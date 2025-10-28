@@ -15,26 +15,28 @@
 
 ## 📋 Table of Contents
 
-- [Abstract](#-abstract)
-- [Overview](#-overview)
-- [Key Differentiators](#-key-differentiators)
-- [System Architecture](#-system-architecture)
-- [Workflow / Data Flow](#-workflow--data-flow)
-- [Detection Metrics & Mathematical Foundation](#-detection-metrics--mathematical-foundation)
-- [Ensemble Methodology](#-ensemble-methodology)
-- [Domain‑Aware Detection](#-domain-aware-detection)
-- [Performance & Cost Characteristics](#-performance--cost-characteristics)
-- [Project Structure](#-project-structure)
-- [API Endpoints](#-api-endpoints)
-- [Installation & Setup](#-installation--setup)
-- [Model Management & First‑Run Behavior](#-model-management--first-run-behavior)
-- [Frontend Features](#-frontend-features)
-- [Accuracy, Validation & Continuous Improvement](#-accuracy-validation--continuous-improvement)
-- [Business Model & Market Analysis](#-business-model--market-analysis)
-- [Research Impact & Future Scope](#-research-impact--future-scope)
-- [Infrastructure & Deployment](#-infrastructure--deployment)
-- [Security & Risk Mitigation](#-security--risk-mitigation)
-- [License & Acknowledgments](#-license--acknowledgments)
+## 📋 Table of Contents
+
+- [Abstract](#abstract)
+- [Overview](#overview)
+- [Key Differentiators](#key-differentiators)
+- [System Architecture](#system-architecture)
+- [Workflow / Data Flow](#workflow--data-flow)
+- [Detection Metrics & Mathematical Foundation](#detection-metrics--mathematical-foundation)
+- [Ensemble Methodology](#ensemble-methodology)
+- [Domain-Aware Detection](#domain-aware-detection)
+- [Performance & Cost Characteristics](#performance--cost-characteristics)
+- [Project Structure](#project-structure)
+- [API Endpoints](#api-endpoints)
+- [Installation & Setup](#installation--setup)
+- [Model Management & First-Run Behavior](#model-management--first-run-behavior)
+- [Frontend Features](#frontend-features)
+- [Accuracy, Validation & Continuous Improvement](#accuracy-validation--continuous-improvement)
+- [Business Model & Market Analysis](#business-model--market-analysis)
+- [Research Impact & Future Scope](#research-impact--future-scope)
+- [Infrastructure & Deployment](#infrastructure--deployment)
+- [Security & Risk Mitigation](#security--risk-mitigation)
+- [License & Acknowledgments](#license--acknowledgments)
 
 ---
 
