@@ -15,8 +15,6 @@
 
 ## 📋 Table of Contents
 
-## 📋 Table of Contents
-
 - [Abstract](#abstract)
 - [Overview](#overview)
 - [Key Differentiators](#key-differentiators)
