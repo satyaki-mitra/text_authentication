@@ -1,0 +1,2189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Text Detector - Verifying Content Authenticity Using Statistics</title>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+:root {
+    --primary: #06b6d4;
+    --primary-dark: #0891b2;
+    --secondary: #3b82f6;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --bg-dark: #0f172a;
+    --bg-darker: #020617;
+    --bg-panel: rgba(30, 41, 59, 0.95);
+    --text-primary: #f1f5f9;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+    --border: rgba(71, 85, 105, 0.5);
+}
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+/* Header */
+.header {
+    background: rgba(15, 23, 42, 0.98);
+    backdrop-filter: blur(10px);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+    text-decoration: none;
+}
+.logo-icon {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);
+}
+.nav-links {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+.nav-link {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+    cursor: pointer;
+}
+.nav-link:hover {
+    color: var(--primary);
+}
+.try-btn {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    color: #fff;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+    text-decoration: none;
+    display: inline-block;
+}
+.try-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(6, 182, 212, 0.4);
+}
+/* Landing Page */
+.landing-page {
+    display: block;
+}
+.hero {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 6rem 2rem 4rem;
+    text-align: center;
+}
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(135deg, #fff 0%, var(--primary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.2;
+}
+.hero-subtitle {
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
+.hero-description {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    max-width: 700px;
+    margin: 0 auto 3rem;
+}
+.accuracy-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(6, 182, 212, 0.2) 100%);
+    border: 2px solid var(--success);
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--success);
+    margin-bottom: 2rem;
+}
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    max-width: 1000px;
+    margin: 4rem auto;
+    padding: 0 2rem;
+}
+.stat-card {
+    background: var(--bg-panel);
+    padding: 2rem;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    text-align: center;
+}
+.stat-value {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+}
+.stat-label {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+/* Features Section */
+.features-section {
+    max-width: 1200px;
+    margin: 6rem auto;
+    padding: 0 2rem;
+}
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+.section-subtitle {
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    margin-bottom: 4rem;
+}
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+}
+.feature-card {
+    background: var(--bg-panel);
+    padding: 2.5rem;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(6, 182, 212, 0.2);
+}
+.feature-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+.feature-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #fff;
+}
+.feature-description {
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+/* Metrics Section */
+.metrics-info {
+    max-width: 1200px;
+    margin: 6rem auto;
+    padding: 0 2rem;
+}
+.metric-card {
+    background: var(--bg-panel);
+    padding: 2rem;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    margin-bottom: 1.5rem;
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 2rem;
+    align-items: center;
+}
+.metric-icon-box {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+}
+.metric-content h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+    color: #fff;
+}
+.metric-weight {
+    display: inline-block;
+    background: rgba(6, 182, 212, 0.2);
+    padding: 0.25rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    color: var(--primary);
+    font-weight: 600;
+    margin-left: 0.5rem;
+}
+/* Analysis Interface */
+.analysis-interface {
+    display: none;
+    max-width: 1600px;
+    margin: 2rem auto;
+    padding: 0 2rem 2rem;
+}
+.interface-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: start;
+}
+.panel {
+    background: var(--bg-panel);
+    border-radius: 16px;
+    padding: 2rem;
+    border: 1px solid var(--border);
+    backdrop-filter: blur(10px);
+}
+.panel-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: #fff;
+}
+.input-tabs {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+.input-tab {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    background: rgba(51, 65, 85, 0.6);
+    border: none;
+    border-radius: 8px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: all 0.3s;
+}
+.input-tab.active {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    color: #fff;
+}
+.input-tab:hover:not(.active) {
+    background: rgba(71, 85, 105, 0.8);
+}
+.tab-content {
+    display: none;
+}
+.tab-content.active {
+    display: block;
+}
+.text-input {
+    width: 100%;
+    min-height: 450px;
+    padding: 1rem;
+    background: rgba(15, 23, 42, 0.8);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    line-height: 1.8;
+    resize: vertical;
+    font-family: inherit;
+}
+.text-input::placeholder {
+    color: var(--text-muted);
+}
+.text-input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+.file-upload-area {
+    border: 2px dashed var(--border);
+    border-radius: 8px;
+    padding: 3rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    background: rgba(15, 23, 42, 0.5);
+}
+.file-upload-area:hover {
+    border-color: var(--primary);
+    background: rgba(6, 182, 212, 0.05);
+}
+.file-upload-area.drag-over {
+    border-color: var(--primary);
+    background: rgba(6, 182, 212, 0.1);
+}
+.file-upload-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+.file-input {
+    display: none;
+}
+.file-name-display {
+    margin-top: 1rem;
+    padding: 0.75rem;
+    background: rgba(6, 182, 212, 0.1);
+    border-radius: 6px;
+    color: var(--primary);
+    display: none;
+}
+.options-section {
+    margin: 1.5rem 0;
+    padding: 1rem;
+    background: rgba(51, 65, 85, 0.3);
+    border-radius: 8px;
+}
+.option-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+}
+.option-row:last-child {
+    margin-bottom: 0;
+}
+.option-label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    flex: 1;
+}
+select {
+    background: rgba(15, 23, 42, 0.8);
+    border: 1px solid var(--border);
+    padding: 0.5rem;
+    border-radius: 6px;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+select:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+.checkbox-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+.analyze-btn {
+    width: 100%;
+    padding: 1rem;
+    margin-top: 1.5rem;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+.analyze-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(6, 182, 212, 0.3);
+}
+.analyze-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+/* Report Tabs */
+.report-tabs {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.5rem;
+}
+.report-tab {
+    padding: 0.75rem 1rem;
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.report-tab.active {
+    color: var(--primary);
+    border-bottom-color: var(--primary);
+}
+.report-content {
+    display: none;
+}
+.report-content.active {
+    display: block;
+}
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+}
+.empty-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1.5rem;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+}
+.empty-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #fff;
+}
+.empty-description {
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+/* Loading State */
+.loading {
+    text-align: center;
+    padding: 3rem;
+}
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid rgba(71, 85, 105, 0.3);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 1rem;
+}
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+/* Result Summary */
+.result-summary {
+    text-align: center;
+    padding: 2rem 0;
+}
+.gauge-container {
+    width: 220px;
+    height: 220px;
+    margin: 0 auto 2rem;
+    position: relative;
+}
+.gauge-circle {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: conic-gradient(var(--gauge-color) 0deg, var(--gauge-color) var(--gauge-degree), rgba(51, 65, 85, 0.3) var(--gauge-degree));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+.gauge-inner {
+    width: 170px;
+    height: 170px;
+    background: var(--bg-panel);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.gauge-value {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--gauge-color);
+}
+.gauge-label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-top: 0.25rem;
+}
+.result-info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+.info-card {
+    background: rgba(51, 65, 85, 0.3);
+    padding: 1.5rem;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+}
+.info-label {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.info-value {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #fff;
+}
+.confidence-badge {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+.confidence-high {
+    background: rgba(16, 185, 129, 0.2);
+    color: var(--success);
+}
+.confidence-medium {
+    background: rgba(245, 158, 11, 0.2);
+    color: var(--warning);
+}
+.confidence-low {
+    background: rgba(239, 68, 68, 0.2);
+    color: var(--danger);
+}
+/* Reasoning Box */
+.reasoning-box {
+    background: rgba(51, 65, 85, 0.4);
+    padding: 1.5rem;
+    border-radius: 10px;
+    border-left: 4px solid var(--primary);
+    margin-top: 2rem;
+}
+.reasoning-title {
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--primary);
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.reasoning-text {
+    color: var(--text-secondary);
+    line-height: 1.7;
+}
+
+/* Enhanced Reasoning Styles */
+.reasoning-box.enhanced {
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.95) 0%, rgba(15, 23, 42, 0.95) 100%);
+    border: 1px solid rgba(71, 85, 105, 0.5);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-top: 2rem;
+    backdrop-filter: blur(10px);
+}
+
+.reasoning-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.reasoning-icon {
+    font-size: 1.5rem;
+}
+
+.reasoning-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--primary);
+    flex: 1;
+}
+
+.confidence-tag {
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.high-confidence {
+    background: rgba(16, 185, 129, 0.2);
+    color: var(--success);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.medium-confidence {
+    background: rgba(245, 158, 11, 0.2);
+    color: var(--warning);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.low-confidence {
+    background: rgba(239, 68, 68, 0.2);
+    color: var(--danger);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.verdict-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: rgba(51, 65, 85, 0.3);
+    border-radius: 8px;
+}
+
+.verdict-text {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--warning);
+}
+
+.probability {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.probability-value {
+    color: var(--text-primary);
+    font-weight: 700;
+}
+
+.metrics-breakdown {
+    margin-bottom: 1.5rem;
+}
+
+.breakdown-header {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.metric-indicator {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.metric-indicator:hover {
+    background: rgba(51, 65, 85, 0.4);
+    transform: translateX(4px);
+}
+
+.metric-name {
+    font-weight: 600;
+    color: var(--text-primary);
+    min-width: 140px;
+}
+
+.metric-details {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.verdict-badge {
+    padding: 0.2rem 0.6rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    min-width: 60px;
+    text-align: center;
+}
+
+.ai-badge {
+    background: rgba(239, 68, 68, 0.2);
+    color: var(--danger);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.human-badge {
+    background: rgba(16, 185, 129, 0.2);
+    color: var(--success);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.confidence, .weight {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    min-width: 100px;
+}
+
+.agreement-indicator {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    border-radius: 8px;
+    color: var(--success);
+}
+
+.agreement-icon {
+    font-weight: 700;
+}
+
+.agreement-text {
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+/* Attribution Section */
+.attribution-section {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: rgba(51, 65, 85, 0.3);
+    border-radius: 10px;
+    border: 1px solid var(--border);
+}
+.attribution-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #fff;
+}
+.model-match {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem;
+    background: rgba(6, 182, 212, 0.1);
+    border-radius: 6px;
+    margin-bottom: 0.5rem;
+}
+.model-name {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+.model-confidence {
+    font-weight: 700;
+    color: var(--primary);
+}
+/* Download Actions */
+.download-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+.download-btn {
+    flex: 1;
+    padding: 0.75rem;
+    background: rgba(51, 65, 85, 0.6);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+.download-btn:hover {
+    background: var(--primary);
+    border-color: var(--primary);
+    transform: translateY(-2px);
+}
+/* Action Buttons */
+.action-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+.action-btn {
+    flex: 1;
+    padding: 0.75rem;
+    background: rgba(51, 65, 85, 0.6);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+.action-btn:hover {
+    background: var(--primary);
+    border-color: var(--primary);
+    transform: translateY(-2px);
+}
+.action-btn.refresh {
+    background: rgba(245, 158, 11, 0.2);
+    border-color: var(--warning);
+    color: var(--warning);
+}
+.action-btn.refresh:hover {
+    background: var(--warning);
+    color: var(--bg-darker);
+}
+/* Metrics Grid */
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+.metric-result-card {
+    background: rgba(51, 65, 85, 0.4);
+    padding: 1.5rem;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+}
+.metric-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+.metric-name {
+    font-weight: 700;
+    color: #fff;
+    font-size: 1.1rem;
+}
+.metric-score {
+    font-size: 1.8rem;
+    font-weight: 800;
+}
+.metric-verdict {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-top: 0.5rem;
+}
+.verdict-ai {
+    background: rgba(239, 68, 68, 0.2);
+    color: var(--danger);
+}
+.verdict-human {
+    background: rgba(16, 185, 129, 0.2);
+    color: var(--success);
+}
+.verdict-uncertain {
+    background: rgba(245, 158, 11, 0.2);
+    color: var(--warning);
+}
+.metric-description {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin-top: 0.75rem;
+}
+/* Highlighted Text */
+.highlight-legend {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: rgba(51, 65, 85, 0.4);
+    border-radius: 8px;
+    flex-wrap: wrap;
+}
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.legend-color {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+}
+.legend-label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+.highlighted-text {
+    background: rgba(15, 23, 42, 0.8);
+    padding: 1.5rem;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    line-height: 1.9;
+    font-size: 0.95rem;
+}
+.highlight-low {
+    background-color: rgba(234, 179, 8, 0.25);
+    padding: 2px 4px;
+    border-radius: 3px;
+}
+.highlight-medium {
+    background-color: rgba(249, 115, 22, 0.35);
+    padding: 2px 4px;
+    border-radius: 3px;
+}
+.highlight-high {
+    background-color: rgba(239, 68, 68, 0.4);
+    padding: 2px 4px;
+    border-radius: 3px;
+}
+/* Footer */
+.footer {
+    max-width: 1200px;
+    margin: 6rem auto 0;
+    padding: 3rem 2rem;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    color: var(--text-muted);
+}
+/* Responsive */
+@media (max-width: 1200px) {
+    .interface-grid {
+        grid-template-columns: 1fr;
+    }
+    .metrics-grid {
+        grid-template-columns: 1fr;
+    }
+}
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+    .metric-card {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    .result-info-grid {
+        grid-template-columns: 1fr;
+    }
+    .nav-links {
+        display: none;
+    }
+    .download-actions,
+    .action-buttons {
+        flex-direction: column;
+    }
+}
+/* Scroll Behavior */
+html {
+    scroll-behavior: smooth;
+}
+</style>
+</head>
+<body>
+<!-- Header -->
+<div class="header">
+<a href="#" class="logo" onclick="showLanding(); return false;">
+    <div class="logo-icon">🔍</div>
+    <span>AI Text Detector</span>
+</a>
+<div class="nav-links">
+    <a href="#features" class="nav-link">Features</a>
+    <a href="#metrics" class="nav-link">Detection Metrics</a>
+    <a href="#" class="nav-link" onclick="showAnalysis(); return false;">Try It Now</a>
+</div>
+</div>
+<!-- Landing Page -->
+<div class="landing-page" id="landing-page">
+<!-- Hero Section -->
+<section class="hero">
+    <h1 class="hero-title">AI Text Detection Platform</h1>
+    <p class="hero-subtitle">Verifying Content Authenticity with Precision</p>
+    <p class="hero-description">
+        Production-ready platform designed to identify AI-generated content across education, 
+        publishing, hiring, and research domains using sophisticated ensemble detection.
+    </p>
+    <button class="try-btn" onclick="showAnalysis()"> Try It Now   → </button>
+</section>
+<!-- Stats -->
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-value">2.4%</div>
+        <div class="stat-label">False Positive Rate</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value">6</div>
+        <div class="stat-label">Total Detection Metrics</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value">2s</div>
+        <div class="stat-label">Average Processing Time</div>
+    </div>
+</div>
+<!-- Features Section -->
+<section class="features-section" id="features">
+    <h2 class="section-title">Why Choose Our Platform?</h2>
+    <p class="section-subtitle">
+        Advanced technology meets practical application
+    </p>
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon">🎯</div>
+            <h3 class="feature-title">Domain-Aware Detection</h3>
+            <p class="feature-description">
+                Calibrated thresholds for Academic, Technical, Creative, and Casual content types with specialized detection algorithms for each domain.
+            </p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🔬</div>
+            <h3 class="feature-title">6-Metric Ensemble</h3>
+            <p class="feature-description">
+                Combines Perplexity, Entropy, Statistical, Linguistic, Semantic Analysis, and DetectGPT for comprehensive detection with orthogonal signal capture.
+            </p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">💡</div>
+            <h3 class="feature-title">Explainable Results</h3>
+            <p class="feature-description">
+                Sentence-level highlighting with confidence scores and detailed reasoning for every detection decision.
+            </p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🚀</div>
+            <h3 class="feature-title">Fast Processing</h3>
+            <p class="feature-description">
+                Analyze short texts in 1.2 seconds, medium documents in 3.5 seconds with parallel metric computation.
+            </p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🤖</div>
+            <h3 class="feature-title">Model Attribution</h3>
+            <p class="feature-description">
+                Identifies which AI model likely generated the text - GPT-4, Claude, Gemini, LLaMA, and more.
+            </p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">📄</div>
+            <h3 class="feature-title">Multi-Format Support</h3>
+            <p class="feature-description">
+                Upload and analyze TXT, PDF, DOCX, DOC, and Markdown files with automatic text extraction.
+            </p>
+        </div>
+    </div>
+</section>
+<!-- Metrics Section -->
+<section class="metrics-info" id="metrics">
+    <h2 class="section-title">Detection Metrics Explained</h2>
+    <p class="section-subtitle">
+        Understanding the science behind the detection
+    </p>
+    <div class="metric-card">
+        <div class="metric-icon-box">📊</div>
+        <div class="metric-content">
+            <h3>Perplexity <span class="metric-weight">Weight: 25%</span></h3>
+            <p>Measures how predictable the text is using GPT-2 XL language model. AI-generated text typically has lower perplexity (more predictable) than human writing, which tends to be more varied and surprising.</p>
+        </div>
+    </div>
+    <div class="metric-card">
+        <div class="metric-icon-box">🎲</div>
+        <div class="metric-content">
+            <h3>Entropy <span class="metric-weight">Weight: 20%</span></h3>
+            <p>Calculates token-level diversity and unpredictability in text sequences. Human writing shows higher entropy with more varied word choices, while AI tends toward more uniform token distributions.</p>
+        </div>
+    </div>
+    <div class="metric-card">
+        <div class="metric-icon-box">📈</div>
+        <div class="metric-content">
+            <h3>Statistical Analysis <span class="metric-weight">Weight: 15%</span></h3>
+            <p>Analyzes sentence length variance, punctuation patterns, and lexical burstiness. Human writing exhibits more variation in sentence structure and rhythm compared to AI's consistent patterns.</p>
+        </div>
+    </div>
+    <div class="metric-card">
+        <div class="metric-icon-box">📝</div>
+        <div class="metric-content">
+            <h3>Linguistic Analysis <span class="metric-weight">Weight: 15%</span></h3>
+            <p>Evaluates POS tag diversity, syntactic complexity, and grammatical patterns. Examines the richness of language structures and whether they match natural human linguistic variation.</p>
+        </div>
+    </div>
+    <div class="metric-card">
+        <div class="metric-icon-box">🧠</div>
+        <div class="metric-content">
+            <h3>Semantic Analysis <span class="metric-weight">Weight: 15%</span></h3>
+            <p>Assesses semantic coherence, repetition patterns, and contextual consistency. Detects the subtle semantic fingerprints that distinguish AI-generated content from human writing.</p>
+        </div>
+    </div>
+    <div class="metric-card">
+        <div class="metric-icon-box">🔍</div>
+        <div class="metric-content">
+            <h3>DetectGPT <span class="metric-weight">Weight: 10%</span></h3>
+            <p>Tests text stability under random perturbations. AI-generated text tends to maintain higher likelihood scores even when slightly modified, while human text shows more variation.</p>
+        </div>
+    </div>
+</section>
+<!-- Footer -->
+<footer class="footer">
+    <p>&copy; 2025 AI Text Detector Platform</p>
+    <p style="margin-top: 1rem;">AI detection with enterprise accuracy and explainability.</p>
+</footer>
+</div>
+<!-- Analysis Interface -->
+<div class="analysis-interface" id="analysis-interface">
+<div class="interface-grid">
+    <!-- Left Panel: Input -->
+    <div class="panel">
+        <h2 class="panel-title">Submit Content for Analysis</h2>
+        <div class="input-tabs">
+            <button class="input-tab active" data-tab="paste">
+                📋 Paste Text
+            </button>
+            <button class="input-tab" data-tab="upload">
+                📁 Upload File
+            </button>
+        </div>
+        <div id="paste-tab" class="tab-content active">
+            <textarea 
+                id="text-input" 
+                class="text-input" 
+                placeholder="Paste your text here for analysis...
+The more text you provide (minimum 50 characters), the more accurate the detection will be. Our system analyzes linguistic patterns, statistical features, and semantic structures to determine authenticity."
+            ></textarea>
+        </div>
+        <div id="upload-tab" class="tab-content">
+            <div class="file-upload-area" id="file-upload-area">
+                <input type="file" id="file-input" class="file-input" accept=".txt,.pdf,.docx,.doc,.md">
+                <div class="file-upload-icon">📄</div>
+                <div style="font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem;">
+                    Click to upload or drag and drop
+                </div>
+                <div style="color: var(--text-muted); font-size: 0.9rem;">
+                    Supported formats: TXT, PDF, DOCX, DOC, MD
+                </div>
+                <div style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.5rem;">
+                    Maximum file size: 10MB
+                </div>
+            </div>
+            <div id="file-name-display" class="file-name-display"></div>
+        </div>
+        <div class="options-section">
+            <div class="option-row">
+                <label class="option-label">Content Domain:</label>
+                <select id="domain-select">
+                    <option value="">Auto-detect</option>
+                    <option value="academic">Academic</option>
+                    <option value="technical_doc">Technical/Medical</option>
+                    <option value="creative">Creative Writing</option>
+                    <option value="social_media">Social Media</option>
+                </select>
+            </div>
+            <div class="option-row">
+                <label class="option-label">Enable AI Model Attribution:</label>
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="enable-attribution" checked>
+                    <span style="font-size: 0.85rem; color: var(--text-muted);">Identify which AI model generated the text</span>
+                </div>
+            </div>
+            <div class="option-row">
+                <label class="option-label">Enable Sentence Highlighting:</label>
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="enable-highlighting" checked>
+                    <span style="font-size: 0.85rem; color: var(--text-muted);">Show suspicious sentences</span>
+                </div>
+            </div>
+            <!-- NEW OPTIONS -->
+            <div class="option-row">
+                <label class="option-label">Sentence-Level Analysis:</label>
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="use-sentence-level" checked>
+                    <span style="font-size: 0.85rem; color: var(--text-muted);">More accurate but slower analysis</span>
+                </div>
+            </div>
+            <div class="option-row">
+                <label class="option-label">Include Metrics Summary:</label>
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="include-metrics-summary" checked>
+                    <span style="font-size: 0.85rem; color: var(--text-muted);">Show text analysis statistics</span>
+                </div>
+            </div>
+        </div>
+        <button id="analyze-btn" class="analyze-btn">
+            🔍 Analyze Text
+        </button>
+        <div class="action-buttons">
+            <button id="refresh-btn" class="action-btn refresh">
+                🔄 Refresh
+            </button>
+            <button id="try-next-btn" class="action-btn">
+                ➕ Try Next
+            </button>
+        </div>
+    </div>
+    <!-- Right Panel: Results -->
+    <div class="panel">
+        <h2 class="panel-title">Analysis Report</h2>
+        <div class="report-tabs">
+            <button class="report-tab active" data-report="summary">
+                📊 Summary
+            </button>
+            <button class="report-tab" data-report="highlighted">
+                📝 Highlighted Text
+            </button>
+            <button class="report-tab" data-report="metrics">
+                ℹ️ Detailed Metrics
+            </button>
+        </div>
+        <!-- Summary Report -->
+        <div id="summary-report" class="report-content active">
+            <div class="empty-state">
+                <div class="empty-icon">✓</div>
+                <h3 class="empty-title">Ready for Analysis</h3>
+                <p class="empty-description">
+                    Paste text or upload a document to begin comprehensive AI detection analysis.
+                    Our 6-metric ensemble will provide detailed insights.
+                </p>
+            </div>
+        </div>
+        <!-- Highlighted Text Report -->
+        <div id="highlighted-report" class="report-content">
+            <div class="empty-state">
+                <div class="empty-icon">📝</div>
+                <p class="empty-description">
+                    Run an analysis to see sentence-level highlighting
+                </p>
+            </div>
+        </div>
+        <!-- Metrics Report -->
+        <div id="metrics-report" class="report-content">
+            <div class="empty-state">
+                <div class="empty-icon">📊</div>
+                <p class="empty-description">
+                    Run an analysis to see detailed metric breakdowns
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script>
+// Configuration
+const API_BASE = '';
+let currentAnalysisData = null;
+
+// Navigation
+function showLanding() {
+    document.getElementById('landing-page').style.display = 'block';
+    document.getElementById('analysis-interface').style.display = 'none';
+    window.scrollTo(0, 0);
+}
+
+function showAnalysis() {
+    document.getElementById('landing-page').style.display = 'none';
+    document.getElementById('analysis-interface').style.display = 'block';
+    window.scrollTo(0, 0);
+    resetAnalysisInterface();
+}
+
+// Reset analysis interface
+function resetAnalysisInterface() {
+    // Clear text input
+    document.getElementById('text-input').value = '';
+    
+    // Clear file input and display
+    document.getElementById('file-input').value = '';
+    document.getElementById('file-name-display').style.display = 'none';
+    document.getElementById('file-name-display').innerHTML = '';
+    
+    // Reset tabs to paste
+    document.querySelectorAll('.input-tab').forEach(t => t.classList.remove('active'));
+    document.querySelector('.input-tab[data-tab="paste"]').classList.add('active');
+    document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+    document.getElementById('paste-tab').classList.add('active');
+    
+    // Reset options to defaults
+    document.getElementById('domain-select').value = '';
+    document.getElementById('enable-attribution').checked = true;
+    document.getElementById('enable-highlighting').checked = true;
+    document.getElementById('use-sentence-level').checked = true;
+    document.getElementById('include-metrics-summary').checked = true;
+    
+    // Reset report tabs to summary
+    document.querySelectorAll('.report-tab').forEach(t => t.classList.remove('active'));
+    document.querySelector('.report-tab[data-report="summary"]').classList.add('active');
+    document.querySelectorAll('.report-content').forEach(content => content.classList.remove('active'));
+    document.getElementById('summary-report').classList.add('active');
+    
+    // Show empty state
+    document.getElementById('summary-report').innerHTML = `
+        <div class="empty-state">
+            <div class="empty-icon">✓</div>
+            <h3 class="empty-title">Ready for Analysis</h3>
+            <p class="empty-description">
+                Paste text or upload a document to begin comprehensive AI detection analysis.
+                Our 6-metric ensemble will provide detailed insights.
+            </p>
+        </div>
+    `;
+    document.getElementById('highlighted-report').innerHTML = `
+        <div class="empty-state">
+            <div class="empty-icon">📝</div>
+            <p class="empty-description">
+                Run an analysis to see sentence-level highlighting
+            </p>
+        </div>
+    `;
+    document.getElementById('metrics-report').innerHTML = `
+        <div class="empty-state">
+            <div class="empty-icon">📊</div>
+            <p class="empty-description">
+                Run an analysis to see detailed metric breakdowns
+            </p>
+        </div>
+    `;
+    
+    // Clear current analysis data
+    currentAnalysisData = null;
+}
+
+// Input Tab Switching
+document.querySelectorAll('.input-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+        const tabName = tab.dataset.tab;
+        document.querySelectorAll('.input-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        document.querySelectorAll('#paste-tab, #upload-tab').forEach(content => {
+            content.classList.remove('active');
+        });
+        document.getElementById(`${tabName}-tab`).classList.add('active');
+    });
+});
+
+// Report Tab Switching
+document.querySelectorAll('.report-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+        const reportName = tab.dataset.report;
+        document.querySelectorAll('.report-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        document.querySelectorAll('.report-content').forEach(content => {
+            content.classList.remove('active');
+        });
+        document.getElementById(`${reportName}-report`).classList.add('active');
+    });
+});
+
+// File Upload Handling
+const fileInput = document.getElementById('file-input');
+const fileUploadArea = document.getElementById('file-upload-area');
+const fileNameDisplay = document.getElementById('file-name-display');
+
+fileUploadArea.addEventListener('click', () => {
+    fileInput.click();
+});
+
+fileInput.addEventListener('change', (e) => {
+    handleFileSelect(e.target.files[0]);
+});
+
+// Drag and Drop
+fileUploadArea.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    fileUploadArea.classList.add('drag-over');
+});
+
+fileUploadArea.addEventListener('dragleave', () => {
+    fileUploadArea.classList.remove('drag-over');
+});
+
+fileUploadArea.addEventListener('drop', (e) => {
+    e.preventDefault();
+    fileUploadArea.classList.remove('drag-over');
+    const file = e.dataTransfer.files[0];
+    if (file) {
+        fileInput.files = e.dataTransfer.files;
+        handleFileSelect(file);
+    }
+});
+
+function handleFileSelect(file) {
+    if (!file) return;
+    
+    const allowedTypes = ['.txt', '.pdf', '.docx', '.doc', '.md'];
+    const fileExt = '.' + file.name.split('.').pop().toLowerCase();
+    
+    if (!allowedTypes.includes(fileExt)) {
+        alert('Unsupported file type. Please upload: TXT, PDF, DOCX, DOC, or MD files.');
+        return;
+    }
+    
+    if (file.size > 10 * 1024 * 1024) {
+        alert('File size exceeds 10MB limit.');
+        return;
+    }
+    
+    fileNameDisplay.style.display = 'block';
+    fileNameDisplay.innerHTML = `
+        <strong>Selected file:</strong> ${file.name} 
+        <span style="color: var(--text-muted);">(${formatFileSize(file.size)})</span>
+    `;
+}
+
+function formatFileSize(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+}
+
+// Analyze Button
+document.getElementById('analyze-btn').addEventListener('click', async () => {
+    const activeTab = document.querySelector('.input-tab.active').dataset.tab;
+    const textInput = document.getElementById('text-input').value.trim();
+    const fileInput = document.getElementById('file-input').files[0];
+    
+    if (activeTab === 'paste' && !textInput) {
+        alert('Please paste some text to analyze (minimum 50 characters).');
+        return;
+    }
+    
+    if (activeTab === 'paste' && textInput.length < 50) {
+        alert('Text must be at least 50 characters long for accurate analysis.');
+        return;
+    }
+    
+    if (activeTab === 'upload' && !fileInput) {
+        alert('Please select a file to upload.');
+        return;
+    }
+    
+    await performAnalysis(activeTab, textInput, fileInput);
+});
+
+// Refresh Button - clears everything and shows empty state
+document.getElementById('refresh-btn').addEventListener('click', () => {
+    resetAnalysisInterface();
+});
+
+// Try Next Button - same as refresh but keeps the interface ready
+document.getElementById('try-next-btn').addEventListener('click', () => {
+    resetAnalysisInterface();
+});
+
+async function performAnalysis(mode, text, file) {
+    const analyzeBtn = document.getElementById('analyze-btn');
+    analyzeBtn.disabled = true;
+    analyzeBtn.innerHTML = '⏳ Analyzing...';
+    
+    showLoading();
+    
+    try {
+        let response;
+        if (mode === 'paste') {
+            response = await analyzeText(text);
+        } else {
+            response = await analyzeFile(file);
+        }
+        
+        currentAnalysisData = response;
+        displayResults(response);
+    } catch (error) {
+        console.error('Analysis error:', error);
+        showError(error.message || 'Analysis failed. Please try again.');
+    } finally {
+        analyzeBtn.disabled = false;
+        analyzeBtn.innerHTML = '🔍 Analyze Text';
+    }
+}
+
+async function analyzeText(text) {
+    const domain = document.getElementById('domain-select').value || null;
+    const enableAttribution = document.getElementById('enable-attribution').checked;
+    const enableHighlighting = document.getElementById('enable-highlighting').checked;
+    const useSentenceLevel = document.getElementById('use-sentence-level').checked;
+    const includeMetricsSummary = document.getElementById('include-metrics-summary').checked;
+    
+    const response = await fetch(`${API_BASE}/api/analyze`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            text: text,
+            domain: domain,
+            enable_attribution: enableAttribution,
+            enable_highlighting: enableHighlighting,
+            use_sentence_level: useSentenceLevel,
+            include_metrics_summary: includeMetricsSummary,
+            skip_expensive_metrics: false
+        })
+    });
+    
+    if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Analysis failed');
+    }
+    
+    return await response.json();
+}
+
+async function analyzeFile(file) {
+    const domain = document.getElementById('domain-select').value || null;
+    const enableAttribution = document.getElementById('enable-attribution').checked;
+    const useSentenceLevel = document.getElementById('use-sentence-level').checked;
+    const includeMetricsSummary = document.getElementById('include-metrics-summary').checked;
+    
+    const formData = new FormData();
+    formData.append('file', file);
+    if (domain) formData.append('domain', domain);
+    formData.append('enable_attribution', enableAttribution.toString());
+    formData.append('use_sentence_level', useSentenceLevel.toString());
+    formData.append('include_metrics_summary', includeMetricsSummary.toString());
+    formData.append('skip_expensive_metrics', 'false');
+    
+    const response = await fetch(`${API_BASE}/api/analyze/file`, {
+        method: 'POST',
+        body: formData
+    });
+    
+    if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'File analysis failed');
+    }
+    
+    return await response.json();
+}
+
+function showLoading() {
+    document.getElementById('summary-report').innerHTML = `
+        <div class="loading">
+            <div class="spinner"></div>
+            <p style="color: var(--text-secondary);">Analyzing content with 6-metric ensemble...</p>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.5rem;">
+                This may take a few seconds
+            </p>
+        </div>
+    `;
+}
+
+function showError(message) {
+    document.getElementById('summary-report').innerHTML = `
+        <div class="empty-state">
+            <div class="empty-icon" style="background: linear-gradient(135deg, var(--danger) 0%, #dc2626 100%);">⚠️</div>
+            <h3 class="empty-title">Analysis Failed</h3>
+            <p class="empty-description">${message}</p>
+        </div>
+    `;
+}
+
+function displayResults(data) {
+    console.log('Response data:', data);
+    
+    // Handle different response structures
+    const detection = data.detection_result;
+    if (!detection) {
+        showError('Invalid response structure. Please check the API response format.');
+        console.error('Full response:', data);
+        return;
+    }
+    
+    // Extract data based on your actual API structure
+    const ensemble = detection.ensemble_result || detection.ensemble;
+    const prediction = detection.prediction || {};
+    const metrics = detection.metric_results || detection.metrics;
+    const analysis = detection.analysis || {};
+    
+    // Display Summary with enhanced reasoning
+    displaySummary(ensemble, prediction, analysis, data.attribution, data.reasoning);
+    
+    // Display Highlighted Text with enhanced features
+    if (data.highlighted_html) {
+        displayHighlightedText(data.highlighted_html);
+    } else {
+        document.getElementById('highlighted-report').innerHTML = `
+            <div class="empty-state">
+                <p class="empty-description">Highlighting not available for this analysis</p>
+            </div>
+        `;
+    }
+    
+    // Display Metrics with full details
+    if (metrics && Object.keys(metrics).length > 0) {
+        displayMetrics(metrics, analysis, ensemble);
+    } else {
+        document.getElementById('metrics-report').innerHTML = `
+            <div class="empty-state">
+                <p class="empty-description">Metric details not available</p>
+            </div>
+        `;
+    }
+}
+
+function displaySummary(ensemble, prediction, analysis, attribution, reasoning) {
+    // Use ensemble values from your actual API response
+    const aiProbability = ensemble.ai_probability !== undefined ? 
+        (ensemble.ai_probability * 100).toFixed(0) : '0';
+    const verdict = ensemble.final_verdict || 'Unknown';
+    const confidence = ensemble.overall_confidence !== undefined ?
+        (ensemble.overall_confidence * 100).toFixed(1) : '0';
+    const domain = analysis.domain || 'general';
+    const isAI = verdict.toLowerCase().includes('ai');
+    const gaugeColor = isAI ? 'var(--danger)' : 'var(--success)';
+    const gaugeDegree = aiProbability * 3.6;
+    
+    const confidenceLevel = parseFloat(confidence) >= 70 ? 'HIGH' :
+                           parseFloat(confidence) >= 40 ? 'MEDIUM' : 'LOW';
+    const confidenceClass = confidenceLevel === 'HIGH' ? 'confidence-high' : 
+                           confidenceLevel === 'MEDIUM' ? 'confidence-medium' : 'confidence-low';
+
+    let attributionHTML = '';
+    if (attribution && attribution.predicted_model) {
+        const modelName = attribution.predicted_model.replace(/_/g, ' ').replace(/-/g, ' ').toUpperCase();
+        const modelConf = attribution.confidence ? 
+            (attribution.confidence * 100).toFixed(1) : 'N/A';
+        let topModels = '';
+        if (attribution.model_probabilities) {
+            const sorted = Object.entries(attribution.model_probabilities)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 3);
+            topModels = sorted.map(([model, prob]) => 
+                `<div class="model-match" style="margin-top: 0.5rem;">
+                    <span class="model-name">${model.replace(/_/g, ' ').replace(/-/g, ' ').toUpperCase()}</span>
+                    <span class="model-confidence">${(prob * 100).toFixed(1)}%</span>
+                </div>`
+            ).join('');
+        }
+        attributionHTML = `
+            <div class="attribution-section">
+                <div class="attribution-title">🤖 AI Model Attribution</div>
+                <div class="model-match">
+                    <span class="model-name">Most Likely: ${modelName}</span>
+                    <span class="model-confidence">${modelConf}%</span>
+                </div>
+                ${topModels}
+                ${attribution.reasoning && attribution.reasoning.length > 0 ? 
+                    `<p style="color: var(--text-secondary); margin-top: 1rem; font-size: 0.9rem;">${attribution.reasoning[0]}</p>` : ''}
+            </div>
+        `;
+    }
+
+    document.getElementById('summary-report').innerHTML = `
+        <div class="result-summary">
+            <div class="gauge-container">
+                <div class="gauge-circle" style="--gauge-color: ${gaugeColor}; --gauge-degree: ${gaugeDegree}deg;">
+                    <div class="gauge-inner">
+                        <div class="gauge-value">${aiProbability}%</div>
+                        <div class="gauge-label">AI Probability</div>
+                    </div>
+                </div>
+            </div>
+            <div class="result-info-grid">
+                <div class="info-card">
+                    <div class="info-label">Verdict</div>
+                    <div class="info-value" style="font-size: 1.2rem;">${verdict}</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-label">Confidence Level</div>
+                    <div class="info-value">
+                        <span class="confidence-badge ${confidenceClass}">${confidence}%</span>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <div class="info-label">Content Domain</div>
+                    <div class="info-value" style="font-size: 1.1rem;">${formatDomainName(domain)}</div>
+                </div>
+            </div>
+            ${createEnhancedReasoningHTML(ensemble, analysis, reasoning)}
+            ${attributionHTML}
+            <div class="download-actions">
+                <button class="download-btn" onclick="downloadReport('json')">
+                    📄 Download JSON
+                </button>
+                <button class="download-btn" onclick="downloadReport('pdf')">
+                    📑 Download PDF Report
+                </button>
+            </div>
+        </div>
+    `;
+}
+
+function createEnhancedReasoningHTML(ensemble, analysis, reasoning) {
+    // Use actual reasoning data if available
+    if (reasoning && reasoning.summary) {
+        return `
+            <div class="reasoning-box enhanced">
+                <div class="reasoning-header">
+                    <div class="reasoning-icon">💡</div>
+                    <div class="reasoning-title">Detection Reasoning</div>
+                    <div class="confidence-tag ${ensemble.overall_confidence >= 0.7 ? 'high-confidence' : ensemble.overall_confidence >= 0.4 ? 'medium-confidence' : 'low-confidence'}">
+                        ${ensemble.overall_confidence >= 0.7 ? 'High Confidence' : ensemble.overall_confidence >= 0.4 ? 'Medium Confidence' : 'Low Confidence'}
+                    </div>
+                </div>
+                
+                <div class="verdict-summary">
+                    <div class="verdict-text">${ensemble.final_verdict}</div>
+                    <div class="probability">AI Probability: <span class="probability-value">${(ensemble.ai_probability * 100).toFixed(2)}%</span></div>
+                </div>
+
+                <div style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">
+                    ${reasoning.summary}
+                </div>
+
+                ${reasoning.key_indicators && reasoning.key_indicators.length > 0 ? `
+                    <div class="metrics-breakdown">
+                        <div class="breakdown-header">Key Indicators</div>
+                        ${reasoning.key_indicators.map(indicator => `
+                            <div class="metric-indicator">
+                                <div class="metric-name">${indicator.split(':')[0]}</div>
+                                <div class="metric-details">
+                                    <span style="color: var(--text-secondary); font-size: 0.9rem;">${indicator.split(':')[1]}</span>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                ` : ''}
+
+                ${ensemble.consensus_level > 0.7 ? `
+                    <div class="agreement-indicator">
+                        <div class="agreement-icon">✓</div>
+                        <div class="agreement-text">Strong metric consensus (${(ensemble.consensus_level * 100).toFixed(1)}%)</div>
+                    </div>
+                ` : ''}
+            </div>
+        `;
+    }
+
+    // Fallback to basic reasoning if no reasoning data
+    return `
+        <div class="reasoning-box">
+            <div class="reasoning-title">💡 Detection Reasoning</div>
+            <p class="reasoning-text">
+                Analysis based on 6-metric ensemble with domain-aware calibration. 
+                The system evaluated linguistic patterns, statistical features, and semantic structures 
+                to determine content authenticity with ${(ensemble.overall_confidence * 100).toFixed(1)}% confidence.
+            </p>
+        </div>
+    `;
+}
+
+function displayHighlightedText(html) {
+    document.getElementById('highlighted-report').innerHTML = `
+        ${createDefaultLegend()}
+        <div class="highlighted-text">
+            ${html}
+        </div>
+        ${getHighlightStyles()}
+    `;
+}
+
+function createDefaultLegend() {
+    return `
+        <div class="highlight-legend">
+            <div class="legend-item">
+                <div class="legend-color" style="background: rgba(239, 68, 68, 0.4);"></div>
+                <div class="legend-label">Very Likely AI (90-100%)</div>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: rgba(249, 115, 22, 0.35);"></div>
+                <div class="legend-label">Likely AI (75-90%)</div>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: rgba(245, 158, 11, 0.3);"></div>
+                <div class="legend-label">Possibly AI (60-75%)</div>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: rgba(251, 191, 36, 0.25);"></div>
+                <div class="legend-label">Uncertain (40-60%)</div>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: rgba(163, 230, 53, 0.25);"></div>
+                <div class="legend-label">Possibly Human (25-40%)</div>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: rgba(74, 222, 128, 0.25);"></div>
+                <div class="legend-label">Likely Human (10-25%)</div>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: rgba(34, 197, 94, 0.3);"></div>
+                <div class="legend-label">Very Likely Human (0-10%)</div>
+            </div>
+        </div>
+    `;
+}
+
+function getHighlightStyles() {
+    return `
+        <style>
+            #highlighted-report .highlight {
+                padding: 2px 4px;
+                margin: 0 1px;
+                border-radius: 3px;
+                cursor: help;
+                transition: all 0.2s;
+                border-bottom: 2px solid transparent;
+            }
+            #highlighted-report .highlight:hover {
+                transform: scale(1.02);
+                filter: brightness(1.2);
+                box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+                z-index: 10;
+                position: relative;
+            }
+            #highlighted-report .very-high-ai {
+                background-color: rgba(239, 68, 68, 0.4) !important;
+                border-bottom-color: #ef4444 !important;
+            }
+            #highlighted-report .high-ai {
+                background-color: rgba(249, 115, 22, 0.35) !important;
+                border-bottom-color: #f97316 !important;
+            }
+            #highlighted-report .medium-ai {
+                background-color: rgba(245, 158, 11, 0.3) !important;
+                border-bottom-color: #f59e0b !important;
+            }
+            #highlighted-report .uncertain {
+                background-color: rgba(251, 191, 36, 0.25) !important;
+                border-bottom-color: #fbbf24 !important;
+            }
+            #highlighted-report .medium-human {
+                background-color: rgba(163, 230, 53, 0.25) !important;
+                border-bottom-color: #a3e635 !important;
+            }
+            #highlighted-report .high-human {
+                background-color: rgba(74, 222, 128, 0.25) !important;
+                border-bottom-color: #4ade80 !important;
+            }
+            #highlighted-report .very-high-human {
+                background-color: rgba(34, 197, 94, 0.3) !important;
+                border-bottom-color: #22c55e !important;
+            }
+        </style>
+    `;
+}
+
+function displayMetrics(metrics, analysis, ensemble) {
+    const metricOrder = ['structural', 'perplexity', 'entropy', 'semantic_analysis', 'linguistic', 'detect_gpt'];
+    
+    let metricsHTML = `
+        <div style="margin-bottom: 2rem; padding: 1.5rem; background: rgba(51, 65, 85, 0.3); border-radius: 10px;">
+            <h3 style="color: var(--primary); margin-bottom: 1rem;">📊 Ensemble Analysis</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                <div>
+                    <div style="font-size: 0.85rem; color: var(--text-secondary);">Method</div>
+                    <div style="font-size: 1.1rem; font-weight: 700; color: #fff;">Confidence Calibrated</div>
+                </div>
+                <div>
+                    <div style="font-size: 0.85rem; color: var(--text-secondary);">Consensus</div>
+                    <div style="font-size: 1.1rem; font-weight: 700; color: #fff;">${(ensemble.consensus_level * 100).toFixed(1)}%</div>
+                </div>
+                <div>
+                    <div style="font-size: 0.85rem; color: var(--text-secondary);">Uncertainty</div>
+                    <div style="font-size: 1.1rem; font-weight: 700; color: #fff;">${(ensemble.uncertainty_score * 100).toFixed(1)}%</div>
+                </div>
+            </div>
+        </div>
+    `;
+
+    metricOrder.forEach(metricKey => {
+        const metric = metrics[metricKey];
+        if (!metric) return;
+        
+        const aiProb = (metric.ai_probability * 100).toFixed(1);
+        const humanProb = (metric.human_probability * 100).toFixed(1);
+        const confidence = (metric.confidence * 100).toFixed(1);
+        const weight = ensemble.metric_weights && ensemble.metric_weights[metricKey] ? 
+            (ensemble.metric_weights[metricKey] * 100).toFixed(1) : '0.0';
+        
+        const color = metric.ai_probability >= 0.6 ? 'var(--danger)' : 
+                     metric.ai_probability >= 0.4 ? 'var(--warning)' : 'var(--success)';
+        const verdictText = metric.ai_probability >= 0.6 ? 'AI' :
+                           metric.ai_probability >= 0.4 ? 'UNCERTAIN' : 'HUMAN';
+        const verdictClass = verdictText === 'AI' ? 'verdict-ai' :
+                            verdictText === 'UNCERTAIN' ? 'verdict-uncertain' : 'verdict-human';
+        
+        metricsHTML += `
+            <div class="metric-result-card" style="margin-bottom: 1.5rem;">
+                <div class="metric-header">
+                    <div class="metric-name">${formatMetricName(metricKey)}</div>
+                    <div class="metric-score" style="color: ${color};">${aiProb}%</div>
+                </div>
+                <div style="display: flex; gap: 1rem; margin: 1rem 0;">
+                    <div style="flex: 1;">
+                        <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.25rem;">AI</div>
+                        <div style="background: rgba(51, 65, 85, 0.5); height: 8px; border-radius: 4px; overflow: hidden;">
+                            <div style="background: var(--danger); height: 100%; width: ${aiProb}%; transition: width 0.5s;"></div>
+                        </div>
+                        <div style="font-size: 0.85rem; font-weight: 600; margin-top: 0.25rem;">${aiProb}%</div>
+                    </div>
+                    <div style="flex: 1;">
+                        <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.25rem;">Human</div>
+                        <div style="background: rgba(51, 65, 85, 0.5); height: 8px; border-radius: 4px; overflow: hidden;">
+                            <div style="background: var(--success); height: 100%; width: ${humanProb}%; transition: width 0.5s;"></div>
+                        </div>
+                        <div style="font-size: 0.85rem; font-weight: 600; margin-top: 0.25rem;">${humanProb}%</div>
+                    </div>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin: 0.75rem 0;">
+                    <span class="metric-verdict ${verdictClass}">${verdictText}</span>
+                    <span style="font-size: 0.85rem; color: var(--text-secondary);">Confidence: ${confidence}% | Weight: ${weight}%</span>
+                </div>
+                <div class="metric-description">
+                    ${getMetricDescription(metricKey)}
+                </div>
+                ${metric.details ? renderMetricDetails(metricKey, metric.details) : ''}
+            </div>
+        `;
+    });
+    
+    document.getElementById('metrics-report').innerHTML = metricsHTML;
+}
+
+function renderMetricDetails(metricName, details) {
+    if (!details || Object.keys(details).length === 0) return '';
+    
+    // Key metrics to show for each type
+    const importantKeys = {
+        'structural': ['burstiness_score', 'length_uniformity', 'avg_sentence_length', 'std_sentence_length'],
+        'perplexity': ['overall_perplexity', 'avg_sentence_perplexity', 'normalized_perplexity'],
+        'entropy': ['token_diversity', 'sequence_unpredictability', 'char_entropy'],
+        'semantic_analysis': ['coherence_score', 'consistency_score', 'repetition_score'],
+        'linguistic': ['pos_diversity', 'syntactic_complexity', 'grammatical_consistency'],
+        'detect_gpt': ['stability_score', 'curvature_score', 'likelihood_ratio']
+    };
+    
+    const keysToShow = importantKeys[metricName] || Object.keys(details).slice(0, 6);
+    let detailsHTML = '<div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border);">';
+    detailsHTML += '<div style="font-size: 0.9rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 0.75rem;">📈 Detailed Metrics:</div>';
+    detailsHTML += '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.75rem; font-size: 0.85rem;">';
+    
+    keysToShow.forEach(key => {
+        if (details[key] !== undefined && details[key] !== null) {
+            const value = typeof details[key] === 'number' ? 
+                (details[key] < 1 && details[key] > 0 ? (details[key] * 100).toFixed(2) + '%' : details[key].toFixed(2)) :
+                details[key];
+            const label = key.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+            detailsHTML += `
+                <div style="background: rgba(15, 23, 42, 0.6); padding: 0.5rem; border-radius: 6px;">
+                    <div style="color: var(--text-muted); font-size: 0.75rem; margin-bottom: 0.25rem;">${label}</div>
+                    <div style="color: var(--primary); font-weight: 700;">${value}</div>
+                </div>
+            `;
+        }
+    });
+    
+    detailsHTML += '</div></div>';
+    return detailsHTML;
+}
+
+function getMetricDescription(metricName) {
+    const descriptions = {
+        structural: 'Analyzes sentence structure, length patterns, and statistical features.',
+        perplexity: 'Measures text predictability using language model cross-entropy.',
+        entropy: 'Evaluates token diversity and sequence unpredictability.',
+        semantic_analysis: 'Examines semantic coherence, topic consistency, and logical flow.',
+        linguistic: 'Assesses grammatical patterns, syntactic complexity, and style markers.',
+        detect_gpt: 'Tests text stability under perturbation using curvature analysis.'
+    };
+    return descriptions[metricName] || 'Metric analysis complete.';
+}
+
+function formatMetricName(name) {
+    const names = {
+        structural: 'Structural Analysis',
+        perplexity: 'Perplexity',
+        entropy: 'Entropy',
+        semantic_analysis: 'Semantic Analysis',
+        linguistic: 'Linguistic Analysis',
+        detect_gpt: 'DetectGPT'
+    };
+    return names[name] || name.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+}
+
+function formatDomainName(domain) {
+    return domain.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+}
+
+async function downloadReport(format) {
+    if (!currentAnalysisData) {
+        alert('No analysis data available');
+        return;
+    }
+    
+    try {
+        const analysisId = currentAnalysisData.analysis_id;
+        const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+        
+        // For JSON, download directly from current data
+        if (format === 'json') {
+            const data = {
+                ...currentAnalysisData,
+                download_timestamp: new Date().toISOString(),
+                report_version: '2.0.0'
+            };
+            const blob = new Blob([JSON.stringify(data, null, 2)], { 
+                type: 'application/json' 
+            });
+            const filename = `ai-detection-report-${analysisId}-${timestamp}.json`;
+            await downloadBlob(blob, filename);
+            return;
+        }
+        
+        // Get the original text for report generation
+        const activeTab = document.querySelector('.input-tab.active').dataset.tab;
+        let textToSend = '';
+        if (activeTab === 'paste') {
+            textToSend = document.getElementById('text-input').value;
+        } else {
+            textToSend = currentAnalysisData.detection_result?.processed_text?.text || 
+                        'Uploaded file content - see analysis for details';
+        }
+        
+        // For PDF, request from server
+        const formData = new FormData();
+        formData.append('analysis_id', analysisId);
+        formData.append('text', textToSend);
+        formData.append('formats', format);
+        formData.append('include_highlights', document.getElementById('enable-highlighting').checked.toString());
+        
+        const response = await fetch(`${API_BASE}/api/report/generate`, {
+            method: 'POST',
+            body: formData
+        });
+        
+        if (!response.ok) {
+            throw new Error('Report generation failed');
+        }
+        
+        const result = await response.json();
+        if (result.reports && result.reports[format]) {
+            const filename = result.reports[format];
+            const downloadResponse = await fetch(`${API_BASE}/api/report/download/${filename}`);
+            if (!downloadResponse.ok) {
+                throw new Error('Failed to download file');
+            }
+            const blob = await downloadResponse.blob();
+            const downloadFilename = `ai-detection-${format}-report-${analysisId}-${timestamp}.${format}`;
+            await downloadBlob(blob, downloadFilename);
+        } else {
+            alert('Report file not available');
+        }
+    } catch (error) {
+        console.error('Download error:', error);
+        alert('Failed to download report. Please try again.');
+    }
+}
+
+async function downloadBlob(blob, filename) {
+    try {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        a.style.display = 'none';
+        document.body.appendChild(a);
+        a.click();
+        
+        setTimeout(() => {
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showDownloadSuccess(filename);
+        }, 100);
+    } catch (error) {
+        console.error('Download failed:', error);
+        alert('Download failed. Please try again.');
+    }
+}
+
+function showDownloadSuccess(filename) {
+    const notification = document.createElement('div');
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: var(--success);
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        font-weight: 600;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        z-index: 10000;
+        animation: slideIn 0.3s ease;
+    `;
+    notification.innerHTML = `
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <span>✓</span>
+            <span>Downloaded: ${filename}</span>
+        </div>
+    `;
+    document.body.appendChild(notification);
+    
+    if (!document.querySelector('#download-animation')) {
+        const style = document.createElement('style');
+        style.id = 'download-animation';
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+    
+    setTimeout(() => {
+        if (notification.parentNode) {
+            notification.parentNode.removeChild(notification);
+        }
+    }, 3000);
+}
+
+// Smooth scrolling for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        const href = this.getAttribute('href');
+        if (href !== '#') {
+            e.preventDefault();
+            const target = document.querySelector(href);
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+    });
+});
+
+// Initialize - show landing page by default
+showLanding();
+</script>
+</body>
+</html>
