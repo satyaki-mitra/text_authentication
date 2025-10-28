@@ -41,6 +41,8 @@
 
 This README is research‑grade (detailed math, methodology, and benchmarks) while being approachable for recruiters and technical reviewers.
 
+*For detailed technical documentation, see [Technical Docs](docs/BLOGPOST.md). For research methodology, see [Whitepaper](docs/WHITE_PAPER.md).*
+
 ---
 
 ## 🚀 Overview
@@ -538,6 +540,8 @@ Actual Mixed 420    580     1000 (2,000)
 - Real‑time streaming API (WebSocket)
 - Fine‑grained attribution & generation parameter estimation
 - Institution‑specific calibration & admin dashboards
+
+*Detailed research methodology and academic foundation available in our [Whitepaper](docs/WHITE_PAPER.md). Technical implementation details in [Technical Documentation](docs/BLOGPOST.md).*
 
 ---
 
