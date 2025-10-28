@@ -1,3 +1,4 @@
+<div align="center">
 
 # 🔍 AI Text Authentication Platform
 ## Enterprise‑Grade AI Content Authentication
@@ -7,6 +8,8 @@
 ![Accuracy](https://img.shields.io/badge/accuracy-~90%25+-success.svg)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Code Style](https://img.shields.io/badge/code%20style-black-black.svg)
+
+</div>
 
 ---
 
@@ -591,7 +594,7 @@ def allowed_file(filename):
 
 ## 📄 License & Acknowledgments
 
-This project is licensed under the **MIT License** — see `LICENSE` in the repo.
+This project is licensed under the **MIT License** — see [LICENSE](LICENSE) in the repo.
 
 Acknowledgments:
 - DetectGPT (Mitchell et al., 2023) — inspiration for perturbation-based detection
@@ -604,6 +607,6 @@ Acknowledgments:
 
 **Built with ❤️ — AI transparency, accountability, and real‑world readiness.**
 
-*Version 1.0.0 — Last Updated: October 28, 2025*
+*Version 1.0.0 — Last Updated: October, 2025*
 
 </div>
