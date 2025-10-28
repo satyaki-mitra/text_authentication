@@ -99,7 +99,7 @@ flowchart LR
 
     G[Ensemble Classifier]
     H[Postprocessing & Reporter]
-    I[Model Manager<br/>(HuggingFace Cache)]
+    I["Model Manager<br/>(HuggingFace Cache)"]
     J[Storage: Logs, Reports, Cache]
 
     A --> C
@@ -548,15 +548,15 @@ Actual Mixed 420    580     1000 (2,000)
 ```mermaid
 %%{init: {'theme': 'dark'}}%%
 flowchart LR
-    CDN[CloudFront / CDN] --> LB[Load Balancer (ALB/NLB)]
+    CDN[CloudFront / CDN] --> LB["Load Balancer (ALB/NLB)"]
     LB --> API1[API Server 1]
     LB --> API2[API Server 2]
     LB --> APIN[API Server N]
     API1 --> Cache[Redis Cache]
     API1 --> DB[PostgreSQL]
-    API1 --> S3[S3 / Model Storage]
-    DB --> Backup[(RDS Snapshot)]
-    S3 --> Archive[(Cold Storage)]
+    API1 --> S3["S3 / Model Storage"]
+    DB --> Backup["RDS Snapshot"]
+    S3 --> Archive["Cold Storage"]
 ```
 
 **Deployment notes**
