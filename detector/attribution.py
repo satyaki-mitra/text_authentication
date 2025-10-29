@@ -86,12 +86,23 @@ class ModelAttributor:
                                 "detect_gpt"       : 0.10,  
                                }
     
-    # DOMAIN-AWARE model patterns
-    DOMAIN_MODEL_PREFERENCES = {Domain.ACADEMIC      : [AIModel.GPT_4, AIModel.CLAUDE_3_OPUS, AIModel.GEMINI_ULTRA],
-                                Domain.TECHNICAL_DOC : [AIModel.GPT_4_TURBO, AIModel.CLAUDE_3_SONNET, AIModel.LLAMA_3],
-                                Domain.CREATIVE      : [AIModel.CLAUDE_3_OPUS, AIModel.GPT_4, AIModel.GEMINI_PRO],
-                                Domain.SOCIAL_MEDIA  : [AIModel.GPT_3_5, AIModel.GEMINI_PRO, AIModel.DEEPSEEK_CHAT],
-                                Domain.GENERAL       : [AIModel.GPT_4, AIModel.CLAUDE_3_SONNET, AIModel.GEMINI_PRO],
+    # DOMAIN-AWARE model patterns for ALL 16 DOMAINS
+    DOMAIN_MODEL_PREFERENCES = {Domain.GENERAL       : [AIModel.GPT_4, AIModel.CLAUDE_3_SONNET, AIModel.GEMINI_PRO, AIModel.GPT_3_5],
+                                Domain.ACADEMIC      : [AIModel.GPT_4, AIModel.CLAUDE_3_OPUS, AIModel.GEMINI_ULTRA, AIModel.GPT_4_TURBO],
+                                Domain.TECHNICAL_DOC : [AIModel.GPT_4_TURBO, AIModel.CLAUDE_3_SONNET, AIModel.LLAMA_3, AIModel.GPT_4],
+                                Domain.AI_ML         : [AIModel.GPT_4_TURBO, AIModel.GPT_4, AIModel.CLAUDE_3_OPUS, AIModel.DEEPSEEK_CODER],
+                                Domain.SOFTWARE_DEV  : [AIModel.GPT_4_TURBO, AIModel.DEEPSEEK_CODER, AIModel.CLAUDE_3_SONNET, AIModel.GPT_4],
+                                Domain.ENGINEERING   : [AIModel.GPT_4, AIModel.CLAUDE_3_OPUS, AIModel.GPT_4_TURBO, AIModel.LLAMA_3],
+                                Domain.SCIENCE       : [AIModel.GPT_4, AIModel.CLAUDE_3_OPUS, AIModel.GEMINI_ULTRA, AIModel.GPT_4_TURBO],
+                                Domain.BUSINESS      : [AIModel.GPT_4, AIModel.CLAUDE_3_SONNET, AIModel.GEMINI_PRO, AIModel.GPT_3_5],
+                                Domain.LEGAL         : [AIModel.GPT_4, AIModel.CLAUDE_3_OPUS, AIModel.GPT_4_TURBO, AIModel.CLAUDE_3_SONNET],
+                                Domain.MEDICAL       : [AIModel.GPT_4, AIModel.CLAUDE_3_OPUS, AIModel.GEMINI_ULTRA, AIModel.GPT_4_TURBO],
+                                Domain.JOURNALISM    : [AIModel.GPT_4, AIModel.CLAUDE_3_SONNET, AIModel.GEMINI_PRO, AIModel.GPT_3_5],
+                                Domain.CREATIVE      : [AIModel.CLAUDE_3_OPUS, AIModel.GPT_4, AIModel.GEMINI_PRO, AIModel.CLAUDE_3_SONNET],
+                                Domain.MARKETING     : [AIModel.GPT_4, AIModel.CLAUDE_3_SONNET, AIModel.GEMINI_PRO, AIModel.GPT_3_5],
+                                Domain.SOCIAL_MEDIA  : [AIModel.GPT_3_5, AIModel.GEMINI_PRO, AIModel.DEEPSEEK_CHAT, AIModel.LLAMA_3],
+                                Domain.BLOG_PERSONAL : [AIModel.CLAUDE_3_SONNET, AIModel.GPT_4, AIModel.GEMINI_PRO, AIModel.GPT_3_5],
+                                Domain.TUTORIAL      : [AIModel.GPT_4, AIModel.CLAUDE_3_SONNET, AIModel.GEMINI_PRO, AIModel.GPT_4_TURBO],
                                }
 
     # Enhanced Model-specific fingerprints with comprehensive patterns
@@ -406,10 +417,10 @@ class ModelAttributor:
             return False
     
 
-    def attribute(self, text: str, processed_text: Optional[ProcessedText] = None, 
-                  metric_results: Optional[Dict[str, MetricResult]] = None, domain: Domain = Domain.GENERAL) -> AttributionResult:
+    def attribute(self, text: str, processed_text: Optional[ProcessedText] = None, metric_results: Optional[Dict[str, MetricResult]] = None,
+                  domain: Domain = Domain.GENERAL) -> AttributionResult:
         """
-        Attribute text to specific AI model with DOMAIN AWARENESS
+        Attribute text to specific AI model with domain awareness
         
         Arguments:
         ----------
@@ -445,7 +456,7 @@ class ModelAttributor:
                                                                                      domain             = domain,
                                                                                     )
             
-            # Domain-aware prediction
+            # Domain-aware prediction - FIXED: Always show the actual highest probability model
             predicted_model, confidence           = self._make_domain_aware_prediction(combined_scores    = combined_scores,
                                                                                        domain             = domain,
                                                                                        domain_preferences = domain_preferences,
@@ -475,16 +486,27 @@ class ModelAttributor:
 
     def _calculate_fingerprint_scores(self, text: str, domain: Domain) -> Dict[AIModel, float]:
         """
-        Calculate fingerprint match scores with DOMAIN CALIBRATION
+        Calculate fingerprint match scores with DOMAIN CALIBRATION - FIXED for all domains
         """
         scores             = {model: 0.0 for model in AIModel if model not in [AIModel.HUMAN, AIModel.UNKNOWN]}
         
-        # DOMAIN-AWARE: Adjust sensitivity based on domain
-        domain_sensitivity = {Domain.ACADEMIC      : 1.2,  # More sensitive in academic
-                              Domain.TECHNICAL_DOC : 1.1,  # Moderately sensitive in technical
-                              Domain.CREATIVE      : 0.9,  # Less sensitive in creative
-                              Domain.SOCIAL_MEDIA  : 0.8,  # Least sensitive in social
-                              Domain.GENERAL       : 1.0,  # Default sensitivity
+        # Adjust sensitivity based on all domains
+        domain_sensitivity = {Domain.GENERAL       : 1.00,   
+                              Domain.ACADEMIC      : 1.20,   
+                              Domain.CREATIVE      : 0.90,   
+                              Domain.AI_ML         : 1.15,  
+                              Domain.SOFTWARE_DEV  : 1.15,
+                              Domain.TECHNICAL_DOC : 1.10,   
+                              Domain.ENGINEERING   : 1.10,   
+                              Domain.SCIENCE       : 1.20,   
+                              Domain.BUSINESS      : 1.05,  
+                              Domain.LEGAL         : 1.25,  
+                              Domain.MEDICAL       : 1.20,   
+                              Domain.JOURNALISM    : 1.00,  
+                              Domain.MARKETING     : 0.95, 
+                              Domain.SOCIAL_MEDIA  : 0.80,   
+                              Domain.BLOG_PERSONAL : 0.90,   
+                              Domain.TUTORIAL      : 1.00,  
                              }
         
         sensitivity        = domain_sensitivity.get(domain, 1.0)
@@ -499,6 +521,7 @@ class ModelAttributor:
                 for phrase in fingerprints["phrases"]:
                     if (phrase in text_lower):
                         match_count += 3
+                    
                     total_checks += 1
             
             # Check sentence starters
@@ -510,13 +533,15 @@ class ModelAttributor:
                         if (sentence.startswith(starter)):
                             match_count += 2
                             break
+                
                 total_checks += len(sentences)
             
             # Check structural patterns
             if ("structural_patterns" in fingerprints):
                 for pattern in fingerprints["structural_patterns"]:
-                    if pattern in text_lower:
+                    if (pattern in text_lower):
                         match_count += 2
+                    
                     total_checks += 1
             
             # Calculate normalized score
@@ -530,7 +555,7 @@ class ModelAttributor:
 
     def _analyze_statistical_patterns(self, text: str, domain: Domain) -> Dict[AIModel, float]:
         """
-        Analyze statistical patterns to identify model with DOMAIN AWARENESS
+        Analyze statistical patterns to identify model with domain awareness
         """
         scores    = {model: 0.3 for model in AIModel if model not in [AIModel.HUMAN, AIModel.UNKNOWN]}
         
@@ -555,12 +580,23 @@ class ModelAttributor:
         question_freq       = text.count('?') / sentence_count if sentence_count else 0
         exclamation_freq    = text.count('!') / sentence_count if sentence_count else 0
         
-        # DOMAIN-AWARE: Adjust expectations based on domain
-        domain_adjustments  = {Domain.ACADEMIC      : 1.1,
-                               Domain.TECHNICAL_DOC : 1.05,
-                               Domain.CREATIVE      : 0.95,
-                               Domain.SOCIAL_MEDIA  : 0.9,
-                               Domain.GENERAL       : 1.0,
+        # DOMAIN-AWARE: Adjust expectations based on domains
+        domain_adjustments  = {Domain.GENERAL       : 1.00,
+                               Domain.ACADEMIC      : 1.10,   
+                               Domain.CREATIVE      : 0.95, 
+                               Domain.AI_ML         : 1.05,  
+                               Domain.SOFTWARE_DEV  : 1.05, 
+                               Domain.TECHNICAL_DOC : 1.05, 
+                               Domain.ENGINEERING   : 1.05, 
+                               Domain.SCIENCE       : 1.08,  
+                               Domain.BUSINESS      : 1.00,  
+                               Domain.LEGAL         : 1.12,  
+                               Domain.MEDICAL       : 1.08,  
+                               Domain.JOURNALISM    : 0.95,  
+                               Domain.MARKETING     : 0.92,  
+                               Domain.SOCIAL_MEDIA  : 0.85,  
+                               Domain.BLOG_PERSONAL : 0.95, 
+                               Domain.TUTORIAL      : 1.00, 
                               }
         
         domain_factor       = domain_adjustments.get(domain, 1.0)
@@ -595,6 +631,7 @@ class ModelAttributor:
             for pattern_name, observed_freq in punctuation_checks:
                 if (pattern_name in punct):
                     min_freq, max_freq = punct[pattern_name]
+
                     if (min_freq <= observed_freq <= max_freq):
                         match_score += 0.08
             
@@ -607,17 +644,28 @@ class ModelAttributor:
         """
         Use all 6 metrics with proper weights for attribution
         """
-        scores = {model: 0.0 for model in AIModel if model not in [AIModel.HUMAN, AIModel.UNKNOWN]}
+        scores                = {model: 0.0 for model in AIModel if model not in [AIModel.HUMAN, AIModel.UNKNOWN]}
         
         if not metric_results:
             return scores
         
-        # DOMAIN-AWARE: Adjust metric sensitivity based on domain
-        domain_metric_weights = {Domain.ACADEMIC      : {"perplexity": 1.2, "linguistic": 1.1, "structural": 1.0},
-                                 Domain.TECHNICAL_DOC : {"semantic_analysis": 1.2, "structural": 1.1, "entropy": 1.0},
-                                 Domain.CREATIVE      : {"linguistic": 1.3, "entropy": 1.1, "perplexity": 0.9},
-                                 Domain.SOCIAL_MEDIA  : {"structural": 1.2, "entropy": 1.1, "linguistic": 0.8},
-                                 Domain.GENERAL       : {metric: 1.0 for metric in self.METRIC_WEIGHTS},
+        # DOMAIN-AWARE: Adjust metric sensitivity based on domain 
+        domain_metric_weights = {Domain.GENERAL       : {"perplexity": 1.0, "structural": 1.0, "entropy": 1.0, "semantic_analysis": 1.0, "linguistic": 1.0, "detect_gpt": 1.0},
+                                 Domain.ACADEMIC      : {"perplexity": 1.2, "structural": 1.0, "entropy": 0.9, "semantic_analysis": 1.1, "linguistic": 1.3, "detect_gpt": 0.8},
+                                 Domain.TECHNICAL_DOC : {"perplexity": 1.2, "structural": 1.1, "entropy": 0.9, "semantic_analysis": 1.2, "linguistic": 1.1, "detect_gpt": 0.8},
+                                 Domain.AI_ML         : {"perplexity": 1.3, "structural": 1.0, "entropy": 0.9, "semantic_analysis": 1.2, "linguistic": 1.2, "detect_gpt": 0.8},
+                                 Domain.SOFTWARE_DEV  : {"perplexity": 1.2, "structural": 1.1, "entropy": 0.9, "semantic_analysis": 1.1, "linguistic": 1.0, "detect_gpt": 0.9},
+                                 Domain.ENGINEERING   : {"perplexity": 1.2, "structural": 1.1, "entropy": 0.9, "semantic_analysis": 1.1, "linguistic": 1.2, "detect_gpt": 0.8},
+                                 Domain.SCIENCE       : {"perplexity": 1.2, "structural": 1.0, "entropy": 0.9, "semantic_analysis": 1.2, "linguistic": 1.3, "detect_gpt": 0.8},
+                                 Domain.BUSINESS      : {"perplexity": 1.1, "structural": 1.0, "entropy": 1.0, "semantic_analysis": 1.2, "linguistic": 1.1, "detect_gpt": 0.9},
+                                 Domain.LEGAL         : {"perplexity": 1.2, "structural": 1.1, "entropy": 0.9, "semantic_analysis": 1.3, "linguistic": 1.3, "detect_gpt": 0.8},
+                                 Domain.MEDICAL       : {"perplexity": 1.2, "structural": 1.0, "entropy": 0.9, "semantic_analysis": 1.2, "linguistic": 1.2, "detect_gpt": 0.8},
+                                 Domain.JOURNALISM    : {"perplexity": 1.1, "structural": 1.0, "entropy": 1.0, "semantic_analysis": 1.1, "linguistic": 1.1, "detect_gpt": 0.9},
+                                 Domain.CREATIVE      : {"perplexity": 0.9, "structural": 0.9, "entropy": 1.2, "semantic_analysis": 1.0, "linguistic": 1.3, "detect_gpt": 0.9},
+                                 Domain.MARKETING     : {"perplexity": 1.0, "structural": 1.0, "entropy": 1.1, "semantic_analysis": 1.1, "linguistic": 1.2, "detect_gpt": 0.8},
+                                 Domain.SOCIAL_MEDIA  : {"perplexity": 1.0, "structural": 0.8, "entropy": 1.3, "semantic_analysis": 0.9, "linguistic": 0.9, "detect_gpt": 0.9},
+                                 Domain.BLOG_PERSONAL : {"perplexity": 1.0, "structural": 0.9, "entropy": 1.2, "semantic_analysis": 1.0, "linguistic": 1.1, "detect_gpt": 0.8},
+                                 Domain.TUTORIAL      : {"perplexity": 1.1, "structural": 1.0, "entropy": 1.0, "semantic_analysis": 1.1, "linguistic": 1.1, "detect_gpt": 0.9},
                                 }
         
         domain_weights        = domain_metric_weights.get(domain, domain_metric_weights[Domain.GENERAL])
@@ -708,12 +756,23 @@ class ModelAttributor:
         """
         ENSEMBLE COMBINATION using document-specified weights and domain awareness
         """
-        # DOMAIN-AWARE weighting
-        domain_weights       = {Domain.ACADEMIC      : {"fingerprint": 0.30, "statistical": 0.35, "metric": 0.35},
+        # DOMAIN-AWARE weighting for ALL 16 DOMAINS
+        domain_weights       = {Domain.GENERAL       : {"fingerprint": 0.35, "statistical": 0.30, "metric": 0.35},
+                                Domain.ACADEMIC      : {"fingerprint": 0.30, "statistical": 0.35, "metric": 0.35},
                                 Domain.TECHNICAL_DOC : {"fingerprint": 0.25, "statistical": 0.40, "metric": 0.35},
+                                Domain.AI_ML         : {"fingerprint": 0.28, "statistical": 0.37, "metric": 0.35},
+                                Domain.SOFTWARE_DEV  : {"fingerprint": 0.27, "statistical": 0.38, "metric": 0.35},
+                                Domain.ENGINEERING   : {"fingerprint": 0.28, "statistical": 0.37, "metric": 0.35},
+                                Domain.SCIENCE       : {"fingerprint": 0.30, "statistical": 0.35, "metric": 0.35},
+                                Domain.BUSINESS      : {"fingerprint": 0.33, "statistical": 0.35, "metric": 0.32},
+                                Domain.LEGAL         : {"fingerprint": 0.28, "statistical": 0.40, "metric": 0.32},
+                                Domain.MEDICAL       : {"fingerprint": 0.30, "statistical": 0.38, "metric": 0.32},
+                                Domain.JOURNALISM    : {"fingerprint": 0.35, "statistical": 0.33, "metric": 0.32},
                                 Domain.CREATIVE      : {"fingerprint": 0.40, "statistical": 0.30, "metric": 0.30},
+                                Domain.MARKETING     : {"fingerprint": 0.38, "statistical": 0.32, "metric": 0.30},
                                 Domain.SOCIAL_MEDIA  : {"fingerprint": 0.45, "statistical": 0.35, "metric": 0.20},
-                                Domain.GENERAL       : {"fingerprint": 0.35, "statistical": 0.30, "metric": 0.35},
+                                Domain.BLOG_PERSONAL : {"fingerprint": 0.42, "statistical": 0.32, "metric": 0.26},
+                                Domain.TUTORIAL      : {"fingerprint": 0.33, "statistical": 0.35, "metric": 0.32},
                                }
         
         weights              = domain_weights.get(domain, domain_weights[Domain.GENERAL])
@@ -721,7 +780,7 @@ class ModelAttributor:
         combined             = dict()
         metric_contributions = dict()
         
-        all_models           = set(fingerprint_scores.keys())
+        all_models           = set(fingerprint_scores.keys()) | set(statistical_scores.keys()) | set(metric_scores.keys())
         
         for model in all_models:
             score                 = (fingerprint_scores.get(model, 0.0) * weights["fingerprint"] + 
@@ -730,6 +789,12 @@ class ModelAttributor:
                                     )
             
             combined[model.value] = score
+        
+        # Normalize scores to sum to 1.0 for proper probability distribution
+        total_score = sum(combined.values())
+
+        if (total_score > 0):
+            combined = {model: score / total_score for model, score in combined.items()}
         
         # Calculate metric contributions for explainability
         if metric_scores:
@@ -743,92 +808,122 @@ class ModelAttributor:
 
     def _make_domain_aware_prediction(self, combined_scores: Dict[str, float], domain: Domain, domain_preferences: List[AIModel]) -> Tuple[AIModel, float]:
         """
-        Domain aware prediction that considers domain-specific model preferences
+        Domain aware prediction that considers domain-specific model preferences - FIXED
         """
         if not combined_scores:
             return AIModel.UNKNOWN, 0.0
         
-        # Apply domain preference boost
-        boosted_scores = combined_scores.copy()
+        # Find the model with the highest probability
+        sorted_models = sorted(combined_scores.items(), key=lambda x: x[1], reverse=True)
         
-        for preferred_model in domain_preferences:
-            if preferred_model.value in boosted_scores:
-                # Boost preferred models for this domain
-                boosted_scores[preferred_model.value] *= 1.2
+        if not sorted_models:
+            return AIModel.UNKNOWN, 0.0
         
-        # Find best model
-        best_model_name = max(boosted_scores.items(), key = lambda x: x[1])[0]
-        best_score      = boosted_scores[best_model_name]
+        best_model_name, best_score = sorted_models[0]
+        
+        # FIXED: Only return UNKNOWN if the best score is very low
+        # Use a more reasonable threshold for attribution
+        if best_score < 0.08:  # Changed from 0.15 to 0.08 to be less restrictive
+            return AIModel.UNKNOWN, best_score
+        
+        # FIXED: Don't override with domain preferences if there's a clear winner
+        # Only consider domain preferences if scores are very close
+        if len(sorted_models) > 1:
+            second_model_name, second_score = sorted_models[1]
+            score_difference = best_score - second_score
+            
+            # If scores are very close (within 3%) and second is domain-preferred, consider it
+            if score_difference < 0.03:
+                try:
+                    best_model = AIModel(best_model_name)
+                    second_model = AIModel(second_model_name)
+                    
+                    # If second model is domain-preferred and first is not, prefer second
+                    if (second_model in domain_preferences and 
+                        best_model not in domain_preferences):
+                        best_model_name = second_model_name
+                        best_score = second_score
+                except ValueError:
+                    pass
         
         try:
             best_model = AIModel(best_model_name)
-        
         except ValueError:
             best_model = AIModel.UNKNOWN
         
-        # Calculate confidence with domain consideration
-        scores_list = list(boosted_scores.values())
-        
-        if (len(scores_list) > 1):
-            sorted_scores = sorted(scores_list, reverse = True)
-            margin        = sorted_scores[0] - sorted_scores[1]
-            confidence    = min(1.0, best_score * 0.6 + margin * 0.4)
-
+        # Calculate confidence based on score dominance
+        if len(sorted_models) > 1:
+            second_score = sorted_models[1][1]
+            margin = best_score - second_score
+            # Confidence based on both absolute score and margin
+            confidence = min(1.0, best_score * 0.6 + margin * 2.0)
         else:
-            confidence = best_score * 0.5
+            confidence = best_score * 0.7
         
-        # Higher threshold for confident attribution
-        if (best_score < 0.4 or confidence < 0.3):
-            return AIModel.UNKNOWN, confidence
-        
+        # FIXED: Don't downgrade to UNKNOWN based on confidence alone
+        # If we have a model with reasonable probability, show it even with low confidence
         return best_model, confidence
 
 
     def _generate_detailed_reasoning(self, predicted_model: AIModel, confidence: float, domain: Domain, metric_contributions: Dict[str, float], 
                                      combined_scores: Dict[str, float]) -> List[str]:
         """
-        Generate Explainable reasoning 
+        Generate Explainable reasoning - FIXED to show proper ordering
         """
         reasoning = list()
         
         reasoning.append("## AI Model Attribution Analysis")
-        reasoning.append(f"**Domain**: {domain.value.title()}")
+        reasoning.append(f"**Domain**: {domain.value.replace('_', ' ').title()}")
         
         if (predicted_model == AIModel.UNKNOWN):
-            reasoning.append("**Result**: Unable to confidently attribute to specific AI model")
-            reasoning.append("**Explanation**: Text patterns don't strongly match known AI model fingerprints")
-        
+            reasoning.append("**Most Likely**: UNKNOWN")
+            # Show the actual highest probability even if it's UNKNOWN
+            if combined_scores:
+                sorted_models = sorted(combined_scores.items(), key=lambda x: x[1], reverse=True)
+                if sorted_models and sorted_models[0][1] > 0:
+                    top_model_name = sorted_models[0][0].replace("-", " ").replace("_", " ").title()
+                    top_score = sorted_models[0][1] * 100
+                    reasoning.append(f"**{top_model_name}**")
+                    reasoning.append(f"{top_score:.1f}%")
         else:
             model_name = predicted_model.value.replace("-", " ").replace("_", " ").title()
-            reasoning.append(f"**Predicted Model**: {model_name}")
-            reasoning.append(f"**Confidence**: {confidence:.1%}")
+            reasoning.append(f"**Most Likely**: {model_name}")
+            # Show the actual probability for the predicted model
+            model_key = predicted_model.value
+            if model_key in combined_scores:
+                score = combined_scores[model_key] * 100
+                reasoning.append(f"{score:.1f}%")
         
-        # Top metric contributions
-        if metric_contributions:
-            reasoning.append("\n## Key Metric Contributions")
-            sorted_metrics = sorted(metric_contributions.items(), key=lambda x: x[1], reverse=True)[:3]
+        # Show top model candidates with ACTUAL percentages in proper order
+        reasoning.append("")
+        if combined_scores:
+            sorted_models = sorted(combined_scores.items(), key=lambda x: x[1], reverse=True)
             
-            for metric, contrib in sorted_metrics:
-                metric_name = metric.replace("_", " ").title()
-                reasoning.append(f"• {metric_name}: {contrib:.1%}")
-        
-        # Top model candidates
-        reasoning.append("\n## Model Probability Distribution")
-        sorted_models = sorted(combined_scores.items(), key=lambda x: x[1], reverse=True)[:5]
-        
-        for model_name, score in sorted_models:
-            display_name = model_name.replace("-", " ").replace("_", " ").title()
-            reasoning.append(f"• {display_name}: {score:.1%}")
+            for model_name, score in sorted_models[:6]:  # Show top 6 models
+                if score < 0.01:  # Skip very low probability models
+                    continue
+                    
+                display_name = model_name.replace("-", " ").replace("_", " ").title()
+                # Multiply by 100 to show as percentage (score is already 0-1)
+                percentage = score * 100
+                
+                # Use proper markdown formatting for the list
+                reasoning.append(f"**{display_name}**")
+                reasoning.append(f"{percentage:.1f}%")
+                reasoning.append("")
         
         # Domain-specific insights
-        reasoning.append(f"\n## Domain Context")
-        reasoning.append(f"Analysis calibrated for {domain.value} content")
+        reasoning.append("## AI Model Attribution Analysis")
+        reasoning.append(f"Analysis calibrated for {domain.value.replace('_', ' ')} content")
         
-        if (domain in [Domain.ACADEMIC, Domain.TECHNICAL_DOC]):
+        if (domain in [Domain.ACADEMIC, Domain.TECHNICAL_DOC, Domain.AI_ML, Domain.SOFTWARE_DEV, Domain.ENGINEERING, Domain.SCIENCE]):
             reasoning.append("Higher weight given to coherence and structural patterns")
         
-        elif (domain == Domain.CREATIVE):
+        elif (domain in [Domain.CREATIVE, Domain.MARKETING, Domain.SOCIAL_MEDIA, Domain.BLOG_PERSONAL]):
             reasoning.append("Higher weight given to linguistic diversity and stylistic patterns")
+        
+        elif (domain in [Domain.LEGAL, Domain.MEDICAL]):
+            reasoning.append("Emphasis on formal language patterns and technical terminology")
         
         return reasoning
 
@@ -838,7 +933,7 @@ class ModelAttributor:
         Get top fingerprint matches for display
         """
         top_matches   = dict()
-        sorted_models = sorted(fingerprint_scores.items(), key=lambda x: x[1], reverse=True)[:5]
+        sorted_models = sorted(fingerprint_scores.items(), key = lambda x: x[1], reverse = True)[:5]
         
         for model, score in sorted_models:
             # Only show meaningful matches
@@ -855,8 +950,7 @@ class ModelAttributor:
         return AttributionResult(predicted_model      = AIModel.UNKNOWN,
                                  confidence           = 0.0,
                                  model_probabilities  = {},
-                                 reasoning            = [f"Model attribution inconclusive for {domain.value} content",
-                                                        "Text may be human-written or from unidentifiable model"],
+                                 reasoning            = [f"Model attribution inconclusive for {domain.value} content. Text may be human-written or from unidentifiable model"],
                                  fingerprint_matches  = {},
                                  domain_used          = domain,
                                  metric_contributions = {},

@@ -298,9 +298,10 @@ class LanguageDetector:
             if not self.initialize():
                 raise RuntimeError("Model not initialized")
         
-        # Truncate if too long (max 512 tokens)
-        if (len(text.split()) > 400):
-            text = ' '.join(text.split()[:400])
+        # Conservative truncation for long texts
+        if (len(text) > 2000):  
+            text = text[:2000]
+            logger.warning(f"Text too long, truncated to {len(text)} characters for language detection")
         
         # Get prediction
         predictions   = self.classifier(text, top_k = 5)

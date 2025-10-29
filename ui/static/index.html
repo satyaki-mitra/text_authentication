@@ -958,21 +958,6 @@ input[type="checkbox"] {
     line-height: 1.9;
     font-size: 0.95rem;
 }
-.highlight-low {
-    background-color: rgba(234, 179, 8, 0.25);
-    padding: 2px 4px;
-    border-radius: 3px;
-}
-.highlight-medium {
-    background-color: rgba(249, 115, 22, 0.35);
-    padding: 2px 4px;
-    border-radius: 3px;
-}
-.highlight-high {
-    background-color: rgba(239, 68, 68, 0.4);
-    padding: 2px 4px;
-    border-radius: 3px;
-}
 /* Footer */
 .footer {
     max-width: 1200px;
@@ -1011,6 +996,10 @@ input[type="checkbox"] {
     .download-actions,
     .action-buttons {
         flex-direction: column;
+    }
+    .highlight-legend {
+        flex-direction: column;
+        gap: 0.75rem;
     }
 }
 /* Scroll Behavior */
@@ -1055,7 +1044,7 @@ html {
         <div class="stat-label">Total Detection Metrics</div>
     </div>
     <div class="stat-card">
-        <div class="stat-value">2s</div>
+        <div class="stat-value">5s</div>
         <div class="stat-label">Average Processing Time</div>
     </div>
 </div>
@@ -1133,7 +1122,7 @@ html {
     <div class="metric-card">
         <div class="metric-icon-box">📈</div>
         <div class="metric-content">
-            <h3>Statistical Analysis <span class="metric-weight">Weight: 15%</span></h3>
+            <h3>Structural Analysis <span class="metric-weight">Weight: 15%</span></h3>
             <p>Analyzes sentence length variance, punctuation patterns, and lexical burstiness. Human writing exhibits more variation in sentence structure and rhythm compared to AI's consistent patterns.</p>
         </div>
     </div>
@@ -1812,32 +1801,36 @@ function createDefaultLegend() {
     return `
         <div class="highlight-legend">
             <div class="legend-item">
-                <div class="legend-color" style="background: rgba(239, 68, 68, 0.4);"></div>
+                <div class="legend-color" style="background: #fecaca;"></div>
                 <div class="legend-label">Very Likely AI (90-100%)</div>
             </div>
             <div class="legend-item">
-                <div class="legend-color" style="background: rgba(249, 115, 22, 0.35);"></div>
+                <div class="legend-color" style="background: #fed7aa;"></div>
                 <div class="legend-label">Likely AI (75-90%)</div>
             </div>
             <div class="legend-item">
-                <div class="legend-color" style="background: rgba(245, 158, 11, 0.3);"></div>
+                <div class="legend-color" style="background: #fde68a;"></div>
                 <div class="legend-label">Possibly AI (60-75%)</div>
             </div>
             <div class="legend-item">
-                <div class="legend-color" style="background: rgba(251, 191, 36, 0.25);"></div>
+                <div class="legend-color" style="background: #fef9c3;"></div>
                 <div class="legend-label">Uncertain (40-60%)</div>
             </div>
             <div class="legend-item">
-                <div class="legend-color" style="background: rgba(163, 230, 53, 0.25);"></div>
+                <div class="legend-color" style="background: #86efac;"></div>
                 <div class="legend-label">Possibly Human (25-40%)</div>
             </div>
             <div class="legend-item">
-                <div class="legend-color" style="background: rgba(74, 222, 128, 0.25);"></div>
+                <div class="legend-color" style="background: #bbf7d0;"></div>
                 <div class="legend-label">Likely Human (10-25%)</div>
             </div>
             <div class="legend-item">
-                <div class="legend-color" style="background: rgba(34, 197, 94, 0.3);"></div>
+                <div class="legend-color" style="background: #dcfce7;"></div>
                 <div class="legend-label">Very Likely Human (0-10%)</div>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #e9d5ff;"></div>
+                <div class="legend-label">Mixed Content</div>
             </div>
         </div>
     `;
@@ -1853,41 +1846,47 @@ function getHighlightStyles() {
                 cursor: help;
                 transition: all 0.2s;
                 border-bottom: 2px solid transparent;
+                color: #000000 !important;
+                font-weight: 500;
             }
             #highlighted-report .highlight:hover {
-                transform: scale(1.02);
-                filter: brightness(1.2);
-                box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+                transform: translateY(-1px);
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
                 z-index: 10;
-                position: relative;
+                text-shadow: 0 1px 1px rgba(255,255,255,0.8);
             }
             #highlighted-report .very-high-ai {
-                background-color: rgba(239, 68, 68, 0.4) !important;
+                background-color: #fee2e2 !important;
                 border-bottom-color: #ef4444 !important;
             }
             #highlighted-report .high-ai {
-                background-color: rgba(249, 115, 22, 0.35) !important;
+                background-color: #fed7aa !important;
                 border-bottom-color: #f97316 !important;
             }
             #highlighted-report .medium-ai {
-                background-color: rgba(245, 158, 11, 0.3) !important;
+                background-color: #fef3c7 !important;
                 border-bottom-color: #f59e0b !important;
             }
             #highlighted-report .uncertain {
-                background-color: rgba(251, 191, 36, 0.25) !important;
+                background-color: #fef9c3 !important;
                 border-bottom-color: #fbbf24 !important;
             }
             #highlighted-report .medium-human {
-                background-color: rgba(163, 230, 53, 0.25) !important;
+                background-color: #ecfccb !important;
                 border-bottom-color: #a3e635 !important;
             }
             #highlighted-report .high-human {
-                background-color: rgba(74, 222, 128, 0.25) !important;
+                background-color: #bbf7d0 !important;
                 border-bottom-color: #4ade80 !important;
             }
             #highlighted-report .very-high-human {
-                background-color: rgba(34, 197, 94, 0.3) !important;
+                background-color: #dcfce7 !important;
                 border-bottom-color: #22c55e !important;
+            }
+            #highlighted-report .mixed-content {
+                background-color: #e9d5ff !important;
+                border-bottom-color: #a855f7 !important;
+                background-image: repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(168, 85, 247, 0.1) 5px, rgba(168, 85, 247, 0.1) 10px) !important;
             }
         </style>
     `;

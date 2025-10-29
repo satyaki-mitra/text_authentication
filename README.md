@@ -23,17 +23,17 @@
 - [Detection Metrics & Mathematical Foundation](#detection-metrics--mathematical-foundation)
 - [Ensemble Methodology](#ensemble-methodology)
 - [Domain-Aware Detection](#domain-aware-detection)
-- [Performance & Cost Characteristics](#performance--cost-characteristics)
+- [Performance Characteristics](#performance-characteristics)
 - [Project Structure](#project-structure)
 - [API Endpoints](#api-endpoints)
 - [Installation & Setup](#installation--setup)
 - [Model Management & First-Run Behavior](#model-management--first-run-behavior)
 - [Frontend Features](#frontend-features)
-- [Accuracy, Validation & Continuous Improvement](#accuracy-validation--continuous-improvement)
 - [Business Model & Market Analysis](#business-model--market-analysis)
 - [Research Impact & Future Scope](#research-impact--future-scope)
 - [Infrastructure & Deployment](#infrastructure--deployment)
 - [Security & Risk Mitigation](#security--risk-mitigation)
+- [Continuous Improvement Pipeline](#continuous-improvement-pipeline)
 - [License & Acknowledgments](#license--acknowledgments)
 
 ---
@@ -313,7 +313,7 @@ DOMAIN_WEIGHTS = {
 
 ---
 
-## ⚡ Performance & Cost Characteristics
+## ⚡ Performance Characteristics
 
 ### Processing Times & Resource Estimates
 
@@ -327,13 +327,6 @@ DOMAIN_WEIGHTS = {
 - Parallel metric computation (thread/process pools)
 - Conditional execution & early exit on high confidence
 - Model caching & quantization support for memory efficiency
-
-### Cost Estimate (example)
-| Scenario | Time | Cost per analysis | Monthly cost (1k analyses) |
-|---|---:|---:|---:|
-| Short | 1.2 s | $0.0008 | $0.80 |
-| Medium | 3.5 s | $0.0025 | $2.50 |
-| Long | 7.8 s | $0.0058 | $5.80 |
 
 ---
 
@@ -384,7 +377,7 @@ text_auth/
 
 ---
 
-## 🌐 API Endpoints (Research‑grade spec)
+## 🌐 API Endpoints 
 
 ### `/api/analyze` — Text Analysis (POST)
 Analyze raw text. Returns ensemble result, per‑metric scores, attribution, highlights, and reasoning.
@@ -485,35 +478,6 @@ snapshot_download(repo_id="satyaki-mitra/text-detector-v1", local_dir="./models/
 
 ---
 
-## 📈 Accuracy, Validation & Continuous Improvement
-
-### Benchmark Summary (reported across internal test sets)
-| Scenario | Samples | Accuracy | Precision | Recall |
-|---|---:|---:|---:|---:|
-| GPT‑4 | 5,000 | 95.8% | 96.2% | 95.3% |
-| Claude‑3 | 3,000 | 94.2% | 94.8% | 93.5% |
-| Gemini Pro | 2,500 | 93.6% | 94.1% | 93.0% |
-| LLaMA 2 | 2,000 | 92.8% | 93.3% | 92.2% |
-| Human Academic | 10,000 | 96.1% | 95.7% | 96.4% |
-| Mixed Content | 2,000 | 88.7% | 89.2% | 88.1% |
-| **Overall** | 29,500 | **94.3%** | **94.6%** | **94.1%** |
-
-**Confusion matrix (abbreviated)**:
-```
-Predicted →  AI     Human   Mixed
-Actual AI    4750   180     70   (5,000)
-Actual Human 240    9680    80   (10,000)
-Actual Mixed 420    580     1000 (2,000)
-```
-
-### Continuous Improvement Pipeline
-- Regular retraining & calibration on new model releases
-- Feedback loop: user reported FP integrated into training
-- A/B testing for weight adjustments
-- Monthly accuracy audits & quarterly model updates
-
----
-
 ## 💼 Business Model & Market Analysis
 
 **TAM**: $20B (education, hiring, publishing) — see detailed breakdown in original repo.
@@ -589,6 +553,14 @@ ALLOWED_EXT = {'.txt','.pdf','.docx','.doc','.md'}
 def allowed_file(filename):
     return any(filename.lower().endswith(ext) for ext in ALLOWED_EXT)
 ```
+
+---
+
+## Continuous Improvement Pipeline (TODO)
+- Regular retraining & calibration on new model releases
+- Feedback loop: user reported FP integrated into training
+- A/B testing for weight adjustments
+- Monthly accuracy audits & quarterly model updates
 
 ---
 
