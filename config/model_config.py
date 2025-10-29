@@ -12,13 +12,14 @@ class ModelType(Enum):
     """
     Model types for categorization
     """
-    TRANSFORMER          = "transformer"
-    SENTENCE_TRANSFORMER = "sentence_transformer"
-    GPT                  = "gpt"
-    GPTMASK              = "gpt"
-    CLASSIFIER           = "classifier"
-    EMBEDDING            = "embedding"
-    RULE_BASED           = "rule_based"
+    TRANSFORMER             = "transformer"
+    SENTENCE_TRANSFORMER    = "sentence_transformer"
+    GPT                     = "gpt"
+    GPTMASK                 = "gpt"
+    CLASSIFIER              = "classifier"
+    EMBEDDING               = "embedding"
+    RULE_BASED              = "rule_based"
+    SEQUENCE_CLASSIFICATION = "sequence_classification"  
 
 
 @dataclass
@@ -77,24 +78,25 @@ MODEL_REGISTRY : Dict[str, ModelConfig] = {"perplexity_gpt2"            : ModelC
                                                                                       batch_size        = 16,
                                                                                       additional_params = {"is_spacy_model": True},
                                                                                      ),
-                                           "domain_classifier"          : ModelConfig(model_id          = "microsoft/deberta-v3-base",
+                                           "domain_classifier"          : ModelConfig(model_id          = "cross-encoder/nli-roberta-base",
                                                                                       model_type        = ModelType.CLASSIFIER,
-                                                                                      description       = "Primary domain classifier (heavy weight, higher accuracy)",
-                                                                                      size_mb           = 650,
+                                                                                      description       = "High-accuracy zero-shot classifier (RoBERTa-base)",
+                                                                                      size_mb           = 500,
                                                                                       required          = True,  
-                                                                                      download_priority = 2,     
+                                                                                      download_priority = 1,     
                                                                                       max_length        = 512,
                                                                                       batch_size        = 8,
                                                                                       quantizable       = True,
                                                                                      ),
-                                           "domain_classifier_fallback" : ModelConfig(model_id          = "typeform/distilbert-base-uncased-mnli",
+                                           "domain_classifier_fallback" : ModelConfig(model_id          = "microsoft/deberta-v3-small",
                                                                                       model_type        = ModelType.CLASSIFIER,
-                                                                                      description       = "Fallback domain classifier (lesser accuracy)",
-                                                                                      size_mb           = 255,
-                                                                                      required          = True, # Optional fallback
-                                                                                      download_priority = 3,    # Lower priority than primary
+                                                                                      description       = "Fast fallback zero-shot classifier (DeBERTa-small)",
+                                                                                      size_mb           = 240,
+                                                                                      required          = True,
+                                                                                      download_priority = 2,
                                                                                       max_length        = 512,
-                                                                                      batch_size        = 8,
+                                                                                      batch_size        = 16,
+                                                                                      quantizable       = True,
                                                                                      ),
                                            "detectgpt_base"             : ModelConfig(model_id          = "gpt2",
                                                                                       model_type        = ModelType.GPTMASK,
@@ -134,7 +136,7 @@ MODEL_GROUPS                            = {"minimal"   : ["perplexity_gpt2", "do
                                           }
 
 
-# MODEL WEIGHTS FOR ENSEMBLE : Adjusted for 6 metrics implemented
+# MODEL WEIGHTS FOR ENSEMBLE : For 6 metrics implemented
 DEFAULT_MODEL_WEIGHTS                   = {"statistical"         : 0.20,  # No model needed
                                            "perplexity"          : 0.20,  # gpt2
                                            "entropy"             : 0.15,  # gpt2 (reused)

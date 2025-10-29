@@ -65,7 +65,7 @@ class ModelCache:
                 self.cache.move_to_end(key)
             
             else:
-                if len(self.cache) >= self.max_size:
+                if (len(self.cache) >= self.max_size):
                     # Remove least recently used
                     removed_key   = next(iter(self.cache))
                     removed_model = self.cache.pop(removed_key)
@@ -191,7 +191,7 @@ class ModelManager:
         return model_path.exists() and model_name in self.metadata
     
 
-    def load_model(self, model_name: str, force_download: bool = False) -> Union[Any, tuple]:
+    def load_model(self, model_name: str, force_download: bool = False) -> Any:
         """
         Load a model by name
         
@@ -200,10 +200,10 @@ class ModelManager:
             model_name     { str }  : Name from MODEL_REGISTRY
 
             force_download { bool } : Force re-download even if cached
-        
+            
         Returns:
         --------
-                  { tuple }         : Model instance or (model, tokenizer) tuple
+                  { Any }           : Model instance
         """
         # Check cache first
         if not force_download:
@@ -230,6 +230,9 @@ class ModelManager:
 
             elif (model_config.model_type == ModelType.CLASSIFIER):
                 model = self._load_classifier(config = model_config)
+
+            elif (model_config.model_type == ModelType.SEQUENCE_CLASSIFICATION):
+                model = self._load_sequence_classifier(config = model_config)
 
             elif (model_config.model_type == ModelType.TRANSFORMER):
                 model = self._load_transformer(config = model_config)
@@ -265,6 +268,42 @@ class ModelManager:
             raise
 
     
+    def load_tokenizer(self, model_name: str) -> Any:
+        """
+        Load tokenizer for a model
+        
+        Arguments:
+        ----------
+            model_name { str } : Name from MODEL_REGISTRY
+            
+        Returns:
+        --------
+            { Any }            : Tokenizer instance
+        """
+        model_config = get_model_config(model_name = model_name)
+        
+        if not model_config:
+            raise ValueError(f"Unknown model: {model_name}")
+        
+        logger.info(f"Loading tokenizer for: {model_name}")
+        
+        try:
+            if (model_config.model_type in [ModelType.GPT, ModelType.CLASSIFIER, ModelType.SEQUENCE_CLASSIFICATION, ModelType.TRANSFORMER]):
+                tokenizer = AutoTokenizer.from_pretrained(pretrained_model_name_or_path = model_config.model_id,
+                                                          cache_dir                     = str(self.cache_dir),
+                                                         )
+                
+                logger.success(f"Successfully loaded tokenizer for: {model_name}")
+                return tokenizer
+            
+            else:
+                raise ValueError(f"Model type {model_config.model_type} doesn't require a separate tokenizer")
+                
+        except Exception as e:
+            logger.error(f"Failed to load tokenizer for {model_name}: {repr(e)}")
+            raise
+
+    
     def _load_sentence_transformer(self, config: ModelConfig) -> SentenceTransformer:
         """
         Load SentenceTransformer model
@@ -297,23 +336,34 @@ class ModelManager:
         if (settings.USE_QUANTIZATION and config.quantizable):
             model = self._quantize_model(model = model)
         
-        return model, tokenizer
+        return (model, tokenizer)
 
     
-    def _load_classifier(self, config: ModelConfig) -> tuple:
+    def _load_classifier(self, config: ModelConfig) -> Any:
         """
-        Load classification model with tokenizer
+        Load classification model (for zero-shot, etc.)
         """
-        model     = AutoModelForSequenceClassification.from_pretrained(pretrained_model_name_or_path = config.model_id,
-                                                                       cache_dir                     = str(self.cache_dir),
-                                                                       num_labels                    = config.additional_params.get('num_labels', 2),
-                                                                      )
-        tokenizer = AutoTokenizer.from_pretrained(pretrained_model_name_or_path = config.model_id,
-                                                  cache_dir                     = str(self.cache_dir),
-                                                 )
+        # For zero-shot classification models
+        pipe = pipeline("zero-shot-classification",
+                        model        = config.model_id,
+                        device       = 0 if self.device.type == "cuda" else -1,
+                        model_kwargs = {"cache_dir": str(self.cache_dir)},
+                       )
+        
+        return pipe
+
+    
+    def _load_sequence_classifier(self, config: ModelConfig) -> Any:
+        """
+        Load sequence classification model (for domain classification)
+        """
+        model = AutoModelForSequenceClassification.from_pretrained(pretrained_model_name_or_path = config.model_id,
+                                                                   cache_dir                     = str(self.cache_dir),
+                                                                   num_labels                    = config.additional_params.get('num_labels', 2),
+                                                                  )
         
         # Move to device
-        model     = model.to(self.device)
+        model = model.to(self.device)
         
         model.eval()
         
@@ -321,7 +371,7 @@ class ModelManager:
         if (settings.USE_QUANTIZATION and config.quantizable):
             model = self._quantize_model(model = model)
         
-        return model, tokenizer
+        return model
 
     
     def _load_transformer(self, config: ModelConfig) -> tuple:
@@ -345,7 +395,7 @@ class ModelManager:
         if (settings.USE_QUANTIZATION and config.quantizable):
             model = self._quantize_model(model)
         
-        return model, tokenizer
+        return (model, tokenizer)
 
     
     def _quantize_model(self, model):
@@ -447,6 +497,15 @@ class ModelManager:
                                               cache_dir                     = str(self.cache_dir),
                                              )
 
+            elif (model_config.model_type == ModelType.SEQUENCE_CLASSIFICATION):
+                AutoModelForSequenceClassification.from_pretrained(pretrained_model_name_or_path = model_config.model_id,
+                                                                   cache_dir                     = str(self.cache_dir),
+                                                                  )
+
+                AutoTokenizer.from_pretrained(pretrained_model_name_or_path = model_config.model_id,
+                                              cache_dir                     = str(self.cache_dir),
+                                             )
+
             elif (model_config.model_type == ModelType.RULE_BASED):
                 if model_config.additional_params.get("is_spacy_model", False):
                     subprocess.run(["python", "-m", "spacy", "download", model_config.model_id], check = True)
@@ -457,9 +516,10 @@ class ModelManager:
                     return True  
 
             else:
-                AutoModel.from_pretrained(pretrained_model_name_or_path = model_config.model_id,
-                                          cache_dir                     = str(self.cache_dir),
-                                         )
+                # Generic transformer models
+                AutoModelForSequenceClassification.from_pretrained(pretrained_model_name_or_path = model_config.model_id,
+                                                                   cache_dir                     = str(self.cache_dir),
+                                                                  )
 
                 AutoTokenizer.from_pretrained(pretrained_model_name_or_path = model_config.model_id,
                                               cache_dir                     = str(self.cache_dir),

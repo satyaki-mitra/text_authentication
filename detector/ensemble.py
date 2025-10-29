@@ -271,15 +271,15 @@ class EnsembleClassifier:
         domain_weights = self._get_domain_performance_weights(domain, list(results.keys()))
         
         # Combine with base weights
-        combined_weights = {}
+        combined_weights = dict()
         for name in results.keys():
-            domain_weight = domain_weights.get(name, 1.0)
-            base_weight = base_weights.get(name, 0.0)
+            domain_weight          = domain_weights.get(name, 1.0)
+            base_weight            = base_weights.get(name, 0.0)
             combined_weights[name] = base_weight * domain_weight
         
         # Normalize
         total_weight = sum(combined_weights.values())
-        if total_weight > 0:
+        if (total_weight > 0):
             combined_weights = {name: w / total_weight for name, w in combined_weights.items()}
         
         return self._weighted_aggregation(results, combined_weights), combined_weights
@@ -462,21 +462,118 @@ class EnsembleClassifier:
                                'detect_gpt'        : 1.0,
                               }
         
-        # Domain-specific adjustments
-        domain_adjustments  = {Domain.ACADEMIC      : {'structural'        : 1.2, 
-                                                       'linguistic'        : 1.3, 
-                                                       'semantic_analysis' : 1.1,
+        # Domain-specific adjustments for all 16 domains
+        domain_adjustments  = {Domain.GENERAL       : {'structural'        : 1.0,
+                                                       'perplexity'        : 1.0,
+                                                       'entropy'           : 1.0,
+                                                       'semantic_analysis' : 1.0,
+                                                       'linguistic'        : 1.0,
+                                                       'detect_gpt'        : 1.0,
                                                       },
-                               Domain.CREATIVE      : {'entropy'     : 1.2, 
-                                                       'perplexity'  : 1.1, 
-                                                       'detect_gpt'  : 0.9,
+                               Domain.ACADEMIC      : {'structural'        : 1.2, 
+                                                       'perplexity'        : 1.3,
+                                                       'entropy'           : 0.9,
+                                                       'semantic_analysis' : 1.1,
+                                                       'linguistic'        : 1.3, 
+                                                       'detect_gpt'        : 0.8,
+                                                      },
+                               Domain.CREATIVE      : {'structural'        : 0.9,
+                                                       'perplexity'        : 1.1,
+                                                       'entropy'           : 1.2, 
+                                                       'semantic_analysis' : 1.0,
+                                                       'linguistic'        : 1.1,
+                                                       'detect_gpt'        : 0.9,
+                                                      },
+                               Domain.AI_ML         : {'structural'        : 1.2,
+                                                       'perplexity'        : 1.3,
+                                                       'entropy'           : 0.9,
+                                                       'semantic_analysis' : 1.1,
+                                                       'linguistic'        : 1.2,
+                                                       'detect_gpt'        : 0.8,
+                                                      },
+                               Domain.SOFTWARE_DEV  : {'structural'        : 1.2,
+                                                       'perplexity'        : 1.3,
+                                                       'entropy'           : 0.9,
+                                                       'semantic_analysis' : 1.1,
+                                                       'linguistic'        : 1.2,
+                                                       'detect_gpt'        : 0.8,
                                                       },
                                Domain.TECHNICAL_DOC : {'structural'        : 1.3, 
+                                                       'perplexity'        : 1.3,
+                                                       'entropy'           : 0.9,
                                                        'semantic_analysis' : 1.2,
+                                                       'linguistic'        : 1.2,
+                                                       'detect_gpt'        : 0.8,
                                                       },
-                               Domain.SOCIAL_MEDIA  : {'entropy'    : 1.3, 
-                                                       'structural' : 0.8, 
-                                                       'linguistic' : 0.7,
+                               Domain.ENGINEERING   : {'structural'        : 1.2,
+                                                       'perplexity'        : 1.3,
+                                                       'entropy'           : 0.9,
+                                                       'semantic_analysis' : 1.1,
+                                                       'linguistic'        : 1.2,
+                                                       'detect_gpt'        : 0.8,
+                                                      },
+                               Domain.SCIENCE       : {'structural'        : 1.2,
+                                                       'perplexity'        : 1.3,
+                                                       'entropy'           : 0.9,
+                                                       'semantic_analysis' : 1.1,
+                                                       'linguistic'        : 1.2,
+                                                       'detect_gpt'        : 0.8,
+                                                      },
+                               Domain.BUSINESS      : {'structural'        : 1.1,
+                                                       'perplexity'        : 1.2,
+                                                       'entropy'           : 1.0,
+                                                       'semantic_analysis' : 1.1,
+                                                       'linguistic'        : 1.1,
+                                                       'detect_gpt'        : 0.9,
+                                                      },
+                               Domain.LEGAL         : {'structural'        : 1.3,
+                                                       'perplexity'        : 1.3,
+                                                       'entropy'           : 0.9,
+                                                       'semantic_analysis' : 1.2,
+                                                       'linguistic'        : 1.3,
+                                                       'detect_gpt'        : 0.8,
+                                                      },
+                               Domain.MEDICAL       : {'structural'        : 1.2,
+                                                       'perplexity'        : 1.3,
+                                                       'entropy'           : 0.9,
+                                                       'semantic_analysis' : 1.2,
+                                                       'linguistic'        : 1.2,
+                                                       'detect_gpt'        : 0.8,
+                                                      },
+                               Domain.JOURNALISM    : {'structural'        : 1.1,
+                                                       'perplexity'        : 1.2,
+                                                       'entropy'           : 1.0,
+                                                       'semantic_analysis' : 1.1,
+                                                       'linguistic'        : 1.1,
+                                                       'detect_gpt'        : 0.8,
+                                                      },
+                               Domain.MARKETING     : {'structural'        : 1.0,
+                                                       'perplexity'        : 1.1,
+                                                       'entropy'           : 1.1,
+                                                       'semantic_analysis' : 1.0,
+                                                       'linguistic'        : 1.2,
+                                                       'detect_gpt'        : 0.8,
+                                                      },
+                               Domain.SOCIAL_MEDIA  : {'structural'        : 0.8,
+                                                       'perplexity'        : 1.0,
+                                                       'entropy'           : 1.3, 
+                                                       'semantic_analysis' : 0.9,
+                                                       'linguistic'        : 0.7,
+                                                       'detect_gpt'        : 0.9,
+                                                      },
+                               Domain.BLOG_PERSONAL : {'structural'        : 0.9,
+                                                       'perplexity'        : 1.1,
+                                                       'entropy'           : 1.2,
+                                                       'semantic_analysis' : 1.0,
+                                                       'linguistic'        : 1.0,
+                                                       'detect_gpt'        : 0.8,
+                                                      },
+                               Domain.TUTORIAL      : {'structural'        : 1.1,
+                                                       'perplexity'        : 1.2,
+                                                       'entropy'           : 1.0,
+                                                       'semantic_analysis' : 1.1,
+                                                       'linguistic'        : 1.1,
+                                                       'detect_gpt'        : 0.8,
                                                       },
                               }
         
@@ -590,8 +687,8 @@ class EnsembleClassifier:
         """
         Apply adaptive threshold considering uncertainty
         """
-        ai_prob            = aggregated["ai_probability"]
-        mixed_prob         = aggregated["mixed_probability"]
+        ai_prob            = aggregated.get("ai_probability", 0.5)
+        mixed_prob         = aggregated.get("mixed_probability", 0.0)
         
         # Adjust threshold based on uncertainty : Higher uncertainty requires more confidence
         adjusted_threshold = base_threshold + (uncertainty * 0.1) 
@@ -619,12 +716,13 @@ class EnsembleClassifier:
         reasoning = list()
         
         # Overall assessment
-        ai_prob   = aggregated["ai_probability"]
+        ai_prob    = aggregated.get("ai_probability", 0.5)
+        mixed_prob = aggregated.get("mixed_probability", 0.0)
 
         reasoning.append(f"## Ensemble Analysis Result")
         reasoning.append(f"**Final Verdict**: {verdict}")
         reasoning.append(f"**AI Probability**: {ai_prob:.1%}")
-        reasoning.append(f"**Confidence Level**: {self._get_confidence_label(aggregated['ai_probability'])}")
+        reasoning.append(f"**Confidence Level**: {self._get_confidence_label(ai_prob)}")
         reasoning.append(f"**Uncertainty**: {uncertainty:.1%}")
         reasoning.append(f"**Consensus**: {consensus:.1%}")
         
@@ -698,6 +796,6 @@ class EnsembleClassifier:
 
 
 # Export
-__all__ = ["EnsembleClassifier", 
-           "EnsembleResult",
+__all__ = ["EnsembleResult",
+           "EnsembleClassifier",
           ]

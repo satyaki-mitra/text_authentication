@@ -183,6 +183,7 @@ class SerializableBaseModel(BaseModel):
         Override dict method to handle NumPy types
         """
         data = super().dict(*args, **kwargs)
+        
         return convert_numpy_types(data)
     
 
@@ -191,6 +192,7 @@ class SerializableBaseModel(BaseModel):
         Override json method to handle NumPy types
         """
         data = self.dict(*args, **kwargs)
+        
         return json.dumps(data, cls=NumpyJSONEncoder, *args, **kwargs)
 
 
@@ -238,13 +240,13 @@ class BatchAnalysisResult(SerializableBaseModel):
     """
     Individual batch analysis result
     """
-    index       : int
-    status      : str
-    detection   : Optional[Dict[str, Any]] = None
-    attribution : Optional[Dict[str, Any]] = None
-    reasoning   : Optional[Dict[str, Any]] = None
-    report_files: Optional[Dict[str, str]] = None
-    error       : Optional[str]            = None
+    index        : int
+    status       : str
+    detection    : Optional[Dict[str, Any]] = None
+    attribution  : Optional[Dict[str, Any]] = None
+    reasoning    : Optional[Dict[str, Any]] = None
+    report_files : Optional[Dict[str, str]] = None
+    error        : Optional[str]            = None
 
 
 class BatchAnalysisResponse(SerializableBaseModel):
@@ -309,7 +311,7 @@ class ErrorResponse(SerializableBaseModel):
 # ==================== FASTAPI APPLICATION ====================
 app = FastAPI(title                  = "TEXT-AUTH AI Detection API",
               description            = "API for detecting AI-generated text",
-              version                = "2.0.0",
+              version                = "1.0.0",
               docs_url               = "/api/docs",
               redoc_url              = "/api/redoc",
               default_response_class = NumpyJSONResponse,
@@ -329,6 +331,7 @@ ui_static_path = Path(__file__).parent / "ui" / "static"
 if ui_static_path.exists():
     app.mount("/static", StaticFiles(directory = str(ui_static_path)), name = "static")
 
+
 # Global instances
 orchestrator       : Optional[DetectionOrchestrator] = None
 attributor         : Optional[ModelAttributor]       = None
@@ -337,8 +340,10 @@ reporter           : Optional[ReportGenerator]       = None
 reasoning_generator: Optional[ReasoningGenerator]    = None
 document_extractor : Optional[DocumentExtractor]     = None
 
+
 # App state
 app_start_time                                       = time.time()
+
 initialization_status                                = {"orchestrator"        : False,
                                                         "attributor"          : False,
                                                         "highlighter"         : False,
@@ -368,7 +373,7 @@ async def startup_event():
     try:
         # Initialize Detection Orchestrator
         logger.info("Initializing Detection Orchestrator...")
-        orchestrator = DetectionOrchestrator(enable_language_detection = False,
+        orchestrator = DetectionOrchestrator(enable_language_detection = True,
                                              parallel_execution        = False,
                                              skip_expensive_metrics    = False,
                                             )
@@ -395,7 +400,7 @@ async def startup_event():
         # Initialize Text Highlighter
         logger.info("Initializing Text Highlighter...")
        
-        highlighter = TextHighlighter()
+        highlighter                          = TextHighlighter()
         
         initialization_status["highlighter"] = True
         
@@ -404,7 +409,7 @@ async def startup_event():
         # Initialize Report Generator
         logger.info("Initializing Report Generator...")
         
-        reporter = ReportGenerator()
+        reporter                          = ReportGenerator()
         
         initialization_status["reporter"] = True
         
@@ -413,7 +418,7 @@ async def startup_event():
         # Initialize Reasoning Generator
         logger.info("Initializing Reasoning Generator...")
         
-        reasoning_generator = ReasoningGenerator()
+        reasoning_generator                          = ReasoningGenerator()
         
         initialization_status["reasoning_generator"] = True
         
@@ -422,7 +427,7 @@ async def startup_event():
         # Initialize Document Extractor
         logger.info("Initializing Document Extractor...")
         
-        document_extractor = DocumentExtractor()
+        document_extractor                          = DocumentExtractor()
         
         initialization_status["document_extractor"] = True
         
@@ -451,18 +456,28 @@ async def shutdown_event():
     logger.info("Shutdown complete")
 
 
+
 # ==================== UTILITY FUNCTIONS ====================
 def _get_domain_description(domain: Domain) -> str:
     """
     Get description for a domain
     """
-    descriptions = {Domain.GENERAL      : "General content without specific domain",
-                    Domain.ACADEMIC     : "Academic papers, essays, research",
-                    Domain.CREATIVE     : "Creative writing, fiction, poetry",
-                    Domain.TECHNICAL_DOC: "Technical documentation, code, manuals",
-                    Domain.SOCIAL_MEDIA : "Social media posts, blogs, casual writing",
-                    Domain.LEGAL        : "Legal documents, contracts, court filings",
-                    Domain.MEDICAL      : "Medical documents, clinical notes, research",
+    descriptions = {Domain.GENERAL       : "General content without specific domain",
+                    Domain.ACADEMIC      : "Academic papers, essays, research",
+                    Domain.CREATIVE      : "Creative writing, fiction, poetry",
+                    Domain.AI_ML         : "AI/ML research papers, technical content",
+                    Domain.SOFTWARE_DEV  : "Software development, code, documentation",
+                    Domain.TECHNICAL_DOC : "Technical documentation, manuals, specs",
+                    Domain.ENGINEERING   : "Engineering documents, technical reports",
+                    Domain.SCIENCE       : "Scientific papers, research articles",
+                    Domain.BUSINESS      : "Business documents, reports, proposals",
+                    Domain.LEGAL         : "Legal documents, contracts, court filings",
+                    Domain.MEDICAL       : "Medical documents, clinical notes, research",
+                    Domain.JOURNALISM    : "News articles, journalistic content",
+                    Domain.MARKETING     : "Marketing copy, advertisements, campaigns",
+                    Domain.SOCIAL_MEDIA  : "Social media posts, blogs, casual writing",
+                    Domain.BLOG_PERSONAL : "Personal blogs, diary entries",
+                    Domain.TUTORIAL      : "Tutorials, how-to guides, educational content",
                    }
 
     return descriptions.get(domain, "")
@@ -470,15 +485,111 @@ def _get_domain_description(domain: Domain) -> str:
 
 def _parse_domain(domain_str: Optional[str]) -> Optional[Domain]:
     """
-    Parse domain string to Domain enum
+    Parse domain string to Domain enum with comprehensive alias support
     """
     if not domain_str:
         return None
     
+    # First try exact match
     try:
         return Domain(domain_str.lower())
     
     except ValueError:
+        # Comprehensive domain mapping with aliases for all 16 domains
+        domain_mapping = {'general'                : Domain.GENERAL,
+                          'default'                : Domain.GENERAL,
+                          'generic'                : Domain.GENERAL,
+                          'academic'               : Domain.ACADEMIC,
+                          'education'              : Domain.ACADEMIC,
+                          'research'               : Domain.ACADEMIC,
+                          'university'             : Domain.ACADEMIC,
+                          'scholarly'              : Domain.ACADEMIC,
+                          'creative'               : Domain.CREATIVE,
+                          'fiction'                : Domain.CREATIVE,
+                          'literature'             : Domain.CREATIVE,
+                          'story'                  : Domain.CREATIVE,
+                          'narrative'              : Domain.CREATIVE,
+                          'ai_ml'                  : Domain.AI_ML,
+                          'ai'                     : Domain.AI_ML,
+                          'machinelearning'        : Domain.AI_ML,
+                          'ml'                     : Domain.AI_ML,
+                          'artificialintelligence' : Domain.AI_ML,
+                          'neural'                 : Domain.AI_ML,
+                          'software_dev'           : Domain.SOFTWARE_DEV,
+                          'software'               : Domain.SOFTWARE_DEV,
+                          'code'                   : Domain.SOFTWARE_DEV,
+                          'programming'            : Domain.SOFTWARE_DEV,
+                          'development'            : Domain.SOFTWARE_DEV,
+                          'dev'                    : Domain.SOFTWARE_DEV,
+                          'technical_doc'          : Domain.TECHNICAL_DOC,
+                          'technical'              : Domain.TECHNICAL_DOC,
+                          'tech'                   : Domain.TECHNICAL_DOC,
+                          'documentation'          : Domain.TECHNICAL_DOC,
+                          'docs'                   : Domain.TECHNICAL_DOC,
+                          'manual'                 : Domain.TECHNICAL_DOC,
+                          'engineering'            : Domain.ENGINEERING,
+                          'engineer'               : Domain.ENGINEERING,
+                          'technical_engineering'  : Domain.ENGINEERING,
+                          'science'                : Domain.SCIENCE,
+                          'scientific'             : Domain.SCIENCE,
+                          'research_science'       : Domain.SCIENCE,
+                          'business'               : Domain.BUSINESS,
+                          'corporate'              : Domain.BUSINESS,
+                          'commercial'             : Domain.BUSINESS,
+                          'enterprise'             : Domain.BUSINESS,
+                          'legal'                  : Domain.LEGAL,
+                          'law'                    : Domain.LEGAL,
+                          'contract'               : Domain.LEGAL,
+                          'court'                  : Domain.LEGAL,
+                          'juridical'              : Domain.LEGAL,
+                          'medical'                : Domain.MEDICAL,
+                          'healthcare'             : Domain.MEDICAL,
+                          'clinical'               : Domain.MEDICAL,
+                          'medicine'               : Domain.MEDICAL,
+                          'health'                 : Domain.MEDICAL,
+                          'journalism'             : Domain.JOURNALISM,
+                          'news'                   : Domain.JOURNALISM,
+                          'reporting'              : Domain.JOURNALISM,
+                          'media'                  : Domain.JOURNALISM,
+                          'press'                  : Domain.JOURNALISM,
+                          'marketing'              : Domain.MARKETING,
+                          'advertising'            : Domain.MARKETING,
+                          'promotional'            : Domain.MARKETING,
+                          'brand'                  : Domain.MARKETING,
+                          'sales'                  : Domain.MARKETING,
+                          'social_media'           : Domain.SOCIAL_MEDIA,
+                          'social'                 : Domain.SOCIAL_MEDIA,
+                          'casual'                 : Domain.SOCIAL_MEDIA,
+                          'informal'               : Domain.SOCIAL_MEDIA,
+                          'posts'                  : Domain.SOCIAL_MEDIA,
+                          'blog_personal'          : Domain.BLOG_PERSONAL,
+                          'blog'                   : Domain.BLOG_PERSONAL,
+                          'personal'               : Domain.BLOG_PERSONAL,
+                          'diary'                  : Domain.BLOG_PERSONAL,
+                          'lifestyle'              : Domain.BLOG_PERSONAL,
+                          'tutorial'               : Domain.TUTORIAL,
+                          'guide'                  : Domain.TUTORIAL,
+                          'howto'                  : Domain.TUTORIAL,
+                          'instructional'          : Domain.TUTORIAL,
+                          'educational'            : Domain.TUTORIAL,
+                          'walkthrough'            : Domain.TUTORIAL,
+                         }
+        
+        normalized_domain = domain_str.lower().strip()
+        
+        if normalized_domain in domain_mapping:
+            return domain_mapping[normalized_domain]
+        
+        # Try to match with underscores/spaces variations
+        normalized_with_underscores = normalized_domain.replace(' ', '_')
+        if normalized_with_underscores in domain_mapping:
+            return domain_mapping[normalized_with_underscores]
+        
+        # Try partial matching for more flexibility
+        for alias, domain_enum in domain_mapping.items():
+            if normalized_domain in alias or alias in normalized_domain:
+                return domain_enum
+        
         return None
 
 
@@ -552,6 +663,15 @@ async def root():
     """
     Serve the main web interface
     """
+    # Serve the updated index.html directly from the current directory
+    index_path = Path(__file__).parent / "index.html"
+    
+    if index_path.exists():
+        with open(index_path, 'r', encoding='utf-8') as f:
+            return HTMLResponse(content=f.read())
+    
+    # Fallback to static directory if exists
+    ui_static_path = Path(__file__).parent / "ui" / "static"
     index_path = ui_static_path / "index.html"
     
     if index_path.exists():
@@ -647,8 +767,9 @@ async def analyze_text(request: TextAnalysisRequest):
                                                                         use_sentence_level = request.use_sentence_level,
                                                                        )
 
+                # FIXED: Set include_legend=False to prevent duplicate legends
                 highlighted_html      = highlighter.generate_html(highlighted_sentences = highlighted_sentences,
-                                                                  include_legend        = True,
+                                                                  include_legend        = False,  # UI already has its own legend
                                                                   include_metrics       = request.include_metrics_summary,
                                                                  )
             except Exception as e:
@@ -784,8 +905,9 @@ async def analyze_file(file: UploadFile = File(...), domain: Optional[str] = For
                                                                         use_sentence_level = use_sentence_level,
                                                                        )
 
+                # FIXED: Set include_legend=False to prevent duplicate legends
                 highlighted_html      = highlighter.generate_html(highlighted_sentences = highlighted_sentences,
-                                                                  include_legend        = True,
+                                                                  include_legend        = False,  # UI already has its own legend
                                                                   include_metrics       = include_metrics_summary,
                                                                  )
             except Exception as e:
@@ -1049,13 +1171,15 @@ async def list_domains():
     """
     List all supported domains
     """
-    return {"domains" : [{"value"       : domain.value,
-                          "name"        : domain.value.replace('_', ' ').title(),
-                          "description" : _get_domain_description(domain),
-                         }
-                         for domain in Domain
-                        ]
-           }
+    domains_list = list()
+
+    for domain in Domain:
+        domains_list.append({"value"       : domain.value,
+                             "name"        : domain.value.replace('_', ' ').title(),
+                             "description" : _get_domain_description(domain),
+                           })
+    
+    return {"domains": domains_list}
 
 
 @app.get("/api/models")
@@ -1114,6 +1238,9 @@ async def log_requests(request: Request, call_next):
                    )
     
     return response
+
+
+
 
 # ==================== MAIN ====================
 if __name__ == "__main__":
