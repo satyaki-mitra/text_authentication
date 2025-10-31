@@ -207,12 +207,12 @@ class ReportGenerator:
         """
         Get description for each metric type
         """
-        descriptions = {"structural"        : "Analyzes sentence structure, length patterns, and statistical features",
-                        "perplexity"        : "Measures text predictability using language model cross-entropy",
-                        "entropy"           : "Evaluates token diversity and sequence unpredictability",
-                        "semantic_analysis" : "Examines semantic coherence, topic consistency, and logical flow",
-                        "linguistic"        : "Assesses grammatical patterns, syntactic complexity, and style markers",
-                        "detect_gpt"        : "Tests text stability under perturbation using curvature analysis",
+        descriptions = {"structural"                   : "Analyzes sentence structure, length patterns, and statistical features",
+                        "perplexity"                   : "Measures text predictability using language model cross-entropy",
+                        "entropy"                      : "Evaluates token diversity and sequence unpredictability",
+                        "semantic_analysis"            : "Examines semantic coherence, topic consistency, and logical flow",
+                        "linguistic"                   : "Assesses grammatical patterns, syntactic complexity, and style markers",
+                        "multi_perturbation_stability" : "Tests text stability under perturbation using curvature analysis",
                        }
 
         return descriptions.get(metric_name, "Advanced text analysis metric.")

@@ -11,7 +11,6 @@ from metrics.entropy import EntropyMetric
 from config.threshold_config import Domain
 from metrics.base_metric import MetricResult
 from detector.ensemble import EnsembleResult
-from metrics.detect_gpt import DetectGPTMetric
 from metrics.perplexity import PerplexityMetric
 from metrics.linguistic import LinguisticMetric
 from metrics.structural import StructuralMetric
@@ -23,7 +22,7 @@ from processors.domain_classifier import DomainPrediction
 from processors.language_detector import LanguageDetector
 from metrics.semantic_analysis import SemanticAnalysisMetric
 from processors.language_detector import LanguageDetectionResult
-
+from metrics.multi_perturbation_stability import MultiPerturbationStabilityMetric
 
 
 @dataclass
@@ -179,13 +178,13 @@ class DetectionOrchestrator:
         except Exception as e:
             logger.error(f"Failed to initialize linguistic metric: {repr(e)}")
         
-        # DetectGPT metric (expensive)
+        # MultiPerturbationStability metric (expensive)
         try:
-            metrics["detect_gpt"] = DetectGPTMetric()
-            logger.debug("DetectGPT metric initialized")
+            metrics["multi_perturbation_stability"] = MultiPerturbationStabilityMetric()
+            logger.debug("MultiPerturbationStability metric initialized")
         
         except Exception as e:
-            logger.error(f"Failed to initialize DetectGPT metric: {repr(e)}")
+            logger.error(f"Failed to initialize MultiPerturbationStability metric: {repr(e)}")
         
         logger.info(f"Initialized {len(metrics)} metrics: {list(metrics.keys())}")
         return metrics
@@ -328,7 +327,7 @@ class DetectionOrchestrator:
                
                 try:
                     # Check if we should skip expensive metrics
-                    if (self.skip_expensive_metrics and (name == "detect_gpt")):
+                    if (self.skip_expensive_metrics and (name == "multi_perturbation_stability")):
                         logger.info(f"Skipping expensive metric: {name}")
                         continue
                     

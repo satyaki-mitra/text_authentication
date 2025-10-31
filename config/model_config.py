@@ -98,16 +98,16 @@ MODEL_REGISTRY : Dict[str, ModelConfig] = {"perplexity_gpt2"            : ModelC
                                                                                       batch_size        = 16,
                                                                                       quantizable       = True,
                                                                                      ),
-                                           "detectgpt_base"             : ModelConfig(model_id          = "gpt2",
+                                           "multi_perturbation_base"    : ModelConfig(model_id          = "gpt2",
                                                                                       model_type        = ModelType.GPTMASK,
-                                                                                      description       = "DetectGPT perturbation model (reuses gpt2)",
+                                                                                      description       = "MultiPerturbationStability model (reuses gpt2)",
                                                                                       size_mb           = 0,  
                                                                                       required          = True,  
                                                                                       download_priority = 4,
                                                                                       max_length        = 1024,
                                                                                       batch_size        = 4,
                                                                                      ),
-                                           "detectgpt_mask"             : ModelConfig(model_id          = "distilroberta-base",
+                                           "multi_perturbation_mask"    : ModelConfig(model_id          = "distilroberta-base",
                                                                                       model_type        = ModelType.TRANSFORMER,
                                                                                       description       = "Masked LM for text perturbation",
                                                                                       size_mb           = 330,
@@ -131,18 +131,18 @@ MODEL_REGISTRY : Dict[str, ModelConfig] = {"perplexity_gpt2"            : ModelC
 # MODEL GROUPS FOR BATCH DOWNLOADING 
 MODEL_GROUPS                            = {"minimal"   : ["perplexity_gpt2", "domain_classifier"],
                                            "essential" : ["perplexity_gpt2", "semantic_primary", "linguistic_spacy", "domain_classifier"],
-                                           "extended"  : ["semantic_secondary", "detectgpt_mask", "domain_classifier_fallback"],
+                                           "extended"  : ["semantic_secondary", "multi_perturbation_mask", "domain_classifier_fallback"],
                                            "optional"  : ["language_detector"],
                                           }
 
 
 # MODEL WEIGHTS FOR ENSEMBLE : For 6 metrics implemented
-DEFAULT_MODEL_WEIGHTS                   = {"statistical"         : 0.20,  # No model needed
-                                           "perplexity"          : 0.20,  # gpt2
-                                           "entropy"             : 0.15,  # gpt2 (reused)
-                                           "semantic_analysis"   : 0.20,  # all-MiniLM-L6-v2
-                                           "linguistic"          : 0.15,  # spacy
-                                           "detect_gpt"          : 0.10,  # gpt2 + distilroberta (optional)
+DEFAULT_MODEL_WEIGHTS                   = {"statistical"                  : 0.20,  # No model needed
+                                           "perplexity"                   : 0.20,  # gpt2
+                                           "entropy"                      : 0.15,  # gpt2 (reused)
+                                           "semantic_analysis"            : 0.20,  # all-MiniLM-L6-v2
+                                           "linguistic"                   : 0.15,  # spacy
+                                           "multi_perturbation_stability" : 0.10,  # gpt2 + distilroberta (optional)
                                           }
 
 

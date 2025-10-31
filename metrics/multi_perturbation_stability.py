@@ -15,18 +15,26 @@ from config.threshold_config import get_threshold_for_domain
 
 
 
-class DetectGPTMetric(BaseMetric):
+class MultiPerturbationStabilityMetric(BaseMetric):
     """
-    DetectGPT implementation for text stability analysis under perturbations
+    Multi-Perturbation Stability Metric (MPSM) 
+    
+    A hybrid approach for combining multiple perturbation techniques for robust AI-generated text detection
     
     Measures:
     - Text stability under random perturbations
     - Likelihood curvature analysis
     - Masked token prediction analysis
+
+    Perturbation Methods:
+    - Word deletation & swapping
+    - RoBERTa mask filling
+    - Synonym replacement
+    - Chunk-based stability Analysis
     """
     def __init__(self):
-        super().__init__(name        = "detect_gpt",
-                         description = "Text stability analysis under perturbations (DetectGPT method)",
+        super().__init__(name        = "multi_perturbation_stability",
+                         description = "Text stability analysis under multi-perturbations techniques",
                         )
         
         self.gpt_model      = None
@@ -38,14 +46,14 @@ class DetectGPTMetric(BaseMetric):
 
     def initialize(self) -> bool:
         """
-        Initialize the DetectGPT metric
+        Initialize the MultiPerturbationStability metric
         """
         try:
-            logger.info("Initializing DetectGPT metric...")
+            logger.info("Initializing MultiPerturbationStability metric...")
             
             # Load GPT-2 model for likelihood calculation
             model_manager = get_model_manager()
-            gpt_result    = model_manager.load_model("detectgpt_base")
+            gpt_result    = model_manager.load_model(model_name = "multi_perturbation_base")
             
             if isinstance(gpt_result, tuple):
                 self.gpt_model, self.gpt_tokenizer = gpt_result
@@ -53,11 +61,11 @@ class DetectGPTMetric(BaseMetric):
                 self.gpt_model.to(self.device)
            
             else:
-                logger.error("Failed to load GPT-2 model for DetectGPT")
+                logger.error("Failed to load GPT-2 model for MultiPerturbationStability")
                 return False
             
             # Load masked language model for perturbations
-            mask_result = model_manager.load_model("detectgpt_mask")
+            mask_result = model_manager.load_model("multi_perturbation_mask")
             
             if (isinstance(mask_result, tuple)):
                 self.mask_model, self.mask_tokenizer = mask_result
@@ -73,17 +81,17 @@ class DetectGPTMetric(BaseMetric):
             
             self.is_initialized = True
             
-            logger.success("DetectGPT metric initialized successfully")
+            logger.success("MultiPerturbationStability metric initialized successfully")
             return True
             
         except Exception as e:
-            logger.error(f"Failed to initialize DetectGPT metric: {repr(e)}")
+            logger.error(f"Failed to initialize MultiPerturbationStability metric: {repr(e)}")
             return False
     
 
     def compute(self, text: str, **kwargs) -> MetricResult:
         """
-        Compute DetectGPT analysis with FULL DOMAIN THRESHOLD INTEGRATION
+        Compute MultiPerturbationStability analysis with FULL DOMAIN THRESHOLD INTEGRATION
         """
         try:
             if ((not text) or (len(text.strip()) < 100)):
@@ -92,17 +100,17 @@ class DetectGPTMetric(BaseMetric):
                                     human_probability = 0.5,
                                     mixed_probability = 0.0,
                                     confidence        = 0.1,
-                                    error             = "Text too short for DetectGPT analysis",
+                                    error             = "Text too short for MultiPerturbationStability analysis",
                                    )
             
             # Get domain-specific thresholds
-            domain               = kwargs.get('domain', Domain.GENERAL)
-            domain_thresholds    = get_threshold_for_domain(domain)
-            detectgpt_thresholds = domain_thresholds.detect_gpt
+            domain                                  = kwargs.get('domain', Domain.GENERAL)
+            domain_thresholds                       = get_threshold_for_domain(domain)
+            multi_perturbation_stability_thresholds = domain_thresholds.multi_perturbation_stability
             
             # Check if we should run this computationally expensive metric
             if (kwargs.get('skip_expensive', False)):
-                logger.info("Skipping DetectGPT due to computational constraints")
+                logger.info("Skipping MultiPerturbationStability due to computational constraints")
                 
                 return MetricResult(metric_name       = self.name,
                                     ai_probability    = 0.5,
@@ -112,17 +120,17 @@ class DetectGPTMetric(BaseMetric):
                                     error             = "Skipped for performance",
                                    )
             
-            # Calculate DetectGPT features
-            features                        = self._calculate_detectgpt_features(text)
+            # Calculate MultiPerturbationStability features
+            features                        = self._calculate_stability_features(text)
             
-            # Calculate raw DetectGPT score (0-1 scale)
-            raw_detectgpt_score, confidence = self._analyze_detectgpt_patterns(features)
+            # Calculate raw MultiPerturbationStability score (0-1 scale)
+            raw_stability_score, confidence = self._analyze_stability_patterns(features)
             
             # Apply domain-specific thresholds to convert raw score to probabilities
-            ai_prob, human_prob, mixed_prob = self._apply_domain_thresholds(raw_detectgpt_score, detectgpt_thresholds, features)
+            ai_prob, human_prob, mixed_prob = self._apply_domain_thresholds(raw_stability_score, multi_perturbation_stability_thresholds, features)
             
             # Apply confidence multiplier from domain thresholds
-            confidence                     *= detectgpt_thresholds.confidence_multiplier
+            confidence                     *= multi_perturbation_stability_thresholds.confidence_multiplier
             confidence                      = max(0.0, min(1.0, confidence))
             
             return MetricResult(metric_name       = self.name,
@@ -132,14 +140,14 @@ class DetectGPTMetric(BaseMetric):
                                 confidence        = confidence,
                                 details           = {**features, 
                                                      'domain_used'     : domain.value,
-                                                     'ai_threshold'    : detectgpt_thresholds.ai_threshold,
-                                                     'human_threshold' : detectgpt_thresholds.human_threshold,
-                                                     'raw_score'       : raw_detectgpt_score,
+                                                     'ai_threshold'    : multi_perturbation_stability_thresholds.ai_threshold,
+                                                     'human_threshold' : multi_perturbation_stability_thresholds.human_threshold,
+                                                     'raw_score'       : raw_stability_score,
                                                     },
                                )
             
         except Exception as e:
-            logger.error(f"Error in DetectGPT computation: {repr(e)}")
+            logger.error(f"Error in MultiPerturbationStability computation: {repr(e)}")
 
             return MetricResult(metric_name       = self.name,
                                 ai_probability    = 0.5,
@@ -201,9 +209,9 @@ class DetectGPTMetric(BaseMetric):
         return ai_prob, human_prob, mixed_prob
     
 
-    def _calculate_detectgpt_features(self, text: str) -> Dict[str, Any]:
+    def _calculate_stability_features(self, text: str) -> Dict[str, Any]:
         """
-        Calculate comprehensive DetectGPT features
+        Calculate comprehensive MultiPerturbationStability features
         """
         if not self.gpt_model or not self.gpt_tokenizer:
             return self._get_default_features()
@@ -267,7 +275,7 @@ class DetectGPTMetric(BaseMetric):
                    }
             
         except Exception as e:
-            logger.warning(f"DetectGPT feature calculation failed: {repr(e)}")
+            logger.warning(f"MultiPerturbationStability feature calculation failed: {repr(e)}")
             return self._get_default_features()
     
 
@@ -652,9 +660,9 @@ class DetectGPTMetric(BaseMetric):
         return stabilities
     
 
-    def _analyze_detectgpt_patterns(self, features: Dict[str, Any]) -> tuple:
+    def _analyze_stability_patterns(self, features: Dict[str, Any]) -> tuple:
         """
-        Analyze DetectGPT patterns to determine RAW DetectGPT score (0-1 scale) : Higher score = more AI-like
+        Analyze MultiPerturbationStability patterns to determine RAW MultiPerturbationStability score (0-1 scale) : Higher score = more AI-like
         """
         # Check feature validity first
         required_features = ['stability_score', 'curvature_score', 'normalized_likelihood_ratio', 'stability_variance', 'perturbation_variance']
@@ -781,7 +789,7 @@ class DetectGPTMetric(BaseMetric):
 
     def _preprocess_text_for_analysis(self, text: str) -> str:
         """
-        Preprocess text for DetectGPT analysis
+        Preprocess text for MultiPerturbationStability analysis
         """
         if not text:
             return ""
@@ -882,4 +890,4 @@ class DetectGPTMetric(BaseMetric):
 
 
 # Export
-__all__ = ["DetectGPTMetric"]
+__all__ = ["MultiPerturbationStabilityMetric"]

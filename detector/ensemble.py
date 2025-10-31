@@ -103,7 +103,7 @@ class EnsembleClassifier:
             
         Returns:
         --------
-            { EnsembleResult }        : EnsembleResult object with final prediction
+            { EnsembleResult }       : EnsembleResult object with final prediction
         """
         try:
             # Filter and validate metrics
@@ -114,76 +114,94 @@ class EnsembleClassifier:
                 return self._create_fallback_result(domain, metric_results, "insufficient_metrics")
             
             # Get domain-specific base weights
-            enabled_metrics = {name: True for name in valid_results.keys()}
-            base_weights    = get_active_metric_weights(domain, enabled_metrics)
+            enabled_metrics    = {name: True for name in valid_results.keys()}
+            base_weights       = get_active_metric_weights(domain, enabled_metrics)
             
-            # Try primary aggregation method
+            # Try primary aggregation method : Initialize in case all methods fail unexpectedly
+            calculated_weights = dict()
+            aggregated         = {"ai_probability"    : 0.5, 
+                                  "human_probability" : 0.5, 
+                                  "mixed_probability" : 0.0,
+                                 }
+
             try:
                 if (self.primary_method == "confidence_calibrated"):
-                    aggregated, weights = self._confidence_calibrated_aggregation(results      = valid_results, 
-                                                                                  base_weights = base_weights,
-                                                                                  domain       = domain,
-                                                                                 )
+                    aggregated, calculated_weights = self._confidence_calibrated_aggregation(results      = valid_results, 
+                                                                                             base_weights = base_weights,
+                                                                                             domain       = domain,
+                                                                                            )
                 
                 elif (self.primary_method == "domain_adaptive"):
-                    aggregated, weights = self._domain_adaptive_aggregation(results      = valid_results, 
-                                                                            base_weights = base_weights, 
-                                                                            domain       = domain,
-                                                                           )
+                    aggregated, calculated_weights = self._domain_adaptive_aggregation(results      = valid_results, 
+                                                                                       base_weights = base_weights, 
+                                                                                       domain       = domain,
+                                                                                      )
                 
                 elif (self.primary_method == "consensus_based"):
-                    aggregated, weights = self._consensus_based_aggregation(results      = valid_results, 
-                                                                            base_weights = base_weights,
-                                                                           )
+                    aggregated, calculated_weights = self._consensus_based_aggregation(results      = valid_results, 
+                                                                                       base_weights = base_weights,
+                                                                                       domain       = domain,
+                                                                                      )
                 
                 elif ((self.primary_method == "ml_ensemble") and self.use_ml_ensemble):
-                    aggregated, weights = self._ml_ensemble_aggregation(results      = valid_results, 
-                                                                        base_weights = base_weights,
-                                                                       )
+                    aggregated, calculated_weights = self._ml_ensemble_aggregation(results      = valid_results, 
+                                                                                   base_weights = base_weights,
+                                                                                   domain       = domain,
+                                                                                  )
                 
                 else:
                     # Fallback to domain weighted
-                    aggregated, weights = self._domain_weighted_aggregation(results      = valid_results, 
-                                                                            base_weights = base_weights,
-                                                                           )
+                    aggregated, calculated_weights = self._domain_weighted_aggregation(results      = valid_results, 
+                                                                                       base_weights = base_weights,
+                                                                                       domain       = domain,
+                                                                                      )
             
             except Exception as e:
                 logger.warning(f"Primary aggregation failed: {e}, using fallback")
-                aggregated, weights = self._apply_fallback_aggregation(results      = valid_results, 
-                                                                       base_weights = base_weights,
-                                                                      )
+                aggregated, calculated_weights = self._apply_fallback_aggregation(results      = valid_results, 
+                                                                                  base_weights = base_weights,
+                                                                                 )
             
-            # Calculate advanced metrics
-            overall_confidence = self._calculate_advanced_confidence(results    = valid_results, 
-                                                                     weights    = weights, 
-                                                                     aggregated = aggregated,
-                                                                    )
+            # Start with the calculated weights (from valid_results)
+            final_metric_weights = calculated_weights.copy() 
 
-            uncertainty_score  = self._calculate_uncertainty(results    = valid_results, 
-                                                             weights    = weights, 
-                                                             aggregated = aggregated,
-                                                            )
+            # Iterate through the *original* metric_results input to the ensemble
+            for original_metric_name in metric_results.keys():
+                # If a metric from the original input wasn't included in calculated_weights :assign it a weight of 0.0.
+                if original_metric_name not in final_metric_weights:
+                    final_metric_weights[original_metric_name] = 0.0
 
-            consensus_level    = self._calculate_consensus_level(results = valid_results)
+            # Calculate advanced metrics using the CALCULATED weights (from valid_results), not the final ones
+            overall_confidence   = self._calculate_advanced_confidence(results    = valid_results, 
+                                                                       weights    = calculated_weights, 
+                                                                       aggregated = aggregated,
+                                                                      )
+
+            uncertainty_score    = self._calculate_uncertainty(results    = valid_results, 
+                                                               weights    = calculated_weights, 
+                                                               aggregated = aggregated,
+                                                              )
+
+            consensus_level      = self._calculate_consensus_level(results = valid_results)
             
             # Apply domain-specific threshold with uncertainty consideration
-            domain_thresholds  = get_threshold_for_domain(domain = domain)
-            final_verdict      = self._apply_adaptive_threshold(aggregated     = aggregated, 
-                                                                base_threshold = domain_thresholds.ensemble_threshold,
-                                                                uncertainty    = uncertainty_score,
-                                                               )
+            domain_thresholds    = get_threshold_for_domain(domain = domain)
+            final_verdict        = self._apply_adaptive_threshold(aggregated     = aggregated, 
+                                                                  base_threshold = domain_thresholds.ensemble_threshold,
+                                                                  uncertainty    = uncertainty_score,
+                                                                 )
             
-            # Generate detailed reasoning
-            reasoning          = self._generate_detailed_reasoning(results     = valid_results, 
-                                                                   weights     = weights, 
-                                                                   aggregated  = aggregated, 
-                                                                   verdict     = final_verdict, 
-                                                                   uncertainty = uncertainty_score, 
-                                                                   consensus   = consensus_level,
-                                                                  )
+            # Generate detailed reasoning using the CALCULATED weights
+            reasoning            = self._generate_detailed_reasoning(results     = valid_results, 
+                                                                     weights     = calculated_weights,
+                                                                     aggregated  = aggregated, 
+                                                                     verdict     = final_verdict, 
+                                                                     uncertainty = uncertainty_score, 
+                                                                     consensus   = consensus_level,
+                                                                    )
             
-            # Calculate weighted scores
-            weighted_scores    = {name: result.ai_probability * weights.get(name, 0.0) for name, result in valid_results.items()}
+            # Calculate weighted scores based on the CALCULATED weights (from valid_results)
+            weighted_scores      = {name: result.ai_probability * calculated_weights.get(name, 0.0) for name, result in valid_results.items()}
             
             return EnsembleResult(final_verdict      = final_verdict,
                                   ai_probability     = aggregated["ai_probability"],
@@ -192,7 +210,7 @@ class EnsembleClassifier:
                                   overall_confidence = overall_confidence,
                                   domain             = domain,
                                   metric_results     = metric_results,
-                                  metric_weights     = weights,
+                                  metric_weights     = final_metric_weights,
                                   weighted_scores    = weighted_scores,
                                   reasoning          = reasoning,
                                   uncertainty_score  = uncertainty_score,
@@ -202,8 +220,8 @@ class EnsembleClassifier:
         except Exception as e:
             logger.error(f"Error in advanced ensemble prediction: {e}")
             return self._create_fallback_result(domain, metric_results, str(e))
-    
 
+    
     def _validate_metrics(self, results: Dict[str, MetricResult]) -> tuple:
         """
         Validate metrics and return quality information
@@ -454,126 +472,126 @@ class EnsembleClassifier:
         Get domain-specific performance weights (would come from validation data)
         """
         # Placeholder - in practice, this would be based on historical performance per domain : FUTURE WORK
-        performance_weights = {'structural'        : 1.0, 
-                               'entropy'           : 1.0, 
-                               'semantic_analysis' : 1.0,
-                               'linguistic'        : 1.0, 
-                               'perplexity'        : 1.0, 
-                               'detect_gpt'        : 1.0,
+        performance_weights = {'structural'                   : 1.0, 
+                               'entropy'                      : 1.0, 
+                               'semantic_analysis'            : 1.0,
+                               'linguistic'                   : 1.0, 
+                               'perplexity'                   : 1.0, 
+                               'multi_perturbation_stability' : 1.0,
                               }
         
         # Domain-specific adjustments for all 16 domains
-        domain_adjustments  = {Domain.GENERAL       : {'structural'        : 1.0,
-                                                       'perplexity'        : 1.0,
-                                                       'entropy'           : 1.0,
-                                                       'semantic_analysis' : 1.0,
-                                                       'linguistic'        : 1.0,
-                                                       'detect_gpt'        : 1.0,
+        domain_adjustments  = {Domain.GENERAL       : {'structural'                   : 1.0,
+                                                       'perplexity'                   : 1.0,
+                                                       'entropy'                      : 1.0,
+                                                       'semantic_analysis'            : 1.0,
+                                                       'linguistic'                   : 1.0,
+                                                       'multi_perturbation_stability' : 1.0,
                                                       },
-                               Domain.ACADEMIC      : {'structural'        : 1.2, 
-                                                       'perplexity'        : 1.3,
-                                                       'entropy'           : 0.9,
-                                                       'semantic_analysis' : 1.1,
-                                                       'linguistic'        : 1.3, 
-                                                       'detect_gpt'        : 0.8,
+                               Domain.ACADEMIC      : {'structural'                   : 1.2, 
+                                                       'perplexity'                   : 1.3,
+                                                       'entropy'                      : 0.9,
+                                                       'semantic_analysis'            : 1.1,
+                                                       'linguistic'                   : 1.3, 
+                                                       'multi_perturbation_stability' : 0.8,
                                                       },
-                               Domain.CREATIVE      : {'structural'        : 0.9,
-                                                       'perplexity'        : 1.1,
-                                                       'entropy'           : 1.2, 
-                                                       'semantic_analysis' : 1.0,
-                                                       'linguistic'        : 1.1,
-                                                       'detect_gpt'        : 0.9,
+                               Domain.CREATIVE      : {'structural'                   : 0.9,
+                                                       'perplexity'                   : 1.1,
+                                                       'entropy'                      : 1.2, 
+                                                       'semantic_analysis'            : 1.0,
+                                                       'linguistic'                   : 1.1,
+                                                       'multi_perturbation_stability' : 0.9,
                                                       },
-                               Domain.AI_ML         : {'structural'        : 1.2,
-                                                       'perplexity'        : 1.3,
-                                                       'entropy'           : 0.9,
-                                                       'semantic_analysis' : 1.1,
-                                                       'linguistic'        : 1.2,
-                                                       'detect_gpt'        : 0.8,
+                               Domain.AI_ML         : {'structural'                   : 1.2,
+                                                       'perplexity'                   : 1.3,
+                                                       'entropy'                      : 0.9,
+                                                       'semantic_analysis'            : 1.1,
+                                                       'linguistic'                   : 1.2,
+                                                       'multi_perturbation_stability' : 0.8,
                                                       },
-                               Domain.SOFTWARE_DEV  : {'structural'        : 1.2,
-                                                       'perplexity'        : 1.3,
-                                                       'entropy'           : 0.9,
-                                                       'semantic_analysis' : 1.1,
-                                                       'linguistic'        : 1.2,
-                                                       'detect_gpt'        : 0.8,
+                               Domain.SOFTWARE_DEV  : {'structural'                   : 1.2,
+                                                       'perplexity'                   : 1.3,
+                                                       'entropy'                      : 0.9,
+                                                       'semantic_analysis'            : 1.1,
+                                                       'linguistic'                   : 1.2,
+                                                       'multi_perturbation_stability' : 0.8,
                                                       },
-                               Domain.TECHNICAL_DOC : {'structural'        : 1.3, 
-                                                       'perplexity'        : 1.3,
-                                                       'entropy'           : 0.9,
-                                                       'semantic_analysis' : 1.2,
-                                                       'linguistic'        : 1.2,
-                                                       'detect_gpt'        : 0.8,
+                               Domain.TECHNICAL_DOC : {'structural'                   : 1.3, 
+                                                       'perplexity'                   : 1.3,
+                                                       'entropy'                      : 0.9,
+                                                       'semantic_analysis'            : 1.2,
+                                                       'linguistic'                   : 1.2,
+                                                       'multi_perturbation_stability' : 0.8,
                                                       },
-                               Domain.ENGINEERING   : {'structural'        : 1.2,
-                                                       'perplexity'        : 1.3,
-                                                       'entropy'           : 0.9,
-                                                       'semantic_analysis' : 1.1,
-                                                       'linguistic'        : 1.2,
-                                                       'detect_gpt'        : 0.8,
+                               Domain.ENGINEERING   : {'structural'                   : 1.2,
+                                                       'perplexity'                   : 1.3,
+                                                       'entropy'                      : 0.9,
+                                                       'semantic_analysis'            : 1.1,
+                                                       'linguistic'                   : 1.2,
+                                                       'multi_perturbation_stability' : 0.8,
                                                       },
-                               Domain.SCIENCE       : {'structural'        : 1.2,
-                                                       'perplexity'        : 1.3,
-                                                       'entropy'           : 0.9,
-                                                       'semantic_analysis' : 1.1,
-                                                       'linguistic'        : 1.2,
-                                                       'detect_gpt'        : 0.8,
+                               Domain.SCIENCE       : {'structural'                   : 1.2,
+                                                       'perplexity'                   : 1.3,
+                                                       'entropy'                      : 0.9,
+                                                       'semantic_analysis'            : 1.1,
+                                                       'linguistic'                   : 1.2,
+                                                       'multi_perturbation_stability' : 0.8,
                                                       },
-                               Domain.BUSINESS      : {'structural'        : 1.1,
-                                                       'perplexity'        : 1.2,
-                                                       'entropy'           : 1.0,
-                                                       'semantic_analysis' : 1.1,
-                                                       'linguistic'        : 1.1,
-                                                       'detect_gpt'        : 0.9,
+                               Domain.BUSINESS      : {'structural'                   : 1.1,
+                                                       'perplexity'                   : 1.2,
+                                                       'entropy'                      : 1.0,
+                                                       'semantic_analysis'            : 1.1,
+                                                       'linguistic'                   : 1.1,
+                                                       'multi_perturbation_stability' : 0.9,
                                                       },
-                               Domain.LEGAL         : {'structural'        : 1.3,
-                                                       'perplexity'        : 1.3,
-                                                       'entropy'           : 0.9,
-                                                       'semantic_analysis' : 1.2,
-                                                       'linguistic'        : 1.3,
-                                                       'detect_gpt'        : 0.8,
+                               Domain.LEGAL         : {'structural'                   : 1.3,
+                                                       'perplexity'                   : 1.3,
+                                                       'entropy'                      : 0.9,
+                                                       'semantic_analysis'            : 1.2,
+                                                       'linguistic'                   : 1.3,
+                                                       'multi_perturbation_stability' : 0.8,
                                                       },
-                               Domain.MEDICAL       : {'structural'        : 1.2,
-                                                       'perplexity'        : 1.3,
-                                                       'entropy'           : 0.9,
-                                                       'semantic_analysis' : 1.2,
-                                                       'linguistic'        : 1.2,
-                                                       'detect_gpt'        : 0.8,
+                               Domain.MEDICAL       : {'structural'                   : 1.2,
+                                                       'perplexity'                   : 1.3,
+                                                       'entropy'                      : 0.9,
+                                                       'semantic_analysis'            : 1.2,
+                                                       'linguistic'                   : 1.2,
+                                                       'multi_perturbation_stability' : 0.8,
                                                       },
-                               Domain.JOURNALISM    : {'structural'        : 1.1,
-                                                       'perplexity'        : 1.2,
-                                                       'entropy'           : 1.0,
-                                                       'semantic_analysis' : 1.1,
-                                                       'linguistic'        : 1.1,
-                                                       'detect_gpt'        : 0.8,
+                               Domain.JOURNALISM    : {'structural'                   : 1.1,
+                                                       'perplexity'                   : 1.2,
+                                                       'entropy'                      : 1.0,
+                                                       'semantic_analysis'            : 1.1,
+                                                       'linguistic'                   : 1.1,
+                                                       'multi_perturbation_stability' : 0.8,
                                                       },
-                               Domain.MARKETING     : {'structural'        : 1.0,
-                                                       'perplexity'        : 1.1,
-                                                       'entropy'           : 1.1,
-                                                       'semantic_analysis' : 1.0,
-                                                       'linguistic'        : 1.2,
-                                                       'detect_gpt'        : 0.8,
+                               Domain.MARKETING     : {'structural'                   : 1.0,
+                                                       'perplexity'                   : 1.1,
+                                                       'entropy'                      : 1.1,
+                                                       'semantic_analysis'            : 1.0,
+                                                       'linguistic'                   : 1.2,
+                                                       'multi_perturbation_stability' : 0.8,
                                                       },
-                               Domain.SOCIAL_MEDIA  : {'structural'        : 0.8,
-                                                       'perplexity'        : 1.0,
-                                                       'entropy'           : 1.3, 
-                                                       'semantic_analysis' : 0.9,
-                                                       'linguistic'        : 0.7,
-                                                       'detect_gpt'        : 0.9,
+                               Domain.SOCIAL_MEDIA  : {'structural'                   : 0.8,
+                                                       'perplexity'                   : 1.0,
+                                                       'entropy'                      : 1.3, 
+                                                       'semantic_analysis'            : 0.9,
+                                                       'linguistic'                   : 0.7,
+                                                       'multi_perturbation_stability' : 0.9,
                                                       },
-                               Domain.BLOG_PERSONAL : {'structural'        : 0.9,
-                                                       'perplexity'        : 1.1,
-                                                       'entropy'           : 1.2,
-                                                       'semantic_analysis' : 1.0,
-                                                       'linguistic'        : 1.0,
-                                                       'detect_gpt'        : 0.8,
+                               Domain.BLOG_PERSONAL : {'structural'                   : 0.9,
+                                                       'perplexity'                   : 1.1,
+                                                       'entropy'                      : 1.2,
+                                                       'semantic_analysis'            : 1.0,
+                                                       'linguistic'                   : 1.0,
+                                                       'multi_perturbation_stability' : 0.8,
                                                       },
-                               Domain.TUTORIAL      : {'structural'        : 1.1,
-                                                       'perplexity'        : 1.2,
-                                                       'entropy'           : 1.0,
-                                                       'semantic_analysis' : 1.1,
-                                                       'linguistic'        : 1.1,
-                                                       'detect_gpt'        : 0.8,
+                               Domain.TUTORIAL      : {'structural'                   : 1.1,
+                                                       'perplexity'                   : 1.2,
+                                                       'entropy'                      : 1.0,
+                                                       'semantic_analysis'            : 1.1,
+                                                       'linguistic'                   : 1.1,
+                                                       'multi_perturbation_stability' : 0.8,
                                                       },
                               }
         
