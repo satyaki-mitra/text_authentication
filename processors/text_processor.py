@@ -75,7 +75,7 @@ class TextProcessor:
     MULTIPLE_NEWLINES = re.compile(r'\n{3,}')
     
 
-    def __init__(self, min_text_length: int = 50, max_text_length: int = 50000, preserve_formatting: bool = False, remove_urls: bool = True, remove_emails: bool = True,
+    def __init__(self, min_text_length: int = 50, max_text_length: int = 500000, preserve_formatting: bool = False, remove_urls: bool = True, remove_emails: bool = True,
                  normalize_unicode: bool = True, fix_encoding: bool = True):
         """
         Initialize text processor

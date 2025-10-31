@@ -767,7 +767,7 @@ async def analyze_text(request: TextAnalysisRequest):
                                                                         use_sentence_level = request.use_sentence_level,
                                                                        )
 
-                # FIXED: Set include_legend=False to prevent duplicate legends
+                # Set include_legend=False to prevent duplicate legends
                 highlighted_html      = highlighter.generate_html(highlighted_sentences = highlighted_sentences,
                                                                   include_legend        = False,  # UI already has its own legend
                                                                   include_metrics       = request.include_metrics_summary,
@@ -794,8 +794,6 @@ async def analyze_text(request: TextAnalysisRequest):
         
         processing_time = time.time() - start_time
         
-        #logger.success(f"[{analysis_id}] Analysis complete: {detection_result.ensemble_result.final_verdict} ({processing_time:.2f}s)")
-        
         # Log the detection event
         log_detection_event(analysis_id         = analysis_id,
                             text_length         = len(request.text),
@@ -806,7 +804,7 @@ async def analyze_text(request: TextAnalysisRequest):
                             enable_attribution  = request.enable_attribution,
                             enable_highlighting = request.enable_highlighting,
                            )
-                           
+        
         return TextAnalysisResponse(status           = "success",
                                     analysis_id      = analysis_id,
                                     detection_result = detection_dict,
@@ -905,7 +903,7 @@ async def analyze_file(file: UploadFile = File(...), domain: Optional[str] = For
                                                                         use_sentence_level = use_sentence_level,
                                                                        )
 
-                # FIXED: Set include_legend=False to prevent duplicate legends
+                # Set include_legend=False to prevent duplicate legends
                 highlighted_html      = highlighter.generate_html(highlighted_sentences = highlighted_sentences,
                                                                   include_legend        = False,  # UI already has its own legend
                                                                   include_metrics       = include_metrics_summary,
@@ -1119,16 +1117,23 @@ async def generate_report(background_tasks: BackgroundTasks, analysis_id: str = 
                 logger.warning(f"Highlight generation for report failed: {e}")
         
         # Generate reports
-        report_files = reporter.generate_complete_report(detection_result      = detection_result,
-                                                         attribution_result    = attribution_result,
-                                                         highlighted_sentences = highlighted_sentences,
-                                                         formats               = requested_formats,
-                                                         filename_prefix       = analysis_id,
-                                                        )
+        report_files     = reporter.generate_complete_report(detection_result      = detection_result,
+                                                             attribution_result    = attribution_result,
+                                                             highlighted_sentences = highlighted_sentences,
+                                                             formats               = requested_formats,
+                                                             filename_prefix       = analysis_id,
+                                                            )
+
+        # Extract only the filename from the full path for the response
+        report_filenames = dict()
+
+        for fmt, full_path in report_files.items():
+            # Get the filename part            
+            report_filenames[fmt] = Path(full_path).name
         
         return ReportGenerationResponse(status      = "success",
                                         analysis_id = analysis_id,
-                                        reports     = report_files,
+                                        reports     = report_filenames,
                                         timestamp   = datetime.now().isoformat(),
                                        )
         

@@ -273,6 +273,16 @@ body {
     padding: 2rem;
     border: 1px solid var(--border);
     backdrop-filter: blur(10px);
+    /* Changed from fixed height to use available space */
+    height: 850px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+.panel-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem 0;
 }
 .panel-title {
     font-size: 1.5rem;
@@ -611,7 +621,6 @@ input[type="checkbox"] {
     color: var(--text-secondary);
     line-height: 1.7;
 }
-
 /* Enhanced Reasoning Styles */
 .reasoning-box.enhanced {
     background: linear-gradient(135deg, rgba(30, 41, 59, 0.95) 0%, rgba(15, 23, 42, 0.95) 100%);
@@ -621,25 +630,21 @@ input[type="checkbox"] {
     margin-top: 2rem;
     backdrop-filter: blur(10px);
 }
-
 .reasoning-header {
     display: flex;
     align-items: center;
     gap: 0.75rem;
     margin-bottom: 1rem;
 }
-
 .reasoning-icon {
     font-size: 1.5rem;
 }
-
 .reasoning-title {
     font-size: 1.1rem;
     font-weight: 700;
     color: var(--primary);
     flex: 1;
 }
-
 .confidence-tag {
     padding: 0.25rem 0.75rem;
     border-radius: 20px;
@@ -647,25 +652,21 @@ input[type="checkbox"] {
     font-weight: 600;
     text-transform: uppercase;
 }
-
 .high-confidence {
     background: rgba(16, 185, 129, 0.2);
     color: var(--success);
     border: 1px solid rgba(16, 185, 129, 0.3);
 }
-
 .medium-confidence {
     background: rgba(245, 158, 11, 0.2);
     color: var(--warning);
     border: 1px solid rgba(245, 158, 11, 0.3);
 }
-
 .low-confidence {
     background: rgba(239, 68, 68, 0.2);
     color: var(--danger);
     border: 1px solid rgba(239, 68, 68, 0.3);
 }
-
 .verdict-summary {
     display: flex;
     justify-content: space-between;
@@ -675,27 +676,22 @@ input[type="checkbox"] {
     background: rgba(51, 65, 85, 0.3);
     border-radius: 8px;
 }
-
 .verdict-text {
     font-size: 1.3rem;
     font-weight: 800;
     color: var(--warning);
 }
-
 .probability {
     color: var(--text-secondary);
     font-size: 0.95rem;
 }
-
 .probability-value {
     color: var(--text-primary);
     font-weight: 700;
 }
-
 .metrics-breakdown {
     margin-bottom: 1.5rem;
 }
-
 .breakdown-header {
     font-size: 0.9rem;
     font-weight: 600;
@@ -704,7 +700,6 @@ input[type="checkbox"] {
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
-
 .metric-indicator {
     display: flex;
     justify-content: space-between;
@@ -714,24 +709,20 @@ input[type="checkbox"] {
     border-radius: 8px;
     transition: all 0.2s ease;
 }
-
 .metric-indicator:hover {
     background: rgba(51, 65, 85, 0.4);
     transform: translateX(4px);
 }
-
 .metric-name {
     font-weight: 600;
     color: var(--text-primary);
     min-width: 140px;
 }
-
 .metric-details {
     display: flex;
     gap: 1rem;
     align-items: center;
 }
-
 .verdict-badge {
     padding: 0.2rem 0.6rem;
     border-radius: 6px;
@@ -741,25 +732,21 @@ input[type="checkbox"] {
     min-width: 60px;
     text-align: center;
 }
-
 .ai-badge {
     background: rgba(239, 68, 68, 0.2);
     color: var(--danger);
     border: 1px solid rgba(239, 68, 68, 0.3);
 }
-
 .human-badge {
     background: rgba(16, 185, 129, 0.2);
     color: var(--success);
     border: 1px solid rgba(16, 185, 129, 0.3);
 }
-
 .confidence, .weight {
     font-size: 0.8rem;
     color: var(--text-muted);
     min-width: 100px;
 }
-
 .agreement-indicator {
     display: flex;
     align-items: center;
@@ -770,16 +757,13 @@ input[type="checkbox"] {
     border-radius: 8px;
     color: var(--success);
 }
-
 .agreement-icon {
     font-weight: 700;
 }
-
 .agreement-text {
     font-size: 0.9rem;
     font-weight: 600;
 }
-
 /* Attribution Section */
 .attribution-section {
     margin-top: 2rem;
@@ -967,6 +951,66 @@ input[type="checkbox"] {
     text-align: center;
     color: var(--text-muted);
 }
+/* Metrics Carousel */
+.metrics-carousel-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.metrics-carousel-content {
+    flex: 1;
+    /* Removed padding and centering to allow content to fill space */
+    padding: 0;
+    /* Removed align-items: center; justify-content: center; to let content take natural space */
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    overflow-y: auto;
+    /* Added some internal spacing for readability */
+    padding: 1rem;
+    /* min-height: 600px; */
+}
+.metric-slide {
+    display: none;
+    width: 100%;
+    /* Reduced padding to make card tighter */
+    padding: 1rem;
+}
+.metric-slide.active {
+    display: block;
+}
+.metrics-carousel-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-top: 1px solid var(--border);
+    background: rgba(15, 23, 42, 0.8);
+}
+.carousel-btn {
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.carousel-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(6, 182, 212, 0.4);
+}
+.carousel-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+.carousel-position {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+}
 /* Responsive */
 @media (max-width: 1200px) {
     .interface-grid {
@@ -1000,6 +1044,10 @@ input[type="checkbox"] {
     .highlight-legend {
         flex-direction: column;
         gap: 0.75rem;
+    }
+    .panel {
+        height: auto;
+        min-height: 600px;
     }
 }
 /* Scroll Behavior */
@@ -1066,7 +1114,7 @@ html {
             <div class="feature-icon">🔬</div>
             <h3 class="feature-title">6-Metric Ensemble</h3>
             <p class="feature-description">
-                Combines Perplexity, Entropy, Statistical, Linguistic, Semantic Analysis, and DetectGPT for comprehensive detection with orthogonal signal capture.
+                Combines Perplexity, Entropy, Statistical, Linguistic, Semantic Analysis, and Multi-Perturbation Stability for comprehensive detection with orthogonal signal capture.
             </p>
         </div>
         <div class="feature-card">
@@ -1109,7 +1157,7 @@ html {
         <div class="metric-icon-box">📊</div>
         <div class="metric-content">
             <h3>Perplexity <span class="metric-weight">Weight: 25%</span></h3>
-            <p>Measures how predictable the text is using GPT-2 XL language model. AI-generated text typically has lower perplexity (more predictable) than human writing, which tends to be more varied and surprising.</p>
+            <p>Measures how predictable the text is using GPT-2 language model. AI-generated text typically has lower perplexity (more predictable) than human writing, which tends to be more varied and surprising.</p>
         </div>
     </div>
     <div class="metric-card">
@@ -1143,7 +1191,7 @@ html {
     <div class="metric-card">
         <div class="metric-icon-box">🔍</div>
         <div class="metric-content">
-            <h3>DetectGPT <span class="metric-weight">Weight: 10%</span></h3>
+            <h3>Multi-Perturbation Stability <span class="metric-weight">Weight: 10%</span></h3>
             <p>Tests text stability under random perturbations. AI-generated text tends to maintain higher likelihood scores even when slightly modified, while human text shows more variation.</p>
         </div>
     </div>
@@ -1160,132 +1208,138 @@ html {
     <!-- Left Panel: Input -->
     <div class="panel">
         <h2 class="panel-title">Submit Content for Analysis</h2>
-        <div class="input-tabs">
-            <button class="input-tab active" data-tab="paste">
-                📋 Paste Text
-            </button>
-            <button class="input-tab" data-tab="upload">
-                📁 Upload File
-            </button>
-        </div>
-        <div id="paste-tab" class="tab-content active">
-            <textarea 
-                id="text-input" 
-                class="text-input" 
-                placeholder="Paste your text here for analysis...
+        <div class="panel-content">
+            <div class="input-tabs">
+                <button class="input-tab active" data-tab="paste">
+                    📋 Paste Text
+                </button>
+                <button class="input-tab" data-tab="upload">
+                    📁 Upload File
+                </button>
+            </div>
+            <div id="paste-tab" class="tab-content active">
+                <textarea 
+                    id="text-input" 
+                    class="text-input" 
+                    placeholder="Paste your text here for analysis...
 The more text you provide (minimum 50 characters), the more accurate the detection will be. Our system analyzes linguistic patterns, statistical features, and semantic structures to determine authenticity."
-            ></textarea>
+                ></textarea>
+            </div>
+            <div id="upload-tab" class="tab-content">
+                <div class="file-upload-area" id="file-upload-area">
+                    <input type="file" id="file-input" class="file-input" accept=".txt,.pdf,.docx,.doc,.md">
+                    <div class="file-upload-icon">📄</div>
+                    <div style="font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem;">
+                        Click to upload or drag and drop
+                    </div>
+                    <div style="color: var(--text-muted); font-size: 0.9rem;">
+                        Supported formats: TXT, PDF, DOCX, DOC, MD
+                    </div>
+                    <div style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.5rem;">
+                        Maximum file size: 10MB
+                    </div>
+                </div>
+                <div id="file-name-display" class="file-name-display"></div>
+            </div>
+            <div class="options-section">
+                <div class="option-row">
+                    <label class="option-label">Content Domain:</label>
+                    <select id="domain-select">
+                        <option value="">Auto-detect</option>
+                        <option value="academic">Academic</option>
+                        <option value="technical_doc">Technical/Medical</option>
+                        <option value="creative">Creative Writing</option>
+                        <option value="social_media">Social Media</option>
+                    </select>
+                </div>
+                <div class="option-row">
+                    <label class="option-label">Enable AI Model Attribution:</label>
+                    <div class="checkbox-wrapper">
+                        <input type="checkbox" id="enable-attribution" checked>
+                        <span style="font-size: 0.85rem; color: var(--text-muted);">Identify which AI model generated the text</span>
+                    </div>
+                </div>
+                <div class="option-row">
+                    <label class="option-label">Enable Sentence Highlighting:</label>
+                    <div class="checkbox-wrapper">
+                        <input type="checkbox" id="enable-highlighting" checked>
+                        <span style="font-size: 0.85rem; color: var(--text-muted);">Show suspicious sentences</span>
+                    </div>
+                </div>
+                <!-- NEW OPTIONS -->
+                <div class="option-row">
+                    <label class="option-label">Sentence-Level Analysis:</label>
+                    <div class="checkbox-wrapper">
+                        <input type="checkbox" id="use-sentence-level" checked>
+                        <span style="font-size: 0.85rem; color: var(--text-muted);">More accurate but slower analysis</span>
+                    </div>
+                </div>
+                <div class="option-row">
+                    <label class="option-label">Include Metrics Summary:</label>
+                    <div class="checkbox-wrapper">
+                        <input type="checkbox" id="include-metrics-summary" checked>
+                        <span style="font-size: 0.85rem; color: var(--text-muted);">Show text analysis statistics</span>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div id="upload-tab" class="tab-content">
-            <div class="file-upload-area" id="file-upload-area">
-                <input type="file" id="file-input" class="file-input" accept=".txt,.pdf,.docx,.doc,.md">
-                <div class="file-upload-icon">📄</div>
-                <div style="font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem;">
-                    Click to upload or drag and drop
-                </div>
-                <div style="color: var(--text-muted); font-size: 0.9rem;">
-                    Supported formats: TXT, PDF, DOCX, DOC, MD
-                </div>
-                <div style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.5rem;">
-                    Maximum file size: 10MB
-                </div>
-            </div>
-            <div id="file-name-display" class="file-name-display"></div>
-        </div>
-        <div class="options-section">
-            <div class="option-row">
-                <label class="option-label">Content Domain:</label>
-                <select id="domain-select">
-                    <option value="">Auto-detect</option>
-                    <option value="academic">Academic</option>
-                    <option value="technical_doc">Technical/Medical</option>
-                    <option value="creative">Creative Writing</option>
-                    <option value="social_media">Social Media</option>
-                </select>
-            </div>
-            <div class="option-row">
-                <label class="option-label">Enable AI Model Attribution:</label>
-                <div class="checkbox-wrapper">
-                    <input type="checkbox" id="enable-attribution" checked>
-                    <span style="font-size: 0.85rem; color: var(--text-muted);">Identify which AI model generated the text</span>
-                </div>
-            </div>
-            <div class="option-row">
-                <label class="option-label">Enable Sentence Highlighting:</label>
-                <div class="checkbox-wrapper">
-                    <input type="checkbox" id="enable-highlighting" checked>
-                    <span style="font-size: 0.85rem; color: var(--text-muted);">Show suspicious sentences</span>
-                </div>
-            </div>
-            <!-- NEW OPTIONS -->
-            <div class="option-row">
-                <label class="option-label">Sentence-Level Analysis:</label>
-                <div class="checkbox-wrapper">
-                    <input type="checkbox" id="use-sentence-level" checked>
-                    <span style="font-size: 0.85rem; color: var(--text-muted);">More accurate but slower analysis</span>
-                </div>
-            </div>
-            <div class="option-row">
-                <label class="option-label">Include Metrics Summary:</label>
-                <div class="checkbox-wrapper">
-                    <input type="checkbox" id="include-metrics-summary" checked>
-                    <span style="font-size: 0.85rem; color: var(--text-muted);">Show text analysis statistics</span>
-                </div>
-            </div>
-        </div>
-        <button id="analyze-btn" class="analyze-btn">
-            🔍 Analyze Text
-        </button>
-        <div class="action-buttons">
-            <button id="refresh-btn" class="action-btn refresh">
-                🔄 Refresh
+        <div style="display: flex; flex-direction: column; gap: 1rem;">
+            <button id="analyze-btn" class="analyze-btn">
+                🔍 Analyze Text
             </button>
-            <button id="try-next-btn" class="action-btn">
-                ➕ Try Next
-            </button>
+            <div class="action-buttons">
+                <button id="refresh-btn" class="action-btn refresh">
+                    🔄 Refresh
+                </button>
+                <button id="try-next-btn" class="action-btn">
+                    ➕ Try Next
+                </button>
+            </div>
         </div>
     </div>
     <!-- Right Panel: Results -->
     <div class="panel">
         <h2 class="panel-title">Analysis Report</h2>
-        <div class="report-tabs">
-            <button class="report-tab active" data-report="summary">
-                📊 Summary
-            </button>
-            <button class="report-tab" data-report="highlighted">
-                📝 Highlighted Text
-            </button>
-            <button class="report-tab" data-report="metrics">
-                ℹ️ Detailed Metrics
-            </button>
-        </div>
-        <!-- Summary Report -->
-        <div id="summary-report" class="report-content active">
-            <div class="empty-state">
-                <div class="empty-icon">✓</div>
-                <h3 class="empty-title">Ready for Analysis</h3>
-                <p class="empty-description">
-                    Paste text or upload a document to begin comprehensive AI detection analysis.
-                    Our 6-metric ensemble will provide detailed insights.
-                </p>
+        <div class="panel-content">
+            <div class="report-tabs">
+                <button class="report-tab active" data-report="summary">
+                    📊 Summary
+                </button>
+                <button class="report-tab" data-report="highlighted">
+                    📝 Highlighted Text
+                </button>
+                <button class="report-tab" data-report="metrics">
+                    ℹ️ Detailed Metrics
+                </button>
             </div>
-        </div>
-        <!-- Highlighted Text Report -->
-        <div id="highlighted-report" class="report-content">
-            <div class="empty-state">
-                <div class="empty-icon">📝</div>
-                <p class="empty-description">
-                    Run an analysis to see sentence-level highlighting
-                </p>
+            <!-- Summary Report -->
+            <div id="summary-report" class="report-content active">
+                <div class="empty-state">
+                    <div class="empty-icon">✓</div>
+                    <h3 class="empty-title">Ready for Analysis</h3>
+                    <p class="empty-description">
+                        Paste text or upload a document to begin comprehensive AI detection analysis.
+                        Our 6-metric ensemble will provide detailed insights.
+                    </p>
+                </div>
             </div>
-        </div>
-        <!-- Metrics Report -->
-        <div id="metrics-report" class="report-content">
-            <div class="empty-state">
-                <div class="empty-icon">📊</div>
-                <p class="empty-description">
-                    Run an analysis to see detailed metric breakdowns
-                </p>
+            <!-- Highlighted Text Report -->
+            <div id="highlighted-report" class="report-content">
+                <div class="empty-state">
+                    <div class="empty-icon">📝</div>
+                    <p class="empty-description">
+                        Run an analysis to see sentence-level highlighting
+                    </p>
+                </div>
+            </div>
+            <!-- Metrics Report -->
+            <div id="metrics-report" class="report-content">
+                <div class="empty-state">
+                    <div class="empty-icon">📊</div>
+                    <p class="empty-description">
+                        Run an analysis to see detailed metric breakdowns
+                    </p>
+                </div>
             </div>
         </div>
     </div>
@@ -1295,50 +1349,44 @@ The more text you provide (minimum 50 characters), the more accurate the detecti
 // Configuration
 const API_BASE = '';
 let currentAnalysisData = null;
-
+let currentMetricIndex = 0;
+let totalMetrics = 0;
 // Navigation
 function showLanding() {
     document.getElementById('landing-page').style.display = 'block';
     document.getElementById('analysis-interface').style.display = 'none';
     window.scrollTo(0, 0);
 }
-
 function showAnalysis() {
     document.getElementById('landing-page').style.display = 'none';
     document.getElementById('analysis-interface').style.display = 'block';
     window.scrollTo(0, 0);
     resetAnalysisInterface();
 }
-
 // Reset analysis interface
 function resetAnalysisInterface() {
     // Clear text input
     document.getElementById('text-input').value = '';
-    
     // Clear file input and display
     document.getElementById('file-input').value = '';
     document.getElementById('file-name-display').style.display = 'none';
     document.getElementById('file-name-display').innerHTML = '';
-    
     // Reset tabs to paste
     document.querySelectorAll('.input-tab').forEach(t => t.classList.remove('active'));
     document.querySelector('.input-tab[data-tab="paste"]').classList.add('active');
     document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
     document.getElementById('paste-tab').classList.add('active');
-    
     // Reset options to defaults
     document.getElementById('domain-select').value = '';
     document.getElementById('enable-attribution').checked = true;
     document.getElementById('enable-highlighting').checked = true;
     document.getElementById('use-sentence-level').checked = true;
     document.getElementById('include-metrics-summary').checked = true;
-    
     // Reset report tabs to summary
     document.querySelectorAll('.report-tab').forEach(t => t.classList.remove('active'));
     document.querySelector('.report-tab[data-report="summary"]').classList.add('active');
     document.querySelectorAll('.report-content').forEach(content => content.classList.remove('active'));
     document.getElementById('summary-report').classList.add('active');
-    
     // Show empty state
     document.getElementById('summary-report').innerHTML = `
         <div class="empty-state">
@@ -1366,11 +1414,11 @@ function resetAnalysisInterface() {
             </p>
         </div>
     `;
-    
     // Clear current analysis data
     currentAnalysisData = null;
+    currentMetricIndex = 0;
+    totalMetrics = 0;
 }
-
 // Input Tab Switching
 document.querySelectorAll('.input-tab').forEach(tab => {
     tab.addEventListener('click', () => {
@@ -1383,7 +1431,6 @@ document.querySelectorAll('.input-tab').forEach(tab => {
         document.getElementById(`${tabName}-tab`).classList.add('active');
     });
 });
-
 // Report Tab Switching
 document.querySelectorAll('.report-tab').forEach(tab => {
     tab.addEventListener('click', () => {
@@ -1396,30 +1443,24 @@ document.querySelectorAll('.report-tab').forEach(tab => {
         document.getElementById(`${reportName}-report`).classList.add('active');
     });
 });
-
 // File Upload Handling
 const fileInput = document.getElementById('file-input');
 const fileUploadArea = document.getElementById('file-upload-area');
 const fileNameDisplay = document.getElementById('file-name-display');
-
 fileUploadArea.addEventListener('click', () => {
     fileInput.click();
 });
-
 fileInput.addEventListener('change', (e) => {
     handleFileSelect(e.target.files[0]);
 });
-
 // Drag and Drop
 fileUploadArea.addEventListener('dragover', (e) => {
     e.preventDefault();
     fileUploadArea.classList.add('drag-over');
 });
-
 fileUploadArea.addEventListener('dragleave', () => {
     fileUploadArea.classList.remove('drag-over');
 });
-
 fileUploadArea.addEventListener('drop', (e) => {
     e.preventDefault();
     fileUploadArea.classList.remove('drag-over');
@@ -1429,77 +1470,61 @@ fileUploadArea.addEventListener('drop', (e) => {
         handleFileSelect(file);
     }
 });
-
 function handleFileSelect(file) {
     if (!file) return;
-    
     const allowedTypes = ['.txt', '.pdf', '.docx', '.doc', '.md'];
     const fileExt = '.' + file.name.split('.').pop().toLowerCase();
-    
     if (!allowedTypes.includes(fileExt)) {
         alert('Unsupported file type. Please upload: TXT, PDF, DOCX, DOC, or MD files.');
         return;
     }
-    
     if (file.size > 10 * 1024 * 1024) {
         alert('File size exceeds 10MB limit.');
         return;
     }
-    
     fileNameDisplay.style.display = 'block';
     fileNameDisplay.innerHTML = `
         <strong>Selected file:</strong> ${file.name} 
         <span style="color: var(--text-muted);">(${formatFileSize(file.size)})</span>
     `;
 }
-
 function formatFileSize(bytes) {
     if (bytes < 1024) return bytes + ' B';
     if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
     return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
 }
-
 // Analyze Button
 document.getElementById('analyze-btn').addEventListener('click', async () => {
     const activeTab = document.querySelector('.input-tab.active').dataset.tab;
     const textInput = document.getElementById('text-input').value.trim();
     const fileInput = document.getElementById('file-input').files[0];
-    
     if (activeTab === 'paste' && !textInput) {
         alert('Please paste some text to analyze (minimum 50 characters).');
         return;
     }
-    
     if (activeTab === 'paste' && textInput.length < 50) {
         alert('Text must be at least 50 characters long for accurate analysis.');
         return;
     }
-    
     if (activeTab === 'upload' && !fileInput) {
         alert('Please select a file to upload.');
         return;
     }
-    
     await performAnalysis(activeTab, textInput, fileInput);
 });
-
 // Refresh Button - clears everything and shows empty state
 document.getElementById('refresh-btn').addEventListener('click', () => {
     resetAnalysisInterface();
 });
-
 // Try Next Button - same as refresh but keeps the interface ready
 document.getElementById('try-next-btn').addEventListener('click', () => {
     resetAnalysisInterface();
 });
-
 async function performAnalysis(mode, text, file) {
     const analyzeBtn = document.getElementById('analyze-btn');
     analyzeBtn.disabled = true;
     analyzeBtn.innerHTML = '⏳ Analyzing...';
-    
     showLoading();
-    
     try {
         let response;
         if (mode === 'paste') {
@@ -1507,7 +1532,6 @@ async function performAnalysis(mode, text, file) {
         } else {
             response = await analyzeFile(file);
         }
-        
         currentAnalysisData = response;
         displayResults(response);
     } catch (error) {
@@ -1518,14 +1542,12 @@ async function performAnalysis(mode, text, file) {
         analyzeBtn.innerHTML = '🔍 Analyze Text';
     }
 }
-
 async function analyzeText(text) {
     const domain = document.getElementById('domain-select').value || null;
     const enableAttribution = document.getElementById('enable-attribution').checked;
     const enableHighlighting = document.getElementById('enable-highlighting').checked;
     const useSentenceLevel = document.getElementById('use-sentence-level').checked;
     const includeMetricsSummary = document.getElementById('include-metrics-summary').checked;
-    
     const response = await fetch(`${API_BASE}/api/analyze`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -1539,21 +1561,17 @@ async function analyzeText(text) {
             skip_expensive_metrics: false
         })
     });
-    
     if (!response.ok) {
         const error = await response.json();
         throw new Error(error.error || 'Analysis failed');
     }
-    
     return await response.json();
 }
-
 async function analyzeFile(file) {
     const domain = document.getElementById('domain-select').value || null;
     const enableAttribution = document.getElementById('enable-attribution').checked;
     const useSentenceLevel = document.getElementById('use-sentence-level').checked;
     const includeMetricsSummary = document.getElementById('include-metrics-summary').checked;
-    
     const formData = new FormData();
     formData.append('file', file);
     if (domain) formData.append('domain', domain);
@@ -1561,20 +1579,16 @@ async function analyzeFile(file) {
     formData.append('use_sentence_level', useSentenceLevel.toString());
     formData.append('include_metrics_summary', includeMetricsSummary.toString());
     formData.append('skip_expensive_metrics', 'false');
-    
     const response = await fetch(`${API_BASE}/api/analyze/file`, {
         method: 'POST',
         body: formData
     });
-    
     if (!response.ok) {
         const error = await response.json();
         throw new Error(error.error || 'File analysis failed');
     }
-    
     return await response.json();
 }
-
 function showLoading() {
     document.getElementById('summary-report').innerHTML = `
         <div class="loading">
@@ -1586,7 +1600,6 @@ function showLoading() {
         </div>
     `;
 }
-
 function showError(message) {
     document.getElementById('summary-report').innerHTML = `
         <div class="empty-state">
@@ -1596,10 +1609,8 @@ function showError(message) {
         </div>
     `;
 }
-
 function displayResults(data) {
     console.log('Response data:', data);
-    
     // Handle different response structures
     const detection = data.detection_result;
     if (!detection) {
@@ -1607,16 +1618,13 @@ function displayResults(data) {
         console.error('Full response:', data);
         return;
     }
-    
     // Extract data based on your actual API structure
     const ensemble = detection.ensemble_result || detection.ensemble;
     const prediction = detection.prediction || {};
     const metrics = detection.metric_results || detection.metrics;
     const analysis = detection.analysis || {};
-    
     // Display Summary with enhanced reasoning
     displaySummary(ensemble, prediction, analysis, data.attribution, data.reasoning);
-    
     // Display Highlighted Text with enhanced features
     if (data.highlighted_html) {
         displayHighlightedText(data.highlighted_html);
@@ -1627,10 +1635,9 @@ function displayResults(data) {
             </div>
         `;
     }
-    
-    // Display Metrics with full details
+    // Display Metrics with carousel
     if (metrics && Object.keys(metrics).length > 0) {
-        displayMetrics(metrics, analysis, ensemble);
+        displayMetricsCarousel(metrics, analysis, ensemble);
     } else {
         document.getElementById('metrics-report').innerHTML = `
             <div class="empty-state">
@@ -1639,7 +1646,6 @@ function displayResults(data) {
         `;
     }
 }
-
 function displaySummary(ensemble, prediction, analysis, attribution, reasoning) {
     // Use ensemble values from your actual API response
     const aiProbability = ensemble.ai_probability !== undefined ? 
@@ -1651,12 +1657,10 @@ function displaySummary(ensemble, prediction, analysis, attribution, reasoning) 
     const isAI = verdict.toLowerCase().includes('ai');
     const gaugeColor = isAI ? 'var(--danger)' : 'var(--success)';
     const gaugeDegree = aiProbability * 3.6;
-    
     const confidenceLevel = parseFloat(confidence) >= 70 ? 'HIGH' :
                            parseFloat(confidence) >= 40 ? 'MEDIUM' : 'LOW';
     const confidenceClass = confidenceLevel === 'HIGH' ? 'confidence-high' : 
                            confidenceLevel === 'MEDIUM' ? 'confidence-medium' : 'confidence-low';
-
     let attributionHTML = '';
     if (attribution && attribution.predicted_model) {
         const modelName = attribution.predicted_model.replace(/_/g, ' ').replace(/-/g, ' ').toUpperCase();
@@ -1677,17 +1681,12 @@ function displaySummary(ensemble, prediction, analysis, attribution, reasoning) 
         attributionHTML = `
             <div class="attribution-section">
                 <div class="attribution-title">🤖 AI Model Attribution</div>
-                <div class="model-match">
-                    <span class="model-name">Most Likely: ${modelName}</span>
-                    <span class="model-confidence">${modelConf}%</span>
-                </div>
                 ${topModels}
                 ${attribution.reasoning && attribution.reasoning.length > 0 ? 
                     `<p style="color: var(--text-secondary); margin-top: 1rem; font-size: 0.9rem;">${attribution.reasoning[0]}</p>` : ''}
             </div>
         `;
     }
-
     document.getElementById('summary-report').innerHTML = `
         <div class="result-summary">
             <div class="gauge-container">
@@ -1727,10 +1726,12 @@ function displaySummary(ensemble, prediction, analysis, attribution, reasoning) 
         </div>
     `;
 }
-
 function createEnhancedReasoningHTML(ensemble, analysis, reasoning) {
     // Use actual reasoning data if available
     if (reasoning && reasoning.summary) {
+        // Process markdown-style *text* to <strong> tags
+        let processedSummary = reasoning.summary;
+        processedSummary = processedSummary.replace(/\*([^*]+)\*/g, '<strong>$1</strong>');
         return `
             <div class="reasoning-box enhanced">
                 <div class="reasoning-header">
@@ -1740,30 +1741,30 @@ function createEnhancedReasoningHTML(ensemble, analysis, reasoning) {
                         ${ensemble.overall_confidence >= 0.7 ? 'High Confidence' : ensemble.overall_confidence >= 0.4 ? 'Medium Confidence' : 'Low Confidence'}
                     </div>
                 </div>
-                
                 <div class="verdict-summary">
                     <div class="verdict-text">${ensemble.final_verdict}</div>
                     <div class="probability">AI Probability: <span class="probability-value">${(ensemble.ai_probability * 100).toFixed(2)}%</span></div>
                 </div>
-
-                <div style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">
-                    ${reasoning.summary}
+                <div class="reasoning-text-content">
+                    ${processedSummary}
                 </div>
-
                 ${reasoning.key_indicators && reasoning.key_indicators.length > 0 ? `
                     <div class="metrics-breakdown">
                         <div class="breakdown-header">Key Indicators</div>
-                        ${reasoning.key_indicators.map(indicator => `
-                            <div class="metric-indicator">
-                                <div class="metric-name">${indicator.split(':')[0]}</div>
-                                <div class="metric-details">
-                                    <span style="color: var(--text-secondary); font-size: 0.9rem;">${indicator.split(':')[1]}</span>
+                        ${reasoning.key_indicators.map(indicator => {
+                            let processedIndicator = indicator;
+                            processedIndicator = processedIndicator.replace(/\*([^*]+)\*/g, '<strong>$1</strong>');
+                            return `
+                                <div class="metric-indicator">
+                                    <div class="metric-name">${processedIndicator.split(':')[0]}</div>
+                                    <div class="metric-details">
+                                        <span class="reasoning-text-content">${processedIndicator.split(':')[1]}</span>
+                                    </div>
                                 </div>
-                            </div>
-                        `).join('')}
+                            `;
+                        }).join('')}
                     </div>
                 ` : ''}
-
                 ${ensemble.consensus_level > 0.7 ? `
                     <div class="agreement-indicator">
                         <div class="agreement-icon">✓</div>
@@ -1773,7 +1774,6 @@ function createEnhancedReasoningHTML(ensemble, analysis, reasoning) {
             </div>
         `;
     }
-
     // Fallback to basic reasoning if no reasoning data
     return `
         <div class="reasoning-box">
@@ -1786,7 +1786,6 @@ function createEnhancedReasoningHTML(ensemble, analysis, reasoning) {
         </div>
     `;
 }
-
 function displayHighlightedText(html) {
     document.getElementById('highlighted-report').innerHTML = `
         ${createDefaultLegend()}
@@ -1796,7 +1795,6 @@ function displayHighlightedText(html) {
         ${getHighlightStyles()}
     `;
 }
-
 function createDefaultLegend() {
     return `
         <div class="highlight-legend">
@@ -1835,7 +1833,6 @@ function createDefaultLegend() {
         </div>
     `;
 }
-
 function getHighlightStyles() {
     return `
         <style>
@@ -1891,87 +1888,118 @@ function getHighlightStyles() {
         </style>
     `;
 }
-
-function displayMetrics(metrics, analysis, ensemble) {
-    const metricOrder = ['structural', 'perplexity', 'entropy', 'semantic_analysis', 'linguistic', 'detect_gpt'];
-    
-    let metricsHTML = `
-        <div style="margin-bottom: 2rem; padding: 1.5rem; background: rgba(51, 65, 85, 0.3); border-radius: 10px;">
-            <h3 style="color: var(--primary); margin-bottom: 1rem;">📊 Ensemble Analysis</h3>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
-                <div>
-                    <div style="font-size: 0.85rem; color: var(--text-secondary);">Method</div>
-                    <div style="font-size: 1.1rem; font-weight: 700; color: #fff;">Confidence Calibrated</div>
-                </div>
-                <div>
-                    <div style="font-size: 0.85rem; color: var(--text-secondary);">Consensus</div>
-                    <div style="font-size: 1.1rem; font-weight: 700; color: #fff;">${(ensemble.consensus_level * 100).toFixed(1)}%</div>
-                </div>
-                <div>
-                    <div style="font-size: 0.85rem; color: var(--text-secondary);">Uncertainty</div>
-                    <div style="font-size: 1.1rem; font-weight: 700; color: #fff;">${(ensemble.uncertainty_score * 100).toFixed(1)}%</div>
-                </div>
+function displayMetricsCarousel(metrics, analysis, ensemble) {
+    const metricOrder = ['structural', 'perplexity', 'entropy', 'semantic_analysis', 'linguistic', 'multi_perturbation_stability'];
+    const availableMetrics = metricOrder.filter(key => metrics[key]);
+    totalMetrics = availableMetrics.length;
+    if (totalMetrics === 0) {
+        document.getElementById('metrics-report').innerHTML = `
+            <div class="empty-state">
+                <p class="empty-description">No metric details available</p>
             </div>
-        </div>
+        `;
+        return;
+    }
+    let carouselHTML = `
+        <div class="metrics-carousel-container">
+            <div class="metrics-carousel-content">
     `;
-
-    metricOrder.forEach(metricKey => {
+    availableMetrics.forEach((metricKey, index) => {
         const metric = metrics[metricKey];
         if (!metric) return;
-        
         const aiProb = (metric.ai_probability * 100).toFixed(1);
         const humanProb = (metric.human_probability * 100).toFixed(1);
         const confidence = (metric.confidence * 100).toFixed(1);
-        const weight = ensemble.metric_weights && ensemble.metric_weights[metricKey] ? 
-            (ensemble.metric_weights[metricKey] * 100).toFixed(1) : '0.0';
-        
+        const weight = ensemble.metric_contributions && ensemble.metric_contributions[metricKey] ?
+              (ensemble.metric_contributions[metricKey].weight * 100).toFixed(1) : '0.0';
         const color = metric.ai_probability >= 0.6 ? 'var(--danger)' : 
                      metric.ai_probability >= 0.4 ? 'var(--warning)' : 'var(--success)';
         const verdictText = metric.ai_probability >= 0.6 ? 'AI' :
                            metric.ai_probability >= 0.4 ? 'UNCERTAIN' : 'HUMAN';
         const verdictClass = verdictText === 'AI' ? 'verdict-ai' :
                             verdictText === 'UNCERTAIN' ? 'verdict-uncertain' : 'verdict-human';
-        
-        metricsHTML += `
-            <div class="metric-result-card" style="margin-bottom: 1.5rem;">
-                <div class="metric-header">
-                    <div class="metric-name">${formatMetricName(metricKey)}</div>
-                    <div class="metric-score" style="color: ${color};">${aiProb}%</div>
-                </div>
-                <div style="display: flex; gap: 1rem; margin: 1rem 0;">
-                    <div style="flex: 1;">
-                        <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.25rem;">AI</div>
-                        <div style="background: rgba(51, 65, 85, 0.5); height: 8px; border-radius: 4px; overflow: hidden;">
-                            <div style="background: var(--danger); height: 100%; width: ${aiProb}%; transition: width 0.5s;"></div>
-                        </div>
-                        <div style="font-size: 0.85rem; font-weight: 600; margin-top: 0.25rem;">${aiProb}%</div>
+        carouselHTML += `
+            <div class="metric-slide ${index === 0 ? 'active' : ''}" data-metric-index="${index}">
+                <div class="metric-result-card">
+                    <div class="metric-header">
+                        <div class="metric-name">${formatMetricName(metricKey)}</div>
                     </div>
-                    <div style="flex: 1;">
-                        <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.25rem;">Human</div>
-                        <div style="background: rgba(51, 65, 85, 0.5); height: 8px; border-radius: 4px; overflow: hidden;">
-                            <div style="background: var(--success); height: 100%; width: ${humanProb}%; transition: width 0.5s;"></div>
-                        </div>
-                        <div style="font-size: 0.85rem; font-weight: 600; margin-top: 0.25rem;">${humanProb}%</div>
+                    <div class="metric-description">
+                        ${getMetricDescription(metricKey)}
                     </div>
+                    <div style="display: flex; gap: 1rem; margin: 1rem 0;">
+                        <div style="flex: 1;">
+                            <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.25rem;">AI</div>
+                            <div style="background: rgba(51, 65, 85, 0.5); height: 8px; border-radius: 4px; overflow: hidden;">
+                                <div style="background: var(--danger); height: 100%; width: ${aiProb}%; transition: width 0.5s;"></div>
+                            </div>
+                            <div style="font-size: 0.85rem; font-weight: 600; margin-top: 0.25rem;">${aiProb}%</div>
+                        </div>
+                        <div style="flex: 1;">
+                            <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.25rem;">Human</div>
+                            <div style="background: rgba(51, 65, 85, 0.5); height: 8px; border-radius: 4px; overflow: hidden;">
+                                <div style="background: var(--success); height: 100%; width: ${humanProb}%; transition: width 0.5s;"></div>
+                            </div>
+                            <div style="font-size: 0.85rem; font-weight: 600; margin-top: 0.25rem;">${humanProb}%</div>
+                        </div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin: 0.75rem 0;">
+                        <span class="metric-verdict ${verdictClass}">${verdictText}</span>
+                        <span style="font-size: 0.85rem; color: var(--text-secondary);">Confidence: ${confidence}% | Weight: ${weight}%</span>
+                    </div>
+                    
+                    ${metric.details ? renderMetricDetails(metricKey, metric.details) : ''}
                 </div>
-                <div style="display: flex; justify-content: space-between; align-items: center; margin: 0.75rem 0;">
-                    <span class="metric-verdict ${verdictClass}">${verdictText}</span>
-                    <span style="font-size: 0.85rem; color: var(--text-secondary);">Confidence: ${confidence}% | Weight: ${weight}%</span>
-                </div>
-                <div class="metric-description">
-                    ${getMetricDescription(metricKey)}
-                </div>
-                ${metric.details ? renderMetricDetails(metricKey, metric.details) : ''}
             </div>
         `;
     });
-    
-    document.getElementById('metrics-report').innerHTML = metricsHTML;
+    carouselHTML += `
+            </div>
+            <div class="metrics-carousel-nav">
+                <button class="carousel-btn prev-btn" onclick="navigateMetrics(-1)" ${currentMetricIndex === 0 ? 'disabled' : ''}>← Previous</button>
+                <div class="carousel-position">${currentMetricIndex + 1} / ${totalMetrics}</div>
+                <button class="carousel-btn next-btn" onclick="navigateMetrics(1)" ${currentMetricIndex === totalMetrics - 1 ? 'disabled' : ''}>Next →</button>
+            </div>
+        </div>
+    `;
+    document.getElementById('metrics-report').innerHTML = carouselHTML;
+    updateCarouselButtons();
 }
-
+function navigateMetrics(direction) {
+    const newMetricIndex = currentMetricIndex + direction;
+    if (newMetricIndex >= 0 && newMetricIndex < totalMetrics) {
+        currentMetricIndex = newMetricIndex;
+        updateMetricCarousel();
+    }
+}
+function updateMetricCarousel() {
+    const slides = document.querySelectorAll('.metric-slide');
+    slides.forEach((slide, index) => {
+        if (index === currentMetricIndex) {
+            slide.classList.add('active');
+        } else {
+            slide.classList.remove('active');
+        }
+    });
+    updateCarouselButtons();
+    // Update position indicator
+    const positionElement = document.querySelector('.carousel-position');
+    if (positionElement) {
+        positionElement.textContent = `${currentMetricIndex + 1} / ${totalMetrics}`;
+    }
+}
+function updateCarouselButtons() {
+    const prevBtn = document.querySelector('.prev-btn');
+    const nextBtn = document.querySelector('.next-btn');
+    if (prevBtn) {
+        prevBtn.disabled = currentMetricIndex === 0;
+    }
+    if (nextBtn) {
+        nextBtn.disabled = currentMetricIndex === totalMetrics - 1;
+    }
+}
 function renderMetricDetails(metricName, details) {
     if (!details || Object.keys(details).length === 0) return '';
-    
     // Key metrics to show for each type
     const importantKeys = {
         'structural': ['burstiness_score', 'length_uniformity', 'avg_sentence_length', 'std_sentence_length'],
@@ -1979,14 +2007,12 @@ function renderMetricDetails(metricName, details) {
         'entropy': ['token_diversity', 'sequence_unpredictability', 'char_entropy'],
         'semantic_analysis': ['coherence_score', 'consistency_score', 'repetition_score'],
         'linguistic': ['pos_diversity', 'syntactic_complexity', 'grammatical_consistency'],
-        'detect_gpt': ['stability_score', 'curvature_score', 'likelihood_ratio']
+        'multi_perturbation_stability': ['stability_score', 'curvature_score', 'likelihood_ratio']
     };
-    
     const keysToShow = importantKeys[metricName] || Object.keys(details).slice(0, 6);
     let detailsHTML = '<div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border);">';
     detailsHTML += '<div style="font-size: 0.9rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 0.75rem;">📈 Detailed Metrics:</div>';
     detailsHTML += '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.75rem; font-size: 0.85rem;">';
-    
     keysToShow.forEach(key => {
         if (details[key] !== undefined && details[key] !== null) {
             const value = typeof details[key] === 'number' ? 
@@ -2001,11 +2027,9 @@ function renderMetricDetails(metricName, details) {
             `;
         }
     });
-    
     detailsHTML += '</div></div>';
     return detailsHTML;
 }
-
 function getMetricDescription(metricName) {
     const descriptions = {
         structural: 'Analyzes sentence structure, length patterns, and statistical features.',
@@ -2013,11 +2037,10 @@ function getMetricDescription(metricName) {
         entropy: 'Evaluates token diversity and sequence unpredictability.',
         semantic_analysis: 'Examines semantic coherence, topic consistency, and logical flow.',
         linguistic: 'Assesses grammatical patterns, syntactic complexity, and style markers.',
-        detect_gpt: 'Tests text stability under perturbation using curvature analysis.'
+        multi_perturbation_stability: 'Tests text stability under perturbation using curvature analysis.'
     };
     return descriptions[metricName] || 'Metric analysis complete.';
 }
-
 function formatMetricName(name) {
     const names = {
         structural: 'Structural Analysis',
@@ -2025,25 +2048,21 @@ function formatMetricName(name) {
         entropy: 'Entropy',
         semantic_analysis: 'Semantic Analysis',
         linguistic: 'Linguistic Analysis',
-        detect_gpt: 'DetectGPT'
+        multi_perturbation_stability: 'Multi-Perturbation Stability'
     };
     return names[name] || name.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
 }
-
 function formatDomainName(domain) {
     return domain.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
 }
-
 async function downloadReport(format) {
     if (!currentAnalysisData) {
         alert('No analysis data available');
         return;
     }
-    
     try {
         const analysisId = currentAnalysisData.analysis_id;
         const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-        
         // For JSON, download directly from current data
         if (format === 'json') {
             const data = {
@@ -2058,7 +2077,6 @@ async function downloadReport(format) {
             await downloadBlob(blob, filename);
             return;
         }
-        
         // Get the original text for report generation
         const activeTab = document.querySelector('.input-tab.active').dataset.tab;
         let textToSend = '';
@@ -2068,23 +2086,19 @@ async function downloadReport(format) {
             textToSend = currentAnalysisData.detection_result?.processed_text?.text || 
                         'Uploaded file content - see analysis for details';
         }
-        
         // For PDF, request from server
         const formData = new FormData();
         formData.append('analysis_id', analysisId);
         formData.append('text', textToSend);
         formData.append('formats', format);
         formData.append('include_highlights', document.getElementById('enable-highlighting').checked.toString());
-        
         const response = await fetch(`${API_BASE}/api/report/generate`, {
             method: 'POST',
             body: formData
         });
-        
         if (!response.ok) {
             throw new Error('Report generation failed');
         }
-        
         const result = await response.json();
         if (result.reports && result.reports[format]) {
             const filename = result.reports[format];
@@ -2103,7 +2117,6 @@ async function downloadReport(format) {
         alert('Failed to download report. Please try again.');
     }
 }
-
 async function downloadBlob(blob, filename) {
     try {
         const url = URL.createObjectURL(blob);
@@ -2113,7 +2126,6 @@ async function downloadBlob(blob, filename) {
         a.style.display = 'none';
         document.body.appendChild(a);
         a.click();
-        
         setTimeout(() => {
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
@@ -2124,7 +2136,6 @@ async function downloadBlob(blob, filename) {
         alert('Download failed. Please try again.');
     }
 }
-
 function showDownloadSuccess(filename) {
     const notification = document.createElement('div');
     notification.style.cssText = `
@@ -2147,7 +2158,6 @@ function showDownloadSuccess(filename) {
         </div>
     `;
     document.body.appendChild(notification);
-    
     if (!document.querySelector('#download-animation')) {
         const style = document.createElement('style');
         style.id = 'download-animation';
@@ -2159,14 +2169,12 @@ function showDownloadSuccess(filename) {
         `;
         document.head.appendChild(style);
     }
-    
     setTimeout(() => {
         if (notification.parentNode) {
             notification.parentNode.removeChild(notification);
         }
     }, 3000);
 }
-
 // Smooth scrolling for anchor links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
@@ -2180,7 +2188,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         }
     });
 });
-
 // Initialize - show landing page by default
 showLanding();
 </script>

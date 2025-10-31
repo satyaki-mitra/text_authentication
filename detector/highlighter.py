@@ -48,7 +48,7 @@ class TextHighlighter:
     - Explainable tooltips
     - Highlighting metrics calculation
     """
-    # Color thresholds with mixed content support - FIXED RANGES
+    # Color thresholds with mixed content support
     COLOR_THRESHOLDS = [(0.00, 0.10, "very-high-human", "#dcfce7", "Very likely human-written"),
                         (0.10, 0.25, "high-human", "#bbf7d0", "Likely human-written"),
                         (0.25, 0.40, "medium-human", "#86efac", "Possibly human-written"),
@@ -61,7 +61,7 @@ class TextHighlighter:
     # Mixed content pattern
     MIXED_THRESHOLD  = 0.25
 
-    # GPTZero-like risk weights
+    # Risk weights
     RISK_WEIGHTS     = {'very-high-ai'    : 1.0,
                         'high-ai'         : 0.8,
                         'medium-ai'       : 0.6,
@@ -189,7 +189,7 @@ class TextHighlighter:
     def _calculate_sentence_ensemble_probability(self, sentence: str, metric_results: Dict[str, MetricResult], weights: Dict[str, float], 
                                                  ensemble_result: Optional[EnsembleResult] = None) -> Tuple[float, float, float, float, Dict[str, float]]:
         """
-        Calculate sentence probabilities using ensemble methods with domain calibration - FIXED
+        Calculate sentence probabilities using ensemble methods with domain calibration
         """
         sentence_length = len(sentence.split())
         
@@ -289,7 +289,7 @@ class TextHighlighter:
 
     def _calculate_weighted_probability(self, metric_results: Dict[str, MetricResult], weights: Dict[str, float], breakdown: Dict[str, float]) -> Tuple[float, float, float, float, Dict[str, float]]:
         """
-        Fallback weighted probability calculation - FIXED
+        Fallback weighted probability calculation
         """
         weighted_ai_probs    = list()
         weighted_human_probs = list()
@@ -456,8 +456,8 @@ class TextHighlighter:
             if self._has_repetition(sentence):
                 return min(1.0, base_prob * 1.2)
         
-        elif (metric_name == "detect_gpt"):
-            # DetectGPT adjustments for sentence level
+        elif (metric_name == "multi_perturbation_stability"):
+            # MultiPerturbationStability adjustments for sentence level
             if (sentence_length > 15):
                 return min(1.0, base_prob * 1.1)
         
@@ -466,7 +466,7 @@ class TextHighlighter:
 
     def _get_color_for_probability(self, probability: float, is_mixed_content: bool = False, mixed_prob: float = 0.0) -> Tuple[str, str, str]:
         """
-        Get color class with mixed content support - FIXED
+        Get color class with mixed content support
         """
         # Check mixed content first
         if (is_mixed_content and (mixed_prob > self.MIXED_THRESHOLD)):
@@ -687,7 +687,7 @@ class TextHighlighter:
             
             include_legend         { bool }                     : Whether to include legend (set to False to avoid duplicates)
             
-            include_metrics        { bool }                     : Whether to include GPTZero-like metrics summary
+            include_metrics        { bool }                     : Whether to include metrics summary
             
         Returns:
         --------
@@ -732,7 +732,7 @@ class TextHighlighter:
 
     def _generate_enhanced_css(self) -> str:
         """
-        Generate CSS for highlighting - FIXED: Better readability
+        Generate CSS for highlighting for Better readability
         """
         return """
         <style>
@@ -863,7 +863,7 @@ class TextHighlighter:
 
     def _generate_metrics_summary(self, sentences: List[HighlightedSentence]) -> str:
         """
-        Generate summary statistics for highlighted sentences - FIXED to calculate like GPTZero
+        Generate summary statistics for highlighted sentences
         """
         if not sentences:
             return ""
@@ -893,7 +893,7 @@ class TextHighlighter:
         avg_ai_prob        = sum(s.ai_probability for s in sentences) / total_sentences
         avg_human_prob     = sum(s.human_probability for s in sentences) / total_sentences
         
-        # GPTZero-like sentence counts
+        # Sentence counts
         ai_sentences       = very_high_ai + high_ai + medium_ai
         human_sentences    = very_high_human + high_human + medium_human
         
@@ -994,7 +994,7 @@ class TextHighlighter:
             
         Returns:
         --------
-            { Dict[str, float] } : Dictionary with GPTZero-like metrics
+                         { Dict[str, float] }                   : Dictionary with metrics
         """
         if not highlighted_sentences:
             return {}

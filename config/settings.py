@@ -34,13 +34,13 @@ class Settings(BaseSettings):
     
     # File Upload Settings
     MAX_UPLOAD_SIZE         : int           = 10 * 1024 * 1024  # 10MB
-    ALLOWED_EXTENSIONS      : list          = [".txt", ".pdf", ".docx", ".doc"]
+    ALLOWED_EXTENSIONS      : list          = [".txt", ".pdf", ".docx", ".doc", ".md"]
     
     # Processing Settings
-    MAX_TEXT_LENGTH         : int           = 50000  # Maximum characters to process
-    MIN_TEXT_LENGTH         : int           = 50     # Minimum characters for analysis
-    CHUNK_SIZE              : int           = 512    # Tokens per chunk
-    CHUNK_OVERLAP           : int           = 50     # Overlap between chunks
+    MAX_TEXT_LENGTH         : int           = 500000  # Maximum characters to process
+    MIN_TEXT_LENGTH         : int           = 50      # Minimum characters for analysis
+    CHUNK_SIZE              : int           = 512     # Tokens per chunk
+    CHUNK_OVERLAP           : int           = 50      # Overlap between chunks
     
     # Model Settings
     DEVICE                  : str           = Field(default = "cpu", env = "DEVICE")  # "cuda" or "cpu"
@@ -87,12 +87,12 @@ class Settings(BaseSettings):
     REQUEST_TIMEOUT         : int           = 300  # seconds (5 minutes)
     
     # Metrics Configuration
-    METRICS_ENABLED         : dict          = {"semantic_analysis"   : True,
-                                               "detect_gpt"          : True,
-                                               "perplexity"          : True,
-                                               "statistical"         : True,
-                                               "entropy"             : True,
-                                               "linguistic"          : True,
+    METRICS_ENABLED         : dict          = {"semantic_analysis"            : True,
+                                               "multi_perturbation_stability" : True,
+                                               "perplexity"                   : True,
+                                               "statistical"                  : True,
+                                               "entropy"                      : True,
+                                               "linguistic"                   : True,
                                               }
     
     class Config:

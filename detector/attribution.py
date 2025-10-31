@@ -78,12 +78,12 @@ class ModelAttributor:
     - Explainable reasoning
     """
     # DOCUMENT-ALIGNED: Metric weights from technical specification
-    METRIC_WEIGHTS           = {"perplexity"       : 0.25,  
-                                "structural"       : 0.15,   
-                                "semantic_analysis": 0.15,  
-                                "entropy"          : 0.20,  
-                                "linguistic"       : 0.15,  
-                                "detect_gpt"       : 0.10,  
+    METRIC_WEIGHTS           = {"perplexity"                   : 0.25,  
+                                "structural"                   : 0.15,   
+                                "semantic_analysis"            : 0.15,  
+                                "entropy"                      : 0.20,  
+                                "linguistic"                   : 0.15,  
+                                "multi_perturbation_stability" : 0.10,  
                                }
     
     # DOMAIN-AWARE model patterns for ALL 16 DOMAINS
@@ -441,13 +441,17 @@ class ModelAttributor:
             domain_preferences                    = self.DOMAIN_MODEL_PREFERENCES.get(domain, [AIModel.GPT_4, AIModel.CLAUDE_3_SONNET])
             
             # Fingerprint analysis
-            fingerprint_scores                    = self._calculate_fingerprint_scores(text, domain)
+            fingerprint_scores                    = self._calculate_fingerprint_scores(text   = text,
+                                                                                       domain = domain,
+                                                                                      )
             
             # Statistical pattern analysis
-            statistical_scores                    = self._analyze_statistical_patterns(text, domain)
+            statistical_scores                    = self._analyze_statistical_patterns(text   = text, 
+                                                                                       domain = domain,
+                                                                                      )
             
             # Metric-based attribution using all 6 metrics
-            metric_scores                         = self._analyze_metric_patterns(metric_results, domain) if metric_results else {}
+            metric_scores                         = self._analyze_metric_patterns(metric_results = metric_results, domain = domain) if metric_results else {}
             
             # Ensemble Combination
             combined_scores, metric_contributions = self._combine_attribution_scores(fingerprint_scores = fingerprint_scores,
@@ -462,7 +466,7 @@ class ModelAttributor:
                                                                                        domain_preferences = domain_preferences,
                                                                                       )
             
-            # Reasoning with domain context
+            # Reasoning with domain context - FIXED
             reasoning                             = self._generate_detailed_reasoning(predicted_model      = predicted_model,
                                                                                       confidence           = confidence,
                                                                                       domain               = domain,
@@ -650,22 +654,22 @@ class ModelAttributor:
             return scores
         
         # DOMAIN-AWARE: Adjust metric sensitivity based on domain 
-        domain_metric_weights = {Domain.GENERAL       : {"perplexity": 1.0, "structural": 1.0, "entropy": 1.0, "semantic_analysis": 1.0, "linguistic": 1.0, "detect_gpt": 1.0},
-                                 Domain.ACADEMIC      : {"perplexity": 1.2, "structural": 1.0, "entropy": 0.9, "semantic_analysis": 1.1, "linguistic": 1.3, "detect_gpt": 0.8},
-                                 Domain.TECHNICAL_DOC : {"perplexity": 1.2, "structural": 1.1, "entropy": 0.9, "semantic_analysis": 1.2, "linguistic": 1.1, "detect_gpt": 0.8},
-                                 Domain.AI_ML         : {"perplexity": 1.3, "structural": 1.0, "entropy": 0.9, "semantic_analysis": 1.2, "linguistic": 1.2, "detect_gpt": 0.8},
-                                 Domain.SOFTWARE_DEV  : {"perplexity": 1.2, "structural": 1.1, "entropy": 0.9, "semantic_analysis": 1.1, "linguistic": 1.0, "detect_gpt": 0.9},
-                                 Domain.ENGINEERING   : {"perplexity": 1.2, "structural": 1.1, "entropy": 0.9, "semantic_analysis": 1.1, "linguistic": 1.2, "detect_gpt": 0.8},
-                                 Domain.SCIENCE       : {"perplexity": 1.2, "structural": 1.0, "entropy": 0.9, "semantic_analysis": 1.2, "linguistic": 1.3, "detect_gpt": 0.8},
-                                 Domain.BUSINESS      : {"perplexity": 1.1, "structural": 1.0, "entropy": 1.0, "semantic_analysis": 1.2, "linguistic": 1.1, "detect_gpt": 0.9},
-                                 Domain.LEGAL         : {"perplexity": 1.2, "structural": 1.1, "entropy": 0.9, "semantic_analysis": 1.3, "linguistic": 1.3, "detect_gpt": 0.8},
-                                 Domain.MEDICAL       : {"perplexity": 1.2, "structural": 1.0, "entropy": 0.9, "semantic_analysis": 1.2, "linguistic": 1.2, "detect_gpt": 0.8},
-                                 Domain.JOURNALISM    : {"perplexity": 1.1, "structural": 1.0, "entropy": 1.0, "semantic_analysis": 1.1, "linguistic": 1.1, "detect_gpt": 0.9},
-                                 Domain.CREATIVE      : {"perplexity": 0.9, "structural": 0.9, "entropy": 1.2, "semantic_analysis": 1.0, "linguistic": 1.3, "detect_gpt": 0.9},
-                                 Domain.MARKETING     : {"perplexity": 1.0, "structural": 1.0, "entropy": 1.1, "semantic_analysis": 1.1, "linguistic": 1.2, "detect_gpt": 0.8},
-                                 Domain.SOCIAL_MEDIA  : {"perplexity": 1.0, "structural": 0.8, "entropy": 1.3, "semantic_analysis": 0.9, "linguistic": 0.9, "detect_gpt": 0.9},
-                                 Domain.BLOG_PERSONAL : {"perplexity": 1.0, "structural": 0.9, "entropy": 1.2, "semantic_analysis": 1.0, "linguistic": 1.1, "detect_gpt": 0.8},
-                                 Domain.TUTORIAL      : {"perplexity": 1.1, "structural": 1.0, "entropy": 1.0, "semantic_analysis": 1.1, "linguistic": 1.1, "detect_gpt": 0.9},
+        domain_metric_weights = {Domain.GENERAL       : {"perplexity": 1.0, "structural": 1.0, "entropy": 1.0, "semantic_analysis": 1.0, "linguistic": 1.0, "multi_perturbation_stability": 1.0},
+                                 Domain.ACADEMIC      : {"perplexity": 1.2, "structural": 1.0, "entropy": 0.9, "semantic_analysis": 1.1, "linguistic": 1.3, "multi_perturbation_stability": 0.8},
+                                 Domain.TECHNICAL_DOC : {"perplexity": 1.2, "structural": 1.1, "entropy": 0.9, "semantic_analysis": 1.2, "linguistic": 1.1, "multi_perturbation_stability": 0.8},
+                                 Domain.AI_ML         : {"perplexity": 1.3, "structural": 1.0, "entropy": 0.9, "semantic_analysis": 1.2, "linguistic": 1.2, "multi_perturbation_stability": 0.8},
+                                 Domain.SOFTWARE_DEV  : {"perplexity": 1.2, "structural": 1.1, "entropy": 0.9, "semantic_analysis": 1.1, "linguistic": 1.0, "multi_perturbation_stability": 0.9},
+                                 Domain.ENGINEERING   : {"perplexity": 1.2, "structural": 1.1, "entropy": 0.9, "semantic_analysis": 1.1, "linguistic": 1.2, "multi_perturbation_stability": 0.8},
+                                 Domain.SCIENCE       : {"perplexity": 1.2, "structural": 1.0, "entropy": 0.9, "semantic_analysis": 1.2, "linguistic": 1.3, "multi_perturbation_stability": 0.8},
+                                 Domain.BUSINESS      : {"perplexity": 1.1, "structural": 1.0, "entropy": 1.0, "semantic_analysis": 1.2, "linguistic": 1.1, "multi_perturbation_stability": 0.9},
+                                 Domain.LEGAL         : {"perplexity": 1.2, "structural": 1.1, "entropy": 0.9, "semantic_analysis": 1.3, "linguistic": 1.3, "multi_perturbation_stability": 0.8},
+                                 Domain.MEDICAL       : {"perplexity": 1.2, "structural": 1.0, "entropy": 0.9, "semantic_analysis": 1.2, "linguistic": 1.2, "multi_perturbation_stability": 0.8},
+                                 Domain.JOURNALISM    : {"perplexity": 1.1, "structural": 1.0, "entropy": 1.0, "semantic_analysis": 1.1, "linguistic": 1.1, "multi_perturbation_stability": 0.9},
+                                 Domain.CREATIVE      : {"perplexity": 0.9, "structural": 0.9, "entropy": 1.2, "semantic_analysis": 1.0, "linguistic": 1.3, "multi_perturbation_stability": 0.9},
+                                 Domain.MARKETING     : {"perplexity": 1.0, "structural": 1.0, "entropy": 1.1, "semantic_analysis": 1.1, "linguistic": 1.2, "multi_perturbation_stability": 0.8},
+                                 Domain.SOCIAL_MEDIA  : {"perplexity": 1.0, "structural": 0.8, "entropy": 1.3, "semantic_analysis": 0.9, "linguistic": 0.9, "multi_perturbation_stability": 0.9},
+                                 Domain.BLOG_PERSONAL : {"perplexity": 1.0, "structural": 0.9, "entropy": 1.2, "semantic_analysis": 1.0, "linguistic": 1.1, "multi_perturbation_stability": 0.8},
+                                 Domain.TUTORIAL      : {"perplexity": 1.1, "structural": 1.0, "entropy": 1.0, "semantic_analysis": 1.1, "linguistic": 1.1, "multi_perturbation_stability": 0.9},
                                 }
         
         domain_weights        = domain_metric_weights.get(domain, domain_metric_weights[Domain.GENERAL])
@@ -733,16 +737,16 @@ class ModelAttributor:
                 scores[AIModel.CLAUDE_3_OPUS] += 0.5 * self.METRIC_WEIGHTS["linguistic"] * domain_weight
                 scores[AIModel.GPT_4]         += 0.4 * self.METRIC_WEIGHTS["linguistic"] * domain_weight
         
-        # DETECTGPT ANALYSIS (10% weight)
-        if ("detect_gpt" in metric_results):
-            detectgpt_result = metric_results["detect_gpt"]
-            stability        = detectgpt_result.details.get("stability_score", 0.5)
-            curvature        = detectgpt_result.details.get("curvature_score", 0.5)
+        # MULTI-PERTURBATION STABILITY ANALYSIS (10% weight)
+        if ("multi_perturbation_stability" in metric_results):
+            multi_perturbation_stability_result = metric_results["multi_perturbation_stability"]
+            stability                           = multi_perturbation_stability_result.details.get("stability_score", 0.5)
+            curvature                           = multi_perturbation_stability_result.details.get("curvature_score", 0.5)
             
             # Specific stability patterns for different model families
             if (0.4 <= stability <= 0.6):
-                scores[AIModel.MIXTRAL] += 0.4 * self.METRIC_WEIGHTS["detect_gpt"]
-                scores[AIModel.LLAMA_3] += 0.3 * self.METRIC_WEIGHTS["detect_gpt"]
+                scores[AIModel.MIXTRAL] += 0.4 * self.METRIC_WEIGHTS["multi_perturbation_stability"]
+                scores[AIModel.LLAMA_3] += 0.3 * self.METRIC_WEIGHTS["multi_perturbation_stability"]
         
         # Normalize scores
         for model in scores:
@@ -823,7 +827,7 @@ class ModelAttributor:
         
         # FIXED: Only return UNKNOWN if the best score is very low
         # Use a more reasonable threshold for attribution
-        if best_score < 0.08:  # Changed from 0.15 to 0.08 to be less restrictive
+        if best_score < 0.05:  # Changed from 0.08 to 0.05 to be less restrictive
             return AIModel.UNKNOWN, best_score
         
         # FIXED: Don't override with domain preferences if there's a clear winner
@@ -868,62 +872,62 @@ class ModelAttributor:
     def _generate_detailed_reasoning(self, predicted_model: AIModel, confidence: float, domain: Domain, metric_contributions: Dict[str, float], 
                                      combined_scores: Dict[str, float]) -> List[str]:
         """
-        Generate Explainable reasoning - FIXED to show proper ordering
+        Generate Explainable reasoning - FIXED to show proper formatting
         """
-        reasoning = list()
+        reasoning = []
         
-        reasoning.append("## AI Model Attribution Analysis")
+        reasoning.append("**AI Model Attribution Analysis**")
+        reasoning.append("")
         reasoning.append(f"**Domain**: {domain.value.replace('_', ' ').title()}")
+        reasoning.append("")
         
+        # Show prediction with confidence
         if (predicted_model == AIModel.UNKNOWN):
-            reasoning.append("**Most Likely**: UNKNOWN")
-            # Show the actual highest probability even if it's UNKNOWN
-            if combined_scores:
-                sorted_models = sorted(combined_scores.items(), key=lambda x: x[1], reverse=True)
-                if sorted_models and sorted_models[0][1] > 0:
-                    top_model_name = sorted_models[0][0].replace("-", " ").replace("_", " ").title()
-                    top_score = sorted_models[0][1] * 100
-                    reasoning.append(f"**{top_model_name}**")
-                    reasoning.append(f"{top_score:.1f}%")
+            reasoning.append("**Most Likely**: Unable to determine with high confidence")
+            reasoning.append("")
+            reasoning.append("**Top Candidates:**")
+        
         else:
             model_name = predicted_model.value.replace("-", " ").replace("_", " ").title()
-            reasoning.append(f"**Most Likely**: {model_name}")
-            # Show the actual probability for the predicted model
-            model_key = predicted_model.value
-            if model_key in combined_scores:
-                score = combined_scores[model_key] * 100
-                reasoning.append(f"{score:.1f}%")
+            reasoning.append(f"**Predicted Model**: {model_name}")
+            reasoning.append(f"**Confidence**: {confidence*100:.1f}%")
+            reasoning.append("")
+            reasoning.append("**Model Probability Distribution:**")
         
-        # Show top model candidates with ACTUAL percentages in proper order
         reasoning.append("")
-        if combined_scores:
-            sorted_models = sorted(combined_scores.items(), key=lambda x: x[1], reverse=True)
-            
-            for model_name, score in sorted_models[:6]:  # Show top 6 models
-                if score < 0.01:  # Skip very low probability models
-                    continue
-                    
-                display_name = model_name.replace("-", " ").replace("_", " ").title()
-                # Multiply by 100 to show as percentage (score is already 0-1)
-                percentage = score * 100
-                
-                # Use proper markdown formatting for the list
-                reasoning.append(f"**{display_name}**")
-                reasoning.append(f"{percentage:.1f}%")
-                reasoning.append("")
         
-        # Domain-specific insights
-        reasoning.append("## AI Model Attribution Analysis")
-        reasoning.append(f"Analysis calibrated for {domain.value.replace('_', ' ')} content")
+        # Show top candidates in proper format
+        if combined_scores:
+            sorted_models = sorted(combined_scores.items(), key = lambda x: x[1], reverse = True)
+            
+            for i, (model_name, score) in enumerate(sorted_models[:6]):
+                # Skip very low probability models
+                if (score < 0.01):  
+                    continue
+                
+                display_name = model_name.replace("-", " ").replace("_", " ").title()
+                percentage   = score * 100
+                
+                # Single line format: "• Model Name: XX.X%"
+                reasoning.append(f"• **{display_name}**: {percentage:.1f}%")
+        
+        reasoning.append("")
+        
+        # Domain-specific insights - FIXED: Removed duplicate header
+        reasoning.append("**Analysis Notes:**")
+        reasoning.append(f"• Calibrated for {domain.value.replace('_', ' ')} domain")
         
         if (domain in [Domain.ACADEMIC, Domain.TECHNICAL_DOC, Domain.AI_ML, Domain.SOFTWARE_DEV, Domain.ENGINEERING, Domain.SCIENCE]):
-            reasoning.append("Higher weight given to coherence and structural patterns")
+            reasoning.append("• Higher weight on structural coherence and technical patterns")
         
         elif (domain in [Domain.CREATIVE, Domain.MARKETING, Domain.SOCIAL_MEDIA, Domain.BLOG_PERSONAL]):
-            reasoning.append("Higher weight given to linguistic diversity and stylistic patterns")
+            reasoning.append("• Emphasis on linguistic diversity and stylistic variation")
         
         elif (domain in [Domain.LEGAL, Domain.MEDICAL]):
-            reasoning.append("Emphasis on formal language patterns and technical terminology")
+            reasoning.append("• Focus on formal language and specialized terminology")
+        
+        elif (domain in [Domain.BUSINESS, Domain.JOURNALISM, Domain.TUTORIAL]):
+            reasoning.append("• Balanced analysis across multiple attribution factors")
         
         return reasoning
 

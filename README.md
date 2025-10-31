@@ -5,7 +5,6 @@
 
 ![Python](https://img.shields.io/badge/python-3.8+-blue.svg)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.104+-green.svg)
-![Accuracy](https://img.shields.io/badge/accuracy-~90%25+-success.svg)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Code Style](https://img.shields.io/badge/code%20style-black-black.svg)
 
@@ -52,7 +51,7 @@ This README is research‑grade (detailed math, methodology, and benchmarks) whi
 
 **Problem.** AI generation tools increasingly produce publishable text, creating integrity and verification challenges in education, hiring, publishing, and enterprise content systems.
 
-**Solution.** A domain‑aware detector combining six orthogonal metrics (Perplexity, Entropy, Structural, Semantic, Linguistic, DetectGPT perturbation stability) into a confidence‑calibrated ensemble. Outputs are explainable with sentence‑level highlighting, attribution probabilities, and downloadable reports (JSON/PDF).
+**Solution.** A domain‑aware detector combining six orthogonal metrics (Perplexity, Entropy, Structural, Semantic, Linguistic, Multi-perturbation stability) into a confidence‑calibrated ensemble. Outputs are explainable with sentence‑level highlighting, attribution probabilities, and downloadable reports (JSON/PDF).
 
 **MVP Scope.** End‑to‑end FastAPI backend, lightweight HTML UI, modular metrics, Hugging Face model auto‑download, and a prototype ensemble classifier. Model weights are not committed to the repo; they are fetched at first run.
 
@@ -99,7 +98,7 @@ flowchart LR
         P3[Structural]
         P4[Linguistic]
         P5[Semantic]
-        P6[DetectGPT]
+        P6[MultiPerturbationStability]
     end
 
     G[Ensemble Classifier]
@@ -157,12 +156,14 @@ This section provides the exact metric definitions implemented in `metrics/` and
 - Structural — 15%
 - Semantic — 15%
 - Linguistic — 15%
-- DetectGPT (perturbation stability) — 10%
+- Multi-perturbation Stability — 10%
 
 ### 1) Perplexity (25% weight)
 
 **Definition**
-\(\displaystyle Perplexity = \exp\left(-\frac{1}{N}\sum_{i=1}^N \log P(w_i\mid context)\right)\)
+```math
+Perplexity = \exp\left(-\frac{1}{N}\sum_{i=1}^N \log P(w_i\mid context)\right)
+```
 
 **Implementation sketch**
 ```python
@@ -187,7 +188,9 @@ elif domain == Domain.SOCIAL_MEDIA:
 ### 2) Entropy (20% weight)
 
 **Shannon entropy (token level)**
-\(\;H(X) = -\sum_{i} p(x_i)\log_2 p(x_i)\)
+```math
+H(X) = -Σ p(x_i) * log₂ p(x_i)
+```
 
 **Implementation sketch**
 ```python
@@ -203,10 +206,23 @@ def calculate_text_entropy(text):
 ### 3) Structural Metric (15% weight)
 
 **Burstiness**
-\(\displaystyle Burstiness=\frac{\sigma-\mu}{\sigma+\mu}\) where \(\mu\)=mean sentence length, \(\sigma\)=std dev
+```math
+Burstiness = \frac{\sigma - \mu}{\sigma + \mu}
+```
+
+where:
+- μ = mean sentence length
+- σ = standard deviation of sentence length
 
 **Uniformity**
-\(\displaystyle Uniformity = 1 - \frac{\sigma}{\mu}\)
+```math
+Uniformity = 1 - \frac{\sigma}{\mu}
+```
+
+where:
+- μ = mean sentence length
+- σ = standard deviation of sentence length
+
 
 **Sketch**
 ```python
@@ -223,7 +239,9 @@ def calculate_burstiness(text):
 ### 4) Semantic Analysis (15% weight)
 
 **Coherence (sentence embedding cosine similarity)**
-\(\displaystyle Coherence=\frac{1}{n}\sum_{i=1}^{n-1} \cos(e_i, e_{i+1})\)
+```math
+Coherence = \frac{1}{n} \sum_{i=1}^{n-1} \cos(e_i, e_{i+1})
+```
 
 **Sketch**
 ```python
@@ -247,13 +265,15 @@ def calculate_linguistic_features(text, nlp_model):
     return {'pos_diversity': pos_diversity, 'mean_tree_depth': np.mean(depths)}
 ```
 
-### 6) DetectGPT (10% weight)
+### 6) MultiPerturbationStability (10% weight)
 
 **Stability under perturbation** (curvature principle)
-\(\displaystyle Stability = \frac{1}{n}\sum_{j} \left|\log P(x) - \log P(x_{perturbed}^j)\right|\)
+```math
+Stability = \frac{1}{n} \sum_{j} \left| \log P(x) - \log P(x_{perturbed_j}) \right|
+```
 
 ```python
-def detect_gpt_score(text, model, num_perturbations=20):
+def multi_perturbation_stability_score(text, model, num_perturbations=20):
     original = model.get_log_probability(text)
     diffs = []
     for _ in range(num_perturbations):
@@ -298,10 +318,10 @@ Domain weights and thresholds are configurable. Example weights (in `config/thre
 
 ```python
 DOMAIN_WEIGHTS = {
-  'academic': {'perplexity':0.22,'entropy':0.18,'structural':0.15,'linguistic':0.20,'semantic':0.15,'detect_gpt':0.10},
-  'technical': {'perplexity':0.20,'entropy':0.18,'structural':0.12,'linguistic':0.18,'semantic':0.22,'detect_gpt':0.10},
-  'creative': {'perplexity':0.25,'entropy':0.25,'structural':0.20,'linguistic':0.12,'semantic':0.10,'detect_gpt':0.08},
-  'social_media': {'perplexity':0.30,'entropy':0.22,'structural':0.15,'linguistic':0.10,'semantic':0.13,'detect_gpt':0.10}
+  'academic': {'perplexity':0.22,'entropy':0.18,'structural':0.15,'linguistic':0.20,'semantic':0.15,'multi_perturbation_stability':0.10},
+  'technical': {'perplexity':0.20,'entropy':0.18,'structural':0.12,'linguistic':0.18,'semantic':0.22,'multi_perturbation_stability':0.10},
+  'creative': {'perplexity':0.25,'entropy':0.25,'structural':0.20,'linguistic':0.12,'semantic':0.10,'multi_perturbation_stability':0.08},
+  'social_media': {'perplexity':0.30,'entropy':0.22,'structural':0.15,'linguistic':0.10,'semantic':0.13,'multi_perturbation_stability':0.10}
 }
 ```
 
@@ -348,7 +368,7 @@ text_auth/
 │   └── orchestrator.py
 ├── metrics/
 │   ├── base_metric.py
-│   ├── detect_gpt.py
+│   ├── multi_perturbation_stability.py
 │   ├── entropy.py
 │   ├── linguistic.py
 │   ├── perplexity.py

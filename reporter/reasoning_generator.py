@@ -61,13 +61,13 @@ class ReasoningGenerator:
     - Metric contribution analysis
     - Actionable recommendations
     """
-    # Enhanced metric descriptions aligned with current architecture
-    METRIC_DESCRIPTIONS = {"structural"        : "analyzes sentence structure, length patterns, and statistical features",
-                           "perplexity"        : "measures text predictability using language model cross-entropy",
-                           "entropy"           : "evaluates token diversity and sequence unpredictability",
-                           "semantic_analysis" : "examines semantic coherence, topic consistency, and logical flow",
-                           "linguistic"        : "assesses grammatical patterns, syntactic complexity, and style markers",
-                           "detect_gpt"        : "tests text stability under perturbation using curvature analysis",
+    # Metric descriptions 
+    METRIC_DESCRIPTIONS = {"structural"                   : "analyzes sentence structure, length patterns, and statistical features",
+                           "perplexity"                   : "measures text predictability using language model cross-entropy",
+                           "entropy"                      : "evaluates token diversity and sequence unpredictability",
+                           "semantic_analysis"            : "examines semantic coherence, topic consistency, and logical flow",
+                           "linguistic"                   : "assesses grammatical patterns, syntactic complexity, and style markers",
+                           "multi_perturbation_stability" : "tests text stability under perturbation using curvature analysis",
                           }
     
     # Ensemble method descriptions
@@ -338,7 +338,7 @@ class ReasoningGenerator:
             elif (not is_ai and (pos_diversity > 0.55)):
                 return f"Rich grammatical variety ({pos_diversity:.2f})"
                 
-        elif (metric_name == "detect_gpt"):
+        elif (metric_name == "multi_perturbation_stability"):
             stability = details.get("stability_score", 0.5)
             curvature = details.get("curvature_score", 0.5)
             

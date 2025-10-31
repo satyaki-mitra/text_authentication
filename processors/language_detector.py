@@ -1,5 +1,6 @@
 # DEPENDENCIES
 import re
+import torch
 import string
 from enum import Enum
 from typing import Dict
@@ -17,6 +18,7 @@ try:
     # Seed for reproducibility
     DetectorFactory.seed = 0
     LANGDETECT_AVAILABLE = True
+
 except ImportError:
     logger.warning("langdetect not available. Install: pip install langdetect")
     LANGDETECT_AVAILABLE = False
@@ -24,6 +26,7 @@ except ImportError:
 try:
     from models.model_manager import get_model_manager
     MODEL_MANAGER_AVAILABLE = True
+    
 except ImportError:
     logger.warning("model_manager not available, using fallback methods")
     MODEL_MANAGER_AVAILABLE = False
@@ -251,7 +254,7 @@ class LanguageDetector:
         # Method 1 : ML Model
         if self.use_model and self.is_initialized:
             try:
-                result                  = self._detect_with_model(cleaned_text)
+                result                  = self._detect_with_model(text = cleaned_text)
                 result.detection_method = "xlm-roberta-model"
             
             except Exception as e:
@@ -261,7 +264,7 @@ class LanguageDetector:
         # Method 2 : langdetect library
         if result is None and LANGDETECT_AVAILABLE:
             try:
-                result                  = self._detect_with_langdetect(cleaned_text)
+                result                  = self._detect_with_langdetect(text = cleaned_text)
                 result.detection_method = "langdetect-library"
             
             except Exception as e:
@@ -292,35 +295,203 @@ class LanguageDetector:
 
     def _detect_with_model(self, text: str) -> LanguageDetectionResult:
         """
-        Detect language using XLM-RoBERTa model
+        Detect language using XLM-RoBERTa model with sentence-based chunking for more accurate detection on long texts
         """
         if not self.is_initialized:
             if not self.initialize():
                 raise RuntimeError("Model not initialized")
         
-        # Conservative truncation for long texts
-        if (len(text) > 2000):  
-            text = text[:2000]
-            logger.warning(f"Text too long, truncated to {len(text)} characters for language detection")
-        
-        # Get prediction
-        predictions   = self.classifier(text, top_k = 5)
-        
-        # Parse results
-        all_languages = dict()
-        primary_lang  = None
-        primary_conf  = 0.0
-        
-        for pred in predictions:
-            lang_code = pred['label']
-            score     = pred['score']
+        try:
+            # Strategy: Use multiple text chunks for better accuracy
+            chunks            = self._split_text_into_chunks(text = text)
+            logger.info(f"Split text into {len(chunks)} chunks for language detection")
             
-            # Handle model output format (might be like "en_XX" or just "en")
+            all_chunk_results = list()
+            
+            for i, chunk in enumerate(chunks):
+                try:
+                    chunk_result = self._process_single_chunk(chunk = chunk)
+                    all_chunk_results.append(chunk_result)
+                    
+                except Exception as e:
+                    logger.warning(f"Chunk {i+1} processing failed: {repr(e)}")
+                    continue
+            
+            if not all_chunk_results:
+                raise RuntimeError("All chunks failed processing")
+            
+            # Aggregate results from all chunks
+            return self._aggregate_chunk_results(chunk_results = all_chunk_results)
+            
+        except Exception as e:
+            logger.error(f"Chunk-based model detection failed: {repr(e)}")
+            raise
+
+
+    def _split_text_into_chunks(self, text: str, max_chunk_length: int = 500, min_chunk_length: int = 50) -> List[str]:
+        """
+        Split text into meaningful chunks for language detection
+        
+        Arguments:
+        ----------
+            text             { str } : Input text
+
+            max_chunk_length { int } : Maximum characters per chunk
+            
+            min_chunk_length { int } : Minimum characters per chunk
+            
+        Returns:
+        --------
+            List of text chunks
+        """
+        if (len(text) <= max_chunk_length):
+            return [text]
+        
+        # Strategy 1: Split by sentences first
+        sentences     = re.split(r'[.!?]+', text)
+        sentences     = [s.strip() for s in sentences if s.strip()]
+        
+        chunks        = list()
+
+        current_chunk = ""
+        
+        for sentence in sentences:
+            # If adding this sentence doesn't exceed max length
+            if len(current_chunk) + len(sentence) + 1 <= max_chunk_length:
+                if current_chunk:
+                    current_chunk += " " + sentence
+                
+                else:
+                    current_chunk = sentence
+            
+            else:
+                # Current chunk is full, save it
+                if current_chunk and len(current_chunk) >= min_chunk_length:
+                    chunks.append(current_chunk)
+                
+                # Start new chunk with current sentence
+                current_chunk = sentence
+        
+        # Add the last chunk if it meets minimum length
+        if (current_chunk and (len(current_chunk) >= min_chunk_length)):
+            chunks.append(current_chunk)
+        
+        # Strategy 2: If sentence splitting didn't work well, use fixed-length chunks
+        if ((len(chunks) == 0) or ((len(chunks) == 1 )and (len(chunks[0]) > max_chunk_length))):
+            chunks = self._split_fixed_length(text, max_chunk_length)
+        
+        logger.debug(f"Split {len(text)} chars into {len(chunks)} chunks: {[len(c) for c in chunks]}")
+        return chunks
+
+
+    def _split_fixed_length(self, text: str, chunk_size: int = 1000) -> List[str]:
+        """
+        Fallback: Split text into fixed-length chunks
+        """
+        chunks = list()
+
+        for i in range(0, len(text), chunk_size):
+            chunk = text[i:i + chunk_size]
+            # Try to break at word boundaries
+            if ((i + chunk_size) < len(text)):
+                last_space = chunk.rfind(' ')
+                # If we found a space in the last 30%
+                if (last_space > chunk_size * 0.7):  
+                    chunk = chunk[:last_space].strip()
+
+            chunks.append(chunk)
+        return chunks
+
+
+    def _process_single_chunk(self, chunk: str) -> Dict:
+        """
+        Process a single chunk through the language detection model
+        """
+        # Get the tokenizer from the pipeline
+        tokenizer = self.classifier.tokenizer
+        
+        # Tokenize with explicit length limits
+        inputs    = tokenizer(chunk,
+                              return_tensors     = "pt",
+                              truncation         = True,
+                              max_length         = 512,
+                              padding            = True,
+                              add_special_tokens = True,
+                             )
+        
+        # Get model from pipeline
+        model     = self.classifier.model
+        device    = next(model.parameters()).device
+        
+        # Move inputs to correct device
+        inputs    = {k: v.to(device) for k, v in inputs.items()}
+        
+        with torch.no_grad():
+            outputs     = model(**inputs)
+            predictions = torch.nn.functional.softmax(outputs.logits, dim=-1)
+        
+        # Get top predictions for this chunk
+        top_predictions = torch.topk(predictions[0], k = 3)
+        
+        chunk_results   = dict()
+
+        for i in range(len(top_predictions.indices)):
+            lang_idx  = top_predictions.indices[i].item()
+            score     = top_predictions.values[i].item()
+            
+            # Get language label from model config
+            lang_code = model.config.id2label[lang_idx]
+            
+            # Handle model output format
             if ('_' in lang_code):
                 lang_code = lang_code.split('_')[0]
             
-            all_languages[lang_code] = score
+            chunk_results[lang_code] = score
+        
+        return chunk_results
+
+
+    def _aggregate_chunk_results(self, chunk_results: List[Dict]) -> LanguageDetectionResult:
+        """
+        Aggregate results from multiple chunks using weighted averaging
+        """
+        # Combine scores from all chunks
+        all_scores    = dict()
+        chunk_weights = list()
+        
+        for chunk_result in chunk_results:
+            # Calculate chunk weight based on confidence and diversity
+            top_score    = max(chunk_result.values()) if chunk_result else 0
+            # Weight by confidence
+            chunk_weight = top_score  
             
+            chunk_weights.append(chunk_weight)
+            
+            for lang_code, score in chunk_result.items():
+                if lang_code not in all_scores:
+                    all_scores[lang_code] = list()
+
+                all_scores[lang_code].append(score)
+        
+        # Calculate weighted average for each language
+        weighted_scores = dict()
+
+        for lang_code, scores in all_scores.items():
+            if (len(scores) != len(chunk_weights)):
+                # Use simple average if weight mismatch
+                weighted_scores[lang_code] = sum(scores) / len(scores)
+
+            else:
+                # Weighted average
+                weighted_sum               = sum(score * weight for score, weight in zip(scores, chunk_weights))
+                total_weight               = sum(chunk_weights)
+                weighted_scores[lang_code] = weighted_sum / total_weight if total_weight > 0 else sum(scores) / len(scores)
+        
+        # Find primary language
+        primary_lang = None
+        primary_conf = 0.0
+        
+        for lang_code, score in weighted_scores.items():
             if (score > primary_conf):
                 primary_conf = score
                 primary_lang = lang_code
@@ -332,16 +503,63 @@ class LanguageDetector:
         except ValueError:
             primary_language = Language.UNKNOWN
         
+        # Calculate detection quality metrics
+        detection_quality = self._assess_detection_quality(chunk_results, weighted_scores)
+        
+        warnings          = list()
+
+        if detection_quality.get('low_confidence', False):
+            warnings.append("Low confidence across multiple chunks")
+
+        if detection_quality.get('inconsistent', False):
+            warnings.append("Inconsistent language detection across chunks")
+        
         return LanguageDetectionResult(primary_language = primary_language,
                                        confidence       = primary_conf,
-                                       all_languages    = all_languages,
+                                       all_languages    = weighted_scores,
                                        script           = Script.UNKNOWN,
-                                       is_multilingual  = False,
-                                       detection_method = "model",
+                                       is_multilingual  = detection_quality.get('multilingual', False),
+                                       detection_method = "model-chunked",
                                        char_count       = 0,
                                        word_count       = 0,
-                                       warnings         = [],
+                                       warnings         = warnings,
                                       )
+
+
+    def _assess_detection_quality(self, chunk_results: List[Dict], final_scores: Dict[str, float]) -> Dict[str, bool]:
+        """
+        Assess the quality and consistency of language detection across chunks
+        """
+        quality_metrics = {'low_confidence' : False,
+                           'inconsistent'   : False,
+                           'multilingual'   : False,
+                          }
+        
+        if not chunk_results:
+            return quality_metrics
+        
+        # Check for low confidence
+        avg_top_confidence = sum(max(chunk.values()) for chunk in chunk_results) / len(chunk_results)
+        if (avg_top_confidence < 0.6):
+            quality_metrics['low_confidence'] = True
+        
+        # Check for inconsistency (different primary languages across chunks)
+        chunk_primaries = list()
+
+        for chunk in chunk_results:
+            if chunk:
+                primary = max(chunk.items(), key=lambda x: x[1])[0]
+                chunk_primaries.append(primary)
+        
+        if (len(set(chunk_primaries)) > 1):
+            quality_metrics['inconsistent'] = True
+        
+        # Check for multilingual content
+        strong_languages = [lang for lang, score in final_scores.items() if score > 0.2]
+        if (len(strong_languages) > 1):
+            quality_metrics['multilingual'] = True
+        
+        return quality_metrics
 
     
     def _detect_with_langdetect(self, text: str) -> LanguageDetectionResult:
@@ -357,7 +575,7 @@ class LanguageDetector:
             all_languages[prob.lang] = prob.prob
         
         # Primary language
-        primary = lang_probs[0]
+        primary       = lang_probs[0]
         
         try:
             primary_language = Language(primary.lang)
@@ -542,14 +760,14 @@ class LanguageDetector:
             { bool }        : True if text is in target language with sufficient confidence
         """
         result = self.detect(text)
-        return (result.primary_language == target_language and (result.confidence >= threshold))
+        return ((result.primary_language == target_language) and (result.confidence >= threshold))
 
     
     def get_supported_languages(self) -> List[str]:
         """
         Get list of supported language codes
         """
-        return [lang.value for lang in Language if lang != Language.UNKNOWN]
+        return [lang.value for lang in Language if (lang != Language.UNKNOWN)]
     
 
     def cleanup(self):
@@ -560,7 +778,7 @@ class LanguageDetector:
         self.is_initialized = False
 
 
-# ==================== Convenience Functions ====================
+# Convenience Functions 
 def quick_detect(text: str, **kwargs) -> LanguageDetectionResult:
     """
     Quick language detection with default settings
@@ -602,42 +820,3 @@ __all__ = ['Script',
            'LanguageDetector',
            'LanguageDetectionResult',
           ]
-
-
-# ==================== Testing ====================
-if __name__ == "__main__":
-    # Test cases
-    test_texts = {"English" : "This is a sample text written in English. It contains multiple sentences to test the language detection system.",
-                  "Spanish" : "Este es un texto de ejemplo escrito en español. Contiene múltiples oraciones para probar el sistema de detección de idiomas.",
-                  "French"  : "Ceci est un exemple de texte écrit en français. Il contient plusieurs phrases pour tester le système de détection de langue.",
-                  "German"  : "Dies ist ein Beispieltext in deutscher Sprache. Es enthält mehrere Sätze zum Testen des Spracherkennungssystems.",
-                  "Chinese" : "这是用中文写的示例文本。它包含多个句子来测试语言检测系统。",
-                  "Russian" : "Это пример текста, написанного на русском языке. Он содержит несколько предложений для проверки системы определения языка.",
-                  "Mixed"   : "This is English. Este es español. C'est français.",
-                  "Short"   : "Hello",
-                 }
-    
-    detector   = LanguageDetector(use_model = True)  # Use fast mode for testing
-    
-    for name, text in test_texts.items():
-        print(f"\n{'='*70}")
-        print(f"Testing: {name}")
-        print(f"{'='*70}")
-        print(f"Text: {text[:80]}...")
-        
-        result = detector.detect(text)
-        
-        print(f"\nPrimary Language: {result.primary_language.value}")
-        print(f"Confidence: {result.confidence:.2f}")
-        print(f"Script: {result.script.value}")
-        print(f"Method: {result.detection_method}")
-        print(f"Multilingual: {result.is_multilingual}")
-        
-        if result.warnings:
-            print(f"Warnings: {result.warnings}")
-        
-        if (len(result.all_languages) > 1):
-            print("\nAll detected languages:")
-            for lang, conf in sorted(result.all_languages.items(), key = lambda x: x[1], reverse = True)[:3]:
-                print(f"  {lang}: {conf:.2f}")
-
