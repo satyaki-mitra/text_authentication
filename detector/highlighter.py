@@ -48,14 +48,14 @@ class TextHighlighter:
     - Explainable tooltips
     - Highlighting metrics calculation
     """
-    # Color thresholds with mixed content support
+    # Color thresholds with mixed content support - FIXED: No gaps
     COLOR_THRESHOLDS = [(0.00, 0.10, "very-high-human", "#dcfce7", "Very likely human-written"),
                         (0.10, 0.25, "high-human", "#bbf7d0", "Likely human-written"),
                         (0.25, 0.40, "medium-human", "#86efac", "Possibly human-written"),
                         (0.40, 0.60, "uncertain", "#fef9c3", "Uncertain"),
                         (0.60, 0.75, "medium-ai", "#fde68a", "Possibly AI-generated"),
                         (0.75, 0.90, "high-ai", "#fed7aa", "Likely AI-generated"),
-                        (0.90, 1.01, "very-high-ai", "#fecaca", "Very likely AI-generated"),
+                        (0.90, 1.00, "very-high-ai", "#fecaca", "Very likely AI-generated"),
                        ]
     
     # Mixed content pattern
@@ -86,10 +86,22 @@ class TextHighlighter:
         self.text_processor     = TextProcessor()
         self.domain             = domain
         self.domain_thresholds  = get_threshold_for_domain(domain)
-        self.ensemble           = ensemble_classifier or EnsembleClassifier(primary_method  = "confidence_calibrated",
-                                                                            fallback_method = "domain_weighted",
-                                                                           )
+        self.ensemble           = ensemble_classifier or self._create_default_ensemble()
     
+
+    def _create_default_ensemble(self) -> EnsembleClassifier:
+        """
+        Create default ensemble classifier with proper error handling
+        """
+        try:
+            return EnsembleClassifier(primary_method  = "confidence_calibrated",
+                                      fallback_method = "domain_weighted",
+                                     )
+        except Exception as e:
+            logger.warning(f"Failed to create default ensemble: {e}. Using fallback mode.")
+            # Return a minimal ensemble or raise based on requirements
+            return EnsembleClassifier(primary_method = "weighted_average")
+
 
     def generate_highlights(self, text: str, metric_results: Dict[str, MetricResult], ensemble_result: Optional[EnsembleResult] = None,
                             enabled_metrics: Optional[Dict[str, bool]] = None, use_sentence_level: bool = True) -> List[HighlightedSentence]:
@@ -112,80 +124,197 @@ class TextHighlighter:
         --------
                          { list }                 : List of HighlightedSentence objects
         """
-        # Get domain-appropriate weights for enabled metrics
-        if enabled_metrics is None:
-            enabled_metrics = {name: True for name in metric_results.keys()}
-        
-        weights   = get_active_metric_weights(self.domain, enabled_metrics)
-        
-        # Split text into sentences
-        sentences = self._split_sentences(text)
-        
-        if not sentences:
-            return []
-        
-        # Calculate probabilities for each sentence using ENSEMBLE METHODS
-        highlighted_sentences = list()
-        
-        for idx, sentence in enumerate(sentences):
-            if use_sentence_level:
-                # Use ENSEMBLE for sentence-level analysis
-                ai_prob, human_prob, mixed_prob, confidence, breakdown = self._calculate_sentence_ensemble_probability(sentence        = sentence, 
-                                                                                                                       metric_results  = metric_results,
-                                                                                                                       weights         = weights,
-                                                                                                                       ensemble_result = ensemble_result,
-                                                                                                                      )
-            else:
-                # Use document-level ensemble probabilities
-                ai_prob, human_prob, mixed_prob, confidence, breakdown = self._get_document_ensemble_probability(ensemble_result = ensemble_result,
-                                                                                                                 metric_results  = metric_results,
-                                                                                                                 weights         = weights,
-                                                                                                                )
+        try:
+            # Validate inputs
+            if not text or not text.strip():
+                return self._handle_empty_text(text, metric_results, ensemble_result)
             
-            # Apply domain-specific adjustments
-            ai_prob = self._apply_domain_specific_adjustments(sentence, ai_prob, len(sentence.split()))
+            # Get domain-appropriate weights for enabled metrics
+            if enabled_metrics is None:
+                enabled_metrics = {name: True for name in metric_results.keys()}
             
-            # Determine if this is mixed content
-            is_mixed_content                     = (mixed_prob > self.MIXED_THRESHOLD)
+            weights   = get_active_metric_weights(self.domain, enabled_metrics)
             
-            # Get confidence level
-            confidence_level                     = get_confidence_level(confidence)
+            # Split text into sentences with error handling
+            sentences = self._split_sentences_with_fallback(text)
             
-            # Get color class (consider mixed content)
-            color_class, color_hex, tooltip_base = self._get_color_for_probability(probability      = ai_prob,
-                                                                                   is_mixed_content = is_mixed_content,
-                                                                                   mixed_prob       = mixed_prob,
-                                                                                  )
+            if not sentences:
+                return self._handle_no_sentences(text, metric_results, ensemble_result)
             
-            # Generate enhanced tooltip
-            tooltip                              = self._generate_ensemble_tooltip(sentence         = sentence, 
-                                                                                   ai_prob          = ai_prob,
-                                                                                   human_prob       = human_prob,
-                                                                                   mixed_prob       = mixed_prob,
-                                                                                   confidence       = confidence, 
-                                                                                   confidence_level = confidence_level, 
-                                                                                   tooltip_base     = tooltip_base, 
-                                                                                   breakdown        = breakdown,
-                                                                                   is_mixed_content = is_mixed_content,
-                                                                                  )
+            # Calculate probabilities for each sentence using ENSEMBLE METHODS
+            highlighted_sentences = list()
             
-            highlighted_sentences.append(HighlightedSentence(text              = sentence,
-                                                             ai_probability    = ai_prob,
-                                                             human_probability = human_prob,
-                                                             mixed_probability = mixed_prob,
-                                                             confidence        = confidence,
-                                                             confidence_level  = confidence_level,
-                                                             color_class       = color_class,
-                                                             tooltip           = tooltip,
-                                                             index             = idx,
-                                                             is_mixed_content  = is_mixed_content,
-                                                             metric_breakdown  = breakdown,
-                                                            )
-                                        )
+            for idx, sentence in enumerate(sentences):
+                try:
+                    if use_sentence_level:
+                        # Use ENSEMBLE for sentence-level analysis
+                        ai_prob, human_prob, mixed_prob, confidence, breakdown = self._calculate_sentence_ensemble_probability(sentence        = sentence, 
+                                                                                                                               metric_results  = metric_results,
+                                                                                                                               weights         = weights,
+                                                                                                                               ensemble_result = ensemble_result,
+                                                                                                                              )
+                    else:
+                        # Use document-level ensemble probabilities
+                        ai_prob, human_prob, mixed_prob, confidence, breakdown = self._get_document_ensemble_probability(ensemble_result = ensemble_result,
+                                                                                                                         metric_results  = metric_results,
+                                                                                                                         weights         = weights,
+                                                                                                                        )
+                    
+                    # Apply domain-specific adjustments with limits
+                    ai_prob                              = self._apply_domain_specific_adjustments(sentence        = sentence, 
+                                                                                                   ai_prob         = ai_prob, 
+                                                                                                   sentence_length = len(sentence.split()),
+                                                                                                  )
+                    
+                    # Determine if this is mixed content
+                    is_mixed_content                     = (mixed_prob > self.MIXED_THRESHOLD)
+                    
+                    # Get confidence level
+                    confidence_level                     = get_confidence_level(confidence)
+                    
+                    # Get color class (consider mixed content)
+                    color_class, color_hex, tooltip_base = self._get_color_for_probability(probability      = ai_prob,
+                                                                                           is_mixed_content = is_mixed_content,
+                                                                                           mixed_prob       = mixed_prob,
+                                                                                          )
+                    
+                    # Generate enhanced tooltip
+                    tooltip                              = self._generate_ensemble_tooltip(sentence         = sentence, 
+                                                                                           ai_prob          = ai_prob,
+                                                                                           human_prob       = human_prob,
+                                                                                           mixed_prob       = mixed_prob,
+                                                                                           confidence       = confidence, 
+                                                                                           confidence_level = confidence_level, 
+                                                                                           tooltip_base     = tooltip_base, 
+                                                                                           breakdown        = breakdown,
+                                                                                           is_mixed_content = is_mixed_content,
+                                                                                          )
+                    
+                    highlighted_sentences.append(HighlightedSentence(text              = sentence,
+                                                                     ai_probability    = ai_prob,
+                                                                     human_probability = human_prob,
+                                                                     mixed_probability = mixed_prob,
+                                                                     confidence        = confidence,
+                                                                     confidence_level  = confidence_level,
+                                                                     color_class       = color_class,
+                                                                     tooltip           = tooltip,
+                                                                     index             = idx,
+                                                                     is_mixed_content  = is_mixed_content,
+                                                                     metric_breakdown  = breakdown,
+                                                                    )
+                                                )
+                
+                except Exception as e:
+                    logger.warning(f"Failed to process sentence {idx}: {e}")
+                    # Add fallback sentence
+                    highlighted_sentences.append(self._create_fallback_sentence(sentence, idx))
+            
+            return highlighted_sentences
         
-        return highlighted_sentences
+        except Exception as e:
+            logger.error(f"Highlight generation failed: {e}")
+            return self._create_error_fallback(text, metric_results)
 
-    
+
+    def _handle_empty_text(self, text: str, metric_results: Dict[str, MetricResult], ensemble_result: Optional[EnsembleResult]) -> List[HighlightedSentence]:
+        """
+        Handle empty input text
+        """
+        if ensemble_result:
+            return [self._create_fallback_sentence(text       = "No text content", 
+                                                   index      = 0, 
+                                                   ai_prob    = ensemble_result.ai_probability, 
+                                                   human_prob = ensemble_result.human_probability,
+                                                  )
+                   ]
+
+        return [self._create_fallback_sentence("No text content", 0)]
+
+
+    def _handle_no_sentences(self, text: str, metric_results: Dict[str, MetricResult], ensemble_result: Optional[EnsembleResult]) -> List[HighlightedSentence]:
+        """
+        Handle case where no sentences could be extracted
+        """
+        if (text and (len(text.strip()) > 0)):
+            # Treat entire text as one sentence
+            return [self._create_fallback_sentence(text.strip(), 0)]
+
+        return [self._create_fallback_sentence("No processable content", 0)]
+
+
+    def _create_fallback_sentence(self, text: str, index: int, ai_prob: float = 0.5, human_prob: float = 0.5) -> HighlightedSentence:
+        """
+        Create a fallback sentence when processing fails
+        """
+        confidence_level             = get_confidence_level(0.3)
+        color_class, _, tooltip_base = self._get_color_for_probability(probability      = ai_prob, 
+                                                                       is_mixed_content = False, 
+                                                                       mixed_prob       = 0.0,
+                                                                      )
+        
+        return HighlightedSentence(text              = text,
+                                   ai_probability    = ai_prob,
+                                   human_probability = human_prob,
+                                   mixed_probability = 0.0,
+                                   confidence        = 0.3,
+                                   confidence_level  = confidence_level,
+                                   color_class       = color_class,
+                                   tooltip           = f"Fallback: {tooltip_base}\nProcessing failed for this sentence",
+                                   index             = index,
+                                   is_mixed_content  = False,
+                                   metric_breakdown  = {"fallback": ai_prob},
+                                  )
+
+
+    def _create_error_fallback(self, text: str, metric_results: Dict[str, MetricResult]) -> List[HighlightedSentence]:
+        """
+        Create fallback when entire processing fails
+        """
+        return [HighlightedSentence(text              = text[:100] + "..." if len(text) > 100 else text,
+                                    ai_probability    = 0.5,
+                                    human_probability = 0.5,
+                                    mixed_probability = 0.0,
+                                    confidence        = 0.1,
+                                    confidence_level  = get_confidence_level(0.1),
+                                    color_class       = "uncertain",
+                                    tooltip           = "Error in text processing",
+                                    index             = 0,
+                                    is_mixed_content  = False,
+                                    metric_breakdown  = {"error": 0.5},
+                                   )
+               ]
+ 
+
+    def _split_sentences_with_fallback(self, text: str) -> List[str]:
+        """
+        Split text into sentences with comprehensive fallback handling
+        """
+        try:
+            sentences          = self.text_processor.split_sentences(text)
+            filtered_sentences = [s.strip() for s in sentences if len(s.strip()) >= 3] 
+            
+            if filtered_sentences:
+                return filtered_sentences
+            
+            # Fallback: split by common sentence endings
+            fallback_sentences = re.split(r'[.!?]+', text)
+            fallback_sentences = [s.strip() for s in fallback_sentences if len(s.strip()) >= 3]
+            
+            if fallback_sentences:
+                return fallback_sentences
+            
+            # Ultimate fallback: treat as single sentence if meaningful
+            if text.strip():
+                return [text.strip()]
+            
+            return []
+            
+        except Exception as e:
+            logger.warning(f"Sentence splitting failed, using fallback: {e}")
+            # Return text as single sentence
+            return [text] if text.strip() else []
+
+
     def _calculate_sentence_ensemble_probability(self, sentence: str, metric_results: Dict[str, MetricResult], weights: Dict[str, float], 
                                                  ensemble_result: Optional[EnsembleResult] = None) -> Tuple[float, float, float, float, Dict[str, float]]:
         """
@@ -193,10 +322,24 @@ class TextHighlighter:
         """
         sentence_length = len(sentence.split())
         
-        # IMPROVED: Better handling of short sentences
+        # Handling short sentences - don't force neutral
         if (sentence_length < 3):
-            # Return neutral probability for very short sentences with low confidence
-            return 0.5, 0.5, 0.0, 0.3, {"short_sentence": 0.5}
+            # Return probabilities with lower confidence for very short sentences
+            base_ai_prob    = 0.5
+
+            # Low confidence for very short sentences
+            base_confidence = 0.2  
+
+            breakdown       = {"short_sentence" : base_ai_prob}
+            
+            # Try to get some signal from available metrics
+            for name, result in metric_results.items():
+                if ((result.error is None) and (weights.get(name, 0) > 0)):
+                    base_ai_prob    = result.ai_probability
+                    breakdown[name] = base_ai_prob
+                    break
+            
+            return base_ai_prob, 1.0 - base_ai_prob, 0.0, base_confidence, breakdown
         
         # Calculate sentence-level metric results
         sentence_metric_results = dict()
@@ -204,20 +347,27 @@ class TextHighlighter:
         
         for name, doc_result in metric_results.items():
             if doc_result.error is None:
-                # Compute sentence-level probability for this metric
-                sentence_prob                 = self._compute_sentence_metric(metric_name = name,
-                                                                              sentence    = sentence,
-                                                                              result      = doc_result,
-                                                                              weight      = weights.get(name, 0.0),
-                                                                             )
+                try:
+                    # Compute sentence-level probability for this metric
+                    sentence_prob                 = self._compute_sentence_metric(metric_name = name,
+                                                                                  sentence    = sentence,
+                                                                                  result      = doc_result,
+                                                                                  weight      = weights.get(name, 0.0),
+                                                                                 )
+                    
+                    # Create sentence-level MetricResult
+                    sentence_metric_results[name] = self._create_sentence_metric_result(metric_name = name,
+                                                                                        ai_prob     = sentence_prob,
+                                                                                        doc_result  = doc_result,
+                                                                                        sentence_length = sentence_length,
+                                                                                       )
+                    
+                    breakdown[name]               = sentence_prob
                 
-                # Create sentence-level MetricResult
-                sentence_metric_results[name] = self._create_sentence_metric_result(metric_name = name,
-                                                                                    ai_prob     = sentence_prob,
-                                                                                    doc_result  = doc_result,
-                                                                                   )
-                
-                breakdown[name]               = sentence_prob
+                except Exception as e:
+                    logger.warning(f"Metric {name} failed for sentence: {e}")
+                    # Use document probability as fallback
+                    breakdown[name] = doc_result.ai_probability
         
         # Use ensemble to combine sentence-level metrics
         if sentence_metric_results:
@@ -226,8 +376,11 @@ class TextHighlighter:
                                                                  domain         = self.domain,
                                                                 )
                 
-                return (ensemble_sentence_result.ai_probability, ensemble_sentence_result.human_probability, ensemble_sentence_result.mixed_probability, 
-                        ensemble_sentence_result.overall_confidence, breakdown)
+                return (ensemble_sentence_result.ai_probability, 
+                        ensemble_sentence_result.human_probability, 
+                        ensemble_sentence_result.mixed_probability, 
+                        ensemble_sentence_result.overall_confidence, 
+                        breakdown)
                         
             except Exception as e:
                 logger.warning(f"Sentence ensemble failed: {e}")
@@ -262,12 +415,12 @@ class TextHighlighter:
         return adjusted_prob
     
 
-    def _create_sentence_metric_result(self, metric_name: str, ai_prob: float, doc_result: MetricResult) -> MetricResult:
+    def _create_sentence_metric_result(self, metric_name: str, ai_prob: float, doc_result: MetricResult, sentence_length: int) -> MetricResult:
         """
         Create sentence-level MetricResult from document-level result
         """
-        # Adjust confidence based on sentence characteristics
-        sentence_confidence = self._calculate_sentence_confidence(doc_result.confidence)
+        # IMPROVED: Calculate confidence based on sentence characteristics
+        sentence_confidence = self._calculate_sentence_confidence(doc_result.confidence, sentence_length)
         
         return MetricResult(metric_name       = metric_name,
                             ai_probability    = ai_prob,
@@ -279,12 +432,15 @@ class TextHighlighter:
                            )
     
 
-    def _calculate_sentence_confidence(self, doc_confidence: float) -> float:
+    def _calculate_sentence_confidence(self, doc_confidence: float, sentence_length: int) -> float:
         """
-        Calculate confidence for sentence-level analysis
+        IMPROVED: Calculate confidence for sentence-level analysis with length consideration
         """
-        # Sentence-level analysis typically has lower confidence
-        return max(0.1, doc_confidence * 0.8)
+        base_reduction = 0.8
+        # Scale confidence penalty with sentence length
+        length_penalty = max(0.3, min(1.0, sentence_length / 12.0))  # Normalize around 12 words
+        
+        return max(0.1, doc_confidence * base_reduction * length_penalty)
     
 
     def _calculate_weighted_probability(self, metric_results: Dict[str, MetricResult], weights: Dict[str, float], breakdown: Dict[str, float]) -> Tuple[float, float, float, float, Dict[str, float]]:
@@ -306,8 +462,8 @@ class TextHighlighter:
                     confidences.append(result.confidence)
                     total_weight += weight
         
-        if not weighted_ai_probs or total_weight == 0:
-            return 0.5, 0.5, 0.0, 0.5, {}
+        if ((not weighted_ai_probs) or (total_weight == 0)):
+            return 0.5, 0.5, 0.0, 0.5, breakdown or {}
         
         ai_prob        = sum(weighted_ai_probs) / total_weight
         human_prob     = sum(weighted_human_probs) / total_weight
@@ -331,84 +487,94 @@ class TextHighlighter:
         else:
             # Calculate from metrics
             return self._calculate_weighted_probability(metric_results, weights, {})
-    
+
 
     def _apply_domain_specific_adjustments(self, sentence: str, ai_prob: float, sentence_length: int) -> float:
         """
-        Apply domain-specific adjustments to AI probability - UPDATED FOR ALL DOMAINS
+        Apply domain-specific adjustments to AI probability with limits
         """
+        original_prob  = ai_prob
+        adjustments    = list()
         sentence_lower = sentence.lower()
         
         # Technical & AI/ML domains
-        if self.domain in [Domain.AI_ML, Domain.SOFTWARE_DEV, Domain.TECHNICAL_DOC, Domain.ENGINEERING, Domain.SCIENCE]:
+        if (self.domain in [Domain.AI_ML, Domain.SOFTWARE_DEV, Domain.TECHNICAL_DOC, Domain.ENGINEERING, Domain.SCIENCE]):
             if self._has_technical_terms(sentence_lower):
-                # Technical terms more common in AI
-                ai_prob *= 1.1  
+                adjustments.append(1.1)  
 
             elif self._has_code_like_patterns(sentence):
-                ai_prob *= 1.15
+                adjustments.append(1.15)
             
-            elif sentence_length > 35:
-                ai_prob *= 1.05
+            elif (sentence_length > 35):
+                adjustments.append(1.05)
                 
         # Creative & informal domains
-        elif self.domain in [Domain.CREATIVE, Domain.SOCIAL_MEDIA, Domain.BLOG_PERSONAL]:
+        elif (self.domain in [Domain.CREATIVE, Domain.SOCIAL_MEDIA, Domain.BLOG_PERSONAL]):
             if self._has_informal_language(sentence_lower):
-                # Informal language more human-like
-                ai_prob *= 0.7  
+                adjustments.append(0.7)  
             
             elif self._has_emotional_language(sentence):
-                ai_prob *= 0.8
+                adjustments.append(0.8)
 
             elif (sentence_length < 10):
-                ai_prob *= 0.8
+                adjustments.append(0.8)
                 
         # Academic & formal domains
-        elif self.domain in [Domain.ACADEMIC, Domain.LEGAL, Domain.MEDICAL]:
+        elif (self.domain in [Domain.ACADEMIC, Domain.LEGAL, Domain.MEDICAL]):
             if self._has_citation_patterns(sentence):
-                # Citations more human-like
-                ai_prob *= 0.8  
+                adjustments.append(0.8)  
 
             elif self._has_technical_terms(sentence_lower):
-                ai_prob *= 1.1
+                adjustments.append(1.1)
 
             elif (sentence_length > 40):
-                ai_prob *= 1.1
+                adjustments.append(1.1)
                 
         # Business & professional domains
-        elif self.domain in [Domain.BUSINESS, Domain.MARKETING, Domain.JOURNALISM]:
+        elif (self.domain in [Domain.BUSINESS, Domain.MARKETING, Domain.JOURNALISM]):
             if self._has_business_jargon(sentence_lower):
-                # Jargon can be AI-like
-                ai_prob *= 1.05  
+                adjustments.append(1.05)  
             
             elif self._has_ambiguous_phrasing(sentence_lower):
-                # Ambiguity more human
-                ai_prob *= 0.9  
+                adjustments.append(0.9)  
             
             elif (15 <= sentence_length <= 25):
-                ai_prob *= 0.9
+                adjustments.append(0.9)
                 
         # Tutorial & educational domains
         elif (self.domain == Domain.TUTORIAL):
             if self._has_instructional_language(sentence_lower):
-                # Instructional tone more human
-                ai_prob *= 0.85  
+                adjustments.append(0.85)  
 
             elif self._has_step_by_step_pattern(sentence):
-                ai_prob *= 0.8
+                adjustments.append(0.8)
             
             elif self._has_examples(sentence):
-                ai_prob *= 0.9
+                adjustments.append(0.9)
         
         # General domain - minimal adjustments
-        elif self.domain == Domain.GENERAL:
+        elif (self.domain == Domain.GENERAL):
             if self._has_complex_structure(sentence):
-                ai_prob *= 0.9
+                adjustments.append(0.9)
             
             elif self._has_repetition(sentence):
-                ai_prob *= 1.1
+                adjustments.append(1.1)
         
-        return max(0.0, min(1.0, ai_prob))
+        # Apply adjustments with limits - take strongest 2 adjustments maximum
+        if adjustments:
+            # Sort by impact (farthest from 1.0)
+            adjustments.sort(key = lambda x: abs(x - 1.0), reverse = True)
+            # Limit to 2 strongest
+            strongest_adjustments = adjustments[:2]  
+            
+            for adjustment in strongest_adjustments:
+                ai_prob *= adjustment
+        
+        # Ensure probability stays within bounds and doesn't change too drastically : Maximum 30% change from original
+        max_change   = 0.3  
+        bounded_prob = max(original_prob - max_change, min(original_prob + max_change, ai_prob))
+        
+        return max(0.0, min(1.0, bounded_prob))
     
 
     def _apply_metric_specific_adjustments(self, metric_name: str, sentence: str, base_prob: float, sentence_length: int, thresholds: MetricThresholds) -> float:
@@ -466,8 +632,12 @@ class TextHighlighter:
 
     def _get_color_for_probability(self, probability: float, is_mixed_content: bool = False, mixed_prob: float = 0.0) -> Tuple[str, str, str]:
         """
-        Get color class with mixed content support
+        Get color class with mixed content support and no threshold gaps
         """
+        # Handle probability = 1.0 explicitly
+        if (probability >= 1.0):
+            return "very-high-ai", "#fecaca", "Very likely AI-generated (100%)"
+        
         # Check mixed content first
         if (is_mixed_content and (mixed_prob > self.MIXED_THRESHOLD)):
             return "mixed-content", "#e9d5ff", f"Mixed AI/Human content ({mixed_prob:.1%} mixed)"
@@ -477,12 +647,12 @@ class TextHighlighter:
             if (min_thresh <= probability < max_thresh):
                 return color_class, color_hex, tooltip
         
-        # Fallback
-        return "uncertain", "#fef9c3", "Uncertain"
-    
+        # Fallback for probability = 1.0 (should be caught above, but just in case)
+        return "very-high-ai", "#fecaca", "Very likely AI-generated"
+
 
     def _generate_ensemble_tooltip(self, sentence: str, ai_prob: float, human_prob: float, mixed_prob: float, confidence: float, confidence_level: ConfidenceLevel, 
-                                  tooltip_base: str, breakdown: Optional[Dict[str, float]] = None, is_mixed_content: bool = False) -> str:
+                                   tooltip_base: str, breakdown: Optional[Dict[str, float]] = None, is_mixed_content: bool = False) -> str:
         """
         Generate enhanced tooltip with ENSEMBLE information
         """
@@ -504,7 +674,7 @@ class TextHighlighter:
             for metric, prob in list(breakdown.items())[:4]:  
                 tooltip += f"\n• {metric}: {prob:.1%}"
         
-        tooltip += f"\n\nEnsemble Method: {self.ensemble.primary_method}"
+        tooltip += f"\n\nEnsemble Method: {getattr(self.ensemble, 'primary_method', 'fallback')}"
         
         return tooltip
 
@@ -619,7 +789,7 @@ class TextHighlighter:
         Analyze sentence complexity (0 = simple, 1 = complex)
         """
         words = sentence.split()
-        if len(words) < 5:
+        if (len(words) < 5):
             return 0.2
         
         complexity_indicators = ['although', 'because', 'while', 'when', 'if', 'since', 'unless', 'until', 'which', 'that', 'who', 'whom', 'whose', 'and', 'but', 'or', 'yet', 'so', 'however', 'therefore', 'moreover', 'furthermore', 'nevertheless', ',', ';', ':', '—']
@@ -637,7 +807,7 @@ class TextHighlighter:
         
         clause_indicators = [',', ';', 'and', 'but', 'or', 'because', 'although']
         clause_count      = sum(1 for indicator in clause_indicators if indicator in sentence.lower())
-        score             += min(0.2, clause_count * 0.05)
+        score            += min(0.2, clause_count * 0.05)
         
         return min(1.0, score)
     
@@ -671,7 +841,7 @@ class TextHighlighter:
         for sentence in sentences:
             clean_sentence = sentence.strip()
             
-            if (len(clean_sentence) >= 10):
+            if (len(clean_sentence) >= 3): 
                 filtered_sentences.append(clean_sentence)
         
         return filtered_sentences
@@ -1002,7 +1172,7 @@ class TextHighlighter:
         total_sentences = len(highlighted_sentences)
         
         # Calculate weighted risk score
-        weighted_risk = 0.0
+        weighted_risk   = 0.0
 
         for sent in highlighted_sentences:
             weight         = self.RISK_WEIGHTS.get(sent.color_class, 0.4)

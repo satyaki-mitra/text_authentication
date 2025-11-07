@@ -273,7 +273,6 @@ body {
     padding: 2rem;
     border: 1px solid var(--border);
     backdrop-filter: blur(10px);
-    /* Changed from fixed height to use available space */
     height: 850px;
     overflow: hidden;
     display: flex;
@@ -621,7 +620,7 @@ input[type="checkbox"] {
     color: var(--text-secondary);
     line-height: 1.7;
 }
-/* Enhanced Reasoning Styles */
+/* Reasoning Styles */
 .reasoning-box.enhanced {
     background: linear-gradient(135deg, rgba(30, 41, 59, 0.95) 0%, rgba(15, 23, 42, 0.95) 100%);
     border: 1px solid rgba(71, 85, 105, 0.5);
@@ -703,7 +702,7 @@ input[type="checkbox"] {
 .metric-indicator {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: left;
     padding: 0.75rem;
     margin-bottom: 0.5rem;
     border-radius: 8px;
@@ -714,7 +713,7 @@ input[type="checkbox"] {
     transform: translateX(4px);
 }
 .metric-name {
-    font-weight: 600;
+    font-weight: 400;
     color: var(--text-primary);
     min-width: 140px;
 }
@@ -794,6 +793,23 @@ input[type="checkbox"] {
 .model-confidence {
     font-weight: 700;
     color: var(--primary);
+}
+.attribution-confidence {
+    margin-top: 0.75rem;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+.attribution-uncertain {
+    color: var(--text-muted);
+    font-style: italic;
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+}
+.attribution-reasoning {
+    color: var(--text-secondary);
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    line-height: 1.4;
 }
 /* Download Actions */
 .download-actions {
@@ -959,21 +975,16 @@ input[type="checkbox"] {
 }
 .metrics-carousel-content {
     flex: 1;
-    /* Removed padding and centering to allow content to fill space */
     padding: 0;
-    /* Removed align-items: center; justify-content: center; to let content take natural space */
     display: flex;
     align-items: flex-start;
     justify-content: flex-start;
     overflow-y: auto;
-    /* Added some internal spacing for readability */
     padding: 1rem;
-    /* min-height: 600px; */
 }
 .metric-slide {
     display: none;
     width: 100%;
-    /* Reduced padding to make card tighter */
     padding: 1rem;
 }
 .metric-slide.active {
@@ -1011,6 +1022,43 @@ input[type="checkbox"] {
     color: var(--text-secondary);
     font-weight: 600;
 }
+/* Info Card Text Styles */
+.verdict-text {
+    font-size: 1.2rem !important;
+}
+.domain-text {
+    font-size: 1.1rem !important;
+}
+
+.verdict-mixed {
+    background: rgba(168, 85, 247, 0.2);
+    color: #a855f7;
+    border: 1px solid rgba(168, 85, 247, 0.3);
+}
+
+/* Reasoning Bullet Points */
+.reasoning-bullet-points {
+    margin: 1.5rem 0;
+    line-height: 1.6;
+    text-align: left;
+}
+
+.bullet-point {
+    margin-bottom: 0.75rem;
+    padding-left: 0.5rem;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    text-align: left;
+}
+
+.bullet-point:last-child {
+    margin-bottom: 0;
+}
+
+.bullet-point strong {
+    color: var(--text-primary);
+}
+
 /* Responsive */
 @media (max-width: 1200px) {
     .interface-grid {
@@ -1222,7 +1270,7 @@ html {
                     id="text-input" 
                     class="text-input" 
                     placeholder="Paste your text here for analysis...
-The more text you provide (minimum 50 characters), the more accurate the detection will be. Our system analyzes linguistic patterns, statistical features, and semantic structures to determine authenticity."
+The more text you provide (minimum 50 characters), the more accurate the detection will be."
                 ></textarea>
             </div>
             <div id="upload-tab" class="tab-content">
@@ -1351,18 +1399,21 @@ const API_BASE = '';
 let currentAnalysisData = null;
 let currentMetricIndex = 0;
 let totalMetrics = 0;
+
 // Navigation
 function showLanding() {
     document.getElementById('landing-page').style.display = 'block';
     document.getElementById('analysis-interface').style.display = 'none';
     window.scrollTo(0, 0);
 }
+
 function showAnalysis() {
     document.getElementById('landing-page').style.display = 'none';
     document.getElementById('analysis-interface').style.display = 'block';
     window.scrollTo(0, 0);
     resetAnalysisInterface();
 }
+
 // Reset analysis interface
 function resetAnalysisInterface() {
     // Clear text input
@@ -1419,6 +1470,7 @@ function resetAnalysisInterface() {
     currentMetricIndex = 0;
     totalMetrics = 0;
 }
+
 // Input Tab Switching
 document.querySelectorAll('.input-tab').forEach(tab => {
     tab.addEventListener('click', () => {
@@ -1431,6 +1483,7 @@ document.querySelectorAll('.input-tab').forEach(tab => {
         document.getElementById(`${tabName}-tab`).classList.add('active');
     });
 });
+
 // Report Tab Switching
 document.querySelectorAll('.report-tab').forEach(tab => {
     tab.addEventListener('click', () => {
@@ -1443,24 +1496,30 @@ document.querySelectorAll('.report-tab').forEach(tab => {
         document.getElementById(`${reportName}-report`).classList.add('active');
     });
 });
+
 // File Upload Handling
 const fileInput = document.getElementById('file-input');
 const fileUploadArea = document.getElementById('file-upload-area');
 const fileNameDisplay = document.getElementById('file-name-display');
+
 fileUploadArea.addEventListener('click', () => {
     fileInput.click();
 });
+
 fileInput.addEventListener('change', (e) => {
     handleFileSelect(e.target.files[0]);
 });
+
 // Drag and Drop
 fileUploadArea.addEventListener('dragover', (e) => {
     e.preventDefault();
     fileUploadArea.classList.add('drag-over');
 });
+
 fileUploadArea.addEventListener('dragleave', () => {
     fileUploadArea.classList.remove('drag-over');
 });
+
 fileUploadArea.addEventListener('drop', (e) => {
     e.preventDefault();
     fileUploadArea.classList.remove('drag-over');
@@ -1470,6 +1529,7 @@ fileUploadArea.addEventListener('drop', (e) => {
         handleFileSelect(file);
     }
 });
+
 function handleFileSelect(file) {
     if (!file) return;
     const allowedTypes = ['.txt', '.pdf', '.docx', '.doc', '.md'];
@@ -1488,16 +1548,19 @@ function handleFileSelect(file) {
         <span style="color: var(--text-muted);">(${formatFileSize(file.size)})</span>
     `;
 }
+
 function formatFileSize(bytes) {
     if (bytes < 1024) return bytes + ' B';
     if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
     return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
 }
+
 // Analyze Button
 document.getElementById('analyze-btn').addEventListener('click', async () => {
     const activeTab = document.querySelector('.input-tab.active').dataset.tab;
     const textInput = document.getElementById('text-input').value.trim();
     const fileInput = document.getElementById('file-input').files[0];
+
     if (activeTab === 'paste' && !textInput) {
         alert('Please paste some text to analyze (minimum 50 characters).');
         return;
@@ -1510,21 +1573,26 @@ document.getElementById('analyze-btn').addEventListener('click', async () => {
         alert('Please select a file to upload.');
         return;
     }
+
     await performAnalysis(activeTab, textInput, fileInput);
 });
+
 // Refresh Button - clears everything and shows empty state
 document.getElementById('refresh-btn').addEventListener('click', () => {
     resetAnalysisInterface();
 });
+
 // Try Next Button - same as refresh but keeps the interface ready
 document.getElementById('try-next-btn').addEventListener('click', () => {
     resetAnalysisInterface();
 });
+
 async function performAnalysis(mode, text, file) {
     const analyzeBtn = document.getElementById('analyze-btn');
     analyzeBtn.disabled = true;
     analyzeBtn.innerHTML = '⏳ Analyzing...';
     showLoading();
+
     try {
         let response;
         if (mode === 'paste') {
@@ -1542,12 +1610,14 @@ async function performAnalysis(mode, text, file) {
         analyzeBtn.innerHTML = '🔍 Analyze Text';
     }
 }
+
 async function analyzeText(text) {
     const domain = document.getElementById('domain-select').value || null;
     const enableAttribution = document.getElementById('enable-attribution').checked;
     const enableHighlighting = document.getElementById('enable-highlighting').checked;
     const useSentenceLevel = document.getElementById('use-sentence-level').checked;
     const includeMetricsSummary = document.getElementById('include-metrics-summary').checked;
+
     const response = await fetch(`${API_BASE}/api/analyze`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -1561,17 +1631,20 @@ async function analyzeText(text) {
             skip_expensive_metrics: false
         })
     });
+
     if (!response.ok) {
         const error = await response.json();
         throw new Error(error.error || 'Analysis failed');
     }
     return await response.json();
 }
+
 async function analyzeFile(file) {
     const domain = document.getElementById('domain-select').value || null;
     const enableAttribution = document.getElementById('enable-attribution').checked;
     const useSentenceLevel = document.getElementById('use-sentence-level').checked;
     const includeMetricsSummary = document.getElementById('include-metrics-summary').checked;
+
     const formData = new FormData();
     formData.append('file', file);
     if (domain) formData.append('domain', domain);
@@ -1579,16 +1652,19 @@ async function analyzeFile(file) {
     formData.append('use_sentence_level', useSentenceLevel.toString());
     formData.append('include_metrics_summary', includeMetricsSummary.toString());
     formData.append('skip_expensive_metrics', 'false');
+
     const response = await fetch(`${API_BASE}/api/analyze/file`, {
         method: 'POST',
         body: formData
     });
+
     if (!response.ok) {
         const error = await response.json();
         throw new Error(error.error || 'File analysis failed');
     }
     return await response.json();
 }
+
 function showLoading() {
     document.getElementById('summary-report').innerHTML = `
         <div class="loading">
@@ -1600,6 +1676,7 @@ function showLoading() {
         </div>
     `;
 }
+
 function showError(message) {
     document.getElementById('summary-report').innerHTML = `
         <div class="empty-state">
@@ -1609,6 +1686,7 @@ function showError(message) {
         </div>
     `;
 }
+
 function displayResults(data) {
     console.log('Response data:', data);
     // Handle different response structures
@@ -1618,13 +1696,16 @@ function displayResults(data) {
         console.error('Full response:', data);
         return;
     }
+
     // Extract data based on your actual API structure
     const ensemble = detection.ensemble_result || detection.ensemble;
     const prediction = detection.prediction || {};
     const metrics = detection.metric_results || detection.metrics;
     const analysis = detection.analysis || {};
+
     // Display Summary with enhanced reasoning
     displaySummary(ensemble, prediction, analysis, data.attribution, data.reasoning);
+
     // Display Highlighted Text with enhanced features
     if (data.highlighted_html) {
         displayHighlightedText(data.highlighted_html);
@@ -1635,6 +1716,7 @@ function displayResults(data) {
             </div>
         `;
     }
+
     // Display Metrics with carousel
     if (metrics && Object.keys(metrics).length > 0) {
         displayMetricsCarousel(metrics, analysis, ensemble);
@@ -1646,10 +1728,48 @@ function displayResults(data) {
         `;
     }
 }
+
 function displaySummary(ensemble, prediction, analysis, attribution, reasoning) {
-    // Use ensemble values from your actual API response
+    // Extract and validate data with fallbacks
+    const {
+        aiProbability,
+        humanProbability,
+        mixedProbability,
+        verdict,
+        confidence,
+        domain,
+        isAI,
+        gaugeColor,
+        gaugeDegree,
+        confidenceLevel,
+        confidenceClass
+    } = extractSummaryData(ensemble, analysis);
+
+    // Generate attribution HTML with proper filtering
+    const attributionHTML = generateAttributionHTML(attribution);
+
+    document.getElementById('summary-report').innerHTML = `
+        <div class="result-summary">
+            ${createGaugeSection(aiProbability, humanProbability, mixedProbability, gaugeColor, gaugeDegree)}
+            ${createInfoGrid(verdict, confidence, confidenceClass, domain, mixedProbability)}
+            ${createEnhancedReasoningHTML(ensemble, analysis, reasoning)}
+            ${attributionHTML}
+            ${createDownloadActions()}
+        </div>
+    `;
+}
+
+// Helper function to extract and validate summary data
+function extractSummaryData(ensemble, analysis) {
     const aiProbability = ensemble.ai_probability !== undefined ? 
         (ensemble.ai_probability * 100).toFixed(0) : '0';
+    
+    const humanProbability = ensemble.human_probability !== undefined ? 
+        (ensemble.human_probability * 100).toFixed(0) : '0';
+    
+    const mixedProbability = ensemble.mixed_probability !== undefined ? 
+        (ensemble.mixed_probability * 100).toFixed(0) : '0';
+    
     const verdict = ensemble.final_verdict || 'Unknown';
     const confidence = ensemble.overall_confidence !== undefined ?
         (ensemble.overall_confidence * 100).toFixed(1) : '0';
@@ -1657,81 +1777,289 @@ function displaySummary(ensemble, prediction, analysis, attribution, reasoning) 
     const isAI = verdict.toLowerCase().includes('ai');
     const gaugeColor = isAI ? 'var(--danger)' : 'var(--success)';
     const gaugeDegree = aiProbability * 3.6;
-    const confidenceLevel = parseFloat(confidence) >= 70 ? 'HIGH' :
-                           parseFloat(confidence) >= 40 ? 'MEDIUM' : 'LOW';
-    const confidenceClass = confidenceLevel === 'HIGH' ? 'confidence-high' : 
-                           confidenceLevel === 'MEDIUM' ? 'confidence-medium' : 'confidence-low';
-    let attributionHTML = '';
-    if (attribution && attribution.predicted_model) {
-        const modelName = attribution.predicted_model.replace(/_/g, ' ').replace(/-/g, ' ').toUpperCase();
-        const modelConf = attribution.confidence ? 
-            (attribution.confidence * 100).toFixed(1) : 'N/A';
-        let topModels = '';
-        if (attribution.model_probabilities) {
-            const sorted = Object.entries(attribution.model_probabilities)
-                .sort((a, b) => b[1] - a[1])
-                .slice(0, 3);
-            topModels = sorted.map(([model, prob]) => 
-                `<div class="model-match" style="margin-top: 0.5rem;">
-                    <span class="model-name">${model.replace(/_/g, ' ').replace(/-/g, ' ').toUpperCase()}</span>
-                    <span class="model-confidence">${(prob * 100).toFixed(1)}%</span>
-                </div>`
-            ).join('');
-        }
-        attributionHTML = `
+    
+    const confidenceLevel = getConfidenceLevel(parseFloat(confidence));
+    const confidenceClass = getConfidenceClass(confidenceLevel);
+
+    return {
+        aiProbability,
+        humanProbability,
+        mixedProbability,
+        verdict,
+        confidence,
+        domain,
+        isAI,
+        gaugeColor,
+        gaugeDegree,
+        confidenceLevel,
+        confidenceClass
+    };
+}
+
+// Helper function to determine confidence level
+function getConfidenceLevel(confidence) {
+    if (confidence >= 70) return 'HIGH';
+    if (confidence >= 40) return 'MEDIUM';
+    return 'LOW';
+}
+
+// Helper function to get confidence CSS class
+function getConfidenceClass(confidenceLevel) {
+    const classMap = {
+        'HIGH': 'confidence-high',
+        'MEDIUM': 'confidence-medium', 
+        'LOW': 'confidence-low'
+    };
+    return classMap[confidenceLevel] || 'confidence-low';
+}
+
+// Helper function to generate attribution HTML with filtering
+function generateAttributionHTML(attribution) {
+    if (!attribution || !attribution.predicted_model) {
+        return '';
+    }
+
+    const modelName = formatModelName(attribution.predicted_model);
+    const modelConf = attribution.confidence ? 
+        (attribution.confidence * 100).toFixed(1) : 'N/A';
+    
+    const topModelsHTML = generateTopModelsHTML(attribution.model_probabilities);
+    const reasoningHTML = generateAttributionReasoningHTML(attribution.reasoning);
+
+    // Only show attribution if confidence is meaningful (>30%)
+    if (attribution.confidence > 0.3) {
+        return `
             <div class="attribution-section">
                 <div class="attribution-title">🤖 AI Model Attribution</div>
-                ${topModels}
-                ${attribution.reasoning && attribution.reasoning.length > 0 ? 
-                    `<p style="color: var(--text-secondary); margin-top: 1rem; font-size: 0.9rem;">${attribution.reasoning[0]}</p>` : ''}
+                ${topModelsHTML}
+                <div class="attribution-confidence">
+                    Attribution Confidence: <strong>${modelConf}%</strong>
+                </div>
+                ${reasoningHTML}
             </div>
         `;
     }
-    document.getElementById('summary-report').innerHTML = `
-        <div class="result-summary">
-            <div class="gauge-container">
-                <div class="gauge-circle" style="--gauge-color: ${gaugeColor}; --gauge-degree: ${gaugeDegree}deg;">
-                    <div class="gauge-inner">
-                        <div class="gauge-value">${aiProbability}%</div>
-                        <div class="gauge-label">AI Probability</div>
-                    </div>
+    
+    return '';
+}
+
+// Helper function to generate top models HTML with filtering
+function generateTopModelsHTML(modelProbabilities) {
+    if (!modelProbabilities) {
+        return '<div class="attribution-uncertain">Model probabilities not available</div>';
+    }
+
+    // Filter and sort models
+    const meaningfulModels = Object.entries(modelProbabilities)
+        .sort((a, b) => b[1] - a[1])
+        .filter(([model, prob]) => prob > 0.15) // Only show models with >15% probability
+        .slice(0, 3); // Show top 3
+
+    if (meaningfulModels.length === 0) {
+        return `
+            <div class="attribution-uncertain">
+                Model attribution uncertain - text patterns don't strongly match any specific AI model
+            </div>
+        `;
+    }
+
+    return meaningfulModels.map(([model, prob]) => 
+        `<div class="model-match">
+            <span class="model-name">${formatModelName(model)}</span>
+            <span class="model-confidence">${(prob * 100).toFixed(1)}%</span>
+        </div>`
+    ).join('');
+}
+
+// Helper function to format model names
+function formatModelName(modelName) {
+    return modelName.replace(/_/g, ' ').replace(/-/g, ' ').toUpperCase();
+}
+
+// Helper function to generate attribution reasoning HTML
+function generateAttributionReasoningHTML(reasoning) {
+    if (!reasoning || !Array.isArray(reasoning) || reasoning.length === 0) {
+        return '';
+    }
+
+    return `
+        <div class="attribution-reasoning">
+            ${reasoning[0]}
+        </div>
+    `;
+}
+
+// Helper function to create single-progress gauge section
+function createGaugeSection(aiProbability, humanProbability, mixedProbability, gaugeColor, gaugeDegree) {
+    // Determine which probability is highest
+    let maxValue, maxColor, maxLabel;
+    
+    if (aiProbability >= humanProbability && aiProbability >= mixedProbability) {
+        maxValue = aiProbability;
+        maxColor = 'var(--danger)';
+        maxLabel = 'AI Probability';
+    } else if (humanProbability >= aiProbability && humanProbability >= mixedProbability) {
+        maxValue = humanProbability;
+        maxColor = 'var(--success)';
+        maxLabel = 'Human Probability';
+    } else {
+        maxValue = mixedProbability;
+        maxColor = 'var(--primary)';
+        maxLabel = 'Mixed Probability';
+    }
+    
+    // Calculate the degree for the progress (maxValue% of 360 degrees)
+    const progressDegree = (maxValue / 100) * 360;
+    
+    return `
+        <div class="gauge-container">
+            <div class="single-progress-gauge" style="
+                background: conic-gradient(
+                    ${maxColor} 0deg,
+                    ${maxColor} ${progressDegree}deg,
+                    rgba(51, 65, 85, 0.3) ${progressDegree}deg,
+                    rgba(51, 65, 85, 0.3) 360deg
+                );
+            ">
+                <div class="gauge-inner">
+                    <div class="gauge-value" style="color: ${maxColor}">${maxValue}%</div>
+                    <div class="gauge-label">${maxLabel}</div>
                 </div>
             </div>
-            <div class="result-info-grid">
-                <div class="info-card">
-                    <div class="info-label">Verdict</div>
-                    <div class="info-value" style="font-size: 1.2rem;">${verdict}</div>
-                </div>
-                <div class="info-card">
-                    <div class="info-label">Confidence Level</div>
-                    <div class="info-value">
-                        <span class="confidence-badge ${confidenceClass}">${confidence}%</span>
-                    </div>
-                </div>
-                <div class="info-card">
-                    <div class="info-label">Content Domain</div>
-                    <div class="info-value" style="font-size: 1.1rem;">${formatDomainName(domain)}</div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin: 1.5rem 0;">
+            <div style="text-align: center; padding: 1rem; background: rgba(239, 68, 68, 0.1); border-radius: 8px; border: 1px solid rgba(239, 68, 68, 0.3);">
+                <div style="font-size: 0.85rem; color: var(--danger); margin-bottom: 0.25rem; font-weight: 600;">AI</div>
+                <div style="font-size: 1.4rem; font-weight: 700; color: var(--danger);">${aiProbability}%</div>
+            </div>
+            <div style="text-align: center; padding: 1rem; background: rgba(16, 185, 129, 0.1); border-radius: 8px; border: 1px solid rgba(16, 185, 129, 0.3);">
+                <div style="font-size: 0.85rem; color: var(--success); margin-bottom: 0.25rem; font-weight: 600;">Human</div>
+                <div style="font-size: 1.4rem; font-weight: 700; color: var(--success);">${humanProbability}%</div>
+            </div>
+            <div style="text-align: center; padding: 1rem; background: rgba(6, 182, 212, 0.1); border-radius: 8px; border: 1px solid rgba(6, 182, 212, 0.3);">
+                <div style="font-size: 0.85rem; color: var(--primary); margin-bottom: 0.25rem; font-weight: 600;">Mixed</div>
+                <div style="font-size: 1.4rem; font-weight: 700; color: var(--primary);">${mixedProbability}%</div>
+            </div>
+        </div>
+        <style>
+            .single-progress-gauge {
+                width: 220px;
+                height: 220px;
+                margin: 0 auto 2rem;
+                position: relative;
+                border-radius: 50%;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            }
+            
+            .gauge-inner {
+                position: absolute;
+                width: 170px;
+                height: 170px;
+                background: var(--bg-panel);
+                border-radius: 50%;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .gauge-value {
+                font-size: 3rem;
+                font-weight: 800;
+            }
+            
+            .gauge-label {
+                font-size: 0.9rem;
+                color: var(--text-secondary);
+                margin-top: 0.25rem;
+            }
+        </style>
+    `;
+}
+
+
+// Helper function to create info grid
+function createInfoGrid(verdict, confidence, confidenceClass, domain, mixedProbability) {
+    const mixedContentInfo = mixedProbability > 10 ? 
+        `<div style="margin-top: 0.5rem; font-size: 0.85rem; color: var(--primary);">
+            🔀 ${mixedProbability}% Mixed Content Detected
+        </div>` : '';
+
+    return `
+        <div class="result-info-grid">
+            <div class="info-card">
+                <div class="info-label">Verdict</div>
+                <div class="info-value verdict-text">${verdict}</div>
+                ${mixedContentInfo}
+            </div>
+            <div class="info-card">
+                <div class="info-label">Confidence Level</div>
+                <div class="info-value">
+                    <span class="confidence-badge ${confidenceClass}">${confidence}%</span>
                 </div>
             </div>
-            ${createEnhancedReasoningHTML(ensemble, analysis, reasoning)}
-            ${attributionHTML}
-            <div class="download-actions">
-                <button class="download-btn" onclick="downloadReport('json')">
-                    📄 Download JSON
-                </button>
-                <button class="download-btn" onclick="downloadReport('pdf')">
-                    📑 Download PDF Report
-                </button>
+            <div class="info-card">
+                <div class="info-label">Content Domain</div>
+                <div class="info-value domain-text">${formatDomainName(domain)}</div>
             </div>
         </div>
     `;
 }
+
+// Helper function to create download actions
+function createDownloadActions() {
+    return `
+        <div class="download-actions">
+            <button class="download-btn" onclick="downloadReport('json')">
+                📄 Download JSON
+            </button>
+            <button class="download-btn" onclick="downloadReport('pdf')">
+                📑 Download PDF Report
+            </button>
+        </div>
+    `;
+}
+
+// Helper function to format domain names
+function formatDomainName(domain) {
+    return domain.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+}
+
 function createEnhancedReasoningHTML(ensemble, analysis, reasoning) {
-    // Use actual reasoning data if available
+    // Use reasoning data if available
     if (reasoning && reasoning.summary) {
-        // Process markdown-style *text* to <strong> tags
-        let processedSummary = reasoning.summary;
-        processedSummary = processedSummary.replace(/\*([^*]+)\*/g, '<strong>$1</strong>');
+        // Process the summary into bullet points
+        const bulletPoints = formatSummaryAsBulletPoints(reasoning.summary, ensemble, analysis);
+        
+        // Process key indicators with markdown formatting
+        let processedIndicators = [];
+        if (reasoning.key_indicators && reasoning.key_indicators.length > 0) {
+            processedIndicators = reasoning.key_indicators.map(indicator => {
+                let processedIndicator = indicator;
+                
+                // Remove HTML entities
+                processedIndicator = processedIndicator.replace(/&ast;/g, '*')
+                                                      .replace(/&#42;/g, '*');
+                
+                // Process bold formatting
+                processedIndicator = processedIndicator.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+                                                      .replace(/\*([^*]+)\*/g, '<strong>$1</strong>');
+                
+                // Clean up remaining asterisks
+                processedIndicator = processedIndicator.replace(/\*\*/g, '')
+                                                      .replace(/\*(?![^<]*>)/g, '');
+
+                // Replace underscores with spaces
+                processedIndicator = processedIndicator.replace(/_/g, ' ');
+
+                
+                return processedIndicator;
+            });
+        }
+        
         return `
             <div class="reasoning-box enhanced">
                 <div class="reasoning-header">
@@ -1745,23 +2073,41 @@ function createEnhancedReasoningHTML(ensemble, analysis, reasoning) {
                     <div class="verdict-text">${ensemble.final_verdict}</div>
                     <div class="probability">AI Probability: <span class="probability-value">${(ensemble.ai_probability * 100).toFixed(2)}%</span></div>
                 </div>
-                <div class="reasoning-text-content">
-                    ${processedSummary}
+                <div class="reasoning-bullet-points">
+                    ${bulletPoints}
                 </div>
-                ${reasoning.key_indicators && reasoning.key_indicators.length > 0 ? `
+                ${processedIndicators.length > 0 ? `
                     <div class="metrics-breakdown">
-                        <div class="breakdown-header">Key Indicators</div>
-                        ${reasoning.key_indicators.map(indicator => {
-                            let processedIndicator = indicator;
-                            processedIndicator = processedIndicator.replace(/\*([^*]+)\*/g, '<strong>$1</strong>');
-                            return `
-                                <div class="metric-indicator">
-                                    <div class="metric-name">${processedIndicator.split(':')[0]}</div>
-                                    <div class="metric-details">
-                                        <span class="reasoning-text-content">${processedIndicator.split(':')[1]}</span>
+                        <div class="breakdown-header" style="text-align: center; font-weight: 700; color: var(--text-secondary); margin-bottom: 1rem;">
+                            KEY INDICATORS
+                        </div>
+                        ${processedIndicators.map(indicator => {
+                            // Split indicator into metric name and sub-metric details
+                            const colonIndex = indicator.indexOf(':');
+                            if (colonIndex !== -1) {
+                                const metricName = indicator.substring(0, colonIndex).trim();
+                                const metricDetails = indicator.substring(colonIndex + 1).trim();
+                                
+                                return `
+                                    <div style="margin-bottom: 1rem; text-align: left;">
+                                        <div style="font-weight: 700; color: #fff; text-align: center; margin-bottom: 0.5rem; font-size: 1rem;">
+                                            ${metricName}
+                                        </div>
+                                        <div style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.4; text-align: left;">
+                                            ${metricDetails}
+                                        </div>
                                     </div>
-                                </div>
-                            `;
+                                `;
+                            } else {
+                                // If no colon, treat as general indicator
+                                return `
+                                    <div style="margin-bottom: 1rem; text-align: left;">
+                                        <div style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.4;">
+                                            ${indicator}
+                                        </div>
+                                    </div>
+                                `;
+                            }
                         }).join('')}
                     </div>
                 ` : ''}
@@ -1778,7 +2124,7 @@ function createEnhancedReasoningHTML(ensemble, analysis, reasoning) {
     return `
         <div class="reasoning-box">
             <div class="reasoning-title">💡 Detection Reasoning</div>
-            <p class="reasoning-text">
+            <p class="reasoning-text" style="text-align: left;">
                 Analysis based on 6-metric ensemble with domain-aware calibration. 
                 The system evaluated linguistic patterns, statistical features, and semantic structures 
                 to determine content authenticity with ${(ensemble.overall_confidence * 100).toFixed(1)}% confidence.
@@ -1786,6 +2132,58 @@ function createEnhancedReasoningHTML(ensemble, analysis, reasoning) {
         </div>
     `;
 }
+
+// Helper function to format summary as bullet points
+function formatSummaryAsBulletPoints(summary, ensemble, analysis) {
+    let processedSummary = summary;
+    
+    // Remove any existing HTML entities for asterisks first
+    processedSummary = processedSummary.replace(/&ast;/g, '*')
+                                      .replace(/&#42;/g, '*');
+    
+    // Process markdown bold formatting
+    processedSummary = processedSummary.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+                                      .replace(/\*([^*]+)\*/g, '<strong>$1</strong>');
+    
+    // Final cleanup: remove any remaining standalone asterisks that weren't processed
+    processedSummary = processedSummary.replace(/\*\*/g, '')
+                                      .replace(/\*(?![^<]*>)/g, '');
+    
+    // Split the summary into sentences/phrases for bullet points
+    const sentences = processedSummary.split(/\.\s+/);
+    
+    // Create bullet points from key information
+    const bulletPoints = [];
+    
+    // Add confidence level as first bullet
+    const confidenceLevel = ensemble.overall_confidence >= 0.7 ? 'High Confidence' :
+                           ensemble.overall_confidence >= 0.4 ? 'Medium Confidence' : 'Low Confidence';
+    bulletPoints.push(`<div class="bullet-point">• ${confidenceLevel}</div>`);
+    
+    // Add verdict as second bullet
+    bulletPoints.push(`<div class="bullet-point">• ${ensemble.final_verdict}</div>`);
+    
+    // Add AI probability as third bullet
+    bulletPoints.push(`<div class="bullet-point">• AI Probability: ${(ensemble.ai_probability * 100).toFixed(2)}%</div>`);
+    
+    // Add the main analysis sentences as individual bullets
+    sentences.forEach(sentence => {
+        if (sentence.trim() && 
+            !sentence.includes('confidence') && 
+            !sentence.includes(ensemble.final_verdict) &&
+            !sentence.includes('AI probability')) {
+            // Clean up the sentence and add as bullet
+            let cleanSentence = sentence.trim();
+            if (!cleanSentence.endsWith('.')) {
+                cleanSentence += '.';
+            }
+            bulletPoints.push(`<div class="bullet-point">• ${cleanSentence}</div>`);
+        }
+    });
+    
+    return bulletPoints.join('');
+}
+
 function displayHighlightedText(html) {
     document.getElementById('highlighted-report').innerHTML = `
         ${createDefaultLegend()}
@@ -1795,6 +2193,7 @@ function displayHighlightedText(html) {
         ${getHighlightStyles()}
     `;
 }
+
 function createDefaultLegend() {
     return `
         <div class="highlight-legend">
@@ -1833,6 +2232,7 @@ function createDefaultLegend() {
         </div>
     `;
 }
+
 function getHighlightStyles() {
     return `
         <style>
@@ -1888,10 +2288,12 @@ function getHighlightStyles() {
         </style>
     `;
 }
+
 function displayMetricsCarousel(metrics, analysis, ensemble) {
     const metricOrder = ['structural', 'perplexity', 'entropy', 'semantic_analysis', 'linguistic', 'multi_perturbation_stability'];
     const availableMetrics = metricOrder.filter(key => metrics[key]);
     totalMetrics = availableMetrics.length;
+
     if (totalMetrics === 0) {
         document.getElementById('metrics-report').innerHTML = `
             <div class="empty-state">
@@ -1900,24 +2302,39 @@ function displayMetricsCarousel(metrics, analysis, ensemble) {
         `;
         return;
     }
+
     let carouselHTML = `
         <div class="metrics-carousel-container">
             <div class="metrics-carousel-content">
     `;
+
     availableMetrics.forEach((metricKey, index) => {
         const metric = metrics[metricKey];
         if (!metric) return;
+
         const aiProb = (metric.ai_probability * 100).toFixed(1);
         const humanProb = (metric.human_probability * 100).toFixed(1);
+        const mixedProb = (metric.mixed_probability * 100).toFixed(1);
         const confidence = (metric.confidence * 100).toFixed(1);
         const weight = ensemble.metric_contributions && ensemble.metric_contributions[metricKey] ?
-              (ensemble.metric_contributions[metricKey].weight * 100).toFixed(1) : '0.0';
-        const color = metric.ai_probability >= 0.6 ? 'var(--danger)' : 
-                     metric.ai_probability >= 0.4 ? 'var(--warning)' : 'var(--success)';
-        const verdictText = metric.ai_probability >= 0.6 ? 'AI' :
-                           metric.ai_probability >= 0.4 ? 'UNCERTAIN' : 'HUMAN';
-        const verdictClass = verdictText === 'AI' ? 'verdict-ai' :
-                            verdictText === 'UNCERTAIN' ? 'verdict-uncertain' : 'verdict-human';
+            (ensemble.metric_contributions[metricKey].weight * 100).toFixed(1) : '0.0';
+        
+        // Determine verdict based on probabilities
+        let verdictText, verdictClass;
+        if (metric.mixed_probability > 0.3) {
+            verdictText = 'MIXED';
+            verdictClass = 'verdict-mixed';
+        } else if (metric.ai_probability >= 0.6) {
+            verdictText = 'AI';
+            verdictClass = 'verdict-ai';
+        } else if (metric.ai_probability >= 0.4) {
+            verdictText = 'UNCERTAIN';
+            verdictClass = 'verdict-uncertain';
+        } else {
+            verdictText = 'HUMAN';
+            verdictClass = 'verdict-human';
+        }
+
         carouselHTML += `
             <div class="metric-slide ${index === 0 ? 'active' : ''}" data-metric-index="${index}">
                 <div class="metric-result-card">
@@ -1927,22 +2344,32 @@ function displayMetricsCarousel(metrics, analysis, ensemble) {
                     <div class="metric-description">
                         ${getMetricDescription(metricKey)}
                     </div>
-                    <div style="display: flex; gap: 1rem; margin: 1rem 0;">
-                        <div style="flex: 1;">
+                    
+                    <!-- Enhanced Probability Display with Mixed -->
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin: 1rem 0;">
+                        <div style="text-align: center;">
                             <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.25rem;">AI</div>
                             <div style="background: rgba(51, 65, 85, 0.5); height: 8px; border-radius: 4px; overflow: hidden;">
                                 <div style="background: var(--danger); height: 100%; width: ${aiProb}%; transition: width 0.5s;"></div>
                             </div>
                             <div style="font-size: 0.85rem; font-weight: 600; margin-top: 0.25rem;">${aiProb}%</div>
                         </div>
-                        <div style="flex: 1;">
+                        <div style="text-align: center;">
                             <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.25rem;">Human</div>
                             <div style="background: rgba(51, 65, 85, 0.5); height: 8px; border-radius: 4px; overflow: hidden;">
                                 <div style="background: var(--success); height: 100%; width: ${humanProb}%; transition: width 0.5s;"></div>
                             </div>
                             <div style="font-size: 0.85rem; font-weight: 600; margin-top: 0.25rem;">${humanProb}%</div>
                         </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.25rem;">Mixed</div>
+                            <div style="background: rgba(51, 65, 85, 0.5); height: 8px; border-radius: 4px; overflow: hidden;">
+                                <div style="background: var(--primary); height: 100%; width: ${mixedProb}%; transition: width 0.5s;"></div>
+                            </div>
+                            <div style="font-size: 0.85rem; font-weight: 600; margin-top: 0.25rem;">${mixedProb}%</div>
+                        </div>
                     </div>
+                    
                     <div style="display: flex; justify-content: space-between; align-items: center; margin: 0.75rem 0;">
                         <span class="metric-verdict ${verdictClass}">${verdictText}</span>
                         <span style="font-size: 0.85rem; color: var(--text-secondary);">Confidence: ${confidence}% | Weight: ${weight}%</span>
@@ -1953,6 +2380,7 @@ function displayMetricsCarousel(metrics, analysis, ensemble) {
             </div>
         `;
     });
+
     carouselHTML += `
             </div>
             <div class="metrics-carousel-nav">
@@ -1962,9 +2390,11 @@ function displayMetricsCarousel(metrics, analysis, ensemble) {
             </div>
         </div>
     `;
+
     document.getElementById('metrics-report').innerHTML = carouselHTML;
     updateCarouselButtons();
 }
+
 function navigateMetrics(direction) {
     const newMetricIndex = currentMetricIndex + direction;
     if (newMetricIndex >= 0 && newMetricIndex < totalMetrics) {
@@ -1972,6 +2402,7 @@ function navigateMetrics(direction) {
         updateMetricCarousel();
     }
 }
+
 function updateMetricCarousel() {
     const slides = document.querySelectorAll('.metric-slide');
     slides.forEach((slide, index) => {
@@ -1988,6 +2419,7 @@ function updateMetricCarousel() {
         positionElement.textContent = `${currentMetricIndex + 1} / ${totalMetrics}`;
     }
 }
+
 function updateCarouselButtons() {
     const prevBtn = document.querySelector('.prev-btn');
     const nextBtn = document.querySelector('.next-btn');
@@ -1998,8 +2430,10 @@ function updateCarouselButtons() {
         nextBtn.disabled = currentMetricIndex === totalMetrics - 1;
     }
 }
+
 function renderMetricDetails(metricName, details) {
     if (!details || Object.keys(details).length === 0) return '';
+
     // Key metrics to show for each type
     const importantKeys = {
         'structural': ['burstiness_score', 'length_uniformity', 'avg_sentence_length', 'std_sentence_length'],
@@ -2007,29 +2441,47 @@ function renderMetricDetails(metricName, details) {
         'entropy': ['token_diversity', 'sequence_unpredictability', 'char_entropy'],
         'semantic_analysis': ['coherence_score', 'consistency_score', 'repetition_score'],
         'linguistic': ['pos_diversity', 'syntactic_complexity', 'grammatical_consistency'],
-        'multi_perturbation_stability': ['stability_score', 'curvature_score', 'likelihood_ratio']
+        'multi_perturbation_stability': ['stability_score', 'curvature_score', 'likelihood_ratio', 'perturbation_variance', 'mixed_probability']
     };
+
     const keysToShow = importantKeys[metricName] || Object.keys(details).slice(0, 6);
+
     let detailsHTML = '<div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border);">';
     detailsHTML += '<div style="font-size: 0.9rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 0.75rem;">📈 Detailed Metrics:</div>';
     detailsHTML += '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.75rem; font-size: 0.85rem;">';
+
     keysToShow.forEach(key => {
         if (details[key] !== undefined && details[key] !== null) {
-            const value = typeof details[key] === 'number' ? 
-                (details[key] < 1 && details[key] > 0 ? (details[key] * 100).toFixed(2) + '%' : details[key].toFixed(2)) :
-                details[key];
+            let value = details[key];
+            let displayValue;
+            
+            // Format values appropriately
+            if (typeof value === 'number') {
+                if (key.includes('score') || key.includes('ratio') || key.includes('probability')) {
+                    displayValue = (value * 100).toFixed(2) + '%';
+                } else if (value < 1 && value > 0) {
+                    displayValue = value.toFixed(4);
+                } else {
+                    displayValue = value.toFixed(2);
+                }
+            } else {
+                displayValue = value;
+            }
+            
             const label = key.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
             detailsHTML += `
                 <div style="background: rgba(15, 23, 42, 0.6); padding: 0.5rem; border-radius: 6px;">
                     <div style="color: var(--text-muted); font-size: 0.75rem; margin-bottom: 0.25rem;">${label}</div>
-                    <div style="color: var(--primary); font-weight: 700;">${value}</div>
+                    <div style="color: var(--primary); font-weight: 700;">${displayValue}</div>
                 </div>
             `;
         }
     });
+
     detailsHTML += '</div></div>';
     return detailsHTML;
 }
+
 function getMetricDescription(metricName) {
     const descriptions = {
         structural: 'Analyzes sentence structure, length patterns, and statistical features.',
@@ -2041,6 +2493,7 @@ function getMetricDescription(metricName) {
     };
     return descriptions[metricName] || 'Metric analysis complete.';
 }
+
 function formatMetricName(name) {
     const names = {
         structural: 'Structural Analysis',
@@ -2052,17 +2505,17 @@ function formatMetricName(name) {
     };
     return names[name] || name.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
 }
-function formatDomainName(domain) {
-    return domain.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
-}
+
 async function downloadReport(format) {
     if (!currentAnalysisData) {
         alert('No analysis data available');
         return;
     }
+
     try {
         const analysisId = currentAnalysisData.analysis_id;
         const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+
         // For JSON, download directly from current data
         if (format === 'json') {
             const data = {
@@ -2077,6 +2530,7 @@ async function downloadReport(format) {
             await downloadBlob(blob, filename);
             return;
         }
+
         // Get the original text for report generation
         const activeTab = document.querySelector('.input-tab.active').dataset.tab;
         let textToSend = '';
@@ -2086,19 +2540,23 @@ async function downloadReport(format) {
             textToSend = currentAnalysisData.detection_result?.processed_text?.text || 
                         'Uploaded file content - see analysis for details';
         }
+
         // For PDF, request from server
         const formData = new FormData();
         formData.append('analysis_id', analysisId);
         formData.append('text', textToSend);
         formData.append('formats', format);
         formData.append('include_highlights', document.getElementById('enable-highlighting').checked.toString());
+
         const response = await fetch(`${API_BASE}/api/report/generate`, {
             method: 'POST',
             body: formData
         });
+
         if (!response.ok) {
             throw new Error('Report generation failed');
         }
+
         const result = await response.json();
         if (result.reports && result.reports[format]) {
             const filename = result.reports[format];
@@ -2117,6 +2575,7 @@ async function downloadReport(format) {
         alert('Failed to download report. Please try again.');
     }
 }
+
 async function downloadBlob(blob, filename) {
     try {
         const url = URL.createObjectURL(blob);
@@ -2136,6 +2595,7 @@ async function downloadBlob(blob, filename) {
         alert('Download failed. Please try again.');
     }
 }
+
 function showDownloadSuccess(filename) {
     const notification = document.createElement('div');
     notification.style.cssText = `
@@ -2158,6 +2618,7 @@ function showDownloadSuccess(filename) {
         </div>
     `;
     document.body.appendChild(notification);
+
     if (!document.querySelector('#download-animation')) {
         const style = document.createElement('style');
         style.id = 'download-animation';
@@ -2169,12 +2630,14 @@ function showDownloadSuccess(filename) {
         `;
         document.head.appendChild(style);
     }
+
     setTimeout(() => {
         if (notification.parentNode) {
             notification.parentNode.removeChild(notification);
         }
     }, 3000);
 }
+
 // Smooth scrolling for anchor links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
@@ -2188,6 +2651,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         }
     });
 });
+
 // Initialize - show landing page by default
 showLanding();
 </script>

@@ -77,7 +77,7 @@ class ModelAttributor:
     - Confidence-weighted aggregation
     - Explainable reasoning
     """
-    # DOCUMENT-ALIGNED: Metric weights from technical specification
+    # Metric weights from technical specification
     METRIC_WEIGHTS           = {"perplexity"                   : 0.25,  
                                 "structural"                   : 0.15,   
                                 "semantic_analysis"            : 0.15,  
@@ -86,7 +86,7 @@ class ModelAttributor:
                                 "multi_perturbation_stability" : 0.10,  
                                }
     
-    # DOMAIN-AWARE model patterns for ALL 16 DOMAINS
+    # Domain-aware model patterns for ALL 16 DOMAINS
     DOMAIN_MODEL_PREFERENCES = {Domain.GENERAL       : [AIModel.GPT_4, AIModel.CLAUDE_3_SONNET, AIModel.GEMINI_PRO, AIModel.GPT_3_5],
                                 Domain.ACADEMIC      : [AIModel.GPT_4, AIModel.CLAUDE_3_OPUS, AIModel.GEMINI_ULTRA, AIModel.GPT_4_TURBO],
                                 Domain.TECHNICAL_DOC : [AIModel.GPT_4_TURBO, AIModel.CLAUDE_3_SONNET, AIModel.LLAMA_3, AIModel.GPT_4],
@@ -105,7 +105,7 @@ class ModelAttributor:
                                 Domain.TUTORIAL      : [AIModel.GPT_4, AIModel.CLAUDE_3_SONNET, AIModel.GEMINI_PRO, AIModel.GPT_4_TURBO],
                                }
 
-    # Enhanced Model-specific fingerprints with comprehensive patterns
+    # Model-specific fingerprints with comprehensive patterns
     MODEL_FINGERPRINTS = {AIModel.GPT_3_5       : {"phrases"              : ["as an ai language model",
                                                                              "i don't have personal opinions",
                                                                              "it's important to note that",
@@ -460,13 +460,13 @@ class ModelAttributor:
                                                                                      domain             = domain,
                                                                                     )
             
-            # Domain-aware prediction - FIXED: Always show the actual highest probability model
+            # Domain-aware prediction : Always show the actual highest probability model
             predicted_model, confidence           = self._make_domain_aware_prediction(combined_scores    = combined_scores,
                                                                                        domain             = domain,
                                                                                        domain_preferences = domain_preferences,
                                                                                       )
             
-            # Reasoning with domain context - FIXED
+            # Reasoning with domain context
             reasoning                             = self._generate_detailed_reasoning(predicted_model      = predicted_model,
                                                                                       confidence           = confidence,
                                                                                       domain               = domain,
@@ -490,7 +490,7 @@ class ModelAttributor:
 
     def _calculate_fingerprint_scores(self, text: str, domain: Domain) -> Dict[AIModel, float]:
         """
-        Calculate fingerprint match scores with DOMAIN CALIBRATION - FIXED for all domains
+        Calculate fingerprint match scores with domain calibration - for all domains
         """
         scores             = {model: 0.0 for model in AIModel if model not in [AIModel.HUMAN, AIModel.UNKNOWN]}
         
@@ -812,7 +812,7 @@ class ModelAttributor:
 
     def _make_domain_aware_prediction(self, combined_scores: Dict[str, float], domain: Domain, domain_preferences: List[AIModel]) -> Tuple[AIModel, float]:
         """
-        Domain aware prediction that considers domain-specific model preferences - FIXED
+        Domain aware prediction that considers domain-specific model preferences
         """
         if not combined_scores:
             return AIModel.UNKNOWN, 0.0
@@ -825,109 +825,103 @@ class ModelAttributor:
         
         best_model_name, best_score = sorted_models[0]
         
-        # FIXED: Only return UNKNOWN if the best score is very low
-        # Use a more reasonable threshold for attribution
-        if best_score < 0.05:  # Changed from 0.08 to 0.05 to be less restrictive
+        # Thresholding to show model only if confidence is sufficient
+        if (best_score < 0.01): 
             return AIModel.UNKNOWN, best_score
-        
-        # FIXED: Don't override with domain preferences if there's a clear winner
-        # Only consider domain preferences if scores are very close
-        if len(sorted_models) > 1:
-            second_model_name, second_score = sorted_models[1]
-            score_difference = best_score - second_score
-            
-            # If scores are very close (within 3%) and second is domain-preferred, consider it
-            if score_difference < 0.03:
-                try:
-                    best_model = AIModel(best_model_name)
-                    second_model = AIModel(second_model_name)
-                    
-                    # If second model is domain-preferred and first is not, prefer second
-                    if (second_model in domain_preferences and 
-                        best_model not in domain_preferences):
-                        best_model_name = second_model_name
-                        best_score = second_score
-                except ValueError:
-                    pass
         
         try:
             best_model = AIModel(best_model_name)
+
         except ValueError:
             best_model = AIModel.UNKNOWN
         
-        # Calculate confidence based on score dominance
-        if len(sorted_models) > 1:
+        # Calculate confidence - be more generous
+        if (len(sorted_models) > 1):
             second_score = sorted_models[1][1]
-            margin = best_score - second_score
-            # Confidence based on both absolute score and margin
-            confidence = min(1.0, best_score * 0.6 + margin * 2.0)
+            margin       = best_score - second_score
+            # More generous confidence calculation
+            confidence   = min(1.0, best_score * 0.8 + margin * 1.5)
+
         else:
-            confidence = best_score * 0.7
+            confidence = best_score * 0.9
         
-        # FIXED: Don't downgrade to UNKNOWN based on confidence alone
-        # If we have a model with reasonable probability, show it even with low confidence
-        return best_model, confidence
+        # Always return the actual best model, never downgrade to UNKNOWN
+        return best_model, max(0.05, confidence)  
 
 
     def _generate_detailed_reasoning(self, predicted_model: AIModel, confidence: float, domain: Domain, metric_contributions: Dict[str, float], 
                                      combined_scores: Dict[str, float]) -> List[str]:
         """
-        Generate Explainable reasoning - FIXED to show proper formatting
+        Generate Explainable reasoning - ENHANCED version
         """
         reasoning = []
         
         reasoning.append("**AI Model Attribution Analysis**")
         reasoning.append("")
-        reasoning.append(f"**Domain**: {domain.value.replace('_', ' ').title()}")
-        reasoning.append("")
         
         # Show prediction with confidence
         if (predicted_model == AIModel.UNKNOWN):
             reasoning.append("**Most Likely**: Unable to determine with high confidence")
-            reasoning.append("")
-            reasoning.append("**Top Candidates:**")
-        
+
         else:
             model_name = predicted_model.value.replace("-", " ").replace("_", " ").title()
             reasoning.append(f"**Predicted Model**: {model_name}")
             reasoning.append(f"**Confidence**: {confidence*100:.1f}%")
-            reasoning.append("")
-            reasoning.append("**Model Probability Distribution:**")
         
+        reasoning.append(f"**Domain**: {domain.value.replace('_', ' ').title()}")
         reasoning.append("")
         
-        # Show top candidates in proper format
+        # Show model probability distribution
+        reasoning.append("**Model Probability Distribution:**")
+        reasoning.append("")
+        
         if combined_scores:
             sorted_models = sorted(combined_scores.items(), key = lambda x: x[1], reverse = True)
             
             for i, (model_name, score) in enumerate(sorted_models[:6]):
-                # Skip very low probability models
+                # Skip very low probabilities
                 if (score < 0.01):  
                     continue
-                
+                    
                 display_name = model_name.replace("-", " ").replace("_", " ").title()
                 percentage   = score * 100
                 
-                # Single line format: "• Model Name: XX.X%"
+                # Use proper markdown formatting
                 reasoning.append(f"• **{display_name}**: {percentage:.1f}%")
         
         reasoning.append("")
         
-        # Domain-specific insights - FIXED: Removed duplicate header
+        # Add analysis insights
         reasoning.append("**Analysis Notes:**")
-        reasoning.append(f"• Calibrated for {domain.value.replace('_', ' ')} domain")
         
-        if (domain in [Domain.ACADEMIC, Domain.TECHNICAL_DOC, Domain.AI_ML, Domain.SOFTWARE_DEV, Domain.ENGINEERING, Domain.SCIENCE]):
-            reasoning.append("• Higher weight on structural coherence and technical patterns")
-        
-        elif (domain in [Domain.CREATIVE, Domain.MARKETING, Domain.SOCIAL_MEDIA, Domain.BLOG_PERSONAL]):
-            reasoning.append("• Emphasis on linguistic diversity and stylistic variation")
-        
-        elif (domain in [Domain.LEGAL, Domain.MEDICAL]):
-            reasoning.append("• Focus on formal language and specialized terminology")
-        
-        elif (domain in [Domain.BUSINESS, Domain.JOURNALISM, Domain.TUTORIAL]):
-            reasoning.append("• Balanced analysis across multiple attribution factors")
+        if (confidence < 0.3):
+            reasoning.append("• Low confidence attribution - text patterns are ambiguous")
+            reasoning.append("• May be human-written or from multiple AI sources")
+
+        else:
+            reasoning.append(f"• Calibrated for {domain.value.replace('_', ' ')} domain")
+            
+            # Domain-specific insights
+            domain_insights = {Domain.ACADEMIC      : "Academic writing patterns analyzed",
+                               Domain.TECHNICAL_DOC : "Technical coherence and structure weighted",
+                               Domain.CREATIVE      : "Stylistic and linguistic diversity emphasized",
+                               Domain.SOCIAL_MEDIA  : "Casual language and engagement patterns considered",
+                               Domain.AI_ML         : "Technical terminology and analytical patterns emphasized",
+                               Domain.SOFTWARE_DEV  : "Code-like structures and technical precision weighted",
+                               Domain.ENGINEERING   : "Technical specifications and formal language analyzed",
+                               Domain.SCIENCE       : "Scientific terminology and methodological patterns considered",
+                               Domain.BUSINESS      : "Professional communication and strategic language weighted",
+                               Domain.LEGAL         : "Formal language and legal terminology emphasized",
+                               Domain.MEDICAL       : "Medical terminology and clinical language analyzed",
+                               Domain.JOURNALISM    : "News reporting style and factual presentation weighted",
+                               Domain.MARKETING     : "Persuasive language and engagement patterns considered",
+                               Domain.BLOG_PERSONAL : "Personal voice and conversational style analyzed",
+                               Domain.TUTORIAL      : "Instructional clarity and step-by-step structure weighted",
+                              }
+            
+            insight         = domain_insights.get(domain, "Multiple attribution factors analyzed")
+
+            reasoning.append(f"• {insight}")
         
         return reasoning
 

@@ -59,6 +59,7 @@ class MultiPerturbationStabilityMetric(BaseMetric):
                 self.gpt_model, self.gpt_tokenizer = gpt_result
                 # Move model to appropriate device
                 self.gpt_model.to(self.device)
+                logger.success("✓ GPT-2 model loaded for MultiPerturbationStability")
            
             else:
                 logger.error("Failed to load GPT-2 model for MultiPerturbationStability")
@@ -76,8 +77,19 @@ class MultiPerturbationStabilityMetric(BaseMetric):
                 if (self.mask_tokenizer.pad_token is None):
                     self.mask_tokenizer.pad_token = self.mask_tokenizer.eos_token or '[PAD]'
 
+                # Ensure tokenizer has mask token
+                if not hasattr(self.mask_tokenizer, 'mask_token') or self.mask_tokenizer.mask_token is None:
+                    self.mask_tokenizer.mask_token = "<mask>"
+                
+                logger.success("✓ DistilRoBERTa model loaded for MultiPerturbationStability")
+
             else:
                 logger.warning("Failed to load mask model, using GPT-2 only")
+            
+            # Verify model loading
+            if not self._verify_model_loading():
+                logger.error("Model verification failed")
+                return False
             
             self.is_initialized = True
             
@@ -89,12 +101,51 @@ class MultiPerturbationStabilityMetric(BaseMetric):
             return False
     
 
+    def _verify_model_loading(self) -> bool:
+        """
+        Verify that models are properly loaded and working
+        """
+        try:
+            test_text = "This is a test sentence for model verification."
+            
+            # Test GPT-2 model
+            if self.gpt_model and self.gpt_tokenizer:
+                gpt_likelihood = self._calculate_likelihood(text = test_text)
+                logger.info(f"GPT-2 test - Likelihood: {gpt_likelihood:.4f}")
+            
+            else:
+                logger.error("GPT-2 model not loaded")
+                return False
+            
+            # Test DistilRoBERTa model if available
+            if self.mask_model and self.mask_tokenizer:
+                # Test mask token
+                if hasattr(self.mask_tokenizer, 'mask_token') and self.mask_tokenizer.mask_token:
+                    logger.info(f"DistilRoBERTa mask token: '{self.mask_tokenizer.mask_token}'")
+                    
+                    # Test basic tokenization
+                    inputs = self.mask_tokenizer(test_text, return_tensors = "pt")
+                    logger.info(f"DistilRoBERTa tokenization test - Input shape: {inputs['input_ids'].shape}")
+                
+                else:
+                    logger.warning("DistilRoBERTa mask token not available")
+            
+            else:
+                logger.warning("DistilRoBERTa model not loaded")
+            
+            return True
+            
+        except Exception as e:
+            logger.error(f"Model verification failed: {e}")
+            return False
+    
+
     def compute(self, text: str, **kwargs) -> MetricResult:
         """
         Compute MultiPerturbationStability analysis with FULL DOMAIN THRESHOLD INTEGRATION
         """
         try:
-            if ((not text) or (len(text.strip()) < 100)):
+            if ((not text) or (len(text.strip()) < 50)):
                 return MetricResult(metric_name       = self.name,
                                     ai_probability    = 0.5,
                                     human_probability = 0.5,
@@ -121,13 +172,16 @@ class MultiPerturbationStabilityMetric(BaseMetric):
                                    )
             
             # Calculate MultiPerturbationStability features
-            features                        = self._calculate_stability_features(text)
+            features                        = self._calculate_stability_features(text = text)
             
             # Calculate raw MultiPerturbationStability score (0-1 scale)
-            raw_stability_score, confidence = self._analyze_stability_patterns(features)
+            raw_stability_score, confidence = self._analyze_stability_patterns(features = features)
             
             # Apply domain-specific thresholds to convert raw score to probabilities
-            ai_prob, human_prob, mixed_prob = self._apply_domain_thresholds(raw_stability_score, multi_perturbation_stability_thresholds, features)
+            ai_prob, human_prob, mixed_prob = self._apply_domain_thresholds(raw_score  = raw_stability_score, 
+                                                                            thresholds = multi_perturbation_stability_thresholds, 
+                                                                            features   = features,
+                                                                           )
             
             # Apply confidence multiplier from domain thresholds
             confidence                     *= multi_perturbation_stability_thresholds.confidence_multiplier
@@ -211,54 +265,75 @@ class MultiPerturbationStabilityMetric(BaseMetric):
 
     def _calculate_stability_features(self, text: str) -> Dict[str, Any]:
         """
-        Calculate comprehensive MultiPerturbationStability features
+        Calculate comprehensive MultiPerturbationStability features with diagnostic logging
         """
         if not self.gpt_model or not self.gpt_tokenizer:
             return self._get_default_features()
         
         try:
             # Preprocess text for better analysis
-            processed_text        = self._preprocess_text_for_analysis(text)
+            processed_text        = self._preprocess_text_for_analysis(text = text)
             
             # Calculate original text likelihood
-            original_likelihood   = self._calculate_likelihood(processed_text)
+            original_likelihood   = self._calculate_likelihood(text = processed_text)
+            logger.debug(f"Original likelihood: {original_likelihood:.4f}")
             
             # Generate perturbations and calculate perturbed likelihoods
-            perturbations         = self._generate_perturbations(processed_text, num_perturbations = 5)
+            perturbations         = self._generate_perturbations(text              = processed_text,
+                                                                 num_perturbations = 10,
+                                                                )
+            logger.debug(f"Generated {len(perturbations)} perturbations")
+
             perturbed_likelihoods = list()
             
-            for perturbed_text in perturbations:
+            for idx, perturbed_text in enumerate(perturbations):
                 if (perturbed_text and (perturbed_text != processed_text)):
-                    likelihood = self._calculate_likelihood(perturbed_text)
+                    likelihood = self._calculate_likelihood(text = perturbed_text)
                     
                     if (likelihood > 0):
                         perturbed_likelihoods.append(likelihood)
+                        logger.debug(f"Perturbation {idx}: likelihood={likelihood:.4f}")
+            
+            logger.info(f"Valid perturbations: {len(perturbed_likelihoods)}/{len(perturbations)}")
             
             # Calculate stability metrics
             if perturbed_likelihoods:
-                stability_score          = self._calculate_stability_score(original_likelihood, perturbed_likelihoods)
-                curvature_score          = self._calculate_curvature_score(original_likelihood, perturbed_likelihoods)
-                variance_score           = np.var(perturbed_likelihoods) if len(perturbed_likelihoods) > 1 else 0.0
+                stability_score          = self._calculate_stability_score(original_likelihood   = original_likelihood, 
+                                                                           perturbed_likelihoods = perturbed_likelihoods,
+                                                                          )
+
+                curvature_score          = self._calculate_curvature_score(original_likelihood   = original_likelihood, 
+                                                                           perturbed_likelihoods = perturbed_likelihoods,
+                                                                          )
+
+                variance_score           = np.var(perturbed_likelihoods) if (len(perturbed_likelihoods) > 1) else 0.0
                 avg_perturbed_likelihood = np.mean(perturbed_likelihoods)
+                
+                logger.info(f"Stability: {stability_score:.3f}, Curvature: {curvature_score:.3f}")
             
             else:
-                stability_score          = 0.5
-                curvature_score          = 0.5
-                variance_score           = 0.1
-                avg_perturbed_likelihood = original_likelihood
+                # Use meaningful defaults when perturbations fail
+                stability_score          = 0.3  # Assume more human-like when no perturbations work
+                curvature_score          = 0.3
+                variance_score           = 0.05
+                avg_perturbed_likelihood = original_likelihood * 0.9  # Assume some drop
+                logger.warning("No valid perturbations, using fallback values")
             
             # Calculate likelihood ratio
-            likelihood_ratio            = original_likelihood / avg_perturbed_likelihood if avg_perturbed_likelihood > 0 else 1.0
+            likelihood_ratio             = original_likelihood / avg_perturbed_likelihood if avg_perturbed_likelihood > 0 else 1.0
             
             # Chunk-based analysis for whole-text understanding
-            chunk_stabilities           = self._calculate_chunk_stability(processed_text, chunk_size=150)
-            stability_variance          = np.var(chunk_stabilities) if chunk_stabilities else 0.0
-            avg_chunk_stability         = np.mean(chunk_stabilities) if chunk_stabilities else stability_score
+            chunk_stabilities            = self._calculate_chunk_stability(text       = processed_text, 
+                                                                           chunk_size = 150,
+                                                                          )
+
+            stability_variance           = np.var(chunk_stabilities) if chunk_stabilities else 0.1 
+            avg_chunk_stability          = np.mean(chunk_stabilities) if chunk_stabilities else stability_score
             
-            # Normalize scores to 0-1 range
-            normalized_stability        = min(1.0, max(0.0, stability_score))
-            normalized_curvature        = min(1.0, max(0.0, curvature_score))
-            normalized_likelihood_ratio = min(2.0, likelihood_ratio) / 2.0    # Normalize to 0-1
+            # Better normalization to prevent extreme values
+            normalized_stability         = min(1.0, max(0.0, stability_score))
+            normalized_curvature         = min(1.0, max(0.0, curvature_score))
+            normalized_likelihood_ratio  = min(3.0, max(0.33, likelihood_ratio)) / 3.0
             
             return {"original_likelihood"         : round(original_likelihood, 4),
                     "avg_perturbed_likelihood"    : round(avg_perturbed_likelihood, 4),
@@ -281,59 +356,87 @@ class MultiPerturbationStabilityMetric(BaseMetric):
 
     def _calculate_likelihood(self, text: str) -> float:
         """
-        Calculate log-likelihood of text using GPT-2 with robust error handling
+        Calculate proper log-likelihood using token probabilities
+        Inspired by DetectGPT's likelihood calculation approach
         """
         try:
             # Check text length before tokenization
             if (len(text.strip()) < 10):
-                return 0.0
+                return 2.0  # Return reasonable baseline
 
-            # Configure tokenizer for proper padding
-            tokenizer      = self._configure_tokenizer_padding(self.gpt_tokenizer)
+            if not self.gpt_model or not self.gpt_tokenizer:
+                logger.warning("GPT model not available for likelihood calculation")
+                return 2.0
+
+            # Ensure tokenizer has pad token
+            if self.gpt_tokenizer.pad_token is None:
+                self.gpt_tokenizer.pad_token = self.gpt_tokenizer.eos_token
             
             # Tokenize text with proper settings
-            encodings      = tokenizer(text, 
-                                       return_tensors = 'pt', 
-                                       truncation     = True,
-                                       max_length     = 512,
-                                       padding        = True,
-                                       return_attention_mask = True,
-                                      )
+            encodings      = self.gpt_tokenizer(text, 
+                                                return_tensors        = 'pt', 
+                                                truncation            = True,
+                                                max_length            = 256,
+                                                padding               = True,
+                                                return_attention_mask = True,
+                                               )
 
             input_ids      = encodings.input_ids.to(self.device)
             attention_mask = encodings.attention_mask.to(self.device)
             
             # Minimum tokens for meaningful analysis
-            if ((input_ids.numel() == 0) or (input_ids.size(1) < 5)):
-                return 0.0
+            if ((input_ids.numel() == 0) or (input_ids.size(1) < 3)):
+                return 2.0
             
-            # Calculate negative log likelihood
+            # Calculate proper log-likelihood using token probabilities
             with torch.no_grad():
-                outputs = self.gpt_model(input_ids, 
-                                         attention_mask = attention_mask, 
-                                         labels         = input_ids,
-                                        )
+                outputs        = self.gpt_model(input_ids, 
+                                                attention_mask = attention_mask,
+                                               )
+                
+                logits         = outputs.logits
+                
+                # Calculate log probabilities for each token
+                log_probs      = torch.nn.functional.log_softmax(logits, dim = -1)
+                
+                # Get the log probability of each actual token
+                log_likelihood = 0.0
+                token_count    = 0
+                
+                for i in range(input_ids.size(1) - 1):
+                    # Only consider non-padding tokens
+                    if (attention_mask[0, i] == 1):       
+                        token_id        = input_ids[0, i + 1]  # Next token prediction
+                        log_prob        = log_probs[0, i, token_id]
+                        log_likelihood += log_prob.item()
+                        token_count    += 1
+                
+                # Normalize by token count to get average log likelihood per token
+                if (token_count > 0):
+                    avg_log_likelihood = log_likelihood / token_count
 
-                loss    = outputs.loss
+                else:
+                    avg_log_likelihood = 0.0
             
-            # Convert to positive log likelihood (higher = more likely)
-            log_likelihood = -loss.item()
-
-            # Reasonable range check (typical values are between -10 and 10)
-            if (abs(log_likelihood) > 100):
-                logger.warning(f"Extreme likelihood value detected: {log_likelihood}")
-                return 0.0
+            # Convert to positive scale and normalize
+            # Typical GPT-2 log probabilities range from ~-10 to ~-2
+            # Higher normalized value = more likely text
+            normalized_likelihood = max(0.5, min(10.0, -avg_log_likelihood))
             
-            return log_likelihood
+            return normalized_likelihood
             
         except Exception as e:
             logger.warning(f"Likelihood calculation failed: {repr(e)}")
-            return 0.0
+            return 2.0  # Return reasonable baseline on error
     
 
     def _generate_perturbations(self, text: str, num_perturbations: int = 5) -> List[str]:
         """
-        Generate perturbed versions of the text with robust error handling
+        Generate perturbed versions of the text using multiple techniques:
+        1. Word deletion (simple but effective)
+        2. Word swapping (preserve meaning)
+        3. DistilRoBERTa masked prediction (DetectGPT-inspired, using lighter model than T5)
+        4. Synonym replacement (fallback)
         """
         perturbations = list()
         
@@ -383,33 +486,37 @@ class MultiPerturbationStabilityMetric(BaseMetric):
                         logger.debug(f"Word swapping perturbation failed: {e}")
                         continue
             
-            # Method 3: RoBERTa-specific masked word replacement
+            # Method 3: DistilRoBERTa-based masked word replacement (DetectGPT-inspired)
             if (self.mask_model and self.mask_tokenizer and (len(words) > 4) and len(perturbations) < num_perturbations):
                 
                 try:
-                    roberta_perturbations = self._generate_roberta_masked_perturbations(processed_text, 
-                                                                                        words, 
-                                                                                        num_perturbations - len(perturbations))
+                    roberta_perturbations = self._generate_roberta_masked_perturbations(text              = processed_text, 
+                                                                                        words             = words, 
+                                                                                        max_perturbations = num_perturbations - len(perturbations),
+                                                                                       )
                     perturbations.extend(roberta_perturbations)
                     
                 except Exception as e:
-                    logger.warning(f"RoBERTa masked perturbation failed: {repr(e)}")
+                    logger.warning(f"DistilRoBERTa masked perturbation failed: {repr(e)}")
             
             # Method 4: Synonym replacement as fallback
             if (len(perturbations) < num_perturbations):
                 try:
-                    synonym_perturbations = self._generate_synonym_perturbations(processed_text, 
-                                                                                 words, 
-                                                                                 num_perturbations - len(perturbations))
+                    synonym_perturbations = self._generate_synonym_perturbations(text              = processed_text, 
+                                                                                 words             = words, 
+                                                                                 max_perturbations = num_perturbations - len(perturbations),
+                                                                                )
                     perturbations.extend(synonym_perturbations)
                     
                 except Exception as e:
-                    logger.debug(f"Synonym replacement failed: {e}")
+                    logger.debug(f"Synonym replacement failed: {repr(e)}")
             
             # Ensure we have at least some perturbations
             if not perturbations:
                 # Fallback: create simple variations
-                fallback_perturbations = self._generate_fallback_perturbations(processed_text, words)
+                fallback_perturbations = self._generate_fallback_perturbations(text  = processed_text, 
+                                                                               words = words,
+                                                                              )
                 perturbations.extend(fallback_perturbations)
             
             # Remove duplicates and ensure we don't exceed requested number
@@ -423,19 +530,23 @@ class MultiPerturbationStabilityMetric(BaseMetric):
             
         except Exception as e:
             logger.warning(f"Perturbation generation failed: {repr(e)}")
-            # Return at least the original text as fallback
-            return [text]
+            return [text]  # Return at least the original text as fallback
     
 
     def _generate_roberta_masked_perturbations(self, text: str, words: List[str], max_perturbations: int) -> List[str]:
         """
-        Generate perturbations using RoBERTa mask filling
+        Generate perturbations using DistilRoBERTa mask filling
+        This is inspired by DetectGPT but uses a lighter model (DistilRoBERTa instead of T5)
         """
         perturbations = list()
         
         try:
-            # RoBERTa uses <mask> token
-            roberta_mask_token  = "<mask>"
+            # Use the proper DistilRoBERTa mask token from tokenizer
+            if hasattr(self.mask_tokenizer, 'mask_token') and self.mask_tokenizer.mask_token:
+                roberta_mask_token = self.mask_tokenizer.mask_token
+            
+            else:
+                roberta_mask_token = "<mask>"  # Fallback
             
             # Select words to mask (avoid very short words and punctuation)
             candidate_positions = [i for i, word in enumerate(words) if (len(word) > 3) and word.isalpha() and word.lower() not in ['the', 'and', 'but', 'for', 'with']]
@@ -448,7 +559,7 @@ class MultiPerturbationStabilityMetric(BaseMetric):
             
             # Try multiple mask positions
             attempts          = min(max_perturbations * 2, len(candidate_positions))
-            positions_to_try  = np.random.choice(candidate_positions, min(attempts, len(candidate_positions)), replace=False)
+            positions_to_try  = np.random.choice(candidate_positions, min(attempts, len(candidate_positions)), replace = False)
             
             for pos in positions_to_try:
                 if (len(perturbations) >= max_perturbations):
@@ -461,15 +572,15 @@ class MultiPerturbationStabilityMetric(BaseMetric):
                     masked_words[pos] = roberta_mask_token
                     masked_text       = ' '.join(masked_words)
                     
-                    # RoBERTa works better with proper sentence structure
+                    # DistilRoBERTa works better with proper sentence structure
                     if not masked_text.endswith(('.', '!', '?')):
                         masked_text += '.'
                     
-                    # Tokenize with RoBERTa-specific settings
+                    # Tokenize with DistilRoBERTa-specific settings
                     inputs = self.mask_tokenizer(masked_text,
                                                  return_tensors = "pt",
                                                  truncation     = True,
-                                                 max_length     = min(128, self.mask_tokenizer.model_max_length),  # Conservative length
+                                                 max_length     = min(128, self.mask_tokenizer.model_max_length),
                                                  padding        = True,
                                                 )
                     
@@ -508,15 +619,14 @@ class MultiPerturbationStabilityMetric(BaseMetric):
                             
                             if (self._is_valid_perturbation(new_text, text)):
                                 perturbations.append(new_text)
-                                # Use first valid prediction
-                                break  
+                                break  # Use first valid prediction
                     
                 except Exception as e:
-                    logger.debug(f"RoBERTa mask filling failed for position {pos}: {e}")
+                    logger.debug(f"DistilRoBERTa mask filling failed for position {pos}: {e}")
                     continue
                     
         except Exception as e:
-            logger.warning(f"RoBERTa masked perturbations failed: {e}")
+            logger.warning(f"DistilRoBERTa masked perturbations failed: {e}")
         
         return perturbations
     
@@ -559,7 +669,7 @@ class MultiPerturbationStabilityMetric(BaseMetric):
                         perturbations.append(new_text)
                         
         except Exception as e:
-            logger.debug(f"Synonym replacement failed: {e}")
+            logger.debug(f"Synonym replacement failed: {repr(e)}")
         
         return perturbations
     
@@ -585,41 +695,72 @@ class MultiPerturbationStabilityMetric(BaseMetric):
                 perturbations.append(text.capitalize())
                 
         except Exception as e:
-            logger.debug(f"Fallback perturbation failed: {e}")
+            logger.debug(f"Fallback perturbation failed: {repr(e)}")
         
         return [p for p in perturbations if p and p != text][:3]
     
 
     def _calculate_stability_score(self, original_likelihood: float, perturbed_likelihoods: List[float]) -> float:
         """
-        Calculate text stability score under perturbations : AI text tends to be less stable (larger likelihood drops)
+        Calculate text stability score with improved normalization : AI text typically shows higher stability (larger drops) than human text
         """
         if ((not perturbed_likelihoods) or (original_likelihood <= 0)):
-            return 0.5
+            # Assume more human-like when no data
+            return 0.3  
         
-        # Calculate average likelihood drop
-        likelihood_drops = [(original_likelihood - pl) / original_likelihood for pl in perturbed_likelihoods]
-        avg_drop         = np.mean(likelihood_drops) if likelihood_drops else 0.0
+        # Calculate relative likelihood drops
+        relative_drops = list()
         
-        # Higher drop = less stable = more AI-like : Normalize to 0-1 scale (assume max drop of 50%)
-        stability_score  = min(1.0, avg_drop / 0.5)
+        for pl in perturbed_likelihoods:
+            if (pl > 0):
+                # Use relative drop to handle scale differences
+                relative_drop = (original_likelihood - pl) / original_likelihood
+                
+                # Clamp to [0, 1]
+                relative_drops.append(max(0.0, min(1.0, relative_drop))) 
+        
+        if not relative_drops:
+            return 0.3
+        
+        avg_relative_drop = np.mean(relative_drops)
+        
+        # Normalization based on empirical observations : AI text typically shows 20-60% drops, human text shows 10-30% drops
+        if (avg_relative_drop > 0.5):
+            # Strong AI indicator
+            stability_score = 0.9  
 
-        return stability_score
+        elif (avg_relative_drop > 0.3):
+            # 0.6 to 0.9
+            stability_score = 0.6 + (avg_relative_drop - 0.3) * 1.5  
+
+        elif (avg_relative_drop > 0.15):
+            # 0.3 to 0.6
+            stability_score = 0.3 + (avg_relative_drop - 0.15) * 2.0  
+        
+        else:
+            # 0.0 to 0.3
+            stability_score = avg_relative_drop * 2.0  
+
+        return min(1.0, max(0.0, stability_score))
     
 
     def _calculate_curvature_score(self, original_likelihood: float, perturbed_likelihoods: List[float]) -> float:
         """
-        Calculate likelihood curvature score : AI text often has different curvature properties
+        Calculate likelihood curvature score with better scaling : Measures how "curved" the likelihood surface is around the text
         """
         if ((not perturbed_likelihoods) or (original_likelihood <= 0)):
-            return 0.5
+            return 0.3
         
         # Calculate variance of likelihood changes
         likelihood_changes = [abs(original_likelihood - pl) for pl in perturbed_likelihoods]
-        change_variance    = np.var(likelihood_changes) if len(likelihood_changes) > 1 else 0.0
         
-        # Higher variance = more curvature = potentially more AI-like : Normalize based on typical variance ranges
-        curvature_score    = min(1.0, change_variance * 10.0)  # Adjust scaling factor as needed
+        if (len(likelihood_changes) < 2):
+            return 0.3
+            
+        change_variance = np.var(likelihood_changes)
+        
+        # Typical variance for meaningful analysis is around 0.1-0.5 : Adjusted scaling
+        curvature_score = min(1.0, change_variance * 3.0)  
         
         return curvature_score
     
@@ -637,7 +778,7 @@ class MultiPerturbationStabilityMetric(BaseMetric):
             
             if (len(chunk) > 50):
                 try:
-                    chunk_likelihood = self._calculate_likelihood(chunk)
+                    chunk_likelihood = self._calculate_likelihood(text = chunk)
                     
                     if (chunk_likelihood > 0):
                         # Generate a simple perturbation for this chunk
@@ -649,11 +790,12 @@ class MultiPerturbationStabilityMetric(BaseMetric):
                             indices_to_keep      = np.random.choice(len(chunk_words), len(chunk_words) - delete_count, replace=False)
                             perturbed_chunk      = ' '.join([chunk_words[i] for i in sorted(indices_to_keep)])
                             
-                            perturbed_likelihood = self._calculate_likelihood(perturbed_chunk)
+                            perturbed_likelihood = self._calculate_likelihood(text = perturbed_chunk)
 
                             if (perturbed_likelihood > 0):
                                 stability = (chunk_likelihood - perturbed_likelihood) / chunk_likelihood
                                 stabilities.append(min(1.0, max(0.0, stability)))
+
                 except Exception:
                     continue
         
@@ -662,7 +804,7 @@ class MultiPerturbationStabilityMetric(BaseMetric):
 
     def _analyze_stability_patterns(self, features: Dict[str, Any]) -> tuple:
         """
-        Analyze MultiPerturbationStability patterns to determine RAW MultiPerturbationStability score (0-1 scale) : Higher score = more AI-like
+        Analyze MultiPerturbationStability patterns with better feature weighting
         """
         # Check feature validity first
         required_features = ['stability_score', 'curvature_score', 'normalized_likelihood_ratio', 'stability_variance', 'perturbation_variance']
@@ -675,61 +817,76 @@ class MultiPerturbationStabilityMetric(BaseMetric):
 
 
         # Initialize ai_indicator list
-        ai_indicators = list()
+        ai_indicators    = list()
+        
+        # Better weighting based on feature reliability
+        stability_weight = 0.3
+        curvature_weight = 0.25
+        ratio_weight     = 0.25
+        variance_weight  = 0.2
         
         # High stability score suggests AI (larger likelihood drops)
-        if (features['stability_score'] > 0.6):
-            ai_indicators.append(0.8)
-
-        elif (features['stability_score'] > 0.3):
-            ai_indicators.append(0.5)
+        stability = features['stability_score']
+        if (stability > 0.7):
+            ai_indicators.append(0.9 * stability_weight)
+        
+        elif (stability > 0.5):
+            ai_indicators.append(0.7 * stability_weight)
+        
+        elif (stability > 0.3):
+            ai_indicators.append(0.5 * stability_weight)
         
         else:
-            ai_indicators.append(0.2)
+            ai_indicators.append(0.2 * stability_weight)
         
         # High curvature score suggests AI
-        if (features['curvature_score'] > 0.7):
-            ai_indicators.append(0.7)
-
-        elif (features['curvature_score'] > 0.4):
-            ai_indicators.append(0.4)
-
+        curvature = features['curvature_score']
+        if (curvature > 0.7):
+            ai_indicators.append(0.8 * curvature_weight)
+        
+        elif (curvature > 0.5):
+            ai_indicators.append(0.6 * curvature_weight)
+        
+        elif (curvature > 0.3):
+            ai_indicators.append(0.4 * curvature_weight)
+        
         else:
-            ai_indicators.append(0.2)
+            ai_indicators.append(0.2 * curvature_weight)
         
         # High likelihood ratio suggests AI (original much more likely than perturbations)
-        if (features['normalized_likelihood_ratio'] > 0.8):
-            ai_indicators.append(0.9)
+        ratio = features['normalized_likelihood_ratio']
+        if (ratio > 0.8):
+            ai_indicators.append(0.9 * ratio_weight)
         
-        elif (features['normalized_likelihood_ratio'] > 0.6):
-            ai_indicators.append(0.6)
-
+        elif (ratio > 0.6):
+            ai_indicators.append(0.7 * ratio_weight)
+        
+        elif (ratio > 0.4):
+            ai_indicators.append(0.5 * ratio_weight)
+        
         else:
-            ai_indicators.append(0.3)
+            ai_indicators.append(0.3 * ratio_weight)
         
         # Low stability variance suggests AI (consistent across chunks)
-        if (features['stability_variance'] < 0.05):
-            ai_indicators.append(0.7)
-
-        elif (features['stability_variance'] < 0.1):
-            ai_indicators.append(0.4)
-
-        else:
-            ai_indicators.append(0.2)
+        stability_var = features['stability_variance']
+        if (stability_var < 0.05):
+            ai_indicators.append(0.8 * variance_weight)
         
-        # High perturbation variance suggests AI
-        if (features['perturbation_variance'] > 0.1):
-            ai_indicators.append(0.6)
-
-        elif (features['perturbation_variance'] > 0.05):
-            ai_indicators.append(0.4)
+        elif (stability_var < 0.1):
+            ai_indicators.append(0.5 * variance_weight)
 
         else:
-            ai_indicators.append(0.2)
+            ai_indicators.append(0.2 * variance_weight)
         
         # Calculate raw score and confidence
-        raw_score  = np.mean(ai_indicators) if ai_indicators else 0.5
-        confidence = 1.0 - (np.std(ai_indicators) / 0.5) if ai_indicators else 0.5
+        if ai_indicators:
+            raw_score  = sum(ai_indicators)
+            confidence = 0.5 + (0.5 * (1.0 - (np.std([x / (weights := [stability_weight, curvature_weight, ratio_weight, variance_weight])[i] for i, x in enumerate(ai_indicators)]) if len(ai_indicators) > 1 else 0.5)))
+       
+        else:
+            raw_score  = 0.5
+            confidence = 0.3
+            
         confidence = max(0.1, min(0.9, confidence))
         
         return raw_score, confidence
@@ -770,16 +927,16 @@ class MultiPerturbationStabilityMetric(BaseMetric):
 
     def _get_default_features(self) -> Dict[str, Any]:
         """
-        Return default features when analysis is not possible
+        Return more meaningful default features
         """
         return {"original_likelihood"         : 2.0,
                 "avg_perturbed_likelihood"    : 1.8,
                 "likelihood_ratio"            : 1.1,
                 "normalized_likelihood_ratio" : 0.55,
-                "stability_score"             : 0.5,
-                "curvature_score"             : 0.5,
+                "stability_score"             : 0.3, 
+                "curvature_score"             : 0.3,
                 "perturbation_variance"       : 0.05,
-                "avg_chunk_stability"         : 0.5,
+                "avg_chunk_stability"         : 0.3,
                 "stability_variance"          : 0.1,
                 "num_perturbations"           : 0,
                 "num_valid_perturbations"     : 0,
@@ -814,14 +971,14 @@ class MultiPerturbationStabilityMetric(BaseMetric):
         # Normalize whitespace
         text = ' '.join(text.split())
         
-        # RoBERTa works better with proper punctuation
+        # DistilRoBERTa works better with proper punctuation
         if not text.endswith(('.', '!', '?')):
             text += '.'
         
         # Truncate to safe length
         if (len(text) > 1000):
             sentences = text.split('. ')
-            if len(sentences) > 1:
+            if (len(sentences) > 1):
                 # Keep first few sentences
                 text = '. '.join(sentences[:3]) + '.'
             
@@ -831,50 +988,54 @@ class MultiPerturbationStabilityMetric(BaseMetric):
         return text
     
 
-    def _configure_tokenizer_padding(self, tokenizer) -> Any:
-        """
-        Configure tokenizer for proper padding
-        """
-        if tokenizer.pad_token is None:
-            if tokenizer.eos_token is not None:
-                tokenizer.pad_token = tokenizer.eos_token
-            
-            else:
-                tokenizer.add_special_tokens({'pad_token': '[PAD]'})
-        
-        tokenizer.padding_side = "left"
-        
-        return tokenizer
-    
-
     def _clean_roberta_token(self, token: str) -> str:
         """
-        Clean tokens from RoBERTa tokenizer
+        Clean tokens from DistilRoBERTa tokenizer
         """
         if not token:
             return ""
         
-        # Remove RoBERTa-specific artifacts
+        # Remove DistilRoBERTa-specific artifacts
         token = token.replace('Ġ', ' ')  # RoBERTa space marker
         token = token.replace('</s>', '')
         token = token.replace('<s>', '')
         token = token.replace('<pad>', '')
+        token = token.replace('<mask>', '')
         
-        # Remove leading/trailing whitespace and punctuation
-        token = token.strip(' .,!?;:"\'')
+        # Remove leading/trailing whitespace
+        token = token.strip()
         
-        return token
+        # Only remove punctuation if token is ONLY punctuation
+        if token and not token.replace('.', '').replace(',', '').replace('!', '').replace('?', '').strip():
+            return ""
+        
+        # Keep the token if it has at least 2 alphanumeric characters
+        if sum(c.isalnum() for c in token) >= 2:
+            return token
+        
+        return ""
     
 
     def _is_valid_perturbation(self, perturbed_text: str, original_text: str) -> bool:
         """
-        Check if a perturbation is valid
+        Check if a perturbation is valid (more lenient validation)
         """
-        # Not too short
-        return (perturbed_text and 
-                len(perturbed_text.strip()) > 10 and 
-                perturbed_text != original_text and
-                len(perturbed_text) > len(original_text) * 0.5)  
+        if (not perturbed_text or not perturbed_text.strip()):
+            return False
+        
+        # Must be different from original
+        if (perturbed_text == original_text):
+            return False
+        
+        # Lenient length check
+        if (len(perturbed_text) < len(original_text) * 0.3):
+            return False
+        
+        # Must have some actual content
+        if len(perturbed_text.strip()) < 5:
+            return False
+        
+        return True
     
 
     def cleanup(self):

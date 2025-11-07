@@ -20,6 +20,8 @@ class ModelType(Enum):
     EMBEDDING               = "embedding"
     RULE_BASED              = "rule_based"
     SEQUENCE_CLASSIFICATION = "sequence_classification"  
+    CAUSAL_LM               = "causal_lm"        
+    MASKED_LM               = "masked_lm" 
 
 
 @dataclass
@@ -99,7 +101,7 @@ MODEL_REGISTRY : Dict[str, ModelConfig] = {"perplexity_gpt2"            : ModelC
                                                                                       quantizable       = True,
                                                                                      ),
                                            "multi_perturbation_base"    : ModelConfig(model_id          = "gpt2",
-                                                                                      model_type        = ModelType.GPTMASK,
+                                                                                      model_type        = ModelType.CAUSAL_LM,
                                                                                       description       = "MultiPerturbationStability model (reuses gpt2)",
                                                                                       size_mb           = 0,  
                                                                                       required          = True,  
@@ -108,7 +110,7 @@ MODEL_REGISTRY : Dict[str, ModelConfig] = {"perplexity_gpt2"            : ModelC
                                                                                       batch_size        = 4,
                                                                                      ),
                                            "multi_perturbation_mask"    : ModelConfig(model_id          = "distilroberta-base",
-                                                                                      model_type        = ModelType.TRANSFORMER,
+                                                                                      model_type        = ModelType.MASKED_LM,
                                                                                       description       = "Masked LM for text perturbation",
                                                                                       size_mb           = 330,
                                                                                       required          = True, 
