@@ -79,6 +79,9 @@ class ReportGenerator:
         --------
                 { dict }          : Dictionary mapping format to filepath
         """
+        # Convert DetectionResult to dict for consistent access
+        detection_dict = detection_result.to_dict() if hasattr(detection_result, 'to_dict') else detection_result
+        
         # Generate detailed reasoning
         reasoning        = self.reasoning_generator.generate(ensemble_result    = detection_result.ensemble_result,
                                                              metric_results     = detection_result.metric_results,
@@ -88,7 +91,7 @@ class ReportGenerator:
                                                             )
         
         # Extract detailed metrics from ACTUAL detection results
-        detailed_metrics = self._extract_detailed_metrics(detection_result)
+        detailed_metrics = self._extract_detailed_metrics(detection_dict)
         
         # Timestamp for filenames
         timestamp        = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -97,7 +100,7 @@ class ReportGenerator:
         
         # Generate requested formats
         if ("json" in formats):  
-            json_path               = self._generate_json_report(detection_result      = detection_result, 
+            json_path               = self._generate_json_report(detection_dict        = detection_dict, 
                                                                  reasoning             = reasoning, 
                                                                  detailed_metrics      = detailed_metrics, 
                                                                  attribution_result    = attribution_result,
@@ -108,7 +111,7 @@ class ReportGenerator:
         
         if ("pdf" in formats):
             try:
-                pdf_path               = self._generate_pdf_report(detection_result      = detection_result, 
+                pdf_path               = self._generate_pdf_report(detection_dict        = detection_dict, 
                                                                    reasoning             = reasoning, 
                                                                    detailed_metrics      = detailed_metrics, 
                                                                    attribution_result    = attribution_result,
@@ -126,26 +129,29 @@ class ReportGenerator:
         return generated_files
 
 
-    def _extract_detailed_metrics(self, detection_result: DetectionResult) -> List[DetailedMetric]:
+    def _extract_detailed_metrics(self, detection_dict: Dict) -> List[DetailedMetric]:
         """
         Extract detailed metrics with sub-metrics from ACTUAL detection result
         """
         detailed_metrics = list()
-        metric_results   = detection_result.metric_results
-        ensemble_result  = detection_result.ensemble_result
+        metrics_data     = detection_dict.get("metrics", {})
+        ensemble_data    = detection_dict.get("ensemble", {})
         
         # Get actual metric weights from ensemble
-        metric_weights   = getattr(ensemble_result, 'metric_weights', {})
+        metric_weights   = ensemble_data.get("metric_contributions", {})
         
         # Extract actual metric data
-        for metric_name, metric_result in metric_results.items():
-            if metric_result.error is not None:
+        for metric_name, metric_result in metrics_data.items():
+            if not isinstance(metric_result, dict):
+                continue
+                
+            if metric_result.get("error") is not None:
                 continue
                 
             # Get actual probabilities and confidence
-            ai_prob    = metric_result.ai_probability * 100
-            human_prob = metric_result.human_probability * 100
-            confidence = metric_result.confidence * 100
+            ai_prob    = metric_result.get("ai_probability", 0) * 100
+            human_prob = metric_result.get("human_probability", 0) * 100
+            confidence = metric_result.get("confidence", 0) * 100
             
             # Determine verdict based on actual probability
             if (ai_prob >= 60):
@@ -158,7 +164,9 @@ class ReportGenerator:
                 verdict = "MIXED (AI + HUMAN)"
             
             # Get actual weight or use default
-            weight                = metric_weights.get(metric_name, 0.0) * 100
+            weight = 0.0
+            if metric_name in metric_weights:
+                weight = metric_weights[metric_name].get("weight", 0.0) * 100
             
             # Extract actual detailed metrics from metric result
             detailed_metrics_data = self._extract_metric_details(metric_name   = metric_name, 
@@ -182,22 +190,22 @@ class ReportGenerator:
         return detailed_metrics
 
 
-    def _extract_metric_details(self, metric_name: str, metric_result) -> Dict[str, float]:
+    def _extract_metric_details(self, metric_name: str, metric_result: Dict) -> Dict[str, float]:
         """
         Extract detailed sub-metrics from metric result
         """
         details = dict()
         
         # Try to get details from metric result
-        if ((hasattr(metric_result, 'details')) and metric_result.details):
-            details = metric_result.details.copy()
+        if metric_result.get("details"):
+            details = metric_result["details"].copy()
         
         # If no details available, provide basic calculated values
         if not details:
-            details = {"ai_probability"    : metric_result.ai_probability * 100,
-                       "human_probability" : metric_result.human_probability * 100,
-                       "confidence"        : metric_result.confidence * 100,
-                       "score"             : getattr(metric_result, 'score', 0.0) * 100,
+            details = {"ai_probability"    : metric_result.get("ai_probability", 0) * 100,
+                       "human_probability" : metric_result.get("human_probability", 0) * 100,
+                       "confidence"        : metric_result.get("confidence", 0) * 100,
+                       "score"             : metric_result.get("score", 0) * 100,
                       }
         
         return details
@@ -218,7 +226,7 @@ class ReportGenerator:
         return descriptions.get(metric_name, "Advanced text analysis metric.")
 
 
-    def _generate_json_report(self, detection_result: DetectionResult, reasoning: DetailedReasoning, detailed_metrics: List[DetailedMetric], 
+    def _generate_json_report(self, detection_dict: Dict, reasoning: DetailedReasoning, detailed_metrics: List[DetailedMetric], 
                               attribution_result: Optional[AttributionResult], highlighted_sentences: Optional[List] = None, filename: str = None) -> Path:
         """
         Generate JSON format report with detailed metrics
@@ -251,7 +259,7 @@ class ReportGenerator:
                                          "index"          : sent.index,
                                        })
 
-        # Attribution data - use attribution_result
+        # Attribution data
         attribution_data = None
         
         if attribution_result:
@@ -264,30 +272,32 @@ class ReportGenerator:
                                 "metric_contributions": attribution_result.metric_contributions,
                                }
         
-        # Use ACTUAL detection results with ensemble integration
-        ensemble_result = detection_result.ensemble_result
+        # Use ACTUAL detection results from dictionary
+        ensemble_data = detection_dict.get("ensemble", {})
+        analysis_data = detection_dict.get("analysis", {})
+        metrics_data_dict = detection_dict.get("metrics", {})
+        performance_data = detection_dict.get("performance", {})
         
         report_data     = {"report_metadata"     : {"generated_at" : datetime.now().isoformat(),
                                                     "version"      : "1.0.0",
                                                     "format"       : "json",
                                                     "report_id"    : filename.replace('.json', ''),
                                                    },
-                           "overall_results"     : {"final_verdict"      : ensemble_result.final_verdict,
-                                                    "ai_probability"     : round(ensemble_result.ai_probability, 4),
-                                                    "human_probability"  : round(ensemble_result.human_probability, 4),
-                                                    "mixed_probability"  : round(ensemble_result.mixed_probability, 4),
-                                                    "overall_confidence" : round(ensemble_result.overall_confidence, 4),
-                                                    "uncertainty_score"  : round(ensemble_result.uncertainty_score, 4),
-                                                    "consensus_level"    : round(ensemble_result.consensus_level, 4),
-                                                    "domain"             : detection_result.domain_prediction.primary_domain.value,
-                                                    "domain_confidence"  : round(detection_result.domain_prediction.confidence, 4),
-                                                    "text_length"        : detection_result.processed_text.word_count,
-                                                    "sentence_count"     : detection_result.processed_text.sentence_count,
+                           "overall_results"     : {"final_verdict"      : ensemble_data.get("final_verdict", "Unknown"),
+                                                    "ai_probability"     : ensemble_data.get("ai_probability", 0),
+                                                    "human_probability"  : ensemble_data.get("human_probability", 0),
+                                                    "mixed_probability"  : ensemble_data.get("mixed_probability", 0),
+                                                    "overall_confidence" : ensemble_data.get("overall_confidence", 0),
+                                                    "uncertainty_score"  : ensemble_data.get("uncertainty_score", 0),
+                                                    "consensus_level"    : ensemble_data.get("consensus_level", 0),
+                                                    "domain"             : analysis_data.get("domain", "general"),
+                                                    "domain_confidence"  : analysis_data.get("domain_confidence", 0),
+                                                    "text_length"        : analysis_data.get("text_length", 0),
+                                                    "sentence_count"     : analysis_data.get("sentence_count", 0),
                                                    },
                            "ensemble_analysis"   : {"method_used"     : "confidence_calibrated",
-                                                    "metric_weights"  : {name: round(weight, 4) for name, weight in ensemble_result.metric_weights.items()},
-                                                    "weighted_scores" : {name: round(score, 4) for name, score in ensemble_result.weighted_scores.items()},
-                                                    "reasoning"       : ensemble_result.reasoning,
+                                                    "metric_weights"  : ensemble_data.get("metric_contributions", {}),
+                                                    "reasoning"       : ensemble_data.get("reasoning", []),
                                                    },
                            "detailed_metrics"    : metrics_data,
                            "detection_reasoning" : {"summary"                : reasoning.summary,
@@ -303,10 +313,10 @@ class ReportGenerator:
                                                    },
                            "highlighted_text"    : highlighted_data,
                            "model_attribution"   : attribution_data,
-                           "performance_metrics" : {"total_processing_time"  : round(detection_result.processing_time, 3),
-                                                    "metrics_execution_time" : {name: round(time, 3) for name, time in detection_result.metrics_execution_time.items()},
-                                                    "warnings"               : detection_result.warnings,
-                                                    "errors"                 : detection_result.errors,
+                           "performance_metrics" : {"total_processing_time"  : performance_data.get("total_time", 0),
+                                                    "metrics_execution_time" : performance_data.get("metrics_time", {}),
+                                                    "warnings"               : detection_dict.get("warnings", []),
+                                                    "errors"                 : detection_dict.get("errors", []),
                                                    }
                           }
         
@@ -323,7 +333,7 @@ class ReportGenerator:
         return output_path
 
 
-    def _generate_pdf_report(self, detection_result: DetectionResult, reasoning: DetailedReasoning, detailed_metrics: List[DetailedMetric], 
+    def _generate_pdf_report(self, detection_dict: Dict, reasoning: DetailedReasoning, detailed_metrics: List[DetailedMetric], 
                              attribution_result: Optional[AttributionResult], highlighted_sentences: Optional[List] = None, filename: str = None) -> Path:
         """
         Generate PDF format report with detailed metrics
@@ -378,8 +388,9 @@ class ReportGenerator:
                                        spaceAfter = 8,
                                       )
         
-        # Use detection results with ensemble integration
-        ensemble_result = detection_result.ensemble_result
+        # Use detection results from dictionary
+        ensemble_data = detection_dict.get("ensemble", {})
+        analysis_data = detection_dict.get("analysis", {})
         
         # Title and main sections
         elements.append(Paragraph("AI Text Detection Analysis Report", title_style))
@@ -388,13 +399,13 @@ class ReportGenerator:
         
         # Verdict section with ensemble metrics
         elements.append(Paragraph("Detection Summary", heading_style))
-        verdict_data = [['Final Verdict:', ensemble_result.final_verdict],
-                        ['AI Probability:', f"{ensemble_result.ai_probability:.1%}"],
-                        ['Human Probability:', f"{ensemble_result.human_probability:.1%}"],
-                        ['Mixed Probability:', f"{ensemble_result.mixed_probability:.1%}"],
-                        ['Overall Confidence:', f"{ensemble_result.overall_confidence:.1%}"],
-                        ['Uncertainty Score:', f"{ensemble_result.uncertainty_score:.1%}"],
-                        ['Consensus Level:', f"{ensemble_result.consensus_level:.1%}"],
+        verdict_data = [['Final Verdict:', ensemble_data.get("final_verdict", "Unknown")],
+                        ['AI Probability:', f"{ensemble_data.get('ai_probability', 0):.1%}"],
+                        ['Human Probability:', f"{ensemble_data.get('human_probability', 0):.1%}"],
+                        ['Mixed Probability:', f"{ensemble_data.get('mixed_probability', 0):.1%}"],
+                        ['Overall Confidence:', f"{ensemble_data.get('overall_confidence', 0):.1%}"],
+                        ['Uncertainty Score:', f"{ensemble_data.get('uncertainty_score', 0):.1%}"],
+                        ['Consensus Level:', f"{ensemble_data.get('consensus_level', 0):.1%}"],
                        ]
         
         verdict_table = Table(verdict_data, colWidths=[2*inch, 3*inch])
@@ -410,11 +421,11 @@ class ReportGenerator:
         
         # Content analysis
         elements.append(Paragraph("Content Analysis", heading_style))
-        content_data = [['Content Domain:', detection_result.domain_prediction.primary_domain.value.title()],
-                        ['Domain Confidence:', f"{detection_result.domain_prediction.confidence:.1%}"],
-                        ['Word Count:', str(detection_result.processed_text.word_count)],
-                        ['Sentence Count:', str(detection_result.processed_text.sentence_count)],
-                        ['Processing Time:', f"{detection_result.processing_time:.2f}s"],
+        content_data = [['Content Domain:', analysis_data.get("domain", "general").title()],
+                        ['Domain Confidence:', f"{analysis_data.get('domain_confidence', 0):.1%}"],
+                        ['Word Count:', str(analysis_data.get("text_length", 0))],
+                        ['Sentence Count:', str(analysis_data.get("sentence_count", 0))],
+                        ['Processing Time:', f"{detection_dict.get('performance', {}).get('total_time', 0):.2f}s"],
                        ]
         
         content_table = Table(content_data, colWidths=[2*inch, 3*inch])
@@ -428,14 +439,16 @@ class ReportGenerator:
         
         # Ensemble Analysis
         elements.append(Paragraph("Ensemble Analysis", heading_style))
-        elements.append(Paragraph(f"Method: Confidence Calibrated Aggregation", styles['Normal']))
+        elements.append(Paragraph("Method: Confidence Calibrated Aggregation", styles['Normal']))
         elements.append(Spacer(1, 0.1*inch))
         
         # Metric weights table
-        if hasattr(ensemble_result, 'metric_weights') and ensemble_result.metric_weights:
+        metric_contributions = ensemble_data.get("metric_contributions", {})
+        if metric_contributions:
             elements.append(Paragraph("Metric Weights", styles['Heading3']))
             weight_data = [['Metric', 'Weight']]
-            for metric, weight in ensemble_result.metric_weights.items():
+            for metric, contribution in metric_contributions.items():
+                weight = contribution.get("weight", 0)
                 weight_data.append([metric.title(), f"{weight:.1%}"])
             
             weight_table = Table(weight_data, colWidths=[3*inch, 1*inch])
@@ -578,8 +591,8 @@ class ReportGenerator:
         
         # Footer
         elements.append(Spacer(1, 0.3*inch))
-        elements.append(Paragraph(f"Generated by AI Text Detector v2.0 | Processing Time: {detection_result.processing_time:.2f}s", 
-                                ParagraphStyle('Footer', parent=styles['Normal'], fontSize=8, textColor=colors.gray)))
+        elements.append(Paragraph(f"Generated by AI Text Detector v2.0 | Processing Time: {detection_dict.get('performance', {}).get('total_time', 0):.2f}s", 
+                        ParagraphStyle('Footer', parent=styles['Normal'], fontSize=8, textColor=colors.gray)))
         
         # Build PDF
         doc.build(elements)

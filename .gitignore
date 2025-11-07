@@ -21,6 +21,10 @@ wheels/
 .installed.cfg
 *.egg
 
+# models
+models/cache
+
+
 # Virtual environments
 venv/
 env/
@@ -36,14 +40,7 @@ ENV/
 .DS_Store
 Thumbs.db
 
-# Logs
-logs/
-*.log
-
-# Data files (if you have large datasets)
-data/
-models/cache/
 
 # Environment variables
 .env
-.env.local
+.env.localrailway.toml

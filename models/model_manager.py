@@ -21,6 +21,7 @@ from transformers import AutoTokenizer
 from transformers import GPT2LMHeadModel
 from config.model_config import ModelType
 from config.model_config import ModelConfig
+from transformers import AutoModelForCausalLM
 from transformers import AutoModelForMaskedLM
 from config.model_config import MODEL_REGISTRY
 from config.model_config import get_model_config
@@ -237,6 +238,12 @@ class ModelManager:
             elif (model_config.model_type == ModelType.TRANSFORMER):
                 model = self._load_transformer(config = model_config)
 
+            elif (model_config.model_type == ModelType.CAUSAL_LM):
+                model = self._load_causal_lm(config = model_config)
+
+            elif (model_config.model_type == ModelType.MASKED_LM):
+                model = self._load_masked_lm(config = model_config)
+
             elif (model_config.model_type == ModelType.RULE_BASED):
                 # Check if it's a spaCy model
                 if model_config.additional_params.get("is_spacy_model", False):
@@ -288,7 +295,13 @@ class ModelManager:
         logger.info(f"Loading tokenizer for: {model_name}")
         
         try:
-            if (model_config.model_type in [ModelType.GPT, ModelType.CLASSIFIER, ModelType.SEQUENCE_CLASSIFICATION, ModelType.TRANSFORMER]):
+            if (model_config.model_type in [ModelType.GPT, 
+                                            ModelType.CLASSIFIER, 
+                                            ModelType.SEQUENCE_CLASSIFICATION, 
+                                            ModelType.TRANSFORMER,
+                                            ModelType.CAUSAL_LM,
+                                            ModelType.MASKED_LM]):
+                
                 tokenizer = AutoTokenizer.from_pretrained(pretrained_model_name_or_path = model_config.model_id,
                                                           cache_dir                     = str(self.cache_dir),
                                                          )
@@ -324,6 +337,54 @@ class ModelManager:
                                                    )
 
         tokenizer = GPT2Tokenizer.from_pretrained(pretrained_model_name_or_path = config.model_id,
+                                                  cache_dir                     = str(self.cache_dir),
+                                                 )
+        
+        # Move to device
+        model     = model.to(self.device)
+
+        model.eval()
+        
+        # Apply quantization if enabled
+        if (settings.USE_QUANTIZATION and config.quantizable):
+            model = self._quantize_model(model = model)
+        
+        return (model, tokenizer)
+
+    
+    def _load_causal_lm(self, config: ModelConfig) -> tuple:
+        """
+        Load causal language model (like GPT-2) for text generation
+        """
+        model     = AutoModelForCausalLM.from_pretrained(pretrained_model_name_or_path = config.model_id,
+                                                         cache_dir                     = str(self.cache_dir),
+                                                        )
+
+        tokenizer = AutoTokenizer.from_pretrained(pretrained_model_name_or_path = config.model_id,
+                                                  cache_dir                     = str(self.cache_dir),
+                                                 )
+        
+        # Move to device
+        model     = model.to(self.device)
+
+        model.eval()
+        
+        # Apply quantization if enabled
+        if (settings.USE_QUANTIZATION and config.quantizable):
+            model = self._quantize_model(model = model)
+        
+        return (model, tokenizer)
+
+    
+    def _load_masked_lm(self, config: ModelConfig) -> tuple:
+        """
+        Load masked language model (like RoBERTa) for fill-mask tasks
+        """
+        model     = AutoModelForMaskedLM.from_pretrained(pretrained_model_name_or_path = config.model_id,
+                                                         cache_dir                     = str(self.cache_dir),
+                                                        )
+
+        tokenizer = AutoTokenizer.from_pretrained(pretrained_model_name_or_path = config.model_id,
                                                   cache_dir                     = str(self.cache_dir),
                                                  )
         
@@ -483,7 +544,7 @@ class ModelManager:
         logger.info(f"Downloading model: {model_name} ({model_config.model_id})")
         
         try:
-            if model_config.model_type == ModelType.SENTENCE_TRANSFORMER:
+            if (model_config.model_type == ModelType.SENTENCE_TRANSFORMER):
                 SentenceTransformer(model_name_or_path = model_config.model_id,
                                     cache_folder       = str(self.cache_dir),
                                    )
@@ -501,6 +562,24 @@ class ModelManager:
                 AutoModelForSequenceClassification.from_pretrained(pretrained_model_name_or_path = model_config.model_id,
                                                                    cache_dir                     = str(self.cache_dir),
                                                                   )
+
+                AutoTokenizer.from_pretrained(pretrained_model_name_or_path = model_config.model_id,
+                                              cache_dir                     = str(self.cache_dir),
+                                             )
+
+            elif (model_config.model_type == ModelType.CAUSAL_LM):
+                AutoModelForCausalLM.from_pretrained(pretrained_model_name_or_path = model_config.model_id,
+                                                     cache_dir                     = str(self.cache_dir),
+                                                    )
+
+                AutoTokenizer.from_pretrained(pretrained_model_name_or_path = model_config.model_id,
+                                              cache_dir                     = str(self.cache_dir),
+                                             )
+
+            elif (model_config.model_type == ModelType.MASKED_LM):
+                AutoModelForMaskedLM.from_pretrained(pretrained_model_name_or_path = model_config.model_id,
+                                                     cache_dir                     = str(self.cache_dir),
+                                                    )
 
                 AutoTokenizer.from_pretrained(pretrained_model_name_or_path = model_config.model_id,
                                               cache_dir                     = str(self.cache_dir),
