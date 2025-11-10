@@ -1,6 +1,7 @@
 # DEPENDENCIES
 import io
 import os
+import re
 import mimetypes
 from typing import Any
 from typing import Dict
@@ -14,16 +15,37 @@ from dataclasses import dataclass
 
 # Document processing libraries
 try:
-    import PyPDF2
-    import pdfplumber
-    PDF_AVAILABLE = True
+    # PyMuPDF - Primary PDF Extractor
+    import fitz  
+    PYPDF_AVAILABLE = True
+    logger.info("PyMuPDF available for high-quality PDF extraction")
+
 except ImportError:
-    logger.warning("PDF libraries not available. Install: pip install PyPDF2 pdfplumber")
-    PDF_AVAILABLE = False
+    logger.warning("PyMuPDF not available. Install: pip install PyMuPDF")
+    PYPDF_AVAILABLE = False
+
+try:
+    # Fallback 1
+    import pdfplumber  
+    PDFPLUMBER_AVAILABLE = True
+
+except ImportError:
+    logger.warning("pdfplumber not available. Install: pip install pdfplumber")
+    PDFPLUMBER_AVAILABLE = False
+
+try:
+    # Fallback 2
+    import PyPDF2  
+    PYPDF2_AVAILABLE = True
+
+except ImportError:
+    logger.warning("PyPDF2 not available. Install: pip install PyPDF2")
+    PYPDF2_AVAILABLE = False
 
 try:
     from docx import Document as DocxDocument
     DOCX_AVAILABLE = True
+
 except ImportError:
     logger.warning("python-docx not available. Install: pip install python-docx")
     DOCX_AVAILABLE = False
@@ -31,6 +53,7 @@ except ImportError:
 try:
     import chardet
     CHARDET_AVAILABLE = True
+
 except ImportError:
     logger.warning("chardet not available. Install: pip install chardet")
     CHARDET_AVAILABLE = False
@@ -38,6 +61,7 @@ except ImportError:
 try:
     from bs4 import BeautifulSoup
     BS4_AVAILABLE = True
+
 except ImportError:
     logger.warning("BeautifulSoup not available. Install: pip install beautifulsoup4")
     BS4_AVAILABLE = False
@@ -82,7 +106,7 @@ class DocumentExtractor:
 
     Supported Formats:
     - Plain text (.txt, .md, .log)
-    - PDF documents (.pdf)
+    - PDF documents (.pdf) - Uses PyMuPDF as primary extractor
     - Microsoft Word (.doc, .docx)
     - Rich Text Format (.rtf)
     - HTML files (.html, .htm)
@@ -105,20 +129,17 @@ class DocumentExtractor:
     MAX_FILE_SIZE        = 50 * 1024 * 1024
 
     
-    def __init__(self, max_file_size: int = MAX_FILE_SIZE, prefer_pdfplumber: bool = True, extract_metadata: bool = True):
+    def __init__(self, max_file_size: int = MAX_FILE_SIZE, extract_metadata: bool = True):
         """
         Initialize document extractor
         
         Arguments:
         ----------
-            max_file_size      : Maximum file size in bytes
+            max_file_size      { int }  : Maximum file size in bytes
 
-            prefer_pdfplumber  : Use pdfplumber over PyPDF2 (better quality)
-            
-            extract_metadata   : Extract document metadata
+            extract_metadata   { bool } : Extract document metadata
         """
         self.max_file_size      = max_file_size
-        self.prefer_pdfplumber  = prefer_pdfplumber
         self.extract_metadata   = extract_metadata
         
         logger.info(f"DocumentExtractor initialized (max_size={max_file_size/1024/1024:.1f}MB)")
@@ -176,7 +197,7 @@ class DocumentExtractor:
             result.file_path       = str(file_path)
             result.file_size_bytes = file_size
             
-            logger.info(f"Extracted {len(result.text)} chars from {file_path.name}")
+            logger.info(f"Extracted {len(result.text)} chars from {file_path.name} using {result.extraction_method}")
             return result
             
         except Exception as e:
@@ -192,15 +213,15 @@ class DocumentExtractor:
         
         Arguments:
         ----------
-            file_bytes : File content as bytes
+            file_bytes { bytes } : File content as bytes
 
-            filename   : Original filename
+            filename    { str }  : Original filename
             
-            mime_type  : MIME type (optional)
+            mime_type   { str }  : MIME type (optional)
             
         Returns:
         --------
-            ExtractedDocument object
+            { ExtractedDocument} : ExtractedDocument object
         """
         try:
             # Determine file type
@@ -244,7 +265,7 @@ class DocumentExtractor:
             return result
             
         except Exception as e:
-            logger.error(f"Error extracting from bytes: {e}")
+            logger.error(f"Error extracting from bytes: {repr(e)}")
             return self._create_error_result(file_path = filename,
                                              error     = repr(e),
                                             )
@@ -264,7 +285,8 @@ class DocumentExtractor:
                 with open(file_path, 'rb') as f:
                     raw_data = f.read()
                     detected = chardet.detect(raw_data)
-                    if detected['confidence'] > 0.7:
+                    
+                    if (detected['confidence'] > 0.7):
                         encoding = detected['encoding']
                         logger.debug(f"Detected encoding: {encoding} (confidence: {detected['confidence']})")
             
@@ -340,20 +362,58 @@ class DocumentExtractor:
 
     def _extract_pdf(self, file_path: Path) -> ExtractedDocument:
         """
-        Extract text from PDF files
+        Extract text from PDF files in exactly this Priority order : PyMuPDF > pdfplumber > PyPDF2
         """
-        if not PDF_AVAILABLE:
-            return self._create_error_result(file_path = (file_path),
-                                             error     = "PDF libraries not installed",
+        if not any([PYPDF_AVAILABLE, PDFPLUMBER_AVAILABLE, PYPDF2_AVAILABLE]):
+            return self._create_error_result(file_path = str(file_path),
+                                             error     = "PDF libraries not installed. Install: pip install PyMuPDF",
                                             )
         
-        warnings   = list()
-        text       = ""
-        page_count = 0
-        metadata   = dict()
+        warnings          = list()
+        text              = ""
+        page_count        = 0
+        metadata          = dict()
+        extraction_method = "unknown"
         
-        # Try pdfplumber first (better quality)
-        if self.prefer_pdfplumber:
+        # Try PyMuPDF first : best quality & performance
+        if PYPDF_AVAILABLE:
+            try:
+                doc        = fitz.open(file_path)
+                page_count = doc.page_count
+                metadata   = doc.metadata
+                
+                for page_num in range(page_count):
+                    page      = doc[page_num]
+                    page_text = page.get_text()
+                    
+                    if page_text:
+                        text += page_text + "\n\n"
+                
+                doc.close()
+                extraction_method = "PyMuPDF"
+                
+                if text.strip():
+                    logger.info(f"Successfully extracted PDF using PyMuPDF: {len(text)} chars")
+                    return ExtractedDocument(text              = text.strip(),
+                                             file_path         = str(file_path),
+                                             file_type         = '.pdf',
+                                             file_size_bytes   = file_path.stat().st_size,
+                                             page_count        = page_count,
+                                             extraction_method = extraction_method,
+                                             metadata          = metadata,
+                                             is_success        = True,
+                                             error_message     = None,
+                                             warnings          = warnings,
+                                            )
+                
+                else:
+                    warnings.append("PyMuPDF extracted no text")
+
+            except Exception as e:
+                warnings.append(f"PyMuPDF failed: {repr(e)}, trying pdfplumber")
+        
+        # Fallback-1: Try pdfplumber
+        if PDFPLUMBER_AVAILABLE:
             try:
                 with pdfplumber.open(file_path) as pdf:
                     page_count = len(pdf.pages)
@@ -365,74 +425,124 @@ class DocumentExtractor:
                         if page_text:
                             text += page_text + "\n\n"
                 
+                extraction_method = "pdfplumber"
+                
                 if text.strip():
+                    logger.info(f"Extracted PDF using pdfplumber: {len(text)} chars")
                     return ExtractedDocument(text              = text.strip(),
                                              file_path         = str(file_path),
                                              file_type         = '.pdf',
                                              file_size_bytes   = file_path.stat().st_size,
                                              page_count        = page_count,
-                                             extraction_method = 'pdfplumber',
+                                             extraction_method = extraction_method,
                                              metadata          = metadata,
                                              is_success        = True,
                                              error_message     = None,
                                              warnings          = warnings,
                                             )
+                
+                else:
+                    warnings.append("pdfplumber extracted no text")
+            
             except Exception as e:
                 warnings.append(f"pdfplumber failed: {repr(e)}, trying PyPDF2")
         
-        # Fallback to PyPDF2
-        try:
-            with open(file_path, 'rb') as f:
-                reader     = PyPDF2.PdfReader(f)
-                page_count = len(reader.pages)
-                
-                if self.extract_metadata:
-                    metadata = reader.metadata or {}
-                
-                for page in reader.pages:
-                    page_text = page.extract_text()
+        # Fallback-2: Try PyPDF2
+        if PYPDF2_AVAILABLE:
+            try:
+                with open(file_path, 'rb') as f:
+                    reader     = PyPDF2.PdfReader(f)
+                    page_count = len(reader.pages)
                     
-                    if page_text:
-                        text += page_text + "\n\n"
-            
-            if not text.strip():
-                warnings.append("PDF appears to be image-based or encrypted")
-            
-            return ExtractedDocument(text              = text.strip(),
-                                     file_path         = str(file_path),
-                                     file_type         = '.pdf',
-                                     file_size_bytes   = file_path.stat().st_size,
-                                     page_count        = page_count,
-                                     extraction_method = 'PyPDF2',
-                                     metadata          = metadata,
-                                     is_success        = bool(text.strip()),
-                                     error_message     = None if text.strip() else "No text extracted",
-                                     warnings          = warnings,
-                                    )
-            
-        except Exception as e:
-            return self._create_error_result(file_path = str(file_path), 
-                                             error     = repr(e),
-                                            )
+                    if self.extract_metadata:
+                        metadata = reader.metadata or {}
+                    
+                    for page in reader.pages:
+                        page_text = page.extract_text()
+                        
+                        if page_text:
+                            text += page_text + "\n\n"
+                
+                extraction_method = "PyPDF2"
+                
+                if not text.strip():
+                    warnings.append("PDF appears to be image-based or encrypted")
+                
+                return ExtractedDocument(text              = text.strip(),
+                                         file_path         = str(file_path),
+                                         file_type         = '.pdf',
+                                         file_size_bytes   = file_path.stat().st_size,
+                                         page_count        = page_count,
+                                         extraction_method = extraction_method,
+                                         metadata          = metadata,
+                                         is_success        = bool(text.strip()),
+                                         error_message     = None if text.strip() else "No text extracted from PDF",
+                                         warnings          = warnings,
+                                        )
+                
+            except Exception as e:
+                warnings.append(f"PyPDF2 failed: {repr(e)}")
+        
+        # All extractors failed
+        return self._create_error_result(file_path = str(file_path), 
+                                         error     = "All PDF extractors failed: " + "; ".join(warnings),
+                                        )
 
     
     def _extract_pdf_bytes(self, file_bytes: bytes, filename: str) -> ExtractedDocument:
         """
-        Extract text from PDF bytes
+        Extract text from PDF bytes in this priority order : PyMuPDF > pdfplumber > PyPDF2
         """
-        if not PDF_AVAILABLE:
+        if not any([PYPDF_AVAILABLE, PDFPLUMBER_AVAILABLE, PYPDF2_AVAILABLE]):
             return self._create_error_result(file_path = filename, 
                                              error     = "PDF libraries not installed",
                                             )
         
-        warnings   = list()
-        text       = ""
-        page_count = 0
-        metadata   = dict()
+        warnings          = list()
+        text              = ""
+        page_count        = 0
+        metadata          = dict()
+        extraction_method = "unknown"
         
         try:
-            # Try pdfplumber
-            if self.prefer_pdfplumber:
+            # Primary: Try PyMuPDF first
+            if PYPDF_AVAILABLE:
+                try:
+                    doc        = fitz.open(stream=file_bytes, filetype="pdf")
+                    page_count = doc.page_count
+                    metadata   = doc.metadata
+                    
+                    for page_num in range(page_count):
+                        page      = doc[page_num]
+                        page_text = page.get_text()
+                        
+                        if page_text:
+                            text += page_text + "\n\n"
+                    
+                    doc.close()
+                    extraction_method = "PyMuPDF"
+                    
+                    if text.strip():
+                        return ExtractedDocument(text              = text.strip(),
+                                                 file_path         = filename,
+                                                 file_type         = '.pdf',
+                                                 file_size_bytes   = len(file_bytes),
+                                                 page_count        = page_count,
+                                                 extraction_method = extraction_method,
+                                                 metadata          = metadata,
+                                                 is_success        = True,
+                                                 error_message     = None,
+                                                 warnings          = warnings,
+                                                )
+                    
+                    else:
+                        warnings.append("PyMuPDF extracted no text")
+
+                except Exception as e:
+                    warnings.append(f"PyMuPDF failed: {repr(e)}, trying pdfplumber")
+            
+            # Fallback-1: Try pdfplumber
+            if PDFPLUMBER_AVAILABLE:
                 try:
                     with pdfplumber.open(io.BytesIO(file_bytes)) as pdf:
                         page_count = len(pdf.pages)
@@ -444,47 +554,61 @@ class DocumentExtractor:
                             if page_text:
                                 text += page_text + "\n\n"
                     
+                    extraction_method = "pdfplumber"
+                    
                     if text.strip():
                         return ExtractedDocument(text              = text.strip(),
                                                  file_path         = filename,
                                                  file_type         = '.pdf',
                                                  file_size_bytes   = len(file_bytes),
                                                  page_count        = page_count,
-                                                 extraction_method = 'pdfplumber',
+                                                 extraction_method = extraction_method,
                                                  metadata          = metadata,
                                                  is_success        = True,
                                                  error_message     = None,
                                                  warnings          = warnings,
                                                 )
+                    
+                    else:
+                        warnings.append("pdfplumber extracted no text")
+
                 except Exception as e:
                     warnings.append(f"pdfplumber failed: {repr(e)}, trying PyPDF2")
             
-            # Fallback to PyPDF2
-            reader     = PyPDF2.PdfReader(io.BytesIO(file_bytes))
-            page_count = len(reader.pages)
-            
-            for page in reader.pages:
-                page_text = page.extract_text()
+            # Fallback-2: Try PyPDF2
+            if PYPDF2_AVAILABLE:
+                reader     = PyPDF2.PdfReader(io.BytesIO(file_bytes))
+                page_count = len(reader.pages)
                 
-                if page_text:
-                    text += page_text + "\n\n"
-            
-            return ExtractedDocument(text              = text.strip(),
-                                     file_path         = filename,
-                                     file_type         = '.pdf',
-                                     file_size_bytes   = len(file_bytes),
-                                     page_count        = page_count,
-                                     extraction_method = 'PyPDF2',
-                                     metadata          = metadata,
-                                     is_success        = bool(text.strip()),
-                                     error_message     = None if text.strip() else "No text extracted",
-                                     warnings          = warnings,
-                                    )
+                for page in reader.pages:
+                    page_text = page.extract_text()
+                    
+                    if page_text:
+                        text += page_text + "\n\n"
+                
+                extraction_method = "PyPDF2"
+                
+                return ExtractedDocument(text              = text.strip(),
+                                         file_path         = filename,
+                                         file_type         = '.pdf',
+                                         file_size_bytes   = len(file_bytes),
+                                         page_count        = page_count,
+                                         extraction_method = extraction_method,
+                                         metadata          = metadata,
+                                         is_success        = bool(text.strip()),
+                                         error_message     = None if text.strip() else "No text extracted",
+                                         warnings          = warnings,
+                                        )
             
         except Exception as e:
             return self._create_error_result(file_path = filename, 
                                              error     = repr(e),
                                             )
+        
+        # All extractors failed
+        return self._create_error_result(file_path = filename, 
+                                         error     = "All PDF extractors failed: " + "; ".join(warnings),
+                                        )
 
     
     def _extract_word(self, file_path: Path) -> ExtractedDocument:
@@ -519,7 +643,7 @@ class DocumentExtractor:
                                      file_path         = str(file_path),
                                      file_type         = file_path.suffix,
                                      file_size_bytes   = file_path.stat().st_size,
-                                     page_count        = len(paragraphs),  # Approximate
+                                     page_count        = len(paragraphs),
                                      extraction_method = 'python-docx',
                                      metadata          = metadata,
                                      is_success        = True,
@@ -659,7 +783,7 @@ class DocumentExtractor:
                 script.decompose()
             
             # Get text
-            text  = soup.get_text(separator='\n')
+            text  = soup.get_text(separator = '\n')
             
             # Clean up whitespace
             lines = (line.strip() for line in text.splitlines())
@@ -736,6 +860,7 @@ class DocumentExtractor:
         
         # Check file size
         file_size = file_path.stat().st_size
+        
         if (file_size > self.max_file_size):
             return False, f"File too large: {file_size/1024/1024:.1f}MB (max: {self.max_file_size/1024/1024:.1f}MB)"
         
@@ -764,21 +889,22 @@ class DocumentExtractor:
 
 
 # Convenience Functions
-
 def extract_text(file_path: str, **kwargs) -> ExtractedDocument:
     """
     Quick text extraction with default settings
     
     Arguments:
     ----------
-        file_path : Path to document
-        **kwargs  : Override settings
+        file_path { str }     : Path to document
+
+        **kwargs              : Override settings
         
     Returns:
     --------
-        ExtractedDocument object
+        { ExtractedDocument } : ExtractedDocument object
     """
     extractor = DocumentExtractor(**kwargs)
+
     return extractor.extract(file_path)
 
 
@@ -788,56 +914,24 @@ def extract_from_upload(file_bytes: bytes, filename: str, **kwargs) -> Extracted
     
     Arguments:
     ----------
-        file_bytes : File content as bytes
-        filename   : Original filename
-        **kwargs   : Override settings
+        file_bytes { bytes }  : File content as bytes
+        
+        filename    { str }   : Original filename
+
+        **kwargs              : Override settings
         
     Returns:
     --------
-        ExtractedDocument object
+        { ExtractedDocument } : ExtractedDocument object
     """
     extractor = DocumentExtractor(**kwargs)
+
     return extractor.extract_from_bytes(file_bytes, filename)
 
 
 # Export
-__all__ = ['DocumentExtractor',
+__all__ = ['extract_text',
+           'DocumentExtractor',
            'ExtractedDocument',
-           'extract_text',
            'extract_from_upload',
           ]
-
-
-# Testing 
-if __name__ == "__main__":
-    import sys
-    
-    if len(sys.argv) > 1:
-        # Test with provided file
-        test_file = sys.argv[1]
-        print(f"Testing extraction on: {test_file}")
-        print("=" * 70)
-        
-        result = extract_text(test_file)
-        
-        print(f"Success: {result.is_success}")
-        print(f"File type: {result.file_type}")
-        print(f"Pages: {result.page_count}")
-        print(f"Method: {result.extraction_method}")
-        print(f"Text length: {len(result.text)} chars")
-        
-        if result.warnings:
-            print(f"Warnings: {result.warnings}")
-        
-        if result.error_message:
-            print(f"Error: {result.error_message}")
-        
-        if result.text:
-            print(f"\nFirst 500 chars:")
-            print("-" * 70)
-            print(result.text[:500])
-    else:
-        print("Usage: python document_extractor.py <file_path>")
-        print("\nSupported formats:")
-        for ext in sorted(DocumentExtractor.SUPPORTED_EXTENSIONS):
-            print(f"  {ext}")
