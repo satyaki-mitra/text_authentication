@@ -65,7 +65,7 @@ This README is research‑grade (detailed math, methodology, and benchmarks) whi
 
 **Solution.** A domain‑aware detector combining six orthogonal metrics (Perplexity, Entropy, Structural, Semantic, Linguistic, Multi-perturbation stability) into a confidence‑calibrated ensemble. Outputs are explainable with sentence‑level highlighting, attribution probabilities, and downloadable reports (JSON/PDF).
 
-**Live Deployment:** [AI Text Authenticator Platform](https://huggingface.co/spaces/satyaki-mitra/AI_Text_Authenticator)
+**Live Deployment Link:** [AI Text Authenticator Platform](https://huggingface.co/spaces/satyaki-mitra/AI_Text_Authenticator)
 
 **MVP Scope.** End‑to‑end FastAPI backend, lightweight HTML UI, modular metrics, Hugging Face model auto‑download, and a prototype ensemble classifier. Model weights are not committed to the repo; they are fetched at first run.
 
