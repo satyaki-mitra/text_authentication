@@ -82,6 +82,18 @@ class ReportGenerator:
         # Convert DetectionResult to dict for consistent access
         detection_dict = detection_result.to_dict() if hasattr(detection_result, 'to_dict') else detection_result
         
+        # DEBUG: Check structure
+        logger.debug(f"detection_dict keys: {list(detection_dict.keys())}")
+        
+        # Extract the actual detection data from the structure: The full response has 'detection_result' key, but we need the inner data
+        if ("detection_result" in detection_dict):
+            detection_data = detection_dict["detection_result"]
+            logger.debug("Extracted detection_result from outer dict")
+
+        else:
+            detection_data = detection_dict
+            logger.debug("Using detection_dict directly")
+        
         # Generate detailed reasoning
         reasoning        = self.reasoning_generator.generate(ensemble_result    = detection_result.ensemble_result,
                                                              metric_results     = detection_result.metric_results,
@@ -91,7 +103,7 @@ class ReportGenerator:
                                                             )
         
         # Extract detailed metrics from ACTUAL detection results
-        detailed_metrics = self._extract_detailed_metrics(detection_dict)
+        detailed_metrics = self._extract_detailed_metrics(detection_data)
         
         # Timestamp for filenames
         timestamp        = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -100,7 +112,8 @@ class ReportGenerator:
         
         # Generate requested formats
         if ("json" in formats):  
-            json_path               = self._generate_json_report(detection_dict        = detection_dict, 
+            json_path               = self._generate_json_report(detection_data        = detection_data, 
+                                                                 detection_dict_full   = detection_dict,
                                                                  reasoning             = reasoning, 
                                                                  detailed_metrics      = detailed_metrics, 
                                                                  attribution_result    = attribution_result,
@@ -111,7 +124,8 @@ class ReportGenerator:
         
         if ("pdf" in formats):
             try:
-                pdf_path               = self._generate_pdf_report(detection_dict        = detection_dict, 
+                pdf_path               = self._generate_pdf_report(detection_data        = detection_data,
+                                                                   detection_dict_full   = detection_dict,
                                                                    reasoning             = reasoning, 
                                                                    detailed_metrics      = detailed_metrics, 
                                                                    attribution_result    = attribution_result,
@@ -129,44 +143,56 @@ class ReportGenerator:
         return generated_files
 
 
-    def _extract_detailed_metrics(self, detection_dict: Dict) -> List[DetailedMetric]:
+    def _extract_detailed_metrics(self, detection_data: Dict) -> List[DetailedMetric]:
         """
         Extract detailed metrics with sub-metrics from ACTUAL detection result
         """
         detailed_metrics = list()
-        metrics_data     = detection_dict.get("metrics", {})
-        ensemble_data    = detection_dict.get("ensemble", {})
+        metrics_data     = detection_data.get("metrics", {})
+        ensemble_data    = detection_data.get("ensemble", {})
         
         # Get actual metric weights from ensemble
         metric_weights   = ensemble_data.get("metric_contributions", {})
         
+        # Log what we're working with
+        logger.debug(f"Extracting metrics from {len(metrics_data)} metrics")
+        logger.debug(f"Metric names: {list(metrics_data.keys())}")
+        
         # Extract actual metric data
         for metric_name, metric_result in metrics_data.items():
-            if not isinstance(metric_result, dict):
+            if (not isinstance(metric_result, dict)):
+                logger.warning(f"Metric {metric_name} is not a dict: {type(metric_result)}")
                 continue
                 
-            if metric_result.get("error") is not None:
+            if (metric_result.get("error") is not None):
+                logger.warning(f"Metric {metric_name} has error: {metric_result.get('error')}")
                 continue
                 
             # Get actual probabilities and confidence
-            ai_prob    = metric_result.get("ai_probability", 0) * 100
-            human_prob = metric_result.get("human_probability", 0) * 100
-            confidence = metric_result.get("confidence", 0) * 100
+            ai_prob    = metric_result.get("ai_probability", 0)
+            human_prob = metric_result.get("human_probability", 0)
+            confidence = metric_result.get("confidence", 0)
+            
+            # DEBUG: Log extracted values
+            logger.debug(f"Metric {metric_name}: AI={ai_prob}, Human={human_prob}, Confidence={confidence}")
             
             # Determine verdict based on actual probability
-            if (ai_prob >= 60):
+            # 60% threshold in decimal
+            if (ai_prob >= 0.6):  
                 verdict = "AI"
-
-            elif (ai_prob <= 40):
+            
+            # 40% threshold in decimal
+            elif (ai_prob <= 0.4):  
                 verdict = "HUMAN"
 
             else:
-                verdict = "MIXED (AI + HUMAN)"
+                verdict = "MIXED"
             
             # Get actual weight or use default
             weight = 0.0
+
             if metric_name in metric_weights:
-                weight = metric_weights[metric_name].get("weight", 0.0) * 100
+                weight = metric_weights[metric_name].get("weight", 0.0)
             
             # Extract actual detailed metrics from metric result
             detailed_metrics_data = self._extract_metric_details(metric_name   = metric_name, 
@@ -177,16 +203,17 @@ class ReportGenerator:
             description           = self._get_metric_description(metric_name = metric_name)
             
             detailed_metrics.append(DetailedMetric(name              = metric_name,
-                                                   ai_probability    = ai_prob,
-                                                   human_probability = human_prob,
-                                                   confidence        = confidence,
+                                                   ai_probability    = ai_prob * 100,         # Convert to percentage
+                                                   human_probability = human_prob * 100,      # Convert to percentage
+                                                   confidence        = confidence * 100,      # Convert to percentage
                                                    verdict           = verdict,
                                                    description       = description,
                                                    detailed_metrics  = detailed_metrics_data,
-                                                   weight            = weight,
+                                                   weight            = weight * 100,          # Convert to percentage
                                                   )
                                    )
         
+        logger.debug(f"Extracted {len(detailed_metrics)} detailed metrics")
         return detailed_metrics
 
 
@@ -226,7 +253,7 @@ class ReportGenerator:
         return descriptions.get(metric_name, "Advanced text analysis metric.")
 
 
-    def _generate_json_report(self, detection_dict: Dict, reasoning: DetailedReasoning, detailed_metrics: List[DetailedMetric], 
+    def _generate_json_report(self, detection_data: Dict, detection_dict_full: Dict, reasoning: DetailedReasoning, detailed_metrics: List[DetailedMetric], 
                               attribution_result: Optional[AttributionResult], highlighted_sentences: Optional[List] = None, filename: str = None) -> Path:
         """
         Generate JSON format report with detailed metrics
@@ -273,54 +300,54 @@ class ReportGenerator:
                                }
         
         # Use ACTUAL detection results from dictionary
-        ensemble_data = detection_dict.get("ensemble", {})
-        analysis_data = detection_dict.get("analysis", {})
-        metrics_data_dict = detection_dict.get("metrics", {})
-        performance_data = detection_dict.get("performance", {})
+        ensemble_data        = detection_data.get("ensemble", {})
+        analysis_data        = detection_data.get("analysis", {})
+        metrics_data_dict    = detection_data.get("metrics", {})
+        performance_data     = detection_data.get("performance", {})
         
-        report_data     = {"report_metadata"     : {"generated_at" : datetime.now().isoformat(),
-                                                    "version"      : "1.0.0",
-                                                    "format"       : "json",
-                                                    "report_id"    : filename.replace('.json', ''),
-                                                   },
-                           "overall_results"     : {"final_verdict"      : ensemble_data.get("final_verdict", "Unknown"),
-                                                    "ai_probability"     : ensemble_data.get("ai_probability", 0),
-                                                    "human_probability"  : ensemble_data.get("human_probability", 0),
-                                                    "mixed_probability"  : ensemble_data.get("mixed_probability", 0),
-                                                    "overall_confidence" : ensemble_data.get("overall_confidence", 0),
-                                                    "uncertainty_score"  : ensemble_data.get("uncertainty_score", 0),
-                                                    "consensus_level"    : ensemble_data.get("consensus_level", 0),
-                                                    "domain"             : analysis_data.get("domain", "general"),
-                                                    "domain_confidence"  : analysis_data.get("domain_confidence", 0),
-                                                    "text_length"        : analysis_data.get("text_length", 0),
-                                                    "sentence_count"     : analysis_data.get("sentence_count", 0),
-                                                   },
-                           "ensemble_analysis"   : {"method_used"     : "confidence_calibrated",
-                                                    "metric_weights"  : ensemble_data.get("metric_contributions", {}),
-                                                    "reasoning"       : ensemble_data.get("reasoning", []),
-                                                   },
-                           "detailed_metrics"    : metrics_data,
-                           "detection_reasoning" : {"summary"                : reasoning.summary,
-                                                    "key_indicators"         : reasoning.key_indicators,
-                                                    "metric_explanations"    : reasoning.metric_explanations,
-                                                    "supporting_evidence"    : reasoning.supporting_evidence,
-                                                    "contradicting_evidence" : reasoning.contradicting_evidence,
-                                                    "confidence_explanation" : reasoning.confidence_explanation,
-                                                    "domain_analysis"        : reasoning.domain_analysis,
-                                                    "ensemble_analysis"      : reasoning.ensemble_analysis,
-                                                    "uncertainty_analysis"   : reasoning.uncertainty_analysis,
-                                                    "recommendations"        : reasoning.recommendations,
-                                                   },
-                           "highlighted_text"    : highlighted_data,
-                           "model_attribution"   : attribution_data,
-                           "performance_metrics" : {"total_processing_time"  : performance_data.get("total_time", 0),
-                                                    "metrics_execution_time" : performance_data.get("metrics_time", {}),
-                                                    "warnings"               : detection_dict.get("warnings", []),
-                                                    "errors"                 : detection_dict.get("errors", []),
-                                                   }
-                          }
+        report_data          = {"report_metadata"     : {"generated_at" : datetime.now().isoformat(),
+                                                         "version"      : "1.0.0",
+                                                         "format"       : "json",
+                                                         "report_id"    : filename.replace('.json', ''),
+                                                        },
+                                "overall_results"     : {"final_verdict"      : ensemble_data.get("final_verdict", "Unknown"),
+                                                         "ai_probability"     : ensemble_data.get("ai_probability", 0),
+                                                         "human_probability"  : ensemble_data.get("human_probability", 0),
+                                                         "mixed_probability"  : ensemble_data.get("mixed_probability", 0),
+                                                         "overall_confidence" : ensemble_data.get("overall_confidence", 0),
+                                                         "uncertainty_score"  : ensemble_data.get("uncertainty_score", 0),
+                                                         "consensus_level"    : ensemble_data.get("consensus_level", 0),
+                                                         "domain"             : analysis_data.get("domain", "general"),
+                                                         "domain_confidence"  : analysis_data.get("domain_confidence", 0),
+                                                         "text_length"        : analysis_data.get("text_length", 0),
+                                                         "sentence_count"     : analysis_data.get("sentence_count", 0),
+                                                        },
+                                "ensemble_analysis"   : {"method_used"     : "confidence_calibrated",
+                                                         "metric_weights"  : ensemble_data.get("metric_contributions", {}),
+                                                         "reasoning"       : ensemble_data.get("reasoning", []),
+                                                        },
+                                "detailed_metrics"    : metrics_data,
+                                "detection_reasoning" : {"summary"                : reasoning.summary,
+                                                         "key_indicators"         : reasoning.key_indicators,
+                                                         "metric_explanations"    : reasoning.metric_explanations,
+                                                         "supporting_evidence"    : reasoning.supporting_evidence,
+                                                         "contradicting_evidence" : reasoning.contradicting_evidence,
+                                                         "confidence_explanation" : reasoning.confidence_explanation,
+                                                         "domain_analysis"        : reasoning.domain_analysis,
+                                                         "ensemble_analysis"      : reasoning.ensemble_analysis,
+                                                         "uncertainty_analysis"   : reasoning.uncertainty_analysis,
+                                                         "recommendations"        : reasoning.recommendations,
+                                                        },
+                                "highlighted_text"    : highlighted_data,
+                                "model_attribution"   : attribution_data,
+                                "performance_metrics" : {"total_processing_time"  : performance_data.get("total_time", 0),
+                                                         "metrics_execution_time" : performance_data.get("metrics_time", {}),
+                                                         "warnings"               : detection_data.get("warnings", []),
+                                                         "errors"                 : detection_data.get("errors", []),
+                                                        }
+                               }
         
-        output_path     = self.output_dir / filename
+        output_path          = self.output_dir / filename
         
         with open(output_path, 'w', encoding='utf-8') as f:
             json.dump(obj          = report_data, 
@@ -333,271 +360,580 @@ class ReportGenerator:
         return output_path
 
 
-    def _generate_pdf_report(self, detection_dict: Dict, reasoning: DetailedReasoning, detailed_metrics: List[DetailedMetric], 
+    def _generate_pdf_report(self, detection_data: Dict, detection_dict_full: Dict, reasoning: DetailedReasoning, detailed_metrics: List[DetailedMetric], 
                              attribution_result: Optional[AttributionResult], highlighted_sentences: Optional[List] = None, filename: str = None) -> Path:
         """
         Generate PDF format report with detailed metrics
         """
         try:
             from reportlab.lib import colors
-            from reportlab.lib.pagesizes import letter, A4
-            from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+            from reportlab.lib.units import cm
+            from reportlab.platypus import Table
             from reportlab.lib.units import inch
-            from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, PageBreak
-            from reportlab.lib.enums import TA_CENTER, TA_LEFT, TA_JUSTIFY
-        
+            from reportlab.platypus import Spacer
+            from reportlab.lib.pagesizes import A4
+            from reportlab.lib.enums import TA_LEFT
+            from reportlab.platypus import PageBreak
+            from reportlab.platypus import Paragraph
+            from reportlab.lib.enums import TA_RIGHT
+            from reportlab.graphics import renderPDF
+            from reportlab.lib.enums import TA_CENTER
+            from reportlab.platypus import TableStyle
+            from reportlab.pdfgen.canvas import Canvas
+            from reportlab.lib.enums import TA_JUSTIFY
+            from reportlab.lib.pagesizes import letter
+            from reportlab.graphics.shapes import Line
+            from reportlab.graphics.shapes import Rect
+            from reportlab.platypus import KeepTogether
+            from reportlab.graphics.shapes import Circle
+            from reportlab.graphics.shapes import Drawing
+            from reportlab.lib.styles import ParagraphStyle
+            from reportlab.platypus import SimpleDocTemplate
+            from reportlab.graphics.charts.piecharts import Pie
+            from reportlab.platypus.flowables import HRFlowable
+            from reportlab.lib.styles import getSampleStyleSheet
+            from reportlab.graphics.charts.textlabels import Label
+            from reportlab.graphics.widgets.markers import makeMarker
+          
         except ImportError:
             raise ImportError("reportlab is required for PDF generation. Install: pip install reportlab")
         
         output_path   = self.output_dir / filename
         
-        # Create PDF
+        # Create PDF with premium settings
         doc           = SimpleDocTemplate(str(output_path),
-                                          pagesize     = letter,
-                                          rightMargin  = 50,
-                                          leftMargin   = 50,
-                                          topMargin    = 50,
-                                          bottomMargin = 20,
+                                          pagesize     = A4,
+                                          rightMargin  = 0.75*inch,
+                                          leftMargin   = 0.75*inch,
+                                          topMargin    = 0.75*inch,
+                                          bottomMargin = 0.75*inch,
                                          )
         
         # Container for PDF elements
-        elements      = list()
-        styles        = getSampleStyleSheet()
+        elements          = list()
+        styles            = getSampleStyleSheet()
         
-        # Custom styles
-        title_style   = ParagraphStyle('CustomTitle',
-                                       parent     = styles['Heading1'],
-                                       fontSize   = 20,
-                                       textColor  = colors.HexColor('#667eea'),
-                                       spaceAfter = 20,
-                                       alignment  = TA_CENTER,
-                                      )
+        # Premium Color Scheme
+        PRIMARY_COLOR     = colors.HexColor('#3b82f6')  # Blue-600
+        SUCCESS_COLOR     = colors.HexColor('#10b981')  # Emerald-500
+        WARNING_COLOR     = colors.HexColor('#f59e0b')  # Amber-500
+        DANGER_COLOR      = colors.HexColor('#ef4444')  # Red-500
+        INFO_COLOR        = colors.HexColor('#8b5cf6')  # Violet-500
+        GRAY_LIGHT        = colors.HexColor('#f8fafc')  # Gray-50
+        GRAY_MEDIUM       = colors.HexColor('#e2e8f0')  # Gray-200
+        GRAY_DARK         = colors.HexColor('#334155')  # Gray-700
+        TEXT_COLOR        = colors.HexColor('#1e293b')  # Gray-800
+        
+        # Premium Custom Styles
+        title_style       = ParagraphStyle('PremiumTitle',
+                                           parent     = styles['Heading1'],
+                                           fontName   = 'Helvetica-Bold',
+                                           fontSize   = 28,
+                                           textColor  = PRIMARY_COLOR,
+                                           spaceAfter = 20,
+                                           alignment  = TA_CENTER,
+                                          ) 
+        
+        subtitle_style    = ParagraphStyle('PremiumSubtitle',
+                                           parent     = styles['Normal'],
+                                           fontName   = 'Helvetica',
+                                           fontSize   = 12,
+                                           textColor  = GRAY_DARK,
+                                           spaceAfter = 30,
+                                           alignment  = TA_CENTER,
+                                          )
                                 
-        heading_style = ParagraphStyle('CustomHeading',
-                                       parent      = styles['Heading2'],
-                                       fontSize    = 14,
-                                       textColor   = colors.HexColor('#111827'),
-                                       spaceAfter  = 12,
-                                       spaceBefore = 12,
-                                      )
+        section_style     = ParagraphStyle('PremiumSection',
+                                           parent      = styles['Heading2'],
+                                           fontName    = 'Helvetica-Bold',
+                                           fontSize    = 18,
+                                           textColor   = TEXT_COLOR,
+                                           spaceAfter  = 12,
+                                           spaceBefore = 20,
+                                           underlineWidth = 1,
+                                           underlineColor = PRIMARY_COLOR,
+                                          )
         
-        body_style    = ParagraphStyle('CustomBody',
-                                       parent     = styles['BodyText'],
-                                       fontSize   = 10,
-                                       alignment  = TA_JUSTIFY,
-                                       spaceAfter = 8,
-                                      )
+        subsection_style  = ParagraphStyle('PremiumSubSection',
+                                           parent      = styles['Heading3'],
+                                           fontName    = 'Helvetica-Bold',
+                                           fontSize    = 14,
+                                           textColor   = GRAY_DARK,
+                                           spaceAfter  = 8,
+                                           spaceBefore = 16,
+                                          )
         
-        # Use detection results from dictionary
-        ensemble_data = detection_dict.get("ensemble", {})
-        analysis_data = detection_dict.get("analysis", {})
+        body_style        = ParagraphStyle('PremiumBody',
+                                           parent     = styles['BodyText'],
+                                           fontName   = 'Helvetica',
+                                           fontSize   = 11,
+                                           textColor  = TEXT_COLOR,
+                                           alignment  = TA_JUSTIFY,
+                                           spaceAfter = 8,
+                                          )
+        
+        verdict_style     = ParagraphStyle('VerdictStyle',
+                                           parent     = styles['Heading2'],
+                                           fontName   = 'Helvetica-Bold',
+                                           fontSize   = 22,
+                                           spaceAfter = 5,
+                                          )
+        
+        metric_name_style = ParagraphStyle('MetricNameStyle',
+                                          parent     = styles['Heading3'],
+                                          fontName   = 'Helvetica-Bold',
+                                          fontSize   = 13,
+                                          textColor  = GRAY_DARK,
+                                          spaceAfter = 4,
+                                         )
+        
+        # Use detection results from detection_data
+        ensemble_data     = detection_data.get("ensemble", {})
+        analysis_data     = detection_data.get("analysis", {})
+        performance_data  = detection_data.get("performance", {})
+        
+        # Extract values
+        ai_prob           = ensemble_data.get("ai_probability", 0)
+        human_prob        = ensemble_data.get("human_probability", 0)
+        mixed_prob        = ensemble_data.get("mixed_probability", 0)
+        confidence        = ensemble_data.get("overall_confidence", 0)
+        uncertainty       = ensemble_data.get("uncertainty_score", 0)
+        consensus         = ensemble_data.get("consensus_level", 0)
+        final_verdict     = ensemble_data.get("final_verdict", "Unknown")
+        
+        # Determine colors based on verdict
+        if ("Human".lower() in final_verdict.lower()):
+            verdict_color = SUCCESS_COLOR
+
+        elif ("AI".lower() in final_verdict.lower()):
+            verdict_color = DANGER_COLOR
+
+        elif ("Mixed".lower() in final_verdict.lower()):
+            verdict_color = WARNING_COLOR
+
+        else:
+            verdict_color = PRIMARY_COLOR
+        
+        # Create header with logo/company name
+        header_style      = ParagraphStyle('HeaderStyle',
+                                           parent     = styles['Normal'],
+                                           fontName   = 'Helvetica-Bold',
+                                           fontSize   = 10,
+                                           textColor  = GRAY_DARK,
+                                           alignment  = TA_RIGHT,
+                                          )
+        
+        # Header
+        elements.append(Paragraph("AI DETECTION ANALYTICS", header_style))
+        elements.append(HRFlowable(width      = "100%", 
+                                   thickness  = 1, 
+                                   color      = PRIMARY_COLOR, 
+                                   spaceAfter = 20,
+                                  )
+                       )
         
         # Title and main sections
         elements.append(Paragraph("AI Text Detection Analysis Report", title_style))
-        elements.append(Paragraph(f"Generated on {datetime.now().strftime('%B %d, %Y at %I:%M %p')}", styles['Normal']))
+        elements.append(Paragraph(f"Generated on {datetime.now().strftime('%B %d, %Y at %I:%M %p')}", subtitle_style))
+        
+        # Add decorative line
+        elements.append(HRFlowable(width       = "80%", 
+                                   thickness   = 2, 
+                                   color       = PRIMARY_COLOR, 
+                                   spaceBefore = 10, 
+                                   spaceAfter  = 30, 
+                                   hAlign      = 'CENTER',
+                                  )
+                       )
+        
+        # Quick Stats Banner
+        stats_data  = [['', 'AI', 'HUMAN', 'MIXED'],
+                       ['Probability', f"{ai_prob:.1%}", f"{human_prob:.1%}", f"{mixed_prob:.1%}"]
+                      ]
+        
+        stats_table = Table(stats_data, colWidths = [1.5*inch, 1*inch, 1*inch, 1*inch])
+        stats_table.setStyle(TableStyle([('BACKGROUND', (0, 0), (-1, 0), PRIMARY_COLOR),
+                                         ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
+                                         ('BACKGROUND', (1, 1), (1, 1), DANGER_COLOR),
+                                         ('BACKGROUND', (2, 1), (2, 1), SUCCESS_COLOR),
+                                         ('BACKGROUND', (3, 1), (3, 1), WARNING_COLOR),
+                                         ('TEXTCOLOR', (1, 1), (-1, 1), colors.white),
+                                         ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+                                         ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+                                         ('FONTSIZE', (0, 0), (-1, -1), 11),
+                                         ('BOTTOMPADDING', (0, 0), (-1, -1), 8),
+                                         ('TOPPADDING', (0, 0), (-1, -1), 8),
+                                         ('GRID', (0, 0), (-1, -1), 0.5, colors.white),
+                                         ('BOX', (0, 0), (-1, -1), 1, PRIMARY_COLOR),
+                                       ])
+                            )
+
+        elements.append(stats_table)
         elements.append(Spacer(1, 0.3*inch))
         
-        # Verdict section with ensemble metrics
-        elements.append(Paragraph("Detection Summary", heading_style))
-        verdict_data = [['Final Verdict:', ensemble_data.get("final_verdict", "Unknown")],
-                        ['AI Probability:', f"{ensemble_data.get('ai_probability', 0):.1%}"],
-                        ['Human Probability:', f"{ensemble_data.get('human_probability', 0):.1%}"],
-                        ['Mixed Probability:', f"{ensemble_data.get('mixed_probability', 0):.1%}"],
-                        ['Overall Confidence:', f"{ensemble_data.get('overall_confidence', 0):.1%}"],
-                        ['Uncertainty Score:', f"{ensemble_data.get('uncertainty_score', 0):.1%}"],
-                        ['Consensus Level:', f"{ensemble_data.get('consensus_level', 0):.1%}"],
-                       ]
+        # Main Verdict Section with colored badge
+        elements.append(Paragraph("DETECTION VERDICT", section_style))
         
-        verdict_table = Table(verdict_data, colWidths=[2*inch, 3*inch])
-        verdict_table.setStyle(TableStyle([('BACKGROUND', (0, 0), (0, -1), colors.HexColor('#f8fafc')),
-                                           ('FONTNAME', (0, 0), (0, -1), 'Helvetica-Bold'),
+        verdict_box_data = [[Paragraph(f"<font size=18 color='{colors.toHex(verdict_color)}'><b>{final_verdict.upper()}</b></font>", ParagraphStyle('VerdictText', alignment=TA_CENTER)),
+                             Paragraph(f"<font size=12>Confidence: <b>{confidence:.1%}</b></font><br/>" f"<font size=10>Uncertainty: {uncertainty:.1%} | Consensus: {consensus:.1%}</font>", ParagraphStyle('VerdictDetails', alignment=TA_CENTER))
+                           ]]
+        
+        verdict_box      = Table(verdict_box_data, colWidths=[2.5*inch, 3*inch])
+
+        verdict_box.setStyle(TableStyle([('BACKGROUND', (0, 0), (0, 0), GRAY_LIGHT),
+                                         ('BACKGROUND', (1, 0), (1, 0), GRAY_LIGHT),
+                                         ('BOX', (0, 0), (-1, -1), 1, verdict_color),
+                                         ('ROUNDEDCORNERS', [10, 10, 10, 10]),
+                                         ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+                                         ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+                                         ('BOTTOMPADDING', (0, 0), (-1, -1), 15),
+                                         ('TOPPADDING', (0, 0), (-1, -1), 15),
+                                       ])
+                            )
+
+        elements.append(verdict_box)
+        elements.append(Spacer(1, 0.3*inch))
+        
+        # Content Analysis in a sleek table
+        elements.append(Paragraph("CONTENT ANALYSIS", section_style))
+        
+        domain            = analysis_data.get("domain", "general").title().replace('_', ' ')
+        domain_confidence = analysis_data.get("domain_confidence", 0)
+        text_length       = analysis_data.get("text_length", 0)
+        sentence_count    = analysis_data.get("sentence_count", 0)
+        total_time        = performance_data.get("total_time", 0)
+        
+        # Create two-column layout for content analysis
+        content_data      = [[Paragraph("<b>Content Domain</b>", body_style), Paragraph(f"<font color='{colors.toHex(INFO_COLOR)}'><b>{domain}</b></font> ({domain_confidence:.1%} confidence)", body_style)],
+                             [Paragraph("<b>Text Statistics</b>", body_style), Paragraph(f"{text_length:,} words | {sentence_count:,} sentences", body_style)],
+                             [Paragraph("<b>Processing Time</b>", body_style), Paragraph(f"{total_time:.2f} seconds", body_style)],
+                             [Paragraph("<b>Analysis Method</b>", body_style), Paragraph("Confidence-Weighted Ensemble Aggregation", body_style)],
+                            ]
+        
+        content_table     = Table(content_data, colWidths = [2*inch, 4*inch])
+        
+        content_table.setStyle(TableStyle([('FONTNAME', (0, 0), (0, -1), 'Helvetica-Bold'),
+                                           ('FONTNAME', (1, 0), (1, -1), 'Helvetica'),
                                            ('FONTSIZE', (0, 0), (-1, -1), 10),
                                            ('BOTTOMPADDING', (0, 0), (-1, -1), 6),
+                                           ('TOPPADDING', (0, 0), (-1, -1), 6),
+                                           ('GRID', (0, 0), (-1, -1), 0.25, GRAY_MEDIUM),
+                                           ('BACKGROUND', (0, 0), (0, -1), GRAY_LIGHT),
                                          ])
                               )
-        
-        elements.append(verdict_table)
-        elements.append(Spacer(1, 0.2*inch))
-        
-        # Content analysis
-        elements.append(Paragraph("Content Analysis", heading_style))
-        content_data = [['Content Domain:', analysis_data.get("domain", "general").title()],
-                        ['Domain Confidence:', f"{analysis_data.get('domain_confidence', 0):.1%}"],
-                        ['Word Count:', str(analysis_data.get("text_length", 0))],
-                        ['Sentence Count:', str(analysis_data.get("sentence_count", 0))],
-                        ['Processing Time:', f"{detection_dict.get('performance', {}).get('total_time', 0):.2f}s"],
-                       ]
-        
-        content_table = Table(content_data, colWidths=[2*inch, 3*inch])
-        content_table.setStyle(TableStyle([('FONTSIZE', (0, 0), (-1, -1), 10),
-                                           ('BOTTOMPADDING', (0, 0), (-1, -1), 4),
-                                         ])
-                              )
-        
+
         elements.append(content_table)
-        elements.append(Spacer(1, 0.2*inch))
+        elements.append(Spacer(1, 0.3*inch))
         
-        # Ensemble Analysis
-        elements.append(Paragraph("Ensemble Analysis", heading_style))
-        elements.append(Paragraph("Method: Confidence Calibrated Aggregation", styles['Normal']))
-        elements.append(Spacer(1, 0.1*inch))
+        # Metric Weights Visualization
+        elements.append(Paragraph("METRIC CONTRIBUTIONS", section_style))
         
-        # Metric weights table
         metric_contributions = ensemble_data.get("metric_contributions", {})
-        if metric_contributions:
-            elements.append(Paragraph("Metric Weights", styles['Heading3']))
-            weight_data = [['Metric', 'Weight']]
-            for metric, contribution in metric_contributions.items():
-                weight = contribution.get("weight", 0)
-                weight_data.append([metric.title(), f"{weight:.1%}"])
+
+        if metric_contributions and len(metric_contributions) > 0:
+            # Create horizontal bar chart effect with table
+            weight_data = [['METRIC', 'WEIGHT', '']]
             
-            weight_table = Table(weight_data, colWidths=[3*inch, 1*inch])
-            weight_table.setStyle(TableStyle([('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#667eea')),
+            for metric_name, contribution in metric_contributions.items():
+                weight       = contribution.get("weight", 0)
+                display_name = metric_name.title().replace('_', ' ')
+                
+                # Create visual bar representation
+                bar_width    = int(weight * 100)
+                bar_cell     = f"[{'█' * bar_width}{'░' * (100-bar_width)}] {weight:.1%}"
+                
+                weight_data.append([display_name, f"{weight:.1%}", bar_cell])
+            
+            weight_table = Table(weight_data, colWidths=[2*inch, 1*inch, 3*inch])
+            weight_table.setStyle(TableStyle([('BACKGROUND', (0, 0), (-1, 0), PRIMARY_COLOR),
                                               ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
                                               ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
                                               ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
                                               ('FONTSIZE', (0, 0), (-1, -1), 9),
-                                              ('BOTTOMPADDING', (0, 0), (-1, -1), 4),
-                                              ('GRID', (0, 0), (-1, -1), 1, colors.black),
+                                              ('BOTTOMPADDING', (0, 0), (-1, -1), 6),
+                                              ('TOPPADDING', (0, 0), (-1, -1), 6),
+                                              ('GRID', (0, 0), (-1, -1), 0.5, GRAY_MEDIUM),
+                                              ('TEXTCOLOR', (2, 1), (2, -1), PRIMARY_COLOR),
+                                              ('FONTNAME', (2, 1), (2, -1), 'Courier'),
                                             ])
-                                 )
-            elements.append(weight_table)
-            elements.append(Spacer(1, 0.2*inch))
-        
-        # Detailed metrics
-        elements.append(Paragraph("Detailed Metric Analysis", heading_style))
-        for metric in detailed_metrics:
-            elements.append(Paragraph(f"{metric.name.title().replace('_', ' ')}", styles['Heading3']))
-            metric_data = [['Verdict:', metric.verdict],
-                           ['AI Probability:', f"{metric.ai_probability:.1f}%"],
-                           ['Human Probability:', f"{metric.human_probability:.1f}%"],
-                           ['Confidence:', f"{metric.confidence:.1f}%"],
-                           ['Ensemble Weight:', f"{metric.weight:.1f}%"],
-                          ]
-            
-            metric_table = Table(metric_data, colWidths=[1.5*inch, 1.5*inch])
-            metric_table.setStyle(TableStyle([('FONTSIZE', (0, 0), (-1, -1), 9),
-                                              ('BOTTOMPADDING', (0, 0), (-1, -1), 2),
-                                            ])
-                                 )
-            
-            elements.append(metric_table)
-            elements.append(Paragraph(metric.description, body_style))
-            
-            # Add detailed sub-metrics if available
-            if metric.detailed_metrics:
-                elements.append(Paragraph("Detailed Metrics:", styles['Heading4']))
-                sub_metric_data = [['Metric', 'Value']]
-                for sub_name, sub_value in list(metric.detailed_metrics.items())[:6]:  # Show top 6
-                    sub_metric_data.append([sub_name.replace('_', ' ').title(), f"{sub_value:.2f}"])
-                
-                sub_metric_table = Table(sub_metric_data, colWidths=[2*inch, 1*inch])
-                sub_metric_table.setStyle(TableStyle([('FONTSIZE', (0, 0), (-1, -1), 8),
-                                                      ('BOTTOMPADDING', (0, 0), (-1, -1), 2),
-                                                      ('GRID', (0, 0), (-1, -1), 1, colors.grey),
-                                                    ])
-                                         )
+                                  )
 
-                elements.append(sub_metric_table)
-            
-            elements.append(Spacer(1, 0.1*inch))
+            elements.append(weight_table)
+            elements.append(Spacer(1, 0.3*inch))
+        
+        # Detailed Metric Analysis with colored cards
+        elements.append(Paragraph("DETAILED METRIC ANALYSIS", section_style))
+        
+        if detailed_metrics:
+            for metric in detailed_metrics:
+                # Determine metric color based on verdict
+                if (metric.verdict == "HUMAN"):
+                    metric_color = SUCCESS_COLOR
+                    prob_color   = SUCCESS_COLOR
+
+                elif( metric.verdict == "AI"):
+                    metric_color = DANGER_COLOR
+                    prob_color   = DANGER_COLOR
+
+                else:
+                    metric_color = WARNING_COLOR
+                    prob_color   = WARNING_COLOR
+                
+                # Create metric card
+                metric_card_data = [[Paragraph(f"<font color='{colors.toHex(metric_color)}' size=12><b>{metric.name.upper().replace('_', ' ')}</b></font><br/>"
+                                               f"<font size=9>{metric.description}</font>", 
+                                               ParagraphStyle('MetricTitle', alignment=TA_LEFT)),
+                                    
+                                     Paragraph(f"<font size=11><b>VERDICT</b></font><br/>"
+                                               f"<font color='{colors.toHex(metric_color)}' size=12><b>{metric.verdict}</b></font>",
+                                               ParagraphStyle('MetricVerdict', alignment=TA_CENTER)),
+                                    
+                                     Paragraph(f"<font size=11><b>AI PROBABILITY</b></font><br/>"
+                                               f"<font color='{colors.toHex(prob_color)}' size=12><b>{metric.ai_probability:.1f}%</b></font>",
+                                               ParagraphStyle('MetricProbability', alignment=TA_CENTER)),
+                                    
+                                     Paragraph(f"<font size=11><b>WEIGHT</b></font><br/>"
+                                               f"<font size=12><b>{metric.weight:.1f}%</b></font>",
+                                               ParagraphStyle('MetricWeight', alignment=TA_CENTER)),
+                                    
+                                     Paragraph(f"<font size=11><b>CONFIDENCE</b></font><br/>"
+                                               f"<font size=12><b>{metric.confidence:.1f}%</b></font>",
+                                               ParagraphStyle('MetricConfidence', alignment=TA_CENTER)),
+                                   ]]
+                                
+                metric_table     = Table(metric_card_data, colWidths = [2.5*inch, 1*inch, 1*inch, 0.8*inch, 0.8*inch])
+                
+                metric_table.setStyle(TableStyle([('BACKGROUND', (0, 0), (-1, 0), GRAY_LIGHT),
+                                                  ('BOX', (0, 0), (-1, 0), 1, metric_color),
+                                                  ('LINEABOVE', (0, 0), (-1, 0), 2, metric_color),
+                                                  ('ALIGN', (0, 0), (-1, 0), 'CENTER'),
+                                                  ('VALIGN', (0, 0), (-1, 0), 'MIDDLE'),
+                                                  ('BOTTOMPADDING', (0, 0), (-1, 0), 10),
+                                                  ('TOPPADDING', (0, 0), (-1, 0), 10),
+                                                ])
+                                     )
+                
+                elements.append(metric_table)
+                
+                # Add detailed sub-metrics if available
+                if metric.detailed_metrics:
+                    elements.append(Spacer(1, 0.1*inch))
+                    
+                    # Create a grid of sub-metrics
+                    sub_items = list(metric.detailed_metrics.items())[:6]
+                    sub_data  = list()
+                    
+                    for i in range(0, len(sub_items), 3):
+                        row = list()
+                        for j in range(3):
+                            if (i + j < len(sub_items)):
+                                sub_name, sub_value = sub_items[i + j]
+                                
+                                # Format the value
+                                if isinstance(sub_value, (int, float)):
+                                    if (sub_name.endswith('_score') or sub_name.endswith('_probability')):
+                                        formatted_value = f"{sub_value:.1f}%"
+
+                                    elif (sub_name.endswith('_ratio') or sub_name.endswith('_frequency')):
+                                        formatted_value = f"{sub_value:.3f}"
+                                    
+                                    elif (sub_name.endswith('_entropy') or sub_name.endswith('_perplexity')):
+                                        formatted_value = f"{sub_value:.2f}"
+                                    
+                                    else:
+                                        formatted_value = f"{sub_value:.2f}"
+                                
+                                else:
+                                    formatted_value = str(sub_value)
+                                
+                                row.append(f"<b>{sub_name.replace('_', ' ').title()}:</b> {formatted_value}")
+                            
+                            else:
+                                row.append("")
+                        
+                        sub_data.append(row)
+                    
+                    if sub_data:
+                        sub_table = Table(sub_data, colWidths = [1.8*inch, 1.8*inch, 1.8*inch])
+
+                        sub_table.setStyle(TableStyle([('FONTSIZE', (0, 0), (-1, -1), 8),
+                                                       ('BOTTOMPADDING', (0, 0), (-1, -1), 4),
+                                                       ('TOPPADDING', (0, 0), (-1, -1), 4),
+                                                       ('FONTNAME', (0, 0), (-1, -1), 'Helvetica'),
+                                                     ])
+                                          )
+                        elements.append(sub_table)
+                
+                elements.append(Spacer(1, 0.2*inch))
         
         # Detection Reasoning
-        elements.append(Paragraph("Detection Reasoning", heading_style))
-        elements.append(Paragraph(reasoning.summary, body_style))
-        elements.append(Spacer(1, 0.1*inch))
+        elements.append(Paragraph("DETECTION REASONING", section_style))
+        
+        # Summary in a colored box
+        summary_box = Table([[Paragraph(f"<font size=11>{reasoning.summary}</font>", body_style)]], colWidths = [6.5*inch])
+        summary_box.setStyle(TableStyle([('BACKGROUND', (0, 0), (-1, -1), GRAY_LIGHT),
+                                         ('BOX', (0, 0), (-1, -1), 1, PRIMARY_COLOR),
+                                         ('PADDING', (0, 0), (-1, -1), 10),
+                                       ])
+                            )
+
+        elements.append(summary_box)
+        elements.append(Spacer(1, 0.2*inch))
         
         # Key Indicators
-        elements.append(Paragraph("Key Indicators", styles['Heading3']))
-        for indicator in reasoning.key_indicators[:5]:  # Show top 5
-            elements.append(Paragraph(f"• {indicator}", body_style))
+        if reasoning.key_indicators:
+            elements.append(Paragraph("KEY INDICATORS", subsection_style))
+            
+            indicators_data = list()
+
+            for i in range(0, len(reasoning.key_indicators), 2):
+                row = list()
+
+                for j in range(2):
+                    if (i + j < len(reasoning.key_indicators)):
+                        indicator = reasoning.key_indicators[i + j]
+                        # Add checkmark for positive indicators
+                        if (indicator.startswith("✅") or indicator.startswith("✓")):
+                            icon_color = SUCCESS_COLOR
+
+                        elif (indicator.startswith("⚠️") or indicator.startswith("❌")):
+                            icon_color = WARNING_COLOR
+
+                        else:
+                            icon_color = PRIMARY_COLOR
+                        
+                        row.append(Paragraph(f"<font color='{colors.toHex(icon_color)}'>•</font> {indicator}", body_style))
+                    
+                    else:
+                        row.append("")
+                indicators_data.append(row)
+            
+            indicators_table = Table(indicators_data, colWidths=[3*inch, 3*inch])
+            indicators_table.setStyle(TableStyle([('VALIGN', (0, 0), (-1, -1), 'TOP'),
+                                                  ('BOTTOMPADDING', (0, 0), (-1, -1), 4),
+                                                ])
+                                     )
+
+            elements.append(indicators_table)
+            elements.append(Spacer(1, 0.2*inch))
         
-        elements.append(Spacer(1, 0.1*inch))
-        
-        # Confidence Explanation
-        elements.append(Paragraph("Confidence Analysis", styles['Heading3']))
-        elements.append(Paragraph(reasoning.confidence_explanation, body_style))
-        elements.append(Spacer(1, 0.1*inch))
-        
-        # Uncertainty Analysis
-        elements.append(Paragraph("Uncertainty Analysis", styles['Heading3']))
-        elements.append(Paragraph(reasoning.uncertainty_analysis, body_style))
+        # Page break for attribution section
+        elements.append(PageBreak())
         
         # Model Attribution Section
         if attribution_result:
-            elements.append(PageBreak())
-            elements.append(Paragraph("AI Model Attribution", heading_style))
+            elements.append(Paragraph("AI MODEL ATTRIBUTION", section_style))
             
-            # Attribution summary
-            predicted_model = attribution_result.predicted_model.value.replace("_", " ").title()
-            confidence = attribution_result.confidence * 100
+            predicted_model        = attribution_result.predicted_model.value.replace("_", " ").title()
+            attribution_confidence = attribution_result.confidence * 100
             
-            attribution_summary = [['Predicted Model:', predicted_model],
-                                   ['Attribution Confidence:', f"{confidence:.1f}%"],
-                                   ['Domain Used:', attribution_result.domain_used.value.title()],
-                                  ]
+            attribution_card_data  = [[Paragraph("<b>PREDICTED MODEL</b>", subsection_style), Paragraph(f"<font size=14 color='{colors.toHex(INFO_COLOR)}'><b>{predicted_model}</b></font>", subsection_style)],
+                                      [Paragraph("<b>ATTRIBUTION CONFIDENCE</b>", subsection_style), Paragraph(f"<font size=14><b>{attribution_confidence:.1f}%</b></font>", subsection_style)],
+                                      [Paragraph("<b>DOMAIN USED</b>", subsection_style), Paragraph(f"<b>{attribution_result.domain_used.value.title()}</b>", subsection_style)],
+                                     ]
             
-            attribution_table = Table(attribution_summary, colWidths=[2*inch, 3*inch])
-            attribution_table.setStyle(TableStyle([('BACKGROUND', (0, 0), (0, -1), colors.HexColor('#f8fafc')),
+            attribution_table      = Table(attribution_card_data, colWidths = [2.5*inch, 3.5*inch])
+            
+            attribution_table.setStyle(TableStyle([('BACKGROUND', (0, 0), (0, -1), GRAY_LIGHT),
                                                    ('FONTNAME', (0, 0), (0, -1), 'Helvetica-Bold'),
-                                                   ('FONTSIZE', (0, 0), (-1, -1), 10),
-                                                   ('BOTTOMPADDING', (0, 0), (-1, -1), 6),
+                                                   ('FONTSIZE', (0, 0), (-1, -1), 11),
+                                                   ('BOTTOMPADDING', (0, 0), (-1, -1), 8),
+                                                   ('TOPPADDING', (0, 0), (-1, -1), 8),
+                                                   ('GRID', (0, 0), (-1, -1), 0.5, GRAY_MEDIUM),
                                                  ])
                                       )
-            
+
             elements.append(attribution_table)
-            elements.append(Spacer(1, 0.1*inch))
+            elements.append(Spacer(1, 0.3*inch))
             
             # Model probabilities table
             if attribution_result.model_probabilities:
-                elements.append(Paragraph("Model Probability Breakdown", styles['Heading3']))
+                elements.append(Paragraph("MODEL PROBABILITY DISTRIBUTION", subsection_style))
                 
-                prob_data     = [['Model', 'Probability']]
+                prob_data     = [['MODEL', 'PROBABILITY', '']]
                 
-                # Show top 5
-                sorted_models = sorted(attribution_result.model_probabilities.items(),
-                                       key     = lambda x: x[1],
-                                       reverse = True)[:5]
+                # Show top 8 models
+                sorted_models = sorted(attribution_result.model_probabilities.items(), key = lambda x: x[1], reverse=True)[:8]
                 
                 for model_name, probability in sorted_models:
                     display_name = model_name.replace("_", " ").replace("-", " ").title()
-                    prob_data.append([display_name, f"{probability:.1%}"])
-                
-                prob_table = Table(prob_data, colWidths=[3*inch, 1*inch])
-                prob_table.setStyle(TableStyle([('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#667eea')),
+                    bar_width    = int(probability * 100)
+                    
+                    prob_data.append([display_name,
+                                      f"{probability:.1%}",
+                                      f"[{'█' * bar_width}{'░' * (100-bar_width)}]"
+                                    ])
+                                
+                prob_table = Table(prob_data, colWidths = [2.5*inch, 1*inch, 2.5*inch])
+
+                prob_table.setStyle(TableStyle([('BACKGROUND', (0, 0), (-1, 0), INFO_COLOR),
                                                 ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
                                                 ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+                                                ('ALIGN', (1, 1), (1, -1), 'RIGHT'),
                                                 ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
                                                 ('FONTSIZE', (0, 0), (-1, -1), 9),
-                                                ('BOTTOMPADDING', (0, 0), (-1, -1), 4),
-                                                ('GRID', (0, 0), (-1, -1), 1, colors.black),
+                                                ('BOTTOMPADDING', (0, 0), (-1, -1), 6),
+                                                ('TOPPADDING', (0, 0), (-1, -1), 6),
+                                                ('GRID', (0, 0), (-1, -1), 0.5, GRAY_MEDIUM),
+                                                ('FONTNAME', (2, 1), (2, -1), 'Courier'),
+                                                ('TEXTCOLOR', (2, 1), (2, -1), INFO_COLOR),
                                               ])
                                    )
-                
+
                 elements.append(prob_table)
-                elements.append(Spacer(1, 0.2*inch))
+                elements.append(Spacer(1, 0.3*inch))
+        
+        # Recommendations in colored boxes
+        if reasoning.recommendations:
+            elements.append(Paragraph("RECOMMENDATIONS", section_style))
             
-            # Attribution reasoning
-            if attribution_result.reasoning:
-                elements.append(Paragraph("Attribution Reasoning", styles['Heading3']))
-                for reason in attribution_result.reasoning[:3]:  # Show top 3 reasons
-                    elements.append(Paragraph(f"• {reason}", body_style))
+            for i, recommendation in enumerate(reasoning.recommendations):
+                # Alternate colors for visual interest
+                if (i % 3 == 0):
+                    rec_color = SUCCESS_COLOR
+
+                elif (i % 3 == 1):
+                    rec_color = INFO_COLOR
+
+                else:
+                    rec_color = WARNING_COLOR
+                
+                rec_box = Table([[Paragraph(f"<font color='{colors.toHex(rec_color)}'>✓</font> {recommendation}", body_style)]], colWidths=[6.5*inch])
+                
+                rec_box.setStyle(TableStyle([('BACKGROUND', (0, 0), (-1, -1), GRAY_LIGHT),
+                                             ('BOX', (0, 0), (-1, -1), 1, rec_color),
+                                             ('PADDING', (0, 0), (-1, -1), 8),
+                                             ('BOTTOMMARGIN', (0, 0), (-1, -1), 5),
+                                           ])
+                                )
+
+                elements.append(rec_box)
+                elements.append(Spacer(1, 0.1*inch))
         
-        # Recommendations
-        elements.append(PageBreak())
-        elements.append(Paragraph("Recommendations", heading_style))
-        for recommendation in reasoning.recommendations:
-            elements.append(Paragraph(f"• {recommendation}", body_style))
+        # Footer with watermark
+        footer_style = ParagraphStyle('FooterStyle',
+                                      parent     = styles['Normal'],
+                                      fontName   = 'Helvetica',
+                                      fontSize   = 9,
+                                      textColor  = GRAY_DARK,
+                                      alignment  = TA_CENTER,
+                                     )
         
-        # Footer
-        elements.append(Spacer(1, 0.3*inch))
-        elements.append(Paragraph(f"Generated by AI Text Detector v2.0 | Processing Time: {detection_dict.get('performance', {}).get('total_time', 0):.2f}s", 
-                        ParagraphStyle('Footer', parent=styles['Normal'], fontSize=8, textColor=colors.gray)))
+        elements.append(Spacer(1, 0.5*inch))
+        elements.append(HRFlowable(width="100%", thickness=0.5, color=GRAY_MEDIUM, spaceAfter=10))
+        
+        footer_text = (f"Generated by AI Text Detector v2.0 | "
+                       f"Processing Time: {total_time:.2f}s | "
+                       f"Report ID: {filename.replace('.pdf', '')}")
+        
+        elements.append(Paragraph(footer_text, footer_style))
+        elements.append(Paragraph("Confidential Analysis Report • © 2025 AI Detection Analytics", 
+                        ParagraphStyle('Copyright', parent=footer_style, fontSize=8, textColor=GRAY_MEDIUM)))
         
         # Build PDF
         doc.build(elements)
         
-        logger.info(f"PDF report saved: {output_path}")
+        logger.info(f"Premium PDF report saved: {output_path}")
         return output_path
 
 
