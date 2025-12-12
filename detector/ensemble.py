@@ -74,13 +74,13 @@ class EnsembleClassifier:
         
         Arguments:
         ----------
-            primary_method      : Primary aggregation method : "confidence_calibrated", "domain_adaptive", "consensus_based", "ml_ensemble"
+            primary_method       : Primary aggregation method : "confidence_calibrated", "domain_adaptive", "consensus_based", "ml_ensemble"
             
-            fallback_method     : Fallback method if primary fails : "domain_weighted", "confidence_weighted", "simple_average"
+            fallback_method      : Fallback method if primary fails : "domain_weighted", "confidence_weighted", "simple_average"
             
-            use_ml_ensemble     : Use RandomForest for final aggregation (requires training)
+            use_ml_ensemble      : Use RandomForest for final aggregation (requires training)
             
-            min_metrics_required: Minimum number of valid metrics required
+            min_metrics_required : Minimum number of valid metrics required
         """
         self.primary_method       = primary_method
         self.fallback_method      = fallback_method

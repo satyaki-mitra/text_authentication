@@ -1891,22 +1891,29 @@ function generateAttributionReasoningHTML(reasoning) {
 
 // Helper function to create single-progress gauge section
 function createGaugeSection(aiProbability, humanProbability, mixedProbability, gaugeColor, gaugeDegree) {
+    // Ensure these are numbers
+    const ai = parseFloat(aiProbability);
+    const human = parseFloat(humanProbability);
+    const mixed = parseFloat(mixedProbability);
+    
     // Determine which probability is highest
     let maxValue, maxColor, maxLabel;
     
-    if (aiProbability >= humanProbability && aiProbability >= mixedProbability) {
-        maxValue = aiProbability;
+    if (ai >= human && ai >= mixed) {
+        maxValue = ai;
         maxColor = 'var(--danger)';
         maxLabel = 'AI Probability';
-    } else if (humanProbability >= aiProbability && humanProbability >= mixedProbability) {
-        maxValue = humanProbability;
+    } else if (human >= ai && human >= mixed) {
+        maxValue = human;
         maxColor = 'var(--success)';
         maxLabel = 'Human Probability';
     } else {
-        maxValue = mixedProbability;
+        maxValue = mixed;
         maxColor = 'var(--primary)';
         maxLabel = 'Mixed Probability';
     }
+    
+    console.log('Selected:', { maxValue, maxLabel });
     
     // Calculate the degree for the progress (maxValue% of 360 degrees)
     const progressDegree = (maxValue / 100) * 360;
