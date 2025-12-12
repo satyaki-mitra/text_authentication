@@ -43,39 +43,46 @@ class DetectionResult:
     
     # Performance metrics
     processing_time        : float
-    metrics_execution_time : Dict[str, float]
+    metrics_execution_time : Dict[str, float] 
     
     # Warnings and errors
     warnings               : List[str]
     errors                 : List[str]
     
+    # File information
+    file_info              : Optional[Dict[str, Any]] = None
 
     def to_dict(self) -> Dict[str, Any]:
         """
         Convert to dictionary for JSON serialization
         """
-        return {"prediction"  : {"verdict"           : self.ensemble_result.final_verdict,
-                                 "ai_probability"    : round(self.ensemble_result.ai_probability, 4),
-                                 "human_probability" : round(self.ensemble_result.human_probability, 4),
-                                 "mixed_probability" : round(self.ensemble_result.mixed_probability, 4),
-                                 "confidence"        : round(self.ensemble_result.overall_confidence, 4),
-                                },
-                "analysis"    : {"domain"              : self.domain_prediction.primary_domain.value,
-                                 "domain_confidence"   : round(self.domain_prediction.confidence, 4),
-                                 "language"            : self.language_result.primary_language.value if self.language_result else "unknown",
-                                 "language_confidence" : round(self.language_result.confidence, 4) if self.language_result else 0.0,
-                                 "text_length"         : self.processed_text.word_count,
-                                 "sentence_count"      : self.processed_text.sentence_count,
-                                },
-                "metrics"     : {name: result.to_dict() for name, result in self.metric_results.items()},
-                "ensemble"    : self.ensemble_result.to_dict(),
-                "performance" : {"total_time"   : round(self.processing_time, 3),
-                                 "metrics_time" : {name: round(t, 3) for name, t in self.metrics_execution_time.items()},
-                                },
-                "warnings"    : self.warnings,
-                "errors"      : self.errors,
-               }
-
+        result = {"prediction"  : {"verdict"           : self.ensemble_result.final_verdict,
+                                   "ai_probability"    : round(self.ensemble_result.ai_probability, 4),
+                                   "human_probability" : round(self.ensemble_result.human_probability, 4),
+                                   "mixed_probability" : round(self.ensemble_result.mixed_probability, 4),
+                                   "confidence"        : round(self.ensemble_result.overall_confidence, 4),
+                                  },
+                  "analysis"    : {"domain"              : self.domain_prediction.primary_domain.value,
+                                   "domain_confidence"   : round(self.domain_prediction.confidence, 4),
+                                   "language"            : self.language_result.primary_language.value if self.language_result else "unknown",
+                                   "language_confidence" : round(self.language_result.confidence, 4) if self.language_result else 0.0,
+                                   "text_length"         : self.processed_text.word_count,
+                                   "sentence_count"      : self.processed_text.sentence_count,
+                                  },
+                  "metrics"     : {name: result.to_dict() for name, result in self.metric_results.items()},
+                  "ensemble"    : self.ensemble_result.to_dict(),
+                  "performance" : {"total_time"   : round(self.processing_time, 3),
+                                   "metrics_time" : {name: round(t, 3) for name, t in self.metrics_execution_time.items()},
+                                  },
+                  "warnings"    : self.warnings,
+                  "errors"      : self.errors,
+                 }
+        
+        # Include file_info if available
+        if self.file_info:
+            result["file_info"] = self.file_info
+        
+        return result
 
 
 class DetectionOrchestrator:

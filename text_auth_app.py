@@ -308,6 +308,95 @@ class ErrorResponse(SerializableBaseModel):
     timestamp : str
 
 
+# ==================== ANALYSIS CACHE ====================
+class AnalysisCache:
+    """
+    In-memory cache for storing analysis results
+    """
+    def __init__(self, max_size: int = 100, ttl_seconds: int = 3600):
+        """
+        Initialize cache with size limit and TTL
+        
+        Arguments:
+        ----------
+            max_size     : Maximum number of cached items
+            ttl_seconds  : Time-to-live for cached items in seconds
+        """
+        self.cache       = {}
+        self.max_size    = max_size
+        self.ttl_seconds = ttl_seconds
+        logger.info(f"AnalysisCache initialized (max_size={max_size}, ttl={ttl_seconds}s)")
+    
+    def set(self, analysis_id: str, data: Dict[str, Any]) -> None:
+        """
+        Store analysis result in cache
+        """
+        # Clean expired entries first
+        self._cleanup_expired()
+        
+        # If cache is full, remove oldest entry
+        if len(self.cache) >= self.max_size:
+            oldest_key = min(self.cache.keys(), key=lambda k: self.cache[k]['timestamp'])
+            del self.cache[oldest_key]
+            logger.debug(f"Cache full, removed oldest entry: {oldest_key}")
+        
+        # Store new entry
+        self.cache[analysis_id] = {
+            'data': data,
+            'timestamp': time.time()
+        }
+        logger.debug(f"Cached analysis: {analysis_id} (cache size: {len(self.cache)})")
+    
+    def get(self, analysis_id: str) -> Optional[Dict[str, Any]]:
+        """
+        Retrieve analysis result from cache
+        """
+        if analysis_id not in self.cache:
+            logger.debug(f"Cache miss: {analysis_id}")
+            return None
+        
+        entry = self.cache[analysis_id]
+        
+        # Check if expired
+        if time.time() - entry['timestamp'] > self.ttl_seconds:
+            del self.cache[analysis_id]
+            logger.debug(f"Cache expired: {analysis_id}")
+            return None
+        
+        logger.debug(f"Cache hit: {analysis_id}")
+        return entry['data']
+    
+    def _cleanup_expired(self) -> None:
+        """
+        Remove expired entries from cache
+        """
+        current_time = time.time()
+        expired_keys = [
+            key for key, entry in self.cache.items()
+            if current_time - entry['timestamp'] > self.ttl_seconds
+        ]
+        
+        for key in expired_keys:
+            del self.cache[key]
+        
+        if expired_keys:
+            logger.debug(f"Cleaned up {len(expired_keys)} expired cache entries")
+    
+    def clear(self) -> None:
+        """
+        Clear all cached entries
+        """
+        count = len(self.cache)
+        self.cache.clear()
+        logger.info(f"Cache cleared ({count} entries removed)")
+    
+    def size(self) -> int:
+        """
+        Get current cache size
+        """
+        return len(self.cache)
+
+
 # ==================== FASTAPI APPLICATION ====================
 app = FastAPI(title                  = "TEXT-AUTH AI Detection API",
               description            = "API for detecting AI-generated text",
@@ -339,6 +428,7 @@ highlighter        : Optional[TextHighlighter]       = None
 reporter           : Optional[ReportGenerator]       = None
 reasoning_generator: Optional[ReasoningGenerator]    = None
 document_extractor : Optional[DocumentExtractor]     = None
+analysis_cache     : Optional[AnalysisCache]         = None 
 
 
 # App state
@@ -350,6 +440,7 @@ initialization_status                                = {"orchestrator"        : 
                                                         "reporter"            : False,
                                                         "reasoning_generator" : False,
                                                         "document_extractor"  : False,
+                                                        "analysis_cache"      : False, 
                                                         }
 
 
@@ -359,7 +450,13 @@ async def startup_event():
     """
     Initialize all components on startup
     """
-    global orchestrator, attributor, highlighter, reporter, reasoning_generator, document_extractor
+    global orchestrator
+    global attributor
+    global highlighter
+    global reporter
+    global reasoning_generator
+    global document_extractor
+    global analysis_cache
     global initialization_status
 
     # Initialize centralized logging first
@@ -433,6 +530,17 @@ async def startup_event():
         
         logger.success("✓ Document Extractor initialized")
         
+        # Initialize Analysis Cache: 1 hour TTL
+        logger.info("Initializing Analysis Cache...")
+        
+        analysis_cache = AnalysisCache(max_size    = 100, 
+                                       ttl_seconds = 3600,
+                                      )  
+        
+        initialization_status["analysis_cache"] = True
+        
+        logger.success("✓ Analysis Cache initialized")
+        
         logger.info("=" * 80)
         logger.success("TEXT-AUTH API Ready!")
         logger.info(f"Server: {settings.HOST}:{settings.PORT}")
@@ -451,6 +559,9 @@ async def shutdown_event():
     """
     Cleanup on shutdown
     """
+    if analysis_cache:
+        analysis_cache.clear()
+    
     central_logger.cleanup()
     
     logger.info("Shutdown complete")
@@ -635,8 +746,8 @@ def _generate_reasoning(detection_result: DetectionResult, attribution_result: O
         return {}
 
 
-def _generate_reports(detection_result: DetectionResult, attribution_result: Optional[AttributionResult] = None, 
-                     highlighted_sentences: Optional[List] = None, analysis_id: str = None) -> Dict[str, str]:
+def _generate_reports(detection_result: DetectionResult, attribution_result: Optional[AttributionResult] = None, highlighted_sentences: Optional[List] = None, 
+                      analysis_id: str = None) -> Dict[str, str]:
     """
     Generate reports for detection results
     """
@@ -767,19 +878,22 @@ async def analyze_text(request: TextAnalysisRequest):
                                                                         use_sentence_level = request.use_sentence_level,
                                                                        )
 
-                # Set include_legend=False to prevent duplicate legends
                 highlighted_html      = highlighter.generate_html(highlighted_sentences = highlighted_sentences,
-                                                                  include_legend        = False,  # UI already has its own legend
+                                                                  include_legend        = False,
                                                                   include_metrics       = request.include_metrics_summary,
                                                                  )
             except Exception as e:
                 logger.warning(f"Highlighting failed: {e}")
+
         
         # Generate reasoning
-        reasoning_dict = _generate_reasoning(detection_result, attribution_result)
+        reasoning_dict = _generate_reasoning(detection_result   = detection_result, 
+                                             attribution_result = attribution_result,
+                                            )
         
         # Generate reports (if requested)
-        report_files = {}
+        report_files   = dict()
+
         if request.generate_report:
             try:
                 logger.info(f"[{analysis_id}] Generating reports...")
@@ -793,6 +907,19 @@ async def analyze_text(request: TextAnalysisRequest):
                 logger.warning(f"Report generation failed: {e}")
         
         processing_time = time.time() - start_time
+        
+        # Cache the full analysis result
+        if analysis_cache:
+            cache_data = {'detection_result'      : detection_result,
+                          'attribution_result'    : attribution_result,
+                          'highlighted_sentences' : highlighted_sentences,
+                          'original_text'         : request.text,
+                          'processing_time'       : processing_time,
+                         }
+
+            analysis_cache.set(analysis_id, cache_data)
+
+            logger.debug(f"Cached analysis: {analysis_id}")
         
         # Log the detection event
         log_detection_event(analysis_id         = analysis_id,
@@ -814,13 +941,13 @@ async def analyze_text(request: TextAnalysisRequest):
                                     report_files     = report_files,
                                     processing_time  = processing_time,
                                     timestamp        = datetime.now().isoformat(),
-                                   )
+                                )
         
     except HTTPException:
         central_logger.log_error("TextAnalysisError",
-                                 f"Analysis failed for request",
-                                 {"text_length": len(request.text)},
-                                 e,
+                                f"Analysis failed for request",
+                                {"text_length": len(request.text)},
+                                e,
                                 )
 
         raise
@@ -833,23 +960,26 @@ async def analyze_text(request: TextAnalysisRequest):
 
 
 @app.post("/api/analyze/file", response_model = FileAnalysisResponse)
-async def analyze_file(file: UploadFile = File(...), domain: Optional[str] = Form(None), enable_attribution: bool = Form(True), skip_expensive_metrics: bool = Form(False), 
+async def analyze_file(file: UploadFile = File(...), domain: Optional[str] = Form(None), enable_attribution: bool = Form(True), skip_expensive_metrics: bool = Form(False),
                        use_sentence_level: bool = Form(True), include_metrics_summary: bool = Form(True), generate_report: bool = Form(False)):
     """
     Analyze uploaded document (PDF, DOCX, TXT)
     """
     if not document_extractor or not orchestrator:
-        raise HTTPException(status_code=503, detail="Service not initialized")
+        raise HTTPException(status_code = 503, 
+                            detail      = "Service not initialized",
+                           )
     
     start_time  = time.time()
     analysis_id = f"file_{int(time.time() * 1000)}"
-    
+
     try:
         # Validate file
         file_ext      = _validate_file_extension(file.filename)
         
         # Read and extract text
         logger.info(f"[{analysis_id}] Extracting text from {file.filename}")
+
         file_bytes    = await file.read()
         
         extracted_doc = document_extractor.extract_from_bytes(file_bytes = file_bytes,
@@ -864,15 +994,23 @@ async def analyze_file(file: UploadFile = File(...), domain: Optional[str] = For
         logger.info(f"[{analysis_id}] Extracted {len(extracted_doc.text)} characters")
         
         # Parse domain and analyze
-        domain_enum      = _parse_domain(domain)
+        domain_enum        = _parse_domain(domain)
         
-        detection_result = orchestrator.analyze(text           = extracted_doc.text,
-                                                domain         = domain_enum,
-                                                skip_expensive = skip_expensive_metrics,
-                                               )
+        detection_result   = orchestrator.analyze(text           = extracted_doc.text,
+                                                  domain         = domain_enum,
+                                                  skip_expensive = skip_expensive_metrics,
+                                                 )
+        
+        # Set file_info on detection_result
+        detection_result.file_info = {"filename"          : file.filename,
+                                      "file_type"         : file_ext,
+                                      "pages"             : extracted_doc.page_count,
+                                      "extraction_method" : extracted_doc.extraction_method,
+                                      "highlighted_html"  : False,
+                                     }
         
         # Convert to serializable dict
-        detection_dict   = safe_serialize_response(detection_result.to_dict())
+        detection_dict     = safe_serialize_response(detection_result.to_dict())
         
         # Attribution
         attribution_result = None
@@ -903,19 +1041,21 @@ async def analyze_file(file: UploadFile = File(...), domain: Optional[str] = For
                                                                         use_sentence_level = use_sentence_level,
                                                                        )
 
-                # Set include_legend=False to prevent duplicate legends
                 highlighted_html      = highlighter.generate_html(highlighted_sentences = highlighted_sentences,
-                                                                  include_legend        = False,  # UI already has its own legend
+                                                                  include_legend        = False,
                                                                   include_metrics       = include_metrics_summary,
                                                                  )
             except Exception as e:
                 logger.warning(f"Highlighting failed: {e}")
         
         # Generate reasoning
-        reasoning_dict = _generate_reasoning(detection_result, attribution_result)
+        reasoning_dict = _generate_reasoning(detection_result   = detection_result, 
+                                             attribution_result = attribution_result,
+                                            )
         
         # Generate reports (if requested)
         report_files   = dict()
+
         if generate_report:
             try:
                 logger.info(f"[{analysis_id}] Generating reports...")
@@ -928,6 +1068,18 @@ async def analyze_file(file: UploadFile = File(...), domain: Optional[str] = For
                 logger.warning(f"Report generation failed: {e}")
         
         processing_time = time.time() - start_time
+        
+        # Cache the full analysis result including Original Text 
+        if analysis_cache:
+            cache_data = {'detection_result'      : detection_result,
+                          'attribution_result'    : attribution_result,
+                          'highlighted_sentences' : highlighted_sentences,
+                          'original_text'         : extracted_doc.text, 
+                          'processing_time'       : processing_time,
+                         }
+
+            analysis_cache.set(analysis_id, cache_data)
+            logger.info(f"✓ Cached file analysis: {analysis_id} (text_length={len(extracted_doc.text)})")
         
         return FileAnalysisResponse(status           = "success",
                                     analysis_id      = analysis_id,
@@ -960,39 +1112,39 @@ async def analyze_file(file: UploadFile = File(...), domain: Optional[str] = For
 async def batch_analyze(request: BatchAnalysisRequest):
     """
     Analyze multiple texts in batch
-    
-    Limits : 1-100 texts per request
+    - Limits : 1-100 texts per request
     """
     if not orchestrator:
         raise HTTPException(status_code = 503, 
                             detail      = "Service not initialized",
                            )
-    
+
     if (len(request.texts) > 100):
         raise HTTPException(status_code = 400, 
                             detail      = "Maximum 100 texts per batch",
                            )
 
-    
+
     start_time = time.time()
     batch_id   = f"batch_{int(time.time() * 1000)}"
-    
+
     try:
         # Parse domain
         domain  = _parse_domain(request.domain)
         
         logger.info(f"[{batch_id}] Processing {len(request.texts)} texts")
         
-        results = []
+        results = list()
+
         for i, text in enumerate(request.texts):
             try:
-                detection_result = orchestrator.analyze(text           = text,
-                                                        domain         = domain,
-                                                        skip_expensive = request.skip_expensive_metrics,
-                                                       )
+                detection_result   = orchestrator.analyze(text           = text,
+                                                          domain         = domain,
+                                                          skip_expensive = request.skip_expensive_metrics,
+                                                         )
                 
                 # Convert to serializable dict
-                detection_dict   = safe_serialize_response(detection_result.to_dict())
+                detection_dict     = safe_serialize_response(detection_result.to_dict())
                 
                 # Attribution if enabled
                 attribution_result = None
@@ -1004,7 +1156,7 @@ async def batch_analyze(request: BatchAnalysisRequest):
                                                                   processed_text = detection_result.processed_text,
                                                                   metric_results = detection_result.metric_results,
                                                                   domain         = detection_result.domain_prediction.primary_domain,
-                                                                )
+                                                                 )
 
                         attribution_dict   = safe_serialize_response(attribution_result.to_dict())
 
@@ -1012,10 +1164,13 @@ async def batch_analyze(request: BatchAnalysisRequest):
                         pass
                 
                 # Generate reasoning
-                reasoning_dict = _generate_reasoning(detection_result, attribution_result)
+                reasoning_dict = _generate_reasoning(detection_result   = detection_result, 
+                                                     attribution_result = attribution_result,
+                                                    )
                 
                 # Generate reports if requested
-                report_files = {}
+                report_files   = dict()
+
                 if request.generate_reports:
                     try:
                         report_files = _generate_reports(detection_result   = detection_result,
@@ -1066,18 +1221,34 @@ async def batch_analyze(request: BatchAnalysisRequest):
 
 # ==================== REPORT GENERATION ENDPOINTS ====================
 @app.post("/api/report/generate", response_model = ReportGenerationResponse)
-async def generate_report(background_tasks: BackgroundTasks, analysis_id: str = Form(...), text: str = Form(...),  formats: str = Form("json,pdf"), 
-                          include_highlights: bool = Form(True)):
+async def generate_report(background_tasks: BackgroundTasks, analysis_id: str = Form(...), formats: str = Form("json,pdf"), include_highlights: bool = Form(True)):
     """
-    Generate detailed report for an analysis
+    Generate detailed report for a cached analysis
     """
-    if not orchestrator or not reporter:
-        raise HTTPException(status_code=503, detail="Service not initialized")
-    
+    if not orchestrator or not reporter or not analysis_cache:
+        raise HTTPException(status_code = 503, 
+                            detail      = "Service not initialized",
+                           )
+
     try:
+        # Check cache first
+        cached_data = analysis_cache.get(analysis_id)
+        
+        if not cached_data:
+            raise HTTPException(status_code = 404, 
+                                detail      = f"Analysis {analysis_id} not found in cache. Please run the analysis first, then request the report.",
+                               )
+        
+        logger.info(f"Using cached analysis for report generation: {analysis_id}")
+
+        # Extract cached data
+        detection_result      = cached_data['detection_result']
+        attribution_result    = cached_data.get('attribution_result')
+        highlighted_sentences = cached_data.get('highlighted_sentences')
+        
         # Parse formats
-        requested_formats = [f.strip() for f in formats.split(',')]
-        valid_formats     = ['json', 'pdf']  # Only JSON and PDF supported now
+        requested_formats     = [f.strip() for f in formats.split(',')]
+        valid_formats         = ['json', 'pdf']
         
         for fmt in requested_formats:
             if fmt not in valid_formats:
@@ -1085,41 +1256,12 @@ async def generate_report(background_tasks: BackgroundTasks, analysis_id: str = 
                                     detail      = f"Invalid format '{fmt}'. Valid: {', '.join(valid_formats)}",
                                    )
         
-        # Analyze text
-        logger.info(f"Generating report for {analysis_id}")
+        # Generate reports using cached data
+        logger.info(f"Generating {', '.join(requested_formats)} report(s) for {analysis_id}")
         
-        detection_result   = orchestrator.analyze(text = text)
-        
-        # Attribution
-        attribution_result = None
-        if attributor:
-            try:
-                attribution_result = attributor.attribute(text           = text,
-                                                          processed_text = detection_result.processed_text,
-                                                          metric_results = detection_result.metric_results,
-                                                          domain         = detection_result.domain_prediction.primary_domain,
-                                                         )
-
-            except Exception as e:
-                logger.warning(f"Attribution failed: {e}")
-        
-        # Generate highlights for PDF reports if requested
-        highlighted_sentences = None
-        
-        if (include_highlights and highlighter and 'pdf' in requested_formats):
-            try:
-                highlighted_sentences = highlighter.generate_highlights(text               = text,
-                                                                        metric_results     = detection_result.metric_results,
-                                                                        ensemble_result    = detection_result.ensemble_result,
-                                                                       )
-
-            except Exception as e:
-                logger.warning(f"Highlight generation for report failed: {e}")
-        
-        # Generate reports
         report_files     = reporter.generate_complete_report(detection_result      = detection_result,
                                                              attribution_result    = attribution_result,
-                                                             highlighted_sentences = highlighted_sentences,
+                                                             highlighted_sentences = highlighted_sentences if include_highlights else None,
                                                              formats               = requested_formats,
                                                              filename_prefix       = analysis_id,
                                                             )
@@ -1128,8 +1270,9 @@ async def generate_report(background_tasks: BackgroundTasks, analysis_id: str = 
         report_filenames = dict()
 
         for fmt, full_path in report_files.items():
-            # Get the filename part            
             report_filenames[fmt] = Path(full_path).name
+        
+        logger.success(f"Generated {len(report_filenames)} report(s) for {analysis_id}")
         
         return ReportGenerationResponse(status      = "success",
                                         analysis_id = analysis_id,
@@ -1146,24 +1289,23 @@ async def generate_report(background_tasks: BackgroundTasks, analysis_id: str = 
                             detail      = str(e),
                            )
 
-
 @app.get("/api/report/download/{filename}")
 async def download_report(filename: str):
     """
     Download a generated report
     """
     if not reporter:
-        raise HTTPException(status_code = 503, 
+        raise HTTPException(status_code = 503,
                             detail      = "Service not initialized",
                            )
-    
+
     file_path = reporter.output_dir / filename
-    
+
     if not file_path.exists():
         raise HTTPException(status_code = 404, 
                             detail      = "Report not found",
                            )
-    
+
     return FileResponse(path       = str(file_path),
                         filename   = filename,
                         media_type = "application/octet-stream",
@@ -1177,13 +1319,12 @@ async def list_domains():
     List all supported domains
     """
     domains_list = list()
-
     for domain in Domain:
         domains_list.append({"value"       : domain.value,
                              "name"        : domain.value.replace('_', ' ').title(),
                              "description" : _get_domain_description(domain),
                            })
-    
+
     return {"domains": domains_list}
 
 
@@ -1197,6 +1338,37 @@ async def list_ai_models():
                         }
                         for model in AIModel if model not in [AIModel.HUMAN, AIModel.UNKNOWN]
                        ]
+           }
+
+
+@app.get("/api/cache/stats")
+async def get_cache_stats():
+    """
+    Get cache statistics (admin endpoint)
+    """
+    if not analysis_cache:
+        return {"status" : "cache not initialized"}
+
+    return {"cache_size"  : analysis_cache.size(),
+            "max_size"    : analysis_cache.max_size,
+            "ttl_seconds" : analysis_cache.ttl_seconds,
+           }
+
+
+@app.post("/api/cache/clear")
+async def clear_cache():
+    """
+    Clear analysis cache (admin endpoint)
+    """
+    if not analysis_cache:
+        raise HTTPException(status_code = 503, 
+                            detail      = "Cache not initialized",
+                           )
+
+    analysis_cache.clear()
+
+    return {"status"  : "success", 
+            "message" : "Cache cleared",
            }
 
 
@@ -1234,24 +1406,24 @@ async def log_requests(request: Request, call_next):
     start_time   = time.time()
     response     = await call_next(request)
     process_time = time.time() - start_time
-    
+
     log_api_request(method      = request.method,
                     path        = request.url.path,
                     status_code = response.status_code,
                     duration    = process_time,
                     ip          = request.client.host if request.client else None,
                    )
-    
+
     return response
+
 
 
 # ==================== MAIN ====================
 if __name__ == "__main__":
     # Configure logging
     log_level = settings.LOG_LEVEL.lower()
-    
     logger.info("Starting TEXT-AUTH API Server...")
-    
+
     uvicorn.run("text_auth_app:app",
                 host       = settings.HOST,
                 port       = settings.PORT,

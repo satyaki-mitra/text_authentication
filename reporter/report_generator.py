@@ -1,4 +1,5 @@
 # DEPENDENCIES
+import re 
 import json
 from typing import Any
 from typing import Dict
@@ -82,32 +83,14 @@ class ReportGenerator:
         # Convert DetectionResult to dict for consistent access
         detection_dict = detection_result.to_dict() if hasattr(detection_result, 'to_dict') else detection_result
         
-        # DEBUG: Check structure
-        logger.debug(f"detection_dict keys: {list(detection_dict.keys())}")
-        logger.debug(f"detection_dict type: {type(detection_dict)}")
-        
-        # Check if this is the full analysis result or just partial data
-        # From your logs, it seems like during report generation, you're getting
-        # a different/shorter text than the original analysis
-        
         # Extract the actual detection data from the structure
         if ("detection_result" in detection_dict):
             detection_data = detection_dict["detection_result"]
-            logger.debug("Extracted detection_result from outer dict")
-            logger.debug(f"Detection data has analysis keys: {list(detection_data.get('analysis', {}).keys())}")
-            logger.debug(f"Text length in analysis: {detection_data.get('analysis', {}).get('text_length', 'Unknown')}")
+            logger.info("Extracted detection_result from outer dict")
+
         else:
             detection_data = detection_dict
-            logger.debug("Using detection_dict directly")
-            logger.debug(f"Detection data has analysis keys: {list(detection_data.get('analysis', {}).keys())}")
-        
-        # Validate we have the correct data (not the short text)
-        analysis_data = detection_data.get("analysis", {})
-        text_length = analysis_data.get("text_length", 0)
-        
-        if text_length < 50:  # Less than minimum
-            logger.warning(f"WARNING: Report generation received short text ({text_length} chars). "
-                         f"This might be partial data instead of full analysis results.")
+            logger.info("Using detection_dict directly")
         
         # Generate detailed reasoning
         reasoning        = self.reasoning_generator.generate(ensemble_result    = detection_result.ensemble_result,
@@ -118,7 +101,7 @@ class ReportGenerator:
                                                             )
         
         # Extract detailed metrics from ACTUAL detection results
-        detailed_metrics = self._extract_detailed_metrics(detection_data)
+        detailed_metrics = self._extract_detailed_metrics(detection_data = detection_data)
         
         # Timestamp for filenames
         timestamp        = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -169,19 +152,14 @@ class ReportGenerator:
         # Get actual metric weights from ensemble
         metric_weights   = ensemble_data.get("metric_contributions", {})
         
-        # Log what we're working with
-        logger.debug(f"Extracting metrics from {len(metrics_data)} metrics")
-        logger.debug(f"Metric names: {list(metrics_data.keys())}")
-        
         # Extract actual metric data
         for metric_name, metric_result in metrics_data.items():
             if (not isinstance(metric_result, dict)):
                 logger.warning(f"Metric {metric_name} is not a dict: {type(metric_result)}")
                 continue
                 
-            error_msg = metric_result.get("error")
-            if (error_msg is not None):
-                logger.warning(f"Metric {metric_name} has error: {error_msg}")
+            if (metric_result.get("error") is not None):
+                logger.warning(f"Metric {metric_name} has error: {metric_result.get('error')}")
                 continue
                 
             # Get actual probabilities and confidence
@@ -189,25 +167,33 @@ class ReportGenerator:
             human_prob = metric_result.get("human_probability", 0)
             confidence = metric_result.get("confidence", 0)
             
-            # DEBUG: Log extracted values
-            logger.debug(f"Metric {metric_name}: AI={ai_prob}, Human={human_prob}, Confidence={confidence}")
-            
             # Determine verdict based on actual probability
-            # 60% threshold in decimal
-            if (ai_prob >= 0.6):  
-                verdict = "AI"
-            
-            # 40% threshold in decimal
-            elif (ai_prob <= 0.4):  
+            if (human_prob >= 0.6):  
                 verdict = "HUMAN"
 
-            else:
+            elif (ai_prob >= 0.6):  
+                verdict = "AI"
+            
+            elif (ai_prob > 0.4 and ai_prob < 0.6):
                 verdict = "MIXED"
+            
+            elif (human_prob > 0.4 and human_prob < 0.6):
+                verdict = "MIXED"
+            
+            else:
+                # If both low, check which is higher
+                if (human_prob > ai_prob):
+                    verdict = "HUMAN"
+                
+                elif (ai_prob > human_prob):
+                    verdict = "AI"
+                
+                else:
+                    verdict = "MIXED"
             
             # Get actual weight or use default
             weight = 0.0
-
-            if metric_name in metric_weights:
+            if (metric_name in metric_weights):
                 weight = metric_weights[metric_name].get("weight", 0.0)
             
             # Extract actual detailed metrics from metric result
@@ -229,7 +215,8 @@ class ReportGenerator:
                                                   )
                                    )
         
-        logger.debug(f"Extracted {len(detailed_metrics)} detailed metrics")
+        logger.info(f"Extracted {len(detailed_metrics)} detailed metrics")
+        
         return detailed_metrics
 
 
@@ -241,14 +228,34 @@ class ReportGenerator:
         
         # Try to get details from metric result
         if metric_result.get("details"):
-            details = metric_result["details"].copy()
+            # Extract all numeric details
+            for key, value in metric_result["details"].items():
+                if (isinstance(value, (int, float))):
+                    # Format specific metrics appropriately
+                    if ("perplexity" in key.lower()):
+                        details[key] = float(f"{value:.2f}")
+
+                    elif ("entropy" in key.lower()):
+                        details[key] = float(f"{value:.2f}")
+
+                    elif (("score" in key.lower()) or ("ratio" in key.lower())):
+                        details[key] = float(f"{value:.4f}")
+
+                    elif ("probability" in key.lower()):
+                        details[key] = float(f"{value:.4f}")
+
+                    else:
+                        details[key] = float(f"{value:.3f}")
+                
+                else:
+                    details[key] = value
         
         # If no details available, provide basic calculated values
         if not details:
             details = {"ai_probability"    : metric_result.get("ai_probability", 0) * 100,
                        "human_probability" : metric_result.get("human_probability", 0) * 100,
                        "confidence"        : metric_result.get("confidence", 0) * 100,
-                       "score"             : metric_result.get("score", 0) * 100,
+                       "score"             : metric_result.get("raw_score", 0) * 100,
                       }
         
         return details
@@ -315,7 +322,7 @@ class ReportGenerator:
                                 "metric_contributions": attribution_result.metric_contributions,
                                }
         
-        # Use ACTUAL detection results from dictionary
+        # Use detection results from dictionary
         ensemble_data        = detection_data.get("ensemble", {})
         analysis_data        = detection_data.get("analysis", {})
         metrics_data_dict    = detection_data.get("metrics", {})
@@ -373,11 +380,12 @@ class ReportGenerator:
                      )
         
         logger.info(f"JSON report saved: {output_path}")
+        
         return output_path
-
+    
 
     def _generate_pdf_report(self, detection_data: Dict, detection_dict_full: Dict, reasoning: DetailedReasoning, detailed_metrics: List[DetailedMetric], 
-                             attribution_result: Optional[AttributionResult], highlighted_sentences: Optional[List] = None, filename: str = None) -> Path:
+                            attribution_result: Optional[AttributionResult], highlighted_sentences: Optional[List] = None, filename: str = None) -> Path:
         """
         Generate PDF format report with detailed metrics
         """
@@ -410,48 +418,37 @@ class ReportGenerator:
             from reportlab.lib.styles import getSampleStyleSheet
             from reportlab.graphics.charts.textlabels import Label
             from reportlab.graphics.widgets.markers import makeMarker
-          
+        
         except ImportError:
             raise ImportError("reportlab is required for PDF generation. Install: pip install reportlab")
         
-        output_path   = self.output_dir / filename
+        output_path       = self.output_dir / filename
         
-        # Create PDF with premium settings
-        doc           = SimpleDocTemplate(str(output_path),
-                                          pagesize     = A4,
-                                          rightMargin  = 0.75*inch,
-                                          leftMargin   = 0.75*inch,
-                                          topMargin    = 0.75*inch,
-                                          bottomMargin = 0.75*inch,
-                                         )
+        # Create PDF with pre-defined settings
+        doc               = SimpleDocTemplate(str(output_path),
+                                              pagesize     = A4,
+                                              rightMargin  = 0.75*inch,
+                                              leftMargin   = 0.75*inch,
+                                              topMargin    = 0.75*inch,
+                                              bottomMargin = 0.75*inch,
+                                             )
         
         # Container for PDF elements
         elements          = list()
         styles            = getSampleStyleSheet()
         
-        # Premium Color Scheme
-        PRIMARY_COLOR     = colors.HexColor('#3b82f6')  # Blue-600
-        SUCCESS_COLOR     = colors.HexColor('#10b981')  # Emerald-500
-        WARNING_COLOR     = colors.HexColor('#f59e0b')  # Amber-500
-        DANGER_COLOR      = colors.HexColor('#ef4444')  # Red-500
-        INFO_COLOR        = colors.HexColor('#8b5cf6')  # Violet-500
-        GRAY_LIGHT        = colors.HexColor('#f8fafc')  # Gray-50
-        GRAY_MEDIUM       = colors.HexColor('#e2e8f0')  # Gray-200
-        GRAY_DARK         = colors.HexColor('#334155')  # Gray-700
-        TEXT_COLOR        = colors.HexColor('#1e293b')  # Gray-800
+        # Color Scheme
+        PRIMARY_COLOR     = '#3b82f6' # Blue-600
+        SUCCESS_COLOR     = '#10b981' # Emerald-500
+        WARNING_COLOR     = '#f59e0b' # Amber-500
+        DANGER_COLOR      = '#ef4444' # Red-500
+        INFO_COLOR        = '#8b5cf6' # Violet-500
+        GRAY_LIGHT        = '#f8fafc' # Gray-50
+        GRAY_MEDIUM       = '#e2e8f0' # Gray-200
+        GRAY_DARK         = '#334155' # Gray-700
+        TEXT_COLOR        = '#1e293b' # Gray-800
         
-        # Helper function to get hex color string
-        def get_hex_color(color_obj):
-            """Convert color object to hex string"""
-            if hasattr(color_obj, 'hexval'):
-                return color_obj.hexval()
-            elif hasattr(color_obj, 'rgb'):
-                r, g, b = color_obj.rgb()
-                return f"#{int(r*255):02x}{int(g*255):02x}{int(b*255):02x}"
-            else:
-                return "#3b82f6"  # Default blue
-        
-        # Premium Custom Styles
+        # Custom Styles
         title_style       = ParagraphStyle('PremiumTitle',
                                            parent     = styles['Heading1'],
                                            fontName   = 'Helvetica-Bold',
@@ -469,6 +466,15 @@ class ReportGenerator:
                                            spaceAfter = 30,
                                            alignment  = TA_CENTER,
                                           )
+        
+        filename_style    = ParagraphStyle('FilenameStyle',
+                                           parent     = styles['Normal'],
+                                           fontName   = 'Helvetica-Bold',
+                                           fontSize   = 10,
+                                           textColor  = GRAY_DARK,
+                                           spaceAfter = 10,
+                                           alignment  = TA_CENTER,
+                                          )
                                 
         section_style     = ParagraphStyle('PremiumSection',
                                            parent      = styles['Heading2'],
@@ -477,6 +483,8 @@ class ReportGenerator:
                                            textColor   = TEXT_COLOR,
                                            spaceAfter  = 12,
                                            spaceBefore = 20,
+                                           underlineWidth = 1,
+                                           underlineColor = PRIMARY_COLOR,
                                           )
         
         subsection_style  = ParagraphStyle('PremiumSubSection',
@@ -488,441 +496,687 @@ class ReportGenerator:
                                            spaceBefore = 16,
                                           )
         
+        key_indicators_style = ParagraphStyle('KeyIndicatorsStyle',
+                                              parent         = styles['Heading2'],
+                                              fontName       = 'Helvetica-Bold',
+                                              fontSize       = 18,
+                                              textColor      = TEXT_COLOR,
+                                              spaceAfter     = 12,
+                                              spaceBefore    = 20,
+                                              underlineWidth = 1,
+                                              underlineColor = PRIMARY_COLOR,
+                                             )
+        
         body_style        = ParagraphStyle('PremiumBody',
+                                          parent     = styles['BodyText'],
+                                          fontName   = 'Helvetica',
+                                          fontSize   = 11,
+                                          textColor  = TEXT_COLOR,
+                                          alignment  = TA_JUSTIFY,
+                                          spaceAfter = 8,
+                                         )
+        
+        # Larger font for page 2 content
+        page2_body_style  = ParagraphStyle('Page2Body',
                                            parent     = styles['BodyText'],
                                            fontName   = 'Helvetica',
-                                           fontSize   = 11,
+                                           fontSize   = 11,  
                                            textColor  = TEXT_COLOR,
                                            alignment  = TA_JUSTIFY,
                                            spaceAfter = 8,
                                           )
         
+        bullet_style      = ParagraphStyle('BulletStyle',
+                                           parent     = styles['BodyText'],
+                                           fontName   = 'Helvetica',
+                                           fontSize   = 11,
+                                           textColor  = TEXT_COLOR,
+                                           alignment  = TA_LEFT,
+                                           spaceAfter = 6,
+                                           leftIndent = 20,
+                                          )
+        
+        bold_style        = ParagraphStyle('BoldStyle',
+                                           parent     = styles['BodyText'],
+                                           fontName   = 'Helvetica-Bold',
+                                           fontSize   = 11,
+                                           textColor  = TEXT_COLOR,
+                                           alignment  = TA_LEFT,
+                                           spaceAfter = 8,
+                                          )
+        
+        small_bold_style  = ParagraphStyle('SmallBoldStyle',
+                                           parent     = styles['BodyText'],
+                                           fontName   = 'Helvetica-Bold',
+                                           fontSize   = 9,
+                                           textColor  = TEXT_COLOR,
+                                           alignment  = TA_LEFT,
+                                           spaceAfter = 4,
+                                          )
+        
+        small_style       = ParagraphStyle('SmallStyle',
+                                           parent     = styles['BodyText'],
+                                           fontName   = 'Helvetica',
+                                           fontSize   = 9,
+                                           textColor  = TEXT_COLOR,
+                                           alignment  = TA_LEFT,
+                                           spaceAfter = 4,
+                                          )
+        
+        footer_style      = ParagraphStyle('FooterStyle',
+                                           parent     = styles['Normal'],
+                                           fontName   = 'Helvetica',
+                                           fontSize   = 9,
+                                           textColor  = GRAY_DARK,
+                                           alignment  = TA_CENTER,
+                                          ) 
+        
+        print (detection_dict_full.keys())
+
         # Use detection results from detection_data
         ensemble_data     = detection_data.get("ensemble", {})
         analysis_data     = detection_data.get("analysis", {})
         performance_data  = detection_data.get("performance", {})
         
-        # Extract values
-        ai_prob           = ensemble_data.get("ai_probability", 0)
-        human_prob        = ensemble_data.get("human_probability", 0)
-        mixed_prob        = ensemble_data.get("mixed_probability", 0)
-        confidence        = ensemble_data.get("overall_confidence", 0)
-        uncertainty       = ensemble_data.get("uncertainty_score", 0)
-        consensus         = ensemble_data.get("consensus_level", 0)
+        # Extract filename from  file_info 
+        file_info         =  detection_data.get("file_info", {})
+        
+        # Extract Analyzed File name from file_info
+        original_filename = file_info.get("filename", "Unknown")
+        
+        # Extract values - handle different data formats
+        ai_prob           = ensemble_data.get("ai_probability", 0) * 100      # Convert to percentage
+        human_prob        = ensemble_data.get("human_probability", 0) * 100   # Convert to percentage
+        mixed_prob        = ensemble_data.get("mixed_probability", 0) * 100   # Convert to percentage
+        confidence        = ensemble_data.get("overall_confidence", 0) * 100  # Convert to percentage
+        uncertainty       = ensemble_data.get("uncertainty_score", 0) * 100   # Convert to percentage
+        consensus         = ensemble_data.get("consensus_level", 0) * 100     # Convert to percentage
         final_verdict     = ensemble_data.get("final_verdict", "Unknown")
+        total_time        = performance_data.get("total_time", 0)
         
         # Determine colors based on verdict
         if ("Human".lower() in final_verdict.lower()):
             verdict_color = SUCCESS_COLOR
+
         elif ("AI".lower() in final_verdict.lower()):
             verdict_color = DANGER_COLOR
+        
         elif ("Mixed".lower() in final_verdict.lower()):
             verdict_color = WARNING_COLOR
+        
         else:
             verdict_color = PRIMARY_COLOR
         
-        # Get hex strings for colors
-        primary_hex = get_hex_color(PRIMARY_COLOR)
-        success_hex = get_hex_color(SUCCESS_COLOR)
-        warning_hex = get_hex_color(WARNING_COLOR)
-        danger_hex = get_hex_color(DANGER_COLOR)
-        info_hex = get_hex_color(INFO_COLOR)
-        verdict_hex = get_hex_color(verdict_color)
-        
+        # PAGE 1: Analyzed File, Verdict, Reasoning, Key Indicators 
         # Header
-        elements.append(Paragraph("AI DETECTION ANALYTICS", 
-                         ParagraphStyle('HeaderStyle', parent=styles['Normal'], fontName='Helvetica-Bold', fontSize=10, textColor=GRAY_DARK, alignment=TA_RIGHT)))
+        header_style = ParagraphStyle('HeaderStyle',
+                                      parent     = styles['Normal'],
+                                      fontName   = 'Helvetica-Bold',
+                                      fontSize   = 10,
+                                      textColor  = GRAY_DARK,
+                                      alignment  = TA_RIGHT,
+                                     )
         
-        elements.append(HRFlowable(width="100%", thickness=1, color=PRIMARY_COLOR, spaceAfter=20))
+        elements.append(Paragraph("AI DETECTION ANALYTICS", header_style))
+
+        elements.append(HRFlowable(width      = "100%", 
+                                   thickness  = 1, 
+                                   color      = PRIMARY_COLOR, 
+                                   spaceAfter = 15,
+                                  )
+                       )
         
         # Title and main sections
         elements.append(Paragraph("AI Text Detection Analysis Report", title_style))
         elements.append(Paragraph(f"Generated on {datetime.now().strftime('%B %d, %Y at %I:%M %p')}", subtitle_style))
         
+        # Add original filename
+        elements.append(Paragraph(f"Analyzed File: {original_filename}", filename_style))
+        elements.append(Spacer(1, 0.1*inch))
+        
         # Add decorative line
-        elements.append(HRFlowable(width="80%", thickness=2, color=PRIMARY_COLOR, spaceBefore=10, spaceAfter=30, hAlign='CENTER'))
+        elements.append(HRFlowable(width       = "80%", 
+                                   thickness   = 2, 
+                                   color       = PRIMARY_COLOR, 
+                                   spaceBefore = 10, 
+                                   spaceAfter  = 25, 
+                                   hAlign      = 'CENTER',
+                                  )
+                       )
         
         # Quick Stats Banner
-        stats_data  = [['', 'AI', 'HUMAN', 'MIXED'],
-                       ['Probability', f"{ai_prob:.1%}", f"{human_prob:.1%}", f"{mixed_prob:.1%}"]]
+        stats_data  = [['Text Source', 'AI', 'HUMAN', 'MIXED'],
+                       ['Probability', f"{ai_prob:.1f}%", f"{human_prob:.1f}%", f"{mixed_prob:.1f}%"]
+                      ]
         
-        stats_table = Table(stats_data, colWidths=[1.5*inch, 1*inch, 1*inch, 1*inch])
-        stats_table.setStyle(TableStyle([
-            ('BACKGROUND', (0, 0), (-1, 0), PRIMARY_COLOR),
-            ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
-            ('BACKGROUND', (1, 1), (1, 1), DANGER_COLOR),
-            ('BACKGROUND', (2, 1), (2, 1), SUCCESS_COLOR),
-            ('BACKGROUND', (3, 1), (3, 1), WARNING_COLOR),
-            ('TEXTCOLOR', (1, 1), (-1, 1), colors.white),
-            ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
-            ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
-            ('FONTSIZE', (0, 0), (-1, -1), 11),
-            ('BOTTOMPADDING', (0, 0), (-1, -1), 8),
-            ('TOPPADDING', (0, 0), (-1, -1), 8),
-            ('GRID', (0, 0), (-1, -1), 0.5, colors.white),
-            ('BOX', (0, 0), (-1, -1), 1, PRIMARY_COLOR),
-        ]))
-        
+        stats_table = Table(stats_data, colWidths = [1.5*inch, 1*inch, 1*inch, 1*inch])
+
+        stats_table.setStyle(TableStyle([('BACKGROUND', (0, 0), (-1, 0), PRIMARY_COLOR),
+                                         ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
+                                         ('BACKGROUND', (1, 1), (1, 1), DANGER_COLOR),
+                                         ('BACKGROUND', (2, 1), (2, 1), SUCCESS_COLOR),
+                                         ('BACKGROUND', (3, 1), (3, 1), WARNING_COLOR),
+                                         ('TEXTCOLOR', (1, 1), (-1, 1), colors.white),
+                                         ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+                                         ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+                                         ('FONTSIZE', (0, 0), (-1, -1), 11),
+                                         ('BOTTOMPADDING', (0, 0), (-1, -1), 8),
+                                         ('TOPPADDING', (0, 0), (-1, -1), 8),
+                                         ('GRID', (0, 0), (-1, -1), 0.5, colors.white),
+                                         ('BOX', (0, 0), (-1, -1), 1, PRIMARY_COLOR),
+                                       ])
+                            )
+
         elements.append(stats_table)
         elements.append(Spacer(1, 0.3*inch))
         
-        # Main Verdict Section with colored badge
+        # Main Verdict Section
         elements.append(Paragraph("DETECTION VERDICT", section_style))
         
-        verdict_box_data = [[
-            Paragraph(f"<font size=18 color='{verdict_hex}'><b>{final_verdict.upper()}</b></font>", 
-                     ParagraphStyle('VerdictText', alignment=TA_CENTER)),
-            Paragraph(f"<font size=12>Confidence: <b>{confidence:.1%}</b></font><br/>"
-                     f"<font size=10>Uncertainty: {uncertainty:.1%} | Consensus: {consensus:.1%}</font>",
-                     ParagraphStyle('VerdictDetails', alignment=TA_CENTER))
-        ]]
+        verdict_box_data = [[Paragraph(f"<font size=18 color='{verdict_color}'><b>{final_verdict.upper()}</b></font>", ParagraphStyle('VerdictText', alignment=TA_CENTER)),
+                             Paragraph(f"<font size=12>Confidence: <b>{confidence:.1f}%</b></font><br/>" 
+                                       f"<font size=10>Uncertainty: {uncertainty:.1f}% | Consensus: {consensus:.1f}%</font>", 
+                                       ParagraphStyle('VerdictDetails', alignment=TA_CENTER))
+                           ]]
         
-        verdict_box = Table(verdict_box_data, colWidths=[2.5*inch, 3*inch])
-        verdict_box.setStyle(TableStyle([
-            ('BACKGROUND', (0, 0), (0, 0), GRAY_LIGHT),
-            ('BACKGROUND', (1, 0), (1, 0), GRAY_LIGHT),
-            ('BOX', (0, 0), (-1, -1), 1, verdict_color),
-            ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
-            ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
-            ('BOTTOMPADDING', (0, 0), (-1, -1), 15),
-            ('TOPPADDING', (0, 0), (-1, -1), 15),
-        ]))
-        
+        verdict_box      = Table(verdict_box_data, colWidths = [2.5*inch, 3*inch])
+
+        verdict_box.setStyle(TableStyle([('BACKGROUND', (0, 0), (0, 0), GRAY_LIGHT),
+                                         ('BACKGROUND', (1, 0), (1, 0), GRAY_LIGHT),
+                                         ('BOX', (0, 0), (-1, -1), 1, verdict_color),
+                                         ('ROUNDEDCORNERS', [10, 10, 10, 10]),
+                                         ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+                                         ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+                                         ('BOTTOMPADDING', (0, 0), (-1, -1), 15),
+                                         ('TOPPADDING', (0, 0), (-1, -1), 15),
+                                       ]) 
+                            )
+
         elements.append(verdict_box)
         elements.append(Spacer(1, 0.3*inch))
         
-        # Content Analysis in a sleek table
+        # DETECTION REASONING
+        elements.append(Paragraph("DETECTION REASONING", section_style))
+        
+        # Process summary text and convert to bullet points
+        summary_text = reasoning.summary if hasattr(reasoning, 'summary') else "No reasoning summary available."
+        
+        # Fix extra spaces first
+        summary_text  = ' '.join(summary_text.split())
+        
+        # Convert **bold** markers to HTML bold tags
+        summary_text  = re.sub(r'\*\*(.*?)\*\*', r'<b>\1</b>', summary_text)
+        
+        # Split into sentences and create bullet points
+        sentences     = re.split(r'(?<=[.!?])\s+', summary_text)
+
+        # Create bullet points
+        for i, sentence in enumerate(sentences):
+            if sentence.strip():
+                # Add bullet point
+                elements.append(Paragraph(f"<font color='{PRIMARY_COLOR}'>•</font> {sentence.strip()}", bullet_style))
+                
+                # Add extra spacing after each bullet point (except the last one)
+                if (i < len(sentences) - 1):
+                    # Add spacing between bullet points
+                    elements.append(Spacer(1, 0.08*inch))  
+        
+        # KEY INDICATORS 
+        if ((hasattr(reasoning, 'key_indicators')) and reasoning.key_indicators and (len(reasoning.key_indicators) > 0)):
+            elements.append(Paragraph("KEY INDICATORS", key_indicators_style))
+            
+            for indicator in reasoning.key_indicators:
+                if isinstance(indicator, str):
+                    # Fix extra spaces
+                    indicator           = ' '.join(indicator.split())
+
+                    # Convert **bold** markers to proper HTML bold tags
+                    formatted_indicator = re.sub(r'\*\*(.*?)\*\*', r'<b>\1</b>', indicator)
+                    
+                    # Fix underscores in metric names
+                    formatted_indicator = formatted_indicator.replace('_', ' ')
+                    
+                    elements.append(Paragraph(f"<font color='{SUCCESS_COLOR}'>•</font> {formatted_indicator}", body_style))
+                    elements.append(Spacer(1, 0.05*inch))
+        
+        elements.append(PageBreak())
+        
+        # PAGE 2: Content Analysis & Metric Contributions 
+        # CONTENT ANALYSIS
         elements.append(Paragraph("CONTENT ANALYSIS", section_style))
         
-        domain = analysis_data.get("domain", "general").title().replace('_', ' ')
-        domain_confidence = analysis_data.get("domain_confidence", 0)
-        text_length = analysis_data.get("text_length", 0)
-        sentence_count = analysis_data.get("sentence_count", 0)
-        total_time = performance_data.get("total_time", 0)
+        domain            = analysis_data.get("domain", "general").replace('_', ' ').upper()
         
-        # Create two-column layout for content analysis
-        content_data = [
-            [Paragraph("<b>Content Domain</b>", body_style), 
-             Paragraph(f"<font color='{info_hex}'><b>{domain}</b></font> ({domain_confidence:.1%} confidence)", body_style)],
-            [Paragraph("<b>Text Statistics</b>", body_style), 
-             Paragraph(f"{text_length:,} words | {sentence_count:,} sentences", body_style)],
-            [Paragraph("<b>Processing Time</b>", body_style), 
-             Paragraph(f"{total_time:.2f} seconds", body_style)],
-            [Paragraph("<b>Analysis Method</b>", body_style), 
-             Paragraph("Confidence-Weighted Ensemble Aggregation", body_style)],
-        ]
+        # Convert to percentage
+        domain_confidence = analysis_data.get("domain_confidence", 0) * 100 
+        text_length       = analysis_data.get("text_length", 0)
+        sentence_count    = analysis_data.get("sentence_count", 0)
         
-        content_table = Table(content_data, colWidths=[2*inch, 4*inch])
-        content_table.setStyle(TableStyle([
-            ('FONTNAME', (0, 0), (0, -1), 'Helvetica-Bold'),
-            ('FONTNAME', (1, 0), (1, -1), 'Helvetica'),
-            ('FONTSIZE', (0, 0), (-1, -1), 10),
-            ('BOTTOMPADDING', (0, 0), (-1, -1), 6),
-            ('TOPPADDING', (0, 0), (-1, -1), 6),
-            ('GRID', (0, 0), (-1, -1), 0.25, GRAY_MEDIUM),
-            ('BACKGROUND', (0, 0), (0, -1), GRAY_LIGHT),
-        ]))
+        # Create two-column layout for content analysis 
+        content_data      = [[Paragraph("<b>Content Domain</b>", bold_style), Paragraph(f"<font color='{INFO_COLOR}'><b>{domain}</b></font> ({domain_confidence:.1f}% confidence)", body_style)],
+                             [Paragraph("<b>Text Statistics</b>", bold_style), Paragraph(f"{text_length:,} words | {sentence_count:,} sentences", body_style)],
+                             [Paragraph("<b>Processing Time</b>", bold_style), Paragraph(f"{total_time:.2f} seconds", body_style)],
+                             [Paragraph("<b>Analysis Method</b>", bold_style), Paragraph("Confidence-Weighted Ensemble Aggregation", body_style)],
+                            ]
         
+        content_table     = Table(content_data, colWidths = [2*inch, 4.5*inch])
+
+        content_table.setStyle(TableStyle([('FONTNAME', (0, 0), (0, -1), 'Helvetica-Bold'),
+                                           ('FONTNAME', (1, 0), (1, -1), 'Helvetica'),
+                                           ('FONTSIZE', (0, 0), (-1, -1), 11),       
+                                           ('BOTTOMPADDING', (0, 0), (-1, -1), 10),  
+                                           ('TOPPADDING', (0, 0), (-1, -1), 10),
+                                           ('GRID', (0, 0), (-1, -1), 0.25, GRAY_MEDIUM),
+                                           ('BACKGROUND', (0, 0), (0, -1), GRAY_LIGHT),
+                                         ])
+                              )
+
         elements.append(content_table)
-        elements.append(Spacer(1, 0.3*inch))
+        elements.append(Spacer(1, 0.4*inch))
         
-        # Metric Weights Visualization
+        # METRIC CONTRIBUTIONS
         elements.append(Paragraph("METRIC CONTRIBUTIONS", section_style))
         
         metric_contributions = ensemble_data.get("metric_contributions", {})
-        if metric_contributions and len(metric_contributions) > 0:
-            # Create horizontal bar chart effect with table
-            weight_data = [['METRIC', 'WEIGHT', '']]
+
+        if (metric_contributions and (len(metric_contributions) > 0)):
+            # Create clean table with updated headers
+            weight_data = [['METRIC NAME', 'ENSEMBLE WEIGHT (%)']]  
             
             for metric_name, contribution in metric_contributions.items():
-                weight = contribution.get("weight", 0)
-                display_name = metric_name.title().replace('_', ' ')
-                
-                # Create visual bar representation
-                bar_width = int(weight * 50)  # Use 50 chars max for better fit
-                bar_cell = f"[{'█' * bar_width}{'░' * (50-bar_width)}] {weight:.1%}"
-                
-                weight_data.append([display_name, f"{weight:.1%}", bar_cell])
+                weight       = contribution.get("weight", 0) * 100
+                display_name = metric_name.replace('_', ' ').title()
+
+                weight_data.append([Paragraph(display_name, bold_style), Paragraph(f"{weight:.1f}%", body_style)])
             
-            weight_table = Table(weight_data, colWidths=[2*inch, 1*inch, 2.5*inch])
-            weight_table.setStyle(TableStyle([
-                ('BACKGROUND', (0, 0), (-1, 0), PRIMARY_COLOR),
-                ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
-                ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
-                ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
-                ('FONTSIZE', (0, 0), (-1, -1), 9),
-                ('BOTTOMPADDING', (0, 0), (-1, -1), 6),
-                ('TOPPADDING', (0, 0), (-1, -1), 6),
-                ('GRID', (0, 0), (-1, -1), 0.5, GRAY_MEDIUM),
-                ('TEXTCOLOR', (2, 1), (2, -1), PRIMARY_COLOR),
-                ('FONTNAME', (2, 1), (2, -1), 'Courier'),
-            ]))
-            
+            # Setup Table Columns
+            weight_table = Table(weight_data, colWidths = [4*inch, 2.5*inch])
+
+            weight_table.setStyle(TableStyle([('BACKGROUND', (0, 0), (-1, 0), PRIMARY_COLOR),
+                                              ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
+                                              ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+                                              ('ALIGN', (1, 0), (1, -1), 'RIGHT'),
+                                              ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+                                              ('FONTSIZE', (0, 0), (-1, -1), 11),  
+                                              ('BOTTOMPADDING', (0, 0), (-1, -1), 10), 
+                                              ('TOPPADDING', (0, 0), (-1, -1), 10),
+                                              ('GRID', (0, 0), (-1, -1), 0.5, GRAY_MEDIUM),
+                                              ('BACKGROUND', (1, 1), (1, -1), GRAY_LIGHT),
+                                            ])
+                                 )
+
             elements.append(weight_table)
-            elements.append(Spacer(1, 0.3*inch))
         
-        # Detailed Metric Analysis with colored cards
-        elements.append(Paragraph("DETAILED METRIC ANALYSIS", section_style))
+        # Add some filler content to reduce white space
+        elements.append(Spacer(1, 0.4*inch))
+        elements.append(HRFlowable(width = "100%", thickness = 1, color = PRIMARY_COLOR, spaceBefore = 10, spaceAfter = 10))
+        elements.append(Paragraph("<i>Report continues with detailed metric analysis on the following pages...</i>", 
+                        ParagraphStyle('ContinueStyle', parent = body_style, fontSize = 10, textColor = GRAY_DARK, alignment = TA_CENTER)))
         
-        if detailed_metrics:
-            for metric in detailed_metrics:
-                # Determine metric color based on verdict
-                if metric.verdict == "HUMAN":
-                    metric_color = SUCCESS_COLOR
-                    prob_color = SUCCESS_COLOR
-                elif metric.verdict == "AI":
-                    metric_color = DANGER_COLOR
-                    prob_color = DANGER_COLOR
-                else:
-                    metric_color = WARNING_COLOR
-                    prob_color = WARNING_COLOR
-                
-                metric_color_hex = get_hex_color(metric_color)
-                prob_color_hex = get_hex_color(prob_color)
-                
-                # Create metric card
-                metric_card_data = [[
-                    Paragraph(f"<font color='{metric_color_hex}' size=12><b>{metric.name.upper().replace('_', ' ')}</b></font><br/>"
-                             f"<font size=9>{metric.description}</font>", 
-                             ParagraphStyle('MetricTitle', alignment=TA_LEFT)),
-                    
-                    Paragraph(f"<font size=11><b>VERDICT</b></font><br/>"
-                             f"<font color='{metric_color_hex}' size=12><b>{metric.verdict}</b></font>",
-                             ParagraphStyle('MetricVerdict', alignment=TA_CENTER)),
-                    
-                    Paragraph(f"<font size=11><b>AI PROBABILITY</b></font><br/>"
-                             f"<font color='{prob_color_hex}' size=12><b>{metric.ai_probability:.1f}%</b></font>",
-                             ParagraphStyle('MetricProbability', alignment=TA_CENTER)),
-                    
-                    Paragraph(f"<font size=11><b>WEIGHT</b></font><br/>"
-                             f"<font size=12><b>{metric.weight:.1f}%</b></font>",
-                             ParagraphStyle('MetricWeight', alignment=TA_CENTER)),
-                ]]
-                
-                metric_table = Table(metric_card_data, colWidths=[2.5*inch, 1.2*inch, 1.2*inch, 1*inch])
-                metric_table.setStyle(TableStyle([
-                    ('BACKGROUND', (0, 0), (-1, 0), GRAY_LIGHT),
-                    ('BOX', (0, 0), (-1, 0), 1, metric_color),
-                    ('LINEABOVE', (0, 0), (-1, 0), 2, metric_color),
-                    ('ALIGN', (0, 0), (-1, 0), 'CENTER'),
-                    ('VALIGN', (0, 0), (-1, 0), 'MIDDLE'),
-                    ('BOTTOMPADDING', (0, 0), (-1, 0), 10),
-                    ('TOPPADDING', (0, 0), (-1, 0), 10),
-                ]))
-                
-                elements.append(metric_table)
-                
-                # Add detailed sub-metrics if available
-                if metric.detailed_metrics:
-                    elements.append(Spacer(1, 0.1*inch))
-                    
-                    # Create a grid of sub-metrics
-                    sub_items = list(metric.detailed_metrics.items())[:6]
-                    sub_data = []
-                    
-                    for i in range(0, len(sub_items), 3):
-                        row = []
-                        for j in range(3):
-                            if i + j < len(sub_items):
-                                sub_name, sub_value = sub_items[i + j]
-                                # Format the value
-                                if isinstance(sub_value, (int, float)):
-                                    if sub_name.endswith('_score') or sub_name.endswith('_probability'):
-                                        formatted_value = f"{sub_value:.1f}%"
-                                    elif sub_name.endswith('_ratio') or sub_name.endswith('_frequency'):
-                                        formatted_value = f"{sub_value:.3f}"
-                                    elif sub_name.endswith('_entropy') or sub_name.endswith('_perplexity'):
-                                        formatted_value = f"{sub_value:.2f}"
-                                    else:
-                                        formatted_value = f"{sub_value:.2f}"
-                                else:
-                                    formatted_value = str(sub_value)
-                                
-                                row.append(f"<b>{sub_name.replace('_', ' ').title()}:</b> {formatted_value}")
-                            else:
-                                row.append("")
-                        
-                        sub_data.append(row)
-                    
-                    if sub_data:
-                        sub_table = Table(sub_data, colWidths=[1.8*inch, 1.8*inch, 1.8*inch])
-                        sub_table.setStyle(TableStyle([
-                            ('FONTSIZE', (0, 0), (-1, -1), 8),
-                            ('BOTTOMPADDING', (0, 0), (-1, -1), 4),
-                            ('TOPPADDING', (0, 0), (-1, -1), 4),
-                            ('FONTNAME', (0, 0), (-1, -1), 'Helvetica'),
-                        ]))
-                        elements.append(sub_table)
-                
-                elements.append(Spacer(1, 0.2*inch))
-        else:
-            elements.append(Paragraph("No detailed metrics available for this analysis.", body_style))
-            elements.append(Spacer(1, 0.2*inch))
-        
-        # Detection Reasoning
-        elements.append(Paragraph("DETECTION REASONING", section_style))
-        
-        # Summary in a colored box
-        summary_box = Table([[Paragraph(f"<font size=11>{reasoning.summary}</font>", body_style)]], colWidths=[6.5*inch])
-        summary_box.setStyle(TableStyle([
-            ('BACKGROUND', (0, 0), (-1, -1), GRAY_LIGHT),
-            ('BOX', (0, 0), (-1, -1), 1, PRIMARY_COLOR),
-            ('PADDING', (0, 0), (-1, -1), 10),
-        ]))
-        
-        elements.append(summary_box)
-        elements.append(Spacer(1, 0.2*inch))
-        
-        # Key Indicators
-        if reasoning.key_indicators:
-            elements.append(Paragraph("KEY INDICATORS", subsection_style))
-            
-            indicators_data = []
-            for i in range(0, len(reasoning.key_indicators), 2):
-                row = []
-                for j in range(2):
-                    if i + j < len(reasoning.key_indicators):
-                        indicator = reasoning.key_indicators[i + j]
-                        # Add checkmark for positive indicators
-                        if indicator.startswith("✅") or indicator.startswith("✓"):
-                            icon_color = success_hex
-                        elif indicator.startswith("⚠️") or indicator.startswith("❌"):
-                            icon_color = warning_hex
-                        else:
-                            icon_color = primary_hex
-                        
-                        row.append(Paragraph(f"<font color='{icon_color}'>•</font> {indicator}", body_style))
-                    else:
-                        row.append("")
-                indicators_data.append(row)
-            
-            indicators_table = Table(indicators_data, colWidths=[3*inch, 3*inch])
-            indicators_table.setStyle(TableStyle([
-                ('VALIGN', (0, 0), (-1, -1), 'TOP'),
-                ('BOTTOMPADDING', (0, 0), (-1, -1), 4),
-            ]))
-            
-            elements.append(indicators_table)
-            elements.append(Spacer(1, 0.2*inch))
-        
-        # Page break for attribution section
         elements.append(PageBreak())
         
-        # Model Attribution Section
+        # PAGE 3: STRUCTURAL & ENTROPY 
+        elements.append(Paragraph("DETAILED METRIC ANALYSIS", section_style))
+        elements.append(Spacer(1, 0.2*inch))
+        
+        # Filter for STRUCTURAL and ENTROPY only
+        page3_metrics = [m for m in detailed_metrics if m.name in ['structural', 'entropy']]
+        
+        for metric in page3_metrics:
+            self._add_detailed_metric_section(elements         = elements, 
+                                              metric           = metric, 
+                                              small_bold_style = small_bold_style, 
+                                              small_style      = small_style, 
+                                              bold_style       = bold_style,
+                                              PRIMARY_COLOR    = PRIMARY_COLOR, 
+                                              SUCCESS_COLOR    = SUCCESS_COLOR,
+                                              DANGER_COLOR     = DANGER_COLOR, 
+                                              WARNING_COLOR    = WARNING_COLOR, 
+                                              GRAY_LIGHT       = GRAY_LIGHT,
+                                             )
+            
+            elements.append(Spacer(1, 0.1*inch))
+        
+            elements.append(HRFlowable(width = "100%", thickness = 0.5, color = GRAY_MEDIUM, spaceBefore = 5, spaceAfter = 15))
+        
+        elements.append(PageBreak())
+        
+        # PAGE 4: PERPLEXITY & SEMANTIC ANALYSIS 
+        elements.append(Paragraph("DETAILED METRIC ANALYSIS", section_style))
+        elements.append(Spacer(1, 0.2*inch))
+        
+        # Filter for PERPLEXITY and SEMANTIC_ANALYSIS only
+        page4_metrics = [m for m in detailed_metrics if m.name in ['perplexity', 'semantic_analysis']]
+        
+        for metric in page4_metrics:
+            self._add_detailed_metric_section(elements         = elements, 
+                                              metric           = metric, 
+                                              small_bold_style = small_bold_style, 
+                                              small_style      = small_style, 
+                                              bold_style       = bold_style,
+                                              PRIMARY_COLOR    = PRIMARY_COLOR, 
+                                              SUCCESS_COLOR    = SUCCESS_COLOR, 
+                                              DANGER_COLOR     = DANGER_COLOR, 
+                                              WARNING_COLOR    = WARNING_COLOR, 
+                                              GRAY_LIGHT       = GRAY_LIGHT,
+                                             )
+            
+            elements.append(Spacer(1, 0.3*inch))
+            elements.append(HRFlowable(width = "100%", thickness = 0.5, color = GRAY_MEDIUM, spaceBefore = 5, spaceAfter = 15))
+        
+        elements.append(PageBreak())
+        
+        # PAGE 5: LINGUISTIC & MULTI PERTURBATION STABILITY 
+        elements.append(Paragraph("DETAILED METRIC ANALYSIS", section_style))
+        elements.append(Spacer(1, 0.1*inch)) 
+        
+        # Filter for LINGUISTIC and MULTI_PERTURBATION_STABILITY only
+        page5_metrics  = [m for m in detailed_metrics if m.name in ['linguistic', 'multi_perturbation_stability']]
+        
+        # Create a list to hold all content for Page 5
+        page5_elements = list()
+        
+        for i, metric in enumerate(page5_metrics):
+            # Create temporary elements list for this metric
+            metric_elements = list()
+            
+            # Add metric section to temporary list
+            self._add_detailed_metric_section(elements         = metric_elements, 
+                                              metric           = metric, 
+                                              small_bold_style = small_bold_style, 
+                                              small_style      = small_style, 
+                                              bold_style       = bold_style,
+                                              PRIMARY_COLOR    = PRIMARY_COLOR, 
+                                              SUCCESS_COLOR    = SUCCESS_COLOR, 
+                                              DANGER_COLOR     = DANGER_COLOR, 
+                                              WARNING_COLOR    = WARNING_COLOR, 
+                                              GRAY_LIGHT       = GRAY_LIGHT,
+                                             )
+            
+            # Add to page5_elements
+            page5_elements.extend(metric_elements)
+            
+            # Add separator if not the last metric
+            if (i < len(page5_metrics) - 1):
+                page5_elements.append(Spacer(1, 0.05*inch))  # Minimal spacing
+                page5_elements.append(HRFlowable(width = "100%", thickness = 0.5, color = GRAY_MEDIUM, spaceBefore = 5, spaceAfter = 10))
+        
+        # Add all page 5 elements to main elements
+        elements.extend(page5_elements)
+        
+        elements.append(PageBreak())
+        
+        # PAGE 6: Model Attribution & Recommendations
+        # AI MODEL ATTRIBUTION
         if attribution_result:
             elements.append(Paragraph("AI MODEL ATTRIBUTION", section_style))
+            elements.append(Spacer(1, 0.1*inch))
             
-            predicted_model = attribution_result.predicted_model.value.replace("_", " ").title()
-            attribution_confidence = attribution_result.confidence * 100
+            predicted_model        = getattr(attribution_result.predicted_model, 'value', str(attribution_result.predicted_model))
+            predicted_model        = predicted_model.replace("_", " ").title()
+            attribution_confidence = getattr(attribution_result, 'confidence', 0) * 100
+            domain_used            = getattr(attribution_result.domain_used, 'value', 'Unknown').upper()
             
-            attribution_card_data = [
-                [Paragraph("<b>PREDICTED MODEL</b>", subsection_style), 
-                 Paragraph(f"<font size=14 color='{info_hex}'><b>{predicted_model}</b></font>", subsection_style)],
-                [Paragraph("<b>ATTRIBUTION CONFIDENCE</b>", subsection_style), 
-                 Paragraph(f"<font size=14><b>{attribution_confidence:.1f}%</b></font>", subsection_style)],
-                [Paragraph("<b>DOMAIN USED</b>", subsection_style), 
-                 Paragraph(f"<b>{attribution_result.domain_used.value.title()}</b>", subsection_style)],
-            ]
+            # Professional attribution table
+            attribution_data       = [[Paragraph("<b>Predicted Model</b>", bold_style), Paragraph(f"<font color='{INFO_COLOR}'><b>{predicted_model}</b></font>", bold_style)],
+                                      [Paragraph("<b>Attribution Confidence</b>", bold_style), Paragraph(f"<b>{attribution_confidence:.1f}%</b>", bold_style)],
+                                      [Paragraph("<b>Domain Used</b>", bold_style), Paragraph(f"<b>{domain_used}</b>", bold_style)]
+                                     ]
             
-            attribution_table = Table(attribution_card_data, colWidths=[2.5*inch, 3.5*inch])
-            attribution_table.setStyle(TableStyle([
-                ('BACKGROUND', (0, 0), (0, -1), GRAY_LIGHT),
-                ('FONTNAME', (0, 0), (0, -1), 'Helvetica-Bold'),
-                ('FONTSIZE', (0, 0), (-1, -1), 11),
-                ('BOTTOMPADDING', (0, 0), (-1, -1), 8),
-                ('TOPPADDING', (0, 0), (-1, -1), 8),
-                ('GRID', (0, 0), (-1, -1), 0.5, GRAY_MEDIUM),
-            ]))
-            
+            attribution_table      = Table(attribution_data, colWidths = [2.5*inch, 4*inch])
+
+            attribution_table.setStyle(TableStyle([('BACKGROUND', (0, 0), (0, -1), GRAY_LIGHT),
+                                                   ('FONTNAME', (0, 0), (0, -1), 'Helvetica-Bold'),
+                                                   ('FONTSIZE', (0, 0), (-1, -1), 11),
+                                                   ('BOTTOMPADDING', (0, 0), (-1, -1), 8),
+                                                   ('TOPPADDING', (0, 0), (-1, -1), 8),
+                                                   ('GRID', (0, 0), (-1, -1), 0.5, GRAY_MEDIUM),
+                                                   ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+                                                 ])
+                                      )
+
             elements.append(attribution_table)
-            elements.append(Spacer(1, 0.3*inch))
+            elements.append(Spacer(1, 0.2*inch)) 
             
-            # Model probabilities table
-            if attribution_result.model_probabilities:
+            # MODEL PROBABILITY DISTRIBUTION
+            model_probs = getattr(attribution_result, 'model_probabilities', {})
+            if (model_probs and (len(model_probs) > 0)):
                 elements.append(Paragraph("MODEL PROBABILITY DISTRIBUTION", subsection_style))
+                elements.append(Spacer(1, 0.05*inch))
                 
-                prob_data = [['MODEL', 'PROBABILITY', '']]
+                # Get top models 
+                sorted_models = sorted(model_probs.items(), key = lambda x: x[1], reverse = True)[:10] 
                 
-                # Show top 6 models
-                sorted_models = sorted(attribution_result.model_probabilities.items(),
-                                       key=lambda x: x[1], reverse=True)[:6]
+                prob_data     = [['LANGUAGE MODEL NAME', 'ATTRIBUTION PROBABILITY']]
                 
                 for model_name, probability in sorted_models:
                     display_name = model_name.replace("_", " ").replace("-", " ").title()
-                    bar_width = int(probability * 40)  # 40 chars max
-                    prob_data.append([
-                        display_name,
-                        f"{probability:.1%}",
-                        f"[{'█' * bar_width}{'░' * (40-bar_width)}]"
-                    ])
+                    prob_data.append([Paragraph(display_name, bold_style), Paragraph(f"{probability:.1%}", bold_style)])
                 
-                prob_table = Table(prob_data, colWidths=[2.5*inch, 1*inch, 2*inch])
-                prob_table.setStyle(TableStyle([
-                    ('BACKGROUND', (0, 0), (-1, 0), INFO_COLOR),
-                    ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
-                    ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
-                    ('ALIGN', (1, 1), (1, -1), 'RIGHT'),
-                    ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
-                    ('FONTSIZE', (0, 0), (-1, -1), 9),
-                    ('BOTTOMPADDING', (0, 0), (-1, -1), 6),
-                    ('TOPPADDING', (0, 0), (-1, -1), 6),
-                    ('GRID', (0, 0), (-1, -1), 0.5, GRAY_MEDIUM),
-                    ('FONTNAME', (2, 1), (2, -1), 'Courier'),
-                    ('TEXTCOLOR', (2, 1), (2, -1), INFO_COLOR),
-                ]))
-                
+                # Table Columns Setup
+                prob_table = Table(prob_data, colWidths = [4*inch, 2.5*inch])
+
+                prob_table.setStyle(TableStyle([('BACKGROUND', (0, 0), (-1, 0), INFO_COLOR),
+                                                ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
+                                                ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+                                                ('ALIGN', (1, 0), (1, -1), 'RIGHT'),
+                                                ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+                                                ('FONTSIZE', (0, 0), (-1, -1), 11),  
+                                                ('BOTTOMPADDING', (0, 0), (-1, -1), 6),
+                                                ('TOPPADDING', (0, 0), (-1, -1), 6),
+                                                ('GRID', (0, 0), (-1, -1), 0.5, GRAY_MEDIUM),
+                                                ('BACKGROUND', (1, 1), (1, -1), GRAY_LIGHT),
+                                              ])
+                                   )
+
                 elements.append(prob_table)
                 elements.append(Spacer(1, 0.3*inch))
         
-        # Recommendations in colored boxes
-        if reasoning.recommendations:
+        # RECOMMENDATIONS
+        if ((hasattr(reasoning, 'recommendations')) and reasoning.recommendations):
             elements.append(Paragraph("RECOMMENDATIONS", section_style))
+            elements.append(Spacer(1, 0.1*inch)) 
             
             for i, recommendation in enumerate(reasoning.recommendations):
                 # Alternate colors for visual interest
-                if i % 3 == 0:
-                    rec_color = success_hex
-                elif i % 3 == 1:
-                    rec_color = info_hex
+                if (i % 3 == 0):
+                    rec_color = SUCCESS_COLOR
+
+                elif (i % 3 == 1):
+                    rec_color = INFO_COLOR
+
                 else:
-                    rec_color = warning_hex
+                    rec_color = WARNING_COLOR
                 
-                rec_box = Table([[Paragraph(f"<font color='{rec_color}'>✓</font> {recommendation}", body_style)]], colWidths=[6.5*inch])
-                rec_box.setStyle(TableStyle([
-                    ('BACKGROUND', (0, 0), (-1, -1), GRAY_LIGHT),
-                    ('PADDING', (0, 0), (-1, -1), 8),
-                    ('BOTTOMMARGIN', (0, 0), (-1, -1), 5),
-                ]))
+                # Clean up recommendation text - fix spaces and bold markers
+                clean_rec    = ' '.join(recommendation.split())
+                clean_rec    = re.sub(r'\*\*(.*?)\*\*', r'<b>\1</b>', clean_rec)
+                clean_rec    = clean_rec.replace('_', ' ')
                 
+                rec_box_data = [[Paragraph(f"<font color='{rec_color}'>✓</font> {clean_rec}", body_style)]]
+                rec_box      = Table(rec_box_data, colWidths = [6.5*inch])
+
+                rec_box.setStyle(TableStyle([('BACKGROUND', (0, 0), (-1, -1), GRAY_LIGHT),
+                                             ('BOX', (0, 0), (-1, -1), 1, rec_color),
+                                             ('PADDING', (0, 0), (-1, -1), 10),
+                                             ('LEFTPADDING', (0, 0), (-1, -1), 8),
+                                             ('BOTTOMMARGIN', (0, 0), (-1, -1), 6),
+                                           ])
+                                )
+
                 elements.append(rec_box)
-                elements.append(Spacer(1, 0.1*inch))
+                elements.append(Spacer(1, 0.2*inch))
         
         # Footer with watermark
-        footer_style = ParagraphStyle('FooterStyle',
-                                     parent     = styles['Normal'],
-                                     fontName   = 'Helvetica',
-                                     fontSize   = 9,
-                                     textColor  = GRAY_DARK,
-                                     alignment  = TA_CENTER,
-                                    )
+        elements.append(Spacer(1, 0.2*inch))
+        elements.append(HRFlowable(width = "100%", thickness = 0.5, color = GRAY_MEDIUM, spaceAfter = 8))
         
-        elements.append(Spacer(1, 0.5*inch))
-        elements.append(HRFlowable(width="100%", thickness=0.5, color=GRAY_MEDIUM, spaceAfter=10))
+        # Extract report ID from filename
+        report_id   = filename.replace('.pdf', '')
         
-        footer_text = (f"Generated by AI Text Detector v2.0 | "
-                      f"Processing Time: {total_time:.2f}s | "
-                      f"Report ID: {filename.replace('.pdf', '')}")
+        footer_text = (f"Generated by AI Text Detector v1.0 | "
+                       f"Processing Time: {total_time:.2f}s | "
+                       f"Report ID: {report_id}")
         
         elements.append(Paragraph(footer_text, footer_style))
         elements.append(Paragraph("Confidential Analysis Report • © 2025 AI Detection Analytics", 
-                        ParagraphStyle('Copyright', parent=footer_style, fontSize=8, textColor=GRAY_MEDIUM)))
+                        ParagraphStyle('Copyright', parent = footer_style, fontSize = 8, textColor = GRAY_MEDIUM)))
         
         # Build PDF
         doc.build(elements)
         
-        logger.info(f"Premium PDF report saved: {output_path}")
+        logger.info(f"PDF report saved: {output_path}")
+        
         return output_path
+    
+    
+    def _add_detailed_metric_section(self, elements, metric, small_bold_style, small_style, bold_style, PRIMARY_COLOR, SUCCESS_COLOR, DANGER_COLOR, WARNING_COLOR, GRAY_LIGHT):
+        """
+        Add a detailed metric section to the PDF
+        """
+        # Import needed components
+        from reportlab.platypus import Paragraph, Table, Spacer
+        from reportlab.platypus import TableStyle
+        from reportlab.lib import colors
+        from reportlab.lib.units import inch
+        from reportlab.lib.styles import ParagraphStyle
+        from reportlab.lib.enums import TA_LEFT
+        
+        # Determine metric color based on verdict
+        if (metric.verdict == "HUMAN"):
+            metric_color = SUCCESS_COLOR
+            prob_color   = SUCCESS_COLOR
 
+        elif (metric.verdict == "AI"):
+            metric_color = DANGER_COLOR
+            prob_color   = DANGER_COLOR
+
+        else:
+            metric_color = WARNING_COLOR
+            prob_color   = WARNING_COLOR
+        
+        # Create professional metric header
+        metric_display_name = metric.name.replace('_', ' ').upper()
+        
+        # Metric title and description
+        subsection_style    = ParagraphStyle('SubsectionStyle',
+                                             parent      = ParagraphStyle('Normal'),
+                                             fontName    = 'Helvetica-Bold',
+                                             fontSize    = 14,
+                                             textColor   = PRIMARY_COLOR,
+                                             spaceAfter  = 8,
+                                             spaceBefore = 16,
+                                             alignment=TA_LEFT,
+                                            )
+        
+        elements.append(Paragraph(f"<b>{metric_display_name}</b>", subsection_style))
+        elements.append(Paragraph(f"<i>{metric.description}</i>", small_style))
+        elements.append(Spacer(1, 0.1*inch))
+        
+        # Key metrics in a clean table
+        key_metrics_data  = [[Paragraph("<b>Verdict</b>", bold_style), Paragraph(f"<font color='{metric_color}'><b>{metric.verdict}</b></font>", bold_style), Paragraph("<b>Weight</b>", bold_style), Paragraph(f"<b>{metric.weight:.1f}%</b>", bold_style)],
+                             [Paragraph("<b>AI Probability</b>", bold_style), Paragraph(f"<font color='{prob_color}'><b>{metric.ai_probability:.1f}%</b></font>", bold_style), Paragraph("<b>Confidence</b>", bold_style), Paragraph(f"<b>{metric.confidence:.1f}%</b>", bold_style)]
+                            ]
+        
+        key_metrics_table = Table(key_metrics_data, colWidths = [1.5*inch, 1.5*inch, 1.5*inch, 1.5*inch])
+
+        key_metrics_table.setStyle(TableStyle([('BACKGROUND', (0, 0), (-1, -1), GRAY_LIGHT),
+                                               ('GRID', (0, 0), (-1, -1), 0.5, colors.white),
+                                               ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+                                               ('BOTTOMPADDING', (0, 0), (-1, -1), 8),
+                                               ('TOPPADDING', (0, 0), (-1, -1), 8),
+                                               ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+                                             ])
+                                  )
+        
+        elements.append(key_metrics_table)
+        elements.append(Spacer(1, 0.2*inch))
+        
+        # Detailed metrics in a compact table
+        if metric.detailed_metrics and len(metric.detailed_metrics) > 0:
+            # Create table with all metrics
+            detailed_data = []
+            
+            # Sort metrics alphabetically
+            sorted_items  = sorted(metric.detailed_metrics.items())
+            
+            # Group into rows with 3 metrics per row
+            for i in range(0, len(sorted_items), 3):
+                row = []
+                # Add up to 3 metrics per row
+                for j in range(3):
+                    if i + j < len(sorted_items):
+                        key, value = sorted_items[i + j]
+                        # Format key name properly
+                        display_key     = key.replace('_', ' ').title()
+                        formatted_value = self._format_metric_value(key, value)
+                        row.append(Paragraph(f"<font size=9><b>{display_key}:</b></font>", small_bold_style))
+                        row.append(Paragraph(f"<font size=9>{formatted_value}</font>", small_style))
+                    
+                    else:
+                        row.append("")
+                        row.append("")
+                
+                detailed_data.append(row)
+            
+            if detailed_data:
+                # Calculate column widths dynamically
+                col_width      = 6.5 * inch / 6  # 6 columns total
+                col_widths     = [col_width] * 6
+                
+                detailed_table = Table(detailed_data, colWidths = col_widths)
+
+                detailed_table.setStyle(TableStyle([('FONTSIZE', (0, 0), (-1, -1), 8),
+                                                    ('BOTTOMPADDING', (0, 0), (-1, -1), 3),
+                                                    ('TOPPADDING', (0, 0), (-1, -1), 3),
+                                                    ('GRID', (0, 0), (-1, -1), 0.2, colors.grey),
+                                                    ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+                                                    ('ALIGN', (1, 0), (1, -1), 'RIGHT'),
+                                                    ('ALIGN', (3, 0), (3, -1), 'RIGHT'),
+                                                    ('ALIGN', (5, 0), (5, -1), 'RIGHT'),
+                                                  ])
+                                       )
+
+                elements.append(detailed_table)
+    
+
+    def _format_metric_value(self, key: str, value: Any) -> str:
+        """
+        Format metric value based on its type
+        """
+        if not isinstance(value, (int, float)):
+            return str(value)
+        
+        key_lower = key.lower()
+        
+        if ('perplexity' in key_lower):
+            if (value > 1000):
+                return f"{value:,.0f}"
+
+            else:
+                return f"{value:.2f}"
+
+        elif (('probability' in key_lower) or ('confidence' in key_lower)):
+            return f"{value:.1f}%"
+
+        elif ('entropy' in key_lower):
+            return f"{value:.2f}"
+
+        elif (('ratio' in key_lower) or ('score' in key_lower)):
+            if (0 <= value <= 1):
+                return f"{value:.3f}"
+
+            else:
+                return f"{value:.2f}"
+
+        elif (key_lower in ['num_sentences', 'num_words', 'vocabulary_size']):
+            return f"{int(value):,}"
+        
+        elif (('length' in key_lower) or ('size' in key_lower)):
+            return f"{value:.2f}"
+        
+        else:
+            return f"{value:.3f}"
 
 
 # Export
