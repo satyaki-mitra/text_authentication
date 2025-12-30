@@ -455,13 +455,10 @@ text_auth/
 ├── utils/
 │   └── logger.py
 ├── validation/
-├── example.py
 ├── requirements.txt
-├── run.sh
 ├── README.md
 ├── Dockerfile
 ├── .gitignore
-├── setup.sh
 ├── test_integration.py
 ├── .env.example
 ├── requirements.txt
