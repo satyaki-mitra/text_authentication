@@ -14,8 +14,6 @@ license: mit
 
 # 🛡️ TEXT-AUTH: Evidence-First Text Forensics & Authenticity Assessment
 
-<div align="center">
-
 ![Python](https://img.shields.io/badge/python-3.8%2B-blue.svg)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.104%2B-009688.svg)
 ![Docker](https://img.shields.io/badge/Docker-Ready-2496ED.svg)
