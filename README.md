@@ -12,13 +12,22 @@ license: mit
 
 <div align="center">
 
-# 🛡️ TEXT-AUTH
-## Evidence-First Text Forensics & Authenticity Assessment
+# 🛡️ TEXT-AUTH: Evidence-First Text Forensics & Authenticity Assessment
 
-![Python](https://img.shields.io/badge/python-3.8+-blue.svg)
-![FastAPI](https://img.shields.io/badge/FastAPI-0.104+-green.svg)
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![Code Style](https://img.shields.io/badge/code%20style-black-black.svg)
+<div align="center">
+
+![Python](https://img.shields.io/badge/python-3.8%2B-blue.svg)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.104%2B-009688.svg)
+![Docker](https://img.shields.io/badge/Docker-Ready-2496ED.svg)
+![License](https://img.shields.io/badge/License-MIT-blue.svg)
+![NLP](https://img.shields.io/badge/NLP-Statistical%20%26%20Semantic-orange.svg)
+![Explainable AI](https://img.shields.io/badge/XAI-Explainable%20AI-success.svg)
+![Evidence Based](https://img.shields.io/badge/Methodology-Evidence--First-critical.svg)
+![Human in the Loop](https://img.shields.io/badge/Human--in--the--Loop-Required-blueviolet.svg)
+![Uncertainty Quantified](https://img.shields.io/badge/Uncertainty-Explicitly%20Modeled-yellow.svg)
+![No Authorship Claims](https://img.shields.io/badge/Authorship-Not%20Claimed-lightgrey.svg)
+![Hugging Face](https://img.shields.io/badge/HuggingFace-Spaces-yellow.svg)
+![API](https://img.shields.io/badge/API-RESTful-green.svg)
 
 </div>
 
