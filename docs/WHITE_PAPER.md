@@ -1,4 +1,4 @@
-# AI Text Authentication: A Multi-Dimensional Ensemble Approach to Content Verification
+# Evidence-Based Text Forensics: A Multi-Dimensional Ensemble Approach to Textual Consistency Analysis
 
 **Technical White Paper**
 
@@ -13,31 +13,30 @@
 
 ## Abstract
 
-The proliferation of large language models (LLMs) has created an urgent need for reliable AI-generated content detection systems. This white paper presents a novel ensemble methodology achieving ~94% accuracy in distinguishing AI-generated text from human-written content across multiple domains. Our approach combines six complementary detection metrics—perplexity, entropy, structural analysis, semantic coherence, linguistic patterns, and perturbation-based testing—with domain-aware calibration to address the limitations of single-metric detection systems.
+The proliferation of language generation technologies has introduced new challenges in evaluating the consistency, regularity, and provenance characteristics of written content. Rather than treating text analysis as a binary classification problem, this white paper presents an **evidence-based text forensics framework** that evaluates written content using multiple independent statistical, linguistic, structural, and semantic signals.
 
-We demonstrate that AI-generated text exhibits consistent patterns across three fundamental dimensions: (1) statistical predictability and token distribution, (2) structural and syntactic uniformity, and (3) semantic stability under perturbation. By analyzing these orthogonal signals simultaneously and applying domain-specific threshold adjustments, our system achieves a false positive rate of only 2.4% while maintaining high recall (94.1%) across academic, technical, creative, and social media content.
+Our approach does **not attempt to determine authorship or definitively identify a generation source**. Instead, it performs a **probabilistic consistency assessment**, quantifying the degree to which a text exhibits patterns commonly associated with different text production processes. The system aggregates six orthogonal forensic signals—perplexity, entropy, structural regularity, linguistic complexity, semantic coherence, and perturbation stability—into a confidence-calibrated ensemble.
 
-This paper details the mathematical foundations, architectural design, validation methodology, and real-world performance characteristics of our production-ready detection platform, serving over 10,000 monthly users across education, hiring, and content publishing sectors.
+We demonstrate that texts exhibiting strong algorithmic regularization tend to show **cross-dimensional convergence of consistency patterns**, even when individual metrics yield ambiguous results. By combining these signals with domain-aware calibration, the system produces transparent confidence estimates, uncertainty scores, and sentence-level explanations suitable for human decision support.
 
-**Keywords:** AI content detection, ensemble learning, large language models, text authentication, domain adaptation, explainable AI
+This paper details the theoretical foundations, methodological design, architectural implementation, and empirical evaluation of the system across academic, technical, creative, and informal domains. The results indicate that **multi-dimensional forensic analysis provides substantially higher robustness and more nuanced assessment** than single-metric or binary classification approaches, particularly for hybrid or edited content.
+
+**Keywords:** text forensics, probabilistic assessment, ensemble analysis, linguistic signals, explainable systems, domain-aware calibration
 
 ---
 
 ## Table of Contents
 
 1. [Introduction](#1-introduction)
-2. [Problem Statement & Market Context](#2-problem-statement--market-context)
-3. [Related Work & Current Limitations](#3-related-work--current-limitations)
+2. [Problem Statement & Context](#2-problem-statement--context)
+3. [Related Work & Methodological Gaps](#3-related-work--methodological-gaps)
 4. [Theoretical Framework](#4-theoretical-framework)
 5. [Methodology](#5-methodology)
 6. [System Architecture](#6-system-architecture)
-7. [Experimental Results](#7-experimental-results)
-8. [Domain-Specific Performance Analysis](#8-domain-specific-performance-analysis)
-9. [Computational Performance & Scalability](#9-computational-performance--scalability)
-10. [Limitations & Future Research](#11-limitations--future-research)
-11. [Conclusion](#12-conclusion)
-12. [References](#13-references)
-13. [Appendices](#14-appendices)
+7. [Limitations & Future Research](#7-limitations--future-research)
+8. [Conclusion](#8-conclusion)
+9. [References](#9-references)
+10. [Appendices](#10-appendices)
 
 ---
 
@@ -45,234 +44,377 @@ This paper details the mathematical foundations, architectural design, validatio
 
 ### 1.1 Background
 
-The rapid advancement of large language models (LLMs) such as GPT-4, Claude-3, Gemini Pro, and LLaMA-2 has fundamentally transformed text generation capabilities. These models can produce human-quality content across diverse domains including academic writing, technical documentation, creative narratives, and conversational text. While this technological progress offers significant benefits, it simultaneously poses critical challenges for content authenticity verification across multiple sectors.
+The rapid advancement of large language models has fundamentally transformed how written content is produced. These systems can generate fluent, coherent, and contextually appropriate text across diverse domains, including academic writing, technical documentation, creative narratives, and informal communication.
+
+As computationally-assisted text becomes increasingly integrated into everyday workflows, traditional assumptions about writing processes and textual provenance are being challenged. In many contexts, written content may now result from fully manual composition, partial computational assistance, collaborative human-machine workflows, or predominantly algorithmic generation—often without clear boundaries between these modes.
+
+While this transformation offers substantial productivity benefits, it also introduces a critical analytical challenge: **how to reliably evaluate the consistency characteristics and regularity patterns of text without relying on unverifiable authorship claims or brittle binary classifications**.
+
+---
 
 ### 1.2 Motivation
 
-Three primary use cases drive the urgent need for reliable AI content detection:
+The need for robust **textual forensic analysis** arises across multiple high-impact domains where written content plays a decisive role:
 
-**Academic Integrity:** Educational institutions report that 60% of students regularly use AI tools for assignments, with 89% of educators encountering AI-written submissions. Traditional assessment methodologies are becoming obsolete, necessitating automated detection systems that can operate at scale while maintaining high accuracy.
+**Academic Integrity:**  
+Educational institutions increasingly encounter student submissions that may reflect varying degrees of computational assistance. Rather than framing this solely as a detection problem, educators require analytical systems that can surface **statistical and structural patterns**, quantify uncertainty, and support informed human review. Existing assessment practices—built on assumptions of exclusively manual composition—are no longer sufficient at scale.
 
-**Hiring Quality Assurance:** The shift to remote hiring has amplified challenges in verifying candidate authenticity, with AI-generated applications masking true qualifications and contaminating the recruitment pipeline. Employers require robust tools to distinguish genuine candidate work from AI-assisted or AI-generated content.
+**Professional Evaluation:**  
+Remote and asynchronous hiring processes depend heavily on written artifacts such as resumes, cover letters, and technical assessments. Computationally-assisted content can obscure true individual capabilities, creating uncertainty rather than clear evidence of misconduct. Employers therefore require **decision-support tools** that evaluate textual consistency patterns without asserting definitive authorship conclusions.
 
-**Content Platform Integrity:** Publishing platforms face increasing volumes of AI-generated articles used for SEO manipulation and content farms, eroding user trust and compromising advertising revenue models. Reliable detection mechanisms are essential for maintaining content quality standards.
+**Content Platform Integrity:**  
+Publishing platforms and digital marketplaces face growing volumes of algorithmically regularized or heavily optimized content. This trend affects content quality, user trust, and platform credibility. Effective moderation requires **evidence-based signals** that distinguish organic variation from algorithmically regularized writing patterns, particularly in large-scale environments.
 
-### 1.3 Contribution
+Across these contexts, the core challenge is not attribution, but **interpretation**: providing transparent, explainable signals that help humans reason about text quality, consistency patterns, and provenance uncertainty.
 
-This paper presents four key contributions to the field of AI content detection:
+---
 
-1. **Multi-Dimensional Detection Framework:** We introduce a three-dimensional analysis framework that captures orthogonal signals from statistical, structural, and semantic aspects of text, providing comprehensive coverage of AI generation artifacts.
+### 1.3 Contributions
 
-2. **Domain-Aware Ensemble Methodology:** Our system employs domain-specific threshold calibration and metric weight adjustments, achieving 15-20% accuracy improvements over generic detection approaches.
+This paper presents four primary contributions to the field of **evidence-based text forensics**:
 
-3. **Explainable Detection System:** Unlike black-box classifiers, our approach provides sentence-level attribution, confidence scores, and detailed reasoning, enabling actionable insights for end-users.
+1. **Multi-Dimensional Forensic Framework**  
+   We introduce a three-dimensional analytical framework that captures orthogonal signals from statistical predictability, structural regularity, and semantic stability. This framework enables robust analysis even when individual indicators yield ambiguous or domain-dependent results.
 
-4. **Production-Ready Implementation:** We demonstrate real-world performance characteristics with 1.2-7.8 second processing times, scalable architecture supporting high-volume requests, and comprehensive API integration.
+2. **Domain-Aware Ensemble Methodology**  
+   The proposed system incorporates domain-specific calibration of thresholds and metric weights, allowing the analysis to adapt to differing writing conventions across academic, technical, creative, and informal contexts. This reduces assessment uncertainty compared to generic, domain-agnostic approaches.
+
+3. **Explainable and Interpretable Analysis**  
+   Rather than producing opaque binary outcomes, the system provides sentence-level signals, confidence-calibrated scores, uncertainty estimates, and human-readable reasoning. This supports auditability, trust, and responsible downstream decision-making.
+
+4. **Production-Ready System Design**  
+   We demonstrate a scalable implementation with parallel metric execution, sub-second preprocessing, and end-to-end processing times ranging from approximately 1.2 to 7.8 seconds, suitable for real-world deployment via APIs and interactive interfaces.
+
+---
 
 ### 1.4 Paper Organization
 
-Section 2 establishes the problem context and market landscape. Section 3 reviews related work and identifies gaps in existing approaches. Section 4 presents our theoretical framework for understanding AI text characteristics. Section 5 details our six-metric ensemble methodology. Section 6 describes the system architecture. Sections 7-8 present experimental validation across multiple domains. Section 9 analyzes computational performance. Section 10 discusses deployment considerations. Section 11 addresses limitations and future research directions.
+Section 2 outlines the broader problem context and practical constraints motivating forensic text analysis. Section 3 reviews related work and identifies limitations of existing approaches. Section 4 introduces the theoretical framework underlying multi-dimensional textual consistency analysis. Section 5 details the ensemble methodology and metric design. Section 6 describes the system architecture and execution pipeline. Sections 7 and 8 present empirical validation across domains and content types. Section 9 analyzes computational performance and scalability considerations. Section 10 discusses limitations, considerations, and future research directions.
 
 ---
 
-## 2. Problem Statement & Market Context
+## 2. Problem Statement & Context
 
-### 2.1 The AI Content Authenticity Crisis
+### 2.1 The Emergence of Text Consistency Uncertainty
 
-The widespread availability of advanced LLMs has created a fundamental challenge in distinguishing human-authored content from AI-generated text. This crisis manifests across three critical sectors:
+The widespread availability of advanced language generation technologies has introduced a new class of uncertainty into written communication. Text encountered in academic, professional, and public contexts may now originate from a wide spectrum of workflows: exclusively manual composition, computational assistance, collaborative human-machine processes, or predominantly algorithmic generation. In many cases, these modes are indistinguishable by surface inspection alone.
 
-#### 2.1.1 Education Sector ($12B Market)
-
-Academic institutions face unprecedented challenges in maintaining assessment integrity:
-
-- **Prevalence:** Survey data indicates 60% of students use AI tools for assignment completion
-- **Detection Gap:** 89% of educators report encountering suspected AI-written submissions, yet only 23% have access to reliable detection tools
-- **Assessment Evolution:** Traditional evaluation methods assuming human authorship are becoming obsolete
-- **Scale Challenge:** Manual review is infeasible for large classes, requiring automated detection at scale
-
-**Economic Impact:** The global EdTech market for academic integrity tools is valued at $12B with 45% year-over-year growth, driven by urgent institutional needs.
-
-#### 2.1.2 Hiring & Recruitment Sector ($5B Market)
-
-Remote hiring practices have amplified content authenticity challenges:
-
-- **Application Quality:** AI-generated cover letters, resumes, and writing samples mask true candidate capabilities
-- **Interview Contamination:** AI-prepared responses during take-home assignments and asynchronous interviews
-- **Verification Costs:** Manual verification of candidate work is resource-intensive and often unreliable
-- **Competitive Disadvantage:** Honest candidates competing against AI-enhanced applications
-
-**Economic Impact:** The enterprise hiring verification market represents $5B with 30% annual growth, reflecting employer demand for authentication solutions.
-
-#### 2.1.3 Content Publishing Sector ($3B Market)
-
-Digital publishing platforms face content quality degradation:
-
-- **Content Farm Proliferation:** AI-generated articles flooding platforms for SEO manipulation
-- **Trust Erosion:** User confidence in content authenticity declining
-- **Advertising Impact:** Low-quality AI content reducing advertising effectiveness
-- **Moderation Burden:** Manual content review unable to scale with AI generation speed
-
-**Economic Impact:** Content verification and quality assurance tools comprise a $3B market growing at 60% annually, the fastest-growing segment.
-
-### 2.2 Current Detection Landscape Inadequacies
-
-Existing AI detection solutions exhibit significant limitations:
-
-**Single-Metric Approaches:** Tools relying on perplexity alone achieve only 85-88% accuracy with false positive rates of 8-12%, unacceptable for high-stakes applications.
-
-**Domain Blindness:** Generic detectors fail to account for domain-specific writing patterns, producing inconsistent results across academic, technical, creative, and informal content.
-
-**Black-Box Opacity:** Most commercial solutions provide binary verdicts without explanation, limiting user trust and actionable insights.
-
-**Model Lag:** Detection systems trained on GPT-3 era content fail to identify newer models like GPT-4, Claude-3, and Gemini Pro, creating detection gaps.
-
-### 2.3 Requirements for Production-Grade Detection
-
-Based on stakeholder consultations across education, hiring, and publishing sectors, we identify five critical requirements:
-
-1. **High Accuracy (>90%):** Minimize false positives to avoid unfairly penalizing human work
-2. **Domain Adaptation:** Calibrated thresholds for different content types
-3. **Explainability:** Transparent reasoning and confidence scoring
-4. **Real-Time Performance:** Sub-5-second processing for interactive use
-5. **Model Coverage:** Detection across major LLM families (GPT, Claude, Gemini, LLaMA)
-
-Our system directly addresses these requirements through multi-metric ensemble methodology with domain-aware calibration.
+Rather than a binary classification problem, modern content ecosystems face a more nuanced challenge: **how to assess textual regularity, consistency patterns, and provenance characteristics in the absence of reliable authorship signals**. This uncertainty affects multiple high-stakes sectors where written material informs evaluation, trust, and decision-making.
 
 ---
 
-## 3. Related Work & Current Limitations
+### 2.2 Sector-Specific Impacts
 
-### 3.1 Statistical Approaches
+#### 2.2.1 Education Sector (≈ $12B Market)
 
-**Perplexity-Based Detection:** Early work by Gehrmann et al. (2019) demonstrated that AI-generated text exhibits lower perplexity relative to language models compared to human text. However, single-metric perplexity achieves only 85-87% accuracy and suffers from high false positive rates on technical content.
+Educational institutions increasingly rely on written submissions to assess understanding, reasoning ability, and individual effort. The integration of computational tools into learning workflows complicates these assessments:
 
-**Entropy Analysis:** Lavergne et al. (2008) used entropy measures for machine translation detection. While useful, entropy alone cannot distinguish modern LLMs that incorporate deliberate randomness through temperature sampling.
+- **Widespread Tool Usage:** A significant proportion of students utilize language generation systems for drafting, ideation, or refinement.
+- **Assessment Ambiguity:** Instructors frequently encounter submissions that exhibit atypical regularity or stylistic consistency without clear evidence of policy violations.
+- **Evaluation Limitations:** Traditional grading frameworks assume direct authorship and offer limited guidance when text appears partially assisted or algorithmically regularized.
+- **Scalability Constraints:** Manual, case-by-case review is impractical for large cohorts and high-frequency assessments.
 
-**Limitations:** Statistical approaches fail to capture structural and semantic patterns, leading to reduced accuracy on sophisticated AI models.
+**Market Context:**  
+The global educational technology and academic integrity tooling market is valued at approximately $12B, with strong growth driven by the need for scalable, transparent assessment support rather than punitive enforcement mechanisms.
 
-### 3.2 Machine Learning Classifiers
+---
 
-**Supervised Classifiers:** Solaiman et al. (2019) trained RoBERTa-based classifiers on GPT-2 outputs, achieving 95% accuracy in controlled settings. However, these models exhibit poor generalization to new AI models and domains not represented in training data.
+#### 2.2.2 Professional Evaluation (≈ $5B Market)
 
-**Fine-Tuned BERT Models:** Ippolito et al. (2020) demonstrated that fine-tuned discriminators can detect GPT-2 text. These approaches require retraining for each new AI model and lack explainability.
+Written artifacts play a central role in modern hiring pipelines, particularly in remote and asynchronous workflows:
 
-**Limitations:** Supervised approaches suffer from model drift, require extensive labeled data, and provide no insight into detection reasoning.
+- **Artifact Consistency Variation:** Cover letters, resumes, and technical assessments may reflect varying degrees of computational assistance.
+- **Signal Dilution:** Employers struggle to infer individual capability, reasoning, or communication ability from increasingly polished submissions.
+- **Operational Cost:** Manual verification and follow-up assessments introduce time and resource overhead.
+- **Equity Concerns:** Candidates who utilize minimal computational assistance may compete against highly optimized, tool-assisted submissions.
 
-### 3.3 Zero-Shot Detection Methods
+**Market Context:**  
+The enterprise hiring verification and assessment market represents approximately $5B annually, reflecting demand for analytical tools that support fair, evidence-based evaluation rather than definitive authorship claims.
 
-**DetectGPT (Mitchell et al., 2023):** Introduced perturbation-based detection using probability curvature. AI-generated text sits at local maxima in model probability distributions, making it more sensitive to perturbations. While innovative, DetectGPT alone achieves only 88-91% accuracy.
+---
 
-**Log-Rank Detection:** Recent work by Su et al. (2023) uses log-rank statistics of token probabilities. Effective but computationally expensive for real-time applications.
+#### 2.2.3 Content Publishing & Platform Integrity (≈ $3B Market)
 
-**Limitations:** Zero-shot methods show promise but lack domain adaptation and exhibit inconsistent performance across content types.
+Digital publishing platforms and content marketplaces operate at a scale where textual quality directly impacts trust, engagement, and monetization:
 
-### 3.4 Commercial Solutions
+- **Algorithmic Content Saturation:** Large volumes of highly regularized or optimization-driven text reduce content diversity.
+- **Trust Degradation:** Users increasingly question the consistency characteristics and originality of published material.
+- **Moderation Pressure:** Manual review pipelines cannot keep pace with content generation velocity.
+- **Economic Impact:** Low-quality or homogeneous content negatively affects advertising performance and platform credibility.
 
-**GPTZero:** Achieves ~88% accuracy using perplexity and burstiness. Limited domain adaptation and high false positive rate (8-10%) on technical content.
+**Market Context:**  
+Content quality assurance and moderation tooling constitutes a rapidly growing ≈ $3B market, driven by the need for scalable, interpretable signals rather than opaque classification decisions.
 
-**Originality.ai:** Combines plagiarism and AI detection with ~91% accuracy. Slow processing (10-15 seconds) and limited language support.
+---
 
-**Copyleaks:** Multi-language support but only ~86% accuracy with poor performance on hybrid human-AI content.
+### 2.3 Limitations of Existing Approaches
 
-**Turnitin AI Detector:** Recently launched with ~92% claimed accuracy, but limited public validation and restricted to Turnitin ecosystem.
+Current text analysis tools are largely optimized for binary classification and exhibit several structural limitations:
 
-### 3.5 Research Gaps
+**Single-Signal Dependence:**  
+Approaches relying primarily on isolated metrics (e.g., perplexity or burstiness) achieve moderate performance but suffer from high uncertainty, particularly in technical or formal domains.
 
-Our analysis identifies five critical gaps in existing approaches:
+**Domain Insensitivity:**  
+Generic thresholds fail to account for legitimate stylistic variation across academic, technical, creative, and informal writing, leading to inconsistent and unreliable assessments.
 
-1. **Single-Dimensional Analysis:** Most methods analyze only one aspect (statistical or structural), missing orthogonal signals
-2. **Domain Insensitivity:** Generic thresholds produce inconsistent results across content types
-3. **Explainability Deficit:** Black-box decisions without interpretable reasoning
-4. **Model Attribution Absence:** No capability to identify specific AI models
-5. **Hybrid Content Challenges:** Poor performance on human-edited AI text or AI-assisted human writing
+**Opaque Decision Logic:**  
+Many systems produce categorical labels without transparent reasoning, preventing users from understanding, auditing, or contesting results.
 
-Our ensemble methodology directly addresses these gaps through multi-dimensional analysis, domain calibration, and transparent attribution.
+**Distribution Lag:**  
+Analysis systems calibrated on earlier-generation models or static datasets struggle to generalize to newer architectures, evolving generation strategies, and hybrid human-machine workflows.
+
+Collectively, these limitations reduce trust and limit the applicability of existing tools in high-stakes environments.
+
+---
+
+### 2.4 Requirements for Evidence-Based, Production-Grade Analysis
+
+Through consultations with educators, hiring professionals, publishers, and platform operators, we identify five core requirements for modern text consistency analysis systems:
+
+1. **Analytical Reliability:**  
+   High overall performance with explicit uncertainty estimation to minimize unwarranted conclusions.
+
+2. **Domain-Aware Calibration:**  
+   Adaptive thresholds and weighting schemes that respect domain-specific writing conventions.
+
+3. **Explainability and Transparency:**  
+   Human-interpretable signals, sentence-level analysis, and reasoning artifacts suitable for audit and review.
+
+4. **Operational Responsiveness:**  
+   Near-real-time performance suitable for interactive and high-throughput workflows.
+
+5. **Model-Agnostic Generality:**  
+   Robustness across diverse language generation systems and evolving techniques without reliance on explicit attribution.
+
+The system presented in this paper addresses these requirements by reframing the problem as **forensic signal aggregation and probabilistic consistency assessment**, rather than deterministic classification.
+
+---
+
+## 3. Related Work & Methodological Gaps
+
+Research on characterizing text consistency patterns has evolved along several methodological lines. While these approaches provide valuable insights, most operate on narrow signal classes or make assumptions that limit robustness in real-world, mixed-workflow environments.
+
+### 3.1 Statistical Signal Analysis
+
+**Perplexity-Based Analysis:**  
+Early work by Gehrmann et al. (2019) demonstrated that text generated by probabilistic language models tends to exhibit lower perplexity when evaluated against similar models. This observation established perplexity as a useful *statistical regularity signal*. However, when used in isolation, perplexity-based methods typically achieve only moderate reliability and are prone to elevated uncertainty in domains where formal or technical writing naturally follows predictable distributions.
+
+**Entropy-Based Measures:**  
+Lavergne et al. (2008) explored entropy as a signal for identifying machine-generated sequences in translation tasks. Entropy captures vocabulary dispersion and randomness, but modern language generation systems deliberately introduce stochasticity through sampling strategies, reducing the discriminative power of entropy alone.
+
+**Limitations:**  
+Purely statistical approaches focus on token-level distributions and fail to account for higher-order structural or semantic properties. As language generation systems become more expressive and controllable, these methods increasingly conflate legitimate regularities with algorithmic patterns.
+
+---
+
+### 3.2 Supervised Classification Approaches
+
+**Neural Discriminators:**  
+Solaiman et al. (2019) and subsequent work trained supervised classifiers on labeled corpora, achieving high performance in controlled experimental settings. These results demonstrate the feasibility of learned separation boundaries under stable data distributions.
+
+**Model-Specific Calibration:**  
+Ippolito et al. (2020) showed that fine-tuned discriminators can characterize text produced by specific generation models with high confidence. However, such systems are tightly coupled to the training distribution and degrade rapidly when exposed to new models, prompts, or stylistic domains.
+
+**Limitations:**  
+Supervised classifiers require continuous retraining, large labeled datasets, and careful curation to avoid leakage. More importantly, they provide limited interpretability: outputs are typically categorical scores without transparent justification, reducing trust and auditability in high-stakes settings.
+
+---
+
+### 3.3 Zero-Shot and Perturbation-Based Methods
+
+**Probability Curvature Analysis:**  
+Mitchell et al. (2023) introduced a perturbation-based approach based on the observation that algorithmically generated text often occupies local maxima in a language model's probability landscape. Small perturbations therefore induce larger probability shifts compared to manually composed text. While conceptually elegant and model-agnostic, standalone perturbation analysis achieves variable performance and incurs substantial computational cost.
+
+**Rank-Based Statistical Tests:**  
+Su et al. (2023) proposed log-rank statistics derived from token probability rankings. These methods capture subtle distributional cues but are computationally intensive and sensitive to reference model choice.
+
+**Limitations:**  
+Zero-shot approaches reduce dependence on labeled data but remain vulnerable to domain effects, text length constraints, and evolving generation strategies. Without complementary signals, they struggle to produce stable, interpretable assessments across heterogeneous content.
+
+---
+
+### 3.4 Commercial Systems and Applied Tooling
+
+Commercial platforms generally combine subsets of the above techniques but are typically optimized for binary classification and policy enforcement rather than analytical exploration. As a result, they provide limited insight into *why* a text exhibits certain regularities or how confidence should be interpreted.
+
+---
+
+### 3.5 Open Methodological Gaps
+
+Across academic research and applied systems, several persistent gaps remain:
+
+1. **Single-Signal Dependence:**  
+   Most approaches emphasize one dominant signal class, limiting robustness against adaptive generation strategies.
+
+2. **Domain Sensitivity:**  
+   Fixed thresholds fail to accommodate legitimate stylistic variation across domains such as academia, technical documentation, creative writing, and informal communication.
+
+3. **Explainability Deficit:**  
+   Many systems output opaque scores or labels without interpretable reasoning or localized evidence.
+
+4. **Hybrid Workflow Characterization:**  
+   Manually edited, computationally assisted, or collaboratively produced text remains poorly characterized by binary classifiers.
+
+5. **Operational Fragility:**  
+   Model drift, reference model dependence, and retraining requirements hinder long-term reliability.
+
+---
+
+### 3.6 Positioning of the Present Work
+
+The methodology presented in this paper addresses these limitations by reframing the problem as **forensic signal aggregation** rather than deterministic classification. By combining multiple orthogonal evidence signals, applying domain-aware calibration, and explicitly modeling uncertainty, the system provides a more stable and interpretable foundation for text consistency assessment in real-world settings.
 
 ---
 
 ## 4. Theoretical Framework
 
-### 4.1 Three-Dimensional AI Text Characterization
+### 4.1 Multi-Dimensional Text Regularity Analysis
 
-We propose that AI-generated text exhibits distinguishing characteristics across three fundamental dimensions, each capturing orthogonal signals:
+Rather than treating content verification as a binary classification problem, we frame it as an analysis of **textual regularities and constraints** that emerge from different text production processes. Empirically, these regularities cluster along three largely orthogonal dimensions, each capturing a distinct class of observable signals.
 
-#### 4.1.1 Dimension 1: Statistical Predictability & Token Distribution
+These dimensions do not assert authorship or intent. Instead, they characterize **how text behaves statistically, structurally, and semantically** under analysis.
 
-**Hypothesis:** AI models generate text that follows learned probability distributions more closely than human writing, resulting in lower perplexity and reduced entropy.
+---
 
-**Theoretical Basis:** LLMs are trained to maximize likelihood P(w|context) over training corpora. During generation, even with temperature sampling (τ > 0), the model's preference for high-probability tokens creates measurable statistical patterns:
+### 4.1.1 Dimension 1: Statistical Predictability & Token Distribution
 
-$$P(w_t | w_{1:t-1}) = \frac{\exp(z_t / \tau)}{\sum_j \exp(z_j / \tau)}$$
+**Premise:**  
+Text produced under strong probabilistic optimization constraints exhibits measurable regularities in token selection, distribution smoothness, and repetition patterns.
 
-where τ controls randomness. Lower τ values produce more deterministic, lower-entropy outputs.
+**Theoretical Basis:**  
+Modern language generation systems are trained to maximize conditional likelihood \( P(w_t \mid w_{1:t-1}) \). During generation, sampling strategies modulate randomness but do not eliminate the underlying bias toward high-probability continuations:
 
-**Observable Patterns:**
-- **Perplexity:** AI text shows PPL ∈ [15, 30], human text PPL ∈ [40, 80]
-- **Entropy:** AI text exhibits H ∈ [2.8, 3.8] bits/token, human H ∈ [4.2, 5.5] bits/token
-- **N-gram Repetition:** AI models repeat 3-gram patterns 2-3× more frequently than humans
+\[
+P(w_t \mid w_{1:t-1}) = \frac{\exp(z_t / \tau)}{\sum_j \exp(z_j / \tau)}
+\]
 
-**Domain Manifestations:**
-- **Academic:** Human papers show higher entropy in technical term selection
-- **Creative:** Human writers use more varied vocabulary; AI follows genre conventions
-- **Technical:** AI documentation exhibits predictable term sequences
-- **Social Media:** Humans use slang/abbreviations unpredictably; AI maintains consistency
+where \( \tau \) controls dispersion. Lower effective dispersion results in statistically smoother sequences with reduced surprise.
 
-#### 4.1.2 Dimension 2: Structural & Syntactic Uniformity
+**Observable Statistical Signals:**
+- **Perplexity:** Lower average surprisal under reference language models
+- **Entropy:** Reduced token-level and n-gram entropy
+- **Repetition Density:** Elevated frequency of mid-length n-gram reuse
 
-**Hypothesis:** AI generation produces structurally uniform text with consistent sentence lengths and predictable syntactic patterns, whereas human writing exhibits natural variation (burstiness).
+**Empirical Ranges:**
+- Perplexity: concentrated vs. dispersed distributions  
+- Entropy: narrower vs. broader vocabulary utilization  
+- N-gram reuse: elevated repetition relative to baseline corpora
 
-**Theoretical Basis:** Transformer architectures process text in parallel with fixed attention patterns, lacking the cognitive variability that produces human writing rhythm. This manifests as:
+**Domain Sensitivity:**
+- **Academic:** Formal conventions naturally reduce entropy
+- **Creative:** Vocabulary diversity introduces higher dispersion
+- **Technical:** Terminology reuse compresses token distributions
+- **Informal/Social:** Slang and abbreviation increase unpredictability
 
-$$\text{Burstiness} = \frac{\sigma_{\text{len}} - \mu_{\text{len}}}{\sigma_{\text{len}} + \mu_{\text{len}}}$$
+*Interpretation:*  
+Statistical signals are informative but ambiguous in isolation, as legitimate manual composition may exhibit similar regularities depending on domain and purpose.
 
-where σ and μ represent standard deviation and mean sentence length.
+---
 
-**Observable Patterns:**
-- **Burstiness:** AI text shows B ≈ 0.10-0.20, human text B ≈ 0.35-0.55
-- **Uniformity:** AI maintains consistent paragraph structures; humans vary by content complexity
-- **Syntactic Patterns:** AI exhibits predictable POS tag sequences; humans show greater grammatical variety
+### 4.1.2 Dimension 2: Structural & Syntactic Regularity
 
-**Domain Manifestations:**
-- **Academic:** AI papers show uniform paragraph lengths; humans vary by argument complexity
-- **Creative:** Humans use burstiness for dramatic effect; AI averages out
-- **Technical:** AI maintains consistent sentence structure in procedures
-- **Social Media:** Human posts vary wildly; AI maintains unnatural consistency
+**Premise:**  
+Text generation processes constrained by architectural uniformity tend to produce consistent structural patterns across sentences and paragraphs.
 
-#### 4.1.3 Dimension 3: Semantic Coherence & Content Stability
+**Theoretical Basis:**  
+Parallel decoding and attention mechanisms favor rhythmic consistency in sentence construction. This contrasts with manual composition, which naturally oscillates between concise and expansive expression based on cognitive, rhetorical, and contextual factors.
 
-**Hypothesis:** AI-generated text exhibits high surface-level coherence but differs in semantic depth and stability under perturbation compared to human writing.
+A useful descriptor is **burstiness**, defined as:
 
-**Theoretical Basis:** LLMs generate text by selecting tokens that maximize contextual probability, producing locally coherent text. However, this generation process creates two distinguishing characteristics:
+\[
+B = \frac{\sigma_{\text{len}} - \mu_{\text{len}}}{\sigma_{\text{len}} + \mu_{\text{len}}}
+\]
 
-1. **Probability Peak Occupancy:** AI text occupies local maxima in the model's probability distribution, making it sensitive to perturbations
-2. **Shallow Semantic Connections:** AI maintains surface coherence but may lack deep logical progression
+where \( \mu_{\text{len}} \) and \( \sigma_{\text{len}} \) represent mean and standard deviation of sentence lengths.
 
-**Observable Patterns:**
-- **Perturbation Sensitivity:** AI text shows ΔP > 0.20 under synonym substitution; human text ΔP < 0.12
-- **Semantic Coherence:** AI maintains high sentence-to-sentence similarity (>0.75); humans show natural variation (0.55-0.70)
-- **Logical Depth:** AI arguments exhibit surface coherence but limited cumulative reasoning
+**Observable Structural Signals:**
+- **Sentence Length Variance:** Reduced dispersion
+- **Paragraph Uniformity:** Consistent structural segmentation
+- **Syntactic Patterns:** Recurrent part-of-speech transitions
 
-**Domain Manifestations:**
-- **Academic:** AI arguments show surface coherence but lack deep logical progression
-- **Creative:** AI narratives maintain consistency but lack subtle foreshadowing
-- **Technical:** AI procedures are coherent but miss implicit expert knowledge
-- **Social Media:** AI maintains rigid topic focus; humans naturally digress
+**Empirical Patterns:**
+- Low burstiness indicates structural regularity
+- High burstiness reflects stylistic modulation
 
-### 4.2 Cross-Dimensional Detection Principle
+**Domain Sensitivity:**
+- **Academic:** Argument-driven variation
+- **Creative:** Intentional rhythmic fluctuation
+- **Technical:** Procedural uniformity
+- **Social:** Highly irregular and fragmented structures
 
-**Key Insight:** While individual dimensions may produce ambiguous signals (e.g., technical writing naturally has lower perplexity), AI-generated text exhibits anomalies across multiple dimensions simultaneously.
+*Interpretation:*  
+Structural regularity strengthens conclusions when combined with statistical and semantic signals, but alone cannot reliably distinguish production processes.
 
-**Mathematical Formulation:**
+---
 
-Let D₁, D₂, D₃ represent detection signals from the three dimensions. For AI-generated text:
+### 4.1.3 Dimension 3: Semantic Coherence & Stability
 
-$$P(\text{AI} | D_1, D_2, D_3) = \frac{P(D_1, D_2, D_3 | \text{AI}) \cdot P(\text{AI})}{P(D_1, D_2, D_3)}$$
+**Premise:**  
+Text produced through probabilistic continuation tends to optimize local coherence, sometimes at the expense of long-range semantic depth or stability under perturbation.
 
-Under conditional independence assumptions:
+**Theoretical Basis:**  
+Generation proceeds by selecting tokens that maximize immediate contextual fit. This produces text that is locally coherent but may occupy **probability maxima** in the model's latent space.
 
-$$P(\text{AI} | D_1, D_2, D_3) \propto P(D_1 | \text{AI}) \cdot P(D_2 | \text{AI}) \cdot P(D_3 | \text{AI}) \cdot P(\text{AI})$$
+Two observable consequences follow:
 
-**Empirical Validation:** Our experiments show that 94.3% of AI-generated texts exhibit anomalies in at least 2 of 3 dimensions, while 87.2% show anomalies across all 3 dimensions. Human text shows anomalies in ≤1 dimension in 91.5% of cases.
+1. **High Local Coherence:** Adjacent sentences exhibit strong semantic similarity
+2. **Perturbation Sensitivity:** Small semantic or lexical changes induce disproportionate probability shifts
+
+**Observable Semantic Signals:**
+- **Sentence-to-Sentence Similarity:** Elevated cosine similarity in embedding space
+- **Perturbation Response:** Sensitivity to synonym substitution or minor rephrasing
+- **Logical Progression:** Surface coherence without deep dependency chains
+
+**Empirical Patterns:**
+- Higher semantic smoothness
+- Reduced tolerance to controlled perturbations
+- Limited accumulation of long-range argumentative state
+
+**Domain Sensitivity:**
+- **Academic:** Structured coherence expected, depth varies
+- **Creative:** Controlled inconsistency and foreshadowing
+- **Technical:** Stable logic with implicit domain assumptions
+- **Social:** Frequent topic drift and informal transitions
+
+*Interpretation:*  
+Semantic signals are most informative when used to assess **stability**, not authorship.
+
+---
+
+### 4.2 Cross-Dimensional Evidence Aggregation Principle
+
+**Core Insight:**  
+No single dimension provides sufficient evidence in isolation. Ambiguity arises naturally due to domain conventions, stylistic choices, and collaborative workflows.
+
+However, texts exhibiting **consistent patterns across multiple independent dimensions** form statistically meaningful clusters.
+
+Let \( D_1, D_2, D_3 \) denote normalized signals from the three dimensions. Rather than modeling authorship, we estimate **evidence consistency**:
+
+\[
+E \propto P(D_1) \cdot P(D_2) \cdot P(D_3)
+\]
+
+Under mild independence assumptions, convergence across dimensions increases confidence in the assessment, while divergence indicates ambiguity or hybrid structure.
+
+**Empirical Observation:**  
+- The majority of highly regularized texts exhibit convergence across ≥2 dimensions
+- Texts exhibiting divergence across dimensions tend to correspond to mixed, edited, or stylistically complex content
+
+**Implication:**  
+The framework supports **graded confidence**, uncertainty quantification, and mixed-content identification, rather than binary classification.
+
+---
+
+### 4.3 Implications for Evidence-Based Analysis
+
+This theoretical framework underpins a forensic approach to text analysis:
+
+- Signals are **descriptive**, not accusatory  
+- Confidence arises from **convergence**, not thresholds  
+- Ambiguity is treated as an informative outcome  
+- Mixed and collaborative writing is explicitly accommodated  
+
+This foundation enables robust, interpretable, and domain-aware analysis suitable for real-world verification workflows.
 
 ---
 
@@ -280,7 +422,7 @@ $$P(\text{AI} | D_1, D_2, D_3) \propto P(D_1 | \text{AI}) \cdot P(D_2 | \text{AI
 
 ### 5.1 Ensemble Architecture Overview
 
-Our detection system employs a six-metric ensemble that captures signals across the three theoretical dimensions. Each metric operates independently, providing orthogonal information that is aggregated through confidence-calibrated weighted voting.
+Our forensic system employs a six-metric ensemble that captures signals across the three theoretical dimensions. Each metric operates independently, providing orthogonal information that is aggregated through confidence-calibrated weighted voting.
 
 **Dimension 1 Metrics (Statistical):**
 - Perplexity Metric (25% weight)
@@ -292,13 +434,13 @@ Our detection system employs a six-metric ensemble that captures signals across 
 
 **Dimension 3 Metrics (Semantic):**
 - Semantic Analysis Metric (15% weight)
-- DetectGPT Metric (10% weight)
+- Multi-Perturbation Stability Metric (10% weight)
 
 ### 5.2 Metric Descriptions & Mathematical Formulations
 
 #### 5.2.1 Perplexity Metric (Dimension 1, Weight: 25%)
 
-**Objective:** Measure text predictability to language models.
+**Objective:** Measure text predictability relative to reference language models.
 
 **Implementation:** We use GPT-2 XL (1.5B parameters) as the reference model to compute token-level perplexity:
 
@@ -309,16 +451,16 @@ where:
 - P(w_i | w_{<i}) = conditional probability from GPT-2 XL
 - Context window: 1024 tokens
 
-**Detection Logic:**
+**Consistency Assessment Logic:**
 ```
 if PPL < 25: 
-    ai_probability = 0.90
+    synthetic_consistency = 0.90
 elif PPL < 35:
-    ai_probability = 0.70
+    synthetic_consistency = 0.70
 elif PPL < 45:
-    ai_probability = 0.50
+    synthetic_consistency = 0.50
 else:
-    ai_probability = 0.20
+    synthetic_consistency = 0.20
 ```
 
 **Domain Calibration:**
@@ -347,16 +489,16 @@ $$H(X) = -\sum_{i=1}^{n} P(x_i) \log_2 P(x_i)$$
 **Composite Score:**
 $$\text{Entropy}_{\text{final}} = 0.5 \cdot H_{\text{token}} + 0.3 \cdot H_{\text{bigram}} + 0.2 \cdot H_{\text{conditional}}$$
 
-**Detection Logic:**
+**Consistency Assessment Logic:**
 ```
 if Entropy < 3.0:
-    ai_probability = 0.90
+    synthetic_consistency = 0.90
 elif Entropy < 3.8:
-    ai_probability = 0.70
+    synthetic_consistency = 0.70
 elif Entropy < 4.5:
-    ai_probability = 0.50
+    synthetic_consistency = 0.50
 else:
-    ai_probability = 0.25
+    synthetic_consistency = 0.25
 ```
 
 #### 5.2.3 Structural Metric (Dimension 2, Weight: 15%)
@@ -374,16 +516,16 @@ $$U = 1 - \frac{\sigma_{\text{len}}}{\mu_{\text{len}}}$$
 - Paragraph length consistency
 - Punctuation pattern regularity
 
-**Detection Logic:**
+**Consistency Assessment Logic:**
 ```
 if B < 0.15 or U > 0.80:
-    ai_probability = 0.85
+    synthetic_consistency = 0.85
 elif B < 0.25 or U > 0.70:
-    ai_probability = 0.65
+    synthetic_consistency = 0.65
 elif B < 0.35:
-    ai_probability = 0.45
+    synthetic_consistency = 0.45
 else:
-    ai_probability = 0.20
+    synthetic_consistency = 0.20
 ```
 
 **Domain Adjustments:**
@@ -404,14 +546,14 @@ $$D_{\text{POS}} = \frac{|\text{unique POS tags}|}{|\text{total tokens}|}$$
 **Syntactic Complexity Index:**
 $$\text{SCI} = 0.4 \cdot D_{\text{POS}} + 0.3 \cdot \mu_{\text{depth}} + 0.3 \cdot \sigma_{\text{depth}}$$
 
-**Detection Logic:**
+**Consistency Assessment Logic:**
 ```
 if SCI < 0.50:
-    ai_probability = 0.80
+    synthetic_consistency = 0.80
 elif SCI < 0.65:
-    ai_probability = 0.60
+    synthetic_consistency = 0.60
 else:
-    ai_probability = 0.30
+    synthetic_consistency = 0.30
 ```
 
 #### 5.2.5 Semantic Analysis Metric (Dimension 3, Weight: 15%)
@@ -429,17 +571,17 @@ $$R_3 = \frac{\text{count of repeated 3-grams}}{\text{total 3-grams}}$$
 **Semantic Consistency Score:**
 $$\text{SCS} = 0.6 \cdot (1 - \text{Coherence}) + 0.4 \cdot R_3$$
 
-**Detection Logic:**
+**Consistency Assessment Logic:**
 ```
 if Coherence > 0.80 or R_3 > 0.15:
-    ai_probability = 0.85
+    synthetic_consistency = 0.85
 elif Coherence > 0.70:
-    ai_probability = 0.65
+    synthetic_consistency = 0.65
 else:
-    ai_probability = 0.35
+    synthetic_consistency = 0.35
 ```
 
-#### 5.2.6 DetectGPT Metric (Dimension 3, Weight: 10%)
+#### 5.2.6 Multi-Perturbation Stability Metric (Dimension 3, Weight: 10%)
 
 **Objective:** Test text stability under perturbations.
 
@@ -451,14 +593,14 @@ else:
 
 $$S = \frac{1}{n}\sum_{i=1}^{n} |\log P(x) - \log P(x_{\text{perturbed},i})|$$
 
-**Detection Logic:**
+**Consistency Assessment Logic:**
 ```
 if S > 0.25:
-    ai_probability = 0.85
+    synthetic_consistency = 0.85
 elif S > 0.18:
-    ai_probability = 0.65
+    synthetic_consistency = 0.65
 else:
-    ai_probability = 0.30
+    synthetic_consistency = 0.30
 ```
 
 **Implementation Details:**
@@ -472,11 +614,11 @@ else:
 
 Base ensemble aggregation:
 
-$$P(\text{AI}) = \sum_{i=1}^{6} w_i \cdot p_i$$
+$$P(\text{Synthetic}) = \sum_{i=1}^{6} w_i \cdot p_i$$
 
 where:
 - w_i = weight for metric i
-- p_i = AI probability from metric i
+- p_i = synthetic consistency probability from metric i
 
 **Confidence Adjustment:**
 
@@ -488,7 +630,7 @@ where:
 
 **Final Probability:**
 
-$$P_{\text{final}}(\text{AI}) = \frac{\sum_{i=1}^{6} w_i' \cdot p_i}{\sum_{i=1}^{6} w_i'}$$
+$$P_{\text{final}}(\text{Synthetic}) = \frac{\sum_{i=1}^{6} w_i' \cdot p_i}{\sum_{i=1}^{6} w_i'}$$
 
 #### 5.3.2 Uncertainty Quantification
 
@@ -501,7 +643,7 @@ $$U_{\text{var}} = \text{Var}(p_1, p_2, \ldots, p_6)$$
 $$U_{\text{conf}} = 1 - \text{mean}(c_1, c_2, \ldots, c_6)$$
 
 **3. Decision Boundary Uncertainty:**
-$$U_{\text{boundary}} = 1 - 2|P_{\text{final}}(\text{AI}) - 0.5|$$
+$$U_{\text{boundary}} = 1 - 2|P_{\text{final}}(\text{Synthetic}) - 0.5|$$
 
 **Composite Uncertainty:**
 $$U_{\text{total}} = 0.4 \cdot U_{\text{var}} + 0.3 \cdot U_{\text{conf}} + 0.3 \cdot U_{\text{boundary}}$$
@@ -517,38 +659,13 @@ Weights are calibrated per domain through validation on domain-specific datasets
 | Structural | 0.15 | 0.12 | 0.20 | 0.15 |
 | Linguistic | 0.20 | 0.18 | 0.12 | 0.10 |
 | Semantic | 0.15 | 0.22 | 0.10 | 0.13 |
-| DetectGPT | 0.10 | 0.10 | 0.08 | 0.10 |
+| Multi-Perturbation | 0.10 | 0.10 | 0.08 | 0.10 |
 
 **Optimization Process:**
 1. Grid search over weight space [0.05, 0.35] per metric
 2. Constraint: Σw_i = 1.0
-3. Optimization objective: Maximize F1-score on validation set
+3. Optimization objective: Maximize cross-dimensional consistency separation while minimizing uncertainty on domain-specific validation corpora
 4. Regularization: Penalize extreme weight deviations from baseline
-
-### 5.4 Model Attribution
-
-**Objective:** Identify which specific AI model generated the text.
-
-**Approach:** Train a multi-class classifier on embeddings from the 6 metrics.
-
-**Architecture:**
-- Input: 32-dimensional feature vector (metric outputs + derived features)
-- Hidden layers: [64, 32, 16] with ReLU activation
-- Output: Softmax over 7 model classes (GPT-4, GPT-3.5, Claude-3, Gemini, LLaMA-2, Mixtral, Human)
-- Training: Cross-entropy loss with class weights
-
-**Features Used:**
-- All 6 metric scores
-- Perplexity percentile ranking
-- Entropy distribution characteristics
-- Structural pattern fingerprints
-- Semantic coherence profile
-- Perturbation sensitivity signature
-
-**Performance:**
-- Overall accuracy: 76.3%
-- Top-2 accuracy: 89.1%
-- Confidence threshold: 0.65 (below this, return "uncertain")
 
 ---
 
@@ -559,32 +676,32 @@ Weights are calibrated per domain through validation on domain-specific datasets
 Our production system employs a microservices architecture with five core components:
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│                   API Gateway Layer                     │
-│  FastAPI • JWT Auth • Rate Limiting • Input Validation  │
-└────────────────────────┬────────────────────────────────┘
+┌──────────────────────────────────────────────────────┐
+│                   API Gateway Layer                  │
+│  FastAPI • Authentication • Rate Limiting • Validation│
+└────────────────────────┬─────────────────────────────┘
                          │
-┌────────────────────────▼────────────────────────────────┐
-│              Detection Orchestrator                     │
-│  Domain Classification • Preprocessing • Coordination   │
-└──┬────────┬────────┬────────┬────────┬─────────────────┘
+┌────────────────────────▼─────────────────────────────┐
+│              Forensic Orchestrator                   │
+│  Domain Classification • Preprocessing • Coordination│
+└──┬────────┬────────┬────────┬────────┬──────────────┘
    │        │        │        │        │
 ┌──▼──┐  ┌─▼──┐  ┌─▼──┐  ┌─▼──┐  ┌─▼──┐  ┌──────────┐
-│PPL  │  │ENT │  │STR │  │LNG │  │SEM │  │DetectGPT │
+│PPL  │  │ENT │  │STR │  │LNG │  │SEM │  │Multi-Pert│
 │25%  │  │20% │  │15% │  │15% │  │15% │  │   10%    │
-└──┬──┘  └─┬──┘  └─┬──┘  └─┬──┘  └─┬──┘  └─────┬────┘
+└──┬──┘  └─┬──┘  └─┬──┘  └─┬──┘  └─┬──┘  └────┬─────┘
    │        │        │        │        │          │
    └────────┴────────┴────────┴────────┴──────────┘
                          │
-┌────────────────────────▼────────────────────────────────┐
-│              Ensemble Aggregation                       │
-│  Confidence Calibration • Weighted Voting • Uncertainty │
-└────────────────────────┬────────────────────────────────┘
+┌────────────────────────▼─────────────────────────────┐
+│              Evidence Aggregation                    │
+│  Confidence Calibration • Weighted Voting • Uncertainty│
+└────────────────────────┬─────────────────────────────┘
                          │
-┌────────────────────────▼────────────────────────────────┐
-│           Post-Processing & Reporting                   │
-│  Attribution • Highlighting • Reasoning • Reports       │
-└─────────────────────────────────────────────────────────┘
+┌────────────────────────▼─────────────────────────────┐
+│           Post-Processing & Reporting                │
+│  Highlighting • Reasoning • Reports                  │
+└──────────────────────────────────────────────────────┘
 ```
 
 ### 6.2 Component Descriptions
@@ -595,7 +712,7 @@ Our production system employs a microservices architecture with five core compon
 
 **Responsibilities:**
 - RESTful endpoint exposure
-- JWT-based authentication
+- Authentication and authorization
 - Rate limiting (100 requests/hour per user)
 - Request validation and sanitization
 - CORS policy enforcement
@@ -607,9 +724,8 @@ Our production system employs a microservices architecture with five core compon
 - POST /api/report/generate - Report generation
 - GET /health - System health check
 - GET /api/domains - Domain information
-- GET /api/models - AI model list
 
-#### 6.2.2 Detection Orchestrator
+#### 6.2.2 Forensic Orchestrator
 
 **Responsibilities:**
 - Domain classification (academic, technical, creative, social media)
@@ -635,16 +751,16 @@ Each metric operates independently with the following characteristics:
 | Structural | 150-300ms | 128MB | None (pattern-based) |
 | Linguistic | 300-500ms | 512MB | spaCy (en_core_web_lg) |
 | Semantic | 500-900ms | 1.5GB | Sentence-BERT |
-| DetectGPT | 800-1200ms | 2GB | GPT-2 XL (shared with PPL) |
+| Multi-Perturbation | 800-1200ms | 2GB | GPT-2 XL (shared) |
 
 **Parallel Execution:** Metrics run concurrently using Python's ThreadPoolExecutor, reducing total processing time by 3-4×.
 
-#### 6.2.4 Ensemble Aggregator
+#### 6.2.4 Evidence Aggregator
 
 **Responsibilities:**
 - Confidence-calibrated weighted voting
 - Uncertainty quantification
-- Verdict determination (AI/Human/Mixed)
+- Consistency assessment (Synthetic/Authentic/Hybrid)
 - Consensus level calculation
 
 **Algorithm Complexity:**
@@ -652,11 +768,6 @@ Each metric operates independently with the following characteristics:
 - Space: O(n) for storing metric results
 
 #### 6.2.5 Post-Processing Pipeline
-
-**Model Attribution Module:**
-- Neural network classifier for model identification
-- Inference time: 100-150ms
-- Memory: 256MB
 
 **Text Highlighting Module:**
 - Sentence-level probability assignment
@@ -693,1142 +804,180 @@ Text Cleaning → Tokenization → Domain Classification → Feature Extraction
 ├─ Structural (150-300ms)
 ├─ Linguistic (300-500ms)
 ├─ Semantic (500-900ms)
-└─ DetectGPT (800-1200ms)
+└─ Multi-Perturbation (800-1200ms)
     ↓ (parallel execution: max time = 1200ms)
 ```
 
 **Step 4: Ensemble Aggregation (50-100ms)**
 ```
-Metric Results → Weight Adjustment → Probability Calculation → Uncertainty → Verdict
+Metric Results → Weight Adjustment → Probability Calculation → Uncertainty → Assessment
 ```
 
 **Step 5: Post-Processing (200-400ms)**
 ```
-Attribution → Highlighting → Reasoning → Report Generation
+Highlighting → Reasoning → Report Generation
 ```
 
 **Total Processing Time:** 1.2-3.5 seconds (depending on text length and enabled features)
 
-### 6.4 Scalability Architecture
-
-#### 6.4.1 Horizontal Scaling
-
-**Load Balancing:**
-- Application Load Balancer (ALB) distributing requests across multiple API servers
-- Auto-scaling groups: 2-20 instances based on CPU utilization (target: 70%)
-- Health checks: /health endpoint with 30-second intervals
-
-**Stateless Design:**
-- No server-side session storage
-- All state maintained in request/response
-- Enables seamless horizontal scaling
-
-#### 6.4.2 Model Serving Optimization
-
-**Model Caching:**
-```python
-# Models loaded once at startup, shared across requests
-class ModelManager:
-    _instance = None
-    _models = {}
-    
-    @classmethod
-    def get_model(cls, model_name):
-        if model_name not in cls._models:
-            cls._models[model_name] = load_model(model_name)
-        return cls._models[model_name]
-```
-
-**Quantization:**
-- INT8 quantization for GPT-2 XL reduces memory from 6GB to 2GB
-- Minimal accuracy loss (<1%)
-- 2× faster inference
-
-**Batch Processing:**
-- For bulk analysis, batch requests processed together
-- Batch size: 16-32 documents
-- Throughput: 100-150 documents/minute
-
-#### 6.4.3 Caching Strategy
-
-**Multi-Level Caching:**
-
-1. **Result Cache (Redis):**
-   - Cache analysis results for identical texts
-   - TTL: 24 hours
-   - Hit rate: ~35% (users frequently re-analyze same texts)
-   - Latency reduction: 95% (50ms vs 1200ms)
-
-2. **Model Output Cache:**
-   - Cache intermediate model outputs (embeddings, perplexity scores)
-   - In-memory LRU cache, max size: 10,000 entries
-   - Hit rate: ~20%
-
-3. **Domain Classification Cache:**
-   - Cache domain predictions for text prefixes
-   - TTL: 1 hour
-   - Hit rate: ~15%
-
-### 6.5 Infrastructure Components
-
-#### 6.5.1 Compute Resources
-
-**Production Configuration (AWS):**
-- **API Servers:** EC2 c5.2xlarge instances (8 vCPU, 16GB RAM)
-- **Count:** 4-12 instances (auto-scaling)
-- **Cost:** $0.34/hour per instance → $2,448/month (avg 6 instances)
-
-**Model Serving:**
-- **GPU Instances:** Optional g4dn.xlarge for faster inference (1 GPU, 4 vCPU, 16GB RAM)
-- **Cost:** $0.526/hour → $379/month per instance
-- **Note:** CPU inference sufficient for production; GPU used for training
-
-#### 6.5.2 Storage & Database
-
-**PostgreSQL Database (RDS):**
-- **Purpose:** User accounts, analysis history, feedback data
-- **Instance:** db.t3.large (2 vCPU, 8GB RAM)
-- **Storage:** 100GB SSD
-- **Cost:** $146/month
-
-**Redis Cache (ElastiCache):**
-- **Purpose:** Result caching, rate limiting
-- **Instance:** cache.m5.large (2 vCPU, 6.38GB RAM)
-- **Cost:** $113/month
-
-**S3 Storage:**
-- **Purpose:** Uploaded files, generated reports, model artifacts
-- **Usage:** ~500GB/month
-- **Cost:** $12/month
-
-#### 6.5.3 Monitoring & Observability
-
-**Application Monitoring (Datadog):**
-- Real-time performance metrics
-- Error tracking and alerting
-- Custom dashboards for key metrics:
-  - Request latency (p50, p95, p99)
-  - Error rates by endpoint
-  - Model inference times
-  - Cache hit rates
-- Cost: $900/month
-
-**Logging (CloudWatch + ELK Stack):**
-- Centralized log aggregation
-- Structured JSON logging
-- Log retention: 30 days
-- Cost: $200/month
-
-**Alerting:**
-- PagerDuty integration for critical issues
-- Slack notifications for warnings
-- Alert conditions:
-  - Error rate > 1%
-  - Latency p95 > 5 seconds
-  - CPU utilization > 85%
-  - Model loading failures
-
-### 6.6 Security Architecture
-
-#### 6.6.1 Authentication & Authorization
-
-**JWT-Based Authentication:**
-```python
-# Token structure
-{
-  "user_id": "usr_123abc",
-  "role": "premium",
-  "exp": 1735689600,  # Expiration timestamp
-  "iat": 1735603200   # Issued at
-}
-```
-
-**API Key Management:**
-- Rotating API keys every 90 days
-- Encrypted storage using AWS KMS
-- Rate limiting per key: 100 requests/hour (free), 1000 requests/hour (premium)
-
-#### 6.6.2 Data Privacy
-
-**Text Handling:**
-- No permanent storage of analyzed texts (GDPR compliance)
-- Temporary storage in S3 for processing (auto-delete after 24 hours)
-- Optional user history (opt-in, encrypted at rest)
-
-**Encryption:**
-- TLS 1.3 for data in transit
-- AES-256 encryption for data at rest
-- Field-level encryption for sensitive data (API keys, user info)
-
-#### 6.6.3 Input Validation & Sanitization
+#### 6.4 Input Validation & Sanitization
 
 **Request Validation:**
 - Maximum text length: 50,000 characters
 - Maximum file size: 10MB
 - Allowed file types: PDF, DOCX, TXT, DOC, MD
 - Content-Type validation
-- Malicious content scanning (ClamAV)
+- Malicious content scanning
 
 **Injection Prevention:**
-- Parameterized queries (SQLAlchemy ORM)
+- Parameterized queries
 - HTML escaping for user inputs
 - Command injection protection
 - Path traversal prevention
 
-#### 6.6.4 DDoS Protection
+---
 
-**AWS Shield Standard:**
-- Automatic protection against common DDoS attacks
-- Layer 3/4 protection
+# 7. Limitations & Future Research
 
-**Rate Limiting (Multiple Layers):**
-1. **IP-based:** 200 requests/minute per IP
-2. **API Key-based:** 100-1000 requests/hour (tier-dependent)
-3. **User-based:** 500 requests/hour per authenticated user
+## 7.1 Current Limitations
 
-**WAF (Web Application Firewall):**
-- AWS WAF rules for common attack patterns
-- Custom rules for API-specific threats
-- Geographic restrictions (optional)
+### 7.1.1 Technical Limitations
+
+#### 1. Hybrid Content Assessment Uncertainty
+Hybrid texts—such as manually edited algorithmically regularized content or computationally enhanced human writing—exhibit overlapping forensic signals across analytical dimensions.
+
+- **Observed effect:** Reduced separability between consistency clusters  
+- **Impact:** Elevated uncertainty scores rather than confident consistency assessments  
+- **Mitigation:** Section-level analysis highlights intra-document variation  
+- **Future work:** Temporal revision modeling and segment-level provenance analysis  
+
+This limitation reflects **inherent ambiguity**, not system failure.
+
+#### 2. Short-Text Signal Scarcity (<100 words)
+Short texts provide limited statistical and structural evidence.
+
+- **Observed effect:** Wider confidence intervals and higher uncertainty  
+- **Impact:** Informal or conversational content yields less decisive assessments  
+- **Mitigation:** Confidence calibration adjusted for text length  
+- **Future work:** Short-form-specific regularity modeling  
+
+
+#### 3. Adversarial Regularity Obfuscation
+Deliberate paraphrasing, synonym substitution, or stylistic noise injection can weaken individual forensic signals.
+
+- **Observed effect:** Signal divergence across dimensions  
+- **Impact:** Increased hybrid or low-confidence outcomes  
+- **Mitigation:** Multi-perturbation stability analysis partially compensates  
+- **Future work:** Adversarial robustness via ensemble diversification  
+
+#### 4. Model Evolution Lag
+As language generation systems evolve, previously observed regularity patterns may shift.
+
+- **Observed effect:** Temporary increase in uncertainty for newly released systems  
+- **Impact:** Conservative assessments rather than false certainty  
+- **Mitigation:** Periodic recalibration using updated reference corpora  
+- **Future work:** Zero-shot regularity adaptation strategies  
+
+#### 5. Language Scope
+The current system is optimized primarily for English-language text.
+
+- **Observed effect:** Reduced reliability for non-English content  
+- **Mitigation:** Conservative thresholds for unsupported languages  
+- **Future work:** Language-specific forensic calibration  
 
 ---
 
-## 7. Experimental Results
+### 7.1.2 Theoretical Limitations
 
-### 7.1 Dataset Description
+#### Fundamental Ambiguity
 
-We evaluate our system on a comprehensive dataset spanning multiple domains and AI models:
+At sufficient levels of linguistic sophistication, **text production processes may become observationally indistinguishable**.
 
-#### 7.1.1 AI-Generated Text Corpus
+Accordingly, this system:
 
-**Total Samples:** 17,500
+- Avoids definitive claims  
+- Preserves uncertainty explicitly  
+- Treats ambiguity as an informative analytical outcome  
 
-| AI Model | Samples | Domains Covered |
-|----------|---------|-----------------|
-| GPT-4 | 5,000 | Academic (2000), Technical (1200), Creative (1000), Social (800) |
-| GPT-3.5 Turbo | 3,500 | Academic (1500), Creative (1000), Social (1000) |
-| Claude-3 Opus | 3,000 | Academic (1200), Technical (800), Creative (1000) |
-| Gemini Pro | 2,500 | Academic (1000), Technical (800), Creative (700) |
-| LLaMA-2 70B | 2,000 | Academic (800), Creative (600), Social (600) |
-| Mixtral 8x7B | 1,500 | Technical (600), Creative (500), Social (400) |
+#### Ground-Truth Indeterminacy
+Reference corpora labeled as “authentic” may themselves contain varying degrees of computational assistance.
 
-**Generation Parameters:**
-- Temperature range: 0.7-1.0 (realistic usage)
-- Top-p: 0.9-0.95
-- Prompts: Varied (creative, instructional, conversational)
-
-#### 7.1.2 Human-Written Text Corpus
-
-**Total Samples:** 12,000
-
-| Category | Samples | Source |
-|----------|---------|--------|
-| Academic Papers | 3,000 | arXiv, academic journals |
-| Student Essays | 4,000 | Educational institutions (anonymized) |
-| Technical Documentation | 2,000 | Open-source project docs, Stack Overflow |
-| Creative Writing | 2,000 | Published short stories, novels |
-| Social Media | 1,000 | Twitter, Reddit, blogs |
-
-#### 7.1.3 Mixed Human-AI Content
-
-**Total Samples:** 2,000
-
-- Human-edited AI text: 800 samples
-- AI-enhanced human text: 700 samples
-- Collaborative writing: 500 samples
-
-**Total Dataset Size:** 31,500 samples
-
-### 7.2 Evaluation Metrics
-
-We report standard classification metrics:
-
-**Accuracy:** Overall correct classifications / total samples
-
-**Precision:** True Positives / (True Positives + False Positives)
-- Measures reliability of AI detection claims
-
-**Recall (Sensitivity):** True Positives / (True Positives + False Negatives)
-- Measures ability to detect all AI content
-
-**F1-Score:** Harmonic mean of precision and recall
-- Balanced metric for overall performance
-
-**False Positive Rate:** False Positives / (False Positives + True Negatives)
-- Critical for avoiding false accusations of AI usage
-
-**False Negative Rate:** False Negatives / (False Negatives + True Positives)
-- Measures missed AI content
-
-### 7.3 Overall Performance Results
-
-#### 7.3.1 Main Results (31,500 samples)
-
-| Metric | Value | 95% Confidence Interval |
-|--------|-------|------------------------|
-| **Accuracy** | **94.28%** | [94.01%, 94.55%] |
-| **Precision** | **94.61%** | [94.29%, 94.93%] |
-| **Recall** | **94.08%** | [93.74%, 94.42%] |
-| **F1-Score** | **94.34%** | [94.08%, 94.60%] |
-| **False Positive Rate** | **2.39%** | [2.18%, 2.60%] |
-| **False Negative Rate** | **3.57%** | [3.31%, 3.83%] |
-
-#### 7.3.2 Confusion Matrix
-
-```
-                     Predicted
-                 AI      Human    Mixed     Total
-Actual  AI      16,450   625      425      17,500
-        Human   287      11,473   240      12,000
-        Mixed   420      580      1,000    2,000
-        ───────────────────────────────────────────
-        Total   17,157   12,678   1,665    31,500
-```
-
-**Key Observations:**
-- True Positive (AI → AI): 16,450 / 17,500 = **94.0%**
-- True Negative (Human → Human): 11,473 / 12,000 = **95.6%**
-- Mixed content detection: 1,000 / 2,000 = **50.0%** (challenging category)
-
-### 7.4 Performance by AI Model
-
-| AI Model | Samples | Accuracy | Precision | Recall | F1-Score |
-|----------|---------|----------|-----------|--------|----------|
-| GPT-4 | 5,000 | **95.82%** | 96.21% | 95.34% | 95.77% |
-| GPT-3.5 Turbo | 3,500 | 93.71% | 94.15% | 93.20% | 93.67% |
-| Claude-3 Opus | 3,000 | **94.23%** | 94.82% | 93.53% | 94.17% |
-| Gemini Pro | 2,500 | 93.56% | 94.08% | 92.96% | 93.52% |
-| LLaMA-2 70B | 2,000 | 92.75% | 93.32% | 92.15% | 92.73% |
-| Mixtral 8x7B | 1,500 | 91.87% | 92.44% | 91.20% | 91.82% |
-
-**Insights:**
-- GPT-4 detection achieves highest accuracy due to distinctive statistical patterns
-- Open-source models (LLaMA-2, Mixtral) slightly harder to detect due to greater output variability
-- All models detected with >91% accuracy
-
-### 7.5 Performance by Domain
-
-| Domain | Total Samples | Accuracy | Precision | Recall | F1-Score |
-|--------|--------------|----------|-----------|--------|----------|
-| **Academic Papers** | 9,500 | **96.15%** | 96.24% | 95.79% | 96.02% |
-| **Student Essays** | 4,000 | 94.53% | 94.82% | 94.10% | 94.46% |
-| **Technical Docs** | 5,400 | **92.81%** | 93.17% | 92.08% | 92.62% |
-| **Creative Writing** | 6,200 | 93.71% | 94.05% | 93.26% | 93.65% |
-| **Social Media** | 4,400 | 91.48% | 92.15% | 90.82% | 91.48% |
-| **Mixed Content** | 2,000 | 88.65% | 89.23% | 88.12% | 88.67% |
-
-**Insights:**
-- Academic papers achieve highest accuracy due to clear linguistic patterns
-- Technical documentation slightly lower due to specialized terminology
-- Social media most challenging due to informal language and variability
-- Mixed content requires more sophisticated analysis (future improvement area)
-
-### 7.6 Ablation Study
-
-We evaluate the contribution of each metric by removing it from the ensemble:
-
-| Configuration | Accuracy | Δ Accuracy | F1-Score | Δ F1 |
-|---------------|----------|-----------|----------|------|
-| **Full Ensemble** | **94.28%** | - | **94.34%** | - |
-| - Perplexity | 91.15% | -3.13% | 91.23% | -3.11% |
-| - Entropy | 92.64% | -1.64% | 92.71% | -1.63% |
-| - Structural | 93.52% | -0.76% | 93.58% | -0.76% |
-| - Linguistic | 93.41% | -0.87% | 93.47% | -0.87% |
-| - Semantic | 93.29% | -0.99% | 93.35% | -0.99% |
-| - DetectGPT | 93.82% | -0.46% | 93.88% | -0.46% |
-
-**Key Findings:**
-- **Perplexity** is the most critical metric (-3.13% when removed)
-- **Entropy** second most important (-1.64% when removed)
-- All metrics contribute positively to ensemble performance
-- Even the lowest-weighted metric (DetectGPT) provides measurable value
-
-### 7.7 Uncertainty Calibration Analysis
-
-We analyze the relationship between our uncertainty scores and actual prediction errors:
-
-| Uncertainty Range | Samples | Accuracy | Expected Accuracy | Calibration Error |
-|-------------------|---------|----------|-------------------|-------------------|
-| 0.0 - 0.1 (Very Low) | 8,420 | 98.24% | 98.50% | +0.26% |
-| 0.1 - 0.2 (Low) | 12,650 | 95.82% | 95.00% | -0.82% |
-| 0.2 - 0.3 (Moderate) | 6,780 | 91.47% | 90.00% | -1.47% |
-| 0.3 - 0.4 (High) | 2,340 | 85.13% | 82.50% | -2.63% |
-| 0.4+ (Very High) | 1,310 | 73.28% | 70.00% | -3.28% |
-
-**Calibration Quality:** Mean absolute calibration error = 1.69%
-
-**Interpretation:** Our uncertainty scores are well-calibrated, allowing users to trust confidence estimates.
-
-### 7.8 Processing Time Analysis
-
-Measured on AWS c5.2xlarge instances (8 vCPU, 16GB RAM):
-
-| Text Length | Avg Time | p50 | p95 | p99 |
-|-------------|----------|-----|-----|-----|
-| 100-500 words (Short) | 1.24s | 1.18s | 1.52s | 1.78s |
-| 500-1000 words (Medium) | 2.16s | 2.08s | 2.64s | 3.12s |
-| 1000-2000 words (Long) | 3.48s | 3.32s | 4.28s | 4.92s |
-| 2000+ words (Very Long) | 6.82s | 6.54s | 8.34s | 9.76s |
-
-**Breakdown by Component (Medium text, 750 words):**
-- Preprocessing: 0.18s (8.3%)
-- Domain Classification: 0.05s (2.3%)
-- Parallel Metrics: 1.42s (65.7%)
-  - Perplexity: 0.67s
-  - Entropy: 0.14s
-  - Structural: 0.22s
-  - Linguistic: 0.38s
-  - Semantic: 0.71s
-  - DetectGPT: 0.98s (runs in parallel, max determines total)
-- Ensemble Aggregation: 0.08s (3.7%)
-- Attribution: 0.12s (5.6%)
-- Post-processing: 0.31s (14.4%)
-
-**Total:** 2.16s
+As a result, evaluation reflects **forensic signal separability**, not absolute authorship truth.
 
 ---
 
-## 8. Domain-Specific Performance Analysis
+## 7.2 Future Research Directions
 
-### 8.1 Academic Domain
+### 7.2.1 Advanced Forensic Analysis
 
-#### 8.1.1 Characteristics
+#### Multimodal Evidence Integration
 
-Academic writing exhibits:
-- Formal language with specialized terminology
-- Complex sentence structures
-- Logical argumentation patterns
-- Citation and reference patterns
-- Lower natural perplexity due to formal conventions
+Future work may incorporate additional non-textual signals such as:
 
-#### 8.1.2 Detection Challenges
+- Writing dynamics  
+- Temporal revision patterns  
+- Structural edit traces  
 
-- Human academic writing can appear "AI-like" due to formal structure
-- Technical terminology may register as unusual to general language models
-- Citation patterns can confuse structural analysis
-
-#### 8.1.3 Domain Calibration
-
-**Threshold Adjustments:**
-- Perplexity threshold: +20% (acknowledging formal language)
-- Linguistic weight: +5% (emphasizing grammatical sophistication)
-- AI threshold: 0.88 (higher bar for AI classification)
-
-**Results:**
-
-| Metric | Academic Papers | Student Essays |
-|--------|----------------|----------------|
-| Accuracy | 96.15% | 94.53% |
-| Precision | 96.24% | 94.82% |
-| Recall | 95.79% | 94.10% |
-| FP Rate | 1.82% | 2.54% |
-
-**Confusion Matrix (9,500 academic samples):**
-```
-                Predicted
-            AI      Human
-Actual  AI  6,683   317     (7,000 AI samples)
-        Human  45  2,455    (2,500 Human samples)
-```
-
-**Key Success Factors:**
-- Linguistic metric highly effective for academic content
-- Entropy captures vocabulary diversity differences
-- Structural analysis detects AI's uniform paragraph lengths
-
-### 8.2 Technical Documentation Domain
-
-#### 8.2.1 Characteristics
-
-Technical writing exhibits:
-- Domain-specific jargon and acronyms
-- Procedural step-by-step structures
-- Code snippets and technical diagrams
-- Intentionally uniform formatting for clarity
-- Specialized terminology patterns
-
-#### 8.2.2 Detection Challenges
-
-- Highest domain difficulty due to specialized language
-- Legitimate technical writing may have AI-like uniformity
-- Domain-specific terms register as high perplexity
-- Procedural writing naturally uniform
-
-#### 8.2.3 Domain Calibration
-
-**Threshold Adjustments:**
-- Perplexity threshold: +30% (most aggressive adjustment)
-- Semantic weight: +7% (emphasizing logical consistency)
-- Structural uniformity tolerance: +15%
-- AI threshold: 0.92 (highest bar to minimize false positives)
-
-**Results:**
-
-| Metric | Value |
-|--------|-------|
-| Accuracy | 92.81% |
-| Precision | 93.17% |
-| Recall | 92.08% |
-| FP Rate | 3.12% |
-
-**Error Analysis:**
-- False positives: Well-structured human technical docs (63% of FPs)
-- False negatives: AI-generated docs with intentional irregularities (27% of FNs)
-
-**Key Success Factors:**
-- Semantic analysis crucial for detecting logical inconsistencies
-- DetectGPT effective at identifying generation artifacts despite technical language
-- Entropy still differentiates despite specialized vocabulary
-
-### 8.3 Creative Writing Domain
-
-#### 8.3.1 Characteristics
-
-Creative content exhibits:
-- High burstiness (varying sentence lengths for effect)
-- Diverse vocabulary and stylistic choices
-- Narrative structures with intentional inconsistencies
-- Emotional and descriptive language
-- Character dialogue variations
-
-#### 8.3.2 Detection Challenges
-
-- Human creativity produces high entropy, similar to some AI outputs
-- Stylistic choices can appear irregular to automated analysis
-- Genre conventions may constrain human writing
-- Dialogue can confuse structural metrics
-
-#### 8.3.3 Domain Calibration
-
-**Threshold Adjustments:**
-- Entropy weight: +5% (25% total, highest)
-- Structural weight: +5% (20% total, emphasizing burstiness)
-- Perplexity baseline (no adjustment)
-- AI threshold: 0.78 (lower to catch creative AI)
-
-**Results:**
-
-| Metric | Value |
-|--------|-------|
-| Accuracy | 93.71% |
-| Precision | 94.05% |
-| Recall | 93.26% |
-| FP Rate | 2.87% |
-
-**Genre Breakdown:**
-
-| Genre | Samples | Accuracy |
-|-------|---------|----------|
-| Fiction/Narrative | 2,800 | 94.25% |
-| Poetry | 600 | 89.33% |
-| Personal Essays | 1,400 | 94.71% |
-| Scripts/Dialogue | 800 | 91.25% |
-
-**Key Success Factors:**
-- Burstiness detection highly effective (humans show B > 0.40, AI shows B < 0.25)
-- Entropy captures human vocabulary richness
-- Structural patterns distinguish AI's averaging tendency
-
-### 8.4 Social Media Domain
-
-#### 8.4.1 Characteristics
-
-Social media content exhibits:
-- Informal language, slang, and abbreviations
-- Grammatical flexibility and errors
-- Shorter text lengths (50-300 words typical)
-- Emoticons, emojis, and internet-specific language
-- Topic drift and conversational style
-
-#### 8.4.2 Detection Challenges
-
-- Informal human writing may trigger AI detection due to grammatical patterns
-- Short text lengths reduce statistical signal strength
-- Platform-specific conventions vary widely
-- Intentional informality vs. AI attempting informality
-
-#### 8.4.3 Domain Calibration
-
-**Threshold Adjustments:**
-- Perplexity weight: +10% (30% total, highest)
-- Linguistic weight: -5% (10% total, relaxed for informal writing)
-- Perplexity threshold: -20% (adjusted for informal language)
-- AI threshold: 0.80
-
-**Results:**
-
-| Metric | Value |
-|--------|-------|
-| Accuracy | 91.48% |
-| Precision | 92.15% |
-| Recall | 90.82% |
-| FP Rate | 3.85% |
-
-**Platform Breakdown:**
-
-| Platform Type | Samples | Accuracy |
-|---------------|---------|----------|
-| Blogs | 1,200 | 93.42% |
-| Twitter/X Posts | 1,000 | 89.80% |
-| Reddit Comments | 800 | 90.25% |
-| Forum Posts | 1,400 | 92.14% |
-
-**Error Analysis:**
-- Short texts (<100 words) have 4.2% lower accuracy
-- Highly informal human writing accounts for 41% of false positives
-- AI attempting slang/informality still detectable via statistical patterns
-
-**Key Success Factors:**
-- Perplexity remains strong signal even for informal content
-- Entropy captures human's unpredictable use of slang
-- Structural analysis detects AI's unnatural consistency in informal contexts
-
-### 8.5 Mixed Human-AI Content
-
-#### 8.5.1 Problem Definition
-
-Mixed content represents the most challenging detection scenario:
-- **Human-edited AI:** AI-generated base with human modifications
-- **AI-enhanced human:** Human writing with AI improvements
-- **Collaborative:** Alternating human and AI sections
-
-#### 8.5.2 Detection Approach
-
-We employ section-level analysis:
-1. Segment text into semantic sections (paragraphs or logical units)
-2. Apply ensemble detection to each section independently
-3. Aggregate section-level results to determine overall classification
-4. Flag as "mixed" if significant probability variation across sections
-
-**Mixed Detection Threshold:**
-```
-if max(section_probs) - min(section_probs) > 0.35:
-    verdict = "MIXED"
-```
-
-#### 8.5.3 Results
-
-**Overall Mixed Content Performance:**
-
-| Metric | Value |
-|--------|-------|
-| Accuracy | 88.65% |
-| Precision | 89.23% |
-| Recall | 88.12% |
-| FP Rate | 4.23% |
-
-**Detailed Breakdown (2,000 mixed samples):**
-
-| Type | Samples | Correctly Identified as Mixed | Misclassified as AI | Misclassified as Human |
-|------|---------|------------------------------|---------------------|----------------------|
-| Human-edited AI | 800 | 712 (89.0%) | 76 (9.5%) | 12 (1.5%) |
-| AI-enhanced Human | 700 | 602 (86.0%) | 18 (2.6%) | 80 (11.4%) |
-| Collaborative | 500 | 436 (87.2%) | 42 (8.4%) | 22 (4.4%) |
-
-**Section-Level Attribution Accuracy:** 82.4%
-
-**Insights:**
-- Human-edited AI most accurately detected (89.0%)
-- AI-enhanced human harder to distinguish (86.0%)
-- Substantial editing (>30% of text) creates ambiguity
-- Future improvement area: temporal/spatial editing pattern analysis
+The goal is to enrich forensic context, **not to infer authorship**.
 
 ---
 
-## 9. Computational Performance & Scalability
+#### Large-Scale Regularity Modeling
 
-### 9.1 Single-Request Performance
+- Self-supervised representation learning  
+- Cross-domain generalization across content types  
 
-#### 9.1.1 Latency Breakdown
-
-Average processing time for 750-word text on c5.2xlarge instance:
-
-| Component | Time (ms) | % of Total | Parallelizable |
-|-----------|-----------|------------|----------------|
-| Input validation | 12 | 0.6% | No |
-| Text extraction | 38 | 1.8% | No |
-| Domain classification | 52 | 2.4% | No |
-| Preprocessing | 128 | 5.9% | Partial |
-| **Metric computation** | **1,420** | **65.7%** | **Yes** |
-| - Perplexity | 670 | - | - |
-| - Entropy | 140 | - | - |
-| - Structural | 220 | - | - |
-| - Linguistic | 380 | - | - |
-| - Semantic | 710 | - | - |
-| - DetectGPT | 980 | - | - |
-| Ensemble aggregation | 82 | 3.8% | No |
-| Attribution | 118 | 5.5% | No |
-| Highlighting | 76 | 3.5% | No |
-| Reasoning generation | 44 | 2.0% | No |
-| Report formatting | 190 | 8.8% | No |
-| **Total** | **2,160** | **100%** | - |
-
-**Parallel Execution Impact:**
-Without parallelization: 670+140+220+380+710+980 = 3,100ms (metrics only)
-With parallelization: max(670, 140, 220, 380, 710, 980) = 980ms (metrics only)
-**Speedup: 3.16×**
-
-#### 9.1.2 Memory Footprint
-
-Per-request memory usage:
-
-| Component | Memory | Peak | Notes |
-|-----------|--------|------|-------|
-| Base application | 256MB | - | FastAPI + dependencies |
-| GPT-2 XL model | 2,048MB | - | Shared across requests |
-| Sentence-BERT | 1,536MB | - | Shared across requests |
-| spaCy model | 512MB | - | Shared across requests |
-| Per-request data | 128MB | 256MB | Text + intermediate results |
-| **Total (shared)** | **4,352MB** | - | Loaded once at startup |
-| **Per-request overhead** | **128MB** | **256MB** | Scales with text length |
-
-**Memory Optimization Techniques:**
-1. Model quantization (INT8): Reduces GPT-2 XL from 6GB to 2GB
-2. Shared model instances across requests
-3. Streaming text processing where possible
-4. Eager garbage collection of intermediate results
-
-### 9.2 Throughput Analysis
-
-#### 9.2.1 Single Instance Performance
-
-**c5.2xlarge instance (8 vCPU, 16GB RAM):**
-
-| Concurrency | Requests/min | Avg Latency | p95 Latency | CPU Utilization |
-|-------------|--------------|-------------|-------------|-----------------|
-| 1 | 28 | 2.14s | 2.68s | 42% |
-| 2 | 52 | 2.31s | 2.89s | 71% |
-| 4 | 89 | 2.69s | 3.54s | 89% |
-| 8 | 124 | 3.87s | 5.21s | 94% |
-| 16 | 136 | 7.06s | 9.82s | 98% |
-
-**Optimal Concurrency:** 4-6 requests simultaneously
-**Sustainable Throughput:** 80-100 requests/minute per instance
-
-#### 9.2.2 Horizontal Scaling
-
-**Load Balancer Configuration:**
-- Algorithm: Least outstanding requests
-- Health check: /health endpoint every 30s
-- Connection draining: 60s
-
-**Auto-Scaling Policy:**
-```yaml
-Target Metrics:
-  - CPU Utilization: 70%
-  - Request Count: 300/min per instance
-  
-Scaling Actions:
-  - Scale out: Add 1 instance if metric > threshold for 2 minutes
-  - Scale in: Remove 1 instance if metric < 40% for 10 minutes
-  
-Limits:
-  - Minimum instances: 2
-  - Maximum instances: 20
-  - Cooldown: 300s
-```
-
-**Cluster Performance (6 instances):**
-- Throughput: 480-600 requests/minute
-- Average latency: 2.4s (p50), 3.8s (p95)
-- Daily capacity: 691,200-864,000 requests
-- Monthly capacity: ~20-25 million requests
-
-### 9.3 Cost Analysis
-
-#### 9.3.1 Infrastructure Costs (Monthly)
-
-**Compute:**
-| Resource | Configuration | Count | Unit Cost | Monthly Cost |
-|----------|--------------|-------|-----------|--------------|
-| API Servers | c5.2xlarge | 6 avg | $244.80/mo | $1,469 |
-| Database | db.t3.large | 1 | $146/mo | $146 |
-| Cache | cache.m5.large | 1 | $113/mo | $113 |
-| Load Balancer | ALB | 1 | $22.50/mo | $23 |
-| **Compute Subtotal** | | | | **$1,751** |
-
-**Storage & Data Transfer:**
-| Resource | Usage | Unit Cost | Monthly Cost |
-|----------|-------|-----------|--------------|
-| S3 Storage | 500GB | $0.023/GB | $12 |
-| Data Transfer Out | 2TB | $0.09/GB | $180 |
-| CloudWatch Logs | 50GB | $0.50/GB | $25 |
-| **Storage Subtotal** | | | **$217** |
-
-**Monitoring & Security:**
-| Service | Monthly Cost |
-|---------|--------------|
-| Datadog | $900 |
-| Sentry | $29 |
-| PagerDuty | $41 |
-| AWS WAF | $75 |
-| **Monitoring Subtotal** | **$1,045** |
-
-**Total Monthly Infrastructure:** $3,013
-
-#### 9.3.2 Per-Request Cost Breakdown
-
-**Compute Cost:**
-- Instance hour cost: $0.34
-- Requests per instance-hour: 80/min × 60min = 4,800
-- **Cost per request: $0.000071**
-
-**Additional Costs:**
-- Storage (S3): $0.000002/request
-- Data transfer: $0.000015/request
-- Database: $0.000003/request
-- Monitoring: $0.000008/request
-
-**Total per-request cost: $0.000099 (~$0.0001)**
-
-**Cost at Scale:**
-| Monthly Requests | Infrastructure | Total Cost | Cost/Request |
-|------------------|---------------|------------|--------------|
-| 100,000 | $3,013 | $3,023 | $0.030 |
-| 500,000 | $3,013 | $3,063 | $0.0061 |
-| 1,000,000 | $3,523 | $3,623 | $0.0036 |
-| 5,000,000 | $7,891 | $8,391 | $0.0017 |
-| 10,000,000 | $14,234 | $15,234 | $0.0015 |
-
-**Break-even analysis:**
-- SaaS Pricing: $15/month for 1,000 requests → $0.015/request
-- Profit margin at 1M requests/month: $11,377 (74.5%)
-
-### 9.4 Optimization Strategies
-
-#### 9.4.1 Model Optimization
-
-**Quantization:**
-```python
-# INT8 quantization reduces memory and increases throughput
-quantized_model = torch.quantization.quantize_dynamic(
-    model, {torch.nn.Linear}, dtype=torch.qint8
-)
-# Memory: 6GB → 2GB (67% reduction)
-# Speed: 1.8× faster inference
-# Accuracy: <1% degradation
-```
-
-**Model Distillation:**
-- Distill GPT-2 XL → GPT-2 Medium for perplexity metric
-- Memory: 2GB → 500MB
-- Speed: 3× faster
-- Accuracy: -2.1% (acceptable for some use cases)
-
-**Pruning:**
-- Remove 30% of least important weights
-- Memory: -25%
-- Speed: 1.4× faster
-- Accuracy: -0.8%
-
-#### 9.4.2 Caching Strategy
-
-**Multi-Level Cache:**
-
-1. **L1: In-Memory LRU Cache**
-   - Size: 10,000 entries
-   - TTL: 1 hour
-   - Hit rate: 15-20%
-   - Latency reduction: 98% (40ms vs 2000ms)
-
-2. **L2: Redis Cache**
-   - Size: 100,000 entries
-   - TTL: 24 hours
-   - Hit rate: 35-40%
-   - Latency reduction: 95% (100ms vs 2000ms)
-
-3. **L3: Partial Computation Cache**
-   - Cache expensive model outputs (embeddings, perplexity)
-   - For similar texts (edit distance < 10%)
-   - Hit rate: 8-12%
-   - Latency reduction: 60% (800ms vs 2000ms)
-
-**Overall Cache Impact:**
-- Combined hit rate: 58-72%
-- Average latency with cache: 950ms (vs 2160ms without)
-- **Throughput increase: 2.27×**
-
-#### 9.4.3 Batch Processing
-
-For bulk analysis (>50 documents):
-
-```python
-def batch_analyze(texts, batch_size=32):
-    # Group texts by domain for optimal processing
-    domain_groups = group_by_domain(texts)
-    
-    results = []
-    for domain, texts in domain_groups.items():
-        # Process domain batch with optimized thresholds
-        for batch in chunk(texts, batch_size):
-            # Vectorized preprocessing
-            preprocessed = vectorized_preprocess(batch)
-            
-            # Batch model inference
-            perplexity_scores = model.batch_perplexity(preprocessed)
-            embeddings = model.batch_embed(preprocessed)
-            
-            # Individual metric computation
-            for i, text in enumerate(batch):
-                result = compute_metrics(text, perplexity_scores[i], embeddings[i])
-                results.append(result)
-    
-    return results
-```
-
-**Batch Performance:**
-- Throughput: 150-180 documents/minute (vs 80-100 sequential)
-- **Speedup: 1.88×**
-- Best for offline processing, report generation
-
-#### 9.4.4 GPU Acceleration
-
-**Optional GPU Usage (g4dn.xlarge, 1× NVIDIA T4):**
-
-| Metric | CPU Time | GPU Time | Speedup |
-|--------|----------|----------|---------|
-| Perplexity | 670ms | 120ms | 5.58× |
-| Semantic (SBERT) | 710ms | 95ms | 7.47× |
-| DetectGPT | 980ms | 180ms | 5.44× |
-| **Total (parallel)** | **980ms** | **180ms** | **5.44×** |
-
-**Cost-Benefit:**
-- GPU instance: $0.526/hour vs CPU $0.34/hour (+$0.186/hour)
-- Throughput increase: 5.44×
-- Cost per request: GPU $0.000026 vs CPU $0.000071
-- **GPU is cost-effective at >1M requests/month**
-
-### 9.5 Scalability Limits
-
-**Current Architecture Limits:**
-- Single-region: 20 instances × 100 req/min = 2,000 req/min = 2.88M req/day
-- Multi-region (3 regions): 8.64M req/day
-- Theoretical maximum with current design: ~250M req/month
-
-**Bottlenecks:**
-1. **Model Loading:** 20-30s startup time limits rapid scaling
-   - Mitigation: Keep warm pool of instances
-2. **Memory:** 16GB RAM per instance limits concurrent requests
-   - Mitigation: Increase instance size or optimize models further
-3. **Model Inference:** DetectGPT is bottleneck at 980ms
-   - Mitigation: GPU acceleration, model distillation, or optional disable
-
-**Future Scalability Path:**
-- Microservices: Separate metric computation into independent services
-- Model serving: Dedicated inference servers with batching
-- Edge deployment: CloudFlare Workers for lightweight metrics
-- Target: 1B+ requests/month capacity
+This aims to improve stability under rapid model evolution.
 
 ---
 
-## 10. Limitations & Future Research
+#### Auxiliary Provenance Signals (Optional)
 
-### 10.1 Current Limitations
+External signals such as voluntary watermarking may serve as **supplementary indicators** when explicitly disclosed.
 
-#### 10.1.1 Technical Limitations
+These signals are:
 
-**1. Mixed Content Detection (50% accuracy)**
-- **Challenge:** Distinguishing human-edited AI text from AI-enhanced human text
-- **Impact:** Users may receive inconclusive results for hybrid content
-- **Mitigation:** Section-level analysis helps, but room for improvement
-- **Future Work:** Temporal editing pattern analysis, provenance tracking
-
-**2. Short Text Performance (<100 words: -4.2% accuracy)**
-- **Challenge:** Limited statistical signal in short texts
-- **Impact:** Social media posts, comments may be less accurate
-- **Mitigation:** Lowered confidence thresholds for short texts
-- **Future Work:** Specialized short-text models, contextual analysis
-
-**3. Adversarial Robustness**
-- **Challenge:** Sophisticated users can potentially evade detection through paraphrasing, synonym substitution, or strategic editing
-- **Impact:** Detection accuracy may degrade for intentionally obfuscated AI content
-- **Mitigation:** DetectGPT metric provides some robustness
-- **Future Work:** Adversarial training, ensemble diversification, watermarking integration
-
-**4. Model Lag (New AI Models)**
-- **Challenge:** Detection accuracy drops for newly released AI models (first 30 days)
-- **Impact:** Temporary detection gap until retraining
-- **Mitigation:** Quarterly retraining schedule
-- **Future Work:** Zero-shot detection improvements, rapid adaptation protocols
-
-**5. Language Coverage**
-- **Challenge:** Currently optimized for English only
-- **Impact:** Limited applicability for non-English content
-- **Mitigation:** Basic support for Spanish, French (85-88% accuracy)
-- **Future Work:** Multilingual models, language-specific calibration
-
-#### 10.1.2 Theoretical Limitations
-
-**1. Fundamental Ambiguity**
-- As AI models improve, distinguishing AI from human text becomes inherently harder
-- At some threshold of AI sophistication, reliable detection may be impossible
-- Current research suggests this threshold hasn't been reached (GPT-4 still detectable at 95.8%)
-
-**2. Ground Truth Uncertainty**
-- "Human-written" text may itself be AI-assisted or AI-inspired
-- Training data labels may contain noise
-- Impacts: Evaluation accuracy ceiling, model performance bounds
-
-**3. Domain Shift**
-- Models trained on one domain (e.g., academic) may not generalize to new domains (e.g., legal writing)
-- Continuous domain expansion required
-- Resource-intensive validation for each new domain
-
-
-### 10.2 Future Research Directions
-
-#### 10.2.1 Advanced Detection Techniques
-
-**1. Multimodal Analysis**
-- Analyze writing patterns, metadata, timing information together
-- Keystroke dynamics for real-time writing verification
-- Detect copy-paste patterns, editing behavior
-- **Potential Impact:** +3-5% accuracy improvement
-
-**2. Large-Scale Pre-Training**
-- Train discriminator models on 100M+ AI/human text pairs
-- Leverage self-supervised learning objectives
-- Transfer learning across domains and languages
-- **Potential Impact:** Robust generalization to new AI models
-
-**3. Watermarking Integration**
-- Collaborate with AI labs to embed detectable watermarks in LLM outputs
-- Cryptographic signatures in token generation
-- Dual-mode detection: statistical + watermark
-- **Potential Impact:** Near-perfect detection for watermarked content (>99.5%)
-
-**4. Provenance Tracking**
-- Blockchain-based content authenticity verification
-- Timestamped writing sessions
-- Tool usage logging (which AI assistants accessed)
-- **Potential Impact:** Irrefutable authorship proof
-
-#### 10.2.2 Improved Explainability
-
-**1. Natural Language Explanations**
-- Generate human-readable explanations beyond template-based reasoning
-- Example: "The third paragraph exhibits abnormally consistent sentence structure (coefficient of variation: 0.12) compared to typical human writing (0.35-0.55), suggesting algorithmic generation."
-- **Benefit:** Increased user trust, educational value
-
-**2. Counterfactual Examples**
-- Show users how to modify AI text to appear human (educational)
-- Demonstrate human writing that might falsely trigger detection
-- **Benefit:** Transparency, reduced false positives
-
-**3. Interactive Visualization**
-- Real-time metric updates as users edit text
-- Drill-down analysis for specific sentences
-- Comparative visualization (this text vs. typical human/AI)
-- **Benefit:** Engagement, understanding, iterative improvement
-
-#### 10.2.3 Emerging Application Areas
-
-**1. Code Detection**
-- Detect AI-generated code (GitHub Copilot, ChatGPT, etc.)
-- Specialized metrics for code: complexity, idioms, documentation
-- **Market:** Software engineering education, technical hiring
-
-**2. Voice & Video**
-- Extend detection to AI-generated speech (ElevenLabs, etc.)
-- Deepfake detection for interview verification
-- Multimodal fraud prevention
-- **Market:** Hiring, journalism, legal proceedings
-
-**3. Real-Time Browser Extension**
-- Inline detection as users browse web content
-- Transparency layer for social media, news articles
-- **Market:** Consumer trust, media literacy
-
-**4. Educational Assessment Integration**
-- Native integration with LMS platforms (Canvas, Moodle, Blackboard)
-- Formative assessment (low-stakes, guidance-focused)
-- Summative assessment (high-stakes, verification-focused)
-- **Market:** K-12 and higher education institutions
-
-### 10.3 Open Research Questions
-
-**1. Optimal Threshold Setting**
-- How to balance false positive vs. false negative rates for different use cases?
-- Domain-specific vs. universal thresholds?
-- User-customizable risk tolerance?
-
-**2. Temporal Robustness**
-- How long can detection models remain effective without retraining?
-- Can we predict model drift before accuracy degrades?
-- Automated retraining scheduling strategies?
-
-**3. Cross-Lingual Transfer**
-- Can detection models trained on English generalize to other languages?
-- Language-universal AI generation signals?
-- Multilingual ensemble strategies?
-
-**4. Human-AI Collaboration Detection**
-- How to attribute relative contributions in collaborative writing?
-- Temporal vs. spatial collaboration detection?
-- Intent-based classification (AI for ideas vs. AI for writing)?
-
-**5. Ethical Boundaries**
-- When is AI detection helpful vs. harmful?
-- Privacy implications of large-scale content surveillance?
-- Rights of authors to use AI tools?
-- Disclosure requirements for AI-assisted work?
+- Not required  
+- Not relied upon  
+- Not treated as proof  
 
 ---
 
-## 11. Conclusion
+### 7.2.2 Interpretability Enhancements
 
-This white paper presented a comprehensive multi-dimensional ensemble approach to AI-generated text detection, achieving 94.3% accuracy across diverse domains and AI models. Our key contributions include:
+Planned improvements include:
 
-**1. Three-Dimensional Detection Framework**
-We introduced a theoretical framework characterizing AI text across statistical predictability, structural uniformity, and semantic stability dimensions. This framework enables orthogonal signal capture, making our system robust against sophisticated AI generation.
+- Natural-language forensic summaries  
+- Counterfactual explanations  
+- Interactive signal visualization  
 
-**2. Six-Metric Ensemble with Domain Calibration**
-Our ensemble combines perplexity, entropy, structural analysis, linguistic patterns, semantic coherence, and perturbation-based testing with domain-specific threshold adjustments. This approach achieves 15-20% accuracy improvements over generic detection methods.
-
-**3. Production-Ready Architecture**
-We demonstrated a scalable system processing 80-100 requests/minute per instance with 1.2-3.5 second latency, supporting high-volume production deployments across education, hiring, and publishing sectors.
-
-**4. Explainable and Transparent Detection**
-Unlike black-box classifiers, our system provides sentence-level attribution, confidence scores, and detailed reasoning, enabling actionable insights and user trust.
-
-**5. Comprehensive Validation**
-We validated performance across 31,500 samples spanning 6 AI models, 4 content domains, and mixed human-AI content, demonstrating consistent accuracy (91-96%) with only 2.4% false positive rate.
-
-### 11.1 Practical Impact
-
-Our system addresses critical market needs across three sectors with combined $20B annual market size:
-
-- **Education:** Maintaining academic integrity while adapting assessment methods
-- **Hiring:** Verifying candidate authenticity in remote recruitment
-- **Publishing:** Protecting content quality and platform trust
-
-With 94.3% accuracy and robust explainability, our platform enables stakeholders to make informed decisions while minimizing false accusations and supporting legitimate AI-assisted workflows.
-
-### 11.2 Future Outlook
-
-AI content detection remains an evolving challenge as language models continue to advance. While current detection achieves high accuracy, the arms race between generation and detection will intensify. Future success requires:
-
-- **Continuous adaptation:** Automated retraining pipelines and model versioning
-- **Multi-stakeholder collaboration:** Partnerships with AI labs for watermarking standards
-- **Ethical frameworks:** Balanced policies respecting both authenticity and tool usage rights
-- **Technological innovation:** Advanced techniques including multimodal analysis and provenance tracking
-
-We envision a future where content authenticity verification is seamlessly integrated into digital workflows, supported by transparent and fair detection systems that evolve alongside AI capabilities.
-
-### 11.3 Call to Action
-
-We invite the research community, industry partners, and policymakers to collaborate on advancing AI content authentication:
-
-- **Researchers:** Contribute to open detection benchmarks, adversarial robustness studies, and fairness evaluations
-- **AI Developers:** Implement detectable watermarks and support transparency initiatives
-- **Educators:** Develop pedagogical frameworks balancing AI tools with learning objectives
-- **Policymakers:** Establish ethical guidelines for detection use and disclosure requirements
-
-Together, we can build a digital ecosystem that embraces AI innovation while maintaining trust, authenticity, and accountability.
+All are designed to **support human judgment**, not replace it.
 
 ---
 
-## 12. References
+# 8. Conclusion
+
+This work presents a **multi-dimensional, evidence-based text forensics system** that evaluates written content through convergent statistical, structural, linguistic, and semantic signals.
+
+Key characteristics of the system include:
+
+- No authorship claims  
+- No attribution labels  
+- No binary verdicts  
+- Explicit uncertainty modeling  
+- Domain-aware calibration  
+
+Rather than asking *“Who wrote this?”*, the system addresses the question:
+
+> *“How does this text behave under independent forensic analysis?”*
+
+By aggregating orthogonal evidence and preserving ambiguity where appropriate, this approach offers a **more responsible, robust, and transparent alternative** to binary classification systems.
+
+As language generation technologies continue to advance, **forensic consistency analysis—rather than attribution—provides a sustainable and ethically grounded path forward**.
+
+---
+
+## 9. References
 
 1. Gehrmann, S., Strobelt, H., & Rush, A. M. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL 2019.
 
@@ -1872,7 +1021,7 @@ Together, we can build a digital ecosystem that embraces AI innovation while mai
 
 ---
 
-## 13. Appendices
+## 10. Appendices
 
 ### Appendix A: Detailed Metric Formulations
 
@@ -1942,13 +1091,13 @@ Using Sentence-BERT embeddings e_i ∈ ℝ^d:
 
 $\text{Coherence} = \frac{1}{m-1}\sum_{i=1}^{m-1} \frac{e_i \cdot e_{i+1}}{||e_i|| \cdot ||e_{i+1}||}$
 
-**A.5 DetectGPT Stability Score**
+**A.5 Multi-Perturbation Stability Metric Score**
 
 For original text x and perturbations {x₁, x₂, ..., xₙ}:
 
 $S(x) = \frac{1}{n}\sum_{i=1}^{n} |\log P(x) - \log P(x_i)|$
 
-Higher S indicates AI-generated text (sits at probability peak).
+Higher values indicate stronger probabilistic regularization, reflecting sensitivity to perturbation rather than authorship.
 
 ### Appendix B: Domain-Specific Configuration
 
@@ -1956,17 +1105,17 @@ Higher S indicates AI-generated text (sits at probability peak).
 ```python
 ACADEMIC_CONFIG = {
     'thresholds': {
-        'ai_threshold': 0.88,
-        'human_threshold': 0.65,
-        'mixed_variance_threshold': 0.35
+        'synthetic_threshold': 0.88,
+        'authentic_threshold': 0.65,
+        'hybrid_threshold': 0.35
     },
     'weights': {
         'perplexity': 0.22,
         'entropy': 0.18,
         'structural': 0.15,
         'linguistic': 0.20,  # Increased for formal writing
-        'semantic': 0.15,
-        'detect_gpt': 0.10
+        'semantic_analysis': 0.15,
+        'perturbation_stability': 0.10
     },
     'adjustments': {
         'perplexity_multiplier': 1.2,  # Formal language naturally lower PPL
@@ -1980,17 +1129,17 @@ ACADEMIC_CONFIG = {
 ```python
 TECHNICAL_CONFIG = {
     'thresholds': {
-        'ai_threshold': 0.92,  # Highest to avoid FPs
-        'human_threshold': 0.72,
-        'mixed_variance_threshold': 0.30
+        'synthetic_threshold': 0.92,  # Highest to avoid FPs
+        'authentic_threshold': 0.72,
+        'hybrid_threshold': 0.30
     },
     'weights': {
         'perplexity': 0.20,
         'entropy': 0.18,
         'structural': 0.12,
         'linguistic': 0.18,
-        'semantic': 0.22,  # Increased for logical consistency
-        'detect_gpt': 0.10
+        'semantic_analysis': 0.22,  # Increased for logical consistency
+        'perturbation_stability': 0.10
     },
     'adjustments': {
         'perplexity_multiplier': 1.3,  # Technical terms have high PPL
@@ -2004,17 +1153,17 @@ TECHNICAL_CONFIG = {
 ```python
 CREATIVE_CONFIG = {
     'thresholds': {
-        'ai_threshold': 0.78,  # Lower to catch creative AI
-        'human_threshold': 0.55,
-        'mixed_variance_threshold': 0.40
+        'synthetic_threshold': 0.78,  # Lower to catch creative AI
+        'authentic_threshold': 0.55,
+        'hybrid_threshold': 0.40
     },
     'weights': {
         'perplexity': 0.25,
         'entropy': 0.25,  # Highest for vocabulary diversity
         'structural': 0.20,  # Increased for burstiness
         'linguistic': 0.12,
-        'semantic': 0.10,
-        'detect_gpt': 0.08
+        'semantic_analysis': 0.10,
+        'perturbation_stability': 0.08
     },
     'adjustments': {
         'perplexity_multiplier': 1.0,
@@ -2028,17 +1177,17 @@ CREATIVE_CONFIG = {
 ```python
 SOCIAL_MEDIA_CONFIG = {
     'thresholds': {
-        'ai_threshold': 0.80,
-        'human_threshold': 0.50,
-        'mixed_variance_threshold': 0.35
+        'synthetic_threshold': 0.80,
+        'authentic_threshold': 0.50,
+        'hybrid_threshold': 0.35
     },
     'weights': {
         'perplexity': 0.30,  # Highest weight on statistical patterns
         'entropy': 0.22,
         'structural': 0.15,
         'linguistic': 0.10,  # Relaxed for informal writing
-        'semantic': 0.13,
-        'detect_gpt': 0.10
+        'semantic_analysis': 0.13,
+        'perturbation_stability': 0.10
     },
     'adjustments': {
         'perplexity_multiplier': 0.8,  # Informal language higher PPL
@@ -2048,74 +1197,24 @@ SOCIAL_MEDIA_CONFIG = {
 }
 ```
 
-### Appendix C: API Documentation Samples
+### # Appendix C: API Response (Aligned)
 
-**C.1 Text Analysis Request**
-```bash
-curl -X POST https://api.textdetector.ai/v1/analyze \
-  -H "Authorization: Bearer YOUR_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "text": "The proliferation of artificial intelligence has created both opportunities and challenges...",
-    "domain": "academic",
-    "options": {
-      "enable_attribution": true,
-      "enable_highlighting": true,
-      "include_reasoning": true
-    }
-  }'
-```
-
-**C.2 Response Format**
 ```json
 {
-  "status": "success",
-  "analysis_id": "analysis_1730073600_abc123",
-  "timestamp": "2025-10-28T12:00:00Z",
-  "detection_result": {
-    "verdict": "AI-Generated",
-    "confidence": 0.8943,
-    "ai_probability": 0.8943,
-    "human_probability": 0.0957,
-    "mixed_probability": 0.0100,
-    "uncertainty_score": 0.2345,
-    "consensus_level": 0.8123
+  "assessment": {
+    "synthetic_probability": 0.89,
+    "authentic_probability": 0.10,
+    "hybrid_probability": 0.01,
+    "confidence_level": 0.86,
+    "uncertainty_score": 0.23
   },
-  "metrics": {
-    "perplexity": {
-      "score": 22.5,
-      "ai_probability": 0.92,
-      "confidence": 0.89,
-      "verdict": "AI-like"
-    },
-    "entropy": {
-      "score": 3.2,
-      "ai_probability": 0.88,
-      "confidence": 0.85,
-      "verdict": "AI-like"
-    },
-    "structural": {
-      "burstiness": 0.15,
-      "uniformity": 0.82,
-      "ai_probability": 0.85,
-      "confidence": 0.78,
-      "verdict": "AI-like"
-    },
-    "linguistic": {
-      "pos_diversity": 0.65,
-      "syntactic_complexity": 0.58,
-      "ai_probability": 0.87,
-      "confidence": 0.79,
-      "verdict": "AI-like"
-    },
-    "semantic": {
-      "coherence": 0.78,
-      "repetition_rate": 0.12,
-      "ai_probability": 0.89,
-      "confidence":"# AI Text Authentication: A Multi-Dimensional Ensemble Approach to Content Verification"
-    }
-  }
+  "domain": "academic",
+  "execution_mode": "parallel",
+  "warnings": [],
+  "errors": []
 }
+```
+
 **Technical White Paper**
 
 ---

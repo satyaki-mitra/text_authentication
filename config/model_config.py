@@ -1,51 +1,14 @@
 # DEPENDENCIES
-from enum import Enum
 from typing import Any
 from typing import Dict
 from typing import Optional
-from dataclasses import field
-from dataclasses import dataclass
+from config.enums import ModelType
+from config.schemas import ModelConfig
 
 
-
-class ModelType(Enum):
-    """
-    Model types for categorization
-    """
-    TRANSFORMER             = "transformer"
-    SENTENCE_TRANSFORMER    = "sentence_transformer"
-    GPT                     = "gpt"
-    GPTMASK                 = "gpt"
-    CLASSIFIER              = "classifier"
-    EMBEDDING               = "embedding"
-    RULE_BASED              = "rule_based"
-    SEQUENCE_CLASSIFICATION = "sequence_classification"  
-    CAUSAL_LM               = "causal_lm"        
-    MASKED_LM               = "masked_lm" 
-
-
-@dataclass
-class ModelConfig:
-    """
-    Configuration for a single model
-    """
-    model_id          : str
-    model_type        : ModelType
-    description       : str
-    size_mb           : int
-    required          : bool           = True
-    download_priority : int            = 1     # 1=highest, 5=lowest
-    quantizable       : bool           = True
-    onnx_compatible   : bool           = False
-    cache_model       : bool           = True
-    max_length        : Optional[int]  = None
-    batch_size        : int            = 1
-    additional_params : Dict[str, Any] = field(default_factory = dict)
-
-
-MODEL_REGISTRY : Dict[str, ModelConfig] = {"perplexity_gpt2"            : ModelConfig(model_id          = "gpt2",
-                                                                                      model_type        = ModelType.GPT,
-                                                                                      description       = "GPT-2 base for perplexity calculation",
+MODEL_REGISTRY : Dict[str, ModelConfig] = {"perplexity_reference_lm"    : ModelConfig(model_id          = "gpt2",
+                                                                                      model_type        = ModelType.LANGUAGE_MODEL,
+                                                                                      description       = "Reference language model for statistical perplexity estimation",
                                                                                       size_mb           = 548,
                                                                                       required          = True,
                                                                                       download_priority = 1,
@@ -80,9 +43,9 @@ MODEL_REGISTRY : Dict[str, ModelConfig] = {"perplexity_gpt2"            : ModelC
                                                                                       batch_size        = 16,
                                                                                       additional_params = {"is_spacy_model": True},
                                                                                      ),
-                                           "domain_classifier"          : ModelConfig(model_id          = "cross-encoder/nli-roberta-base",
+                                           "content_domain_classifier"  : ModelConfig(model_id          = "cross-encoder/nli-roberta-base",
                                                                                       model_type        = ModelType.CLASSIFIER,
-                                                                                      description       = "High-accuracy zero-shot classifier (RoBERTa-base)",
+                                                                                      description       = "Zero-shot content domain inference model",
                                                                                       size_mb           = 500,
                                                                                       required          = True,  
                                                                                       download_priority = 1,     
@@ -120,7 +83,7 @@ MODEL_REGISTRY : Dict[str, ModelConfig] = {"perplexity_gpt2"            : ModelC
                                                                                      ),
                                            "language_detector"          : ModelConfig(model_id          = "papluca/xlm-roberta-base-language-detection",
                                                                                       model_type        = ModelType.CLASSIFIER,
-                                                                                      description       = "Language detection (skip if English-only)",
+                                                                                      description       = "Language detection for routing; not used in authenticity scoring",
                                                                                       size_mb           = 1100,
                                                                                       required          = False,
                                                                                       download_priority = 5,
@@ -131,18 +94,18 @@ MODEL_REGISTRY : Dict[str, ModelConfig] = {"perplexity_gpt2"            : ModelC
 
 
 # MODEL GROUPS FOR BATCH DOWNLOADING 
-MODEL_GROUPS                            = {"minimal"   : ["perplexity_gpt2", "domain_classifier"],
-                                           "essential" : ["perplexity_gpt2", "semantic_primary", "linguistic_spacy", "domain_classifier"],
+MODEL_GROUPS                            = {"minimal"   : ["perplexity_reference_lm", "content_domain_classifier"],
+                                           "essential" : ["perplexity_reference_lm", "semantic_primary", "linguistic_spacy", "content_domain_classifier"],
                                            "extended"  : ["semantic_secondary", "multi_perturbation_mask", "domain_classifier_fallback"],
                                            "optional"  : ["language_detector"],
                                           }
 
 
 # MODEL WEIGHTS FOR ENSEMBLE : For 6 metrics implemented
-DEFAULT_MODEL_WEIGHTS                   = {"statistical"                  : 0.20,  # No model needed
-                                           "perplexity"                   : 0.20,  # gpt2
-                                           "entropy"                      : 0.15,  # gpt2 (reused)
-                                           "semantic_analysis"            : 0.20,  # all-MiniLM-L6-v2
+DEFAULT_MODEL_WEIGHTS                   = {"structural"                   : 0.20,  # No model needed
+                                           "perplexity"                   : 0.20,  # reference language model
+                                           "entropy"                      : 0.15,  # token distribution statistics
+                                           "semantic"                     : 0.20,  # all-MiniLM-L6-v2
                                            "linguistic"                   : 0.15,  # spacy
                                            "multi_perturbation_stability" : 0.10,  # gpt2 + distilroberta (optional)
                                           }

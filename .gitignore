@@ -44,3 +44,10 @@ Thumbs.db
 # Environment variables
 .env
 .env.localrailway.toml
+
+
+# Validation ignored as of now
+validation/
+data/validation_data/
+logs/
+notebooks/

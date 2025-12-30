@@ -7,10 +7,11 @@ from typing import List
 from typing import Tuple
 from loguru import logger
 from collections import Counter
-from config.threshold_config import Domain
+from config.enums import Domain
+from config.schemas import MetricResult
 from metrics.base_metric import BaseMetric
-from metrics.base_metric import MetricResult
 from models.model_manager import get_model_manager
+from config.constants import linguistic_metric_params
 from config.threshold_config import get_threshold_for_domain
 
 
@@ -29,6 +30,7 @@ class LinguisticMetric(BaseMetric):
                          description = "POS tag diversity, syntactic complexity, and grammatical pattern analysis",
                         )
         self.nlp = None
+        self.params = linguistic_metric_params
     
 
     def initialize(self) -> bool:
@@ -57,104 +59,95 @@ class LinguisticMetric(BaseMetric):
         Compute linguistic analysis with FULL DOMAIN THRESHOLD INTEGRATION
         """
         try:
-            if ((not text) or (len(text.strip()) < 50)):
-                return MetricResult(metric_name       = self.name,
-                                    ai_probability    = 0.5,
-                                    human_probability = 0.5,
-                                    mixed_probability = 0.0,
-                                    confidence        = 0.1,
-                                    error             = "Text too short for linguistic analysis",
-                                   )
-            
+            if ((not text) or (len(text.strip()) < self.params.MIN_TEXT_LENGTH_FOR_ANALYSIS)):
+                return self._default_result(error = "Text too short for linguistic analysis")
+
             # Get domain-specific thresholds
-            domain                           = kwargs.get('domain', Domain.GENERAL)
-            domain_thresholds                = get_threshold_for_domain(domain)
-            linguistic_thresholds            = domain_thresholds.linguistic
+            domain                                      = kwargs.get('domain', Domain.GENERAL)
+            domain_thresholds                           = get_threshold_for_domain(domain)
+            linguistic_thresholds                       = domain_thresholds.linguistic
             
             # Calculate comprehensive linguistic features
-            features                         = self._calculate_linguistic_features(text)
+            features                                    = self._calculate_linguistic_features(text = text)
             
-            # Calculate raw linguistic score (0-1 scale)
-            raw_linguistic_score, confidence = self._analyze_linguistic_patterns(features)
+            # Calculate raw linguistic score (0-1 scale) - higher = more synthetic-like
+            raw_linguistic_score, confidence            = self._analyze_linguistic_patterns(features = features)
             
             # Apply domain-specific thresholds to convert raw score to probabilities
-            ai_prob, human_prob, mixed_prob  = self._apply_domain_thresholds(raw_linguistic_score, linguistic_thresholds, features)
+            synthetic_prob, authentic_prob, hybrid_prob = self._apply_domain_thresholds(raw_score  = raw_linguistic_score, 
+                                                                                        thresholds = linguistic_thresholds, 
+                                                                                        features   = features,
+                                                                                       )
             
             # Apply confidence multiplier from domain thresholds
-            confidence                      *= linguistic_thresholds.confidence_multiplier
-            confidence                       = max(0.0, min(1.0, confidence))
+            confidence                                 *= linguistic_thresholds.confidence_multiplier
+            confidence                                  = max(self.params.MIN_CONFIDENCE, min(self.params.MAX_CONFIDENCE, confidence))
             
-            return MetricResult(metric_name       = self.name,
-                                ai_probability    = ai_prob,
-                                human_probability = human_prob,
-                                mixed_probability = mixed_prob,
-                                confidence        = confidence,
-                                details           = {**features, 
-                                                     'domain_used'     : domain.value,
-                                                     'ai_threshold'    : linguistic_thresholds.ai_threshold,
-                                                     'human_threshold' : linguistic_thresholds.human_threshold,
-                                                     'raw_score'       : raw_linguistic_score,
-                                                    },
+            return MetricResult(metric_name           = self.name,
+                                synthetic_probability = synthetic_prob,
+                                authentic_probability = authentic_prob,
+                                hybrid_probability    = hybrid_prob,
+                                confidence            = confidence,
+                                details               = {**features, 
+                                                         'domain_used'        : domain.value,
+                                                         'synthetic_threshold': linguistic_thresholds.synthetic_threshold,
+                                                         'authentic_threshold': linguistic_thresholds.authentic_threshold,
+                                                         'raw_score'          : raw_linguistic_score,
+                                                        },
                                )
             
         except Exception as e:
             logger.error(f"Error in linguistic computation: {repr(e)}")
-            return MetricResult(metric_name       = self.name,
-                                ai_probability    = 0.5,
-                                human_probability = 0.5,
-                                mixed_probability = 0.0,
-                                confidence        = 0.0,
-                                error             = str(e),
-                               )
+            return self._default_result(error = str(e))
     
 
     def _apply_domain_thresholds(self, raw_score: float, thresholds: Any, features: Dict[str, Any]) -> tuple:
         """
         Apply domain-specific thresholds to convert raw score to probabilities
         """
-        ai_threshold    = thresholds.ai_threshold
-        human_threshold = thresholds.human_threshold
+        synthetic_threshold = thresholds.synthetic_threshold
+        authentic_threshold = thresholds.authentic_threshold
 
         # Calculate probabilities based on threshold distances
-        if (raw_score >= ai_threshold):
-            # Above AI threshold - strongly AI
-            distance_from_threshold = raw_score - ai_threshold
-            ai_prob                 = 0.7 + (distance_from_threshold * 0.3)  # 0.7 to 1.0
-            human_prob              = 0.3 - (distance_from_threshold * 0.3)  # 0.3 to 0.0
+        if (raw_score >= synthetic_threshold):
+            # Above synthetic threshold - strongly synthetic
+            distance_from_threshold = raw_score - synthetic_threshold
+            synthetic_prob          = self.params.STRONG_SYNTHETIC_BASE_PROB + (distance_from_threshold * self.params.WEAK_PROBABILITY_ADJUSTMENT)
+            authentic_prob          = self.params.UNCERTAIN_AUTHENTIC_RANGE_START - (distance_from_threshold * self.params.WEAK_PROBABILITY_ADJUSTMENT)
 
-        elif (raw_score <= human_threshold):
-            # Below human threshold - strongly human
-            distance_from_threshold = human_threshold - raw_score
-            ai_prob                 = 0.3 - (distance_from_threshold * 0.3)  # 0.3 to 0.0
-            human_prob              = 0.7 + (distance_from_threshold * 0.3)  # 0.7 to 1.0
+        elif (raw_score <= authentic_threshold):
+            # Below authentic threshold - strongly authentic
+            distance_from_threshold = authentic_threshold - raw_score
+            synthetic_prob          = self.params.UNCERTAIN_SYNTHETIC_RANGE_START - (distance_from_threshold * self.params.WEAK_PROBABILITY_ADJUSTMENT)
+            authentic_prob          = self.params.STRONG_AUTHENTIC_BASE_PROB + (distance_from_threshold * self.params.WEAK_PROBABILITY_ADJUSTMENT)
         
         else:
             # Between thresholds - uncertain zone
-            range_width             = ai_threshold - human_threshold
-            if (range_width > 0):
-                position_in_range = (raw_score - human_threshold) / range_width
-                ai_prob           = 0.3 + (position_in_range * 0.4)  # 0.3 to 0.7
-                human_prob        = 0.7 - (position_in_range * 0.4)  # 0.7 to 0.3
+            range_width             = synthetic_threshold - authentic_threshold
+            if (range_width > self.params.ZERO_TOLERANCE):
+                position_in_range = (raw_score - authentic_threshold) / range_width
+                synthetic_prob    = self.params.UNCERTAIN_SYNTHETIC_RANGE_START + (position_in_range * self.params.UNCERTAIN_RANGE_WIDTH)
+                authentic_prob    = self.params.UNCERTAIN_AUTHENTIC_RANGE_START - (position_in_range * self.params.UNCERTAIN_RANGE_WIDTH)
             
             else:
-                ai_prob    = 0.5
-                human_prob = 0.5
+                synthetic_prob = self.params.NEUTRAL_PROBABILITY
+                authentic_prob = self.params.NEUTRAL_PROBABILITY
         
         # Ensure probabilities are valid
-        ai_prob    = max(0.0, min(1.0, ai_prob))
-        human_prob = max(0.0, min(1.0, human_prob))
+        synthetic_prob = max(self.params.MIN_PROBABILITY, min(self.params.MAX_PROBABILITY, synthetic_prob))
+        authentic_prob = max(self.params.MIN_PROBABILITY, min(self.params.MAX_PROBABILITY, authentic_prob))
         
-        # Calculate mixed probability based on linguistic variance
-        mixed_prob = self._calculate_mixed_probability(features)
+        # Calculate hybrid probability based on linguistic variance
+        hybrid_prob = self._calculate_hybrid_probability(features)
         
         # Normalize to sum to 1.0
-        total      = ai_prob + human_prob + mixed_prob
-        if (total > 0):
-            ai_prob    /= total
-            human_prob /= total
-            mixed_prob /= total
+        total       = synthetic_prob + authentic_prob + hybrid_prob
+        if (total > self.params.ZERO_TOLERANCE):
+            synthetic_prob /= total
+            authentic_prob /= total
+            hybrid_prob    /= total
         
-        return ai_prob, human_prob, mixed_prob
+        return synthetic_prob, authentic_prob, hybrid_prob
     
 
     def _calculate_linguistic_features(self, text: str) -> Dict[str, Any]:
@@ -170,7 +163,6 @@ class LinguisticMetric(BaseMetric):
             
             # Extract POS tags and dependencies
             pos_tags                = [token.pos_ for token in doc]
-            dependencies            = [token.dep_ for token in doc]
             
             # Calculate POS diversity and patterns
             pos_diversity           = self._calculate_pos_diversity(pos_tags = pos_tags)
@@ -185,12 +177,14 @@ class LinguisticMetric(BaseMetric):
             writing_style_score     = self._analyze_writing_style(doc = doc)
             
             # Chunk-based analysis for whole-text understanding
-            chunk_features          = self._calculate_chunk_linguistics(text       = text, 
-                                                                        chunk_size = 200,
-                                                                       )
+            chunk_complexities      = self._calculate_chunk_linguistics(text = text)
             
-            # Calculate specific AI linguistic patterns
-            ai_pattern_score        = self._detect_ai_linguistic_patterns(doc = doc)
+            avg_chunk_complexity    = np.mean(chunk_complexities) if chunk_complexities else 0.0
+            complexity_variance     = np.var(chunk_complexities) if chunk_complexities else 0.0
+            num_chunks              = len(chunk_complexities)
+            
+            # Calculate specific synthetic linguistic patterns
+            synthetic_pattern_score = self._detect_synthetic_linguistic_patterns(doc = doc)
             
             return {"pos_diversity"           : round(pos_diversity, 4),
                     "pos_entropy"             : round(pos_entropy, 4),
@@ -200,11 +194,11 @@ class LinguisticMetric(BaseMetric):
                     "transition_word_usage"   : round(grammatical_patterns['transition_usage'], 4),
                     "passive_voice_ratio"     : round(grammatical_patterns['passive_ratio'], 4),
                     "writing_style_score"     : round(writing_style_score, 4),
-                    "ai_pattern_score"        : round(ai_pattern_score, 4),
-                    "avg_chunk_complexity"    : round(np.mean(chunk_features['complexities']) if chunk_features['complexities'] else 0.0, 4),
-                    "complexity_variance"     : round(np.var(chunk_features['complexities']) if chunk_features['complexities'] else 0.0, 4),
+                    "synthetic_pattern_score" : round(synthetic_pattern_score, 4),
+                    "avg_chunk_complexity"    : round(avg_chunk_complexity, 4),
+                    "complexity_variance"     : round(complexity_variance, 4),
                     "num_sentences"           : len(list(doc.sents)),
-                    "num_chunks_analyzed"     : len(chunk_features['complexities']),
+                    "num_chunks_analyzed"     : num_chunks,
                    }
             
         except Exception as e:
@@ -230,7 +224,7 @@ class LinguisticMetric(BaseMetric):
         """
         Calculate entropy of POS tag distribution
         """
-        if not pos_tags:
+        if (not pos_tags) or (len(pos_tags) < self.params.MIN_TAGS_FOR_ENTROPY):
             return 0.0
         
         pos_counts = Counter(pos_tags)
@@ -239,7 +233,8 @@ class LinguisticMetric(BaseMetric):
         entropy = 0.0
         for count in pos_counts.values():
             probability = count / total_tags
-            entropy    -= probability * np.log2(probability)
+            if probability > self.params.ZERO_TOLERANCE:
+                entropy -= probability * np.log2(probability)
         
         return entropy
     
@@ -260,7 +255,8 @@ class LinguisticMetric(BaseMetric):
             if depths:
                 avg_depth  = np.mean(depths)
                 max_depth  = np.max(depths)
-                complexity = (avg_depth + max_depth) / 2.0
+                complexity = (avg_depth * self.params.COMPLEXITY_WEIGHT_AVG + 
+                              max_depth * self.params.COMPLEXITY_WEIGHT_MAX)
                 complexities.append(complexity)
         
         return np.mean(complexities) if complexities else 0.0
@@ -287,11 +283,10 @@ class LinguisticMetric(BaseMetric):
         for sent in doc.sents:
             # Simple complexity measure based on sentence length and structure
             words       = [token for token in sent if not token.is_punct]
-            num_clauses = len([token for token in sent if token.dep_ in ['cc', 'mark']])
+            num_clauses = len([token for token in sent if token.dep_ in self.params.CLAUSE_MARKERS])
             
             if (len(words) > 0):
-                complexity = (len(words) / 10.0) + (num_clauses * 0.5)
-
+                complexity = (len(words) / self.params.WORDS_PER_COMPLEXITY_UNIT) + (num_clauses * self.params.CLAUSE_COMPLEXITY_FACTOR)
                 complexities.append(complexity)
         
         return np.mean(complexities) if complexities else 0.0
@@ -307,21 +302,19 @@ class LinguisticMetric(BaseMetric):
         transition_words     = 0
         total_sentences      = 0
         
-        transition_words_set = {'however', 'therefore', 'moreover', 'furthermore', 'consequently', 'additionally', 'nevertheless', 'nonetheless', 'thus', 'hence'}
-        
         for sent in doc.sents:
             total_sentences += 1
             sent_text        = sent.text.lower()
             
             # Check for passive voice patterns
-            if (any(token.dep_ == 'nsubjpass' for token in sent)):
+            if (any(token.dep_ == self.params.PASSIVE_DEPENDENCY for token in sent)):
                 passive_voice += 1
             
             else:
-                active_voice += 1
+                active_voice += 1       
             
-            # Count transition words
-            for word in transition_words_set:
+            # Count transition words``
+            for word in self.params.TRANSITION_WORDS_SET:
                 if word in sent_text:
                     transition_words += 1
                     break
@@ -331,7 +324,8 @@ class LinguisticMetric(BaseMetric):
         transition_usage = transition_words / total_sentences if total_sentences > 0 else 0.0
         
         # Calculate consistency (lower variance in patterns)
-        consistency      = 1.0 - min(1.0, abs(passive_ratio - 0.3) + abs(transition_usage - 0.2))
+        consistency      = 1.0 - min(1.0, abs(passive_ratio - self.params.IDEAL_PASSIVE_RATIO) + 
+                                     abs(transition_usage - self.params.IDEAL_TRANSITION_RATIO))
         
         return {'consistency'      : max(0.0, consistency),
                 'passive_ratio'    : passive_ratio,
@@ -350,24 +344,22 @@ class LinguisticMetric(BaseMetric):
         
         if sent_lengths:
             length_variation = np.std(sent_lengths) / np.mean(sent_lengths) if np.mean(sent_lengths) > 0 else 0.0
-            # Moderate variation is more human-like
-            style_score      = 1.0 - min(1.0, abs(length_variation - 0.5))
-
+            # Moderate variation is more authentic-like
+            style_score      = 1.0 - min(1.0, abs(length_variation - self.params.IDEAL_LENGTH_VARIATION))
             style_indicators.append(style_score)
         
         # Punctuation usage
         punct_ratio = len([token for token in doc if token.is_punct]) / len(doc) if len(doc) > 0 else 0.0
-        # Balanced punctuation is more human-like
-        punct_score = 1.0 - min(1.0, abs(punct_ratio - 0.1))
-
+        # Balanced punctuation is more authentic-like
+        punct_score = 1.0 - min(1.0, abs(punct_ratio - self.params.IDEAL_PUNCTUATION_RATIO))
         style_indicators.append(punct_score)
         
         return np.mean(style_indicators) if style_indicators else 0.5
     
 
-    def _detect_ai_linguistic_patterns(self, doc) -> float:
+    def _detect_synthetic_linguistic_patterns(self, doc) -> float:
         """
-        Detect AI-specific linguistic patterns
+        Detect synthetic-specific linguistic patterns
         """ 
         patterns_detected     = 0
         total_patterns        = 5
@@ -407,13 +399,12 @@ class LinguisticMetric(BaseMetric):
 
     def _check_transition_overuse(self, doc) -> bool:
         """
-        Check for overuse of transition words (common AI pattern)
+        Check for overuse of transition words (common synthetic pattern)
         """
-        transition_words = {'however', 'therefore', 'moreover', 'furthermore', 'additionally'}
-        transition_count = sum(1 for token in doc if token.lemma_.lower() in transition_words)
+        transition_count = sum(1 for token in doc if token.lemma_.lower() in self.params.TRANSITION_WORDS_SET)
         
-        # More than 5% of words being transitions is suspicious
-        return transition_count / len(doc) > 0.05 if len(doc) > 0 else False
+        # More than threshold of words being transitions is suspicious
+        return transition_count / len(doc) > self.params.TRANSITION_OVERUSE_THRESHOLD if len(doc) > 0 else False
     
 
     def _check_unnatural_pos_sequences(self, doc) -> bool:
@@ -433,8 +424,8 @@ class LinguisticMetric(BaseMetric):
         sequence_counts  = Counter(pos_sequences)
         most_common_freq = max(sequence_counts.values()) / len(pos_sequences) if pos_sequences else 0
         
-        # High frequency of specific sequences suggests AI
-        return (most_common_freq > 0.1)
+        # High frequency of specific sequences suggests synthetic
+        return (most_common_freq > self.params.POS_SEQUENCE_FREQ_THRESHOLD)
     
 
     def _check_structure_consistency(self, doc) -> bool:
@@ -448,15 +439,15 @@ class LinguisticMetric(BaseMetric):
             structure = tuple(token.dep_ for token in sent if token.dep_ not in ['punct', 'det'])
             sent_structures.append(structure)
         
-        if (len(sent_structures) < 3):
+        if (len(sent_structures) < self.params.MIN_SENTENCES_FOR_STRUCTURE):
             return False
         
         # Calculate structure similarity
         unique_structures = len(set(sent_structures))
         similarity_ratio  = unique_structures / len(sent_structures)
         
-        # Low diversity suggests AI
-        return (similarity_ratio < 0.5)
+        # Low diversity suggests synthetic
+        return (similarity_ratio < self.params.STRUCTURE_DIVERSITY_THRESHOLD)
     
 
     def _check_unusual_grammar(self, doc) -> bool:
@@ -467,11 +458,11 @@ class LinguisticMetric(BaseMetric):
         
         for token in doc:
             # Check for unusual dependency relations i.e. less common relations
-            if token.dep_ in ['attr', 'oprd']:  
+            if token.dep_ in self.params.UNUSUAL_DEPENDENCIES:  
                 unusual_constructions += 1
         
-        # More than 2% unusual constructions is suspicious
-        return (unusual_constructions / len(doc) > 0.02) if (len(doc) > 0) else False
+        # More than threshold unusual constructions is suspicious
+        return (unusual_constructions / len(doc) > self.params.UNUSUAL_CONSTRUCTION_THRESHOLD) if (len(doc) > 0) else False
     
 
     def _check_repetitive_phrasing(self, doc) -> bool:
@@ -491,26 +482,29 @@ class LinguisticMetric(BaseMetric):
         phrase_counts    = Counter(phrases)
         repeated_phrases = sum(1 for count in phrase_counts.values() if count > 1)
         
-        # High repetition suggests AI
-        return (repeated_phrases / len(phrases) > 0.3)
+        # High repetition suggests synthetic
+        return (repeated_phrases / len(phrases) > self.params.REPETITIVE_PHRASING_THRESHOLD)
     
 
-    def _calculate_chunk_linguistics(self, text: str, chunk_size: int = 200) -> Dict[str, List[float]]:
+    def _calculate_chunk_linguistics(self, text: str) -> List[float]:
         """
         Calculate linguistic features across text chunks
         """
         complexities = list()
         words        = text.split()
-        
-        for i in range(0, len(words), chunk_size // 2):
+        chunk_size   = self.params.CHUNK_SIZE_WORDS
+        overlap      = int(chunk_size * self.params.CHUNK_OVERLAP_RATIO)
+        step         = max(1, chunk_size - overlap)
+
+        for i in range(0, len(words), step):
             chunk = ' '.join(words[i:i + chunk_size])
             
-            if (len(chunk) > 50):
+            if (len(chunk) > self.params.MIN_CHUNK_LENGTH):
                 try:
                     chunk_doc = self.nlp(chunk)
                     
                     # Check if processing was successful
-                    if (chunk_doc and (len(list(chunk_doc.sents)) > 0)):
+                    if (chunk_doc and (len(list(chunk_doc.sents)) > self.params.MIN_SENTENCES_FOR_ANALYSIS)):
                         complexity = self._calculate_syntactic_complexity(chunk_doc)
                         complexities.append(complexity)
                 
@@ -518,141 +512,147 @@ class LinguisticMetric(BaseMetric):
                     logger.debug(f"Chunk linguistic analysis failed: {e}")
                     continue
         
-        return {'complexities': complexities}
+        return complexities
     
 
     def _analyze_linguistic_patterns(self, features: Dict[str, Any]) -> tuple:
         """
-        Analyze linguistic patterns to determine RAW linguistic score (0-1 scale) : Higher score = more AI-like
+        Analyze linguistic patterns to determine RAW linguistic score (0-1 scale) : Higher score = more synthetic-like
         """
         # Check feature validity first
-        required_features = ['pos_diversity', 'syntactic_complexity', 'grammatical_consistency', 'transition_word_usage', 'ai_pattern_score', 'complexity_variance']
+        required_features = ['pos_diversity', 'pos_entropy', 'syntactic_complexity', 'grammatical_consistency', 'transition_word_usage', 'synthetic_pattern_score', 'complexity_variance']
         
-        valid_features    = [features.get(feat, 0) for feat in required_features if features.get(feat, 0) > 0]
+        valid_features    = [features.get(feat, 0) for feat in required_features if features.get(feat, 0) > self.params.ZERO_TOLERANCE]
         
-        if (len(valid_features) < 4):
+        if (len(valid_features) < self.params.MIN_REQUIRED_FEATURES):
             # Low confidence if insufficient features
-            return 0.5, 0.3  
+            return self.params.NEUTRAL_PROBABILITY, self.params.LOW_FEATURE_CONFIDENCE
 
-        # Initialize ai_indicator list 
-        ai_indicators = list()
+        # Initialize synthetic_indicator list 
+        synthetic_indicators = list()
         
-        # Low POS diversity suggests AI
-        if (features['pos_diversity'] < 0.3):
-            ai_indicators.append(0.8)
+        # Low POS diversity suggests synthetic
+        if (features['pos_diversity'] < self.params.POS_DIVERSITY_LOW_THRESHOLD):
+            synthetic_indicators.append(self.params.STRONG_SYNTHETIC_WEIGHT)
 
-        elif (features['pos_diversity'] < 0.5):
-            ai_indicators.append(0.6)
+        elif (features['pos_diversity'] < self.params.POS_DIVERSITY_MEDIUM_THRESHOLD):
+            synthetic_indicators.append(self.params.MODERATE_SYNTHETIC_WEIGHT)
 
         else:
-            ai_indicators.append(0.2)
-        
-        # Low syntactic complexity suggests AI
-        if (features['syntactic_complexity'] < 2.0):
-            ai_indicators.append(0.7)
+            synthetic_indicators.append(self.params.MINIMAL_SYNTHETIC_WEIGHT)
 
-        elif (features['syntactic_complexity'] < 3.0):
-            ai_indicators.append(0.4)
+        
+        # Low POS entropy suggests templated / synthetic language
+        if (features['pos_entropy'] < self.params.POS_ENTROPY_LOW_THRESHOLD):
+            synthetic_indicators.append(self.params.MODERATE_SYNTHETIC_WEIGHT)
+        
+        # Low syntactic complexity suggests synthetic
+        if (features['syntactic_complexity'] < self.params.SYNTACTIC_COMPLEXITY_LOW_THRESHOLD):
+            synthetic_indicators.append(self.params.MEDIUM_SYNTHETIC_WEIGHT)
+
+        elif (features['syntactic_complexity'] < self.params.SYNTACTIC_COMPLEXITY_MEDIUM_THRESHOLD):
+            synthetic_indicators.append(self.params.WEAK_SYNTHETIC_WEIGHT)
 
         else:
-            ai_indicators.append(0.2)
+            synthetic_indicators.append(self.params.VERY_LOW_SYNTHETIC_WEIGHT)
         
-        # High grammatical consistency suggests AI (unnaturally consistent)
-        if (features['grammatical_consistency'] > 0.8):
-            ai_indicators.append(0.9)
+        # High grammatical consistency suggests synthetic (unnaturally consistent)
+        if (features['grammatical_consistency'] > self.params.GRAMMATICAL_CONSISTENCY_HIGH_THRESHOLD):
+            synthetic_indicators.append(self.params.STRONG_SYNTHETIC_WEIGHT)
 
-        elif (features['grammatical_consistency'] > 0.6):
-            ai_indicators.append(0.5)
+        elif (features['grammatical_consistency'] > self.params.GRAMMATICAL_CONSISTENCY_MEDIUM_THRESHOLD):
+            synthetic_indicators.append(self.params.MODERATE_SYNTHETIC_WEIGHT)
 
         else:
-            ai_indicators.append(0.3)
+            synthetic_indicators.append(self.params.LOW_SYNTHETIC_WEIGHT)
         
-        # High transition word usage suggests AI
-        if (features['transition_word_usage'] > 0.3):
-            ai_indicators.append(0.7)
+        # High transition word usage suggests synthetic
+        if (features['transition_word_usage'] > self.params.TRANSITION_USAGE_HIGH_THRESHOLD):
+            synthetic_indicators.append(self.params.MEDIUM_SYNTHETIC_WEIGHT)
         
-        elif (features['transition_word_usage'] > 0.15):
-            ai_indicators.append(0.4)
+        elif (features['transition_word_usage'] > self.params.TRANSITION_USAGE_MEDIUM_THRESHOLD):
+            synthetic_indicators.append(self.params.WEAK_SYNTHETIC_WEIGHT)
 
         else:
-            ai_indicators.append(0.2)
+            synthetic_indicators.append(self.params.VERY_LOW_SYNTHETIC_WEIGHT)
         
-        # High AI pattern score suggests AI
-        if (features['ai_pattern_score'] > 0.6):
-            ai_indicators.append(0.8)
+        # High synthetic pattern score suggests synthetic
+        if (features['synthetic_pattern_score'] > self.params.SYNTHETIC_PATTERN_HIGH_THRESHOLD):
+            synthetic_indicators.append(self.params.MEDIUM_SYNTHETIC_WEIGHT)
 
-        elif (features['ai_pattern_score'] > 0.3):
-            ai_indicators.append(0.5)
+        elif (features['synthetic_pattern_score'] > self.params.SYNTHETIC_PATTERN_MEDIUM_THRESHOLD):
+            synthetic_indicators.append(self.params.MODERATE_SYNTHETIC_WEIGHT)
 
         else:
-            ai_indicators.append(0.2)
+            synthetic_indicators.append(self.params.MINIMAL_SYNTHETIC_WEIGHT)
         
-        # Low complexity variance suggests AI
-        if (features['complexity_variance'] < 0.1):
-            ai_indicators.append(0.7)
+        # Low complexity variance suggests synthetic
+        if (features['complexity_variance'] < self.params.COMPLEXITY_VARIANCE_LOW_THRESHOLD):
+            synthetic_indicators.append(self.params.MEDIUM_SYNTHETIC_WEIGHT)
 
-        elif (features['complexity_variance'] < 0.3):
-            ai_indicators.append(0.4)
+        elif (features['complexity_variance'] < self.params.COMPLEXITY_VARIANCE_MEDIUM_THRESHOLD):
+            synthetic_indicators.append(self.params.WEAK_SYNTHETIC_WEIGHT)
 
         else:
-            ai_indicators.append(0.2)
+            synthetic_indicators.append(self.params.VERY_LOW_SYNTHETIC_WEIGHT)
         
         # Calculate raw score and confidence
-        raw_score  = np.mean(ai_indicators) if ai_indicators else 0.5
-        confidence = 1.0 - (np.std(ai_indicators) / 0.5) if ai_indicators else 0.5
-        confidence = max(0.1, min(0.9, confidence))
+        raw_score  = np.mean(synthetic_indicators) if synthetic_indicators else self.params.NEUTRAL_PROBABILITY
+        confidence = 1.0 - (np.std(synthetic_indicators) / self.params.CONFIDENCE_STD_NORMALIZER) if synthetic_indicators else self.params.NEUTRAL_CONFIDENCE
+        confidence = max(self.params.MIN_CONFIDENCE, min(self.params.MAX_CONFIDENCE, confidence))
         
         return raw_score, confidence
     
 
-    def _calculate_mixed_probability(self, features: Dict[str, Any]) -> float:
+    def _calculate_hybrid_probability(self, features: Dict[str, Any]) -> float:
         """
-        Calculate probability of mixed AI/Human content
+        Calculate probability of hybrid synthetic/authentic content
         """
-        mixed_indicators = list()
+        hybrid_indicators = list()
         
         # Moderate POS diversity might indicate mixing
-        if (0.35 <= features['pos_diversity'] <= 0.55):
-            mixed_indicators.append(0.3)
+        if (self.params.POS_DIVERSITY_MIXED_MIN <= features['pos_diversity'] <= self.params.POS_DIVERSITY_MIXED_MAX):
+            hybrid_indicators.append(self.params.WEAK_HYBRID_WEIGHT)
 
         else:
-            mixed_indicators.append(0.0)
+            hybrid_indicators.append(self.params.MINIMAL_HYBRID_WEIGHT)
         
         # High complexity variance suggests mixed content
-        if (features['complexity_variance'] > 0.5):
-            mixed_indicators.append(0.4)
+        if (features['complexity_variance'] > self.params.COMPLEXITY_VARIANCE_HIGH_THRESHOLD):
+            hybrid_indicators.append(self.params.MODERATE_HYBRID_WEIGHT)
 
-        elif (features['complexity_variance'] > 0.3):
-            mixed_indicators.append(0.2)
-
-        else:
-            mixed_indicators.append(0.0)
-        
-        # Inconsistent AI pattern detection
-        if (0.2 <= features['ai_pattern_score'] <= 0.6):
-            mixed_indicators.append(0.3)
+        elif (features['complexity_variance'] > self.params.COMPLEXITY_VARIANCE_MEDIUM_THRESHOLD):
+            hybrid_indicators.append(self.params.WEAK_HYBRID_WEIGHT)
 
         else:
-            mixed_indicators.append(0.0)
+            hybrid_indicators.append(self.params.MINIMAL_HYBRID_WEIGHT)
         
-        return min(0.3, np.mean(mixed_indicators)) if mixed_indicators else 0.0
+        # Inconsistent synthetic pattern detection
+        if (self.params.SYNTHETIC_PATTERN_MIXED_MIN <= features['synthetic_pattern_score'] <= self.params.SYNTHETIC_PATTERN_MIXED_MAX):
+            hybrid_indicators.append(self.params.WEAK_HYBRID_WEIGHT)
+
+        else:
+            hybrid_indicators.append(self.params.MINIMAL_HYBRID_WEIGHT)
+        
+        hybrid_prob = np.mean(hybrid_indicators) if hybrid_indicators else 0.0
+        return min(self.params.MAX_HYBRID_PROBABILITY, hybrid_prob)
     
 
     def _get_default_features(self) -> Dict[str, Any]:
         """
         Return default features when analysis is not possible
         """
-        return {"pos_diversity"           : 0.5,
-                "pos_entropy"             : 2.5,
-                "syntactic_complexity"    : 2.5,
-                "avg_sentence_complexity" : 2.0,
-                "grammatical_consistency" : 0.5,
-                "transition_word_usage"   : 0.1,
-                "passive_voice_ratio"     : 0.2,
-                "writing_style_score"     : 0.5,
-                "ai_pattern_score"        : 0.3,
-                "avg_chunk_complexity"    : 2.5,
-                "complexity_variance"     : 0.2,
+        return {"pos_diversity"           : self.params.DEFAULT_POS_DIVERSITY,
+                "pos_entropy"             : self.params.DEFAULT_POS_ENTROPY,
+                "syntactic_complexity"    : self.params.DEFAULT_SYNTACTIC_COMPLEXITY,
+                "avg_sentence_complexity" : self.params.DEFAULT_SENTENCE_COMPLEXITY,
+                "grammatical_consistency" : self.params.DEFAULT_GRAMMATICAL_CONSISTENCY,
+                "transition_word_usage"   : self.params.DEFAULT_TRANSITION_USAGE,
+                "passive_voice_ratio"     : self.params.DEFAULT_PASSIVE_RATIO,
+                "writing_style_score"     : self.params.DEFAULT_WRITING_STYLE_SCORE,
+                "synthetic_pattern_score" : self.params.DEFAULT_SYNTHETIC_PATTERN_SCORE,
+                "avg_chunk_complexity"    : self.params.DEFAULT_CHUNK_COMPLEXITY,
+                "complexity_variance"     : self.params.DEFAULT_COMPLEXITY_VARIANCE,
                 "num_sentences"           : 0,
                 "num_chunks_analyzed"     : 0,
                }

@@ -7,51 +7,13 @@ from typing import Dict
 from typing import Tuple
 from loguru import logger
 from typing import Optional
-from dataclasses import dataclass
-
-
-@dataclass
-class ProcessedText:
-    """
-    Container for processed text with metadata
-    """
-    original_text      : str
-    cleaned_text       : str
-    sentences          : List[str]
-    words              : List[str]
-    paragraphs         : List[str]
-    char_count         : int
-    word_count         : int
-    sentence_count     : int
-    paragraph_count    : int
-    avg_sentence_length: float
-    avg_word_length    : float
-    is_valid           : bool
-    validation_errors  : List[str]
-    metadata           : Dict[str, Any]
-    
-
-    def to_dict(self) -> Dict[str, Any]:
-        """
-        Convert to dictionary for JSON serialization
-        """
-        return {"original_length"      : len(self.original_text),
-                "cleaned_length"       : len(self.cleaned_text),
-                "char_count"           : self.char_count,
-                "word_count"           : self.word_count,
-                "sentence_count"       : self.sentence_count,
-                "paragraph_count"      : self.paragraph_count,
-                "avg_sentence_length"  : round(self.avg_sentence_length, 2),
-                "avg_word_length"      : round(self.avg_word_length, 2),
-                "is_valid"             : self.is_valid,
-                "validation_errors"    : self.validation_errors,
-                "metadata"             : self.metadata,
-               }
+from config.schemas import ProcessedText
+from config.constants import text_processing_params
 
 
 class TextProcessor:
     """
-    Handles text cleaning, normalization, sentence splitting, and preprocessing for AI detection metrics
+    Handles text cleaning, normalization, sentence splitting, and preprocessing for downstream text analysis and authentication signals
     
     Features::
     - Unicode normalization
@@ -63,10 +25,6 @@ class TextProcessor:
     - Text validation
     - Chunk creation for long texts
     """
-    
-    # Common abbreviations that shouldn't trigger sentence breaks
-    ABBREVIATIONS     = {'dr', 'mr', 'mrs', 'ms', 'prof', 'sr', 'jr', 'ph.d', 'inc', 'ltd', 'corp', 'co', 'vs', 'etc', 'e.g', 'i.e', 'al', 'fig', 'vol', 'no', 'approx', 'est', 'min', 'max', 'avg', 'dept', 'assoc', 'bros', 'u.s', 'u.k', 'a.m', 'p.m', 'b.c', 'a.d', 'st', 'ave', 'blvd'}
-    
     # Patterns for sentence splitting
     SENTENCE_ENDINGS  = r'[.!?]+(?=\s+[A-Z]|$)'
     
@@ -74,37 +32,21 @@ class TextProcessor:
     MULTIPLE_SPACES   = re.compile(r'\s+')
     MULTIPLE_NEWLINES = re.compile(r'\n{3,}')
     
-
-    def __init__(self, min_text_length: int = 50, max_text_length: int = 500000, preserve_formatting: bool = False, remove_urls: bool = True, remove_emails: bool = True,
-                 normalize_unicode: bool = True, fix_encoding: bool = True):
+    def __init__(self):
         """
         Initialize text processor
-        
-        Arguments:
-        ----------
-            min_text_length      : Minimum acceptable text length
-
-            max_text_length      : Maximum text length to process
-            
-            preserve_formatting  : Keep original line breaks and spacing
-            
-            remove_urls          : Remove URLs from text
-            
-            remove_emails        : Remove email addresses
-            
-            normalize_unicode    : Normalize Unicode characters
-            
-            fix_encoding         : Fix common encoding issues
         """
-        self.min_text_length     = min_text_length
-        self.max_text_length     = max_text_length
-        self.preserve_formatting = preserve_formatting
-        self.remove_urls         = remove_urls
-        self.remove_emails       = remove_emails
-        self.normalize_unicode   = normalize_unicode
-        self.fix_encoding        = fix_encoding
+        self.min_text_length     = text_processing_params.MINIMUM_TEXT_LENGTH
+        self.max_text_length     = text_processing_params.MAXIMUM_TEXT_LENGTH
+        self.preserve_formatting = text_processing_params.PRESERVE_FORMATTING
+        self.remove_urls         = text_processing_params.REMOVE_URLS
+        self.remove_emails       = text_processing_params.REMOVE_EMAILS
+        self.normalize_unicode   = text_processing_params.NORMALIZE_UNICODE
+        self.fix_encoding        = text_processing_params.FIX_ENCODING
+        self.minimum_word_count  = text_processing_params.MINIMUM_WORD_COUNT
+        self.common_abbreviations = text_processing_params.COMMON_ABBREVIATIONS
         
-        logger.info(f"TextProcessor initialized with min_length={min_text_length}, max_length={max_text_length}")
+        logger.info(f"TextProcessor initialized with min_length={self.min_text_length}, max_length={self.max_text_length}")
     
 
     def process(self, text: str, **kwargs) -> ProcessedText:
@@ -170,15 +112,15 @@ class TextProcessor:
             sent_count   = len(sentences)
             para_count   = len(paragraphs)
             
-            avg_sent_len = word_count / sent_count if sent_count > 0 else 0
+            avg_sent_len = word_count / sent_count if (sent_count > 0) else 0
             avg_word_len = sum(len(w) for w in words) / word_count if word_count > 0 else 0
             
             # Additional validation
             if (sent_count == 0):
                 validation_errors.append("No valid sentences found")
             
-            if (word_count < 10):
-                validation_errors.append(f"Too few words: {word_count} (minimum: 10)")
+            if (word_count < self.minimum_word_count):
+                validation_errors.append(f"Too few words: {word_count} (minimum: {self.minimum_word_count})")
             
             # Create metadata
             metadata = {"has_special_chars" : self._has_special_characters(text),
@@ -227,7 +169,7 @@ class TextProcessor:
         # Protect abbreviations
         protected_text = text
 
-        for abbr in self.ABBREVIATIONS:
+        for abbr in self.common_abbreviations:
             # Replace abbreviation periods with placeholder
             protected_text = re.sub(pattern = rf'\b{re.escape(abbr)}\.',
                                     repl    = abbr.replace('.', '<DOT>'),
@@ -417,8 +359,8 @@ class TextProcessor:
         text = unicodedata.normalize('NFKC', text)
         
         # Replace smart quotes and apostrophes
-        text = text.replace('"', '"').replace('"', '"')
-        text = text.replace(''', "'").replace(''', "'")
+        text = text.replace('“', '"').replace('”', '"')
+        text = text.replace('‘', "'").replace('’', "'")
         text = text.replace('—', '-').replace('–', '-')
         
         return text
@@ -492,9 +434,6 @@ class TextProcessor:
                             )
 
 
-
-# Convenience Functions
-
 def quick_process(text: str, **kwargs) -> ProcessedText:
     """
     Quick processing with default settings
@@ -536,46 +475,3 @@ __all__ = ['TextProcessor',
            'extract_sentences',
            'extract_words',
           ]
-
-
-# ==================== Testing ====================
-if __name__ == "__main__":
-    # Test cases
-    test_texts = [
-        # Normal text
-        "This is a test. Dr. Smith works at the U.S. Department of Education. "
-        "He published a paper on AI detection in 2024.",
-        
-        # Text with encoding issues
-        "This textâ€™s got some â€œweirdâ€ characters that need fixing.",
-        
-        # Text with URLs and emails
-        "Check out https://example.com or email me at test@example.com for more info.",
-        
-        # Short text (should fail validation)
-        "Too short.",
-        
-        # Text with numbers and special characters
-        "The price is $19.99 for version 2.0. Contact us at (555) 123-4567!",
-    ]
-    
-    processor = TextProcessor(min_text_length=20)
-    
-    for i, text in enumerate(test_texts, 1):
-        print(f"\n{'='*70}")
-        print(f"TEST CASE {i}")
-        print(f"{'='*70}")
-        print(f"Input: {text[:100]}...")
-        
-        result = processor.process(text)
-        
-        print(f"\nValid: {result.is_valid}")
-        if not result.is_valid:
-            print(f"Errors: {result.validation_errors}")
-        
-        print(f"Word count: {result.word_count}")
-        print(f"Sentence count: {result.sentence_count}")
-        print(f"Avg sentence length: {result.avg_sentence_length:.2f}")
-        print(f"\nSentences:")
-        for j, sent in enumerate(result.sentences[:3], 1):
-            print(f"  {j}. {sent}")

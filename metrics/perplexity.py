@@ -7,10 +7,11 @@ from typing import Any
 from typing import Dict
 from typing import List
 from loguru import logger
-from config.threshold_config import Domain
+from config.enums import Domain
+from config.schemas import MetricResult
 from metrics.base_metric import BaseMetric
-from metrics.base_metric import MetricResult
 from models.model_manager import get_model_manager
+from config.constants import perplexity_metric_params
 from config.threshold_config import get_threshold_for_domain
 
 
@@ -19,7 +20,7 @@ class PerplexityMetric(BaseMetric):
     Text predictability analysis using GPT-2 for perplexity calculation
     
     Measures (Aligned with Documentation):
-    - Overall text perplexity (lower = more predictable = more AI-like)
+    - Overall text perplexity (lower = more predictable = more synthetic-like)
     - Perplexity distribution across text chunks
     - Sentence-level perplexity patterns
     - Cross-entropy analysis
@@ -31,6 +32,7 @@ class PerplexityMetric(BaseMetric):
 
         self.model     = None
         self.tokenizer = None
+        self.params    = perplexity_metric_params
     
 
     def initialize(self) -> bool:
@@ -42,7 +44,7 @@ class PerplexityMetric(BaseMetric):
             
             # Load GPT-2 model and tokenizer
             model_manager = get_model_manager()
-            model_result  = model_manager.load_model(model_name = "perplexity_gpt2")
+            model_result  = model_manager.load_model(model_name = "perplexity_reference_lm")
             
             if isinstance(model_result, tuple):
                 self.model, self.tokenizer = model_result
@@ -65,106 +67,101 @@ class PerplexityMetric(BaseMetric):
         Compute perplexity measures with FULL DOMAIN THRESHOLD INTEGRATION
         """
         try:
-            if not text or len(text.strip()) < 50:
-                return MetricResult(metric_name       = self.name,
-                                    ai_probability    = 0.5,
-                                    human_probability = 0.5,
-                                    mixed_probability = 0.0,
-                                    confidence        = 0.1,
-                                    error             = "Text too short for perplexity analysis",
+            if (not text or len(text.strip()) < self.params.MIN_TEXT_LENGTH_FOR_ANALYSIS):
+                return MetricResult(metric_name           = self.name,
+                                    synthetic_probability = self.params.NEUTRAL_PROBABILITY,
+                                    authentic_probability = self.params.NEUTRAL_PROBABILITY,
+                                    hybrid_probability    = self.params.MIN_PROBABILITY,
+                                    confidence            = self.params.MIN_CONFIDENCE,
+                                    error                 = "Text too short for perplexity analysis",
                                    )
             
             # Get domain-specific thresholds
-            domain                           = kwargs.get('domain', Domain.GENERAL)
-            domain_thresholds                = get_threshold_for_domain(domain)
-            perplexity_thresholds            = domain_thresholds.perplexity
+            domain                                       = kwargs.get('domain', Domain.GENERAL)
+            domain_thresholds                            = get_threshold_for_domain(domain)
+            perplexity_thresholds                        = domain_thresholds.perplexity
             
             # Calculate comprehensive perplexity features
-            features                         = self._calculate_perplexity_features(text)
+            features                                     = self._calculate_perplexity_features(text = text)
             
             # Calculate raw perplexity score (0-1 scale)
-            raw_perplexity_score, confidence = self._analyze_perplexity_patterns(features)
+            raw_perplexity_score, confidence             = self._analyze_perplexity_patterns(features = features)
             
             # Apply domain-specific thresholds to convert raw score to probabilities
-            ai_prob, human_prob, mixed_prob  = self._apply_domain_thresholds(raw_perplexity_score, perplexity_thresholds, features)
-            
+            synthetic_prob, authentic_prob, hybrid_prob  = self._apply_domain_thresholds(raw_score  = raw_perplexity_score, 
+                                                                                         thresholds = perplexity_thresholds, 
+                                                                                         features   = features,
+                                                                                        )
+                                                                                        
             # Apply confidence multiplier from domain thresholds
-            confidence                      *= perplexity_thresholds.confidence_multiplier
-            confidence                       = max(0.0, min(1.0, confidence))
+            confidence                                  *= perplexity_thresholds.confidence_multiplier
+            confidence                                   = max(self.params.MIN_CONFIDENCE, min(self.params.MAX_CONFIDENCE, confidence))
             
-            return MetricResult(metric_name       = self.name,
-                                ai_probability    = ai_prob,
-                                human_probability = human_prob,
-                                mixed_probability = mixed_prob,
-                                confidence        = confidence,
-                                details           = {**features, 
-                                                     'domain_used'     : domain.value,
-                                                     'ai_threshold'    : perplexity_thresholds.ai_threshold,
-                                                     'human_threshold' : perplexity_thresholds.human_threshold,
-                                                     'raw_score'       : raw_perplexity_score,
-                                                    },
+            return MetricResult(metric_name           = self.name,
+                                synthetic_probability = synthetic_prob,
+                                authentic_probability = authentic_prob,
+                                hybrid_probability    = hybrid_prob,
+                                confidence            = confidence,
+                                details               = {**features, 
+                                                         'domain_used'        : domain.value,
+                                                         'synthetic_threshold': perplexity_thresholds.synthetic_threshold,
+                                                         'authentic_threshold': perplexity_thresholds.authentic_threshold,
+                                                         'raw_score'          : raw_perplexity_score,
+                                                        },
                                )
             
         except Exception as e:
             logger.error(f"Error in perplexity computation: {repr(e)}")
-            return MetricResult(metric_name       = self.name,
-                                ai_probability    = 0.5,
-                                human_probability = 0.5,
-                                mixed_probability = 0.0,
-                                confidence        = 0.0,
-                                error             = str(e),
-                               )
+            return self._default_result(error = str(e))
     
 
     def _apply_domain_thresholds(self, raw_score: float, thresholds: Any, features: Dict[str, Any]) -> tuple:
         """
         Apply domain-specific thresholds to convert raw score to probabilities
         """
-        ai_threshold    = thresholds.ai_threshold      # e.g., 0.60 for GENERAL, 0.55 for ACADEMIC
-        human_threshold = thresholds.human_threshold   # e.g., 0.40 for GENERAL, 0.35 for ACADEMIC
+        synthetic_threshold = thresholds.synthetic_threshold
+        authentic_threshold = thresholds.authentic_threshold
         
         # Calculate probabilities based on threshold distances
-        if (raw_score >= ai_threshold):
-            # Above AI threshold - strongly AI
-            distance_from_threshold = raw_score - ai_threshold
-            ai_prob                 = 0.7 + (distance_from_threshold * 0.3)  # 0.7 to 1.0
-            human_prob              = 0.3 - (distance_from_threshold * 0.3)  # 0.3 to 0.0
+        if (raw_score >= synthetic_threshold):
+            distance       = raw_score - synthetic_threshold
+            synthetic_prob = self.params.STRONG_SYNTHETIC_BASE_PROB + distance * self.params.WEAK_PROBABILITY_ADJUSTMENT
+            authentic_prob = (self.params.MAX_PROBABILITY - self.params.STRONG_SYNTHETIC_BASE_PROB) - distance * self.params.WEAK_PROBABILITY_ADJUSTMENT
 
-        elif (raw_score <= human_threshold):
-            # Below human threshold - strongly human
-            distance_from_threshold = human_threshold - raw_score
-            ai_prob                 = 0.3 - (distance_from_threshold * 0.3)  # 0.3 to 0.0
-            human_prob              = 0.7 + (distance_from_threshold * 0.3)  # 0.7 to 1.0
-        
+        elif (raw_score <= authentic_threshold):
+            distance       = authentic_threshold - raw_score
+            synthetic_prob = (self.params.MAX_PROBABILITY - self.params.STRONG_AUTHENTIC_BASE_PROB) - distance * self.params.WEAK_PROBABILITY_ADJUSTMENT
+            authentic_prob = self.params.STRONG_AUTHENTIC_BASE_PROB + distance * self.params.WEAK_PROBABILITY_ADJUSTMENT
+            
         else:
             # Between thresholds - uncertain zone
-            range_width = ai_threshold - human_threshold
+            range_width = synthetic_threshold - authentic_threshold
 
-            if (range_width > 0):
-                position_in_range = (raw_score - human_threshold) / range_width
-                ai_prob           = 0.3 + (position_in_range * 0.4)  # 0.3 to 0.7
-                human_prob        = 0.7 - (position_in_range * 0.4)  # 0.7 to 0.3
+            if (range_width > self.params.ZERO_TOLERANCE):
+                position_in_range = (raw_score - authentic_threshold) / range_width
+                synthetic_prob    = self.params.UNCERTAIN_SYNTHETIC_RANGE_START + (position_in_range * self.params.UNCERTAIN_RANGE_WIDTH)
+                authentic_prob    = self.params.UNCERTAIN_AUTHENTIC_RANGE_START - (position_in_range * self.params.UNCERTAIN_RANGE_WIDTH)
             
             else:
-                ai_prob = 0.5
-                human_prob = 0.5
+                synthetic_prob = self.params.NEUTRAL_PROBABILITY
+                authentic_prob = self.params.NEUTRAL_PROBABILITY
         
         # Ensure probabilities are valid
-        ai_prob    = max(0.0, min(1.0, ai_prob))
-        human_prob = max(0.0, min(1.0, human_prob))
+        synthetic_prob = max(self.params.MIN_PROBABILITY, min(self.params.MAX_PROBABILITY, synthetic_prob))
+        authentic_prob = max(self.params.MIN_PROBABILITY, min(self.params.MAX_PROBABILITY, authentic_prob))
         
-        # Calculate mixed probability based on perplexity variance
-        mixed_prob = self._calculate_mixed_probability(features)
+        # Calculate hybrid probability based on perplexity variance
+        hybrid_prob = self._calculate_hybrid_probability(features)
         
         # Normalize to sum to 1.0
-        total      = ai_prob + human_prob + mixed_prob
+        total       = synthetic_prob + authentic_prob + hybrid_prob
 
-        if (total > 0):
-            ai_prob    /= total
-            human_prob /= total
-            mixed_prob /= total
+        if (total > self.params.ZERO_TOLERANCE):
+            synthetic_prob /= total
+            authentic_prob /= total
+            hybrid_prob    /= total
         
-        return ai_prob, human_prob, mixed_prob
+        return synthetic_prob, authentic_prob, hybrid_prob
     
 
     def _calculate_perplexity_features(self, text: str) -> Dict[str, Any]:
@@ -186,10 +183,10 @@ class PerplexityMetric(BaseMetric):
         
         for sentence in sentences:
             # Minimum sentence length
-            if (len(sentence.strip()) > 20):  
+            if (len(sentence.strip()) > self.params.MIN_SENTENCE_LENGTH):  
                 sent_perplexity = self._calculate_perplexity(sentence)
                 
-                if (sent_perplexity > 0):
+                if (sent_perplexity > self.params.ZERO_TOLERANCE):
                     sentence_perplexities.append(sent_perplexity)
                     valid_sentences += 1
         
@@ -207,7 +204,7 @@ class PerplexityMetric(BaseMetric):
             max_sentence_perplexity = overall_perplexity
         
         # Chunk-based analysis for whole-text understanding
-        chunk_perplexities    = self._calculate_chunk_perplexity(text, chunk_size = 200)
+        chunk_perplexities    = self._calculate_chunk_perplexity(text)
         perplexity_variance   = np.var(chunk_perplexities) if chunk_perplexities else 0.0
         avg_chunk_perplexity  = np.mean(chunk_perplexities) if chunk_perplexities else overall_perplexity
         
@@ -233,24 +230,24 @@ class PerplexityMetric(BaseMetric):
 
     def _calculate_perplexity(self, text: str) -> float:
         """
-        Calculate perplexity for given text using GPT-2 : Lower perplexity = more predictable = more AI-like
+        Calculate perplexity for given text using GPT-2 : Lower perplexity = more predictable = more synthetic-like
         """
         try:
             # Check text length before tokenization
-            if (len(text.strip()) < 10):
+            if (len(text.strip()) < self.params.MIN_SENTENCE_LENGTH // 2):
                 return 0.0
 
             # Tokenize the text
             encodings = self.tokenizer(text, 
                                        return_tensors = 'pt', 
                                        truncation     = True, 
-                                       max_length     = 1024,
+                                       max_length     = self.params.MAX_TOKEN_LENGTH,
                                       )
 
             input_ids = encodings.input_ids
             
             # Minimum tokens
-            if ((input_ids.numel() == 0) or (input_ids.size(1) < 5)):
+            if ((input_ids.numel() == 0) or (input_ids.size(1) < self.params.MIN_TOKENS_FOR_PERPLEXITY)):
                 return 0.0
             
             # Calculate loss (cross-entropy)
@@ -272,44 +269,49 @@ class PerplexityMetric(BaseMetric):
         """
         Split text into sentences
         """
-        sentences = re.split(r'[.!?]+', text)
-        return [s.strip() for s in sentences if s.strip() and len(s.strip()) > 10]
+        sentences = re.split(self.params.SENTENCE_SPLIT_PATTERN, text)
+        return [s.strip() for s in sentences if s.strip() and len(s.strip()) > self.params.MIN_SENTENCE_LENGTH // 2]
     
 
-    def _calculate_chunk_perplexity(self, text: str, chunk_size: int = 200) -> List[float]:
+    def _calculate_chunk_perplexity(self, text: str) -> List[float]:
         """
         Calculate perplexity across text chunks for whole-text analysis
         """
         chunks = list()
         words  = text.split()
+        chunk_size = self.params.CHUNK_SIZE_WORDS
+        overlap = int(chunk_size * self.params.CHUNK_OVERLAP_RATIO)
 
         # Ensure we have enough words for meaningful chunks
         if (len(words) < chunk_size // 2):
             return [self._calculate_perplexity(text)] if text.strip() else []
         
         # Create overlapping chunks for better analysis
-        for i in range(0, len(words), chunk_size // 2):
+        step = max(1, chunk_size - overlap)
+
+        for i in range(0, len(words), step):
             chunk = ' '.join(words[i:i + chunk_size])
             
             # Minimum chunk size
-            if (len(chunk) > 50):  
+            if (len(chunk) > self.params.MIN_CHUNK_LENGTH):  
                 perplexity = self._calculate_perplexity(chunk)
 
                 # Reasonable range check
-                if ((perplexity > 0) and (perplexity < 1000)):
+                if ((perplexity > self.params.ZERO_TOLERANCE) and (perplexity < self.params.LARGE_PERPLEXITY_THRESHOLD)):
                     chunks.append(perplexity)
         
-        return chunks if chunks else [0.0]
+        # Zero perplexity is physically impossible and biases the score hence returning DEFAULT_OVERALL_PERPLEXITY
+        return chunks if chunks else [self.params.DEFAULT_OVERALL_PERPLEXITY]
     
 
     def _normalize_perplexity(self, perplexity: float) -> float:
         """
         Normalize perplexity using sigmoid transformation
 
-        Lower perplexity = higher normalized score = more AI-like
+        Lower perplexity = higher normalized score = more synthetic-like
         """
-        # Use exponential normalization : Typical ranges: AI = 10-40, Human = 20-100
-        normalized = 1.0 / (1.0 + np.exp((perplexity - 30) / 10))
+        # Use exponential normalization
+        normalized = 1.0 / (1.0 + np.exp((perplexity - self.params.PERPLEXITY_SIGMOID_CENTER) / self.params.PERPLEXITY_SIGMOID_SCALE))
         
         return normalized 
     
@@ -319,7 +321,10 @@ class PerplexityMetric(BaseMetric):
         Calculate cross-entropy as an alternative measure
         """
         try:
-            encodings = self.tokenizer(text, return_tensors='pt', truncation=True, max_length=1024)
+            encodings = self.tokenizer(text, 
+                                       return_tensors = 'pt', 
+                                       truncation     = True, 
+                                       max_length     = self.params.MAX_TOKEN_LENGTH)
             input_ids = encodings.input_ids
             
             if (input_ids.numel() == 0):
@@ -329,9 +334,9 @@ class PerplexityMetric(BaseMetric):
                 outputs = self.model(input_ids, labels = input_ids)
                 loss    = outputs.loss
             
-            # Normalize cross-entropy to 0-1 scale : Assuming max ~5 nats
+            # Normalize cross-entropy to 0-1 scale
             cross_entropy = loss.item()
-            normalized_ce = min(1.0, cross_entropy / 5.0) 
+            normalized_ce = min(1.0, cross_entropy / self.params.MAX_CROSS_ENTROPY) 
             
             return normalized_ce
             
@@ -342,130 +347,129 @@ class PerplexityMetric(BaseMetric):
 
     def _analyze_perplexity_patterns(self, features: Dict[str, Any]) -> tuple:
         """
-        Analyze perplexity patterns to determine RAW perplexity score (0-1 scale) : Higher score = more AI-like
+        Analyze perplexity patterns to determine RAW perplexity score (0-1 scale) : Higher score = more synthetic-like
         """
         # Check feature validity first
         required_features = ['normalized_perplexity', 'perplexity_variance', 'std_sentence_perplexity', 'cross_entropy_score']
     
-        valid_features    = [features.get(feat, 0) for feat in required_features if features.get(feat, 0) > 0]
+        valid_features    = [features.get(feat, 0) for feat in required_features if features.get(feat, 0) > self.params.ZERO_TOLERANCE]
     
-        if (len(valid_features) < 3):
+        if (len(valid_features) < self.params.MIN_REQUIRED_FEATURES):
             # Low confidence if insufficient features
-            return 0.5, 0.3  
+            return self.params.NEUTRAL_PROBABILITY, self.params.LOW_FEATURE_CONFIDENCE
 
 
-        # Initialize ai_indicator list
-        ai_indicators = list()
+        # Initialize synthetic_indicator list
+        synthetic_indicators = list()
         
-        # Low overall perplexity suggests AI
-        if (features['normalized_perplexity'] > 0.7):
-            # Very AI-like
-            ai_indicators.append(0.8)  
+        # Low overall perplexity suggests synthetic
+        if (features['normalized_perplexity'] > self.params.NORMALIZED_PERPLEXITY_HIGH_THRESHOLD):
+            # Very synthetic-like
+            synthetic_indicators.append(self.params.STRONG_SYNTHETIC_WEIGHT)  
 
-        elif (features['normalized_perplexity'] > 0.5):
-            # AI-like
-            ai_indicators.append(0.6)  
-
-        else:
-            # Human-like
-            ai_indicators.append(0.2) 
-        
-        # Low perplexity variance suggests AI (consistent predictability)
-        if (features['perplexity_variance'] < 50):
-            ai_indicators.append(0.7)
-
-        elif (features['perplexity_variance'] < 200):
-            ai_indicators.append(0.4)
+        elif (features['normalized_perplexity'] > self.params.NORMALIZED_PERPLEXITY_MEDIUM_THRESHOLD):
+            # synthetic-like
+            synthetic_indicators.append(self.params.MEDIUM_SYNTHETIC_WEIGHT)  
 
         else:
-            ai_indicators.append(0.2)
+            # authentic-like
+            synthetic_indicators.append(self.params.MINIMAL_SYNTHETIC_WEIGHT) 
         
-        # Low sentence perplexity std suggests AI (consistent across sentences)
-        if (features['std_sentence_perplexity'] < 20):
-            ai_indicators.append(0.8)
+        # Low perplexity variance suggests synthetic (consistent predictability)
+        if (features['perplexity_variance'] < self.params.PERPLEXITY_VARIANCE_LOW_THRESHOLD):
+            synthetic_indicators.append(self.params.MEDIUM_SYNTHETIC_WEIGHT)
 
-        elif (features['std_sentence_perplexity'] < 50):
-            ai_indicators.append(0.5)
+        elif (features['perplexity_variance'] < self.params.PERPLEXITY_VARIANCE_MEDIUM_THRESHOLD):
+            synthetic_indicators.append(self.params.WEAK_SYNTHETIC_WEIGHT)
+
+        else:
+            synthetic_indicators.append(self.params.MINIMAL_SYNTHETIC_WEIGHT)
+        
+        # Low sentence perplexity std suggests synthetic (consistent across sentences)
+        if (features['std_sentence_perplexity'] < self.params.STD_SENTENCE_PERPLEXITY_LOW_THRESHOLD):
+            synthetic_indicators.append(self.params.STRONG_SYNTHETIC_WEIGHT)
+
+        elif (features['std_sentence_perplexity'] < self.params.STD_SENTENCE_PERPLEXITY_MEDIUM_THRESHOLD):
+            synthetic_indicators.append(self.params.MEDIUM_SYNTHETIC_WEIGHT)
         
         else:
-            ai_indicators.append(0.2)
+            synthetic_indicators.append(self.params.MINIMAL_SYNTHETIC_WEIGHT)
         
-        # Low cross-entropy suggests AI (more predictable)
-        if (features['cross_entropy_score'] < 0.3):
-            ai_indicators.append(0.7)
+        # Low cross-entropy suggests synthetic (more predictable)
+        if (features['cross_entropy_score'] < self.params.CROSS_ENTROPY_LOW_THRESHOLD):
+            synthetic_indicators.append(self.params.MEDIUM_SYNTHETIC_WEIGHT)
         
-        elif (features['cross_entropy_score'] < 0.6):
-            ai_indicators.append(0.4)
+        elif (features['cross_entropy_score'] < self.params.CROSS_ENTROPY_MEDIUM_THRESHOLD):
+            synthetic_indicators.append(self.params.WEAK_SYNTHETIC_WEIGHT)
         
         else:
-            ai_indicators.append(0.2)
+            synthetic_indicators.append(self.params.MINIMAL_SYNTHETIC_WEIGHT)
         
-        # Consistent chunk perplexity suggests AI
+        # Consistent chunk perplexity suggests synthetic
         chunk_variance = features['perplexity_variance']
         
-        if (chunk_variance < 25):
-            ai_indicators.append(0.9)
+        if (chunk_variance < self.params.CHUNK_VARIANCE_VERY_LOW_THRESHOLD):
+            synthetic_indicators.append(self.params.STRONG_SYNTHETIC_WEIGHT)
 
-        elif (chunk_variance < 100):
-            ai_indicators.append(0.6)
+        elif (chunk_variance < self.params.CHUNK_VARIANCE_LOW_THRESHOLD):
+            synthetic_indicators.append(self.params.MEDIUM_SYNTHETIC_WEIGHT)
 
         else:
-            ai_indicators.append(0.3)
+            synthetic_indicators.append(self.params.VERY_WEAK_SYNTHETIC_WEIGHT)
         
         # Calculate raw score and confidence
-        raw_score  = np.mean(ai_indicators) if ai_indicators else 0.5
-        confidence = 1.0 - (np.std(ai_indicators) / 0.5) if ai_indicators else 0.5
-        confidence = max(0.1, min(0.9, confidence))
-        
+        raw_score  = np.mean(synthetic_indicators) if synthetic_indicators else self.params.NEUTRAL_PROBABILITY
+        confidence = max(self.params.MIN_CONFIDENCE, min(self.params.MAX_CONFIDENCE, 1.0 - (np.std(synthetic_indicators) / self.params.CONFIDENCE_STD_NORMALIZER)))
         return raw_score, confidence
     
 
-    def _calculate_mixed_probability(self, features: Dict[str, Any]) -> float:
+    def _calculate_hybrid_probability(self, features: Dict[str, Any]) -> float:
         """
-        Calculate probability of mixed AI/Human content
+        Calculate probability of hybrid synthetic/authentic content
         """
-        mixed_indicators = list()
+        hybrid_indicators = list()
         
         # Moderate perplexity values might indicate mixing
-        if (0.4 <= features['normalized_perplexity'] <= 0.6):
-            mixed_indicators.append(0.3)
+        if (self.params.NORMALIZED_PERPLEXITY_MIXED_MIN <= features['normalized_perplexity'] <= self.params.NORMALIZED_PERPLEXITY_MIXED_MAX):
+            hybrid_indicators.append(self.params.WEAK_HYBRID_WEIGHT)
 
         else:
-            mixed_indicators.append(0.0)
+            hybrid_indicators.append(self.params.MINIMAL_HYBRID_WEIGHT)
         
         # High perplexity variance suggests mixed content
-        if (features['perplexity_variance'] > 200):
-            mixed_indicators.append(0.4)
+        if (features['perplexity_variance'] > self.params.PERPLEXITY_VARIANCE_HIGH_THRESHOLD):
+            hybrid_indicators.append(self.params.MODERATE_HYBRID_WEIGHT)
 
-        elif (features['perplexity_variance'] > 100):
-            mixed_indicators.append(0.2)
+        elif (features['perplexity_variance'] > self.params.PERPLEXITY_VARIANCE_MEDIUM_THRESHOLD):
+            hybrid_indicators.append(self.params.WEAK_HYBRID_WEIGHT)
 
         else:
-            mixed_indicators.append(0.0)
+            hybrid_indicators.append(self.params.MINIMAL_HYBRID_WEIGHT)
         
         # Inconsistent sentence perplexities
-        if (20 <= features['std_sentence_perplexity'] <= 60):
-            mixed_indicators.append(0.3)
+        if (self.params.STD_SENTENCE_PERPLEXITY_MIXED_MIN <= features['std_sentence_perplexity'] <= self.params.STD_SENTENCE_PERPLEXITY_MIXED_MAX):
+            hybrid_indicators.append(self.params.WEAK_HYBRID_WEIGHT)
 
         else:
-            mixed_indicators.append(0.0)
+            hybrid_indicators.append(self.params.MINIMAL_HYBRID_WEIGHT)
         
-        return min(0.3, np.mean(mixed_indicators)) if mixed_indicators else 0.0
+        hybrid_prob = np.mean(hybrid_indicators) if hybrid_indicators else 0.0
+        return min(self.params.MAX_HYBRID_PROBABILITY, hybrid_prob)
     
 
     def _get_default_features(self) -> Dict[str, Any]:
         """
         Return default features when analysis is not possible
         """
-        return {"overall_perplexity"      : 50.0,
-                "normalized_perplexity"   : 0.5,
-                "avg_sentence_perplexity" : 50.0,
-                "std_sentence_perplexity" : 25.0,
-                "min_sentence_perplexity" : 30.0,
-                "max_sentence_perplexity" : 70.0,
-                "perplexity_variance"     : 100.0,
-                "avg_chunk_perplexity"    : 50.0,
-                "cross_entropy_score"     : 0.5,
+        return {"overall_perplexity"      : self.params.DEFAULT_OVERALL_PERPLEXITY,
+                "normalized_perplexity"   : self.params.DEFAULT_NORMALIZED_PERPLEXITY,
+                "avg_sentence_perplexity" : self.params.DEFAULT_AVG_SENTENCE_PERPLEXITY,
+                "std_sentence_perplexity" : self.params.DEFAULT_STD_SENTENCE_PERPLEXITY,
+                "min_sentence_perplexity" : self.params.DEFAULT_MIN_SENTENCE_PERPLEXITY,
+                "max_sentence_perplexity" : self.params.DEFAULT_MAX_SENTENCE_PERPLEXITY,
+                "perplexity_variance"     : self.params.DEFAULT_PERPLEXITY_VARIANCE,
+                "avg_chunk_perplexity"    : self.params.DEFAULT_AVG_CHUNK_PERPLEXITY,
+                "cross_entropy_score"     : self.params.DEFAULT_CROSS_ENTROPY_SCORE,
                 "num_sentences_analyzed"  : 0,
                 "num_chunks_analyzed"     : 0,
                }

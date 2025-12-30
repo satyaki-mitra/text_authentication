@@ -181,15 +181,7 @@ class ModelManager:
         """
         Check if model is already downloaded
         """
-        model_config = get_model_config(model_name = model_name)
-        
-        if not model_config:
-            return False
-        
-        # Check if model exists in cache directory
-        model_path = self.cache_dir / model_config.model_id.replace("/", "_")
-        
-        return model_path.exists() and model_name in self.metadata
+        return model_name in self.metadata
     
 
     def load_model(self, model_name: str, force_download: bool = False) -> Any:
@@ -211,6 +203,8 @@ class ModelManager:
             cached = self.cache.get(key = model_name)
             
             if cached is not None:
+                self.metadata[model_name]["last_used"] = datetime.now().isoformat()
+                self._save_metadata()
                 return cached
         
         # Get model configuration
@@ -226,8 +220,8 @@ class ModelManager:
             if (model_config.model_type == ModelType.SENTENCE_TRANSFORMER):
                 model = self._load_sentence_transformer(config = model_config)
 
-            elif (model_config.model_type == ModelType.GPT):
-                model = self._load_gpt_model(config = model_config)
+            elif (model_config.model_type == ModelType.LANGUAGE_MODEL):
+                model = self._load_language_model(config = model_config)
 
             elif (model_config.model_type == ModelType.CLASSIFIER):
                 model = self._load_classifier(config = model_config)
@@ -295,7 +289,7 @@ class ModelManager:
         logger.info(f"Loading tokenizer for: {model_name}")
         
         try:
-            if (model_config.model_type in [ModelType.GPT, 
+            if (model_config.model_type in [ModelType.LANGUAGE_MODEL, 
                                             ModelType.CLASSIFIER, 
                                             ModelType.SEQUENCE_CLASSIFICATION, 
                                             ModelType.TRANSFORMER,
@@ -328,7 +322,7 @@ class ModelManager:
         return model
         
     
-    def _load_gpt_model(self, config: ModelConfig) -> tuple:
+    def _load_language_model(self, config: ModelConfig) -> tuple:
         """
         Load GPT-style model with tokenizer
         """
@@ -489,12 +483,20 @@ class ModelManager:
             raise ValueError(f"Unknown model: {model_name}")
         
         logger.info(f"Loading pipeline: {task} with {model_name}")
+
+        cache_key = f"{model_name}:{task}"
+        cached    = self.cache.get(cache_key)
+        
+        if cached:
+             return cached
         
         pipe = pipeline(task         = task,
                         model        = model_config.model_id,
                         device       = 0 if self.device.type == "cuda" else -1,
                         model_kwargs = {"cache_dir": str(self.cache_dir)},
                        )
+
+        self.cache.put(cache_key, pipe)
         
         return pipe
     
@@ -549,7 +551,7 @@ class ModelManager:
                                     cache_folder       = str(self.cache_dir),
                                    )
                                    
-            elif (model_config.model_type == ModelType.GPT):
+            elif (model_config.model_type == ModelType.LANGUAGE_MODEL):
                 GPT2LMHeadModel.from_pretrained(pretrained_model_name_or_path = model_config.model_id,
                                                 cache_dir                     = str(self.cache_dir),
                                                )

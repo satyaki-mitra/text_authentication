@@ -1,6 +1,4 @@
 # DEPENDENCIES
-import gc
-import torch
 import threading
 from typing import Any
 from typing import Dict
@@ -8,34 +6,9 @@ from typing import List
 from loguru import logger
 from typing import Optional
 from datetime import datetime
-from dataclasses import dataclass
-from config.model_config import ModelConfig
+from config.schemas import ModelUsageStats
 from config.model_config import MODEL_REGISTRY
 from config.model_config import get_model_config
-
-
-@dataclass
-class ModelUsageStats:
-    """
-    Lightweight model usage statistics
-    """
-    model_name               : str
-    load_count               : int
-    last_used                : datetime
-    total_usage_time_seconds : float
-    avg_usage_time_seconds   : float
-    
-
-    def to_dict(self) -> Dict[str, Any]:
-        """
-        Convert to dictionary
-        """
-        return {"model_name"               : self.model_name,
-                "load_count"               : self.load_count,
-                "last_used"                : self.last_used.isoformat(),
-                "total_usage_time_seconds" : round(self.total_usage_time_seconds, 2),
-                "avg_usage_time_seconds"   : round(self.avg_usage_time_seconds, 2),
-               }
 
 
 class ModelRegistry:
@@ -64,13 +37,24 @@ class ModelRegistry:
         """
         Initialize registry with all known models
         """
+        self.usage_stats.clear()
+        self.dependency_graph.clear()
+
         for model_name in MODEL_REGISTRY.keys():
+            config                       = get_model_config(model_name)
+
+            # Register usage stats
             self.usage_stats[model_name] = ModelUsageStats(model_name               = model_name,
-                                                           load_count               = 0,
-                                                           last_used                = datetime.now(),
+                                                           usage_count              = 0,
+                                                           last_used                = None,
+                                                           timed_usage_count        = 0,
                                                            total_usage_time_seconds = 0.0,
                                                            avg_usage_time_seconds   = 0.0,
                                                           )
+
+            # Register dependencies if defined
+            if config and config.additional_params.get("depends_on"):
+                self.dependency_graph[model_name] = config.additional_params["depends_on"]
     
 
     def record_model_usage(self, model_name: str, usage_time_seconds: float = 0.0):
@@ -87,21 +71,23 @@ class ModelRegistry:
             if model_name not in self.usage_stats:
                 # Auto-register unknown models
                 self.usage_stats[model_name] = ModelUsageStats(model_name               = model_name,
-                                                               load_count               = 0,
-                                                               last_used                = datetime.now(),
+                                                               usage_count              = 0,
+                                                               last_used                = datetime.utcnow(),
+                                                               timed_usage_count        = 0,
                                                                total_usage_time_seconds = 0.0,
                                                                avg_usage_time_seconds   = 0.0,
                                                               )
             
-            stats             = self.usage_stats[model_name]
-            stats.load_count += 1
-            stats.last_used   = datetime.now()
+            stats              = self.usage_stats[model_name]
+            stats.usage_count += 1
+            stats.last_used    = datetime.utcnow()
             
             if (usage_time_seconds > 0):
                 stats.total_usage_time_seconds += usage_time_seconds
-                stats.avg_usage_time_seconds    = stats.total_usage_time_seconds / stats.load_count
+                stats.timed_usage_count        += 1
+                stats.avg_usage_time_seconds    = (stats.total_usage_time_seconds / stats.timed_usage_count)
             
-            logger.debug(f"Recorded usage for {model_name} (count: {stats.load_count})")
+            logger.debug(f"Recorded usage for {model_name} (count: {stats.usage_count})")
     
 
     def get_usage_stats(self, model_name: str) -> Optional[ModelUsageStats]:
@@ -118,7 +104,7 @@ class ModelRegistry:
         """
         with self.lock:
             sorted_models = sorted(self.usage_stats.values(), 
-                                   key     = lambda x: x.load_count, 
+                                   key     = lambda x: x.usage_count, 
                                    reverse = True,
                                   )
 
@@ -193,10 +179,10 @@ class ModelRegistry:
         Generate a comprehensive usage report
         """
         with self.lock:
-            total_usage   = sum(stats.load_count for stats in self.usage_stats.values())
-            active_models = [name for name, stats in self.usage_stats.items() if stats.load_count > 0]
+            total_usage   = sum(stats.usage_count for stats in self.usage_stats.values())
+            active_models = [name for name, stats in self.usage_stats.items() if stats.usage_count > 0]
             
-            return {"timestamp"           : datetime.now().isoformat(),
+            return {"timestamp"           : datetime.utcnow().isoformat(),
                     "summary"             : {"total_models_tracked" : len(self.usage_stats),
                                              "active_models"        : len(active_models),
                                              "total_usage_count"    : total_usage,
@@ -219,8 +205,9 @@ class ModelRegistry:
             if model_name:
                 if model_name in self.usage_stats:
                     self.usage_stats[model_name] = ModelUsageStats(model_name               = model_name,
-                                                                   load_count               = 0,
-                                                                   last_used                = datetime.now(),
+                                                                   usage_count              = 0,
+                                                                   last_used                = datetime.utcnow(),
+                                                                   timed_usage_count        = 0,
                                                                    total_usage_time_seconds = 0.0,
                                                                    avg_usage_time_seconds   = 0.0,
                                                                   )

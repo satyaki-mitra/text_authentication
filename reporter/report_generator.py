@@ -8,26 +8,10 @@ from pathlib import Path
 from loguru import logger
 from typing import Optional
 from datetime import datetime
-from dataclasses import dataclass
-from detector.orchestrator import DetectionResult
-from detector.attribution import AttributionResult
-from reporter.reasoning_generator import DetailedReasoning
-from reporter.reasoning_generator import ReasoningGenerator
-
-
-@dataclass
-class DetailedMetric:
-    """
-    Metric data structure with sub-metrics
-    """
-    name              : str
-    ai_probability    : float
-    human_probability : float
-    confidence        : float
-    verdict           : str
-    description       : str
-    detailed_metrics  : Dict[str, float]
-    weight            : float
+from config.schemas import DetectionResult
+from config.schemas import DetailedMetricResult
+from config.schemas import DetailedReasoningResult
+from services.reasoning_generator import ReasoningGenerator
 
 
 class ReportGenerator:
@@ -59,16 +43,14 @@ class ReportGenerator:
         logger.info(f"ReportGenerator initialized (output_dir={self.output_dir})")
     
 
-    def generate_complete_report(self, detection_result: DetectionResult, attribution_result: Optional[AttributionResult] = None, highlighted_sentences: Optional[List] = None, 
-                                 formats: List[str] = ["json", "pdf"], filename_prefix: str = "ai_detection_report") -> Dict[str, str]:
+    def generate_complete_report(self, detection_result: DetectionResult, highlighted_sentences: Optional[List] = None, formats: List[str] = ["json", "pdf"], 
+                                 filename_prefix: str = "text_authenticity_report") -> Dict[str, str]:
         """
         Generate comprehensive report in JSON and PDF formats with detailed metrics
         
         Arguments:
         ----------
             detection_result      : Detection analysis result
-
-            attribution_result    : Model attribution result (optional)
 
             highlighted_sentences : List of highlighted sentences (optional)
         
@@ -93,11 +75,10 @@ class ReportGenerator:
             logger.info("Using detection_dict directly")
         
         # Generate detailed reasoning
-        reasoning        = self.reasoning_generator.generate(ensemble_result    = detection_result.ensemble_result,
-                                                             metric_results     = detection_result.metric_results,
-                                                             domain             = detection_result.domain_prediction.primary_domain,
-                                                             attribution_result = attribution_result,
-                                                             text_length        = detection_result.processed_text.word_count,
+        reasoning        = self.reasoning_generator.generate(ensemble_result = detection_result.ensemble_result,
+                                                             metric_results  = detection_result.metric_results,
+                                                             domain          = detection_result.domain_prediction.primary_domain,
+                                                             text_length     = detection_result.processed_text.word_count,
                                                             )
         
         # Extract detailed metrics from ACTUAL detection results
@@ -113,8 +94,7 @@ class ReportGenerator:
             json_path               = self._generate_json_report(detection_data        = detection_data, 
                                                                  detection_dict_full   = detection_dict,
                                                                  reasoning             = reasoning, 
-                                                                 detailed_metrics      = detailed_metrics, 
-                                                                 attribution_result    = attribution_result,
+                                                                 detailed_metrics      = detailed_metrics,
                                                                  highlighted_sentences = highlighted_sentences,
                                                                  filename              = f"{filename_prefix}_{timestamp}.json",
                                                                 )
@@ -125,8 +105,7 @@ class ReportGenerator:
                 pdf_path               = self._generate_pdf_report(detection_data        = detection_data,
                                                                    detection_dict_full   = detection_dict,
                                                                    reasoning             = reasoning, 
-                                                                   detailed_metrics      = detailed_metrics, 
-                                                                   attribution_result    = attribution_result,
+                                                                   detailed_metrics      = detailed_metrics,
                                                                    highlighted_sentences = highlighted_sentences,
                                                                    filename              = f"{filename_prefix}_{timestamp}.pdf",
                                                                   )  
@@ -141,7 +120,7 @@ class ReportGenerator:
         return generated_files
 
 
-    def _extract_detailed_metrics(self, detection_data: Dict) -> List[DetailedMetric]:
+    def _extract_detailed_metrics(self, detection_data: Dict) -> List[DetailedMetricResult]:
         """
         Extract detailed metrics with sub-metrics from ACTUAL detection result
         """
@@ -163,33 +142,33 @@ class ReportGenerator:
                 continue
                 
             # Get actual probabilities and confidence
-            ai_prob    = metric_result.get("ai_probability", 0)
-            human_prob = metric_result.get("human_probability", 0)
+            synthetic_prob = metric_result.get("synthetic_probability", 0)
+            authentic_prob = metric_result.get("authentic_probability", 0)
             confidence = metric_result.get("confidence", 0)
             
             # Determine verdict based on actual probability
-            if (human_prob >= 0.6):  
-                verdict = "HUMAN"
+            if (authentic_prob >= 0.6):  
+                verdict = "Authentically-Written"
 
-            elif (ai_prob >= 0.6):  
-                verdict = "AI"
+            elif (synthetic_prob >= 0.6):  
+                verdict = "Synthetically-Generated"
             
-            elif (ai_prob > 0.4 and ai_prob < 0.6):
-                verdict = "MIXED"
+            elif (synthetic_prob > 0.4 and synthetic_prob < 0.6):
+                verdict = "Hybrid"
             
-            elif (human_prob > 0.4 and human_prob < 0.6):
-                verdict = "MIXED"
+            elif (authentic_prob > 0.4 and authentic_prob < 0.6):
+                verdict = "Hybrid"
             
             else:
                 # If both low, check which is higher
-                if (human_prob > ai_prob):
-                    verdict = "HUMAN"
+                if (authentic_prob > synthetic_prob):
+                    verdict = "Authentically-Written"
                 
-                elif (ai_prob > human_prob):
-                    verdict = "AI"
+                elif (synthetic_prob > authentic_prob):
+                    verdict = "Synthetically-Generated"
                 
                 else:
-                    verdict = "MIXED"
+                    verdict = "Hybrid"
             
             # Get actual weight or use default
             weight = 0.0
@@ -204,15 +183,15 @@ class ReportGenerator:
             # Get description based on metric type
             description           = self._get_metric_description(metric_name = metric_name)
             
-            detailed_metrics.append(DetailedMetric(name              = metric_name,
-                                                   ai_probability    = ai_prob * 100,         # Convert to percentage
-                                                   human_probability = human_prob * 100,      # Convert to percentage
-                                                   confidence        = confidence * 100,      # Convert to percentage
-                                                   verdict           = verdict,
-                                                   description       = description,
-                                                   detailed_metrics  = detailed_metrics_data,
-                                                   weight            = weight * 100,          # Convert to percentage
-                                                  )
+            detailed_metrics.append(DetailedMetricResult(name                  = metric_name,
+                                                         synthetic_probability = synthetic_prob * 100,  # Convert to percentage
+                                                         authentic_probability = authentic_prob * 100,  # Convert to percentage
+                                                         confidence            = confidence * 100,      # Convert to percentage
+                                                         verdict               = verdict,
+                                                         description           = description,
+                                                         detailed_metrics      = detailed_metrics_data,
+                                                         weight                = weight * 100,          # Convert to percentage
+                                                        )
                                    )
         
         logger.info(f"Extracted {len(detailed_metrics)} detailed metrics")
@@ -252,8 +231,8 @@ class ReportGenerator:
         
         # If no details available, provide basic calculated values
         if not details:
-            details = {"ai_probability"    : metric_result.get("ai_probability", 0) * 100,
-                       "human_probability" : metric_result.get("human_probability", 0) * 100,
+            details = {"synthetic_probability"    : metric_result.get("synthetic_probability", 0) * 100,
+                       "authentic_probability" : metric_result.get("authentic_probability", 0) * 100,
                        "confidence"        : metric_result.get("confidence", 0) * 100,
                        "score"             : metric_result.get("raw_score", 0) * 100,
                       }
@@ -276,8 +255,8 @@ class ReportGenerator:
         return descriptions.get(metric_name, "Advanced text analysis metric.")
 
 
-    def _generate_json_report(self, detection_data: Dict, detection_dict_full: Dict, reasoning: DetailedReasoning, detailed_metrics: List[DetailedMetric], 
-                              attribution_result: Optional[AttributionResult], highlighted_sentences: Optional[List] = None, filename: str = None) -> Path:
+    def _generate_json_report(self, detection_data: Dict, detection_dict_full: Dict, reasoning: DetailedReasoningResult, detailed_metrics: List[DetailedMetricResult], 
+                              highlighted_sentences: Optional[List] = None, filename: str = None) -> Path:
         """
         Generate JSON format report with detailed metrics
         """
@@ -286,8 +265,8 @@ class ReportGenerator:
 
         for metric in detailed_metrics:
             metrics_data.append({"name"              : metric.name,
-                                 "ai_probability"    : metric.ai_probability,
-                                 "human_probability" : metric.human_probability,
+                                 "synthetic_probability"    : metric.synthetic_probability,
+                                 "authentic_probability" : metric.authentic_probability,
                                  "confidence"        : metric.confidence,
                                  "verdict"           : metric.verdict,
                                  "description"       : metric.description,
@@ -303,24 +282,11 @@ class ReportGenerator:
 
             for sent in highlighted_sentences:
                 highlighted_data.append({"text"           : sent.text,
-                                         "ai_probability" : sent.ai_probability,
+                                         "synthetic_probability" : sent.synthetic_probability,
                                          "confidence"     : sent.confidence,
                                          "color_class"    : sent.color_class,
                                          "index"          : sent.index,
                                        })
-
-        # Attribution data
-        attribution_data = None
-        
-        if attribution_result:
-            attribution_data = {"predicted_model"     : attribution_result.predicted_model.value,
-                                "confidence"          : attribution_result.confidence,
-                                "model_probabilities" : attribution_result.model_probabilities,
-                                "reasoning"           : attribution_result.reasoning,
-                                "fingerprint_matches" : attribution_result.fingerprint_matches,
-                                "domain_used"         : attribution_result.domain_used.value,
-                                "metric_contributions": attribution_result.metric_contributions,
-                               }
         
         # Use detection results from dictionary
         ensemble_data        = detection_data.get("ensemble", {})
@@ -333,17 +299,17 @@ class ReportGenerator:
                                                          "format"       : "json",
                                                          "report_id"    : filename.replace('.json', ''),
                                                         },
-                                "overall_results"     : {"final_verdict"      : ensemble_data.get("final_verdict", "Unknown"),
-                                                         "ai_probability"     : ensemble_data.get("ai_probability", 0),
-                                                         "human_probability"  : ensemble_data.get("human_probability", 0),
-                                                         "mixed_probability"  : ensemble_data.get("mixed_probability", 0),
-                                                         "overall_confidence" : ensemble_data.get("overall_confidence", 0),
-                                                         "uncertainty_score"  : ensemble_data.get("uncertainty_score", 0),
-                                                         "consensus_level"    : ensemble_data.get("consensus_level", 0),
-                                                         "domain"             : analysis_data.get("domain", "general"),
-                                                         "domain_confidence"  : analysis_data.get("domain_confidence", 0),
-                                                         "text_length"        : analysis_data.get("text_length", 0),
-                                                         "sentence_count"     : analysis_data.get("sentence_count", 0),
+                                "overall_results"     : {"final_verdict"         : ensemble_data.get("final_verdict", "Unknown"),
+                                                         "synthetic_probability" : ensemble_data.get("synthetic_probability", 0),
+                                                         "authentic_probability" : ensemble_data.get("authentic_probability", 0),
+                                                         "hybrid_probability"     : ensemble_data.get("hybrid_probability", 0),
+                                                         "overall_confidence"    : ensemble_data.get("overall_confidence", 0),
+                                                         "uncertainty_score"     : ensemble_data.get("uncertainty_score", 0),
+                                                         "consensus_level"       : ensemble_data.get("consensus_level", 0),
+                                                         "domain"                : analysis_data.get("domain", "general"),
+                                                         "domain_confidence"     : analysis_data.get("domain_confidence", 0),
+                                                         "text_length"           : analysis_data.get("text_length", 0),
+                                                         "sentence_count"        : analysis_data.get("sentence_count", 0),
                                                         },
                                 "ensemble_analysis"   : {"method_used"     : "confidence_calibrated",
                                                          "metric_weights"  : ensemble_data.get("metric_contributions", {}),
@@ -362,7 +328,6 @@ class ReportGenerator:
                                                          "recommendations"        : reasoning.recommendations,
                                                         },
                                 "highlighted_text"    : highlighted_data,
-                                "model_attribution"   : attribution_data,
                                 "performance_metrics" : {"total_processing_time"  : performance_data.get("total_time", 0),
                                                          "metrics_execution_time" : performance_data.get("metrics_time", {}),
                                                          "warnings"               : detection_data.get("warnings", []),
@@ -384,8 +349,8 @@ class ReportGenerator:
         return output_path
     
 
-    def _generate_pdf_report(self, detection_data: Dict, detection_dict_full: Dict, reasoning: DetailedReasoning, detailed_metrics: List[DetailedMetric], 
-                            attribution_result: Optional[AttributionResult], highlighted_sentences: Optional[List] = None, filename: str = None) -> Path:
+    def _generate_pdf_report(self, detection_data: Dict, detection_dict_full: Dict, reasoning: DetailedReasoningResult, detailed_metrics: List[DetailedMetricResult], 
+                             highlighted_sentences: Optional[List] = None, filename: str = None) -> Path:
         """
         Generate PDF format report with detailed metrics
         """
@@ -570,8 +535,6 @@ class ReportGenerator:
                                            textColor  = GRAY_DARK,
                                            alignment  = TA_CENTER,
                                           ) 
-        
-        print (detection_dict_full.keys())
 
         # Use detection results from detection_data
         ensemble_data     = detection_data.get("ensemble", {})
@@ -585,23 +548,23 @@ class ReportGenerator:
         original_filename = file_info.get("filename", "Unknown")
         
         # Extract values - handle different data formats
-        ai_prob           = ensemble_data.get("ai_probability", 0) * 100      # Convert to percentage
-        human_prob        = ensemble_data.get("human_probability", 0) * 100   # Convert to percentage
-        mixed_prob        = ensemble_data.get("mixed_probability", 0) * 100   # Convert to percentage
-        confidence        = ensemble_data.get("overall_confidence", 0) * 100  # Convert to percentage
-        uncertainty       = ensemble_data.get("uncertainty_score", 0) * 100   # Convert to percentage
-        consensus         = ensemble_data.get("consensus_level", 0) * 100     # Convert to percentage
+        synthetic_prob    = ensemble_data.get("synthetic_probability", 0) * 100 # Convert to percentage
+        authentic_prob    = ensemble_data.get("authentic_probability", 0) * 100 # Convert to percentage
+        hybrid_prob       = ensemble_data.get("hybrid_probability", 0) * 100    # Convert to percentage
+        confidence        = ensemble_data.get("overall_confidence", 0) * 100    # Convert to percentage
+        uncertainty       = ensemble_data.get("uncertainty_score", 0) * 100     # Convert to percentage
+        consensus         = ensemble_data.get("consensus_level", 0) * 100       # Convert to percentage
         final_verdict     = ensemble_data.get("final_verdict", "Unknown")
         total_time        = performance_data.get("total_time", 0)
         
         # Determine colors based on verdict
-        if ("Human".lower() in final_verdict.lower()):
+        if ("Authentically-Written".lower() in final_verdict.lower()):
             verdict_color = SUCCESS_COLOR
 
-        elif ("AI".lower() in final_verdict.lower()):
+        elif ("Synthetically-Generated".lower() in final_verdict.lower()):
             verdict_color = DANGER_COLOR
         
-        elif ("Mixed".lower() in final_verdict.lower()):
+        elif ("Hybrid".lower() in final_verdict.lower()):
             verdict_color = WARNING_COLOR
         
         else:
@@ -617,7 +580,7 @@ class ReportGenerator:
                                       alignment  = TA_RIGHT,
                                      )
         
-        elements.append(Paragraph("AI DETECTION ANALYTICS", header_style))
+        elements.append(Paragraph("TEXT AUTHENTICATION ANALYTICS", header_style))
 
         elements.append(HRFlowable(width      = "100%", 
                                    thickness  = 1, 
@@ -627,7 +590,7 @@ class ReportGenerator:
                        )
         
         # Title and main sections
-        elements.append(Paragraph("AI Text Detection Analysis Report", title_style))
+        elements.append(Paragraph("Text Authentication Analysis Report", title_style))
         elements.append(Paragraph(f"Generated on {datetime.now().strftime('%B %d, %Y at %I:%M %p')}", subtitle_style))
         
         # Add original filename
@@ -645,8 +608,8 @@ class ReportGenerator:
                        )
         
         # Quick Stats Banner
-        stats_data  = [['Text Source', 'AI', 'HUMAN', 'MIXED'],
-                       ['Probability', f"{ai_prob:.1f}%", f"{human_prob:.1f}%", f"{mixed_prob:.1f}%"]
+        stats_data  = [['Classification', 'Synthetic', 'Authentic', 'Hybrid'],
+                       ['Probability', f"{synthetic_prob:.1f}%", f"{authentic_prob:.1f}%", f"{hybrid_prob:.1f}%"]
                       ]
         
         stats_table = Table(stats_data, colWidths = [1.5*inch, 1*inch, 1*inch, 1*inch])
@@ -673,7 +636,7 @@ class ReportGenerator:
         # Main Verdict Section
         elements.append(Paragraph("DETECTION VERDICT", section_style))
         
-        verdict_box_data = [[Paragraph(f"<font size=18 color='{verdict_color}'><b>{final_verdict.upper()}</b></font>", ParagraphStyle('VerdictText', alignment=TA_CENTER)),
+        verdict_box_data = [[Paragraph(f"<font size=10 color='{verdict_color}'><b>{final_verdict.upper()}</b></font>", ParagraphStyle('VerdictText', alignment=TA_CENTER)),
                              Paragraph(f"<font size=12>Confidence: <b>{confidence:.1f}%</b></font><br/>" 
                                        f"<font size=10>Uncertainty: {uncertainty:.1f}% | Consensus: {consensus:.1f}%</font>", 
                                        ParagraphStyle('VerdictDetails', alignment=TA_CENTER))
@@ -699,7 +662,7 @@ class ReportGenerator:
         elements.append(Paragraph("DETECTION REASONING", section_style))
         
         # Process summary text and convert to bullet points
-        summary_text = reasoning.summary if hasattr(reasoning, 'summary') else "No reasoning summary available."
+        summary_text  = reasoning.summary if hasattr(reasoning, 'summary') else "No reasoning summary available."
         
         # Fix extra spaces first
         summary_text  = ' '.join(summary_text.split())
@@ -906,71 +869,6 @@ class ReportGenerator:
         
         elements.append(PageBreak())
         
-        # PAGE 6: Model Attribution & Recommendations
-        # AI MODEL ATTRIBUTION
-        if attribution_result:
-            elements.append(Paragraph("AI MODEL ATTRIBUTION", section_style))
-            elements.append(Spacer(1, 0.1*inch))
-            
-            predicted_model        = getattr(attribution_result.predicted_model, 'value', str(attribution_result.predicted_model))
-            predicted_model        = predicted_model.replace("_", " ").title()
-            attribution_confidence = getattr(attribution_result, 'confidence', 0) * 100
-            domain_used            = getattr(attribution_result.domain_used, 'value', 'Unknown').upper()
-            
-            # Professional attribution table
-            attribution_data       = [[Paragraph("<b>Predicted Model</b>", bold_style), Paragraph(f"<font color='{INFO_COLOR}'><b>{predicted_model}</b></font>", bold_style)],
-                                      [Paragraph("<b>Attribution Confidence</b>", bold_style), Paragraph(f"<b>{attribution_confidence:.1f}%</b>", bold_style)],
-                                      [Paragraph("<b>Domain Used</b>", bold_style), Paragraph(f"<b>{domain_used}</b>", bold_style)]
-                                     ]
-            
-            attribution_table      = Table(attribution_data, colWidths = [2.5*inch, 4*inch])
-
-            attribution_table.setStyle(TableStyle([('BACKGROUND', (0, 0), (0, -1), GRAY_LIGHT),
-                                                   ('FONTNAME', (0, 0), (0, -1), 'Helvetica-Bold'),
-                                                   ('FONTSIZE', (0, 0), (-1, -1), 11),
-                                                   ('BOTTOMPADDING', (0, 0), (-1, -1), 8),
-                                                   ('TOPPADDING', (0, 0), (-1, -1), 8),
-                                                   ('GRID', (0, 0), (-1, -1), 0.5, GRAY_MEDIUM),
-                                                   ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
-                                                 ])
-                                      )
-
-            elements.append(attribution_table)
-            elements.append(Spacer(1, 0.2*inch)) 
-            
-            # MODEL PROBABILITY DISTRIBUTION
-            model_probs = getattr(attribution_result, 'model_probabilities', {})
-            if (model_probs and (len(model_probs) > 0)):
-                elements.append(Paragraph("MODEL PROBABILITY DISTRIBUTION", subsection_style))
-                elements.append(Spacer(1, 0.05*inch))
-                
-                # Get top models 
-                sorted_models = sorted(model_probs.items(), key = lambda x: x[1], reverse = True)[:10] 
-                
-                prob_data     = [['LANGUAGE MODEL NAME', 'ATTRIBUTION PROBABILITY']]
-                
-                for model_name, probability in sorted_models:
-                    display_name = model_name.replace("_", " ").replace("-", " ").title()
-                    prob_data.append([Paragraph(display_name, bold_style), Paragraph(f"{probability:.1%}", bold_style)])
-                
-                # Table Columns Setup
-                prob_table = Table(prob_data, colWidths = [4*inch, 2.5*inch])
-
-                prob_table.setStyle(TableStyle([('BACKGROUND', (0, 0), (-1, 0), INFO_COLOR),
-                                                ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
-                                                ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
-                                                ('ALIGN', (1, 0), (1, -1), 'RIGHT'),
-                                                ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
-                                                ('FONTSIZE', (0, 0), (-1, -1), 11),  
-                                                ('BOTTOMPADDING', (0, 0), (-1, -1), 6),
-                                                ('TOPPADDING', (0, 0), (-1, -1), 6),
-                                                ('GRID', (0, 0), (-1, -1), 0.5, GRAY_MEDIUM),
-                                                ('BACKGROUND', (1, 1), (1, -1), GRAY_LIGHT),
-                                              ])
-                                   )
-
-                elements.append(prob_table)
-                elements.append(Spacer(1, 0.3*inch))
         
         # RECOMMENDATIONS
         if ((hasattr(reasoning, 'recommendations')) and reasoning.recommendations):
@@ -1014,12 +912,12 @@ class ReportGenerator:
         # Extract report ID from filename
         report_id   = filename.replace('.pdf', '')
         
-        footer_text = (f"Generated by AI Text Detector v1.0 | "
+        footer_text = (f"Generated by Text Authenticator v1.0 | "
                        f"Processing Time: {total_time:.2f}s | "
                        f"Report ID: {report_id}")
         
         elements.append(Paragraph(footer_text, footer_style))
-        elements.append(Paragraph("Confidential Analysis Report • © 2025 AI Detection Analytics", 
+        elements.append(Paragraph("Confidential Analysis Report • © 2025 Text Authentication Analytics", 
                         ParagraphStyle('Copyright', parent = footer_style, fontSize = 8, textColor = GRAY_MEDIUM)))
         
         # Build PDF
@@ -1043,11 +941,11 @@ class ReportGenerator:
         from reportlab.lib.enums import TA_LEFT
         
         # Determine metric color based on verdict
-        if (metric.verdict == "HUMAN"):
+        if (metric.verdict == "Authentic Text"):
             metric_color = SUCCESS_COLOR
             prob_color   = SUCCESS_COLOR
 
-        elif (metric.verdict == "AI"):
+        elif (metric.verdict == "Synthetic Text"):
             metric_color = DANGER_COLOR
             prob_color   = DANGER_COLOR
 
@@ -1062,7 +960,7 @@ class ReportGenerator:
         subsection_style    = ParagraphStyle('SubsectionStyle',
                                              parent      = ParagraphStyle('Normal'),
                                              fontName    = 'Helvetica-Bold',
-                                             fontSize    = 14,
+                                             fontSize    = 12,
                                              textColor   = PRIMARY_COLOR,
                                              spaceAfter  = 8,
                                              spaceBefore = 16,
@@ -1075,7 +973,7 @@ class ReportGenerator:
         
         # Key metrics in a clean table
         key_metrics_data  = [[Paragraph("<b>Verdict</b>", bold_style), Paragraph(f"<font color='{metric_color}'><b>{metric.verdict}</b></font>", bold_style), Paragraph("<b>Weight</b>", bold_style), Paragraph(f"<b>{metric.weight:.1f}%</b>", bold_style)],
-                             [Paragraph("<b>AI Probability</b>", bold_style), Paragraph(f"<font color='{prob_color}'><b>{metric.ai_probability:.1f}%</b></font>", bold_style), Paragraph("<b>Confidence</b>", bold_style), Paragraph(f"<b>{metric.confidence:.1f}%</b>", bold_style)]
+                             [Paragraph("<b>Synthetic Probability</b>", bold_style), Paragraph(f"<font color='{prob_color}'><b>{metric.synthetic_probability:.1f}%</b></font>", bold_style), Paragraph("<b>Confidence</b>", bold_style), Paragraph(f"<b>{metric.confidence:.1f}%</b>", bold_style)]
                             ]
         
         key_metrics_table = Table(key_metrics_data, colWidths = [1.5*inch, 1.5*inch, 1.5*inch, 1.5*inch])
@@ -1095,7 +993,7 @@ class ReportGenerator:
         # Detailed metrics in a compact table
         if metric.detailed_metrics and len(metric.detailed_metrics) > 0:
             # Create table with all metrics
-            detailed_data = []
+            detailed_data = list()
             
             # Sort metrics alphabetically
             sorted_items  = sorted(metric.detailed_metrics.items())
@@ -1180,6 +1078,4 @@ class ReportGenerator:
 
 
 # Export
-__all__ = ["ReportGenerator", 
-           "DetailedMetric",
-          ]
+__all__ = ["ReportGenerator"]

@@ -1,5 +1,5 @@
 ---
-title: Text Authentication Platform
+title: TEXT-AUTH — Evidence-Based Text Forensics System
 emoji: 🔍
 colorFrom: blue
 colorTo: purple
@@ -12,8 +12,8 @@ license: mit
 
 <div align="center">
 
-# 🔍 AI Text Authentication Platform
-## Enterprise‑Grade AI Content Authentication
+# 🛡️ TEXT-AUTH
+## Evidence-First Text Forensics & Authenticity Assessment
 
 ![Python](https://img.shields.io/badge/python-3.8+-blue.svg)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.104+-green.svg)
@@ -31,9 +31,9 @@ license: mit
 - [Key Differentiators](#key-differentiators)
 - [System Architecture](#system-architecture)
 - [Workflow / Data Flow](#workflow--data-flow)
-- [Detection Metrics & Mathematical Foundation](#detection-metrics--mathematical-foundation)
+- [Forensic Signals & Mathematical Foundation](#forensic-signals--mathematical-foundation)
 - [Ensemble Methodology](#ensemble-methodology)
-- [Domain-Aware Detection](#domain-aware-detection)
+- [Domain-Aware Analysis](#domain-aware-analysis)
 - [Performance Characteristics](#performance-characteristics)
 - [Project Structure](#project-structure)
 - [API Endpoints](#api-endpoints)
@@ -51,19 +51,24 @@ license: mit
 
 ## 📝 Abstract
 
-**AI Text Authentication Platform** is a research‑oriented, production‑minded MVP that detects and attributes AI‑generated text across multiple domains using a multi‑metric, explainable ensemble approach. The platform is designed for reproducibility, extensibility, and real‑world deployment: model weights are auto‑fetched from Hugging Face on first run and cached for offline reuse.
+**TEXT-AUTH** is a research-oriented, production-minded **text forensics system** that evaluates written content using multiple independent linguistic, statistical, and semantic signals.
 
-This README is research‑grade (detailed math, methodology, and benchmarks) while being approachable for recruiters and technical reviewers.
+Rather than claiming authorship or identifying a generation source, the platform performs **evidence-based probabilistic assessment** of textual consistency patterns. It reports confidence-calibrated signals, uncertainty estimates, and human-interpretable explanations to support downstream decision-making.
 
-*For detailed technical documentation, see [Technical Docs](docs/BLOGPOST.md). For research methodology, see [Whitepaper](docs/WHITE_PAPER.md).*
+TEXT-AUTH is designed as a **decision-support and forensic analysis tool**, not a binary classifier or attribution oracle.
+
+- *For Architectural details, see [Architecture](docs/ARCHITECTURE.md).*
+- *For detailed technical documentation, see [Technical Docs](docs/BLOGPOST.md).* 
+- *For research methodology, see [Whitepaper](docs/WHITE_PAPER.md).*
+- *For API documentation, see [API Documentation](docs/API_DOCUMENTATION.md).*
 
 ---
 
 ## 🚀 Overview
 
-**Problem.** AI generation tools increasingly produce publishable text, creating integrity and verification challenges in education, hiring, publishing, and enterprise content systems.
+**Problem.** Modern text—whether human-written, assisted, edited, or fully generated—often exhibits patterns that are difficult to evaluate using binary classifiers.
 
-**Solution.** A domain‑aware detector combining six orthogonal metrics (Perplexity, Entropy, Structural, Semantic, Linguistic, Multi-perturbation stability) into a confidence‑calibrated ensemble. Outputs are explainable with sentence‑level highlighting, attribution probabilities, and downloadable reports (JSON/PDF).
+**Solution.** A domain-aware analysis system combining six orthogonal evidence signals (Perplexity, Entropy, Structural, Semantic, Linguistic, Multi-perturbation stability) analysis into a confidence‑calibrated ensemble. Outputs are explainable with sentence‑level highlighting, and downloadable reports (JSON/PDF).
 
 **Live Deployment Link:** [AI Text Authenticator Platform](https://huggingface.co/spaces/satyaki-mitra/AI_Text_Authenticator)
 
@@ -75,16 +80,15 @@ This README is research‑grade (detailed math, methodology, and benchmarks) whi
 
 | Feature | Description | Impact |
 |---|---:|---|
-| **Domain‑Aware Detection** | Calibrated thresholds and metric weights for 16 content types (Academic, Technical, Creative, Social Media, etc.) | ↑15–20% accuracy vs generic detectors |
-| **6‑Metric Ensemble** | Orthogonal signals across statistical, syntactic and semantic dimensions | Low false positives (≈2–3%) |
+| **Domain‑Aware Detection** | Calibrated thresholds and metric weights for 16 content types (Academic, Technical, Creative, Social Media, etc.) | Improved signal calibration and reduced false positives compared to generic binary systems |
+| **6-Signal Evidence Ensemble** | Orthogonal statistical, syntactic, and semantic indicators | Robust assessments with reduced false positives |
 | **Explainability** | Sentence‑level scoring, highlights, and human‑readable reasoning | Trust & auditability |
-| **Model Attribution** | Likely model identification (GPT‑4, Claude, Gemini, LLaMA, etc.) | Forensic insights |
 | **Auto Model Fetch** | First‑run download from Hugging Face, local cache, offline fallback | Lightweight repo & reproducible runs |
 | **Extensible Design** | Plug‑in metrics, model registry, and retraining pipeline hooks | Easy research iteration |
 
 ### 📊 Supported Domains & Threshold Configuration
 
-The platform supports detection tailored to the following 16 domains, each with specific AI/Human probability thresholds and metric weights defined in `config/threshold_config.py`. These configurations are used by the ensemble classifier to adapt its decision-making process.
+The platform supports domain-aware forensic analysis tailored to the following 16 domains, each with specific synthetic-text consistency thresholds and metric weights defined in `config/threshold_config.py`. These configurations are used by the ensemble classifier to adapt its decision-making process.
 
 **Domains:**
 
@@ -109,8 +113,8 @@ The platform supports detection tailored to the following 16 domains, each with 
 
 Each domain is configured with specific thresholds for the six detection metrics and an ensemble threshold. The weights determine the relative importance of each metric's output during the ensemble aggregation phase.
 
-*   **AI Threshold:** If a metric's AI probability exceeds this value, it leans towards an "AI" classification for that metric.
-*   **Human Threshold:** If a metric's AI probability falls below this value, it leans towards a "Human" classification for that metric.
+*   **High-Consistency Threshold:** If a metric's synthetic-consistency score exceeds this value, it contributes stronger evidence toward a synthetic-consistency assessment for that metric.
+*   **Low-Consistency Threshold:** If a metric's Authentic probability falls below this value, it contributes evidence toward higher human-authored consistency for that metric.
 *   **Weight:** The relative weight assigned to the metric's result during ensemble combination (normalized internally to sum to 1.0 for active metrics).
 
 ### Confidence-Calibrated Aggregation (High Level)
@@ -138,7 +142,7 @@ flowchart LR
         C[FastAPI<br/>Auth & Rate Limit]
     end
 
-    subgraph ORCH [Detection Orchestrator]
+    subgraph ORCH [Forensic Orchestrator]
         D[Domain Classifier]
         E[Preprocessor]
         F[Metric Coordinator]
@@ -153,9 +157,9 @@ flowchart LR
         P6[MultiPerturbationStability]
     end
 
-    G[Ensemble Classifier]
+    G[Evidence Aggregator]
     H[Postprocessing & Reporter]
-    I["Model Manager<br/>(HuggingFace Cache)"]
+    I["Statistical Reference Models<br/>(HuggingFace Cache)"]
     J[Storage: Logs, Reports, Cache]
 
     A --> C
@@ -190,7 +194,7 @@ sequenceDiagram
     O->>M: Preprocess & dispatch metrics (parallel)
     M-->>O: Metric results (async)
     O->>E: Aggregate & calibrate
-    E-->>O: Final verdict + uncertainty
+    E-->>O: Final assessment + uncertainty
     O->>R: Generate highlights & report
     R-->>API: Report ready (JSON/PDF)
     API-->>U: Return analysis + download link
@@ -198,9 +202,9 @@ sequenceDiagram
 
 ---
 
-## 🧮 Detection Metrics & Mathematical Foundation
+## 🧮 Forensic Signals & Mathematical Foundation
 
-This section provides the exact metric definitions implemented in `metrics/` and rationale for their selection. The ensemble combines these orthogonal signals to increase robustness against adversarial or edited AI content.
+This section provides the exact metric definitions implemented in `metrics/` and rationale for their selection. The ensemble combines these orthogonal signals to increase robustness against edited, paraphrased, or algorithmically regularized text.
 
 ### Metric summary (weights are configurable per domain)
 - Perplexity — 25%
@@ -356,9 +360,9 @@ def ensemble_aggregation(metric_results, domain):
 ### Uncertainty Quantification
 ```python
 def calculate_uncertainty(metric_results, ensemble_result):
-    var_uncert = np.var([r.ai_probability for r in metric_results.values()])
+    var_uncert = np.var([r.synthetic_probability for r in metric_results.values()])
     conf_uncert = 1 - np.mean([r.confidence for r in metric_results.values()])
-    decision_uncert = 1 - 2*abs(ensemble_result.ai_probability - 0.5)
+    decision_uncert = 1 - 2*abs(ensemble_result.synthetic_probability - 0.5)
     return var_uncert*0.4 + conf_uncert*0.3 + decision_uncert*0.3
 ```
 
@@ -369,17 +373,16 @@ def calculate_uncertainty(metric_results, ensemble_result):
 Domain weights and thresholds are configurable. Example weights (in `config/threshold_config.py`):
 
 ```python
-DOMAIN_WEIGHTS = {
-  'academic': {'perplexity':0.22,'entropy':0.18,'structural':0.15,'linguistic':0.20,'semantic':0.15,'multi_perturbation_stability':0.10},
-  'technical': {'perplexity':0.20,'entropy':0.18,'structural':0.12,'linguistic':0.18,'semantic':0.22,'multi_perturbation_stability':0.10},
-  'creative': {'perplexity':0.25,'entropy':0.25,'structural':0.20,'linguistic':0.12,'semantic':0.10,'multi_perturbation_stability':0.08},
-  'social_media': {'perplexity':0.30,'entropy':0.22,'structural':0.15,'linguistic':0.10,'semantic':0.13,'multi_perturbation_stability':0.10}
-}
+DOMAIN_WEIGHTS = {'academic'     : {'perplexity':0.22,'entropy':0.18,'structural':0.15,'linguistic':0.20,'semantic':0.15,'multi_perturbation_stability':0.10},
+                  'technical'    : {'perplexity':0.20,'entropy':0.18,'structural':0.12,'linguistic':0.18,'semantic':0.22,'multi_perturbation_stability':0.10},
+                  'creative'     : {'perplexity':0.25,'entropy':0.25,'structural':0.20,'linguistic':0.12,'semantic':0.10,'multi_perturbation_stability':0.08},
+                  'social_media' : {'perplexity':0.30,'entropy':0.22,'structural':0.15,'linguistic':0.10,'semantic':0.13,'multi_perturbation_stability':0.10},
+                 }
 ```
 
 ### Domain Calibration Strategy (brief)
 - **Academic**: increase linguistic weight, raise perplexity multiplier
-- **Technical**: prioritize semantic coherence, maximize AI threshold to reduce false positives
+- **Technical**: prioritize semantic coherence, maximize Synthetic threshold to reduce false positives
 - **Creative**: boost entropy & structural weights for burstiness detection
 - **Social Media**: prioritize perplexity and relax linguistic demands
 
@@ -409,13 +412,17 @@ text_auth/
 ├── config/
 │   ├── model_config.py
 │   ├── settings.py
+|   ├── enums.py
+|   ├── constants.py
+|   ├── schemas.py
 │   └── threshold_config.py
 ├── data/
 │   ├── reports/
+|   ├── validation_data/
 │   └── uploads/
-├── detector/
-│   ├── attribution.py
-│   ├── ensemble.py
+├── services/
+│   ├── reasoning_generator.py
+│   ├── ensemble_classifier.py
 │   ├── highlighter.py
 │   └── orchestrator.py
 ├── metrics/
@@ -435,15 +442,22 @@ text_auth/
 │   ├── language_detector.py
 │   └── text_processor.py
 ├── reporter/
-│   ├── reasoning_generator.py
 │   └── report_generator.py
 ├── ui/
 │   └── static/index.html
 ├── utils/
 │   └── logger.py
+├── validation/
 ├── example.py
 ├── requirements.txt
 ├── run.sh
+├── README.md
+├── Dockerfile
+├── .gitignore
+├── setup.sh
+├── test_integration.py
+├── .env.example
+├── requirements.txt
 └── text_auth_app.py
 ```
 
@@ -452,34 +466,40 @@ text_auth/
 ## 🌐 API Endpoints 
 
 ### `/api/analyze` — Text Analysis (POST)
-Analyze raw text. Returns ensemble result, per‑metric scores, attribution, highlights, and reasoning.
+Analyze raw text. Returns ensemble assessment, per‑metric signals, highlights, and explainability reasoning.
 
 **Request (JSON)**
 ```json
 {
   "text":"...",
   "domain":"academic|technical_doc|creative|social_media",
-  "enable_attribution": true,
   "enable_highlighting": true,
   "use_sentence_level": true,
-  "include_metrics_summary": true
-}
 ```
 
 **Response (JSON)** — abbreviated
 ```json
 {
-  "status":"success",
-  "analysis_id":"analysis_170...",
-  "detection_result":{
-    "ensemble_result":{ "final_verdict":"AI-Generated", "ai_probability":0.89, "uncertainty_score":0.23 },
-    "metric_results":{ "...": { "ai_probability":0.92, "confidence":0.89 } }
+  "status": "success",
+  "analysis_id": "analysis_170...",
+  "assessment": {
+    "final_verdict": "Synthetic / Authentic / Hybrid",
+    "overall_confidence": 0.89,
+    "uncertainty_score": 0.23
   },
-  "attribution":{ "predicted_model":"gpt-4", "confidence":0.76 },
-  "highlighted_html":"<div>...</div>",
-  "reasoning":{ "summary":"...", "key_indicators":[ "...", "..."] }
+  "metric_signals": {
+    "perplexity": { "score": 0.92, "confidence": 0.89 }
+  },
+  "highlighted_html": "<div>...</div>",
+  "reasoning": {
+    "summary": "...",
+    "key_indicators": ["...", "..."]
+  }
 }
 ```
+
+> **Note:** The final verdict represents a probabilistic consistency assessment, not an authorship or generation claim.
+
 
 ### `/api/analyze/file` — File Analysis (POST, multipart/form-data)
 Supports PDF, DOCX, TXT, DOC, MD. File size limit default: 10MB. Returns same structure as text analyze endpoint.
@@ -534,7 +554,7 @@ python text_auth_app.py
 **Example snippet**
 ```python
 from huggingface_hub import snapshot_download
-snapshot_download(repo_id="satyaki-mitra/text-detector-v1", local_dir="./models/text-detector-v1")
+snapshot_download(repo_id="satyaki-mitra/statistical-text-reference-v1", local_dir="./models/text-detector-v1")
 ```
 
 ---
@@ -556,7 +576,7 @@ snapshot_download(repo_id="satyaki-mitra/text-detector-v1", local_dir="./models/
 **Use cases**: universities (plagiarism & integrity), hiring platforms (resume authenticity), publishers (content verification), social platforms (spam & SEO abuse).
 
 **Competitive landscape** (summary)
-- GPTZero, Originality.ai, Copyleaks — our advantages: domain adaptation, explainability, attribution, lower false positives and competitive pricing.
+- Binary authorship-claim systems (e.g., GPTZero-style tools) — our advantages: domain adaptation, explainability, evidence transparency, lower false positives and competitive pricing. TEXT-AUTH explicitly avoids authorship claims in favor of evidence-based forensic assessment.
 
 **Monetization ideas**
 - SaaS subscription (seat / monthly analyze limits)
@@ -571,13 +591,11 @@ snapshot_download(repo_id="satyaki-mitra/text-detector-v1", local_dir="./models/
 **Research directions**
 - Adversarial robustness (paraphrase & synonym attacks)
 - Cross‑model generalization & zero‑shot detection
-- Fine‑grained attribution (model versioning, temperature estimation)
 - Explainability: counterfactual examples & feature importance visualization
 
 **Planned features (Q1‑Q2 2026)**
 - Multi‑language support (Spanish, French, German, Chinese)
 - Real‑time streaming API (WebSocket)
-- Fine‑grained attribution & generation parameter estimation
 - Institution‑specific calibration & admin dashboards
 
 *Detailed research methodology and academic foundation available in our [Whitepaper](docs/WHITE_PAPER.md). Technical implementation details in [Technical Documentation](docs/BLOGPOST.md).*
@@ -649,7 +667,7 @@ Acknowledgments:
 
 <div align="center">
 
-**Built with ❤️ — AI transparency, accountability, and real‑world readiness.**
+**Built with ❤️ — Evidence-based text forensics, transparency, and real-world readiness.**
 
 *Version 1.0.0 — Last Updated: October, 2025*
 

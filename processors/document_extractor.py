@@ -2,7 +2,6 @@
 import io
 import os
 import re
-import mimetypes
 from typing import Any
 from typing import Dict
 from typing import List
@@ -10,7 +9,8 @@ from pathlib import Path
 from typing import Tuple
 from loguru import logger
 from typing import Optional 
-from dataclasses import dataclass
+from config.schemas import ExtractedDocument
+from config.constants import document_extraction_params
 
 
 # Document processing libraries
@@ -67,82 +67,38 @@ except ImportError:
     BS4_AVAILABLE = False
 
 
-@dataclass
-class ExtractedDocument:
-    """
-    Container for extracted document content with metadata
-    """
-    text              : str
-    file_path         : Optional[str]
-    file_type         : str
-    file_size_bytes   : int
-    page_count        : int
-    extraction_method : str
-    metadata          : Dict[str, Any]
-    is_success        : bool
-    error_message     : Optional[str]
-    warnings          : List[str]
-    
-
-    def to_dict(self) -> Dict[str, Any]:
-        """
-        Convert to dictionary for JSON serialization
-        """
-        return {"text_length"        : len(self.text),
-                "file_type"          : self.file_type,
-                "file_size_bytes"    : self.file_size_bytes,
-                "page_count"         : self.page_count,
-                "extraction_method"  : self.extraction_method,
-                "metadata"           : self.metadata,
-                "is_success"         : self.is_success,
-                "error_message"      : self.error_message,
-                "warnings"           : self.warnings,
-               }
-
-
 class DocumentExtractor:
     """
-    Extracts text from various document formats for AI detection processing
+    Extracts and normalizes textual content from heterogeneous document formats
+    for downstream text authentication and provenance analysis
 
     Supported Formats:
-    - Plain text (.txt, .md, .log)
-    - PDF documents (.pdf) - Uses PyMuPDF as primary extractor
+    - Plain text (.txt, .md, .log, .csv)
+    - PDF documents (.pdf)
     - Microsoft Word (.doc, .docx)
     - Rich Text Format (.rtf)
     - HTML files (.html, .htm)
 
-    Features:
-    - Robust error handling
-    - Encoding detection
-    - Metadata extraction
-    - Page/section preservation
-    - Memory-efficient processing
-    """
-    
-    # Supported file extensions
-    SUPPORTED_EXTENSIONS = {'.txt', '.text', '.md', '.markdown', '.log', '.csv', '.pdf', '.docx', '.doc',  '.rtf', '.html', '.htm'}
-    
-    # Text file extensions
-    TEXT_EXTENSIONS      = {'.txt', '.text', '.md', '.markdown', '.log', '.csv'}
-    
-    # Maximum file size (50 MB default)
-    MAX_FILE_SIZE        = 50 * 1024 * 1024
-
-    
-    def __init__(self, max_file_size: int = MAX_FILE_SIZE, extract_metadata: bool = True):
+    Design Principles:
+    - Loss-minimized text extraction
+    - Best-effort fallback strategy
+    - Metadata-preserving ingestion
+    - Format-agnostic downstream compatibility
+    """    
+    def __init__(self, extract_metadata: bool = True):
         """
         Initialize document extractor
         
         Arguments:
         ----------
-            max_file_size      { int }  : Maximum file size in bytes
-
             extract_metadata   { bool } : Extract document metadata
         """
-        self.max_file_size      = max_file_size
-        self.extract_metadata   = extract_metadata
+        self.max_file_size        = document_extraction_params.MAX_FILE_SIZE
+        self.text_extensions      = document_extraction_params.TEXT_EXTENSIONS
+        self.supported_extensions = document_extraction_params.SUPPORTED_EXTENSIONS
+        self.extract_metadata     = extract_metadata
         
-        logger.info(f"DocumentExtractor initialized (max_size={max_file_size/1024/1024:.1f}MB)")
+        logger.info(f"DocumentExtractor initialized (max_size={self.max_file_size/1024/1024:.1f}MB)")
     
 
     def extract(self, file_path: str) -> ExtractedDocument:
@@ -173,7 +129,7 @@ class DocumentExtractor:
             file_ext  = file_path.suffix.lower()
             
             # Route to appropriate extractor
-            if (file_ext in self.TEXT_EXTENSIONS):
+            if (file_ext in self.text_extensions):
                 result = self._extract_text_file(file_path)
             
             elif (file_ext == '.pdf'):
@@ -227,7 +183,7 @@ class DocumentExtractor:
             # Determine file type
             file_ext = Path(filename).suffix.lower()
             
-            if file_ext not in self.SUPPORTED_EXTENSIONS:
+            if file_ext not in self.supported_extensions:
                 return self._create_error_result(file_path = filename,
                                                  error     = f"Unsupported file type: {file_ext}",
                                                 )
@@ -239,7 +195,7 @@ class DocumentExtractor:
                                                 )
             
             # Route to appropriate extractor
-            if (file_ext in self.TEXT_EXTENSIONS):
+            if (file_ext in self.text_extensions):
                 result = self._extract_text_bytes(file_bytes, filename)
             
             elif (file_ext == '.pdf'):
@@ -508,7 +464,7 @@ class DocumentExtractor:
             # Primary: Try PyMuPDF first
             if PYPDF_AVAILABLE:
                 try:
-                    doc        = fitz.open(stream=file_bytes, filetype="pdf")
+                    doc        = fitz.open(stream = file_bytes, filetype = "pdf")
                     page_count = doc.page_count
                     metadata   = doc.metadata
                     
@@ -865,7 +821,7 @@ class DocumentExtractor:
             return False, f"File too large: {file_size/1024/1024:.1f}MB (max: {self.max_file_size/1024/1024:.1f}MB)"
         
         # Check file extension
-        if (file_path.suffix.lower() not in self.SUPPORTED_EXTENSIONS):
+        if (file_path.suffix.lower() not in self.supported_extensions):
             return False, f"Unsupported file type: {file_path.suffix}"
         
         return True, None

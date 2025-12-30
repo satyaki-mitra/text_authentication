@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Text Detector - Verifying Content Authenticity Using Statistics</title>
+<title>TextAuth Forensics — Evidence-Based Text Authenticity Analysis</title>
 <style>
 * {
     margin: 0;
@@ -731,12 +731,12 @@ input[type="checkbox"] {
     min-width: 60px;
     text-align: center;
 }
-.ai-badge {
+.synthetic-badge {
     background: rgba(239, 68, 68, 0.2);
     color: var(--danger);
     border: 1px solid rgba(239, 68, 68, 0.3);
 }
-.human-badge {
+.authentic-badge {
     background: rgba(16, 185, 129, 0.2);
     color: var(--success);
     border: 1px solid rgba(16, 185, 129, 0.3);
@@ -762,54 +762,6 @@ input[type="checkbox"] {
 .agreement-text {
     font-size: 0.9rem;
     font-weight: 600;
-}
-/* Attribution Section */
-.attribution-section {
-    margin-top: 2rem;
-    padding: 1.5rem;
-    background: rgba(51, 65, 85, 0.3);
-    border-radius: 10px;
-    border: 1px solid var(--border);
-}
-.attribution-title {
-    font-size: 1.1rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-    color: #fff;
-}
-.model-match {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.75rem;
-    background: rgba(6, 182, 212, 0.1);
-    border-radius: 6px;
-    margin-bottom: 0.5rem;
-}
-.model-name {
-    font-weight: 600;
-    color: var(--text-primary);
-}
-.model-confidence {
-    font-weight: 700;
-    color: var(--primary);
-}
-.attribution-confidence {
-    margin-top: 0.75rem;
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-}
-.attribution-uncertain {
-    color: var(--text-muted);
-    font-style: italic;
-    margin-top: 0.5rem;
-    font-size: 0.9rem;
-}
-.attribution-reasoning {
-    color: var(--text-secondary);
-    margin-top: 1rem;
-    font-size: 0.9rem;
-    line-height: 1.4;
 }
 /* Download Actions */
 .download-actions {
@@ -908,11 +860,11 @@ input[type="checkbox"] {
     text-transform: uppercase;
     margin-top: 0.5rem;
 }
-.verdict-ai {
+.verdict-synthetic {
     background: rgba(239, 68, 68, 0.2);
     color: var(--danger);
 }
-.verdict-human {
+.verdict-authentic {
     background: rgba(16, 185, 129, 0.2);
     color: var(--success);
 }
@@ -1030,7 +982,7 @@ input[type="checkbox"] {
     font-size: 1.1rem !important;
 }
 
-.verdict-mixed {
+.verdict-hybrid {
     background: rgba(168, 85, 247, 0.2);
     color: #a855f7;
     border: 1px solid rgba(168, 85, 247, 0.3);
@@ -1109,11 +1061,11 @@ html {
 <div class="header">
 <a href="#" class="logo" onclick="showLanding(); return false;">
     <div class="logo-icon">🔍</div>
-    <span>AI Text Detector</span>
+    <span>TextAuth Forensics</span>
 </a>
 <div class="nav-links">
     <a href="#features" class="nav-link">Features</a>
-    <a href="#metrics" class="nav-link">Detection Metrics</a>
+    <a href="#metrics" class="nav-link">Forensic Signals</a>
     <a href="#" class="nav-link" onclick="showAnalysis(); return false;">Try It Now</a>
 </div>
 </div>
@@ -1121,26 +1073,27 @@ html {
 <div class="landing-page" id="landing-page">
 <!-- Hero Section -->
 <section class="hero">
-    <h1 class="hero-title">AI Text Detection Platform</h1>
-    <p class="hero-subtitle">Verifying Content Authenticity with Precision</p>
+    <h1 class="hero-title">Evidence-Based Text Forensics Platform</h1>
+    <p class="hero-subtitle">Analyzing Content Authenticity Through Linguistic & Statistical Evidence</p>
     <p class="hero-description">
-        Production-ready platform designed to identify AI-generated content across education, 
-        publishing, hiring, and research domains using sophisticated ensemble detection.
+        A forensic analysis system that evaluates textual evidence using multiple statistical,
+        linguistic, and semantic signals to assess content authenticity across education,
+        publishing, hiring, and research domains.
     </p>
     <button class="try-btn" onclick="showAnalysis()"> Try It Now   → </button>
 </section>
 <!-- Stats -->
 <div class="stats-grid">
     <div class="stat-card">
-        <div class="stat-value">2.4%</div>
-        <div class="stat-label">False Positive Rate</div>
+        <div class="stat-value">Low</div>
+        <div class="stat-label">False-Positive Bias (Domain-Calibrated)</div>
     </div>
     <div class="stat-card">
         <div class="stat-value">6</div>
-        <div class="stat-label">Total Detection Metrics</div>
+        <div class="stat-label">Total Forensic Signals</div>
     </div>
     <div class="stat-card">
-        <div class="stat-value">5s</div>
+        <div class="stat-value">10s</div>
         <div class="stat-label">Average Processing Time</div>
     </div>
 </div>
@@ -1153,23 +1106,23 @@ html {
     <div class="features-grid">
         <div class="feature-card">
             <div class="feature-icon">🎯</div>
-            <h3 class="feature-title">Domain-Aware Detection</h3>
+            <h3 class="feature-title">Domain-Aware Analysis</h3>
             <p class="feature-description">
-                Calibrated thresholds for Academic, Technical, Creative, and Casual content types with specialized detection algorithms for each domain.
+                Calibrated thresholds for Academic, Technical, Creative, and Casual content types with specialized analysis algorithms for each domain.
             </p>
         </div>
         <div class="feature-card">
             <div class="feature-icon">🔬</div>
-            <h3 class="feature-title">6-Metric Ensemble</h3>
+            <h3 class="feature-title">6-Signal Evidence Ensemble</h3>
             <p class="feature-description">
-                Combines Perplexity, Entropy, Statistical, Linguistic, Semantic Analysis, and Multi-Perturbation Stability for comprehensive detection with orthogonal signal capture.
+                Combines perplexity, entropy, structural, linguistic, semantic, and perturbation-stability signals to form a multi-angle forensic evidence profile
             </p>
         </div>
         <div class="feature-card">
             <div class="feature-icon">💡</div>
             <h3 class="feature-title">Explainable Results</h3>
             <p class="feature-description">
-                Sentence-level highlighting with confidence scores and detailed reasoning for every detection decision.
+                Sentence-level highlighting with confidence scores and detailed forensic reasoning for each assessment.
             </p>
         </div>
         <div class="feature-card">
@@ -1177,13 +1130,6 @@ html {
             <h3 class="feature-title">Fast Processing</h3>
             <p class="feature-description">
                 Analyze short texts in 1.2 seconds, medium documents in 3.5 seconds with parallel metric computation.
-            </p>
-        </div>
-        <div class="feature-card">
-            <div class="feature-icon">🤖</div>
-            <h3 class="feature-title">Model Attribution</h3>
-            <p class="feature-description">
-                Identifies which AI model likely generated the text - GPT-4, Claude, Gemini, LLaMA, and more.
             </p>
         </div>
         <div class="feature-card">
@@ -1197,29 +1143,29 @@ html {
 </section>
 <!-- Metrics Section -->
 <section class="metrics-info" id="metrics">
-    <h2 class="section-title">Detection Metrics Explained</h2>
+    <h2 class="section-title">Forensic Signals Explained</h2>
     <p class="section-subtitle">
-        Understanding the science behind the detection
+        Understanding the science behind the forensic evaluation
     </p>
     <div class="metric-card">
         <div class="metric-icon-box">📊</div>
         <div class="metric-content">
             <h3>Perplexity <span class="metric-weight">Weight: 25%</span></h3>
-            <p>Measures how predictable the text is using GPT-2 language model. AI-generated text typically has lower perplexity (more predictable) than human writing, which tends to be more varied and surprising.</p>
+            <p>Measures how predictable the text is using reference language model. Model-generated or algorithmically assisted text typically exhibits lower perplexity (more predictable) than human writing, which tends to be more varied and surprising.</p>
         </div>
     </div>
     <div class="metric-card">
         <div class="metric-icon-box">🎲</div>
         <div class="metric-content">
             <h3>Entropy <span class="metric-weight">Weight: 20%</span></h3>
-            <p>Calculates token-level diversity and unpredictability in text sequences. Human writing shows higher entropy with more varied word choices, while AI tends toward more uniform token distributions.</p>
+            <p>Calculates token-level diversity and unpredictability in text sequences. Human writing shows higher entropy with more varied word choices, while algorithmically generated text tends toward more uniform token distributions.</p>
         </div>
     </div>
     <div class="metric-card">
         <div class="metric-icon-box">📈</div>
         <div class="metric-content">
             <h3>Structural Analysis <span class="metric-weight">Weight: 15%</span></h3>
-            <p>Analyzes sentence length variance, punctuation patterns, and lexical burstiness. Human writing exhibits more variation in sentence structure and rhythm compared to AI's consistent patterns.</p>
+            <p>Analyzes sentence length variance, punctuation patterns, and lexical burstiness. Human writing exhibits more variation in sentence structure and rhythm compared to algorithmically generated text, which often shows more uniform patterns.</p>
         </div>
     </div>
     <div class="metric-card">
@@ -1233,21 +1179,21 @@ html {
         <div class="metric-icon-box">🧠</div>
         <div class="metric-content">
             <h3>Semantic Analysis <span class="metric-weight">Weight: 15%</span></h3>
-            <p>Assesses semantic coherence, repetition patterns, and contextual consistency. Detects the subtle semantic fingerprints that distinguish AI-generated content from human writing.</p>
+            <p>Assesses semantic coherence, repetition patterns, and contextual consistency. Identifies semantic consistency patterns that often differ between human-authored and algorithmically generated text.</p>
         </div>
     </div>
     <div class="metric-card">
         <div class="metric-icon-box">🔍</div>
         <div class="metric-content">
             <h3>Multi-Perturbation Stability <span class="metric-weight">Weight: 10%</span></h3>
-            <p>Tests text stability under random perturbations. AI-generated text tends to maintain higher likelihood scores even when slightly modified, while human text shows more variation.</p>
+            <p>Tests text stability under random perturbations. Algorithmically generated text tends to maintain higher likelihood scores even when slightly modified, while human text shows more variation.</p>
         </div>
     </div>
 </section>
 <!-- Footer -->
 <footer class="footer">
-    <p>&copy; 2025 AI Text Detector Platform</p>
-    <p style="margin-top: 1rem;">AI detection with enterprise accuracy and explainability.</p>
+    <p>&copy; 2025 Evidence-Based Text Forensics Platform</p>
+    <p style="margin-top: 1rem;">Evidence-first text forensics with explainable decisions.</p>
 </footer>
 </div>
 <!-- Analysis Interface -->
@@ -1270,7 +1216,7 @@ html {
                     id="text-input" 
                     class="text-input" 
                     placeholder="Paste your text here for analysis...
-The more text you provide (minimum 50 characters), the more accurate the detection will be."
+                    The more text you provide (minimum 50 characters), the more reliable the forensic evaluation will be."
                 ></textarea>
             </div>
             <div id="upload-tab" class="tab-content">
@@ -1299,13 +1245,6 @@ The more text you provide (minimum 50 characters), the more accurate the detecti
                         <option value="creative">Creative Writing</option>
                         <option value="social_media">Social Media</option>
                     </select>
-                </div>
-                <div class="option-row">
-                    <label class="option-label">Enable AI Model Attribution:</label>
-                    <div class="checkbox-wrapper">
-                        <input type="checkbox" id="enable-attribution" checked>
-                        <span style="font-size: 0.85rem; color: var(--text-muted);">Identify which AI model generated the text</span>
-                    </div>
                 </div>
                 <div class="option-row">
                     <label class="option-label">Enable Sentence Highlighting:</label>
@@ -1366,8 +1305,8 @@ The more text you provide (minimum 50 characters), the more accurate the detecti
                     <div class="empty-icon">✓</div>
                     <h3 class="empty-title">Ready for Analysis</h3>
                     <p class="empty-description">
-                        Paste text or upload a document to begin comprehensive AI detection analysis.
-                        Our 6-metric ensemble will provide detailed insights.
+                        Paste text or upload a document to begin evidence-based forensic analysis.
+                        Our multi-signal ensemble will provide detailed, explainable insights.
                     </p>
                 </div>
             </div>
@@ -1429,7 +1368,6 @@ function resetAnalysisInterface() {
     document.getElementById('paste-tab').classList.add('active');
     // Reset options to defaults
     document.getElementById('domain-select').value = '';
-    document.getElementById('enable-attribution').checked = true;
     document.getElementById('enable-highlighting').checked = true;
     document.getElementById('use-sentence-level').checked = true;
     document.getElementById('include-metrics-summary').checked = true;
@@ -1444,8 +1382,8 @@ function resetAnalysisInterface() {
             <div class="empty-icon">✓</div>
             <h3 class="empty-title">Ready for Analysis</h3>
             <p class="empty-description">
-                Paste text or upload a document to begin comprehensive AI detection analysis.
-                Our 6-metric ensemble will provide detailed insights.
+                Paste text or upload a document to begin evidence-based forensic analysis.
+                Our multi-signal ensemble will provide detailed, explainable insights.
             </p>
         </div>
     `;
@@ -1613,7 +1551,6 @@ async function performAnalysis(mode, text, file) {
 
 async function analyzeText(text) {
     const domain = document.getElementById('domain-select').value || null;
-    const enableAttribution = document.getElementById('enable-attribution').checked;
     const enableHighlighting = document.getElementById('enable-highlighting').checked;
     const useSentenceLevel = document.getElementById('use-sentence-level').checked;
     const includeMetricsSummary = document.getElementById('include-metrics-summary').checked;
@@ -1624,7 +1561,6 @@ async function analyzeText(text) {
         body: JSON.stringify({
             text: text,
             domain: domain,
-            enable_attribution: enableAttribution,
             enable_highlighting: enableHighlighting,
             use_sentence_level: useSentenceLevel,
             include_metrics_summary: includeMetricsSummary,
@@ -1641,14 +1577,12 @@ async function analyzeText(text) {
 
 async function analyzeFile(file) {
     const domain = document.getElementById('domain-select').value || null;
-    const enableAttribution = document.getElementById('enable-attribution').checked;
     const useSentenceLevel = document.getElementById('use-sentence-level').checked;
     const includeMetricsSummary = document.getElementById('include-metrics-summary').checked;
 
     const formData = new FormData();
     formData.append('file', file);
     if (domain) formData.append('domain', domain);
-    formData.append('enable_attribution', enableAttribution.toString());
     formData.append('use_sentence_level', useSentenceLevel.toString());
     formData.append('include_metrics_summary', includeMetricsSummary.toString());
     formData.append('skip_expensive_metrics', 'false');
@@ -1669,7 +1603,7 @@ function showLoading() {
     document.getElementById('summary-report').innerHTML = `
         <div class="loading">
             <div class="spinner"></div>
-            <p style="color: var(--text-secondary);">Analyzing content with 6-metric ensemble...</p>
+            <p style="color: var(--text-secondary);">Analyzing content using multi-signal forensic evaluation...</p>
             <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.5rem;">
                 This may take a few seconds
             </p>
@@ -1704,7 +1638,7 @@ function displayResults(data) {
     const analysis = detection.analysis || {};
 
     // Display Summary with enhanced reasoning
-    displaySummary(ensemble, prediction, analysis, data.attribution, data.reasoning);
+    displaySummary(ensemble, prediction, analysis, data.reasoning);
 
     // Display Highlighted Text with enhanced features
     if (data.highlighted_html) {
@@ -1729,31 +1663,27 @@ function displayResults(data) {
     }
 }
 
-function displaySummary(ensemble, prediction, analysis, attribution, reasoning) {
+function displaySummary(ensemble, prediction, analysis, reasoning) {
     // Extract and validate data with fallbacks
     const {
-        aiProbability,
-        humanProbability,
-        mixedProbability,
+        syntheticProbability,
+        authenticProbability,
+        hybridProbability,
         verdict,
         confidence,
         domain,
-        isAI,
+        isSynthetic,
         gaugeColor,
         gaugeDegree,
         confidenceLevel,
         confidenceClass
     } = extractSummaryData(ensemble, analysis);
 
-    // Generate attribution HTML with proper filtering
-    const attributionHTML = generateAttributionHTML(attribution);
-
     document.getElementById('summary-report').innerHTML = `
         <div class="result-summary">
-            ${createGaugeSection(aiProbability, humanProbability, mixedProbability, gaugeColor, gaugeDegree)}
-            ${createInfoGrid(verdict, confidence, confidenceClass, domain, mixedProbability)}
+            ${createGaugeSection(syntheticProbability, authenticProbability, hybridProbability, gaugeColor, gaugeDegree)}
+            ${createInfoGrid(verdict, confidence, confidenceClass, domain, hybridProbability)}
             ${createEnhancedReasoningHTML(ensemble, analysis, reasoning)}
-            ${attributionHTML}
             ${createDownloadActions()}
         </div>
     `;
@@ -1761,34 +1691,45 @@ function displaySummary(ensemble, prediction, analysis, attribution, reasoning) 
 
 // Helper function to extract and validate summary data
 function extractSummaryData(ensemble, analysis) {
-    const aiProbability = ensemble.ai_probability !== undefined ? 
-        (ensemble.ai_probability * 100).toFixed(0) : '0';
-    
-    const humanProbability = ensemble.human_probability !== undefined ? 
-        (ensemble.human_probability * 100).toFixed(0) : '0';
-    
-    const mixedProbability = ensemble.mixed_probability !== undefined ? 
-        (ensemble.mixed_probability * 100).toFixed(0) : '0';
-    
+    const syntheticProbability = ensemble.synthetic_probability !== undefined
+        ? (ensemble.synthetic_probability * 100).toFixed(0)
+        : '0';
+
+    const authenticProbability = ensemble.authentic_probability !== undefined
+        ? (ensemble.authentic_probability * 100).toFixed(0)
+        : '0';
+
+    const hybridProbability = ensemble.hybrid_probability !== undefined
+        ? (ensemble.hybrid_probability * 100).toFixed(0)
+        : '0';
+
     const verdict = ensemble.final_verdict || 'Unknown';
-    const confidence = ensemble.overall_confidence !== undefined ?
-        (ensemble.overall_confidence * 100).toFixed(1) : '0';
+
+    const confidence = ensemble.overall_confidence !== undefined
+        ? (ensemble.overall_confidence * 100).toFixed(1)
+        : '0';
+
     const domain = analysis.domain || 'general';
-    const isAI = verdict.toLowerCase().includes('ai');
-    const gaugeColor = isAI ? 'var(--danger)' : 'var(--success)';
-    const gaugeDegree = aiProbability * 3.6;
-    
+
+    const isSynthetic = verdict.toLowerCase().includes('synthetic');
+
+    const gaugeColor = isSynthetic
+        ? 'var(--danger)'
+        : 'var(--success)';
+
+    const gaugeDegree = parseFloat(syntheticProbability) * 3.6;
+
     const confidenceLevel = getConfidenceLevel(parseFloat(confidence));
     const confidenceClass = getConfidenceClass(confidenceLevel);
 
     return {
-        aiProbability,
-        humanProbability,
-        mixedProbability,
+        syntheticProbability,
+        authenticProbability,
+        hybridProbability,
         verdict,
         confidence,
         domain,
-        isAI,
+        isSynthetic,
         gaugeColor,
         gaugeDegree,
         confidenceLevel,
@@ -1813,104 +1754,33 @@ function getConfidenceClass(confidenceLevel) {
     return classMap[confidenceLevel] || 'confidence-low';
 }
 
-// Helper function to generate attribution HTML with filtering
-function generateAttributionHTML(attribution) {
-    if (!attribution || !attribution.predicted_model) {
-        return '';
-    }
-
-    const modelName = formatModelName(attribution.predicted_model);
-    const modelConf = attribution.confidence ? 
-        (attribution.confidence * 100).toFixed(1) : 'N/A';
-    
-    const topModelsHTML = generateTopModelsHTML(attribution.model_probabilities);
-    const reasoningHTML = generateAttributionReasoningHTML(attribution.reasoning);
-
-    // Only show attribution if confidence is meaningful (>30%)
-    if (attribution.confidence > 0.3) {
-        return `
-            <div class="attribution-section">
-                <div class="attribution-title">🤖 AI Model Attribution</div>
-                ${topModelsHTML}
-                <div class="attribution-confidence">
-                    Attribution Confidence: <strong>${modelConf}%</strong>
-                </div>
-                ${reasoningHTML}
-            </div>
-        `;
-    }
-    
-    return '';
-}
-
-// Helper function to generate top models HTML with filtering
-function generateTopModelsHTML(modelProbabilities) {
-    if (!modelProbabilities) {
-        return '<div class="attribution-uncertain">Model probabilities not available</div>';
-    }
-
-    // Filter and sort models
-    const meaningfulModels = Object.entries(modelProbabilities)
-        .sort((a, b) => b[1] - a[1])
-        .filter(([model, prob]) => prob > 0.15) // Only show models with >15% probability
-        .slice(0, 3); // Show top 3
-
-    if (meaningfulModels.length === 0) {
-        return `
-            <div class="attribution-uncertain">
-                Model attribution uncertain - text patterns don't strongly match any specific AI model
-            </div>
-        `;
-    }
-
-    return meaningfulModels.map(([model, prob]) => 
-        `<div class="model-match">
-            <span class="model-name">${formatModelName(model)}</span>
-            <span class="model-confidence">${(prob * 100).toFixed(1)}%</span>
-        </div>`
-    ).join('');
-}
-
 // Helper function to format model names
 function formatModelName(modelName) {
     return modelName.replace(/_/g, ' ').replace(/-/g, ' ').toUpperCase();
 }
 
-// Helper function to generate attribution reasoning HTML
-function generateAttributionReasoningHTML(reasoning) {
-    if (!reasoning || !Array.isArray(reasoning) || reasoning.length === 0) {
-        return '';
-    }
-
-    return `
-        <div class="attribution-reasoning">
-            ${reasoning[0]}
-        </div>
-    `;
-}
-
 // Helper function to create single-progress gauge section
-function createGaugeSection(aiProbability, humanProbability, mixedProbability, gaugeColor, gaugeDegree) {
+function createGaugeSection(syntheticProbability, authenticProbability, hybridProbability, gaugeColor, gaugeDegree) {
     // Ensure these are numbers
-    const ai = parseFloat(aiProbability);
-    const human = parseFloat(humanProbability);
-    const mixed = parseFloat(mixedProbability);
+    const synthetic = parseFloat(syntheticProbability);
+    const authentic = parseFloat(authenticProbability);
+    const hybrid = parseFloat(hybridProbability);
     
     // Determine which probability is highest
     let maxValue, maxColor, maxLabel;
     
-    if (ai >= human && ai >= mixed) {
-        maxValue = ai;
+    if (synthetic >= authentic && synthetic >= hybrid) {
+        maxValue = synthetic;
         maxColor = 'var(--danger)';
-        maxLabel = 'AI Probability';
-    } else if (human >= ai && human >= mixed) {
-        maxValue = human;
+        maxLabel = 'Synthetic Probability';
+    } else if (authentic >= synthetic && authentic >= hybrid) {
+        maxValue = authentic;
         maxColor = 'var(--success)';
-        maxLabel = 'Human Probability';
+        maxLabel = 'Authentic Probability';
     } else {
-        maxValue = mixed;
+        maxValue = hybrid;
         maxColor = 'var(--primary)';
-        maxLabel = 'Mixed Probability';
+        maxLabel = 'Hybrid Probability';
     }
     
     console.log('Selected:', { maxValue, maxLabel });
@@ -1936,16 +1806,16 @@ function createGaugeSection(aiProbability, humanProbability, mixedProbability, g
         </div>
         <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin: 1.5rem 0;">
             <div style="text-align: center; padding: 1rem; background: rgba(239, 68, 68, 0.1); border-radius: 8px; border: 1px solid rgba(239, 68, 68, 0.3);">
-                <div style="font-size: 0.85rem; color: var(--danger); margin-bottom: 0.25rem; font-weight: 600;">AI</div>
-                <div style="font-size: 1.4rem; font-weight: 700; color: var(--danger);">${aiProbability}%</div>
+                <div style="font-size: 0.85rem; color: var(--danger); margin-bottom: 0.25rem; font-weight: 600;">Synthetic</div>
+                <div style="font-size: 1.4rem; font-weight: 700; color: var(--danger);">${syntheticProbability}%</div>
             </div>
             <div style="text-align: center; padding: 1rem; background: rgba(16, 185, 129, 0.1); border-radius: 8px; border: 1px solid rgba(16, 185, 129, 0.3);">
-                <div style="font-size: 0.85rem; color: var(--success); margin-bottom: 0.25rem; font-weight: 600;">Human</div>
-                <div style="font-size: 1.4rem; font-weight: 700; color: var(--success);">${humanProbability}%</div>
+                <div style="font-size: 0.85rem; color: var(--success); margin-bottom: 0.25rem; font-weight: 600;">Authentic</div>
+                <div style="font-size: 1.4rem; font-weight: 700; color: var(--success);">${authenticProbability}%</div>
             </div>
             <div style="text-align: center; padding: 1rem; background: rgba(6, 182, 212, 0.1); border-radius: 8px; border: 1px solid rgba(6, 182, 212, 0.3);">
-                <div style="font-size: 0.85rem; color: var(--primary); margin-bottom: 0.25rem; font-weight: 600;">Mixed</div>
-                <div style="font-size: 1.4rem; font-weight: 700; color: var(--primary);">${mixedProbability}%</div>
+                <div style="font-size: 0.85rem; color: var(--primary); margin-bottom: 0.25rem; font-weight: 600;">Hybrid</div>
+                <div style="font-size: 1.4rem; font-weight: 700; color: var(--primary);">${hybridProbability}%</div>
             </div>
         </div>
         <style>
@@ -1989,10 +1859,10 @@ function createGaugeSection(aiProbability, humanProbability, mixedProbability, g
 
 
 // Helper function to create info grid
-function createInfoGrid(verdict, confidence, confidenceClass, domain, mixedProbability) {
-    const mixedContentInfo = mixedProbability > 10 ? 
+function createInfoGrid(verdict, confidence, confidenceClass, domain, hybridProbability) {
+    const hybridContentInfo = hybridProbability > 10 ? 
         `<div style="margin-top: 0.5rem; font-size: 0.85rem; color: var(--primary);">
-            🔀 ${mixedProbability}% Mixed Content Detected
+            🔀 ${hybridProbability}% Hybrid Content Detected
         </div>` : '';
 
     return `
@@ -2000,7 +1870,7 @@ function createInfoGrid(verdict, confidence, confidenceClass, domain, mixedProba
             <div class="info-card">
                 <div class="info-label">Verdict</div>
                 <div class="info-value verdict-text">${verdict}</div>
-                ${mixedContentInfo}
+                ${hybridContentInfo}
             </div>
             <div class="info-card">
                 <div class="info-label">Confidence Level</div>
@@ -2040,6 +1910,21 @@ function createEnhancedReasoningHTML(ensemble, analysis, reasoning) {
     if (reasoning && reasoning.summary) {
         // Process the summary into bullet points
         const bulletPoints = formatSummaryAsBulletPoints(reasoning.summary, ensemble, analysis);
+
+        const dominantLabel =
+            ensemble.hybrid_probability > ensemble.synthetic_probability &&
+            ensemble.hybrid_probability > ensemble.authentic_probability
+                ? 'Hybrid Probability'
+                : ensemble.synthetic_probability > ensemble.authentic_probability
+                    ? 'Synthetic Probability'
+                    : 'Authentic Probability';
+
+        const dominantValue =
+            Math.max(
+                ensemble.synthetic_probability,
+                ensemble.authentic_probability,
+                ensemble.hybrid_probability
+            );
         
         // Process key indicators with markdown formatting
         let processedIndicators = [];
@@ -2071,14 +1956,15 @@ function createEnhancedReasoningHTML(ensemble, analysis, reasoning) {
             <div class="reasoning-box enhanced">
                 <div class="reasoning-header">
                     <div class="reasoning-icon">💡</div>
-                    <div class="reasoning-title">Detection Reasoning</div>
+                    <div class="reasoning-title">Forensic Reasoning</div>
                     <div class="confidence-tag ${ensemble.overall_confidence >= 0.7 ? 'high-confidence' : ensemble.overall_confidence >= 0.4 ? 'medium-confidence' : 'low-confidence'}">
                         ${ensemble.overall_confidence >= 0.7 ? 'High Confidence' : ensemble.overall_confidence >= 0.4 ? 'Medium Confidence' : 'Low Confidence'}
                     </div>
                 </div>
                 <div class="verdict-summary">
                     <div class="verdict-text">${ensemble.final_verdict}</div>
-                    <div class="probability">AI Probability: <span class="probability-value">${(ensemble.ai_probability * 100).toFixed(2)}%</span></div>
+                       ${dominantLabel}:
+                       <span class="probability-value">${(dominantValue * 100).toFixed(2)}%</span>
                 </div>
                 <div class="reasoning-bullet-points">
                     ${bulletPoints}
@@ -2130,11 +2016,11 @@ function createEnhancedReasoningHTML(ensemble, analysis, reasoning) {
     // Fallback to basic reasoning if no reasoning data
     return `
         <div class="reasoning-box">
-            <div class="reasoning-title">💡 Detection Reasoning</div>
+            <div class="reasoning-title">💡 Forensic Reasoning</div>
             <p class="reasoning-text" style="text-align: left;">
-                Analysis based on 6-metric ensemble with domain-aware calibration. 
-                The system evaluated linguistic patterns, statistical features, and semantic structures 
-                to determine content authenticity with ${(ensemble.overall_confidence * 100).toFixed(1)}% confidence.
+                Analysis based on a multi-signal forensic ensemble with domain-aware calibration.
+                The system evaluated linguistic, statistical, and semantic evidence patterns
+                to assess content authenticity with ${(ensemble.overall_confidence * 100).toFixed(1)}% confidence.
             </p>
         </div>
     `;
@@ -2170,15 +2056,15 @@ function formatSummaryAsBulletPoints(summary, ensemble, analysis) {
     // Add verdict as second bullet
     bulletPoints.push(`<div class="bullet-point">• ${ensemble.final_verdict}</div>`);
     
-    // Add AI probability as third bullet
-    bulletPoints.push(`<div class="bullet-point">• AI Probability: ${(ensemble.ai_probability * 100).toFixed(2)}%</div>`);
+    // Add Synthetic probability as third bullet
+    bulletPoints.push(`<div class="bullet-point">• Synthetic Probability: ${(ensemble.synthetic_probability * 100).toFixed(2)}%</div>`);
     
     // Add the main analysis sentences as individual bullets
     sentences.forEach(sentence => {
         if (sentence.trim() && 
             !sentence.includes('confidence') && 
             !sentence.includes(ensemble.final_verdict) &&
-            !sentence.includes('AI probability')) {
+            !sentence.includes('Synthetic probability')) {
             // Clean up the sentence and add as bullet
             let cleanSentence = sentence.trim();
             if (!cleanSentence.endsWith('.')) {
@@ -2205,36 +2091,20 @@ function createDefaultLegend() {
     return `
         <div class="highlight-legend">
             <div class="legend-item">
-                <div class="legend-color" style="background: #fecaca;"></div>
-                <div class="legend-label">Very Likely AI (90-100%)</div>
-            </div>
-            <div class="legend-item">
-                <div class="legend-color" style="background: #fed7aa;"></div>
-                <div class="legend-label">Likely AI (75-90%)</div>
-            </div>
-            <div class="legend-item">
-                <div class="legend-color" style="background: #fde68a;"></div>
-                <div class="legend-label">Possibly AI (60-75%)</div>
+                <div class="legend-color" style="background: #dcfce7;"></div>
+                <div class="legend-label">Authentic</div>
             </div>
             <div class="legend-item">
                 <div class="legend-color" style="background: #fef9c3;"></div>
-                <div class="legend-label">Uncertain (40-60%)</div>
+                <div class="legend-label">Uncertain</div>
             </div>
             <div class="legend-item">
-                <div class="legend-color" style="background: #86efac;"></div>
-                <div class="legend-label">Possibly Human (25-40%)</div>
-            </div>
-            <div class="legend-item">
-                <div class="legend-color" style="background: #bbf7d0;"></div>
-                <div class="legend-label">Likely Human (10-25%)</div>
-            </div>
-            <div class="legend-item">
-                <div class="legend-color" style="background: #dcfce7;"></div>
-                <div class="legend-label">Very Likely Human (0-10%)</div>
+                <div class="legend-color" style="background: #fee2e2;"></div>
+                <div class="legend-label">Synthetic</div>
             </div>
             <div class="legend-item">
                 <div class="legend-color" style="background: #e9d5ff;"></div>
-                <div class="legend-label">Mixed Content</div>
+                <div class="legend-label">Hybrid</div>
             </div>
         </div>
     `;
@@ -2259,15 +2129,15 @@ function getHighlightStyles() {
                 z-index: 10;
                 text-shadow: 0 1px 1px rgba(255,255,255,0.8);
             }
-            #highlighted-report .very-high-ai {
+            #highlighted-report .very-high-synthetic {
                 background-color: #fee2e2 !important;
                 border-bottom-color: #ef4444 !important;
             }
-            #highlighted-report .high-ai {
+            #highlighted-report .high-synthetic {
                 background-color: #fed7aa !important;
                 border-bottom-color: #f97316 !important;
             }
-            #highlighted-report .medium-ai {
+            #highlighted-report .medium-synthetic {
                 background-color: #fef3c7 !important;
                 border-bottom-color: #f59e0b !important;
             }
@@ -2275,19 +2145,19 @@ function getHighlightStyles() {
                 background-color: #fef9c3 !important;
                 border-bottom-color: #fbbf24 !important;
             }
-            #highlighted-report .medium-human {
+            #highlighted-report .medium-authentic {
                 background-color: #ecfccb !important;
                 border-bottom-color: #a3e635 !important;
             }
-            #highlighted-report .high-human {
+            #highlighted-report .high-authentic {
                 background-color: #bbf7d0 !important;
                 border-bottom-color: #4ade80 !important;
             }
-            #highlighted-report .very-high-human {
+            #highlighted-report .very-high-authentic {
                 background-color: #dcfce7 !important;
                 border-bottom-color: #22c55e !important;
             }
-            #highlighted-report .mixed-content {
+            #highlighted-report .hybrid-content {
                 background-color: #e9d5ff !important;
                 border-bottom-color: #a855f7 !important;
                 background-image: repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(168, 85, 247, 0.1) 5px, rgba(168, 85, 247, 0.1) 10px) !important;
@@ -2319,27 +2189,27 @@ function displayMetricsCarousel(metrics, analysis, ensemble) {
         const metric = metrics[metricKey];
         if (!metric) return;
 
-        const aiProb = (metric.ai_probability * 100).toFixed(1);
-        const humanProb = (metric.human_probability * 100).toFixed(1);
-        const mixedProb = (metric.mixed_probability * 100).toFixed(1);
+        const syntheticProb = (metric.synthetic_probability * 100).toFixed(1);
+        const authenticProb = (metric.authentic_probability * 100).toFixed(1);
+        const hybridProb = (metric.hybrid_probability * 100).toFixed(1);
         const confidence = (metric.confidence * 100).toFixed(1);
         const weight = ensemble.metric_contributions && ensemble.metric_contributions[metricKey] ?
             (ensemble.metric_contributions[metricKey].weight * 100).toFixed(1) : '0.0';
         
         // Determine verdict based on probabilities
         let verdictText, verdictClass;
-        if (metric.mixed_probability > 0.3) {
-            verdictText = 'MIXED';
-            verdictClass = 'verdict-mixed';
-        } else if (metric.ai_probability >= 0.6) {
-            verdictText = 'AI';
-            verdictClass = 'verdict-ai';
-        } else if (metric.ai_probability >= 0.4) {
-            verdictText = 'UNCERTAIN';
+        if (metric.hybrid_probability > 0.3) {
+            verdictText = 'Hybrid';
+            verdictClass = 'verdict-hybrid';
+        } else if (metric.synthetic_probability >= 0.6) {
+            verdictText = 'Synthetic';
+            verdictClass = 'verdict-synthetic';
+        } else if (metric.synthetic_probability >= 0.4) {
+            verdictText = 'Uncertain';
             verdictClass = 'verdict-uncertain';
         } else {
-            verdictText = 'HUMAN';
-            verdictClass = 'verdict-human';
+            verdictText = 'Authentic';
+            verdictClass = 'verdict-authentic';
         }
 
         carouselHTML += `
@@ -2352,28 +2222,28 @@ function displayMetricsCarousel(metrics, analysis, ensemble) {
                         ${getMetricDescription(metricKey)}
                     </div>
                     
-                    <!-- Enhanced Probability Display with Mixed -->
+                    <!-- Probability Display with Hybrid -->
                     <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin: 1rem 0;">
                         <div style="text-align: center;">
-                            <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.25rem;">AI</div>
+                            <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.25rem;">Synthetic</div>
                             <div style="background: rgba(51, 65, 85, 0.5); height: 8px; border-radius: 4px; overflow: hidden;">
-                                <div style="background: var(--danger); height: 100%; width: ${aiProb}%; transition: width 0.5s;"></div>
+                                <div style="background: var(--danger); height: 100%; width: ${syntheticProb}%; transition: width 0.5s;"></div>
                             </div>
-                            <div style="font-size: 0.85rem; font-weight: 600; margin-top: 0.25rem;">${aiProb}%</div>
+                            <div style="font-size: 0.85rem; font-weight: 600; margin-top: 0.25rem;">${syntheticProb}%</div>
                         </div>
                         <div style="text-align: center;">
-                            <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.25rem;">Human</div>
+                            <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.25rem;">Authentic</div>
                             <div style="background: rgba(51, 65, 85, 0.5); height: 8px; border-radius: 4px; overflow: hidden;">
-                                <div style="background: var(--success); height: 100%; width: ${humanProb}%; transition: width 0.5s;"></div>
+                                <div style="background: var(--success); height: 100%; width: ${authenticProb}%; transition: width 0.5s;"></div>
                             </div>
-                            <div style="font-size: 0.85rem; font-weight: 600; margin-top: 0.25rem;">${humanProb}%</div>
+                            <div style="font-size: 0.85rem; font-weight: 600; margin-top: 0.25rem;">${authenticProb}%</div>
                         </div>
                         <div style="text-align: center;">
-                            <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.25rem;">Mixed</div>
+                            <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.25rem;">Hybrid</div>
                             <div style="background: rgba(51, 65, 85, 0.5); height: 8px; border-radius: 4px; overflow: hidden;">
-                                <div style="background: var(--primary); height: 100%; width: ${mixedProb}%; transition: width 0.5s;"></div>
+                                <div style="background: var(--primary); height: 100%; width: ${hybridProb}%; transition: width 0.5s;"></div>
                             </div>
-                            <div style="font-size: 0.85rem; font-weight: 600; margin-top: 0.25rem;">${mixedProb}%</div>
+                            <div style="font-size: 0.85rem; font-weight: 600; margin-top: 0.25rem;">${hybridProb}%</div>
                         </div>
                     </div>
                     
@@ -2448,7 +2318,7 @@ function renderMetricDetails(metricName, details) {
         'entropy': ['token_diversity', 'sequence_unpredictability', 'char_entropy'],
         'semantic_analysis': ['coherence_score', 'consistency_score', 'repetition_score'],
         'linguistic': ['pos_diversity', 'syntactic_complexity', 'grammatical_consistency'],
-        'multi_perturbation_stability': ['stability_score', 'curvature_score', 'likelihood_ratio', 'perturbation_variance', 'mixed_probability']
+        'multi_perturbation_stability': ['stability_score', 'curvature_score', 'likelihood_ratio', 'perturbation_variance', 'hybrid_probability']
     };
 
     const keysToShow = importantKeys[metricName] || Object.keys(details).slice(0, 6);
@@ -2533,7 +2403,7 @@ async function downloadReport(format) {
             const blob = new Blob([JSON.stringify(data, null, 2)], { 
                 type: 'application/json' 
             });
-            const filename = `ai-detection-report-${analysisId}-${timestamp}.json`;
+            const filename = `text-forensics-report-${analysisId}-${timestamp}.json`;
             await downloadBlob(blob, filename);
             return;
         }
@@ -2572,7 +2442,7 @@ async function downloadReport(format) {
                 throw new Error('Failed to download file');
             }
             const blob = await downloadResponse.blob();
-            const downloadFilename = `ai-detection-${format}-report-${analysisId}-${timestamp}.${format}`;
+            const downloadFilename = `text-forensics-report-${format}-report-${analysisId}-${timestamp}.${format}`;
             await downloadBlob(blob, downloadFilename);
         } else {
             alert('Report file not available');

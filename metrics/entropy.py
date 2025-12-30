@@ -6,10 +6,11 @@ from typing import Dict
 from typing import List
 from loguru import logger
 from collections import Counter
+from config.enums import Domain
+from config.schemas import MetricResult
 from metrics.base_metric import BaseMetric
-from config.threshold_config import Domain
-from metrics.base_metric import MetricResult
 from models.model_manager import get_model_manager
+from config.constants import entropy_metric_params
 from config.threshold_config import get_threshold_for_domain
 
 
@@ -22,13 +23,14 @@ class EntropyMetric(BaseMetric):
     - Word-level entropy and burstiness  
     - Token-level diversity and unpredictability in sequences
     - Entropy distribution across text chunks
-    - AI-specific pattern detection
+    - Synthetic-specific pattern detection
     """
     def __init__(self):
         super().__init__(name        = "entropy",
                          description = "Token-level diversity and unpredictability in text sequences",
                         )
         self.tokenizer = None
+        self.params    = entropy_metric_params
     
 
     def initialize(self) -> bool:
@@ -40,7 +42,7 @@ class EntropyMetric(BaseMetric):
             
             # Load tokenizer for token-level analysis
             model_manager = get_model_manager()
-            gpt_model     = model_manager.load_model("perplexity_gpt2")
+            gpt_model     = model_manager.load_model("perplexity_reference_lm")
             
             if isinstance(gpt_model, tuple):
                 self.tokenizer = gpt_model[1]
@@ -62,108 +64,105 @@ class EntropyMetric(BaseMetric):
         Compute enhanced entropy measures for text with FULL DOMAIN THRESHOLD INTEGRATION
         """
         try:
-            if (not text or (len(text.strip()) < 50)):
-                return MetricResult(metric_name       = self.name,
-                                    ai_probability    = 0.5,
-                                    human_probability = 0.5,
-                                    mixed_probability = 0.0,
-                                    confidence        = 0.1,
-                                    error             = "Text too short for entropy analysis",
+            if (not text or (len(text.strip()) < self.params.MIN_TEXT_LENGTH_FOR_ANALYSIS)):
+                return MetricResult(metric_name           = self.name,
+                                    synthetic_probability = self.params.NEUTRAL_PROBABILITY,
+                                    authentic_probability = self.params.NEUTRAL_PROBABILITY,
+                                    hybrid_probability    = self.params.MIN_PROBABILITY,
+                                    confidence            = self.params.MIN_CONFIDENCE,
+                                    error                 = "Text too short for entropy analysis",
                                    )
             
             # Get domain-specific thresholds
-            domain                          = kwargs.get('domain', Domain.GENERAL)
-            domain_thresholds               = get_threshold_for_domain(domain)
-            entropy_thresholds              = domain_thresholds.entropy
+            domain                                      = kwargs.get('domain', Domain.GENERAL)
+            domain_thresholds                           = get_threshold_for_domain(domain)
+            entropy_thresholds                          = domain_thresholds.entropy
             
             # Calculate comprehensive entropy features
-            features                        = self._calculate_enhanced_entropy_features(text)
+            features                                    = self._calculate_entropy_features(text = text)
             
             # Calculate raw entropy score (0-1 scale)
-            raw_entropy_score, confidence   = self._analyze_entropy_patterns(features)
+            raw_entropy_score, confidence               = self._analyze_entropy_patterns(features = features)
             
             # Apply domain-specific thresholds to convert raw score to probabilities
-            ai_prob, human_prob, mixed_prob = self._apply_domain_thresholds(raw_entropy_score, entropy_thresholds, features)
+            synthetic_prob, authentic_prob, hybrid_prob = self._apply_domain_thresholds(raw_score  = raw_entropy_score, 
+                                                                                        thresholds = entropy_thresholds, 
+                                                                                        features   = features,
+                                                                                       )
             
             # Apply confidence multiplier from domain thresholds
-            confidence                     *= entropy_thresholds.confidence_multiplier
-            confidence                      = max(0.0, min(1.0, confidence))
+            confidence                                 *= entropy_thresholds.confidence_multiplier
+            confidence                                  = max(self.params.MIN_CONFIDENCE, min(self.params.MAX_CONFIDENCE, confidence))
             
-            return MetricResult(metric_name       = self.name,
-                                ai_probability    = ai_prob,
-                                human_probability = human_prob,
-                                mixed_probability = mixed_prob,
-                                confidence        = confidence,
-                                details           = {**features, 
-                                                     'domain_used'     : domain.value,
-                                                     'ai_threshold'    : entropy_thresholds.ai_threshold,
-                                                     'human_threshold' : entropy_thresholds.human_threshold,
-                                                     'raw_score'       : raw_entropy_score,
-                                                    },
+            return MetricResult(metric_name           = self.name,
+                                synthetic_probability = synthetic_prob,
+                                authentic_probability = authentic_prob,
+                                hybrid_probability    = hybrid_prob,
+                                confidence            = confidence,
+                                details               = {**features, 
+                                                         'domain_used'        : domain.value,
+                                                         'synthetic_threshold': entropy_thresholds.synthetic_threshold,
+                                                         'authentic_threshold': entropy_thresholds.authentic_threshold,
+                                                         'raw_score'          : raw_entropy_score,
+                                                        },
                                )
             
         except Exception as e:
             logger.error(f"Error in entropy computation: {repr(e)}")
-            return MetricResult(metric_name       = self.name,
-                                ai_probability    = 0.5,
-                                human_probability = 0.5,
-                                mixed_probability = 0.0,
-                                confidence        = 0.0,
-                                error             = str(e),
-                               )
+            return self._default_result(error = str(e))
     
 
     def _apply_domain_thresholds(self, raw_score: float, thresholds: Any, features: Dict[str, Any]) -> tuple:
         """
         Apply domain-specific thresholds to convert raw score to probabilities
         """
-        ai_threshold    = thresholds.ai_threshold    # e.g., 0.55 for GENERAL, 0.50 for ACADEMIC
-        human_threshold = thresholds.human_threshold # e.g., 0.45 for GENERAL, 0.40 for ACADEMIC
+        synthetic_threshold = thresholds.synthetic_threshold
+        authentic_threshold = thresholds.authentic_threshold
         
         # Calculate probabilities based on threshold distances
-        if (raw_score >= ai_threshold):
-            # Above AI threshold - strongly AI
-            distance_from_threshold = raw_score - ai_threshold
-            ai_prob                 = 0.7 + (distance_from_threshold * 0.3)  # 0.7 to 1.0
-            human_prob              = 0.3 - (distance_from_threshold * 0.3)  # 0.3 to 0.0
+        if (raw_score >= synthetic_threshold):
+            # Above synthetic threshold - strongly synthetic
+            distance_from_threshold = raw_score - synthetic_threshold
+            synthetic_prob          = self.params.STRONG_SYNTHETIC_BASE_PROB + (distance_from_threshold * self.params.WEAK_PROBABILITY_ADJUSTMENT)
+            authentic_prob          = self.params.UNCERTAIN_AUTHENTIC_RANGE_START - (distance_from_threshold * self.params.WEAK_PROBABILITY_ADJUSTMENT)
         
-        elif (raw_score <= human_threshold):
-            # Below human threshold - strongly human
-            distance_from_threshold = human_threshold - raw_score
-            ai_prob                 = 0.3 - (distance_from_threshold * 0.3)  # 0.3 to 0.0
-            human_prob              = 0.7 + (distance_from_threshold * 0.3)  # 0.7 to 1.0
+        elif (raw_score <= authentic_threshold):
+            # Below authentic threshold - strongly authentic
+            distance_from_threshold = authentic_threshold - raw_score
+            synthetic_prob          = self.params.UNCERTAIN_SYNTHETIC_RANGE_START - (distance_from_threshold * self.params.WEAK_PROBABILITY_ADJUSTMENT)
+            authentic_prob          = self.params.STRONG_AUTHENTIC_BASE_PROB + (distance_from_threshold * self.params.WEAK_PROBABILITY_ADJUSTMENT)
         
         else:
             # Between thresholds - uncertain zone
-            range_width = ai_threshold - human_threshold
-            if (range_width > 0):
-                position_in_range = (raw_score - human_threshold) / range_width
-                ai_prob           = 0.3 + (position_in_range * 0.4)  # 0.3 to 0.7
-                human_prob        = 0.7 - (position_in_range * 0.4)  # 0.7 to 0.3
+            range_width = synthetic_threshold - authentic_threshold
+            if (range_width > self.params.ZERO_TOLERANCE):
+                position_in_range = (raw_score - authentic_threshold) / range_width
+                synthetic_prob    = self.params.UNCERTAIN_SYNTHETIC_RANGE_START + (position_in_range * self.params.UNCERTAIN_RANGE_WIDTH)
+                authentic_prob    = self.params.UNCERTAIN_AUTHENTIC_RANGE_START - (position_in_range * self.params.UNCERTAIN_RANGE_WIDTH)
             
             else:
-                ai_prob    = 0.5
-                human_prob = 0.5
+                synthetic_prob = self.params.NEUTRAL_PROBABILITY
+                authentic_prob = self.params.NEUTRAL_PROBABILITY
         
         # Ensure probabilities are valid
-        ai_prob    = max(0.0, min(1.0, ai_prob))
-        human_prob = max(0.0, min(1.0, human_prob))
+        synthetic_prob = max(self.params.MIN_PROBABILITY, min(self.params.MAX_PROBABILITY, synthetic_prob))
+        authentic_prob = max(self.params.MIN_PROBABILITY, min(self.params.MAX_PROBABILITY, authentic_prob))
         
-        # Calculate mixed probability based on entropy variance
-        mixed_prob = self._calculate_mixed_probability(features)
+        # Calculate hybrid probability based on entropy variance
+        hybrid_prob = self._calculate_hybrid_probability(features)
         
         # Normalize to sum to 1.0
-        total      = ai_prob + human_prob + mixed_prob
+        total       = synthetic_prob + authentic_prob + hybrid_prob
 
-        if (total > 0):
-            ai_prob    /= total
-            human_prob /= total
-            mixed_prob /= total
+        if (total > self.params.ZERO_TOLERANCE):
+            synthetic_prob /= total
+            authentic_prob /= total
+            hybrid_prob    /= total
         
-        return ai_prob, human_prob, mixed_prob
+        return synthetic_prob, authentic_prob, hybrid_prob
     
 
-    def _calculate_enhanced_entropy_features(self, text: str) -> Dict[str, Any]:
+    def _calculate_entropy_features(self, text: str) -> Dict[str, Any]:
         """
         Calculate comprehensive entropy measures including document-required features
         """
@@ -179,15 +178,15 @@ class EntropyMetric(BaseMetric):
         sequence_unpredictability = self._calculate_sequence_unpredictability(text)
         
         # Chunk-based analysis for whole-text understanding
-        chunk_entropies           = self._calculate_chunk_entropy(text, chunk_size=100)
+        chunk_entropies           = self._calculate_chunk_entropy(text)
         entropy_variance          = np.var(chunk_entropies) if chunk_entropies else 0.0
         avg_chunk_entropy         = np.mean(chunk_entropies) if chunk_entropies else 0.0
         
-        # AI-specific pattern detection
-        ai_pattern_score          = self._detect_ai_entropy_patterns(text)
+        # Synthetic-specific pattern detection
+        synthetic_pattern_score   = self._detect_synthetic_entropy_patterns(text)
         
         # Predictability measures
-        predictability            = 1.0 - min(1.0, char_entropy / 4.0)
+        predictability            = 1.0 - min(1.0, char_entropy / self.params.MAX_CHAR_ENTROPY)
         
         return {"char_entropy"              : round(char_entropy, 4),
                 "word_entropy"              : round(word_entropy, 4),
@@ -197,7 +196,7 @@ class EntropyMetric(BaseMetric):
                 "entropy_variance"          : round(entropy_variance, 4),
                 "avg_chunk_entropy"         : round(avg_chunk_entropy, 4),
                 "predictability_score"      : round(predictability, 4),
-                "ai_pattern_score"          : round(ai_pattern_score, 4),
+                "synthetic_pattern_score"   : round(synthetic_pattern_score, 4),
                 "num_chunks_analyzed"       : len(chunk_entropies),
                }
     
@@ -221,7 +220,8 @@ class EntropyMetric(BaseMetric):
 
         for count in char_counts.values():
             probability = count / total_chars
-            entropy    -= probability * math.log2(probability)
+            if probability > self.params.ZERO_TOLERANCE:
+                entropy -= probability * math.log2(probability)
         
         return entropy
     
@@ -231,7 +231,7 @@ class EntropyMetric(BaseMetric):
         Calculate word-level entropy
         """
         words = text.lower().split()
-        if (len(words) < 5):
+        if (len(words) < self.params.MIN_WORDS_FOR_ANALYSIS):
             return 0.0
         
         word_counts = Counter(words)
@@ -241,7 +241,8 @@ class EntropyMetric(BaseMetric):
 
         for count in word_counts.values():
             probability = count / total_words
-            entropy    -= probability * math.log2(probability)
+            if probability > self.params.ZERO_TOLERANCE:
+                entropy -= probability * math.log2(probability)
         
         return entropy
     
@@ -255,7 +256,7 @@ class EntropyMetric(BaseMetric):
                 return 0.0
             
             # Length check before tokenization
-            if (len(text.strip()) < 10):
+            if (len(text.strip()) < self.params.MIN_SENTENCE_LENGTH):
                 return 0.0
 
             # Tokenize text
@@ -264,7 +265,7 @@ class EntropyMetric(BaseMetric):
                                            truncation         = True, 
                                           )
             
-            if (len(tokens) < 10):
+            if (len(tokens) < self.params.MIN_TOKENS_FOR_ANALYSIS):
                 return 0.0
             
             token_counts = Counter(tokens)
@@ -274,7 +275,8 @@ class EntropyMetric(BaseMetric):
 
             for count in token_counts.values():
                 probability = count / total_tokens
-                entropy    -= probability * math.log2(probability)
+                if probability > self.params.ZERO_TOLERANCE:
+                    entropy -= probability * math.log2(probability)
             
             return entropy
             
@@ -285,14 +287,14 @@ class EntropyMetric(BaseMetric):
 
     def _calculate_token_diversity(self, text: str) -> float:
         """
-        Calculate token-level diversity : Higher diversity = more human-like
+        Calculate token-level diversity : Higher diversity = more authentic-like
         """
         if not self.tokenizer:
             return 0.0
         
         try:
             tokens = self.tokenizer.encode(text, add_special_tokens=False)
-            if (len(tokens) < 10):
+            if (len(tokens) < self.params.MIN_TOKENS_FOR_ANALYSIS):
                 return 0.0
             
             unique_tokens = len(set(tokens))
@@ -317,7 +319,7 @@ class EntropyMetric(BaseMetric):
         
         try:
             tokens = self.tokenizer.encode(text, add_special_tokens=False)
-            if (len(tokens) < 20):
+            if (len(tokens) < self.params.MIN_TOKENS_FOR_SEQUENCE):
                 return 0.0
             
             # Calculate bigram unpredictability
@@ -329,11 +331,12 @@ class EntropyMetric(BaseMetric):
             sequence_entropy = 0.0
 
             for count in bigram_counts.values():
-                probability       = count / total_bigrams
-                sequence_entropy -= probability * math.log2(probability)
+                probability = count / total_bigrams
+                if probability > self.params.ZERO_TOLERANCE:
+                    sequence_entropy -= probability * math.log2(probability)
             
-            # Normalize to 0-1 scale : Assuming max ~8 bits
-            normalized_entropy = min(1.0, sequence_entropy / 8.0)  
+            # Normalize to 0-1 scale
+            normalized_entropy = min(1.0, sequence_entropy / self.params.MAX_BIGRAM_ENTROPY)  
             
             return normalized_entropy
             
@@ -342,28 +345,32 @@ class EntropyMetric(BaseMetric):
             return 0.0
     
 
-    def _calculate_chunk_entropy(self, text: str, chunk_size: int = 100) -> List[float]:
+    def _calculate_chunk_entropy(self, text: str) -> List[float]:
         """
         Calculate entropy distribution across text chunks
         """
-        chunks = list()
-        words  = text.split()
+        chunks     = list()
+        words      = text.split()
+        chunk_size = self.params.CHUNK_SIZE_WORDS
+        overlap    = int(chunk_size * self.params.CHUNK_OVERLAP_RATIO)
+        step       = max(1, chunk_size - overlap)
         
         # Create overlapping chunks for better analysis
-        for i in range(0, len(words), chunk_size // 2):
+        for i in range(0, len(words), step):
             chunk = ' '.join(words[i:i + chunk_size])
             
             # Minimum chunk size
-            if (len(chunk) > 20):  
+            if (len(chunk) > self.params.MIN_CHUNK_LENGTH):  
                 entropy = self._calculate_character_entropy(chunk)
-                chunks.append(entropy)
+                if entropy > self.params.ZERO_TOLERANCE:
+                    chunks.append(entropy)
         
         return chunks
     
 
-    def _detect_ai_entropy_patterns(self, text: str) -> float:
+    def _detect_synthetic_entropy_patterns(self, text: str) -> float:
         """
-        Detect AI-specific entropy patterns: AI text often shows specific entropy signatures
+        Detect synthetic-specific entropy patterns: synthetic text often shows specific entropy signatures
         """
         patterns_detected = 0
         total_patterns    = 4
@@ -371,30 +378,30 @@ class EntropyMetric(BaseMetric):
         # Overly consistent character distribution
         char_entropy      = self._calculate_character_entropy(text)
         
-        # AI tends to be more consistent
-        if (char_entropy < 3.8):  
+        # synthetic tends to be more consistent
+        if (char_entropy < self.params.CHAR_ENTROPY_LOW_THRESHOLD):  
             patterns_detected += 1
         
         # Low token diversity
         token_diversity = self._calculate_token_diversity(text)
 
-        # AI reuses tokens more
-        if (token_diversity < 0.7):  
+        # synthetic reuses tokens more
+        if (token_diversity < self.params.TOKEN_DIVERSITY_MEDIUM_THRESHOLD):  
             patterns_detected += 1
         
         # Predictable sequences
         sequence_unpredictability = self._calculate_sequence_unpredictability(text)
         
-        # AI sequences are more predictable
-        if (sequence_unpredictability < 0.4):  
+        # synthetic sequences are more predictable
+        if (sequence_unpredictability < self.params.SEQUENCE_UNPREDICTABILITY_MEDIUM_THRESHOLD):  
             patterns_detected += 1
         
         # Low entropy variance across chunks
-        chunk_entropies  = self._calculate_chunk_entropy(text, chunk_size = 100)
+        chunk_entropies  = self._calculate_chunk_entropy(text)
         entropy_variance = np.var(chunk_entropies) if chunk_entropies else 0.0
         
-        # AI maintains consistent entropy
-        if (entropy_variance < 0.2):  
+        # synthetic maintains consistent entropy
+        if (entropy_variance < self.params.ENTROPY_VARIANCE_LOW_THRESHOLD):  
             patterns_detected += 1
         
         return patterns_detected / total_patterns
@@ -407,120 +414,129 @@ class EntropyMetric(BaseMetric):
         """
         # Check feature validity
         valid_features = [score for score in [features.get('char_entropy', 0),
+                                              features.get('token_entropy', 0),
                                               features.get('token_diversity', 0), 
                                               features.get('sequence_unpredictability', 0),
-                                              features.get('ai_pattern_score', 0)
-                                             ] if score > 0
+                                              features.get('synthetic_pattern_score', 0)
+                                             ] if score > self.params.ZERO_TOLERANCE
                          ]
         
-        if (len(valid_features) < 2):
+        if (len(valid_features) < self.params.MIN_REQUIRED_FEATURES):
             # Low confidence if insufficient features
-            return 0.5, 0.3  
+            return self.params.NEUTRAL_PROBABILITY, self.params.LOW_FEATURE_CONFIDENCE
 
-        ai_indicators = list()
+        synthetic_indicators = list()
         
-        # AI text often has lower character entropy (more predictable)
-        if (features['char_entropy'] < 3.5):
-            # Strong AI indicator
-            ai_indicators.append(0.8)  
+        # synthetic text often has lower character entropy (more predictable)
+        if (features['char_entropy'] < self.params.CHAR_ENTROPY_VERY_LOW_THRESHOLD):
+            # Strong synthetic indicator
+            synthetic_indicators.append(self.params.VERY_STRONG_SYNTHETIC_WEIGHT)  
 
-        elif (features['char_entropy'] < 4.0):
-            # Moderate AI indicator
-            ai_indicators.append(0.6)  
+        elif (features['char_entropy'] < self.params.CHAR_ENTROPY_LOW_THRESHOLD):
+            # Moderate synthetic indicator
+            synthetic_indicators.append(self.params.MODERATE_SYNTHETIC_WEIGHT)  
 
         else:
-            # Weak AI indicator
-            ai_indicators.append(0.2)  
-        
-        # Low entropy variance suggests AI (consistent patterns)
-        if (features['entropy_variance'] < 0.1):
-            # Very strong AI indicator
-            ai_indicators.append(0.9)  
+            # Weak synthetic indicator
+            synthetic_indicators.append(self.params.MINIMAL_SYNTHETIC_WEIGHT) 
 
-        elif (features['entropy_variance'] < 0.3):
+        # Low token entropy suggests synthetic (limited vocabulary reuse)
+        if (features['token_entropy'] < self.params.TOKEN_ENTROPY_LOW_THRESHOLD):
+            synthetic_indicators.append(self.params.MODERATE_SYNTHETIC_WEIGHT)
+        
+        else:
+            synthetic_indicators.append(self.params.MINIMAL_SYNTHETIC_WEIGHT) 
+
+                
+        # Low entropy variance suggests synthetic (consistent patterns)
+        if (features['entropy_variance'] < self.params.ENTROPY_VARIANCE_VERY_LOW_THRESHOLD):
+            # Very strong synthetic indicator
+            synthetic_indicators.append(self.params.STRONG_SYNTHETIC_WEIGHT)  
+
+        elif (features['entropy_variance'] < self.params.ENTROPY_VARIANCE_MEDIUM_THRESHOLD):
             # Neutral
-            ai_indicators.append(0.5)  
+            synthetic_indicators.append(self.params.WEAK_SYNTHETIC_WEIGHT)  
 
         else:
-            # Strong human indicator
-            ai_indicators.append(0.1)  
+            # Strong authentic indicator
+            synthetic_indicators.append(self.params.VERY_LOW_SYNTHETIC_WEIGHT)  
         
-        # Low token diversity suggests AI
-        if (features['token_diversity'] < 0.6):
-            ai_indicators.append(0.7)
+        # Low token diversity suggests synthetic
+        if (features['token_diversity'] < self.params.TOKEN_DIVERSITY_LOW_THRESHOLD):
+            synthetic_indicators.append(self.params.MEDIUM_SYNTHETIC_WEIGHT)
 
-        elif (features['token_diversity'] < 0.8):
-            ai_indicators.append(0.4)
-
-        else:
-            ai_indicators.append(0.2)
-        
-        # Low sequence unpredictability suggests AI
-        if (features['sequence_unpredictability'] < 0.3):
-            ai_indicators.append(0.8)
-
-        elif (features['sequence_unpredictability'] < 0.5):
-            ai_indicators.append(0.5)
+        elif (features['token_diversity'] < self.params.TOKEN_DIVERSITY_MEDIUM_THRESHOLD):
+            synthetic_indicators.append(self.params.VERY_WEAK_SYNTHETIC_WEIGHT)
 
         else:
-            ai_indicators.append(0.2)
+            synthetic_indicators.append(self.params.MINIMAL_SYNTHETIC_WEIGHT)
         
-        # High AI pattern score suggests AI
-        if (features['ai_pattern_score'] > 0.75):
-            ai_indicators.append(0.9)
+        # Low sequence unpredictability suggests synthetic
+        if (features['sequence_unpredictability'] < self.params.SEQUENCE_UNPREDICTABILITY_LOW_THRESHOLD):
+            synthetic_indicators.append(self.params.VERY_STRONG_SYNTHETIC_WEIGHT)
+
+        elif (features['sequence_unpredictability'] < self.params.SEQUENCE_UNPREDICTABILITY_MEDIUM_THRESHOLD):
+            synthetic_indicators.append(self.params.WEAK_SYNTHETIC_WEIGHT)
+
+        else:
+            synthetic_indicators.append(self.params.MINIMAL_SYNTHETIC_WEIGHT)
         
-        elif (features['ai_pattern_score'] > 0.5):
-            ai_indicators.append(0.7)
+        # High synthetic pattern score suggests synthetic
+        if (features['synthetic_pattern_score'] > self.params.SYNTHETIC_PATTERN_SCORE_HIGH_THRESHOLD):
+            synthetic_indicators.append(self.params.STRONG_SYNTHETIC_WEIGHT)
+        
+        elif (features['synthetic_pattern_score'] > self.params.SYNTHETIC_PATTERN_SCORE_MEDIUM_THRESHOLD):
+            synthetic_indicators.append(self.params.MEDIUM_SYNTHETIC_WEIGHT)
         
         else:
-            ai_indicators.append(0.3)
+            synthetic_indicators.append(self.params.LOW_SYNTHETIC_WEIGHT)
         
         # Calculate raw score and confidence
-        raw_score  = np.mean(ai_indicators) if ai_indicators else 0.5
-        confidence = 1.0 - (np.std(ai_indicators) / 0.5) if ai_indicators else 0.5
-        confidence = max(0.1, min(0.9, confidence))
+        raw_score  = np.mean(synthetic_indicators) if synthetic_indicators else self.params.NEUTRAL_PROBABILITY
+        confidence = 1.0 - (np.std(synthetic_indicators) / self.params.CONFIDENCE_STD_NORMALIZER) if synthetic_indicators else self.params.NEUTRAL_CONFIDENCE
+        confidence = max(self.params.MIN_CONFIDENCE, min(self.params.MAX_CONFIDENCE, confidence))
         
         return raw_score, confidence
     
 
-    def _calculate_mixed_probability(self, features: Dict[str, Any]) -> float:
+    def _calculate_hybrid_probability(self, features: Dict[str, Any]) -> float:
         """
-        Calculate probability of mixed AI/Human content with better indicators
+        Calculate probability of hybrid synthetic/authentic content with better indicators
         """
-        mixed_indicators = list()
+        hybrid_indicators = list()
         
         # High entropy variance suggests mixed content
         entropy_variance = features.get('entropy_variance', 0)
         
-        if (entropy_variance > 0.5):
+        if (entropy_variance > self.params.ENTROPY_VARIANCE_HIGH_THRESHOLD):
             # Strong mixed indicator
-            mixed_indicators.append(0.6)  
+            hybrid_indicators.append(self.params.STRONG_HYBRID_WEIGHT)  
 
-        elif (entropy_variance > 0.3):
-            mixed_indicators.append(0.3)
+        elif (entropy_variance > self.params.ENTROPY_VARIANCE_MIXED_THRESHOLD):
+            hybrid_indicators.append(self.params.MODERATE_HYBRID_WEIGHT)
 
         else:
-            mixed_indicators.append(0.0)
+            hybrid_indicators.append(self.params.MINIMAL_HYBRID_WEIGHT)
         
         # Inconsistent patterns across different entropy measures
         char_entropy = features.get('char_entropy', 0)
         word_entropy = features.get('word_entropy', 0)
         
-        if ((char_entropy > 0) and (word_entropy > 0)):
+        if ((char_entropy > self.params.ZERO_TOLERANCE) and (word_entropy > self.params.ZERO_TOLERANCE)):
             entropy_discrepancy = abs(char_entropy - word_entropy)
 
             # Large discrepancy suggests mixing
-            if (entropy_discrepancy > 1.0):  
-                mixed_indicators.append(0.4)
+            if (entropy_discrepancy > self.params.ENTROPY_DISCREPANCY_THRESHOLD):  
+                hybrid_indicators.append(self.params.MODERATE_HYBRID_WEIGHT)
         
-        # Moderate AI pattern score might indicate mixing
-        ai_pattern_score = features.get('ai_pattern_score', 0)
-        if (0.4 <= ai_pattern_score <= 0.6):
-            mixed_indicators.append(0.3)
+        # Moderate synthetic pattern score might indicate mixing
+        synthetic_pattern_score = features.get('synthetic_pattern_score', 0)
+        if (self.params.SYNTHETIC_PATTERN_MIXED_MIN <= synthetic_pattern_score <= self.params.SYNTHETIC_PATTERN_MIXED_MAX):
+            hybrid_indicators.append(self.params.WEAK_HYBRID_WEIGHT)
         
-        mixed_probability = min(0.4, np.mean(mixed_indicators)) if mixed_indicators else 0.0
+        hybrid_probability = min(self.params.MAX_HYBRID_PROBABILITY, np.mean(hybrid_indicators)) if hybrid_indicators else 0.0
         
-        return mixed_probability
+        return hybrid_probability
 
 
     def cleanup(self):

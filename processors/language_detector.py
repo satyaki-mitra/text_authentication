@@ -2,13 +2,16 @@
 import re
 import torch
 import string
-from enum import Enum
 from typing import Dict
 from typing import List
 from typing import Tuple
 from loguru import logger
 from typing import Optional
+from config.enums import Script
 from dataclasses import dataclass
+from config.enums import Language
+from config.schemas import LanguageDetectionResult
+from config.constants import language_detection_params
 
 
 # Try to import optional libraries
@@ -32,152 +35,50 @@ except ImportError:
     MODEL_MANAGER_AVAILABLE = False
 
 
-class Language(Enum):
-    """
-    ISO 639-1 language codes for supported languages
-    """
-    ENGLISH    = "en"
-    SPANISH    = "es"
-    FRENCH     = "fr"
-    GERMAN     = "de"
-    ITALIAN    = "it"
-    PORTUGUESE = "pt"
-    RUSSIAN    = "ru"
-    CHINESE    = "zh"
-    JAPANESE   = "ja"
-    KOREAN     = "ko"
-    ARABIC     = "ar"
-    HINDI      = "hi"
-    DUTCH      = "nl"
-    POLISH     = "pl"
-    TURKISH    = "tr"
-    SWEDISH    = "sv"
-    VIETNAMESE = "vi"
-    INDONESIAN = "id"
-    THAI       = "th"
-    GREEK      = "el"
-    HEBREW     = "he"
-    CZECH      = "cs"
-    ROMANIAN   = "ro"
-    DANISH     = "da"
-    FINNISH    = "fi"
-    NORWEGIAN  = "no"
-    UNKNOWN    = "unknown"
-
-
-class Script(Enum):
-    """
-    Writing scripts
-    """
-    LATIN      = "latin"
-    CYRILLIC   = "cyrillic"
-    ARABIC     = "arabic"
-    CHINESE    = "chinese"
-    JAPANESE   = "japanese"
-    KOREAN     = "korean"
-    DEVANAGARI = "devanagari"
-    GREEK      = "greek"
-    HEBREW     = "hebrew"
-    THAI       = "thai"
-    MIXED      = "mixed"
-    UNKNOWN    = "unknown"
-
-
-@dataclass
-class LanguageDetectionResult:
-    """
-    Result of language detection
-    """
-    primary_language   : Language
-    confidence         : float
-    all_languages      : Dict[str, float]  # language_code -> confidence
-    script             : Script
-    is_multilingual    : bool
-    detection_method   : str
-    char_count         : int
-    word_count         : int
-    warnings           : List[str]
-    
-
-    def to_dict(self) -> Dict:
-        """
-        Convert to dictionary
-        """
-        return {"primary_language"  : self.primary_language.value,
-                "confidence"        : round(self.confidence, 4),
-                "all_languages"     : {k: round(v, 4) for k, v in self.all_languages.items()},
-                "script"            : self.script.value,
-                "is_multilingual"   : self.is_multilingual,
-                "detection_method"  : self.detection_method,
-                "char_count"        : self.char_count,
-                "word_count"        : self.word_count,
-                "warnings"          : self.warnings,
-               }
-
-
 class LanguageDetector:
     """
     Detects the language of input text using multiple strategies with fallbacks.
 
     Features:
-    - Primary    : XLM-RoBERTa model (supports 100+ languages)
-    - Fallback 1 : langdetect library (fast, probabilistic)
-    - Fallback 2 : Character-based heuristics
-    - Confidence scoring
-    - Multi-language detection
-    - Script detection (Latin, Cyrillic, Arabic, etc.)
+    - Learned language representations (when available)
+    - Statistical language probability estimation
+    - Script and character distribution analysis
+    - Multi-signal aggregation with fallbacks
 
     Supported Languages:
-    - 100+ languages via XLM-RoBERTa
-    - High accuracy for major languages (English, Spanish, French, German, Chinese, etc.)
+    - Broad multilingual coverage via learned language representations
+    - Deterministic support via script and statistical analysis
     """
-    # Minimum text length for reliable detection
-    MIN_TEXT_LENGTH = 20
+    # Use constants from config
+    MIN_TEXT_LENGTH = language_detection_params.MINIMUM_TEXT_LENGTH
+    LANGUAGE_NAMES  = language_detection_params.LANGUAGE_NAMES
     
-    # Language name mappings
-    LANGUAGE_NAMES  = {"en": "English",
-                       "es": "Spanish",
-                       "fr": "French",
-                       "de": "German",
-                       "it": "Italian",
-                       "pt": "Portuguese",
-                       "ru": "Russian",
-                       "zh": "Chinese",
-                       "ja": "Japanese",
-                       "ko": "Korean",
-                       "ar": "Arabic",
-                       "hi": "Hindi",
-                      }
-    
-    # Character ranges for script detection
-    SCRIPT_RANGES   = {Script.LATIN: [(0x0041, 0x007A), (0x00C0, 0x024F)],
-                       Script.CYRILLIC: [(0x0400, 0x04FF)],
-                       Script.ARABIC: [(0x0600, 0x06FF), (0x0750, 0x077F)],
-                       Script.CHINESE: [(0x4E00, 0x9FFF), (0x3400, 0x4DBF)],
-                       Script.JAPANESE: [(0x3040, 0x309F), (0x30A0, 0x30FF)],
-                       Script.KOREAN: [(0xAC00, 0xD7AF), (0x1100, 0x11FF)],
-                       Script.DEVANAGARI: [(0x0900, 0x097F)],
-                       Script.GREEK: [(0x0370, 0x03FF)],
-                       Script.HEBREW: [(0x0590, 0x05FF)],
-                       Script.THAI: [(0x0E00, 0x0E7F)],
+    # Map Script enum to string keys for SCRIPT_RANGES
+    SCRIPT_RANGES   = {Script.LATIN      : language_detection_params.SCRIPT_RANGES["latin"],
+                       Script.CYRILLIC   : language_detection_params.SCRIPT_RANGES["cyrillic"],
+                       Script.ARABIC     : language_detection_params.SCRIPT_RANGES["arabic"],
+                       Script.CHINESE    : language_detection_params.SCRIPT_RANGES["chinese"],
+                       Script.JAPANESE   : language_detection_params.SCRIPT_RANGES["japanese"],
+                       Script.KOREAN     : language_detection_params.SCRIPT_RANGES["korean"],
+                       Script.DEVANAGARI : language_detection_params.SCRIPT_RANGES["devanagari"],
+                       Script.GREEK      : language_detection_params.SCRIPT_RANGES["greek"],
+                       Script.HEBREW     : language_detection_params.SCRIPT_RANGES["hebrew"],
+                       Script.THAI       : language_detection_params.SCRIPT_RANGES["thai"],
                       }
     
 
-    def __init__(self, use_model: bool = True, min_confidence: float = 0.5):
+    def __init__(self, use_model: bool = True):
         """
         Initialize language detector
         
         Arguments:
         ----------
-            use_model       : Use ML model for detection (more accurate)
-
-            min_confidence  : Minimum confidence threshold
+            use_model : Use ML model for detection (more accurate)
         """
-        self.use_model      = use_model and MODEL_MANAGER_AVAILABLE
-        self.min_confidence = min_confidence
-        self.model_manager  = None
-        self.classifier     = None
-        self.is_initialized = False
+        self.use_model             = use_model and MODEL_MANAGER_AVAILABLE
+        self.model_manager         = None
+        self.classifier            = None
+        self.is_initialized        = False
         
         logger.info(f"LanguageDetector initialized (use_model={self.use_model})")
     
@@ -251,44 +152,45 @@ class LanguageDetector:
         # Try detection methods in order
         result = None
         
-        # Method 1 : ML Model
+        # Method 1: ML Model
         if self.use_model and self.is_initialized:
             try:
                 result                  = self._detect_with_model(text = cleaned_text)
-                result.detection_method = "xlm-roberta-model"
+                result.detection_method = "learned-language-representation"
             
             except Exception as e:
                 logger.warning(f"Model detection failed: {repr(e)}, trying fallback")
                 warnings.append("Model detection failed, using fallback")
         
-        # Method 2 : langdetect library
+        # Method 2: langdetect library
         if result is None and LANGDETECT_AVAILABLE:
             try:
                 result                  = self._detect_with_langdetect(text = cleaned_text)
-                result.detection_method = "langdetect-library"
+                result.detection_method = "statistical-language-estimation"
             
             except Exception as e:
                 logger.warning(f"langdetect failed: {repr(e)}, trying heuristics")
                 warnings.append("langdetect failed, using heuristics")
         
-        # Method 3 : Character-based heuristics
+        # Method 3: Character-based heuristics
         if result is None:
             result                  = self._detect_with_heuristics(cleaned_text, script)
-            result.detection_method = "character-heuristics"
+            result.detection_method = "character-distribution-analysis"
         
         # Add metadata
         result.script     = script
         result.char_count = char_count
         result.word_count = word_count
-
         result.warnings.extend(warnings)
         
-        # Check for multilingual content
-        if len([v for v in result.all_languages.values() if v > 0.2]) > 1:
+        # Check for multilingual content using constant
+        threshold         = language_detection_params.MULTILINGUAL_THRESHOLD
+
+        if len([v for v in result.all_languages.values() if v > threshold]) > 1:
             result.is_multilingual = True
             warnings.append("Text appears to contain multiple languages")
         
-        logger.info(f"Detected language: {result.primary_language.value} (confidence: {result.confidence:.2f}, method: {result.detection_method})")
+        logger.info(f"Detected language: {result.primary_language.value} (evidence_strength: {result.evidence_strength:.2f}, method: {result.detection_method})")
         
         return result
     
@@ -328,7 +230,7 @@ class LanguageDetector:
             raise
 
 
-    def _split_text_into_chunks(self, text: str, max_chunk_length: int = 500, min_chunk_length: int = 50) -> List[str]:
+    def _split_text_into_chunks(self, text: str, max_chunk_length: int = language_detection_params.MAX_CHUNK_LENGTH, min_chunk_length: int = language_detection_params.MIN_CHUNK_LENGTH) -> List[str]:
         """
         Split text into meaningful chunks for language detection
         
@@ -352,12 +254,11 @@ class LanguageDetector:
         sentences     = [s.strip() for s in sentences if s.strip()]
         
         chunks        = list()
-
         current_chunk = ""
         
         for sentence in sentences:
             # If adding this sentence doesn't exceed max length
-            if len(current_chunk) + len(sentence) + 1 <= max_chunk_length:
+            if ((len(current_chunk) + len(sentence) + 1) <= max_chunk_length):
                 if current_chunk:
                     current_chunk += " " + sentence
                 
@@ -366,7 +267,7 @@ class LanguageDetector:
             
             else:
                 # Current chunk is full, save it
-                if current_chunk and len(current_chunk) >= min_chunk_length:
+                if (current_chunk and (len(current_chunk) >= min_chunk_length)):
                     chunks.append(current_chunk)
                 
                 # Start new chunk with current sentence
@@ -377,29 +278,32 @@ class LanguageDetector:
             chunks.append(current_chunk)
         
         # Strategy 2: If sentence splitting didn't work well, use fixed-length chunks
-        if ((len(chunks) == 0) or ((len(chunks) == 1 )and (len(chunks[0]) > max_chunk_length))):
+        if ((len(chunks) == 0) or ((len(chunks) == 1) and (len(chunks[0]) > max_chunk_length))):
             chunks = self._split_fixed_length(text, max_chunk_length)
         
         logger.debug(f"Split {len(text)} chars into {len(chunks)} chunks: {[len(c) for c in chunks]}")
         return chunks
 
 
-    def _split_fixed_length(self, text: str, chunk_size: int = 1000) -> List[str]:
+    def _split_fixed_length(self, text: str, chunk_size: int = language_detection_params.FIXED_CHUNK_SIZE) -> List[str]:
         """
         Fallback: Split text into fixed-length chunks
         """
-        chunks = list()
+        chunks              = list()
+        word_boundary_ratio = language_detection_params.WORD_BOUNDARY_RATIO
 
         for i in range(0, len(text), chunk_size):
             chunk = text[i:i + chunk_size]
+            
             # Try to break at word boundaries
             if ((i + chunk_size) < len(text)):
                 last_space = chunk.rfind(' ')
-                # If we found a space in the last 30%
-                if (last_space > chunk_size * 0.7):  
+                # If we found a space in the last 30% (using word_boundary_ratio)
+                if (last_space > chunk_size * word_boundary_ratio):
                     chunk = chunk[:last_space].strip()
 
             chunks.append(chunk)
+        
         return chunks
 
 
@@ -408,32 +312,34 @@ class LanguageDetector:
         Process a single chunk through the language detection model
         """
         # Get the tokenizer from the pipeline
-        tokenizer = self.classifier.tokenizer
+        tokenizer  = self.classifier.tokenizer
         
-        # Tokenize with explicit length limits
-        inputs    = tokenizer(chunk,
-                              return_tensors     = "pt",
-                              truncation         = True,
-                              max_length         = 512,
-                              padding            = True,
-                              add_special_tokens = True,
-                             )
+        # Tokenize with explicit length limits using constant
+        max_length = language_detection_params.MODEL_MAX_LENGTH
+        inputs     = tokenizer(chunk,
+                               return_tensors     = "pt",
+                               truncation         = True,
+                               max_length         = max_length,
+                               padding            = True,
+                               add_special_tokens = True,
+                              )
         
         # Get model from pipeline
-        model     = self.classifier.model
-        device    = next(model.parameters()).device
+        model      = self.classifier.model
+        device     = next(model.parameters()).device
         
         # Move inputs to correct device
-        inputs    = {k: v.to(device) for k, v in inputs.items()}
+        inputs     = {k: v.to(device) for k, v in inputs.items()}
         
         with torch.no_grad():
             outputs     = model(**inputs)
             predictions = torch.nn.functional.softmax(outputs.logits, dim=-1)
         
-        # Get top predictions for this chunk
-        top_predictions = torch.topk(predictions[0], k = 3)
+        # Get top predictions for this chunk using constant
+        top_k           = language_detection_params.TOP_K_PREDICTIONS
+        top_predictions = torch.topk(predictions[0], k=top_k)
         
-        chunk_results   = dict()
+        chunk_results = dict()
 
         for i in range(len(top_predictions.indices)):
             lang_idx  = top_predictions.indices[i].item()
@@ -451,6 +357,19 @@ class LanguageDetector:
         return chunk_results
 
 
+    def _map_language_code(self, code: str) -> Language:
+        """
+        Map language code string to Language enum
+        """
+        code = code.lower()
+
+        for lang in Language:
+            if (lang.value == code):
+                return lang
+
+        return Language.UNKNOWN
+
+
     def _aggregate_chunk_results(self, chunk_results: List[Dict]) -> LanguageDetectionResult:
         """
         Aggregate results from multiple chunks using weighted averaging
@@ -460,9 +379,9 @@ class LanguageDetector:
         chunk_weights = list()
         
         for chunk_result in chunk_results:
-            # Calculate chunk weight based on confidence and diversity
+            # Calculate chunk weight based on evidence_strength and diversity
             top_score    = max(chunk_result.values()) if chunk_result else 0
-            # Weight by confidence
+            # Weight by evidence_strength
             chunk_weight = top_score  
             
             chunk_weights.append(chunk_weight)
@@ -480,12 +399,12 @@ class LanguageDetector:
             if (len(scores) != len(chunk_weights)):
                 # Use simple average if weight mismatch
                 weighted_scores[lang_code] = sum(scores) / len(scores)
-
+            
             else:
                 # Weighted average
                 weighted_sum               = sum(score * weight for score, weight in zip(scores, chunk_weights))
                 total_weight               = sum(chunk_weights)
-                weighted_scores[lang_code] = weighted_sum / total_weight if total_weight > 0 else sum(scores) / len(scores)
+                weighted_scores[lang_code] = (weighted_sum / total_weight if total_weight > 0 else sum(scores) / len(scores))
         
         # Find primary language
         primary_lang = None
@@ -493,13 +412,13 @@ class LanguageDetector:
         
         for lang_code, score in weighted_scores.items():
             if (score > primary_conf):
-                primary_conf = score
-                primary_lang = lang_code
+                primary_evidence_strength = score
+                primary_lang              = lang_code
         
         # Convert to Language enum
         try:
-            primary_language = Language(primary_lang)
-
+            primary_language = self._map_language_code(code = primary_lang)
+        
         except ValueError:
             primary_language = Language.UNKNOWN
         
@@ -508,21 +427,21 @@ class LanguageDetector:
         
         warnings          = list()
 
-        if detection_quality.get('low_confidence', False):
-            warnings.append("Low confidence across multiple chunks")
+        if detection_quality.get('evidence_strength', False):
+            warnings.append("Low evidence_strength across multiple chunks")
 
         if detection_quality.get('inconsistent', False):
             warnings.append("Inconsistent language detection across chunks")
         
-        return LanguageDetectionResult(primary_language = primary_language,
-                                       confidence       = primary_conf,
-                                       all_languages    = weighted_scores,
-                                       script           = Script.UNKNOWN,
-                                       is_multilingual  = detection_quality.get('multilingual', False),
-                                       detection_method = "model-chunked",
-                                       char_count       = 0,
-                                       word_count       = 0,
-                                       warnings         = warnings,
+        return LanguageDetectionResult(primary_language  = primary_language,
+                                       evidence_strength = primary_evidence_strength,
+                                       all_languages     = weighted_scores,
+                                       script            = Script.UNKNOWN,
+                                       is_multilingual   = detection_quality.get('multilingual', False),
+                                       detection_method  = "model-chunked",
+                                       char_count        = 0,
+                                       word_count        = 0,
+                                       warnings          = warnings,
                                       )
 
 
@@ -530,18 +449,21 @@ class LanguageDetector:
         """
         Assess the quality and consistency of language detection across chunks
         """
-        quality_metrics = {'low_confidence' : False,
-                           'inconsistent'   : False,
-                           'multilingual'   : False,
+        quality_metrics = {'low_evidence_strength' : False,
+                           'inconsistent'          : False,
+                           'multilingual'          : False,
                           }
         
         if not chunk_results:
             return quality_metrics
         
-        # Check for low confidence
-        avg_top_confidence = sum(max(chunk.values()) for chunk in chunk_results) / len(chunk_results)
-        if (avg_top_confidence < 0.6):
-            quality_metrics['low_confidence'] = True
+        # Check for low evidence_strength using constant
+        avg_top_evidence_strength       = sum(max(chunk.values()) for chunk in chunk_results) / len(chunk_results)
+        
+        low_evidence_strength_threshold = language_detection_params.LOW_CONFIDENCE_THRESHOLD
+        
+        if (avg_top_evidence_strength < low_evidence_strength_threshold):
+            quality_metrics['low_evidence_strength'] = True
         
         # Check for inconsistency (different primary languages across chunks)
         chunk_primaries = list()
@@ -554,8 +476,10 @@ class LanguageDetector:
         if (len(set(chunk_primaries)) > 1):
             quality_metrics['inconsistent'] = True
         
-        # Check for multilingual content
-        strong_languages = [lang for lang, score in final_scores.items() if score > 0.2]
+        # Check for multilingual content using constant
+        multilingual_threshold = language_detection_params.MULTILINGUAL_THRESHOLD
+        strong_languages       = [lang for lang, score in final_scores.items() if score > multilingual_threshold]
+
         if (len(strong_languages) > 1):
             quality_metrics['multilingual'] = True
         
@@ -575,63 +499,63 @@ class LanguageDetector:
             all_languages[prob.lang] = prob.prob
         
         # Primary language
-        primary       = lang_probs[0]
+        primary = lang_probs[0]
         
         try:
-            primary_language = Language(primary.lang)
-
+            primary_language = self._map_language_code(code = primary.lang)
+        
         except ValueError:
             primary_language = Language.UNKNOWN
         
-        return LanguageDetectionResult(primary_language = primary_language,
-                                       confidence       = primary.prob,
-                                       all_languages    = all_languages,
-                                       script           = Script.UNKNOWN,
-                                       is_multilingual  = False,
-                                       detection_method = "langdetect",
-                                       char_count       = 0,
-                                       word_count       = 0,
-                                       warnings         = [],
+        return LanguageDetectionResult(primary_language  = primary_language,
+                                       evidence_strength = primary.prob,
+                                       all_languages     = all_languages,
+                                       script            = Script.UNKNOWN,
+                                       is_multilingual   = False,
+                                       detection_method  = "langdetect",
+                                       char_count        = 0,
+                                       word_count        = 0,
+                                       warnings          = [],
                                       )
-    
+                                
 
     def _detect_with_heuristics(self, text: str, script: Script) -> LanguageDetectionResult:
         """
         Detect language using character-based heuristics
         """
         # Script-based language mapping
-        script_to_language = {Script.CHINESE    : Language.CHINESE,
-                              Script.JAPANESE   : Language.JAPANESE,
-                              Script.KOREAN     : Language.KOREAN,
-                              Script.ARABIC     : Language.ARABIC,
-                              Script.CYRILLIC   : Language.RUSSIAN,
-                              Script.DEVANAGARI : Language.HINDI,
-                              Script.GREEK      : Language.GREEK,
-                              Script.HEBREW     : Language.HEBREW,
-                              Script.THAI       : Language.THAI,
+        script_to_language = {Script.CHINESE:    Language.CHINESE,
+                              Script.JAPANESE:   Language.JAPANESE,
+                              Script.KOREAN:     Language.KOREAN,
+                              Script.ARABIC:     Language.ARABIC,
+                              Script.CYRILLIC:   Language.RUSSIAN,
+                              Script.DEVANAGARI: Language.HINDI,
+                              Script.GREEK:      Language.GREEK,
+                              Script.HEBREW:     Language.HEBREW,
+                              Script.THAI:       Language.THAI,
                              }
         
         # If script clearly indicates language
         if script in script_to_language:
-            primary_language = script_to_language[script]
-            # Moderate confidence for heuristics
-            confidence       = 0.7  
+            primary_language  = script_to_language[script]
+            # Moderate evidence_strength for heuristics
+            evidence_strength = 0.7
 
         else:
             # For Latin script, check common words
-            primary_language = self._detect_latin_language(text)
-            # Lower confidence
-            confidence       = 0.5  
+            primary_language  = self._detect_latin_language(text)
+            # Lower evidence_strength
+            evidence_strength = 0.5
         
-        return LanguageDetectionResult(primary_language = primary_language,
-                                       confidence       = confidence,
-                                       all_languages    = {primary_language.value: confidence},
-                                       script           = script,
-                                       is_multilingual  = False,
-                                       detection_method = "heuristics",
-                                       char_count       = 0,
-                                       word_count       = 0,
-                                       warnings         = ["Detection using heuristics, accuracy may be limited"],
+        return LanguageDetectionResult(primary_language  = primary_language,
+                                       evidence_strength = evidence_strength,
+                                       all_languages     = {primary_language.value: evidence_strength},
+                                       script            = script,
+                                       is_multilingual   = False,
+                                       detection_method  = "heuristics",
+                                       char_count        = 0,
+                                       word_count        = 0,
+                                       warnings          = ["Detection using heuristics, accuracy may be limited"],
                                       )
     
 
@@ -660,9 +584,9 @@ class LanguageDetector:
         
         # Return language with highest score
         if scores:
-            best_lang = max(scores.items(), key = lambda x: x[1])
+            best_lang = max(scores.items(), key=lambda x: x[1])
             # At least 3 matches
-            if (best_lang[1] > 2):  
+            if (best_lang[1] > 2):
                 return best_lang[0]
         
         # Default to English for Latin script
@@ -697,10 +621,11 @@ class LanguageDetector:
         # Calculate percentages
         script_percentages = {script: count / total_chars for script, count in script_counts.items() if count > 0}
         
-        # Check if mixed (no single script > 70%)
+        # Check if mixed using constant
+        dominance_threshold = language_detection_params.SCRIPT_DOMINANCE_THRESHOLD
         if (len(script_percentages) > 1):
             max_percentage = max(script_percentages.values())
-            if (max_percentage < 0.7):
+            if (max_percentage < dominance_threshold):
                 return Script.MIXED
         
         # Return dominant script
@@ -731,19 +656,20 @@ class LanguageDetector:
         """
         Create result for unknown language
         """
-        return LanguageDetectionResult(primary_language = Language.UNKNOWN,
-                                       confidence       = 0.0,
-                                       all_languages    = {},
-                                       script           = Script.UNKNOWN,
-                                       is_multilingual  = False,
-                                       detection_method = "none",
-                                       char_count       = len(text),
-                                       word_count       = len(text.split()),
-                                       warnings         = warnings,
+        return LanguageDetectionResult(primary_language  = Language.UNKNOWN,
+                                       evidence_strength = 0.0,
+                                       all_languages     = {},
+                                       script            = Script.UNKNOWN,
+                                       is_multilingual   = False,
+                                       detection_method  = "none",
+                                       char_count        = len(text),
+                                       word_count        = len(text.split()),
+                                       warnings          = warnings,
                                       )
 
     
-    def is_language(self, text: str, target_language: Language, threshold: float = 0.7) -> bool:
+    def is_language(self, text: str, target_language: Language, threshold: float = language_detection_params.LANGUAGE_MATCH_THRESHOLD
+    ) -> bool:
         """
         Check if text is in a specific language
         
@@ -753,14 +679,14 @@ class LanguageDetector:
 
             target_language : Language to check for
             
-            threshold       : Minimum confidence threshold
+            threshold       : Minimum evidence_strength threshold
             
         Returns:
         --------
-            { bool }        : True if text is in target language with sufficient confidence
+            { bool }        : True if text is in target language with sufficient evidence_strength
         """
         result = self.detect(text)
-        return ((result.primary_language == target_language) and (result.confidence >= threshold))
+        return ((result.primary_language == target_language) and (result.evidence_strength >= threshold))
 
     
     def get_supported_languages(self) -> List[str]:
@@ -778,7 +704,7 @@ class LanguageDetector:
         self.is_initialized = False
 
 
-# Convenience Functions 
+
 def quick_detect(text: str, **kwargs) -> LanguageDetectionResult:
     """
     Quick language detection with default settings
@@ -786,7 +712,6 @@ def quick_detect(text: str, **kwargs) -> LanguageDetectionResult:
     Arguments:
     ----------
         text     : Input text
-
         **kwargs : Override settings
         
     Returns:
@@ -801,15 +726,14 @@ def quick_detect(text: str, **kwargs) -> LanguageDetectionResult:
     return detector.detect(text)
 
 
-def is_english(text: str, threshold: float = 0.7) -> bool:
+def is_english(text: str, threshold: float = language_detection_params.LANGUAGE_MATCH_THRESHOLD) -> bool:
     """
     Quick check if text is English
     """
-    detector   = LanguageDetector(use_model = True)
+    detector   = LanguageDetector(use_model=True)
     is_english = detector.is_language(text, Language.ENGLISH, threshold)
     
     return is_english
-
 
 
 # Export

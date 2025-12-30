@@ -1,8 +1,5 @@
 # DEPENDENCIES
-import os
 import sys
-import json
-import time
 import logging
 from typing import Any
 from typing import Dict
@@ -31,52 +28,16 @@ class InterceptHandler(logging.Handler):
         # Find caller from where originated the logged message
         frame, depth = logging.currentframe(), 2
         while (frame.f_code.co_filename == logging.__file__):
-            frame  = frame.f_back
-            depth += 1
+               frame  = frame.f_back
+               depth += 1
         
-        logger.opt(depth=depth, exception=record.exc_info).log(level, record.getMessage())
-
-
-class JSONFormatter:
-    """
-    JSON formatter for structured logging
-    """
-    def __init__(self):
-        self.pid = os.getpid()
+        logger.opt(depth = depth, exception = record.exc_info).log(level, record.getMessage())
     
-
-    def format(self, record: Dict[str, Any]) -> str:
-        """
-        Format log record as JSON
-        """
-        # Create structured log entry
-        log_entry = {"timestamp"  : datetime.fromtimestamp(record["time"].timestamp()).isoformat(),
-                     "level"      : record["level"].name,
-                     "message"    : record["message"],
-                     "module"     : record["name"],
-                     "function"   : record["function"],
-                     "line"       : record["line"],
-                     "process_id" : self.pid,
-                     "thread_id"  : record["thread"].id if record.get("thread") else None,
-                    }
-        
-        # Add exception info if present
-        if record.get("exception"):
-            log_entry["exception"] = {"type"      : str(record["exception"].type),
-                                      "value"     : str(record["exception"].value),
-                                      "traceback" : "".join(record["exception"].traceback).strip() if record["exception"].traceback else None,
-                                     }
-        
-        # Add extra fields
-        if record.get("extra"):
-            log_entry.update(record["extra"])
-        
-        return json.dumps(log_entry, ensure_ascii=False, default=str)
 
 
 class CentralizedLogger:
     """
-    Centralized logging system for AI Text Detector
+    Centralized logging system for Text Authenticator
     
     Features:
     - Structured JSON logging for production
@@ -305,7 +266,7 @@ class CentralizedLogger:
         """
         performance_data = {"operation"        : operation,
                             "duration_seconds" : round(duration, 4),
-                            "timestamp"        : datetime.now().isoformat(),
+                            "timestamp"        : datetime.utcnow().isoformat(),
                             **kwargs
                            }
         
@@ -331,7 +292,7 @@ class CentralizedLogger:
         security_data = {"event_type" : event_type,
                          "user"       : user,
                          "ip_address" : ip,
-                         "timestamp"  : datetime.now().isoformat(),
+                         "timestamp"  : datetime.utcnow().isoformat(),
                          **kwargs,
                         }
         
@@ -365,7 +326,7 @@ class CentralizedLogger:
                         "duration_seconds" : round(duration, 4),
                         "user"             : user,
                         "ip_address"       : ip,
-                        "timestamp"        : datetime.now().isoformat(),
+                        "timestamp"        : datetime.utcnow().isoformat(),
                         **kwargs
                        }
         
@@ -386,9 +347,9 @@ class CentralizedLogger:
                        )
     
 
-    def log_detection_event(self, analysis_id: str, text_length: int, verdict: str, confidence: float, domain: str, processing_time: float, **kwargs) -> None:
+    def log_analysis_event(self, analysis_id: str, text_length: int, assessment: str, signal_strength: float, domain: str, processing_time: float, **kwargs) -> None:
         """
-        Log text detection events
+        Log text analysis events
         
         Arguments:
         ----------
@@ -396,28 +357,28 @@ class CentralizedLogger:
 
             text_length     { int }   : Length of analyzed text
             
-            verdict         { str }   : Detection verdict
+            assessment       { str }  : Analysis assessment
             
-            confidence      { float } : Confidence score
+            signal_strength { float } : signal_strength score
             
             domain          { str }   : Content domain
             
             processing_time { float } : Processing time in seconds
             
-            **kwargs                  : Additional detection context
+            **kwargs                  : Additional Analysis context
         """
-        detection_data = {"analysis_id"             : analysis_id,
+        analysis_data  = {"analysis_id"             : analysis_id,
                           "text_length"             : text_length,
-                          "verdict"                 : verdict,
-                          "confidence"              : round(confidence, 4),
+                          "assessment"              : assessment,
+                          "signal_strength"         : round(signal_strength, 4),
                           "domain"                  : domain,
                           "processing_time_seconds" : round(processing_time, 4),
-                          "timestamp"               : datetime.now().isoformat(),
+                          "timestamp"               : datetime.utcnow().isoformat(),
                           **kwargs
                         }
         
-        logger.bind(log_type = "application").info(f"Detection completed: {analysis_id} -> {verdict}",
-                    extra    = detection_data,
+        logger.bind(log_type = "application").info(f"Analysis completed: {analysis_id} -> {assessment}",
+                    extra    = analysis_data,
                    )
 
     
@@ -438,7 +399,7 @@ class CentralizedLogger:
         model_data = {"model_name"        : model_name,
                       "success"           : success,
                       "load_time_seconds" : round(load_time, 4),
-                      "timestamp"         : datetime.now().isoformat(),
+                      "timestamp"         : datetime.utcnow().isoformat(),
                       **kwargs
                      }
         
@@ -470,7 +431,7 @@ class CentralizedLogger:
         error_data = {"error_type" : error_type,
                       "message"    : message,
                       "context"    : context or {},
-                      "timestamp"  : datetime.now().isoformat(),
+                      "timestamp"  : datetime.utcnow().isoformat(),
                      }
         
         if exception:
@@ -498,7 +459,7 @@ class CentralizedLogger:
         """
         startup_data = {"component" : component,
                         "success"   : success,
-                        "timestamp" : datetime.now().isoformat(),
+                        "timestamp" : datetime.utcnow().isoformat(),
                         **kwargs
                        }
         
@@ -518,7 +479,7 @@ class CentralizedLogger:
         Cleanup logging resources
         """
         try:
-            logger.complete()
+            logger.remove()
             logger.info("Logging system cleanup completed")
         
         except Exception as e:
@@ -566,11 +527,11 @@ def log_api_request(method: str, path: str, status_code: int, duration: float, u
     central_logger.log_api_request(method, path, status_code, duration, user, ip, **kwargs)
 
 
-def log_detection_event(analysis_id: str, text_length: int,  verdict: str, confidence: float, domain: str, processing_time: float, **kwargs) -> None:
+def log_analysis_event(analysis_id: str, text_length: int,  assessment: str, signal_strength: float, domain: str, processing_time: float, **kwargs) -> None:
     """
-    Log text detection events
+    Log text analysis events
     """
-    central_logger.log_detection_event(analysis_id, text_length, verdict, confidence, domain, processing_time, **kwargs)
+    central_logger.log_analysis_event(analysis_id, text_length, assessment, signal_strength, domain, processing_time, **kwargs)
 
 
 def log_model_loading(model_name: str, success: bool, load_time: float, **kwargs) -> None:
@@ -606,5 +567,5 @@ __all__ = ["log_error",
            "CentralizedLogger",
            "log_model_loading",
            "log_security_event",
-           "log_detection_event",
+           "log_analysis_event",
           ]

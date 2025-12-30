@@ -3,6 +3,7 @@ import os
 import time
 import json
 import uvicorn
+import asyncio
 import numpy as np
 from typing import Any
 from typing import List
@@ -19,31 +20,26 @@ from fastapi import Request
 from datetime import datetime
 from fastapi import UploadFile
 from pydantic import BaseModel
+from config.enums import Domain
 from fastapi import HTTPException
 from fastapi import BackgroundTasks
 from config.settings import settings
 from utils.logger import central_logger
 from utils.logger import log_api_request
-from detector.attribution import AIModel
-from config.threshold_config import Domain
 from fastapi.responses import JSONResponse
 from fastapi.responses import HTMLResponse
 from fastapi.responses import FileResponse
+from config.schemas import DetectionResult
 from fastapi.staticfiles import StaticFiles
-from utils.logger import log_detection_event
-from detector.attribution import ModelAttributor
-from detector.highlighter import TextHighlighter
-from processors.language_detector import Language
-from detector.orchestrator import DetectionResult
-from detector.attribution import AttributionResult
+from utils.logger import log_analysis_event
+from services.highlighter import TextHighlighter
+from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ProcessPoolExecutor
 from fastapi.middleware.cors import CORSMiddleware
-from processors.text_processor import TextProcessor
 from reporter.report_generator import ReportGenerator
-from detector.orchestrator import DetectionOrchestrator
-from processors.domain_classifier import DomainClassifier
-from processors.language_detector import LanguageDetector
+from services.orchestrator import DetectionOrchestrator
 from processors.document_extractor import DocumentExtractor
-from reporter.reasoning_generator import ReasoningGenerator
+from services.reasoning_generator import ReasoningGenerator
 
 
 
@@ -202,7 +198,6 @@ class TextAnalysisRequest(SerializableBaseModel):
     """
     text                    : str           = Field(..., min_length = 50, max_length = 50000, description = "Text to analyze")
     domain                  : Optional[str] = Field(None, description = "Override automatic domain detection")
-    enable_attribution      : bool          = Field(True, description = "Enable AI model attribution")
     enable_highlighting     : bool          = Field(True, description = "Generate sentence highlighting")
     skip_expensive_metrics  : bool          = Field(False, description = "Skip computationally expensive metrics")
     use_sentence_level      : bool          = Field(True, description = "Use sentence-level analysis for highlighting") 
@@ -217,7 +212,6 @@ class TextAnalysisResponse(SerializableBaseModel):
     status           : str
     analysis_id      : str
     detection_result : Dict[str, Any]
-    attribution      : Optional[Dict[str, Any]] = None
     highlighted_html : Optional[str]            = None
     reasoning        : Optional[Dict[str, Any]] = None
     report_files     : Optional[Dict[str, str]] = None
@@ -231,7 +225,6 @@ class BatchAnalysisRequest(SerializableBaseModel):
     """
     texts                  : List[str]     = Field(..., min_items = 1, max_items = 100)
     domain                 : Optional[str] = None
-    enable_attribution     : bool          = False
     skip_expensive_metrics : bool          = True
     generate_reports       : bool          = False
 
@@ -243,7 +236,6 @@ class BatchAnalysisResult(SerializableBaseModel):
     index        : int
     status       : str
     detection    : Optional[Dict[str, Any]] = None
-    attribution  : Optional[Dict[str, Any]] = None
     reasoning    : Optional[Dict[str, Any]] = None
     report_files : Optional[Dict[str, str]] = None
     error        : Optional[str]            = None
@@ -271,7 +263,6 @@ class FileAnalysisResponse(SerializableBaseModel):
     analysis_id      : str
     file_info        : Dict[str, Any]
     detection_result : Dict[str, Any]
-    attribution      : Optional[Dict[str, Any]] = None
     highlighted_html : Optional[str]            = None 
     reasoning        : Optional[Dict[str, Any]] = None
     report_files     : Optional[Dict[str, str]] = None
@@ -327,6 +318,7 @@ class AnalysisCache:
         self.ttl_seconds = ttl_seconds
         logger.info(f"AnalysisCache initialized (max_size={max_size}, ttl={ttl_seconds}s)")
     
+
     def set(self, analysis_id: str, data: Dict[str, Any]) -> None:
         """
         Store analysis result in cache
@@ -335,18 +327,20 @@ class AnalysisCache:
         self._cleanup_expired()
         
         # If cache is full, remove oldest entry
-        if len(self.cache) >= self.max_size:
-            oldest_key = min(self.cache.keys(), key=lambda k: self.cache[k]['timestamp'])
+        if (len(self.cache) >= self.max_size):
+            oldest_key = min(self.cache.keys(), key = lambda k: self.cache[k]['timestamp'])
+            
             del self.cache[oldest_key]
+            
             logger.debug(f"Cache full, removed oldest entry: {oldest_key}")
         
         # Store new entry
-        self.cache[analysis_id] = {
-            'data': data,
-            'timestamp': time.time()
-        }
+        self.cache[analysis_id] = {'data'      : data,
+                                   'timestamp' : time.time()
+                                  }
         logger.debug(f"Cached analysis: {analysis_id} (cache size: {len(self.cache)})")
     
+
     def get(self, analysis_id: str) -> Optional[Dict[str, Any]]:
         """
         Retrieve analysis result from cache
@@ -358,7 +352,7 @@ class AnalysisCache:
         entry = self.cache[analysis_id]
         
         # Check if expired
-        if time.time() - entry['timestamp'] > self.ttl_seconds:
+        if ((time.time() - entry['timestamp']) > self.ttl_seconds):
             del self.cache[analysis_id]
             logger.debug(f"Cache expired: {analysis_id}")
             return None
@@ -366,15 +360,13 @@ class AnalysisCache:
         logger.debug(f"Cache hit: {analysis_id}")
         return entry['data']
     
+
     def _cleanup_expired(self) -> None:
         """
         Remove expired entries from cache
         """
         current_time = time.time()
-        expired_keys = [
-            key for key, entry in self.cache.items()
-            if current_time - entry['timestamp'] > self.ttl_seconds
-        ]
+        expired_keys = [key for key, entry in self.cache.items() if ((current_time - entry['timestamp']) > self.ttl_seconds)]
         
         for key in expired_keys:
             del self.cache[key]
@@ -382,6 +374,7 @@ class AnalysisCache:
         if expired_keys:
             logger.debug(f"Cleaned up {len(expired_keys)} expired cache entries")
     
+
     def clear(self) -> None:
         """
         Clear all cached entries
@@ -390,6 +383,7 @@ class AnalysisCache:
         self.cache.clear()
         logger.info(f"Cache cleared ({count} entries removed)")
     
+
     def size(self) -> int:
         """
         Get current cache size
@@ -398,8 +392,8 @@ class AnalysisCache:
 
 
 # ==================== FASTAPI APPLICATION ====================
-app = FastAPI(title                  = "TEXT-AUTH AI Detection API",
-              description            = "API for detecting AI-generated text",
+app = FastAPI(title                  = "Text Forensics API",
+              description            = "Evidence-based statistical and linguistic text analysis API",
               version                = "1.0.0",
               docs_url               = "/api/docs",
               redoc_url              = "/api/redoc",
@@ -423,25 +417,26 @@ if ui_static_path.exists():
 
 # Global instances
 orchestrator       : Optional[DetectionOrchestrator] = None
-attributor         : Optional[ModelAttributor]       = None
 highlighter        : Optional[TextHighlighter]       = None
 reporter           : Optional[ReportGenerator]       = None
 reasoning_generator: Optional[ReasoningGenerator]    = None
 document_extractor : Optional[DocumentExtractor]     = None
 analysis_cache     : Optional[AnalysisCache]         = None 
 
+# Thread pool executor for parallel processing
+parallel_executor  : Optional[ThreadPoolExecutor]    = None
 
 # App state
 app_start_time                                       = time.time()
 
 initialization_status                                = {"orchestrator"        : False,
-                                                        "attributor"          : False,
                                                         "highlighter"         : False,
                                                         "reporter"            : False,
                                                         "reasoning_generator" : False,
                                                         "document_extractor"  : False,
-                                                        "analysis_cache"      : False, 
-                                                        }
+                                                        "analysis_cache"      : False,
+                                                        "parallel_executor"   : False,
+                                                       }
 
 
 # ==================== APPLICATION LIFECYCLE ====================
@@ -451,12 +446,12 @@ async def startup_event():
     Initialize all components on startup
     """
     global orchestrator
-    global attributor
     global highlighter
     global reporter
     global reasoning_generator
     global document_extractor
     global analysis_cache
+    global parallel_executor
     global initialization_status
 
     # Initialize centralized logging first
@@ -464,35 +459,35 @@ async def startup_event():
         raise RuntimeError("Failed to initialize logging system")
     
     logger.info("=" * 80)
-    logger.info("TEXT-AUTH API Starting Up...")
+    logger.info("TEXT-AUTH Forensic Analysis API Starting Up...")
     logger.info("=" * 80)
     
     try:
-        # Initialize Detection Orchestrator
+        # Initialize ThreadPoolExecutor for parallel metric calculation
+        logger.info("Initializing Parallel Executor...")
+        parallel_executor = ThreadPoolExecutor(
+            max_workers = getattr(settings, 'PARALLEL_WORKERS', 4)
+        )
+        initialization_status["parallel_executor"] = True
+        logger.success(f"✓ Parallel Executor initialized with {parallel_executor._max_workers} workers")
+        
+        # Initialize Detection Orchestrator with parallel execution enabled
         logger.info("Initializing Detection Orchestrator...")
-        orchestrator = DetectionOrchestrator(enable_language_detection = True,
-                                             parallel_execution        = False,
-                                             skip_expensive_metrics    = False,
-                                            )
+        
+        # Use the factory method to create orchestrator with executor
+        orchestrator = DetectionOrchestrator.create_with_executor(
+            max_workers = getattr(settings, 'PARALLEL_WORKERS', 4),
+            enable_language_detection = True,
+            parallel_execution = True,  # Enable parallel execution
+            skip_expensive_metrics = False,
+        )
         
         if orchestrator.initialize():
             initialization_status["orchestrator"] = True
-            logger.success("✓ Detection Orchestrator initialized")
+            logger.success("✓ Detection Orchestrator initialized with parallel execution")
         
         else:
             logger.warning("⚠ Detection Orchestrator initialization incomplete")
-        
-        # Initialize Model Attributor
-        logger.info("Initializing Model Attributor...")
-        
-        attributor = ModelAttributor()
-        
-        if attributor.initialize():
-            initialization_status["attributor"] = True
-            logger.success("✓ Model Attributor initialized")
-        
-        else:
-            logger.warning("⚠ Model Attributor initialization incomplete")
         
         # Initialize Text Highlighter
         logger.info("Initializing Text Highlighter...")
@@ -542,10 +537,11 @@ async def startup_event():
         logger.success("✓ Analysis Cache initialized")
         
         logger.info("=" * 80)
-        logger.success("TEXT-AUTH API Ready!")
+        logger.success("TEXT-AUTH Forensic Analysis API Ready!")
         logger.info(f"Server: {settings.HOST}:{settings.PORT}")
         logger.info(f"Environment: {settings.ENVIRONMENT}")
         logger.info(f"Device: {settings.DEVICE}")
+        logger.info(f"Parallel Execution: Enabled")
         logger.info("=" * 80)
         
     except Exception as e:
@@ -559,6 +555,12 @@ async def shutdown_event():
     """
     Cleanup on shutdown
     """
+    # Clean up orchestrator first (it will handle executor cleanup)
+    if orchestrator:
+        orchestrator.cleanup()
+        logger.info("Orchestrator cleanup complete")
+    
+    # Additional cleanup
     if analysis_cache:
         analysis_cache.clear()
     
@@ -567,13 +569,12 @@ async def shutdown_event():
     logger.info("Shutdown complete")
 
 
-
 # ==================== UTILITY FUNCTIONS ====================
 def _get_domain_description(domain: Domain) -> str:
     """
     Get description for a domain
     """
-    descriptions = {Domain.GENERAL       : "General content without specific domain",
+    descriptions = {Domain.GENERAL       : "General-purpose text without domain-specific structure",
                     Domain.ACADEMIC      : "Academic papers, essays, research",
                     Domain.CREATIVE      : "Creative writing, fiction, poetry",
                     Domain.AI_ML         : "AI/ML research papers, technical content",
@@ -693,7 +694,7 @@ def _parse_domain(domain_str: Optional[str]) -> Optional[Domain]:
         
         # Try to match with underscores/spaces variations
         normalized_with_underscores = normalized_domain.replace(' ', '_')
-        if normalized_with_underscores in domain_mapping:
+        if (normalized_with_underscores in domain_mapping):
             return domain_mapping[normalized_with_underscores]
         
         # Try partial matching for more flexibility
@@ -724,19 +725,18 @@ def _validate_file_extension(filename: str) -> str:
     return file_extension
 
 
-def _generate_reasoning(detection_result: DetectionResult, attribution_result: Optional[AttributionResult] = None) -> Dict[str, Any]:
+def _generate_reasoning(detection_result: DetectionResult) -> Dict[str, Any]:
     """
-    Generate detailed reasoning for detection results
+    Generate detailed forensic reasoning explaining metric-level evidence
     """
     if not reasoning_generator:
         return {}
     
     try:
-        reasoning = reasoning_generator.generate(ensemble_result    = detection_result.ensemble_result,
-                                                 metric_results     = detection_result.metric_results,
-                                                 domain             = detection_result.domain_prediction.primary_domain,
-                                                 attribution_result = attribution_result,
-                                                 text_length        = detection_result.processed_text.word_count,
+        reasoning = reasoning_generator.generate(ensemble_result = detection_result.ensemble_result,
+                                                 metric_results  = detection_result.metric_results,
+                                                 domain          = detection_result.domain_prediction.primary_domain,
+                                                 text_length     = detection_result.processed_text.word_count,
                                                 )
 
         return safe_serialize_response(reasoning.to_dict())
@@ -746,8 +746,7 @@ def _generate_reasoning(detection_result: DetectionResult, attribution_result: O
         return {}
 
 
-def _generate_reports(detection_result: DetectionResult, attribution_result: Optional[AttributionResult] = None, highlighted_sentences: Optional[List] = None, 
-                      analysis_id: str = None) -> Dict[str, str]:
+def _generate_reports(detection_result: DetectionResult, highlighted_sentences: Optional[List] = None, analysis_id: str = None) -> Dict[str, str]:
     """
     Generate reports for detection results
     """
@@ -756,7 +755,6 @@ def _generate_reports(detection_result: DetectionResult, attribution_result: Opt
     
     try:
         report_files = reporter.generate_complete_report(detection_result      = detection_result,
-                                                         attribution_result    = attribution_result,
                                                          highlighted_sentences = highlighted_sentences,
                                                          formats               = ["json", "pdf"],
                                                          filename_prefix       = analysis_id or f"report_{int(time.time() * 1000)}",
@@ -766,6 +764,55 @@ def _generate_reports(detection_result: DetectionResult, attribution_result: Opt
     except Exception as e:
         logger.warning(f"Report generation failed: {e}")
         return {}
+
+
+# ==================== ASYNC HELPER FUNCTIONS ====================
+async def _run_detection_parallel(text: str, domain: Optional[Domain], skip_expensive: bool) -> DetectionResult:
+    """
+    Run forensic analysis in parallel mode
+    """
+    if not orchestrator:
+        raise HTTPException(status_code=503, detail="Service not initialized")
+    
+    # Use orchestrator's analyze method which now handles parallel execution internally
+    return orchestrator.analyze(text           = text,
+                                domain         = domain,
+                                skip_expensive = skip_expensive,
+                               )
+
+
+async def _run_batch_analysis_parallel(texts: List[str], domain: Optional[Domain], skip_expensive: bool) -> List[DetectionResult]:
+    """
+    Run batch analysis with parallel execution
+    """
+    if not orchestrator:
+        raise HTTPException(status_code=503, detail="Service not initialized")
+    
+    # Create tasks for parallel execution
+    tasks = list()
+
+    for text in texts:
+        task = asyncio.create_task(asyncio.to_thread(orchestrator.analyze,
+                                                     text           = text,
+                                                     domain         = domain,
+                                                     skip_expensive = skip_expensive,
+                                                    )
+                                  )
+        tasks.append(task)
+    
+    # Wait for all tasks to complete
+    results           = await asyncio.gather(*tasks, return_exceptions = True)
+    
+    # Process results
+    detection_results = list()
+
+    for result in results:
+        if isinstance(result, Exception):
+            raise result
+
+        detection_results.append(result)
+    
+    return detection_results
 
 
 # ==================== ROOT & HEALTH ENDPOINTS ====================
@@ -783,10 +830,10 @@ async def root():
     
     # Fallback to static directory if exists
     ui_static_path = Path(__file__).parent / "ui" / "static"
-    index_path = ui_static_path / "index.html"
+    index_path     = ui_static_path / "index.html"
     
     if index_path.exists():
-        with open(index_path, 'r', encoding='utf-8') as f:
+        with open(index_path, 'r', encoding = 'utf-8') as f:
             return HTMLResponse(content=f.read())
     
     return HTMLResponse(content = """
@@ -794,7 +841,7 @@ async def root():
                                           <head><title>TEXT-AUTH API</title></head>
                                           <body style="font-family: sans-serif; padding: 50px; text-align: center;">
                                               <h1>🔍 TEXT-AUTH API</h1>
-                                              <p>AI Text Detection Platform v2.0</p>
+                                              <p>Evidence-First Text Forensics Platform v1.0</p>
                                               <p><a href="/api/docs">API Documentation</a></p>
                                               <p><a href="/health">Health Check</a></p>
                                           </body>
@@ -809,20 +856,22 @@ async def health_check():
     Health check endpoint
     """
     return HealthCheckResponse(status        = "healthy" if all(initialization_status.values()) else "degraded",
-                               version       = "2.0.0",
+                               version       = "1.0.0",
                                uptime        = time.time() - app_start_time,
                                models_loaded = initialization_status,
-                             )
+                              )
 
 
 # ==================== ANALYSIS ENDPOINTS ====================
 @app.post("/api/analyze", response_model = TextAnalysisResponse)
 async def analyze_text(request: TextAnalysisRequest):
     """
-    Analyze text for AI generation
+    Analyze text for statistical consistency with language-model generation patterns using parallel metric calculation
     """
     if not orchestrator:
-        raise HTTPException(status_code=503, detail="Service not initialized")
+        raise HTTPException(status_code = 503, 
+                            detail      = "Service not initialized",
+                           )
     
     start_time  = time.time()
     analysis_id = f"analysis_{int(time.time() * 1000)}"
@@ -836,42 +885,68 @@ async def analyze_text(request: TextAnalysisRequest):
                                 detail      = f"Invalid domain. Valid options: {[d.value for d in Domain]}",
                                )
         
-        # Run detection analysis
-        logger.info(f"[{analysis_id}] Analyzing text ({len(request.text)} chars)")
+        # Run detection analysis with parallel execution (handled internally by orchestrator)
+        logger.info(f"[{analysis_id}] Analyzing text ({len(request.text)} chars) with parallel metrics")
         
-        detection_result = orchestrator.analyze(text           = request.text,
-                                                domain         = domain,
-                                                skip_expensive = request.skip_expensive_metrics,
-                                               )
+        detection_result      = await _run_detection_parallel(text           = request.text,
+                                                              domain         = domain,
+                                                              skip_expensive = request.skip_expensive_metrics
+                                                             )
         
         # Convert detection result to ensure serializability
-        detection_dict   = safe_serialize_response(detection_result.to_dict())
+        detection_dict        = safe_serialize_response(detection_result.to_dict())
         
-        # Attribution (if enabled)
-        attribution_result = None
-        attribution_dict   = None
-        
-        if (request.enable_attribution and attributor):
-            try:
-                logger.info(f"[{analysis_id}] Running attribution...")
-                attribution_result = attributor.attribute(text           = request.text,
-                                                          processed_text = detection_result.processed_text,
-                                                          metric_results = detection_result.metric_results,
-                                                          domain         = detection_result.domain_prediction.primary_domain,
-                                                         )
-
-                attribution_dict   = safe_serialize_response(attribution_result.to_dict())
-
-            except Exception as e:
-                logger.warning(f"Attribution failed: {e}")
-        
-        # Highlighting (if enabled)
+        # Highlighting (if enabled) - run in parallel with reasoning generation
         highlighted_sentences = None
         highlighted_html      = None
-
-        if request.enable_highlighting and highlighter:
+        reasoning_dict        = dict()
+        
+        # Run highlighting and reasoning generation in parallel if both are needed
+        if (request.enable_highlighting and highlighter and reasoning_generator):
             try:
-                logger.info(f"[{analysis_id}] Generating highlights...")
+                logger.info(f"[{analysis_id}] Generating highlights and reasoning in parallel...")
+                
+                # Create parallel tasks for highlighting and reasoning
+                highlight_task                        = asyncio.create_task(asyncio.to_thread(highlighter.generate_highlights,
+                                                                                              text               = request.text,
+                                                                                              metric_results     = detection_result.metric_results,
+                                                                                              ensemble_result    = detection_result.ensemble_result,
+                                                                                              use_sentence_level = request.use_sentence_level,
+                                                                                             )
+                                                                           )
+                
+                reasoning_task                        = asyncio.create_task(asyncio.to_thread(_generate_reasoning,
+                                                                                              detection_result = detection_result
+                                                                                             )
+                                                                           )
+                
+                # Wait for both tasks to complete
+                highlighted_sentences, reasoning_dict = await asyncio.gather(highlight_task, reasoning_task) 
+                
+                # Generate HTML from highlighted sentences
+                highlighted_html                      = highlighter.generate_html(highlighted_sentences = highlighted_sentences,
+                                                                                  include_legend        = False,
+                                                                                 )
+                
+            except Exception as e:
+                logger.warning(f"Parallel highlighting/reasoning failed: {e}")
+                # Fallback to sequential if parallel fails
+                try:
+                    highlighted_sentences = highlighter.generate_highlights(text               = request.text,
+                                                                            metric_results     = detection_result.metric_results,
+                                                                            ensemble_result    = detection_result.ensemble_result,
+                                                                            use_sentence_level = request.use_sentence_level,
+                                                                           )
+
+                    highlighted_html      = highlighter.generate_html(highlighted_sentences = highlighted_sentences,
+                                                                      include_legend        = False,
+                                                                     )
+                except Exception as e2:
+                    logger.warning(f"Highlighting fallback also failed: {e2}")
+        
+        elif request.enable_highlighting and highlighter:
+            # Only highlighting requested
+            try:
                 highlighted_sentences = highlighter.generate_highlights(text               = request.text,
                                                                         metric_results     = detection_result.metric_results,
                                                                         ensemble_result    = detection_result.ensemble_result,
@@ -880,29 +955,25 @@ async def analyze_text(request: TextAnalysisRequest):
 
                 highlighted_html      = highlighter.generate_html(highlighted_sentences = highlighted_sentences,
                                                                   include_legend        = False,
-                                                                  include_metrics       = request.include_metrics_summary,
                                                                  )
             except Exception as e:
                 logger.warning(f"Highlighting failed: {e}")
-
         
-        # Generate reasoning
-        reasoning_dict = _generate_reasoning(detection_result   = detection_result, 
-                                             attribution_result = attribution_result,
-                                            )
+        elif reasoning_generator:
+            # Only reasoning requested
+            reasoning_dict = _generate_reasoning(detection_result = detection_result)
         
         # Generate reports (if requested)
-        report_files   = dict()
+        report_files = dict()
 
         if request.generate_report:
             try:
                 logger.info(f"[{analysis_id}] Generating reports...")
-                report_files = _generate_reports(detection_result      = detection_result,
-                                                 attribution_result    = attribution_result,
-                                                 highlighted_sentences = highlighted_sentences,
-                                                 analysis_id           = analysis_id,
-                                                )
-
+                report_files = await asyncio.to_thread(_generate_reports,
+                                                       detection_result      = detection_result,
+                                                       highlighted_sentences = highlighted_sentences,
+                                                       analysis_id           = analysis_id,
+                                                      )
             except Exception as e:
                 logger.warning(f"Report generation failed: {e}")
         
@@ -911,14 +982,12 @@ async def analyze_text(request: TextAnalysisRequest):
         # Cache the full analysis result
         if analysis_cache:
             cache_data = {'detection_result'      : detection_result,
-                          'attribution_result'    : attribution_result,
                           'highlighted_sentences' : highlighted_sentences,
                           'original_text'         : request.text,
                           'processing_time'       : processing_time,
                          }
 
             analysis_cache.set(analysis_id, cache_data)
-
             logger.debug(f"Cached analysis: {analysis_id}")
         
         # Log the detection event
@@ -928,14 +997,12 @@ async def analyze_text(request: TextAnalysisRequest):
                             confidence          = detection_result.ensemble_result.overall_confidence,
                             domain              = detection_result.domain_prediction.primary_domain.value,
                             processing_time     = processing_time,
-                            enable_attribution  = request.enable_attribution,
                             enable_highlighting = request.enable_highlighting,
                            )
         
         return TextAnalysisResponse(status           = "success",
                                     analysis_id      = analysis_id,
                                     detection_result = detection_dict,
-                                    attribution      = attribution_dict,
                                     highlighted_html = highlighted_html,
                                     reasoning        = reasoning_dict,
                                     report_files     = report_files,
@@ -943,13 +1010,12 @@ async def analyze_text(request: TextAnalysisRequest):
                                     timestamp        = datetime.now().isoformat(),
                                 )
         
-    except HTTPException:
+    except HTTPException as e:
         central_logger.log_error("TextAnalysisError",
                                 f"Analysis failed for request",
                                 {"text_length": len(request.text)},
                                 e,
                                 )
-
         raise
 
     except Exception as e:
@@ -960,10 +1026,9 @@ async def analyze_text(request: TextAnalysisRequest):
 
 
 @app.post("/api/analyze/file", response_model = FileAnalysisResponse)
-async def analyze_file(file: UploadFile = File(...), domain: Optional[str] = Form(None), enable_attribution: bool = Form(True), skip_expensive_metrics: bool = Form(False),
-                       use_sentence_level: bool = Form(True), include_metrics_summary: bool = Form(True), generate_report: bool = Form(False)):
+async def analyze_file(file: UploadFile = File(...), domain: Optional[str] = Form(None), skip_expensive_metrics: bool = Form(False), use_sentence_level: bool = Form(True), include_metrics_summary: bool = Form(True), generate_report: bool = Form(False)):
     """
-    Analyze uploaded document (PDF, DOCX, TXT)
+    Analyze uploaded document for linguistic and statistical consistency patterns using parallel processing
     """
     if not document_extractor or not orchestrator:
         raise HTTPException(status_code = 503, 
@@ -993,13 +1058,13 @@ async def analyze_file(file: UploadFile = File(...), domain: Optional[str] = For
         
         logger.info(f"[{analysis_id}] Extracted {len(extracted_doc.text)} characters")
         
-        # Parse domain and analyze
-        domain_enum        = _parse_domain(domain)
+        # Parse domain and analyze with parallel execution
+        domain_enum      = _parse_domain(domain)
         
-        detection_result   = orchestrator.analyze(text           = extracted_doc.text,
-                                                  domain         = domain_enum,
-                                                  skip_expensive = skip_expensive_metrics,
-                                                 )
+        detection_result = await _run_detection_parallel(text           = extracted_doc.text,
+                                                         domain         = domain_enum,
+                                                         skip_expensive = skip_expensive_metrics,
+                                                        )
         
         # Set file_info on detection_result
         detection_result.file_info = {"filename"          : file.filename,
@@ -1010,60 +1075,62 @@ async def analyze_file(file: UploadFile = File(...), domain: Optional[str] = For
                                      }
         
         # Convert to serializable dict
-        detection_dict     = safe_serialize_response(detection_result.to_dict())
+        detection_dict        = safe_serialize_response(detection_result.to_dict())
         
-        # Attribution
-        attribution_result = None
-        attribution_dict   = None
-        
-        if (enable_attribution and attributor):
-            try:
-                attribution_result = attributor.attribute(text           = extracted_doc.text,
-                                                          processed_text = detection_result.processed_text,
-                                                          metric_results = detection_result.metric_results,
-                                                          domain         = detection_result.domain_prediction.primary_domain,
-                                                         )
-
-                attribution_dict   = safe_serialize_response(attribution_result.to_dict())
-
-            except Exception as e:
-                logger.warning(f"Attribution failed: {e}")
-        
-        # Highlighting
+        # Parallel highlighting and reasoning generation
         highlighted_sentences = None
         highlighted_html      = None
-
-        if highlighter:
-            try:
-                highlighted_sentences = highlighter.generate_highlights(text               = extracted_doc.text,
-                                                                        metric_results     = detection_result.metric_results,
-                                                                        ensemble_result    = detection_result.ensemble_result,
-                                                                        use_sentence_level = use_sentence_level,
-                                                                       )
-
-                highlighted_html      = highlighter.generate_html(highlighted_sentences = highlighted_sentences,
-                                                                  include_legend        = False,
-                                                                  include_metrics       = include_metrics_summary,
-                                                                 )
-            except Exception as e:
-                logger.warning(f"Highlighting failed: {e}")
+        reasoning_dict        = {}
         
-        # Generate reasoning
-        reasoning_dict = _generate_reasoning(detection_result   = detection_result, 
-                                             attribution_result = attribution_result,
-                                            )
+        if highlighter and reasoning_generator:
+            try:
+                # Run highlighting and reasoning in parallel
+                highlight_task                        = asyncio.create_task(asyncio.to_thread(highlighter.generate_highlights,
+                                                                                              text               = extracted_doc.text,
+                                                                                              metric_results     = detection_result.metric_results,
+                                                                                              ensemble_result    = detection_result.ensemble_result,
+                                                                                              use_sentence_level = use_sentence_level,
+                                                                                             )
+                                                                           )
+                
+                reasoning_task                        = asyncio.create_task(asyncio.to_thread(_generate_reasoning,
+                                                                                              detection_result = detection_result
+                                                                                             )
+                                                                           )
+                
+                highlighted_sentences, reasoning_dict = await asyncio.gather(highlight_task, reasoning_task)
+                
+                highlighted_html                      = highlighter.generate_html(highlighted_sentences = highlighted_sentences,
+                                                                                  include_legend        = False,
+                                                                                 )
+                
+            except Exception as e:
+                logger.warning(f"Parallel highlighting/reasoning failed: {e}")
+                # Fallback
+                try:
+                    highlighted_sentences = highlighter.generate_highlights(text               = extracted_doc.text,
+                                                                            metric_results     = detection_result.metric_results,
+                                                                            ensemble_result    = detection_result.ensemble_result,
+                                                                            use_sentence_level = use_sentence_level,
+                                                                           )
+                    highlighted_html      = highlighter.generate_html(highlighted_sentences = highlighted_sentences,
+                                                                      include_legend        = False,
+                                                                     )
+                except Exception as e2:
+                    logger.warning(f"Highlighting fallback also failed: {e2}")
         
         # Generate reports (if requested)
-        report_files   = dict()
+        report_files = dict()
 
         if generate_report:
             try:
                 logger.info(f"[{analysis_id}] Generating reports...")
-                report_files = _generate_reports(detection_result      = detection_result,
-                                                 attribution_result    = attribution_result,
-                                                 highlighted_sentences = highlighted_sentences,
-                                                 analysis_id           = analysis_id,
-                                                )
+                report_files = await asyncio.to_thread(_generate_reports,
+                                                       detection_result      = detection_result,
+                                                       highlighted_sentences = highlighted_sentences,
+                                                       analysis_id           = analysis_id,
+                                                      )
+
             except Exception as e:
                 logger.warning(f"Report generation failed: {e}")
         
@@ -1072,7 +1139,6 @@ async def analyze_file(file: UploadFile = File(...), domain: Optional[str] = For
         # Cache the full analysis result including Original Text 
         if analysis_cache:
             cache_data = {'detection_result'      : detection_result,
-                          'attribution_result'    : attribution_result,
                           'highlighted_sentences' : highlighted_sentences,
                           'original_text'         : extracted_doc.text, 
                           'processing_time'       : processing_time,
@@ -1090,7 +1156,6 @@ async def analyze_file(file: UploadFile = File(...), domain: Optional[str] = For
                                                         "highlighted_html"  : highlighted_html is not None,
                                                        },
                                     detection_result = detection_dict,
-                                    attribution      = attribution_dict,
                                     highlighted_html = highlighted_html,
                                     reasoning        = reasoning_dict,
                                     report_files     = report_files,
@@ -1111,7 +1176,7 @@ async def analyze_file(file: UploadFile = File(...), domain: Optional[str] = For
 @app.post("/api/analyze/batch", response_model = BatchAnalysisResponse)
 async def batch_analyze(request: BatchAnalysisRequest):
     """
-    Analyze multiple texts in batch
+    Analyze multiple texts in batch for forensic consistency signals using parallel processing
     - Limits : 1-100 texts per request
     """
     if not orchestrator:
@@ -1124,78 +1189,76 @@ async def batch_analyze(request: BatchAnalysisRequest):
                             detail      = "Maximum 100 texts per batch",
                            )
 
-
     start_time = time.time()
     batch_id   = f"batch_{int(time.time() * 1000)}"
 
     try:
         # Parse domain
-        domain  = _parse_domain(request.domain)
+        domain            = _parse_domain(request.domain)
         
-        logger.info(f"[{batch_id}] Processing {len(request.texts)} texts")
+        logger.info(f"[{batch_id}] Processing {len(request.texts)} texts with parallel execution")
         
-        results = list()
+        # Use parallel batch analysis
+        detection_results = await _run_batch_analysis_parallel(texts          = request.texts,
+                                                               domain         = domain,
+                                                               skip_expensive = request.skip_expensive_metrics,
+                                                              )
+        
+        results           = list()
+        
+        # Process results with parallel reasoning generation
+        reasoning_tasks   = list()
 
-        for i, text in enumerate(request.texts):
-            try:
-                detection_result   = orchestrator.analyze(text           = text,
-                                                          domain         = domain,
-                                                          skip_expensive = request.skip_expensive_metrics,
-                                                         )
-                
-                # Convert to serializable dict
-                detection_dict     = safe_serialize_response(detection_result.to_dict())
-                
-                # Attribution if enabled
-                attribution_result = None
-                attribution_dict   = None
+        for i, detection_result in enumerate(detection_results):
+            if isinstance(detection_result, Exception):
+                results.append(BatchAnalysisResult(index  = i,
+                                                   status = "error",
+                                                   error  = str(detection_result),
+                                                  ))
+                continue
+            
+            # Convert to serializable dict
+            detection_dict = safe_serialize_response(detection_result.to_dict())
+            
+            # Start reasoning generation task
+            if reasoning_generator:
+                task = asyncio.create_task(asyncio.to_thread(_generate_reasoning,
+                                                             detection_result = detection_result
+                                                            )
+                                          )
 
-                if request.enable_attribution and attributor:
-                    try:
-                        attribution_result = attributor.attribute(text           = text,
-                                                                  processed_text = detection_result.processed_text,
-                                                                  metric_results = detection_result.metric_results,
-                                                                  domain         = detection_result.domain_prediction.primary_domain,
-                                                                 )
+                reasoning_tasks.append((i, task, detection_dict))
 
-                        attribution_dict   = safe_serialize_response(attribution_result.to_dict())
-
-                    except Exception:
-                        pass
-                
-                # Generate reasoning
-                reasoning_dict = _generate_reasoning(detection_result   = detection_result, 
-                                                     attribution_result = attribution_result,
-                                                    )
-                
-                # Generate reports if requested
-                report_files   = dict()
-
-                if request.generate_reports:
-                    try:
-                        report_files = _generate_reports(detection_result   = detection_result,
-                                                         attribution_result = attribution_result,
-                                                         analysis_id        = f"{batch_id}_{i}"
-                                                        )
-                    except Exception:
-                        pass
-                
+            else:
                 results.append(BatchAnalysisResult(index        = i,
                                                    status       = "success",
                                                    detection    = detection_dict,
-                                                   attribution  = attribution_dict,
+                                                   reasoning    = {},
+                                                   report_files = None,
+                                                  ))
+        
+        # Wait for all reasoning tasks to complete
+        for i, task, detection_dict in reasoning_tasks:
+            try:
+                reasoning_dict = await task
+                results.append(BatchAnalysisResult(index        = i,
+                                                   status       = "success",
+                                                   detection    = detection_dict,
                                                    reasoning    = reasoning_dict,
-                                                   report_files = report_files,
-                                                  )
-                              )
-                
+                                                   report_files = None,
+                                                  ))
+
             except Exception as e:
-                logger.error(f"[{batch_id}] Text {i} failed: {e}")
-                results.append(BatchAnalysisResult(index  = i,
-                                                   status = "error",
-                                                   error  = str(e),
-                                                  )
-                              )
+                logger.error(f"[{batch_id}] Reasoning generation failed for text {i}: {e}")
+                results.append(BatchAnalysisResult(index        = i,
+                                                   status       = "success",
+                                                   detection    = detection_dict,
+                                                   reasoning    = {},
+                                                   report_files = None,
+                                                  ))
+        
+        # Sort results by index
+        results.sort(key = lambda x: x.index)
         
         processing_time = time.time() - start_time
         success_count   = sum(1 for r in results if r.status == "success")
@@ -1243,7 +1306,6 @@ async def generate_report(background_tasks: BackgroundTasks, analysis_id: str = 
 
         # Extract cached data
         detection_result      = cached_data['detection_result']
-        attribution_result    = cached_data.get('attribution_result')
         highlighted_sentences = cached_data.get('highlighted_sentences')
         
         # Parse formats
@@ -1259,12 +1321,12 @@ async def generate_report(background_tasks: BackgroundTasks, analysis_id: str = 
         # Generate reports using cached data
         logger.info(f"Generating {', '.join(requested_formats)} report(s) for {analysis_id}")
         
-        report_files     = reporter.generate_complete_report(detection_result      = detection_result,
-                                                             attribution_result    = attribution_result,
-                                                             highlighted_sentences = highlighted_sentences if include_highlights else None,
-                                                             formats               = requested_formats,
-                                                             filename_prefix       = analysis_id,
-                                                            )
+        report_files     = await asyncio.to_thread(reporter.generate_complete_report,
+                                                   detection_result      = detection_result,
+                                                   highlighted_sentences = highlighted_sentences if include_highlights else None,
+                                                   formats               = requested_formats,
+                                                   filename_prefix       = analysis_id,
+                                                  )
 
         # Extract only the filename from the full path for the response
         report_filenames = dict()
@@ -1288,6 +1350,7 @@ async def generate_report(background_tasks: BackgroundTasks, analysis_id: str = 
         raise HTTPException(status_code = 500, 
                             detail      = str(e),
                            )
+
 
 @app.get("/api/report/download/{filename}")
 async def download_report(filename: str):
@@ -1326,19 +1389,6 @@ async def list_domains():
                            })
 
     return {"domains": domains_list}
-
-
-@app.get("/api/models")
-async def list_ai_models():
-    """
-    List all AI models that can be attributed
-    """
-    return {"models" : [{"value" : model.value,
-                         "name"  : model.value.replace('-', ' ').replace('_', ' ').title(),
-                        }
-                        for model in AIModel if model not in [AIModel.HUMAN, AIModel.UNKNOWN]
-                       ]
-           }
 
 
 @app.get("/api/cache/stats")
@@ -1415,6 +1465,7 @@ async def log_requests(request: Request, call_next):
                    )
 
     return response
+
 
 
 
