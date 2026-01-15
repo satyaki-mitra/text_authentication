@@ -627,25 +627,7 @@ snapshot_download(repo_id="satyaki-mitra/statistical-text-reference-v1", local_d
 
 ---
 
-## 🏗️ Infrastructure & Deployment
-
-### Deployment (Mermaid dark diagram)
-
-```mermaid
-%%{init: {'theme': 'dark'}}%%
-flowchart LR
-    CDN[CloudFront / CDN] --> LB["Load Balancer (ALB/NLB)"]
-    LB --> API1[API Server 1]
-    LB --> API2[API Server 2]
-    LB --> APIN[API Server N]
-    API1 --> Cache[Redis Cache]
-    API1 --> DB[PostgreSQL]
-    API1 --> S3["S3 / Model Storage"]
-    DB --> Backup["RDS Snapshot"]
-    S3 --> Archive["Cold Storage"]
-```
-
-**Deployment notes**
+## 🏗️ Deployment notes**
 - Containerize app with Docker, orchestrate with Kubernetes or ECS for scale
 - Autoscaling groups for API servers & worker nodes
 - Use spot GPU instances for retraining & large metric compute jobs
@@ -671,14 +653,6 @@ def allowed_file(filename):
 
 ---
 
-## Continuous Improvement Pipeline (TODO)
-- Regular retraining & calibration on new model releases
-- Feedback loop: user reported FP integrated into training
-- A/B testing for weight adjustments
-- Monthly accuracy audits & quarterly model updates
-
----
-
 ## 📄 License & Acknowledgments
 
 This project is licensed under the **MIT License** — see [LICENSE](LICENSE) in the repo.
@@ -692,7 +666,7 @@ Acknowledgments:
 
 <div align="center">
 
-**Built with ❤️ — Evidence-based text forensics, transparency, and real-world readiness.**
+**Built for Evidence-based text forensics, transparency, and real-world readiness.**
 
 *Version 1.0.0 — Last Updated: October, 2025*
 
