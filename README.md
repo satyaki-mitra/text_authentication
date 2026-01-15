@@ -135,13 +135,11 @@ Each domain is configured with specific thresholds for the six detection metrics
 
 ## 🏗️ System Architecture
 
-### Architecture (Dark‑themed Mermaid)
-
 ```mermaid
 %%{init: {
   "theme": "dark",
   "themeVariables": {
-    "fontSize": "12px",
+    "fontSize": "10px",
     "fontFamily": "Segoe UI, Helvetica, Arial, sans-serif"
   }
 }}%%
@@ -156,7 +154,7 @@ flowchart TD
     A[Web UI<br/>📄 Upload & Input]:::frontend
     B[Dashboard<br/>📊 Live Results]:::frontend
 
-    C[FastAPI<br/>🔐 Auth • ⚡ Rate Limit]:::api
+    C[FastAPI<br/>]:::api
 
     D[Domain Classifier]:::orchestrator
     E[Preprocessor]:::orchestrator
@@ -197,49 +195,6 @@ flowchart TD
     C --> J
 ```
 
-```mermaid
-%%{init: {'theme': 'dark'}}%%
-flowchart LR
-    subgraph FE [Frontend Layer]
-        A[Web UI<br/>File Upload & Input]
-        B[Interactive Dashboard]
-    end
-
-    subgraph API [API & Gateway]
-        C[FastAPI<br/>Auth & Rate Limit]
-    end
-
-    subgraph ORCH [Forensic Orchestrator]
-        D[Domain Classifier]
-        E[Preprocessor]
-        F[Metric Coordinator]
-    end
-
-    subgraph METRICS [Metrics Pool]
-        P1[Perplexity]
-        P2[Entropy]
-        P3[Structural]
-        P4[Linguistic]
-        P5[Semantic]
-        P6[MultiPerturbationStability]
-    end
-
-    G[Evidence Aggregator]
-    H[Postprocessing & Reporter]
-    I["Statistical Reference Models<br/>(HuggingFace Cache)"]
-    J[Storage: Logs, Reports, Cache]
-
-    A --> C
-    B --> C
-    C --> ORCH
-    ORCH --> METRICS
-    METRICS --> G
-    G --> H
-    H --> C
-    I --> ORCH
-    C --> J
-```
-
 **Notes:** The orchestrator schedules parallel metric computation, handles timeouts, and coordinates with the model manager for model loading and caching.
 
 ---
@@ -247,24 +202,30 @@ flowchart LR
 ## 🔁 Workflow / Data Flow
 
 ```mermaid
-%%{init: {'theme': 'dark'}}%%
+%%{init: {
+  "theme": "dark",
+  "themeVariables": {
+    "fontSize": "10px",
+    "fontFamily": "Segoe UI, Helvetica, Arial, sans-serif"
+  }
+}}%%
 sequenceDiagram
-    participant U as User (UI/API)
-    participant API as FastAPI
-    participant O as Orchestrator
-    participant M as Metrics Pool
-    participant E as Ensemble
-    participant R as Reporter
+    participant U as 👤 User<br/>(Web / API)
+    participant API as 🚪 FastAPI<br/>
+    participant O as 🧠 Orchestrator<br/>Domain + Preprocess
+    participant M as 📊 Metrics Pool<br/>6 Detectors (ParallelGroup)
+    participant E as ⚖️ Ensemble<br/>Domain Based<br/>Confidence Calibration
+    participant R as 📝 Reporter<br/>PDF/JSON Export
 
-    U->>API: Submit text / upload file
-    API->>O: Validate & enqueue job
-    O->>M: Preprocess & dispatch metrics (parallel)
-    M-->>O: Metric results (async)
-    O->>E: Aggregate & calibrate
-    E-->>O: Final assessment + uncertainty
-    O->>R: Generate highlights & report
-    R-->>API: Report ready (JSON/PDF)
-    API-->>U: Return analysis + download link
+    U->>API: 📤 Submit text or file
+    API->>O: ✅ Validate & enqueue job
+    O->>M: ⚡ Run metrics in parallel
+    M-->>O: 📈 Return evidence scores
+    O->>E: 🔗 Aggregate & calibrate
+    E-->>O: 🎯 Verdict + uncertainty
+    O->>R: 🖨️ Generate report
+    R-->>API: 📦 JSON/PDF ready
+    API-->>U: 🔗 Return analysis + download
 ```
 
 ---
