@@ -1,0 +1,11 @@
+Title: An Examination of the Impact of Cognitive Behavioral Therapy on Depression and Quality of Life Among Cancer Patients: A Systematic Review and Meta-Analysis
+
+Abstract
+
+Background: Cancer is a leading cause of morbidity and mortality worldwide, with depression being a prevalent comorbid condition among cancer patients that significantly impacts their quality of life (QoL). Cognitive Behavioral Therapy (CBT) has emerged as an effective psychotherapeutic intervention for managing depression in various populations. However, the efficacy of CBT in addressing depression and improving QoL specifically within the cancer population remains under-explored.
+
+Methods: A comprehensive search was conducted across multiple electronic databases (PubMed, PsycINFO, Embase, Cochrane Library) using a combination of keywords related to cancer, depression, quality of life, and cognitive behavioral therapy. Randomized controlled trials (RCTs) published between January 2000 and March 2021 that reported outcomes on depression and QoL were included in the review. Two independent reviewers screened studies, extracted data, and assessed risk of bias using the Cochrane Risk of Bias Tool. Heterogeneity was evaluated using the I² statistic, and a random-effects model was used for pooling effect sizes.
+
+Results: A total of 21 RCTs (n = 3,069) met the inclusion criteria and were included in the review. The meta-analysis revealed that CBT had a significant effect on reducing depressive symptoms among cancer patients (g = -0.54, 95% CI [-0.67, -0.41], p < 0.001, I² = 82%). Additionally, CBT demonstrated moderate effects in improving QoL (g = 0.32, 95% CI [0.18, 0.46], p < 0.001, I² = 77%). Subgroup analyses by cancer type, severity of depression, and length of treatment indicated mixed results, with some evidence suggesting greater benefits for breast and lung cancer patients, those with moderate to severe depression, and longer treatment duration.
+
+Conclusion: This systematic review and meta-analysis provides strong evidence supporting the use of CBT in managing depression and

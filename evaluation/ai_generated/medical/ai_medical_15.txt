@@ -1,0 +1,13 @@
+Title: Unusual Presentation of Gastrointestinal Stromal Tumor (GIST) in the Esophagus
+
+Case Description:
+
+A 68-year-old Caucasian male, non-smoker with no significant past medical history, presented to our institution with a two-month history of progressive dysphagia and unintentional weight loss. The patient reported symptoms worsening over time, including regurgitation of undigested food and recurrent bouts of hemoptysis. Physical examination was unremarkable, except for a palpable mass in the mid-thorax.
+
+Initial esophagogastroduodenoscopy (EGD) revealed an irregular ulcerative lesion in the distal esophagus, biopsy of which was inconclusive due to sampling error. Subsequent computed tomography (CT) scan showed a 5 cm heterogeneous mass in the distal esophagus with signs of invasion into the mediastinum and superior vena cava (SVC).
+
+Given the radiological findings suggestive of malignancy, the patient underwent an esophagectomy. Histopathology revealed a spindle cell tumor positive for CD117, CD34, and DOG1, consistent with a gastrointestinal stromal tumor (GIST). The tumor was negative for c-kit exon 9 mutation but had an exon 11 mutation. Immunohistochemistry also demonstrated KIT expression, confirming the diagnosis of GIST.
+
+The patient's postoperative course was uneventful. He started imatinib mesylate, a tyrosine kinase inhibitor, for adjuvant treatment due to the exon 11 mutation. The patient remains asymptomatic and is currently under regular follow-up with oncology services.
+
+This case highlights an unusual presentation of GIST in the esophagus, which can mimic other esophageal malignancies. Early recognition, proper diagnosis, and appropriate management are crucial for improved outcomes in such cases.

@@ -1,0 +1,15 @@
+Title: A Rare Case of Recurrent Hypokalemic Periodic Paralysis in a Young Adult
+
+Abstract:
+
+We present an intriguing case study of a 25-year-old male patient, previously healthy, who presented with recurrent episodes of flaccid muscle weakness over the past two years. The episodes were characterized by sudden onset, often triggered by rest after prolonged physical activity or stress, and lasting from hours to days. During these attacks, the patient experienced partial or complete paralysis, more pronounced in proximal limb muscles, with normal sensory function preserved.
+
+Laboratory investigations during an attack revealed a marked hypokalemia (serum potassium: 2.1 mmol/L; normal range: 3.5-5.1 mmol/L), while creatine kinase levels were significantly elevated (CK: 10,000 U/L; normal range: <170 U/L). The patient's family history was unremarkable for similar symptoms or neurological disorders.
+
+The diagnosis of Hypokalemic Periodic Paralysis (HPP) was made based on the clinical presentation and biochemical findings, confirmed by genetic testing that identified a heterozygous mutation in the gene encoding the skeletal muscle voltage-gated sodium channel (SCN4A).
+
+The patient was treated with oral potassium supplements during acute attacks and regular potassium-sparing diuretics for prophylaxis. With these interventions, the frequency and severity of the episodes have significantly decreased, improving the quality of life for our patient.
+
+This case highlights the importance of considering rare inherited disorders such as HPP in patients presenting with recurrent muscle weakness and hypokalemia. Early recognition and appropriate management can lead to effective symptom control and improved outcomes.
+
+Keywords: Hypokalemic Periodic Paralysis, Skeletal Muscle Disorders, Genetic Testing, Potassium Supplementation, Prophylaxis

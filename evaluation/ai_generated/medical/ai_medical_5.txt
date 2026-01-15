@@ -1,0 +1,13 @@
+Title: An Uncommon Presentation of Pemphigus Vulgaris: A Case Study
+
+Abstract:
+
+We present an intriguing case of a 58-year-old Caucasian male, previously healthy with no known allergies, who presented with a two-month history of painful oral and genital lesions. The patient reported a gradual onset of symptoms, initially manifesting as multiple, fluid-filled blisters on the tongue and buccal mucosa, which subsequently spread to the penis and scrotum.
+
+Physical examination revealed numerous tense, flaccid bullous lesions with erythematous bases, primarily affecting the oral cavity, genitalia, and extensor surfaces of the limbs. Nikolsky sign was positive, confirming the diagnosis of autoimmune blistering disease. Direct immunofluorescence (DIF) analysis of a perilesional biopsy specimen from the buccal mucosa demonstrated intercellular deposition of IgG and C3 along the basement membrane zone, consistent with pemphigus vulgaris (PV).
+
+The patient was initially treated with oral prednisone at an initial dose of 1mg/kg/day, which led to partial resolution of symptoms. However, due to concerns about potential side effects and the need for a more targeted approach, treatment was switched to rituximab, a monoclonal antibody targeting CD20-positive B cells. After four infusions over an eight-week period, complete remission was achieved with no recurrence at six-month follow-up.
+
+This case underscores the importance of considering PV in the differential diagnosis of oral and genital blistering lesions, even in atypical presentations. Furthermore, it highlights the potential benefits of using rituximab as a treatment for refractory or steroid-dependent cases of PV.
+
+Keywords: Pemphigus Vulgaris, Autoimmune Blistering Disease, Rituximab, Oral Lesions, Genital Lesions

@@ -1,0 +1,30 @@
+Title: User Authentication Feature Documentation
+
+1. Introduction
+   - The User Authentication feature is designed to secure the application by verifying the identity of users before granting access. This feature includes mechanisms for registration, login, and password recovery.
+
+2. Registration
+   - Users can register by providing a unique email address, choosing a strong password, and confirming their account via a verification link sent to their email. The system will validate the entered email and ensure it is unique.
+
+3. Login
+   - Authenticated users can log in using their registered email and password. The system will verify the provided credentials against the user's account in the database. If successful, the user is granted access to the application.
+
+4. Password Recovery
+   - In case a user forgets their password, they can request a reset link via email. The system will send a unique token to the user's registered email, which can be used to create a new password.
+
+5. Session Management
+   - Upon successful login, a session is created for the user, which remains active until the user logs out or the session times out due to inactivity. The session ID is stored on the client-side and is sent with each subsequent request to maintain user context.
+
+6. Security Measures
+   - To ensure the security of user data, passwords are hashed using a strong one-way function before storing them in the database. Sensitive information, such as passwords, is never sent over unencrypted channels.
+
+7. Error Handling and Validation
+   - The system includes error handling and validation mechanisms to ensure that only valid input is processed and users are notified of any errors or issues during registration, login, or password recovery processes.
+
+8. API Endpoints
+   - Registration: POST /auth/register
+     Request body example: `{ "email": "john_doe@example.com", "password": "mypassword" }`
+   - Login: POST /auth/login
+     Request body example: `{ "email": "john_doe@example.com", "password": "mypassword" }`
+   - Password Recovery: POST /auth/recover-password
+     Request body example: `{ "email": "john_doe@example.com" }`

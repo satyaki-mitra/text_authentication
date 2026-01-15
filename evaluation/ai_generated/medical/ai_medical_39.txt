@@ -1,0 +1,13 @@
+Title: A Rare Case of Simultaneous Malignant Lymphoma and Gastrointestinal Stromal Tumor Diagnosed in a Patient with Chronic Myeloid Leukemia
+
+Abstract:
+
+We present an extraordinary case of a 63-year-old male patient, previously diagnosed with chronic myeloid leukemia (CML) and currently undergoing imatinib therapy. The patient presented with recurring abdominal pain, nausea, and weight loss over a period of six months. Upon further investigation, computed tomography (CT) scan revealed two distinct masses in the stomach and mesentery, leading to the diagnosis of simultaneous malignant lymphoma (ML) and gastrointestinal stromal tumor (GIST).
+
+The GIST was found to be a spindle cell variant, located in the fundus of the stomach, measuring 7cm x 5.5cm, and the ML presented as diffuse large B-cell lymphoma (DLBCL) infiltrating the mesentery. The patient's CML was also found to be in a state of chronic myeloid leukemia blast crisis (CML-BC).
+
+The patient was treated with a combination chemotherapy regimen for DLBCL, targeted therapy for GIST using imatinib, and tyrosine kinase inhibitor for CML-BC. The patient is currently undergoing treatment and regular follow-ups to monitor the response and manage potential complications.
+
+This case highlights the importance of comprehensive diagnostic workup in patients with a history of hematological malignancies, as they may be at increased risk for developing secondary cancers. It also underscores the complexity of managing multiple concurrent malignancies, emphasizing the need for multidisciplinary approach and individualized treatment plans.
+
+Keywords: Chronic Myeloid Leukemia, Malignant Lymphoma, Gastrointestinal Stromal Tumor, Simultaneous Malignancies, Comprehensive Diagnostic Workup, Multidisciplinary Approach.

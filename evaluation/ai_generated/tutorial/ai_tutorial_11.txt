@@ -1,0 +1,58 @@
+Title: Creating a Simple Web Page Using HTML and CSS
+
+**Step 1: Setting Up the Workspace**
+
+1. Install a text editor (if you don't have one already). Notepad++, Sublime Text, or Visual Studio Code are popular choices for beginners.
+
+2. Download a web browser if you haven't already (Chrome, Firefox, Safari, etc.). You will use this to view your web page.
+
+**Step 2: Creating the HTML File**
+
+1. Open your text editor and create a new file with a .html extension (e.g., `index.html`).
+
+2. In the file, write the basic HTML structure:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My First Web Page</title>
+</head>
+<body>
+    <!-- Your content goes here -->
+</body>
+</html>
+```
+
+**Step 3: Adding Content and Styling with CSS**
+
+1. To add styling, create a new file with the .css extension (e.g., `styles.css`) and link it to your HTML file by adding this line inside the head tag:
+
+```html
+<head>
+    ...
+    <link rel="stylesheet" href="styles.css">
+</head>
+```
+
+2. Now, you can write CSS rules for your web page in the `styles.css` file. Here's an example of a simple rule:
+
+```css
+body {
+    background-color: lightblue;
+}
+```
+
+3. To add content to your web page, place it inside the body tag (between `<body>` and `</body>`) in the HTML file:
+
+```html
+<body>
+    <h1>Welcome to My First Web Page!</h1>
+</body>
+```
+
+**Step 4: Viewing Your Web Page**
+
+1. Save both files (index.html and styles.css) in the same folder on your computer.

@@ -1,0 +1,21 @@
+Title: Clause Regarding Confidentiality and Non-Disclosure
+
+1. Confidential Information Definition
+
+For the purposes of this Agreement, "Confidential Information" shall refer to any proprietary information, trade secrets, business and technical data, or know-how, whether tangible or intangible, and whether or how compiled, that is either identified as confidential at the time of disclosure or should reasonably be understood to be confidential based on the nature of the information and the circumstances surrounding its disclosure.
+
+2. Obligations Regarding Confidential Information
+
+Party A agrees to maintain the confidentiality of all Confidential Information received from Party B, and shall use such Confidential Information solely for the purposes contemplated by this Agreement. Party A shall not disclose any Confidential Information to any third party without prior written consent from Party B.
+
+3. Exceptions to Confidentiality Obligations
+
+The obligations under this Clause shall not extend to information that: (a) is or becomes publicly known through no fault of Party A; (b) was in possession of Party A prior to receipt from Party B; (c) is lawfully obtained by Party A from a third party without a breach of any obligation of confidentiality; or (d) is independently developed by Party A without reference to the Confidential Information.
+
+4. Remedies for Breach
+
+In the event of a breach or threatened breach of this Clause, the non-breaching party shall be entitled to seek immediate injunctive relief, in addition to any other remedies available at law or in equity.
+
+Case Summary - ABC Corp v XYZ Inc
+
+In the case of ABC Corp v XYZ Inc, the plaintiff, ABC Corp, alleged that the defendant, XYZ Inc, had breached a confidentiality agreement by disclosing trade secrets related to a new product development project. The court found in favor of ABC Corp, ruling that XYZ Inc had violated the non-disclosure obligations outlined in the agreement and ordered XYZ Inc to pay damages for the breach. The case underscores the importance of parties adhering to confidentiality agreements in order to protect sensitive business information.

@@ -1,0 +1,53 @@
+Title: A Step-by-Step Tutorial for Beginners: Creating a Basic Website using HTML and CSS
+
+**Step 1: Setting Up Your Workspace**
+
+First, ensure you have a text editor installed on your computer. Some popular choices are Sublime Text, Atom, and Visual Studio Code.
+
+**Step 2: Creating the Project Folder**
+
+Create a new folder on your computer for this project. Inside that folder, create two more folders named "HTML" and "CSS". These will be used to store our HTML files and CSS stylesheets respectively.
+
+**Step 3: Writing Your First HTML File (index.html)**
+
+Inside the "HTML" folder, create a new file called `index.html`. Open this file in your text editor.
+
+Add the following basic structure for an HTML document:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My First Website</title>
+</head>
+<body>
+    <!-- Your content here -->
+</body>
+</html>
+```
+
+**Step 4: Adding Content to the HTML File**
+
+Now let's add some text and links inside the body section of our `index.html` file:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My First Website</title>
+    <!-- Linking the CSS stylesheet -->
+    <link rel="stylesheet" href="CSS/styles.css">
+</head>
+<body>
+    <h1>Welcome to My First Website!</h1>
+    <p>This is a simple example of a webpage created with HTML and CSS.</p>
+    <a href="https://www.google.com">Visit Google</a>
+</body>
+</html>
+```
+
+**Step 5: Creating the CSS Stylesheet (styles

@@ -1,0 +1,37 @@
+Title: Understanding Duck Typing in JavaScript
+
+Duck typing is a programming concept that originates from the famous quote, "If it looks like a duck, swims like a duck, and quacks like a duck, then it probably is a duck." In the context of programming, particularly in dynamic languages like JavaScript, duck typing emphasizes behavior over rigid type definitions.
+
+In JavaScript, duck typing can be seen as follows: if an object has the properties and methods that another piece of code expects, it will work with it regardless of its declared type or class. This means that you don't have to explicitly declare types for your variables. Instead, the type is determined by the methods and properties the object has.
+
+Here's a simple example:
+
+```javascript
+function printDetails(obj) {
+  console.log('Name:', obj.name);
+  console.log('Age:', obj.age);
+}
+
+let duck = { name: 'Donald', age: 80 };
+let car = { brand: 'Toyota', year: 2015 };
+
+printDetails(duck); // Name: Donald, Age: 80
+printDetails(car); // TypeError: Cannot read property 'name' of undefined (if strict mode is enabled) or undefined (if not in strict mode)
+```
+
+In this example, the `printDetails` function expects an object with `name` and `age` properties. When we pass a `duck`, it works as expected. However, when we pass a `car`, which doesn't have the required properties, JavaScript throws an error because of the lack of duck typing (or explicit type checking).
+
+To make this work with duck typing, we could modify our function to check for the presence of the necessary properties before trying to access them:
+
+```javascript
+function printDetails(obj) {
+  if (obj.hasOwnProperty('name') && obj.hasOwnProperty('age')) {
+    console.log('Name:', obj.name);
+    console.log('Age:', obj.age);
+  } else {
+    console.log('Invalid object, needs name and age properties.');
+  }
+}
+```
+
+Now, our function can work with any object that has the necessary properties, even if they're not explicitly declared as such

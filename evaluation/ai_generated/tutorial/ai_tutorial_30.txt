@@ -1,0 +1,30 @@
+Title: A Step-by-Step Guide for Beginners: Setting Up a Personal Blog Using WordPress
+
+Introduction:
+In this tutorial, we will guide you through the process of setting up a personal blog using WordPress. By the end, you'll have a functional blog that you can customize to your liking. Let's get started!
+
+**Step 1: Choose a Web Host**
+
+First, you need a web host for your blog. We recommend Bluehost due to its user-friendly interface and WordPress-optimized plans. Sign up for their Basic plan (or higher) and choose your new domain name during the registration process.
+
+**Step 2: Install WordPress**
+
+Once you've signed up for a hosting account, log in to your Bluehost control panel. Look for the "Website" section and click on "Install WordPress." Follow the on-screen instructions to complete the installation process.
+
+**Step 3: Access Your WordPress Dashboard**
+
+After the installation is complete, you'll receive an email with login credentials for your new WordPress site. Use these details to access your WordPress dashboard by appending "/wp-admin" to your domain name (e.g., http://yourdomainname.com/wp-admin).
+
+**Step 4: Customize Your Blog**
+
+Inside the WordPress dashboard, navigate to "Appearance" and then click on "Themes." Here, you can choose a theme for your blog. For beginners, we recommend using a free, responsive theme like Astra or GeneratePress. Click "Activate" once you've found a suitable theme.
+
+**Step 5: Install Plugins**
+
+Plugins extend the functionality of your WordPress site. Essential plugins include Akismet for spam protection, Yoast SEO for search engine optimization, and Jetpack for additional features like site statistics, security, and performance improvements. To install these plugins, go to "Plugins" > "Add New" in your dashboard and search for the desired plugins. Click "Install Now" followed by "Activate."
+
+**Step 6: Configure Your Settings**
+
+Navigate to "Settings" in your WordPress dashboard. Here, you can configure various aspects of your blog such as site title and tagline, timezone, permalink structure, and more.
+
+**Step 7: Create Content**

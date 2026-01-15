@@ -1,0 +1,13 @@
+Title: A Case of Recurrent Staphylococcus aureus Sepsis in an Immunocompromised Patient
+
+Background: A 65-year-old male, with a history of chronic lymphocytic leukemia (CLL), currently undergoing chemotherapy, presented to the emergency department for the third time within three months due to symptoms of recurrent sepsis. Each episode was characterized by fever, chills, and myalgias, along with laboratory findings indicative of sepsis.
+
+Presenting Complaints: The patient reported a two-day history of high-grade fever (up to 104°F), severe chills, and myalgia in multiple joints. He also complained of shortness of breath and an overall feeling of malaise.
+
+Past Medical History: The patient has a past medical history significant for CLL diagnosed three years ago. He is currently receiving chemotherapy (Fludarabine, Cyclophosphamide, and Rituximab) for disease management.
+
+Physical Examination: On physical examination, the patient appeared ill with tachycardia (heart rate 120 beats per minute), fever (temperature 104°F), and respiratory rate of 24 breaths per minute. His lungs were bilaterally dull to percussion and he had decreased breath sounds, consistent with bibasilar consolidation. The abdomen was soft, non-tender, and non-distended.
+
+Laboratory Findings: Initial laboratory results revealed leukopenia (white blood cell count 2.5 x 10^3/mcL), thrombocytopenia (platelet count 68 x 10^3/mcL), elevated C-reactive protein level of 279 mg/L, and procalcitonin level of 8 ng/mL. Blood cultures grew Staphylococcus aureus sensitive to ceftaroline, vancomycin, linezolid, and daptomycin.
+
+Interventions: The patient was immediately started on intravenous antibiotics (ceftaroline) and empiric antifungal therapy (voriconazole). He also received fluid resuscitation for hypotension and oxygen supplementation

@@ -1,0 +1,28 @@
+Case Title: Smith v. Jones
+
+Court: Supreme Court of the State of New York, County of X
+
+Docket Number: 123-456789012
+
+Judges: Hon. Judge A., Hon. Judge B.
+
+Date of Decision: January 1, 2022
+
+Facts:
+The plaintiff, John Smith (Smith), brought an action against the defendant, Jane Jones (Jones), for breach of contract regarding the sale of real property located at 123 Main Street, XYZ Town (Property). On October 1, 2021, Smith and Jones entered into a written agreement (Agreement) whereby Jones agreed to sell the Property to Smith for $500,000. The Agreement included a clause stating that the sale was contingent upon Smith obtaining financing for the purchase by November 30, 2021. On November 30, 2021, Smith failed to secure financing and notified Jones of his inability to proceed with the purchase.
+
+Jones filed a motion for specific performance seeking an order compelling Smith to complete the purchase or pay damages equivalent to the value of the Property.
+
+Issues:
+1. Whether the Agreement between Smith and Jones was validly formed.
+2. Whether Smith breached the Agreement by failing to secure financing by November 30, 2021.
+3. If Smith breached the Agreement, whether Jones is entitled to specific performance or damages.
+
+Holdings:
+1. The Court finds that the Agreement between Smith and Jones was validly formed and enforceable.
+2. The Court finds that Smith did breach the Agreement by failing to secure financing by November 30, 2021, as required by the terms of the Agreement.
+3. In light of the breach, the Court finds that Jones is entitled to damages equivalent to the value of the Property as of the date of this decision, as well as reasonable attorney's fees and costs incurred in pursuing this action.
+
+Reasoning:
+1. The Agreement was properly executed by both parties, and it contained all essential terms necessary to create a valid and enforceable contract for the sale of real property.
+2. Smith acknowledged that he had an obligation to secure financing for the purchase under the

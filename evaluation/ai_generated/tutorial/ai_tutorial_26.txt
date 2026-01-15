@@ -1,0 +1,69 @@
+Title: A Step-by-Step Guide for Beginners: Setting Up a Simple Web Server using Node.js and Express
+
+**Step 1: Install Node.js and npm**
+
+Before we start, ensure you have Node.js and npm (Node Package Manager) installed on your computer. You can download Node.js from the official website (https://nodejs.org/) and follow the installation instructions according to your operating system. After installing Node.js, npm will be installed automatically.
+
+**Step 2: Verify Installation**
+
+Open your terminal or command prompt and type the following commands:
+
+```bash
+node -v
+npm -v
+```
+
+The output should display the versions of Node.js and npm that you've installed.
+
+**Step 3: Create a new directory for your project**
+
+Create a new folder where you will work on this tutorial by running the following command in your terminal or command prompt:
+
+```bash
+mkdir simple-web-server
+cd simple-web-server
+```
+
+**Step 4: Initialize the project and install Express**
+
+Initialize your project as a Node.js project by running:
+
+```bash
+npm init -y
+```
+
+Now, let's install Express.js, which is a popular web application framework for Node.js:
+
+```bash
+npm install express
+```
+
+**Step 5: Create your first Express app file**
+
+Create a new file called `app.js` in your project folder:
+
+```bash
+touch app.js
+```
+
+**Step 6: Write the basic code for your web server**
+
+Open the `app.js` file in your preferred text editor and paste the following code:
+
+```javascript
+const express = require('express');
+const app = express();
+const port = 3000;
+
+app.get('/', (req, res) => {
+  res.send('Hello World!');
+});
+
+app.listen(port, () => {
+  console.log(`Server is running at http://localhost:${port}`);
+});
+```
+
+**Step 7: Run your web server**
+
+In your terminal or command prompt, navigate to the

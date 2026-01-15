@@ -1,0 +1,26 @@
+Title: A Step-by-Step Guide for Beginners on Using a Basic Text Editor
+
+1. **Introduction**
+   - This guide will help you navigate a basic text editor, which is essential for coding and writing simple scripts. We will be using Notepad (Windows) or TextEdit (Mac) as examples of these editors.
+
+2. **Step 1: Open Your Text Editor**
+   - On Windows, search for "Notepad" in the Start menu and click on it.
+   - On Mac, open Finder and then Applications > TextEdit.
+
+3. **Step 2: Creating a New File**
+   - In both Notepad and TextEdit, you can create a new file by going to "File" > "New" or by pressing `Ctrl + N` (Windows) or `Cmd + N` (Mac).
+
+4. **Step 3: Typing Text**
+   - Once the new window opens, you can start typing your text inside the blank area. This could be anything from writing a simple story to coding a basic script.
+
+5. **Step 4: Saving Your File**
+   - After you've typed your text, go to "File" > "Save As." In the window that appears, name your file and choose where to save it (usually in Documents). Click "Save" when done.
+
+6. **Step 5: Opening Saved Files**
+   - To open a saved file, go to "File" > "Open" and navigate to the location of your saved file. Select the file and click "Open."
+
+7. **Step 6: Basic Text Editor Limitations**
+   - Keep in mind that basic text editors do not have advanced features like syntax highlighting, code completion, or debugging tools found in Integrated Development Environments (IDEs). If you plan on doing more complex coding, it's recommended to learn how to use an IDE.
+
+8. **Step 7: Exploring More**
+   - Now that you have a basic understanding of using a text editor, feel free to explore its other features such as search and replace, finding lines, and adjusting the font and colors. These options can usually be found under "Edit" or by right-clicking within the editor.

@@ -1,0 +1,26 @@
+Case Title: Smith v. Jones
+
+Court: Supreme Court of the State of New York, County of Albany
+
+Docket Number: 20-CV-1234
+
+Judgment Date: January 15, 2021
+
+Jurisdiction: Civil Court
+
+Parties:
+1. Plaintiff: John Smith
+2. Defendant: Jane Jones
+
+Cause of Action:
+Breach of Contract (Promissory Estoppel)
+
+Factual Background:
+The plaintiff, John Smith, entered into a verbal agreement with the defendant, Jane Jones, for the sale of real property located at 123 Maple Street, Albany, New York. The defendant agreed to sell the property to the plaintiff for $500,000, but she later reneged on the agreement without providing a valid reason.
+
+Legal Claims and Ruling:
+The plaintiff brought forth a claim of breach of contract under the theory of promissory estoppel. The court found that the defendant made a clear promise to sell the property, reliance by the plaintiff was reasonable given the circumstances, and the plaintiff suffered damages as a result of the defendant's breach.
+
+The court held in favor of the plaintiff, John Smith, and ordered Jane Jones to complete the sale of the property at 123 Maple Street, Albany, New York, for $500,000 as originally agreed upon. The court further awarded the plaintiff compensatory damages in the amount of $10,000 for costs and expenses incurred due to the defendant's breach.
+
+This judgment is final unless appealed within 30 days from the date of this ruling.

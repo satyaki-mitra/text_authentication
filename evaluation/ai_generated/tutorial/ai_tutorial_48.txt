@@ -1,0 +1,35 @@
+Title: Beginner's Guide to Using Markdown on GitHub
+
+1. **Understanding Markdown**
+   Markdown is a lightweight markup language that you can use to add formatting elements to plaintext text documents. It was created by John Gruber and Aaron Swartz in 2004.
+
+2. **Creating a New File on GitHub**
+   - Log into your GitHub account.
+   - Navigate to the repository where you want to add a Markdown file.
+   - Click on the green "New file" button located at the top right corner of the file list.
+
+3. **Naming Your Markdown File**
+   - Name your file with a `.md` extension, such as `myfile.md`.
+   - Click on the "Create new file" button to create the empty Markdown file.
+
+4. **Basic Markdown Syntax**
+   - **Headers**: Use `#` for larger headers (up to 6 `#` for the smallest) and `##`, `###`, etc., for smaller ones.
+     Example: `# Header 1`
+
+   - **Emphasis**: For italic, use `*italic text*` or `_italic text_`. For bold, use `**bold text**` or `__bold text__`.
+
+   - **Links**: Create a link using `[Link Text](URL)`.
+
+   - **Images**: Insert an image with syntax like this: `![Alt Text](URL)`
+
+   - **Lists**: Use asterisks for unordered lists and numbers for ordered ones.
+     Example:
+       - Unordered list: `* Item 1`
+       - Ordered list: `1. First item`
+
+5. **Saving and Previewing Your Markdown File**
+   - After writing your content, click on the green "Commit new file" button at the bottom of the page.
+   - You'll be taken to a page where you can add a commit message and choose a branch (if applicable). Click "Create a new branch for this commit" if it's your first time committing to this repository.
+   - After saving, you can preview your Markdown file by clicking on the green "Preview changes" button at the top right corner of the page.
+
+6

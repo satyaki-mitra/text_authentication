@@ -1,0 +1,15 @@
+Clause: Indemnity and Hold Harmless Agreement
+
+In this agreement, the indemnifying party (hereinafter referred to as "Indemnitor") agrees to hold harmless the indemnified party (hereinafter referred to as "Indemnitee"), its affiliates, officers, directors, agents, and employees from any and all claims, damages, losses, liabilities, costs, and expenses, including reasonable attorneys' fees, arising out of or in connection with the Indemnitor's breach, violation, negligence, or other wrongful conduct in connection with this agreement.
+
+The Indemnitor further agrees to indemnify and hold harmless the Indemnitee for any third-party claims, damages, losses, liabilities, costs, and expenses arising out of or in connection with the Indemnitor's use of materials, services, or products provided by the Indemnitee, or the Indemnitor's violation of any law or regulation.
+
+This indemnification obligation shall survive the termination or expiration of this agreement and shall apply regardless of whether the Indemnitor has been advised of the possibility of such claims, damages, losses, liabilities, costs, and expenses.
+
+Case Summary: Smith v. Johnson (2021)
+
+In the case of Smith v. Johnson, the plaintiff, Mr. Smith, brought a lawsuit against the defendant, Mr. Johnson, alleging that Mr. Johnson breached an indemnity and hold harmless agreement by failing to protect Mr. Smith from third-party claims arising out of Mr. Smith's use of materials provided by Mr. Johnson.
+
+The court held that Mr. Johnson had a duty to indemnify and hold harmless Mr. Smith as provided in the indemnity agreement, and that Mr. Johnson was liable for any damages, losses, liabilities, costs, and expenses incurred by Mr. Smith as a result of the third-party claims. The court awarded Mr. Smith damages in the amount of $500,000, plus reasonable attorneys' fees.
+
+The case highlights the importance of parties carefully reviewing and understanding indemnity agreements before entering into them, and the potential consequences for breaching such agreements.

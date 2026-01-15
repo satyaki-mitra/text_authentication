@@ -1,0 +1,29 @@
+Case Title: Smith v. Johnson
+
+Court: Supreme Court of the State of New York, County of Albany
+
+Docket Number: 2021-CV-001234
+
+Judgment Date: January 15, 2022
+
+Jurisdiction: New York
+
+Parties:
+1. Plaintiff: John Smith (hereinafter referred to as "Plaintiff")
+2. Defendant: Jane Johnson (hereinafter referred to as "Defendant")
+
+Facts:
+The plaintiff, John Smith, brought a claim against the defendant, Jane Johnson, alleging breach of contract and tortious interference with contractual relations regarding an agreement for the sale of real property. The parties entered into a written sales agreement on March 1, 2021, whereby the Defendant agreed to sell her property at 123 Main Street to the Plaintiff for $500,000. Subsequently, the Defendant entered into an oral agreement with a third party, William Brown, to sell him the same property for $550,000, which constitutes tortious interference with contractual relations by the Defendant.
+
+Issue:
+1. Did the Defendant breach her contractual obligations by entering into an oral agreement to sell the real property to another party before the contract with the Plaintiff was fulfilled?
+2. Did the Defendant's tortious interference with contractual relations cause damages to the Plaintiff?
+
+Holding:
+The Court finds that the Defendant breached her contractual obligations by entering into an oral agreement with William Brown for the sale of the real property before fulfilling her contract with the Plaintiff. The court also finds that the Defendant's tortious interference with contractual relations caused damages to the Plaintiff, as the Plaintiff was unable to purchase the property at the agreed-upon price due to the Defendant's actions.
+
+Decision:
+The Court grants the Plaintiff's motion for summary judgment and orders the Defendant to pay compensatory damages in the amount of $500,000 to the Plaintiff. Additionally, the court awards reasonable attorney's fees to the Plaintiff as determined by a subsequent hearing on costs.
+
+Opinion:
+The

@@ -1,0 +1,24 @@
+Title: Clause for Confidentiality and Non-Disclosure Agreement (NDA)
+
+1. Definition and Interpretation:
+In this Agreement, the "Disclosing Party" refers to the party who discloses confidential information, and the "Receiving Party" refers to the one who receives such confidential information.
+
+2. Purpose:
+The purpose of this agreement is to protect any non-public, proprietary, or confidential information ("Confidential Information") that may be disclosed by the Disclosing Party to the Receiving Party in connection with their business relationship.
+
+3. Scope of Confidential Information:
+The Confidential Information includes but is not limited to technical data, trade secrets, and financial and business information disclosed either directly or indirectly by the Disclosing Party to the Receiving Party. However, Confidential Information does not include any information that: (a) was already known to the Receiving Party at the time of disclosure; (b) becomes publicly available through no fault of the Receiving Party; (c) is learned by the Receiving Party through legitimate means other than from the Disclosing Party or a disclosure recipient subject to obligations of confidentiality; or (d) is independently developed by the Receiving Party without reference to the Confidential Information.
+
+4. Obligations of the Parties:
+(a) The Receiving Party agrees to hold the Confidential Information in strict confidence and not to disclose it to any third party, except with the Disclosing Party's prior written consent or as required by law.
+
+(b) The Receiving Party further agrees to take reasonable precautions to protect the confidentiality of the Confidential Information, including maintaining it in secure locations and restricting access on a need-to-know basis.
+
+5. Duration:
+The obligations under this agreement shall continue for a period of five (5) years from the date of disclosure, unless otherwise agreed upon in writing by both parties.
+
+6. Termination:
+This agreement shall terminate upon written notice from either party if the other party breaches any of its obligations under this agreement and fails to cure such breach within thirty (30) days after receipt of written notice specifying the nature of the breach.
+
+7. Miscellaneous:
+(a) This agreement constitutes the entire agreement between the

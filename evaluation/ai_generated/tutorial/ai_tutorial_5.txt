@@ -1,0 +1,35 @@
+Title: Beginner's Guide to Using a Text Editor for Coding
+
+1. **Choosing a Text Editor**
+   - For beginners, free text editors such as Visual Studio Code (VSCode), Atom, or Sublime Text are recommended due to their user-friendly interfaces and extensive support for plugins and themes.
+   - Download the preferred text editor from its official website and follow the installation instructions provided.
+
+2. **Setting Up the Workspace**
+   - Once installed, open the text editor. A new window or tab will appear where you can start writing your code.
+
+3. **Understanding the Interface**
+   - Familiarize yourself with the interface and its various components such as the sidebar (file explorer), editor area (where you write code), status bar, and menus.
+
+4. **Setting Up a Project**
+   - Create a new folder on your computer for your project by right-clicking in an empty space and selecting "New Folder." Name it appropriately.
+   - In the text editor, open this folder by going to File > Open Folder or using the keyboard shortcut (Ctrl+Shift+O in VSCode).
+
+5. **Writing Your First Code**
+   - To write code, simply type it into the editor area. For example, if you're learning Python:
+     ```python
+     print("Hello, World!")
+     ```
+
+6. **Saving Your File**
+   - Save your file by going to File > Save As or using the keyboard shortcut (Ctrl+S). Name it appropriately with a .py extension if you're writing Python code.
+
+7. **Running Your Code**
+   - To run your code, you may need an integrated development environment (IDE) or a terminal emulator. If you're using Python:
+     - Install Python from https://www.python.org/downloads/ if not already installed.
+     - In the text editor, open the terminal by going to Terminal > New Terminal or using the keyboard shortcut (Ctrl+``).
+     - Navigate to your project folder using the cd command, then run your code with the python command followed by the file name:
+       ```
+       cd path/to/your/project
+       python filename.py
+       ```
+       You should see "Hello

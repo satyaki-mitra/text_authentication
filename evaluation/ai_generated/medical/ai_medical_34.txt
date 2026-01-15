@@ -1,0 +1,13 @@
+Title: A Rare Case of Multiple Myeloma Manifesting as Spinal Cord Compression in a Young Adult
+
+Abstract
+
+We present an unusual case of a 26-year-old previously healthy male patient who presented with acute onset lower extremity weakness, sensory deficits, and urinary retention. Neurological examination revealed signs of spinal cord compression at the thoracic level. Magnetic Resonance Imaging (MRI) of the spine confirmed an epidural mass lesion at T7-T8 vertebrae. Following initial treatment with high-dose dexamethasone, a bone marrow biopsy revealed plasma cell dyscrasia consistent with Multiple Myeloma (MM).
+
+Laboratory findings included elevated serum M-protein, β2-microglobulin, and lactate dehydrogenase levels. Immunoelectrophoresis showed a monoclonal IgG kappa band. Cytogenetic analysis revealed t(4;14) translocation, a characteristic genetic abnormality in MM.
+
+The patient was initiated on induction therapy with bortezomib, lenalidomide, dexamethasone (VLd), and underwent radiotherapy for the spinal cord compression. After six cycles of VLd, there was a significant improvement in his neurological symptoms and a partial response according to International Myeloma Working Group criteria.
+
+This case underscores the importance of considering MM in young adults presenting with spinal cord compression, even in the absence of typical MM symptoms. Early recognition and aggressive treatment can lead to improved outcomes, as demonstrated by our patient's initial response to therapy. Further long-term follow-up is necessary to assess the efficacy of this treatment regimen in managing both the hematological and neurological manifestations of MM.
+
+Keywords: Multiple Myeloma, Spinal Cord Compression, Young Adult, Bortezomib, Lenalidomide, Dexamethasone

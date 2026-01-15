@@ -1,0 +1,9 @@
+Title: A Rare Case of Acute Pancreatitis Triggered by Cholecystokinin Analogue Administration
+
+Background: Acute pancreatitis (AP) is an inflammatory condition of the pancreas, often caused by gallstones or alcohol consumption. Less commonly, it can be induced by medications, such as cholecystokinin (CCK) analogues.
+
+Case Presentation: A 58-year-old female with a history of type 2 diabetes mellitus and chronic kidney disease presented to the emergency department with acute onset epigastric abdominal pain radiating to her back, nausea, and vomiting. The patient had recently initiated treatment with liraglutide, a CCK analogue, for weight loss management. On examination, tenderness was noted in the upper abdomen, and laboratory tests revealed an elevated serum amylase (132 U/L; normal range: 25-100 U/L) and lipase (897 U/L; normal range: 13-60 U/L), consistent with AP. Abdominal ultrasound revealed a normal gallbladder, ruling out gallstone disease as the causative factor. The patient's symptoms improved significantly after discontinuing liraglutide and receiving appropriate symptomatic care.
+
+Discussion: This case highlights the importance of considering medication-induced AP in patients who present with acute abdominal pain, especially those on CCK analogues. Although rare, the incidence of pancreatitis associated with these medications may be underestimated due to its delayed recognition and lack of regulatory warnings regarding this side effect. Clinicians should consider this potential adverse effect when prescribing CCK analogues, particularly in patients with a history of pancreatic disease or those who are taking multiple medications concurrently.
+
+Keywords: Acute Pancreatitis, Cholecystokinin Analogue, Liraglutide, Medication-induced Pancreatitis

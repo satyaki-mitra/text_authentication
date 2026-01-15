@@ -1,0 +1,18 @@
+Title: Clause Regarding Confidentiality and Non-Disclosure
+
+1. CONFIDENTIALITY AGREEMENT
+
+1.1 Parties
+This Agreement is entered into as of _______ (the "Effective Date") by and between _______________ (hereinafter referred to as the "Discloser"), and _______________ (hereinafter referred to as the "Recipient").
+
+1.2 Confidential Information
+The Recipient acknowledges that it may have access to certain confidential information of the Discloser during the term of this Agreement (the "Confidential Information"). The Recipient agrees not to disclose, use, or make copies of any Confidential Information except as expressly permitted herein.
+
+1.3 Obligations
+The Recipient shall: (a) maintain the confidentiality of the Confidential Information using at least the same degree of care that it uses to protect its own confidential information; (b) not disclose or use the Confidential Information except for the purpose of fulfilling its obligations under this Agreement, and then only to those of its employees, contractors, consultants, advisors, and agents who need to know such information for such purposes, provided that each such person is bound by written confidentiality obligations no less restrictive than those contained herein; (c) promptly notify the Discloser if it becomes aware of any unauthorized use or disclosure of the Confidential Information; and (d) return or destroy all copies of the Confidential Information upon termination of this Agreement.
+
+1.4 Exclusions
+The obligations set forth in Section 1.3 shall not apply to information that: (a) is or becomes publicly known through no fault of the Recipient; (b) was in the Recipient's possession prior to receipt from the Discloser; (c) is lawfully obtained by the Recipient from a third party without a breach of any obligation of confidentiality; or (d) is independently developed by employees of the Recipient who had no access to such information.
+
+1.5 Term and Termination
+This Agreement shall continue in effect for _______ years from the Effective Date, unless earlier terminated as provided herein. Either party may terminate this Agreement upon written notice if the other party breaches any of its obligations under this Agreement and fails to cure such breach within

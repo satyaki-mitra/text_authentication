@@ -1,0 +1,11 @@
+Title: A Case of Acute Myocardial Infarction in a Young Adult: An Unusual Presentation
+
+Abstract
+
+Background: Acute myocardial infarction (AMI) is typically associated with advanced age, diabetes, and hypertension. However, it can occur in younger individuals, particularly those with underlying genetic predispositions or risk factors such as dyslipidemia, obesity, smoking, and family history.
+
+Case Presentation: A 35-year-old previously healthy male presented to the emergency department (ED) with a one-day history of chest pain. The patient described the pain as a heavy pressure in the left chest that radiated to the neck and arm. He denied any prior cardiac symptoms but reported a family history of premature coronary artery disease. On physical examination, the patient was afebrile, with a blood pressure of 140/85 mmHg, pulse rate of 120 beats per minute, and oxygen saturation of 98% on room air. Electrocardiogram (ECG) showed ST-segment elevation in leads V1-V6, consistent with an anterior wall myocardial infarction. Troponin levels were markedly elevated (peak troponin T: 25 ng/mL; normal range: <0.014 ng/mL). Echocardiography revealed a large apical thrombus and left ventricular dysfunction with an ejection fraction of 30%. The patient was emergently transferred to the cardiac catheterization laboratory, where he underwent successful percutaneous coronary intervention (PCI) of the left anterior descending artery. Post-PCI, the patient's symptoms resolved, and he was started on dual antiplatelet therapy and a statin.
+
+Discussion: This case underscores the importance of recognizing AMI in young adults, even in the absence of traditional risk factors. Early recognition and prompt management, as demonstrated in this case, can significantly improve outcomes. Furthermore, it emphasizes the need for a thorough family history assessment in all patients presenting with acute coronary syndromes.
+
+Keywords: Acute myocardial infarction, young adult, atypical presentation, family history, percutaneous coronary intervention

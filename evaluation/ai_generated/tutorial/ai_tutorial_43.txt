@@ -1,0 +1,40 @@
+Title: Beginner's Guide to Using Microsoft Excel
+
+**Step 1: Launching Excel**
+
+- Open your computer and locate the Microsoft Office application.
+- Double click on "Microsoft Excel" or search for it in your Start menu.
+
+**Step 2: Understanding the Interface**
+
+- The Excel window has several components: Ribbon, Formula Bar, Gridlines, Column Letters, Row Numbers, and Cell Cursors.
+
+**Step 3: Creating a New Workbook**
+
+- Click on "Blank workbook" in the "Personal Workbook" section or press `Ctrl + N` to create a new workbook.
+
+**Step 4: Navigating Through the Grid**
+
+- Use the arrow keys, scroll bars, Page Up/Page Down, Home, End, PgUp, and PgDn keys to navigate through the grid.
+
+**Step 5: Entering Data**
+
+- Click on a cell (cell A1 by default) and start typing to enter data. You can also use AutoFill to enter repeated data quickly.
+
+**Step 6: Formatting Cells**
+
+- Use the Home tab on the Ribbon to change font, size, color, and style of text, as well as cell background color.
+
+**Step 7: Performing Basic Mathematical Operations**
+
+- Click on a cell where you want the result, enter an equal sign (=), select the cells containing the numbers to be operated, and then press Enter to perform addition (+), subtraction (-), multiplication (*), or division (/).
+
+**Step 8: AutoSum Feature**
+
+- To calculate the sum of a range of cells, click on the cell where you want the total, go to the Home tab > Editing group > AutoSum (the icon looks like an ABC with a square around it) > select AutoSum from the dropdown menu. Excel will automatically highlight and sum the selected cells.
+
+**Step 9: Copying and Pasting Data**
+
+- Select the data you want to copy, right-click, and choose Copy or press `Ctrl + C`. Navigate to the destination cell(s) and right-click, choosing Paste or pressing `Ctrl + V`.
+
+**Step 10: Saving

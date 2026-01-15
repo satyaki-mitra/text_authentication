@@ -1,0 +1,30 @@
+Title: A Step-by-Step Guide for Beginners on Using a Basic Text Editor
+
+1. **Introduction**
+   This guide will help you understand how to use a basic text editor, which is an essential tool for coding and writing documents. In this tutorial, we'll be using Notepad (for Windows) as our example text editor.
+
+2. **Step 1: Opening the Text Editor**
+   - For Windows users, click on the Start menu or press the Windows key.
+   - Type "Notepad" in the search bar and click on the Notepad application to open it.
+
+3. **Step 2: Creating a New Document**
+   - Once opened, you'll see an empty window with a blinking cursor, ready for you to type. This is your new document.
+
+4. **Step 3: Typing Text**
+   - Click anywhere inside the blank area and start typing. You can write anything you want, such as text messages, code snippets, or even simple programs.
+
+5. **Step 4: Saving Your Work**
+   - To save your work, click on "File" at the top menu bar.
+   - From the dropdown menu, select "Save As...". A new window will appear.
+   - Choose a location where you'd like to save your file (e.g., Desktop).
+   - In the "File name" field, type a name for your document. Make sure it ends with the correct extension if it's a coding file (e.g., .html, .py, .js).
+   - Click on "Save". Your work is now saved in the chosen location.
+
+6. **Step 5: Opening an Existing Document**
+   - To open an existing document, click on "File" and then select "Open..." from the dropdown menu. Navigate to the folder where your file is located and double-click on it to open it in Notepad.
+
+7. **Step 6: Basic Text Formatting**
+   - You can format your text using various options available under the "Format" menu, such as changing font style, size, or color.
+
+8. **Step 7: Closing the Text Editor**
+   - To close Notepad, click on "File" and then select "Exit

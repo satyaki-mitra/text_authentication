@@ -1,0 +1,17 @@
+Title: An Examination of the Influence of Cognitive Flexibility on Creativity in Problem-Solving among College Students
+
+Abstract
+
+This study investigates the relationship between cognitive flexibility and creativity in problem-solving among college students. Drawing from the dual-process theory (Evans, 2008) and the creative cognition perspective (Finke, Ward, & Smith, 1992), we aim to understand how the ability to shift attention and think flexibly impacts the generation of novel and effective solutions to complex problems.
+
+The study employs a mixed-methods design, combining quantitative and qualitative approaches. A sample of undergraduate students (N = 300) was randomly selected from various academic departments at a mid-sized university in the United States. Participants were administered a series of tasks designed to measure their cognitive flexibility (Intra-Extra Dimensional Set Shift task, Ludwig, Kreutz, & Dias, 2006), creativity (Torrance Tests of Creative Thinking, Torrance, 1974), and problem-solving ability (Raven's Progressive Matrices, Raven, Court, & Raven, 1998).
+
+Preliminary analyses revealed significant correlations between cognitive flexibility and both creativity and problem-solving ability. Moreover, a hierarchical multiple regression analysis indicated that cognitive flexibility accounted for unique variance in both creativity and problem-solving above and beyond the effects of age, gender, and academic major.
+
+In addition to the quantitative data, open-ended responses from a subset of participants (N = 50) were analyzed using thematic content analysis (Braun & Clarke, 2006). The qualitative findings highlighted that students who exhibited higher levels of cognitive flexibility reported a greater propensity for viewing problems from multiple perspectives and generating diverse solutions.
+
+The results provide empirical support for the importance of cognitive flexibility in facilitating creative problem-solving among college students. The study contributes to existing literature by offering novel insights into the interplay between cognitive flexibility, creativity, and problem-solving ability. The findings have implications for educational practices, as they suggest that fostering cognitive flexibility may help improve students' abilities to generate innovative solutions to real-world problems.
+
+References
+
+Braun, V., & Clarke, V.

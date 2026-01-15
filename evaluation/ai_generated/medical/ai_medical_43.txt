@@ -1,0 +1,11 @@
+Title: A Rare Case of Recurrent Eosinophilic Esophagitis with Concurrent Asthma and Atopic Dermatitis: Successful Management with Swallowed Food Oral Immunotherapy (SFOIT)
+
+Abstract:
+
+We present a unique case study of a 35-year-old Caucasian male, who presented with symptoms of recurrent food impaction, odynophagia, and dysphagia to solids for over five years. The patient's medical history was significant for concurrent asthma and atopic dermatitis. Esophagogastroduodenoscopy (EGD) revealed diffuse esophageal edema, eosinophilic infiltration, and narrowing of the distal esophagus consistent with Eosinophilic Esophagitis (EoE). A biopsy confirmed the presence of 24 eosinophils per high-power field, a diagnostic threshold for EoE. The patient had previously undergone conventional treatment with proton pump inhibitors and topical corticosteroids without significant improvement in symptoms.
+
+Given the patient's persistent symptoms and failure to respond to traditional treatments, Swallowed Food Oral Immunotherapy (SFOIT) was initiated. The patient was instructed to consume a specific food (in this case, peanuts) daily, gradually increasing the dosage over several weeks under medical supervision. After a 12-week treatment period, the patient reported significant improvement in symptoms, with no further episodes of food impaction or odynophagia. A follow-up EGD confirmed resolution of esophageal edema and eosinophilic infiltration, indicating successful management of EoE through SFOIT.
+
+This case highlights the potential benefits of SFOIT as a novel treatment strategy for patients with recurrent EoE who have not responded to conventional treatments. Further studies are needed to establish the long-term safety and efficacy of this approach.
+
+Keywords: Eosinophilic Esophagitis, Swallowed Food Oral Immunotherapy, Asthma, Atopic Dermatitis, Recurrent Food Impaction

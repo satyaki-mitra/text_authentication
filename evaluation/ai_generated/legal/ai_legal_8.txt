@@ -1,0 +1,15 @@
+Clause: Confidentiality and Non-Disclosure Agreement (NDA)
+
+Whereas, _[Party A]_ ("Disclosing Party") is the owner of certain confidential information ("Confidential Information"), and _[Party B]_ ("Receiving Party") desires to have access to such Confidential Information for the purposes set forth in this Agreement. In consideration of the mutual covenants contained herein, the parties hereto agree as follows:
+
+1. Definition of Confidential Information: For the purpose of this Agreement, "Confidential Information" shall mean all technical and business information disclosed by the Disclosing Party to the Receiving Party, whether in written, oral or any other form, including but not limited to research, experimental work, developments, inventions, know-how, trade secrets, and designs.
+
+2. Obligations of Receiving Party: The Receiving Party agrees to hold and maintain the Confidential Information in strictest confidence for the sole and exclusive use of the Disclosing Party. The Receiving Party shall not, without the prior written consent of the Disclosing Party, disclose any of the Confidential Information to third parties or use the same for any purpose outside the scope of this Agreement.
+
+3. Exceptions: The obligations set forth in Section 2 shall not apply to information which (a) is or becomes generally available to the public through no fault of the Receiving Party; (b) was in the possession of the Receiving Party prior to receipt from the Disclosing Party; (c) is learned by the Receiving Party through legitimate means other than from the Disclosing Party or Disclosing Party's representatives; or (d) is independently developed by employees of the Receiving Party who had no access to such information.
+
+4. Return of Confidential Information: Upon the termination of this Agreement, or at the Disclosing Party's request, the Receiving Party shall return to the Disclosing Party any and all records, notes, and other written, printed, or tangible materials in its possession pertaining to the Confidential Information.
+
+5. Remedies: The Disclosing Party shall have the right to seek injunctive relief and damages for any breach or threatened breach by the Receiving Party of any of its obligations under this Agreement.
+
+6. Governing

@@ -1,0 +1,19 @@
+Title: Understanding Dynamic Programming in Computer Science
+
+Dynamic Programming (DP) is an algorithmic technique used for efficiently solving complex problems by breaking them down into simpler, overlapping sub-problems. The solutions to these sub-problems are stored and reused when needed, rather than being recalculated multiple times. This approach reduces the time complexity significantly, making it useful for solving a wide range of computational problems.
+
+Key Concepts:
+1. Overlapping Sub-Problems: In DP, sub-problems share common sub-sub-problems, which are solved only once and their solutions are reused in the solutions to other sub-problems. This is a crucial aspect that distinguishes DP from Divide and Conquer (DC) algorithms, where each problem division results in disjoint sub-problems.
+
+2. Optimal Substructure: Each optimal solution can be constructed from optimal solutions of its sub-problems. In other words, the solution to a problem is built by combining the solutions to its smaller, optimally solved sub-problems. This property ensures that the DP approach will always find the most optimal solution.
+
+3. Memoization: To avoid recomputing the solutions to already computed sub-problems, DP algorithms typically use a technique called memoization (or tabulation). Memoization involves storing the solutions to previously solved sub-problems in an array or table, so that the solutions can be quickly retrieved when needed.
+
+4. Bottom-up and Top-down Approaches: There are two main approaches for implementing DP algorithms - bottom-up (also called dynamic programming by construction) and top-down (dynamic programming by recursion).
+
+   a. Bottom-up approach initializes an array or table to store the solutions to sub-problems, starting with base cases, and then fills in the remaining values based on the optimal substructure property. This approach is more efficient for problems where space complexity is not a concern.
+
+   b. Top-down approach solves each problem recursively, caching the results of previously solved sub-problems to avoid redundant computations. This approach is useful for problems where memory consumption is limited or for understanding the underlying optimal substructure property.
+
+Examples:
+1. Fibonacci Sequ

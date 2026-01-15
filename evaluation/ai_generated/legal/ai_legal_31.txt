@@ -1,0 +1,31 @@
+Case Title: Smith v. Johnson
+
+Court: Supreme Court of the State of New York, County of Albany
+
+Docket Number: 2021-CV-012345
+
+Date of Ruling: March 17, 2022
+
+Judge: Honorable Jane Doe
+
+Parties:
+Plaintiff: John Smith (hereinafter "Plaintiff")
+Defendant: Mary Johnson (hereinafter "Defendant")
+
+Facts:
+The Plaintiff, John Smith, alleges that the Defendant, Mary Johnson, breached a written contract by failing to fulfill her obligations as outlined in the Agreement of Sale dated January 1, 2021 (the "Agreement"). Specifically, the Plaintiff claims that the Defendant has failed to make payments according to the payment schedule outlined in the Agreement and has not taken necessary steps towards the transfer of property ownership.
+
+Issues:
+1. Whether the Defendant breached the written contract (Agreement) by failing to fulfill her obligations as specified in the Agreement.
+2. If a breach occurred, what remedies are available to the Plaintiff.
+
+Holding:
+The Court finds that the Defendant has breached the written contract (Agreement) by failing to fulfill her obligations as specified in the Agreement. The Court orders the Defendant to complete the remaining payments according to the payment schedule outlined in the Agreement and to initiate the transfer of property ownership within 30 days from the date of this ruling.
+
+Reasoning:
+The Plaintiff has provided evidence that demonstrates the Defendant's failure to make payments as required by the Agreement and has not taken necessary steps towards the transfer of property ownership. The Court finds that these actions constitute a breach of contract by the Defendant, as the terms outlined in the Agreement have not been met.
+
+The Court further finds that the Plaintiff is entitled to specific performance as a remedy for the breach, which includes the completion of remaining payments and the transfer of property ownership. The Court also awards reasonable attorney's fees to the Plaintiff due to the Defendant's failure to fulfill her obligations under the Agreement.
+
+Judgment:
+IT IS HEREBY ORDERED that the Defendant, Mary Johnson, shall complete the remaining payments according to the

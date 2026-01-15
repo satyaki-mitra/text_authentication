@@ -1,0 +1,26 @@
+Case Title: Smith v. Johnson
+
+Court of Jurisdiction: Supreme Court of the State of New York, County of Albany
+
+Docket Number: 2021-04567
+
+Date of Decision: March 15, 2023
+
+Judge Presiding: Honorable Sarah A. Mawyer
+
+Parties Involved:
+1. Plaintiff: John Smith (hereinafter "Plaintiff")
+2. Defendant: Jane Johnson (hereinafter "Defendant")
+
+Facts:
+The Plaintiff, John Smith, brought a claim against the Defendant, Jane Johnson, alleging breach of contract in connection with the sale and purchase agreement for a residential property located at 123 Maple Street, Albany, New York. The parties entered into a written sales agreement on August 1, 2022, wherein the Defendant agreed to sell and transfer ownership of the said property to the Plaintiff upon the terms specified in the agreement. However, the Defendant failed to fulfill her obligations under the contract by not delivering the deed of sale or vacating the property by the stipulated date, thereby causing damages to the Plaintiff.
+
+Issues:
+1. Whether there was a breach of contract by the Defendant in failing to fulfill her obligations as outlined in the sales agreement?
+2. If so, what remedies are available to the Plaintiff for the damages suffered due to the Defendant's breach of contract?
+
+Holding:
+The Court finds that there was a breach of contract by the Defendant in failing to fulfill her obligations as outlined in the sales agreement. As a result, the Court grants the Plaintiff's request for specific performance, ordering the Defendant to transfer the deed of sale and vacate the property within 30 days of this decision. Additionally, the Court awards the Plaintiff compensatory damages in the amount of $15,000 to cover his expenses related to the failed transaction.
+
+Reasoning:
+The Court finds that the Defendant has breached her obligations under the sales agreement by failing to deliver the deed of sale and vacate the property by the stipulated date. The Plaintiff has provided evidence demonstrating that he has suffered damages as a result, including expenses incurred for inspe

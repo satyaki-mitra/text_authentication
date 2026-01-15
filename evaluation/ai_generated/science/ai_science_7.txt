@@ -1,0 +1,13 @@
+Title: Explanation of the Green Flash Phenomenon
+
+The Green Flash is an intriguing optical phenomenon that occurs at sunset or sunrise, primarily over a body of water but can also be seen from land under specific conditions. It appears as a brief, bright green light above the upper rim of the setting or rising sun for a few seconds.
+
+This captivating sight results from a combination of atmospheric refraction, dispersion, and total internal reflection. As sunlight passes through Earth's atmosphere, it encounters different layers with varying densities, causing it to bend or refract. This bending separates white light into its constituent colors, a process known as dispersion.
+
+During sunrise or sunset, the angle between the sun and the horizon is small, and the sun's rays pass through more dense layers of atmosphere near the horizon compared to those higher up in the sky. The denser atmosphere causes stronger scattering of shorter wavelengths (blue and violet light) while allowing longer wavelengths (red, orange, and yellow) to pass through with little scatter.
+
+As the sun nears the horizon, its disc appears smaller than it actually is due to atmospheric refraction. At this point, the upper rim of the sun becomes visible above the horizon before the rest of the disk does. If conditions are just right - such as a stable, calm atmosphere with minimal turbulence and low humidity - the remaining blue light can be further refracted and bent back toward the observer by the atmospheric layers surrounding the still-invisible sun.
+
+This retraction of light occurs multiple times before it finally escapes our atmosphere, each time bending the light more towards the shorter wavelengths (blue). However, when light reaches a critical angle with respect to the normal (perpendicular) at the interface between air and water or other refractive medium, total internal reflection occurs instead of further refraction.
+
+At this point, only the remaining blue light is left to undergo total internal reflection. Surprisingly, as it bounces back and forth between the air and the water (or another refractive medium), some of the blue light is converted into green light due to a phenomenon known as Rayleigh scattering. This conversion occurs because the wavelength of green light is slightly longer than that of blue light, making it less susceptible to total internal reflection.

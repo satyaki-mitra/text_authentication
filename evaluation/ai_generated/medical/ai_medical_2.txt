@@ -1,0 +1,11 @@
+Title: Unusual Presentation of Lymphoma Masquerading as Acute Appendicitis: A Case Report
+
+Background: The coexistence of lymphoma and acute appendicitis is rare, with only a few cases reported in the literature. This case report highlights an unusual presentation of Burkitt's lymphoma mimicking acute appendicitis.
+
+Case Presentation: A 45-year-old male presented to the emergency department with a one-day history of periumbilical abdominal pain, nausea, and vomiting. The patient had no significant past medical history, and the physical examination revealed localized right lower quadrant tenderness with rebound tenderness and a positive Rovsing's sign. Initial laboratory results were unremarkable except for a mild leukocytosis (12.5 x 10^9/L). Due to the clinical presentation suggestive of acute appendicitis, the patient underwent an appendectomy.
+
+Intraoperatively, the appendix appeared normal, but multiple enlarged lymph nodes were found in the mesenteric and retroperitoneal regions. Given the atypical findings, a frozen section biopsy was performed, which revealed diffuse large B-cell lymphoma (DLBCL). The final pathology report confirmed the diagnosis of Burkitt's lymphoma.
+
+Discussion: The patient was subsequently managed with chemotherapy according to the protocol for high-grade DLBCL. He responded well to treatment and showed complete remission after four cycles. This case underscores the importance of considering lymphoma in the differential diagnosis of patients presenting with atypical abdominal symptoms, even when acute appendicitis is the initial suspicion.
+
+Conclusion: The coexistence of lymphoma and acute appendicitis is a rare phenomenon that can lead to misdiagnosis if not considered in the differential diagnosis. This case report emphasizes the need for thorough clinical evaluation and histopathological confirmation to establish an accurate diagnosis.

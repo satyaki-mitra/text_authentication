@@ -1,0 +1,33 @@
+Title: System Design Report Excerpt - Modular Data Processing Architecture (MDPA)
+
+1. Executive Summary
+
+   The MDPA is a novel, scalable, and flexible data processing architecture designed to handle high-volume and varied data streams efficiently. This report provides an overview of the system design, focusing on its key components, functionalities, and performance metrics.
+
+2. System Overview
+
+   The MDPA comprises four main modules: Data Ingestion, Data Processing, Data Storage, and Data Analytics. Each module is designed as a self-contained unit to ensure scalability, reliability, and ease of maintenance.
+
+3. Data Ingestion Module
+
+   This module is responsible for receiving data from various sources, filtering irrelevant information, and formatting the data according to the system's requirements. It employs multiple data streaming protocols (e.g., Kafka, RabbitMQ) to ensure robustness and adaptability.
+
+4. Data Processing Module
+
+   The Data Processing module is designed to handle real-time data processing tasks using a combination of distributed computing frameworks like Apache Spark and Apache Flink. It allows for the customization of processing pipelines based on specific data requirements.
+
+5. Data Storage Module
+
+   This module manages data storage, ensuring efficient and secure access to processed data. It utilizes a combination of relational databases (e.g., MySQL) and NoSQL databases (e.g., MongoDB) for optimal performance and flexibility in handling structured and unstructured data.
+
+6. Data Analytics Module
+
+   The Data Analytics module provides business intelligence capabilities by analyzing processed data using tools like Tableau and PowerBI. It offers customizable dashboards, reports, and alerts to help users make informed decisions based on the system's insights.
+
+7. Performance Metrics
+
+   Preliminary testing has shown that the MDPA can process up to 10 million records per second with a latency of less than 5 milliseconds. The system can handle peak loads of up to 100 times its initial capacity, thanks to its modular design and horizontal scalability features.
+
+8. Future Work
+
+   Further development will focus on integrating machine learning algorithms into the Data Processing module for predictive analytics capabilities, as well as improving the system's

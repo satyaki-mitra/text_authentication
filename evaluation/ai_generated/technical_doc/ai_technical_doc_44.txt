@@ -1,0 +1,31 @@
+Title: User Authentication Feature Documentation
+
+1. Overview
+
+The User Authentication feature is an essential component of our application, providing secure access to user accounts and personal data. This document outlines the functionality, architecture, and usage of the User Authentication feature in our software.
+
+2. Functionality
+
+The User Authentication feature enables users to register new accounts, log in to existing accounts, reset their passwords, and manage account security settings. The feature ensures that only authorized users can access their personal data and perform actions within the application.
+
+3. Architecture
+
+The User Authentication feature consists of several components:
+
+   - **User Authentication Service**: Responsible for handling user registration, login, password reset requests, and account security settings updates. The service communicates with external identity providers (e.g., Google, Facebook) when users opt to sign up or log in using their existing accounts from these services.
+
+   - **JWT Authentication**: Utilizes JSON Web Tokens (JWT) for secure user authentication. Upon successful login, the User Authentication Service generates a JWT token and sends it to the client application. The token is used to authenticate subsequent requests made by the client to protected resources within the application.
+
+   - **OAuth2**: Integrates OAuth 2.0 protocol for secure authentication with third-party identity providers, such as Google and Facebook. This allows users to sign up or log in using their existing accounts from these services.
+
+4. Usage
+
+Users can interact with the User Authentication feature through the client application's user interface:
+
+   - **Registration**: Users can create a new account by providing required information, such as email, password, and username. Optionally, users can sign up using their existing accounts from supported third-party identity providers (e.g., Google, Facebook).
+
+   - **Login**: Users can log in to their accounts using either their email/password combination or their accounts from supported third-party identity providers. Upon successful login, the user receives a JWT token and is redirected to the application's dashboard.
+
+   - **Password Reset**: In case users forget their password, they can request a reset link via email. The link allows them to set a new password for their account.
+
+   - **Security Settings**: Users can manage their security settings, such as updating their email address or password

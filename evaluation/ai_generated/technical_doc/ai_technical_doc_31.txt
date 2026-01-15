@@ -1,0 +1,45 @@
+Title: Documentation for Scheduled Backup Feature in XYZ Application
+
+1. Overview
+
+The Scheduled Backup feature is designed to automate the process of backing up user data within the XYZ application. This feature allows users to set regular intervals for creating backup copies of their data, ensuring data security and recovery in case of unexpected events such as system crashes or data loss.
+
+2. Feature Description
+
+The Scheduled Backup feature enables users to schedule backups at predefined intervals (daily, weekly, or monthly). Users can also specify the time and date for the backup to run. Once scheduled, the application will automatically create a backup copy of the user's data according to the specified settings.
+
+3. User Guide
+
+3.1 Accessing Scheduled Backup Settings
+
+To access the Scheduled Backup settings:
+- Navigate to the main menu and click on 'Settings.'
+- In the left sidebar, select 'Backup & Sync.'
+- Click on 'Scheduled Backup' in the submenu.
+
+3.2 Configuring Scheduled Backup
+
+In the Scheduled Backup settings page:
+- Toggle the switch to enable or disable the Scheduled Backup feature.
+- Choose the desired backup interval (Daily, Weekly, Monthly).
+- Set the time and date for the scheduled backup.
+- Click 'Save' to apply the changes.
+
+3.3 Viewing and Modifying Scheduled Backups
+
+To view or modify existing scheduled backups:
+- Navigate to the main menu and click on 'Settings.'
+- In the left sidebar, select 'Backup & Sync.'
+- Click on 'Scheduled Backup' in the submenu.
+- The list of scheduled backups will be displayed. To edit an existing backup, click on the 'Edit' button next to it.
+
+4. Best Practices
+
+- Ensure that you have adequate storage space available for backing up your data.
+- Regularly review and test your backups to ensure they are functioning correctly.
+- Store backup copies in a secure location to prevent unauthorized access or accidental deletion.
+- Consider setting multiple backup intervals (e.g., daily, weekly, and monthly) to maintain comprehensive data protection.
+
+5. Troubleshooting
+
+If you encounter any issues with the Scheduled Backup

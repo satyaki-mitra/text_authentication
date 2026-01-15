@@ -1,0 +1,11 @@
+Clause: Indemnification Clause
+
+In this Agreement, the indemnifying party (Indemnitor) agrees to hold harmless and indemnify the indemnified party (Indemnitee) from any and all claims, damages, liabilities, costs, and expenses (including reasonable attorney's fees) arising out of or in connection with a third-party claim resulting from the Indemnitor's breach of this Agreement, negligence, or willful misconduct. The Indemnitor shall promptly notify the Indemnitee upon becoming aware of any such claim and provide reasonable cooperation in its defense. This indemnity obligation survives termination or expiration of this Agreement.
+
+Case Summary: Smith v. Johnson (20X1) 567 N.E.2d 894 (Ill. App.)
+
+In the case of Smith v. Johnson, the Illinois Appellate Court considered a breach of contract claim involving an indemnification clause similar to the one outlined above. The plaintiff, Smith, brought a lawsuit against the defendant, Johnson, alleging that Johnson had breached their contract by failing to complete a construction project as agreed upon. The contract contained an indemnification clause that required Johnson to hold Smith harmless from any claims arising out of the construction project.
+
+Johnson argued that the indemnification clause was unenforceable because it was ambiguous and against public policy. However, the court found that the language of the indemnification clause was clear and did not violate any public policy considerations. The court further held that Johnson's breach of contract had caused Smith to incur additional expenses related to completing the construction project, and therefore Johnson was required to indemnify Smith for those expenses under the terms of the contract.
+
+The court's decision underscores the importance of clear and unambiguous language in indemnification clauses and reinforces the enforceability of such provisions in breach of contract cases.

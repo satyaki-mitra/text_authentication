@@ -1,0 +1,29 @@
+Title: Clause Regarding Confidentiality and Non-Disclosure Agreement (NDA)
+
+1. Definition and Interpretation
+
+1.1 In this Agreement, "Parties" shall refer to the Disclosing Party and the Receiving Party. The Disclosing Party is the entity that discloses confidential information, while the Receiving Party is the entity that receives such confidential information.
+
+1.2 "Confidential Information" encompasses any technical or business information disclosed by one party to another under this Agreement, including but not limited to trade secrets, proprietary data, and non-public financial or marketing information.
+
+2. Obligations of the Parties
+
+2.1 The Receiving Party agrees to maintain the confidentiality of all Confidential Information received from the Disclosing Party, using at least the same degree of care as it uses to protect its own confidential information of a similar nature.
+
+2.2 The Receiving Party shall not use or disclose any Confidential Information for any purpose other than as necessary to evaluate potential business deals between the Parties.
+
+3. Exceptions to Confidentiality Obligations
+
+3.1 The obligations under this Agreement do not extend to information that: (i) is or becomes publicly available through no fault of the Receiving Party; (ii) was in the possession of the Receiving Party prior to receipt from the Disclosing Party; (iii) is lawfully obtained by the Receiving Party from a third party without a breach of any obligation of confidentiality; or (iv) is independently developed by employees of the Receiving Party who had no access to such information.
+
+4. Term and Termination
+
+4.1 This Agreement shall remain in effect for a period of five years from the date of signing, unless earlier terminated by either party upon providing written notice to the other.
+
+5. Remedies
+
+5.1 In the event of a breach or threatened breach of this Agreement, the Disclosing Party shall be entitled to seek equitable relief, including but not limited to injunctive relief and damages, in addition to any other remedies available at law or in equity.
+
+6. Miscellaneous Provisions
+
+6.1 This Agreement constitutes the entire agreement between the Parties regarding the subject matter hereof, superseding all prior and

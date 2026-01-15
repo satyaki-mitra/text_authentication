@@ -1,0 +1,13 @@
+Phenomenon: Aurora Borealis (Northern Lights)
+
+The Aurora Borealis, also known as the Northern Lights, is a natural light display that primarily occurs in polar regions, predominantly around the Arctic Circle. This breathtaking spectacle results from collisions between electrically charged particles from the sun that enter the Earth's atmosphere with the gases present in our planet's atmosphere.
+
+1. Solar Particles: The sun is a giant magnet with constant outflows of energy, called solar wind. This solar wind consists of electrically charged particles, mainly electrons and protons. During periods of increased solar activity, such as solar flares or coronal mass ejections (CMEs), these charged particles are accelerated and directed towards the Earth.
+
+2. Interaction with Earth's Magnetic Field: As the high-speed solar wind approaches Earth, it interacts with our planet's magnetic field. The magnetosphere, as it is called, acts as a protective shield by deflecting most of these charged particles around the Earth. However, near the poles, where the magnetic field lines are weaker and closer to the surface, some solar particles can leak in.
+
+3. Collision with Atmosphere: Once inside the Earth's atmosphere, these charged particles collide with gases like oxygen and nitrogen, which are present in our planet's atmosphere. These gas molecules become excited by the collision and return to their normal state by emitting photons - packets of light energy.
+
+4. Light Display: The colors of the aurora depend on the type of gas molecule colliding with the charged particles and the altitude at which these collisions occur. Oxygen produces green and red lights, while nitrogen generates blue and purple hues. At higher altitudes (approximately 200 km), oxygen molecules emit green light, while closer to the ground (around 100 km), they can produce red auroras due to a different type of excitation. Nitrogen emits blue at high altitudes and purplish-red at lower ones.
+
+5. Geomagnetic Storms: Strong solar activity can lead to geomagnetic storms, which intensify the aurora borealis. These storms can disrupt satellite operations, radio communication systems, and power grids on Earth. The appearance of auror

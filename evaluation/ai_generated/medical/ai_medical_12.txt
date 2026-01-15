@@ -1,0 +1,13 @@
+Title: A Case Study on Refractory Epilepsy Management: An Unusual Presentation of Dravet Syndrome
+
+Background: Dravet syndrome is a rare, severe form of intractable epilepsy, typically presenting in the first year of life with febrile seizures. The condition is characterized by the development of recurrent, drug-resistant seizures and intellectual disability. Herein, we present an atypical case of Dravet syndrome presenting later in childhood.
+
+Case Presentation: A 7-year-old male patient, previously healthy, presented with a 6-month history of frequent, prolonged tonic-clonic seizures. The seizures were initially triggered by fever but soon became spontaneous. The patient's developmental milestones were normal until the onset of seizures, followed by gradual decline in cognitive function and behavioral problems.
+
+Investigations: Electroencephalography (EEG) showed hypsarrhythmia and magnetic resonance imaging (MRI) was unremarkable. Genetic testing revealed a de novo mutation in the SCN1A gene, confirming the diagnosis of Dravet syndrome.
+
+Treatment: The patient was initially treated with several antiepileptic drugs (AEDs), including valproic acid, lamotrigine, and levetiracetam, but remained refractory to treatment, requiring frequent hospitalizations due to repeated seizures.
+
+Discussion: This case highlights the challenges in managing Dravet syndrome, particularly when it presents later in childhood. Early identification and genetic testing are crucial for accurate diagnosis and appropriate management. Despite advances in AEDs, many patients with Dravet syndrome remain refractory to treatment, underscoring the need for novel therapeutic strategies.
+
+Conclusion: This case underscores the importance of early suspicion and prompt investigation in cases of refractory epilepsy, even if they present outside the typical age range for Dravet syndrome. Further research is needed to improve our understanding of this condition and develop more effective treatment strategies.

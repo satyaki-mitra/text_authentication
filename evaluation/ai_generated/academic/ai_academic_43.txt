@@ -1,0 +1,13 @@
+Title: An Examination of the Impact of Digital Transformation on Organizational Performance: A Comparative Study between Traditional and Digital Native Enterprises
+
+Abstract
+
+In the contemporary business landscape, digital transformation has emerged as a critical factor influencing organizational performance. This study aims to delve into the impact of digital transformation on organizational performance, comparing traditional enterprises that are undergoing digital transition with digital native enterprises that have been digitally-oriented from inception. The research employs a mixed-methods approach, incorporating both quantitative and qualitative data to provide a comprehensive analysis.
+
+The quantitative component involves the collection and analysis of financial performance indicators such as revenue growth, profit margin, and return on assets (ROA) for a sample of 100 traditional enterprises undergoing digital transformation and 100 digital native enterprises. Statistical analyses, including t-tests and regression models, will be utilized to discern significant differences in performance outcomes between the two groups.
+
+The qualitative component comprises semi-structured interviews with key executives from both traditional and digital native enterprises. These interviews aim to elicit insights into the organizational strategies, cultural shifts, and technological investments that underpin successful digital transformation. The data collected will be analyzed using thematic analysis to identify common themes and patterns across the two groups.
+
+The findings of this study are expected to contribute significantly to our understanding of the role of digital transformation in shaping organizational performance. By comparing traditional enterprises undergoing digital transformation with digital native enterprises, this research seeks to provide valuable insights for managers and policymakers navigating the complexities of digital transformation. The study also aims to identify best practices that can facilitate successful digital transformation, thereby enhancing organizational competitiveness in the digital age.
+
+Keywords: Digital Transformation, Organizational Performance, Traditional Enterprises, Digital Native Enterprises, Mixed-Methods Approach

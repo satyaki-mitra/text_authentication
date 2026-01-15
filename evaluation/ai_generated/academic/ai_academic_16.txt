@@ -1,0 +1,13 @@
+Title: An Exploration of the Impact of Cognitive Behavioral Therapy (CBT) on Stress Management among College Students
+
+Abstract
+
+This study aims to investigate the efficacy of Cognitive Behavioral Therapy (CBT) in managing stress levels among college students. The research is grounded in the theoretical framework of cognitive-behavioral theory, which posits that an individual's thoughts, feelings, and behaviors are interconnected and can be modified to improve mental health outcomes.
+
+The study employed a quasi-experimental design with a pre-test and post-test control group design. A total of 200 college students were randomly assigned to either the experimental group (n=100) who received eight weekly sessions of CBT, or the control group (n=100) who did not receive any intervention but completed pre- and post-surveys. The primary outcome measure was the Perceived Stress Scale (PSS), which assessed the participants' perceived stress levels.
+
+The results revealed significant reductions in stress levels among the experimental group compared to the control group, both immediately after the intervention and at a three-month follow-up. Furthermore, qualitative data from semi-structured interviews suggested that CBT helped students develop coping strategies, improve their self-efficacy, and enhance their understanding of the relationship between thoughts, emotions, and behaviors.
+
+These findings support the utility of CBT as an effective stress management intervention for college students. The study contributes to the existing literature by providing empirical evidence for the application of CBT in reducing stress levels among this population. However, future research should explore long-term effects, consider variations in effectiveness across different subgroups of students, and investigate potential mechanisms underlying the therapeutic benefits of CBT.
+
+Keywords: Cognitive Behavioral Therapy (CBT), Stress Management, College Students, Perceived Stress Scale (PSS)

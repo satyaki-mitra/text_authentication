@@ -1,0 +1,30 @@
+Case Title: Smith v. Johnson
+
+Court: Supreme Court of the State of New York, County of XYZ
+
+Case No.: ABC-123456
+
+Date: January 1, 20XX
+
+Judgment:
+
+In the matter between John Doe Smith, Plaintiff, and Jane Doe Johnson, Defendant, the Court hereby issues the following judgment:
+
+WHEREAS, this action arises out of a dispute concerning breach of contract in regards to the sale of real property located at 123 Main Street, Anytown, USA (the "Property") between the Plaintiff and the Defendant;
+
+WHEREAS, on March 15, 20XX, a written agreement of sale was executed by both parties, wherein the Defendant agreed to sell and convey the Property to the Plaintiff for the sum of $500,000 (the "Purchase Price");
+
+WHEREAS, the Plaintiff has alleged that the Defendant failed to comply with the terms of the agreement, specifically by failing to transfer clear title to the Property;
+
+WHEREAS, on June 30, 20XX, the Plaintiff notified the Defendant of their intention to terminate the agreement and seek damages for breach;
+
+WHEREAS, the Plaintiff has provided evidence that demonstrates the Defendant's inability to transfer clear title due to outstanding liens against the Property;
+
+WHEREAS, the Defendant has failed to provide a valid defense or counterclaim in response to the Plaintiff's allegations;
+
+NOW, THEREFORE, IT IS ORDERED THAT:
+
+1. The Defendant is hereby found guilty of breach of contract as defined by Section 14(a) of the General Obligations Law of the State of New York.
+2. The Plaintiff shall be awarded actual damages in the amount of $50,000, representing the costs incurred to investigate and remedy the Defendant's failure to transfer clear title to the Property.
+3. The Defendant is hereby ordered to pay the Plaintiff the sum of $50,000 within 45 days from the date of this judgment.
+4. The Plaintiff shall be entitled to interest

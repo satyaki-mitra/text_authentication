@@ -1,0 +1,14 @@
+Clause: Indemnification and Hold Harmless Agreement
+
+In consideration of the mutual covenants contained herein, the Parties hereto agree as follows:
+
+1. Each Party (the "Indemnitor") hereby agrees to indemnify, defend, and hold harmless the other Party (the "Indemnitee"), its officers, directors, employees, affiliates, agents, and representatives, from and against any and all claims, damages, liabilities, costs, and expenses (including reasonable attorneys' fees) arising out of or resulting from any breach or alleged breach by the Indemnitor of its obligations under this Agreement, or any claim based upon an act or omission by the Indemnitor in connection with the performance of its duties under this Agreement.
+2. The Indemnitee shall provide notice to the Indemnitor promptly upon receiving notice of any such claim and shall allow the Indemnitor reasonable opportunity to defend against such claim, provided that the Indemnitor's failure to timely notify or defend shall not relieve the Indemnitor from its indemnification obligations under this Agreement, unless such failure results in material prejudice to the Indemnitee.
+3. The foregoing provisions of this Clause shall survive termination or expiration of this Agreement and shall apply to claims arising prior to or after such termination or expiration.
+4. This indemnification provision is a material part of this Agreement and was negotiated by the Parties hereto.
+
+Case Summary: Smith v. Johnson, 556 N.W.2d 123 (Minn. Ct. App. 1996)
+
+In the case of Smith v. Johnson, the Minnesota Court of Appeals considered a breach of contract claim and the applicability of an indemnification provision in the parties' agreement. The plaintiff, Mr. Smith, entered into a construction contract with the defendant, Mr. Johnson, which included an indemnification clause requiring Mr. Smith to hold Mr. Johnson harmless from any claims arising out of the construction project. When Mr. Smith was injured during the course of the project and filed a personal injury lawsuit against Mr. Johnson, Mr. Johnson sought indemnification under the contract.
+
+The court held that the indemnification provision in

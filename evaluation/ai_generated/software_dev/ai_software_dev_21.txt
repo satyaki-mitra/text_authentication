@@ -1,0 +1,34 @@
+Title: Understanding the Concept of Functional Programming in JavaScript (FP in JS)
+
+Functional Programming (FP) is an influential and declarative programming paradigm, emphasizing the use of functions as first-class citizens with higher-order functions, immutability, and pure functions. Incorporating FP concepts can significantly improve code readability, testability, performance, and reusability in JavaScript, especially when dealing with asynchronous operations.
+
+In this article, we'll explore some key aspects of Functional Programming in JavaScript:
+
+1. First-Class Functions and Higher-Order Functions:
+   - First-class functions refer to functions that can be passed as arguments to other functions, returned by other functions, and assigned as values to variables. In JS, functions are indeed first-class citizens since they fulfill all the criteria.
+   - Higher-order functions are functions that take one or more functions as arguments (taking a callback) or return a function as output (mapping or filtering arrays).
+
+Example: map(), filter(), reduce() and forEach() from the Array prototype in JavaScript are examples of higher-order functions.
+
+```javascript
+const numbers = [1, 2, 3, 4];
+const doubledNumbers = numbers.map(num => num * 2);
+```
+
+2. Pure Functions: A pure function is a function that always returns the same result given the same input and has no side effects (modifying variables outside of its own scope). This makes testing much easier since you can depend on the output solely based on the input provided.
+
+Example:
+```javascript
+function add(x, y) {
+  return x + y;
+}
+
+// Pure function, always returns the same result given the same input.
+console.log(add(3, 4)); // 7
+console.log(add(3, 4)); // 7 (same output as before)
+```
+
+3. Immutability: Unlike mutable data structures, immutable objects cannot be changed once they are created. In FP, instead of modifying existing objects, we create new ones when needed, ensuring predictable behavior and making it easier to reason about our code.
+
+Example: Using the `Object.assign()` method in JavaScript:
+```javascript

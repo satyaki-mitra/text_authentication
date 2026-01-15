@@ -1,0 +1,26 @@
+Case Title: United States v. Johnson
+
+Court: United States District Court for the Southern District of New York
+
+Docket Number: 1-2021-cv-08765
+
+Judges: Hon. Judge Alison J. Nathan
+
+Date of Decision: October 15, 2021
+
+Facts:
+The defendant, John A. Johnson (hereinafter "Johnson"), was charged with securities fraud and wire fraud under 18 U.S.C. §§ 1348, 1343 in connection with a scheme to deceive investors in his company, Johnson Enterprises Inc. (hereinafter "Johnson Enterprises"). The government alleged that Johnson made materially false statements regarding the financial health and prospects of Johnson Enterprises to induce investors to invest over $20 million, which he then misappropriated for personal use.
+
+Procedural History:
+The case proceeded to trial, where the jury found Johnson guilty on all counts on October 15, 2021.
+
+Holding:
+In a decision handed down on October 15, 2021, Judge Alison J. Nathan of the United States District Court for the Southern District of New York entered a judgment convicting Johnson on all charges and sentencing him to serve a term of imprisonment of 120 months, followed by three years of supervised release, and ordering him to pay restitution in the amount of $20,500,000 and forfeiture in an amount to be determined at a later hearing.
+
+Reasoning:
+The court found that the evidence presented at trial established beyond a reasonable doubt that Johnson had engaged in a scheme to defraud investors by making materially false statements about the financial health and prospects of Johnson Enterprises, which he knew were false or made with reckless disregard for their truth. The court further found that Johnson had intentionally misappropriated investor funds for his personal use and had acted with intent to deceive investors in furtherance of this scheme.
+
+Based on these findings, the court held that Johnson was guilty of securities fraud and wire fraud as charged and sentenced him accordingly.
+
+Significance:
+The United States v. Johnson case represents a significant victory for the government in its ongoing efforts to combat securities fraud

@@ -1,0 +1,23 @@
+Title: Understanding the Functional Programming Pattern - Map and Reduce
+
+Functional programming (FP) is a programming paradigm that emphasizes the use of functions as first-class citizens, immutability, and higher-order functions. Two powerful techniques in functional programming are Map and Reduce.
+
+1. **Map**: The map function applies a given function to every element of an array or collection, creating a new array with the results. In JavaScript, for example, you can use the Array.map() method:
+
+```javascript
+const numbers = [1, 2, 3, 4, 5];
+const squares = numbers.map(num => num * num); // [1, 4, 9, 16, 25]
+```
+
+In this example, the map function applies the multiplication with itself (num * num) to each number in the array and returns a new array of squares. The original array remains unchanged.
+
+2. **Reduce**: The reduce function, also known as fold, takes an array and a reducing function, combining all elements into a single output. In JavaScript, you can use the Array.reduce() method:
+
+```javascript
+const numbers = [1, 2, 3, 4, 5];
+const sum = numbers.reduce((accumulator, current) => accumulator + current, 0); // 15
+```
+
+In this example, the reduce function takes a running total (accumulator), adds each number from the array, and returns the final sum. The initial value of the accumulator is provided as the second argument (0 in this case).
+
+Both map and reduce are versatile tools for data manipulation and can significantly improve code readability and reusability in functional programming. By chaining these functions, you can build more complex algorithms efficiently.

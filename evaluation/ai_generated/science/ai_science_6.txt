@@ -1,0 +1,19 @@
+Phenomenon: Aurora Borealis (Northern Lights) and Aurora Australis (Southern Lights)
+
+Explanation:
+
+The Northern Lights, or Aurora Borealis, and the Southern Lights, or Aurora Australis, are natural light displays that occur in polar regions. These spectacular and colorful displays are caused by interactions between solar wind and Earth's magnetic field.
+
+1. Solar Flares: The sun emits charged particles, mainly electrons and protons, in large amounts during a solar flare. These charged particles form the solar wind that travels through space at high speeds.
+
+2. Interaction with Earth's Magnetic Field: When the solar wind reaches Earth, it collides with the planet's magnetic field. The magnetic field lines bend and twist the solar winds into an elongated ribbon around the poles.
+
+3. Particle Acceleration: As the charged particles are guided by Earth's magnetic field, they get accelerated towards the poles.
+
+4. Collision with Atmosphere: When these high-energy particles reach Earth's upper atmosphere (around 80 to 600 kilometers above sea level), they collide with atoms and molecules of gases like oxygen and nitrogen.
+
+5. Energy Release: During the collision, energy is transferred from the charged particles to atmospheric gases. The energy causes the electrons in these gases to jump to a higher energy state before returning to their ground state, emitting photons (light) in the process.
+
+6. Colorful Light Displays: Different colors of the aurora are produced depending on the type and altitude of gas molecules struck by charged particles. Oxygen produces green and red lights at lower altitudes, while nitrogen produces blue and purple lights at higher altitudes.
+
+In summary, the Northern and Southern Lights are a mesmerizing display of light caused by interactions between solar wind and Earth's magnetic field in the polar regions. The beautiful colors result from energy transfers during collisions between charged particles and atmospheric gases.

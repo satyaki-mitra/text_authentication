@@ -1,0 +1,13 @@
+Title: A Case of Severe Acute Pancreatitis with Concurrent Infective Endocarditis: A Multidisciplinary Approach to Management
+
+Abstract
+
+A 62-year-old male, a chronic smoker and heavy alcohol consumer, presented to the emergency department (ED) with a three-day history of persistent abdominal pain, nausea, and vomiting. On initial presentation, his vital signs showed tachycardia, fever, and mild hypotension. Laboratory results revealed significant elevation of serum amylase and lipase levels, suggesting acute pancreatitis. Further imaging with computed tomography (CT) scan confirmed the diagnosis, demonstrating diffuse enlargement of the pancreas with peripancreatic fat stranding.
+
+Upon closer examination, a heart murmur was heard, prompting an echocardiogram that revealed vegetations on the mitral valve, indicative of infective endocarditis (IE). Blood cultures grew Staphylococcus aureus, which matched the IE lesion. The patient's condition worsened due to sepsis, and he required mechanical ventilation and continuous renal replacement therapy (CRRT) for acute kidney injury.
+
+The patient was managed concurrently by gastroenterology and infectious disease specialists. The pancreatitis was treated with intravenous fluids, analgesia, and nasogastric suctioning. Antibiotic therapy was initiated for the IE, targeting S. aureus, and subsequently adjusted based on antimicrobial susceptibility results.
+
+Despite intensive care unit (ICU) management, the patient's condition continued to deteriorate, and he succumbed to multi-organ failure 10 days after admission. This case underscores the importance of a multidisciplinary approach in managing complex cases, particularly those involving concurrent life-threatening conditions such as acute pancreatitis and infective endocarditis.
+
+Keywords: Acute Pancreatitis, Infective Endocarditis, Sepsis, Multidisciplinary Management, Staphylococcus aureus, Mortality

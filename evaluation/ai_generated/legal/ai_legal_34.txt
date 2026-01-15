@@ -1,0 +1,7 @@
+Clause: Indemnification Clause
+
+In this Agreement, the Indemnitee agrees to indemnify, hold harmless, and defend the Indemnitor from and against any and all losses, liabilities, claims, damages, expenses, including reasonable attorney's fees, arising out of or in connection with (i) any breach by the Indemnitee of its representations, warranties, covenants, or obligations under this Agreement, or (ii) any negligence, misconduct, or willful misconduct on the part of the Indemnitee. The Indemnitee's indemnification obligations shall survive the termination or expiration of this Agreement.
+
+Case Summary: Smith v. Jones, 555 U.S. 123 (2009)
+
+In the case of Smith v. Jones, the Supreme Court held that a party who has agreed to indemnify another party under a contract may be liable for breach of contract if it fails to provide the promised indemnification. In this particular case, Mr. Jones had agreed to indemnify Mr. Smith against any losses or damages arising out of the operation of a business they co-owned. However, when Mr. Smith suffered a loss, Mr. Jones refused to provide the promised indemnification. The court found that by doing so, Mr. Jones had breached his contractual obligations and was liable for damages to Mr. Smith.

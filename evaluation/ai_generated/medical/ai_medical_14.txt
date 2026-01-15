@@ -1,0 +1,11 @@
+Title: A Rare Case of Giant Cell Hepatitis in a Pediatric Patient
+
+Abstract:
+
+We present an unusual case of Giant Cell Hepatitis (GCH), a rare form of pediatric liver disease, in a 7-year-old female patient with no significant past medical history. The initial presentation included abdominal pain, nausea, and jaundice that lasted for two weeks. Laboratory investigations revealed elevated liver enzymes (ALT: 1200 U/L, AST: 900 U/L) and bilirubin levels (total bilirubin: 14 mg/dL, direct bilirubin: 8 mg/dL), indicating acute liver injury.
+
+Ultrasonography revealed a heterogeneous liver with multiple hyperechoic foci, suggestive of hepatic granulomas. A liver biopsy confirmed the diagnosis of Giant Cell Hepatitis, characterized by large multinucleated giant cells within hepatocytes. The patient was treated with oral prednisone (2 mg/kg daily) and azathioprine (2 mg/kg daily). After an initial improvement in symptoms, a gradual taper of the corticosteroid dose was initiated over six months, while maintaining the azathioprine dosage.
+
+This case underscores the importance of considering Giant Cell Hepatitis in the differential diagnosis of pediatric liver disease, even in the absence of characteristic clinical features. The management involves immunosuppressive therapy, necessitating close monitoring for adverse effects and long-term follow-up to ensure disease remission and prevent potential complications.
+
+Keywords: Giant Cell Hepatitis, Pediatric Liver Disease, Immunosuppressive Therapy, Liver Biopsy, Prednisone, Azathioprine.

@@ -1,0 +1,11 @@
+Title: A Rare Case of Autoimmune Hemolytic Anemia in a Pediatric Patient with Coexistent Autoimmune Thyroiditis
+
+Abstract:
+
+We present an unusual case of a 10-year-old girl who presented with symptoms of fatigue, pallor, and shortness of breath. On admission, laboratory results revealed severe anemia (Hb: 6 g/dL), reticulocytosis (12%), and elevated lactate dehydrogenase (LDH: 800 U/L). Coomb's test was positive, indicating the presence of autoantibodies. Direct antiglobulin test (DAT) confirmed the diagnosis of autoimmune hemolytic anemia (AIHA). Additionally, thyroid function tests showed elevated levels of thyroglobulin (157 ng/mL) and thyroid-stimulating hormone receptor antibodies (TSHR-Ab), suggesting coexistent autoimmune thyroiditis.
+
+The patient was treated with high-dose corticosteroids, which led to a rapid improvement in her hemoglobin levels and symptomatic relief. Thyroid function was closely monitored, and levothyroxine therapy was initiated due to persistently elevated thyroid function tests.
+
+This case underscores the importance of considering AIHA as part of the differential diagnosis in pediatric patients presenting with severe anemia. Moreover, it emphasizes the potential for coexistent autoimmune disorders, particularly autoimmune thyroiditis, which requires careful monitoring and management.
+
+Keywords: Autoimmune Hemolytic Anemia, Pediatrics, Coexistent Autoimmune Thyroiditis, Corticosteroids, Levothyroxine

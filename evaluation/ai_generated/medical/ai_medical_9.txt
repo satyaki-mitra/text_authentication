@@ -1,0 +1,11 @@
+Title: An Unusual Case of Recurrent Pneumocystis jirovecii Pneumonia in an Immunocompetent Patient
+
+Abstract
+
+We present an intriguing case of a 35-year-old Caucasian male, non-smoker, with no known comorbidities or immunosuppressive conditions, who presented twice within six months with symptoms suggestive of pneumonia. The initial presentation involved a four-day history of fever, cough, and progressive dyspnea, for which he was hospitalized and treated empirically for bacterial pneumonia due to the severe respiratory distress. Despite appropriate antibiotic therapy, his condition did not improve, and his chest X-ray showed bilateral interstitial infiltrates. Subsequent bronchoalveolar lavage (BAL) revealed Pneumocystis jirovecii organisms, leading to a diagnosis of Pneumocystis pneumonia (PCP). Intravenous trimethoprim-sulfamethoxazole was initiated, and the patient improved significantly.
+
+However, six months later, the patient returned with similar symptoms. Repeat imaging confirmed bilateral interstitial infiltrates, and BAL once again showed P. jirovecii organisms. The recurrence of PCP in an immunocompetent individual is a rare event, particularly without any identifiable risk factors such as HIV infection or immunosuppressive medications. A thorough investigation for underlying causes was conducted, including autoimmune workup and testing for congenital immune deficiencies, all of which were normal.
+
+This case highlights the importance of considering PCP in the differential diagnosis of community-acquired pneumonia, even in immunocompetent individuals. Further investigations are ongoing to identify any potential predisposing factors that may have led to this rare recurrence. The patient is currently being managed with long-term suppressive therapy with trimethoprim-sulfamethoxazole and close follow-up.
+
+Keywords: Pneumocystis jirovecii pneumonia, immunocompetent patient, recurrent pneumonia, diagnostic challenge

@@ -1,0 +1,13 @@
+Title: An Unusual Case of Refractory Neutropenia in an Immunocompetent Patient
+
+Abstract
+
+A 52-year-old female, with no significant past medical history, presented to the emergency department (ED) with a two-week history of recurrent fevers and fatigue. Physical examination was unremarkable except for pallor. Laboratory findings revealed a markedly low absolute neutrophil count (ANC) of 0.5 x10^9/L (normal range: 1.8-7.8 x10^9/L), hemoglobin of 10 g/dL, and platelets of 250 x10^9/L. The patient did not have any history of chemotherapy or radiation therapy, and there were no signs of infection or inflammation.
+
+Over the next three weeks, the patient was hospitalized for intensive work-up including bone marrow aspiration and biopsy, which revealed a normocellular marrow with a paucity of myeloid precursors and mature neutrophils (<1%). Flow cytometry did not show any clonal abnormalities. A diagnosis of cyclic neutropenia was initially considered but was ruled out due to the absence of periodic fever, rash, or splenomegaly.
+
+Further investigation revealed an autoantibody against granulocyte-macrophage colony-stimulating factor (GM-CSF) in the patient's serum, which was confirmed by functional assays. The patient was diagnosed with Autoimmune Neutropenia and initiated on daily subcutaneous injections of recombinant human GM-CSF. After one month of treatment, the ANC increased to 2.5 x10^9/L, and the patient's symptoms resolved.
+
+This case highlights an uncommon presentation of autoimmune neutropenia in an immunocompetent individual, emphasizing the importance of considering this diagnosis in patients with refractory neutropenia of unknown cause. The response to recombinant human GM-CSF further supports its role as a potential treatment option for such cases.
+
+Keywords: Autoimmune Neutropenia, Cyclic Neutropenia, Granulocyte-

@@ -1,0 +1,13 @@
+Title: A Rare Case of Pheochromocytoma Masquerading as Acute Myocardial Infarction
+
+Abstract:
+
+We present an unusual case of a 47-year-old female patient, a non-smoker with no significant past medical history, who presented to the emergency department (ED) with severe chest pain and shortness of breath. The symptoms were sudden in onset and intensified over a few hours, prompting the initial diagnosis of an acute myocardial infarction (AMI).
+
+Upon arrival, the patient exhibited vital signs consistent with severe sympathetic activation: blood pressure 210/130 mmHg, heart rate 145 bpm, and respiratory rate 26 breaths per minute. Electrocardiogram (ECG) showed sinus tachycardia with ST-segment elevation in multiple leads. Troponin levels were significantly elevated, further supporting the AMI diagnosis.
+
+However, due to atypical features and the patient's young age, a more comprehensive workup was initiated. Abdominal computed tomography (CT) revealed a 6 cm adrenal mass, leading to the eventual diagnosis of pheochromocytoma—a neuroendocrine tumor arising from the adrenal medulla.
+
+The patient underwent an uneventful laparoscopic adrenalectomy, and pathology confirmed the diagnosis. Postoperatively, the patient's symptoms resolved, blood pressure normalized, and follow-up ECG showed no evidence of myocardial injury.
+
+This case highlights the importance of considering rare etiologies in patients presenting with symptoms typically associated with acute coronary syndrome, especially in younger individuals without traditional cardiovascular risk factors. Early recognition and appropriate management can lead to favorable outcomes, as demonstrated in this patient's successful surgery and subsequent recovery.

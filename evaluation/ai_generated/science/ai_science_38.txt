@@ -1,0 +1,13 @@
+Phenomenon: Aurora Borealis (Northern Lights) and Aurora Australis (Southern Lights)
+
+Explanation: The aurora phenomena, both Northern Lights and Southern Lights, are atmospheric displays predominantly observed in polar regions. They occur due to the interaction between solar particles and Earth's magnetic field.
+
+The Sun is a constant emission of charged particles, primarily electrons and protons, which form the solar wind. When the solar wind encounters Earth, it interacts with our planet's magnetic field, creating a region known as the magnetosphere. The magnetosphere captures and channels the solar particles towards the polar regions, where Earth's magnetic field lines are weaker and more vertical.
+
+As these charged particles approach the Earth, they become trapped in the Earth's magnetic field and funneled downwards towards the poles. As they descend, they collide with molecules and atoms in the Earth's upper atmosphere, specifically oxygen and nitrogen at altitudes between 80 to 600 km. During these collisions, energy is transferred from the solar particles to the atmospheric gases, causing them to become excited.
+
+Excited oxygen and nitrogen molecules then release their excess energy by emitting photons – packets of light. For oxygen, the most common emissions result in green and reddish hues, while for nitrogen, they predominantly emit blue and purplish colors. The specific wavelengths of these emissions depend on the altitude at which the collisions occur and the type of atmospheric gas involved.
+
+The dancing patterns of auroras are determined by the movement of solar particles within Earth's magnetic field and the turbulence in this region. In some cases, disturbances in the Sun, such as solar flares or coronal mass ejections, can cause increased solar activity and more intense auroras.
+
+In summary, the Northern and Southern Lights are breathtaking displays caused by the interaction between solar particles and Earth's magnetic field, resulting in the emission of colored light from excited atmospheric gases in polar regions.

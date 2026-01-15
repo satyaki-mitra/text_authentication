@@ -1,0 +1,42 @@
+Title: A Step-by-Step Guide to Getting Started with Coding in Python for Beginners
+
+1. **Installation of Python**
+   - Visit the official Python website (https://www.python.org/) and download the latest version of Python suitable for your operating system.
+   - Follow the installation wizard's instructions to complete the setup process on your computer.
+
+2. **Setting Up Your Development Environment**
+   - For this tutorial, we will be using IDLE (Python's Integrated DEvelopment and Learning Environment). You can access it by searching for "IDLE" in your start menu or by opening a command prompt and typing `idle` followed by pressing Enter.
+
+3. **Hello, World! Program**
+   - In the IDLE editor, type the following code:
+     ```python
+     print("Hello, World!")
+     ```
+   - Press F5 (Run) or click on Run > Run Module to execute the code. The message "Hello, World!" should appear in a new window.
+
+4. **Understanding Variables**
+   - In Python, variables are used to store data.
+   - To create a variable, simply assign a value to it:
+     ```python
+     my_variable = 10
+     print(my_variable)
+     ```
+   - You can also use strings (text):
+     ```python
+     my_string = "Hello, World!"
+     print(my_string)
+     ```
+
+5. **Basic Arithmetic Operations**
+   - Python supports the four basic arithmetic operations: addition (+), subtraction (-), multiplication (*), and division (/).
+   - Example:
+     ```python
+     result = 5 + 3 * 2
+     print(result)  # Output: 13
+     ```
+
+6. **Data Types**
+   - Python has several data types, including integers, floating-point numbers (decimals), strings, lists, tuples, and dictionaries.
+   - To learn more about these data types, visit the following links:
+     - Integers: https://www.w3schools.com/python/python_data_types.asp#integer
+     - Floating-point numbers: https://www.w3schools.com/python/

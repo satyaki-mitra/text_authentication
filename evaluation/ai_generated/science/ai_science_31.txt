@@ -1,0 +1,17 @@
+Phenomenon: Aurora Borealis (Northern Lights)
+
+The Aurora Borealis, commonly known as the Northern Lights, is a natural light display that occurs in polar regions. This stunning spectacle is caused by collisions between electrically charged particles from the sun that enter the Earth's atmosphere with the gases present in our planet's atmosphere.
+
+1. Solar Particles: The solar particles are released during solar flares and coronal mass ejections (CMEs) on the Sun. These high-energy particles travel through space at speeds of millions of miles per hour, directed towards Earth.
+
+2. Earth's Magnetic Field: As these charged particles approach Earth, they encounter the planet's magnetic field. The magnetic field lines guide these particles towards the polar regions where the field lines dip closest to the surface.
+
+3. Ionosphere and Mesosphere: The solar particles enter Earth's atmosphere at the top layer called the ionosphere and then continue down into another layer called the mesosphere. In these layers, the solar particles collide with gases such as oxygen and nitrogen molecules.
+
+4. Energy Exchange: When these charged particles collide with atmospheric gases, energy is exchanged between them. The excess energy causes the gas molecules to become excited, which means they gain extra energy and vibrate more than usual.
+
+5. Light Emission: As the excited gas molecules return to their normal state (a process known as de-excitation), they release the excess energy in the form of photons – particles of light. The color of the light emitted depends on the type of gas molecule involved and its altitude in the atmosphere.
+
+6. Auroral Formation: The interaction between the charged solar particles, Earth's magnetic field, and atmospheric gases results in the formation of various shapes and patterns of lights known as auroras. The aurora borealis usually appears greenish-yellow, but under certain conditions, it can also display red, purple, blue, or white hues.
+
+7. Geomagnetic Storms: When strong solar flares occur, they can generate intense geomagnetic storms that cause auroras to be particularly vibrant and widespread. These events may also lead to disruptions in satellite operations and power grids near the poles.

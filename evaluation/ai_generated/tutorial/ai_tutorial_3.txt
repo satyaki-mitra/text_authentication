@@ -1,0 +1,48 @@
+Title: A Step-by-Step Guide for Beginners: Creating a Simple Web Page Using HTML and CSS
+
+**Step 1: Setting Up Your Workspace**
+
+1. Install a Code Editor: You can use free editors like Visual Studio Code, Atom, or Sublime Text.
+
+2. Download a Browser: If you don't have one installed already, download Google Chrome, Mozilla Firefox, or Microsoft Edge for testing your web page.
+
+**Step 2: Understanding the Basics of HTML and CSS**
+
+HTML (HyperText Markup Language) is used to structure the content on a webpage, while CSS (Cascading Style Sheets) is used to style it.
+
+**Step 3: Creating Your First HTML File**
+
+1. Open your code editor and create a new file called `index.html`. Save this file in a folder you'll be using for all your web projects.
+
+2. Write the basic HTML structure, including the `<!DOCTYPE html>`, `<html>`, `<head>`, and `<body>` tags:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My First Web Page</title>
+</head>
+<body>
+    <!-- Your content will go here -->
+</body>
+</html>
+```
+
+**Step 4: Adding Content to Your HTML File**
+
+1. In the `<body>` section, add a header for your web page using the `<header>` tag, followed by some text inside an `<h1>` heading:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My First Web Page</title>
+</head>
+<body>
+    <header>
+        <h1>Welcome to My First Web Page!</h1>
+    </header>

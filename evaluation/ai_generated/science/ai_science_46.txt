@@ -1,0 +1,11 @@
+Phenomenon: Aurora Borealis (Northern Lights)
+
+The Northern Lights, also known as the Aurora Borealis, are a breathtaking natural light display that is predominantly observed in high-latitude regions around the Earth's North and South poles. This dazzling spectacle occurs due to complex interactions between solar particles, the Earth's magnetic field, and our planet's atmosphere.
+
+The underlying cause of the Northern Lights is the constant stream of charged particles (electrons and protons) emitted from the Sun, known as the solar wind. These particles are funneled towards Earth by the Earth's magnetic field, which acts like a massive magnet surrounding our planet. The magnetic field lines twist and dance as they near Earth, creating a region called the magnetosphere.
+
+Inside the magnetosphere, the solar particles collide with molecules and atoms in the Earth's upper atmosphere (exosphere), particularly those of oxygen and nitrogen. At these altitudes, the air is thin, allowing electrons to transfer energy directly to gas molecules without being scattered or absorbed.
+
+When an electron collides with an oxygen or nitrogen molecule, it transfers its energy in the form of photons – particles of light. The type of light emitted depends on the altitude and the type of gas molecule involved. For example, oxygen molecules produce green and red lights at higher altitudes, while nitrogen produces blue and purple hues closer to the Earth's surface.
+
+The resulting dance of colors in the sky – known as auroras – is a mesmerizing display of energy transfer and atmospheric physics that has captivated humans for millennia. Although auroras primarily occur around the polar regions, they can be observed at lower latitudes during periods of increased solar activity or under particularly favorable geomagnetic conditions.

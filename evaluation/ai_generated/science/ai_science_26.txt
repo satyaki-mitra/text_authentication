@@ -1,0 +1,21 @@
+Title: The Phenomenon of Tidal Waves (Tsunamis)
+
+Introduction:
+
+Tidal waves, commonly known as tsunamis, are massive ocean waves that can cause catastrophic damage when they reach land. Although their name may suggest otherwise, tsunamis are not related to tides but rather triggered by underwater seismic activities or volcanic eruptions.
+
+Causes:
+
+The primary causes of tsunamis are earthquakes and volcanic eruptions that forcefully displace large volumes of water, resulting in a series of waves with long wavelengths and small amplitudes. When an underwater earthquake occurs, it generates seismic energy that can cause the ocean floor to move vertically or horizontally, displacing water above it. The displaced water propagates outwards from the epicenter as a series of waves with long wavelengths (hundreds of kilometers) and small amplitudes (a few centimeters).
+
+Volcanic eruptions can also cause tsunamis if they occur underwater or involve large-scale collapse of volcanic material into the sea. The sudden displacement of water by a volcanic event generates a tsunami similar to those caused by earthquakes.
+
+Propagation and Impact:
+
+Tsunami waves travel faster in open oceans, with speeds ranging from 500-800 kilometers per hour, depending on the depth at which they are generated. However, as they approach shallow waters near the coastline, their wavelength shortens, causing an increase in wave height. The shallower the water, the greater the amplification of wave heights, which can reach several meters or even tens of meters upon impact with the shoreline.
+
+The destructive force of a tsunami comes from its enormous energy and rapid acceleration as it approaches shallow waters, rather than its height when it first reaches land. The wave can inundate coastal areas, causing flooding, property damage, and loss of life. In addition, the retreating waves after the initial impact can also cause significant damage due to strong currents and surges.
+
+Detection and Warning Systems:
+
+Early detection and warning systems are crucial for minimizing the impact of tsunamis on coastal communities. Dense networks of ocean-bottom seismometers, tide gauges,

@@ -1,0 +1,13 @@
+Title: An Examination of the Impact of Social Media on Civic Engagement Among Adolescents: A Comparative Study Between Developed and Developing Countries
+
+Abstract:
+
+This study aims to investigate and compare the influence of social media on civic engagement among adolescents in developed and developing countries. The research is grounded in the theoretical frameworks of Social Learning Theory, Uses and Gratifications Theory, and Diffusion of Innovations Theory, which provide a comprehensive understanding of the role of social media in shaping behavioral patterns, particularly within the youth demographic.
+
+The study employs a mixed-methods approach, combining quantitative surveys with qualitative interviews. A stratified random sampling technique is utilized to select participants from various socio-economic backgrounds in both developed (United States and United Kingdom) and developing (Brazil and India) countries. The survey instrument measures variables such as social media usage patterns, attitudes towards civic engagement, and the perceived impact of social media on civic participation.
+
+The qualitative component involves in-depth interviews with a subset of participants to gain a deeper understanding of their experiences and perceptions regarding social media's influence on civic engagement. The data collected will be analyzed using thematic analysis techniques.
+
+Expected findings suggest that while there may be similarities in the ways social media influences civic engagement across both developed and developing countries, differences are anticipated due to variations in socio-economic conditions, cultural norms, and political systems. For instance, it is hypothesized that adolescents in developing countries may rely more on social media for information about politics and social issues due to limited access to traditional media sources.
+
+This research contributes to the existing literature by providing a comparative analysis of social media's impact on civic engagement among adolescents across different economic contexts, thereby offering insights into potential strategies for fostering youth participation in democratic processes globally. The findings can also inform policy and practice in digital literacy education, digital citizenship programs, and social media platform design to promote responsible and effective use of these platforms for civic purposes.

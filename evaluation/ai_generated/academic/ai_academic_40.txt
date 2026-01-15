@@ -1,0 +1,13 @@
+Title: An Examination of the Impact of Cognitive Load and Attentional Focus on Learning Retention in Virtual Reality Environments
+
+Abstract:
+
+This study explores the interplay between cognitive load, attentional focus, and learning retention within immersive virtual reality (VR) environments. Drawing from constructivist and cognitive theories of learning, we investigate how VR's unique characteristics, such as spatial immersion and interactive simulations, influence the cognitive processes that govern learning and memory.
+
+The study employed a mixed-methods design involving two main experiments. The first experiment examined the effect of varying levels of cognitive load on learning retention in a VR environment, using a within-subjects design. Participants engaged in a series of tasks requiring different levels of mental effort while immersed in a VR setting. Results indicated that high cognitive load impeded learning retention compared to low or moderate loads, suggesting that VR environments may exacerbate the negative effects of excessive cognitive load on memory recall.
+
+The second experiment focused on attentional focus and its impact on learning retention in VR. Participants were divided into two groups: those instructed to maintain a broad focus (attending to multiple aspects of the environment) and those directed to maintain a narrow focus (focusing on specific elements within the environment). The results revealed that maintaining a narrow attentional focus improved learning retention compared to a broader focus, highlighting the importance of directing learners' attention effectively in VR settings.
+
+The findings of this study contribute to our understanding of how cognitive load and attentional focus interact within immersive virtual reality environments to influence learning outcomes. Implications for educational practitioners and designers are discussed, including suggestions for strategies to reduce cognitive load, promote effective attentional focus, and optimize learning retention in VR-based educational experiences. Future research is needed to further explore these findings in various educational contexts and age groups, as well as to investigate potential moderating factors that may influence the effects of cognitive load and attentional focus on learning retention in virtual reality environments.
+
+Keywords: Virtual Reality, Cognitive Load, Attentional Focus, Learning Retention, Educational Technology

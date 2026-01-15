@@ -1,0 +1,13 @@
+Title: A Rare Case of Primary Angryoedema in a Pediatric Patient: Challenges and Management
+
+Abstract
+
+Background: Primary Angioedema (PA) is an uncommon, non-pruritic, acute swelling disorder characterized by sudden onset, self-limiting edema in the dermis or submucosa. It is often associated with C1 esterase inhibitor deficiency or dysfunction, and typically affects adults, with pediatric cases being rare.
+
+Case Description: A 12-year-old previously healthy girl presented to the emergency department with sudden onset of bilateral periorbital edema, lasting for approximately 48 hours. The symptoms were recurrent over the next two weeks, occurring without any identifiable triggers. Physical examination revealed no urticaria, pruritus, or respiratory distress. Laboratory investigations showed normal complement levels and negative results on skin testing for allergens. Serum C1 esterase inhibitor (C1-INH) activity was markedly reduced (52%), and qualitative analysis of C1-INH revealed a functional deficiency. The diagnosis of hereditary angioedema with C1-INH deficiency was confirmed, making this an extremely rare case in pediatric patients.
+
+Management: The patient was initially treated with short-acting corticosteroids for symptomatic relief. Due to the recurrent nature of the attacks and the diagnosis of hereditary angioedema, long-term prophylaxis with C1-INH concentrate was initiated. Subsequent attacks were controlled effectively with this treatment regimen.
+
+Conclusion: This case highlights the importance of considering rare entities such as PA in pediatric patients presenting with acute edema, even when common causes have been ruled out. Early recognition and appropriate management can significantly improve patient outcomes and quality of life. Future research is needed to better understand the genetic mechanisms underlying this condition in pediatric populations.
+
+Keywords: Primary Angioedema, C1 esterase inhibitor deficiency, Hereditary angioedema, Pediatrics, Rare disease

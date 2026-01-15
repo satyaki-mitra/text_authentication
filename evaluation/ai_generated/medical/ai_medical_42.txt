@@ -1,0 +1,11 @@
+Title: A Rare Case of Recurrent Pemphigus Vulgaris with Successful Management
+
+Abstract:
+
+We present an unusual case of a 60-year-old Caucasian male who presented repeatedly over a two-year period with symptoms suggestive of pemphigus vulgaris (PV), a rare autoimmune blistering disorder. The patient initially reported multiple, painful, flaccid bullae on the oral mucosa and extremities, accompanied by erosions and crusting. Direct immunofluorescence (DIF) from skin biopsy revealed intercellular IgG deposits, confirming a diagnosis of PV.
+
+The patient was initially treated with systemic corticosteroids, which resulted in partial remission but recurrence occurred after three months. Subsequently, the patient was managed with azathioprine and rituximab due to steroid-induced side effects and treatment refractoriness. After a six-month course of rituximab, the patient experienced a complete remission, as evidenced by resolution of lesions and normalization of DIF results.
+
+This case underscores the importance of early recognition and aggressive management of pemphigus vulgaris to minimize morbidity and prevent recurrences. It also highlights the utility of rituximab in managing steroid-refractory PV, offering a promising treatment option for patients who do not respond well to corticosteroids alone.
+
+Keywords: Pemphigus Vulgaris, Autoimmune Blistering Disorder, Rituximab, Azathioprine, Treatment Refractoriness

@@ -1,0 +1,36 @@
+Title: Documentation for the Auto-Save Feature in XYZ Software
+
+1. Overview
+
+The Auto-Save feature is an essential component of the XYZ Software, designed to automatically save user data at regular intervals to prevent loss of work due to unexpected system events or user errors. This documentation provides a comprehensive understanding of the Auto-Save feature's functionality, configuration, and best practices for its usage.
+
+2. Feature Description
+
+The Auto-Save feature in XYZ Software automatically saves users' data at predefined intervals (default is every 5 minutes). It helps to minimize data loss and ensure that work progress is preserved, even when the user forgets to save their work manually or encounters system errors.
+
+3. Configuration
+
+Users can adjust the Auto-Save interval by navigating to the "Preferences" menu, then selecting "Auto-Save." The available options are 5 minutes (default), 10 minutes, 15 minutes, 30 minutes, and 1 hour. Users may also disable the Auto-Save feature if desired.
+
+4. Best Practices
+
+To make the most of the Auto-Save feature, users should:
+
+   a. Adjust the Auto-Save interval based on their work habits and project requirements.
+   b. Save their work manually whenever possible to ensure that all changes are captured by the Auto-Save feature.
+   c. Close the software when not in use to conserve system resources and prevent accidental modifications.
+
+5. Limitations and Known Issues
+
+While the Auto-Save feature greatly reduces the risk of data loss, it is essential to note that it may still fail under certain circumstances:
+
+   a. Power outages or sudden system shutdowns can cause data loss if they occur during an Auto-Save interval.
+   b. In cases where the software encounters severe errors or bugs, the Auto-Save feature might not function as expected, and users should save their work manually before continuing.
+
+6. Troubleshooting
+
+If users encounter issues with the Auto-Save feature, they can try the following troubleshooting steps:
+
+   a. Verify that the Auto-Save interval is set correctly in the Preferences menu.
+   b. Check for any ongoing software updates or patches that may affect the Auto-Save functionality.
+   c. If issues persist, contact XY

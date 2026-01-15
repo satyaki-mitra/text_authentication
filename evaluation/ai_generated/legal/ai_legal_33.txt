@@ -1,0 +1,19 @@
+Clause: Non-Disclosure Agreement (NDA)
+
+1. Confidential Information: For the purposes of this Agreement, "Confidential Information" shall refer to any information disclosed by one party ("Discloser") to another party ("Receiving Party"), either directly or indirectly, in writing, orally, or by visual demonstration, that is designated as confidential or that a reasonable person would understand to be confidential under the circumstances.
+
+2. Purpose: The Receiving Party agrees to maintain the Confidential Information in strict confidence for the sole purpose of evaluating potential business dealings between the Discloser and the Receiving Party.
+
+3. Obligations: The Receiving Party agrees not to disclose any Confidential Information to third parties without the prior written consent of the Discloser, except as may be required by law or a court order. In such cases, the Receiving Party shall provide the Discloser with prompt notice and reasonable assistance in seeking protection of the Confidential Information.
+
+4. Exclusions: The obligations set forth above shall not apply to information that (a) is publicly known at the time of disclosure or becomes publicly known through no fault of the Receiving Party; (b) was in the possession of the Receiving Party prior to disclosure by the Discloser without a confidentiality obligation; (c) is lawfully obtained from a third party without a breach of any duty; or (d) is developed independently by the Receiving Party.
+
+5. Term: This NDA shall remain in effect for a period of five (5) years from the date of execution, unless terminated earlier by written agreement of the parties.
+
+6. Remedies: The Discloser acknowledges that any breach of this Agreement may result in irreparable harm for which damages would be an insufficient remedy, and therefore, the Discloser shall be entitled to seek equitable relief, including but not limited to, injunction, specific performance, or other appropriate equitable relief.
+
+7. Governing Law: This NDA shall be governed by and construed in accordance with the laws of the state in which the Discloser is domiciled.
+
+Case Summary: Smith v. Johnson (20X1)
+
+In Smith v. Johnson, the plaintiff, a software developer, entered into a Non-Dis

@@ -1,0 +1,31 @@
+Case Title: Smith v. Johnson
+
+Court: Supreme Court of the State of New York, County of Albany
+
+Docket Number: 20-CV-12345
+
+Date of Decision: March 1, 2021
+
+Judge: Honorable Elizabeth A. Garry
+
+Parties:
+Plaintiff: John Smith (hereinafter "Plaintiff")
+Defendant: Jane Johnson (hereinafter "Defendant")
+
+Facts:
+The Plaintiff, John Smith, brought this action against the Defendant, Jane Johnson, alleging breach of contract. The parties entered into a written agreement on October 1, 2020, whereby the Defendant agreed to sell and transfer certain real property to the Plaintiff for the sum of $300,000. According to the Plaintiff's complaint, the Defendant failed to deliver possession of the property on the agreed-upon closing date, December 15, 2020, thereby breaching the contract.
+
+Issue:
+Whether the Defendant's failure to deliver possession of the real property by the closing date constitutes a breach of the contract between the parties.
+
+Holding:
+The Court finds that the Defendant's failure to deliver possession of the real property on the agreed-upon closing date constituted a material breach of the contract, entitling the Plaintiff to damages.
+
+Reasoning:
+Under New York law, a breach of contract occurs when one party fails to perform a material obligation under the contract without justification. Here, the Defendant's failure to deliver possession of the property by the closing date was a material term of the contract, as it was specifically mentioned in the agreement and essential for the Plaintiff to complete his purchase. The Defendant's failure to perform this obligation constitutes a breach of contract.
+
+Decision:
+The Court grants the Plaintiff's motion for summary judgment on his claim for breach of contract, and orders the Defendant to pay damages to the Plaintiff in an amount to be determined at a future trial or by further proceedings. The Clerk is directed to enter judgment accordingly.
+
+Attorneys:
+For the Plaintiff: John Doe, Esq., 123 Main Street, Albany,

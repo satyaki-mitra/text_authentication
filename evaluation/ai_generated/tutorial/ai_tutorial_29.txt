@@ -1,0 +1,27 @@
+Title: A Step-by-Step Guide for Beginners: Setting Up a Basic Home Network
+
+**Introduction**
+
+This tutorial will guide you through the process of setting up a basic home network, which is essential for connecting multiple devices to share resources like internet connection, printers, and files. Let's get started!
+
+**Materials Needed:**
+
+1. Modem (provided by your Internet Service Provider)
+2. Router (you can purchase one from a variety of brands)
+3. Ethernet cables (if needed to connect devices directly to the router)
+4. Wi-Fi enabled devices (e.g., computers, smartphones, tablets, smart TVs)
+
+**Step 1: Connecting Your Modem**
+
+1. Find a suitable location for your modem, ideally near an outlet and away from other electronic devices.
+2. Plug the modem into the power outlet.
+3. Connect the coaxial cable (provided by your Internet Service Provider) to the back of the modem's "COAX IN" port.
+4. If you have a cable modem, connect an Ethernet cable from one of the modem's LAN ports to the WAN port on your router.
+
+**Step 2: Setting Up Your Router**
+
+1. Plug your router into a power outlet and wait for the power LED to turn on.
+2. Connect the router to the modem using an Ethernet cable from one of the router's LAN ports to the modem's "Internet" or "ONLINE" port (it may vary depending on your modem model).
+3. Locate the router's IP address, usually printed on a label on the bottom or back of the device. Common default addresses include 192.168.0.1, 192.168.1.1, and 192.168.1.254.
+4. Open a web browser on any Wi-Fi enabled device connected to the network (preferably a computer or tablet). Type the router's IP address into the URL bar and press Enter.
+5. You will be prompted to enter a username and password, which are usually printed on the bottom or back of the router. If you haven'

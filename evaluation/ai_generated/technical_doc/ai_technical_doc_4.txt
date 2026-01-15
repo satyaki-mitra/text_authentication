@@ -1,0 +1,33 @@
+Title: User Authentication Feature in XYZ Application
+
+1. Overview
+
+The User Authentication feature is an essential component of the XYZ Application, enabling secure access to user accounts by implementing two layers of authentication - Email/Password and Two-Factor Authentication (2FA). This documentation provides a comprehensive overview of the User Authentication feature, its functionalities, and implementation details.
+
+2. Functionalities
+
+   a. Registration: Users can register for an account using their email addresses and chosen passwords. The system will validate the entered email address to ensure it is unique and active.
+
+   b. Password Reset: In case users forget their password, they can reset it by entering their registered email address and following the password recovery process.
+
+   c. Email/Password Authentication: Users authenticate themselves using their registered email addresses and passwords during login. The system will validate the entered credentials against the stored records to ensure secure access.
+
+   d. Two-Factor Authentication (2FA): For enhanced security, users can opt for 2FA by providing a mobile number during registration or enabling it in their account settings. Upon successful email/password authentication, users receive a verification code via SMS, which they must enter to complete the login process.
+
+3. Implementation Details
+
+   a. Registration:
+      - Users input their email address and chosen password upon registration.
+      - The system validates the entered email address for uniqueness using a unique constraint in the database.
+      - A secure hash of the password is stored in the database to protect against unauthorized access.
+      b. Password Reset:
+         - Users enter their registered email addresses to initiate the password recovery process.
+         - The system sends a reset link to the user's email address.
+         - Upon clicking the link, users are redirected to a page where they can input and confirm a new password.
+      c. Email/Password Authentication:
+          - During login, users enter their email addresses and passwords.
+          - The system validates the entered credentials against the stored records in the database.
+          d. Two-Factor Authentication (2FA):
+              - Users can opt for 2FA by providing a mobile number during registration or enabling it in their account settings.
+              - Upon successful email/password authentication, users receive a verification code via SMS.
+              -

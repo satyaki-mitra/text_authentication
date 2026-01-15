@@ -1,0 +1,31 @@
+Title: A Step-by-Step Tutorial for Beginners on Using Microsoft Excel
+
+1. **Installing Microsoft Excel**
+   - If you don't already have Microsoft Excel installed, visit the official Microsoft website to download and install it. You may need a subscription for some versions.
+
+2. **Opening Excel**
+   - Locate the Excel icon on your computer (usually found in the Start menu or Applications folder). Click on it to open a new workbook.
+
+3. **Understanding the Interface**
+   - Familiarize yourself with the Excel interface:
+     1. Ribbon (tabs at the top): Contains various commands like File, Home, Insert, etc.
+     2. Formula bar (above the grid): Displays the current cell reference and any entered formulas or text.
+     3. Grid (largest area): Consists of rows (A to Z) and columns (1 to 1048576).
+
+4. **Entering Data**
+   - To enter data, click on a cell and start typing. You can also use auto-fill handle (small square at the bottom-right corner of selected cells) for sequential data.
+
+5. **Basic Formatting**
+   - Click on the Home tab to find various formatting options like font style, size, color, alignment, etc.
+
+6. **Creating a Formula**
+   - In the formula bar, enter an equals sign (=), select or type the cell references, and press Enter. For example, `=A1+B1` adds the values in cells A1 and B1.
+
+7. **Saving Your Workbook**
+   - Click on File > Save As to choose a location, name your workbook, and save it as an .xlsx file (Excel 2007 or later) or .xls (for older versions).
+
+8. **Opening Saved Workbooks**
+   - To open a saved workbook, click on File > Open, navigate to the location of your file, and double-click it to open.
+
+9. **Saving Changes**
+   - When you've made changes to a workbook, always save them by clicking File > Save or pressing Ctrl+S (Cmd+S on Mac).

@@ -1,0 +1,23 @@
+Title: Clause Regarding Confidentiality and Non-Disclosure
+
+1. Confidential Information
+
+1.1 In the course of performing services under this Agreement, each party (the "Receiving Party") may have access to confidential information of the other party (the "Disclosing Party"). The Receiving Party acknowledges that such confidential information is valuable and proprietary to the Disclosing Party, and agrees to protect and preserve it.
+
+1.2 For the purposes of this Agreement, "Confidential Information" shall mean any non-public, proprietary, or business-sensitive information disclosed by one party to the other, whether in written, oral, or electronic form, and including but not limited to technical data, trade secrets, product designs, financial data, marketing plans, customer lists, and business strategies.
+
+2. Obligations of the Receiving Party
+
+2.1 The Receiving Party shall keep all Confidential Information in strict confidence and shall not disclose or use any such information except as expressly permitted under this Agreement.
+
+2.2 The Receiving Party may disclose Confidential Information to its employees, contractors, agents, or representatives who have a need to know the information for the purposes of performing services under this Agreement, provided that each such person is bound by confidentiality obligations no less restrictive than those set forth in this Agreement.
+
+2.3 The Receiving Party shall take reasonable measures to protect the Confidential Information from unauthorized disclosure or use, including but not limited to maintaining physical security over Confidential Information and limiting access to Confidential Information on a need-to-know basis.
+
+3. Exceptions to Confidentiality Obligations
+
+3.1 The obligations under this Clause shall not apply to any information that: (a) is or becomes generally available to the public through no fault of the Receiving Party; (b) was in the possession of the Receiving Party prior to receipt from the Disclosing Party; (c) is lawfully obtained by the Receiving Party from a third party without a breach of any obligation of confidentiality; or (d) is independently developed by employees of the Receiving Party without reference to or use of the Confidential Information.
+
+4. Return of Confidential Information
+
+Upon termination or expiration of this Agreement, or upon the request of the Dis

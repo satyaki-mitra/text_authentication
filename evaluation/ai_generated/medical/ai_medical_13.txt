@@ -1,0 +1,15 @@
+Title: An Uncommon Case of Drug-Induced Pancytopenia: A Case Study
+
+Abstract:
+
+We present an interesting and rare case of drug-induced pancytopenia secondary to the use of a commonly prescribed nonsteroidal anti-inflammatory drug (NSAID), naproxen. The patient, a 58-year-old female with a history of rheumatoid arthritis, presented with symptoms of fatigue, pallor, and recurrent infections over a period of three months.
+
+Upon admission, complete blood count (CBC) revealed a hemoglobin level of 7 g/dL (normal range: 12-15 g/dL), white blood cell count of 2.5 x 10^9/L (normal range: 4-11 x 10^9/L), and a platelet count of 30 x 10^9/L (normal range: 150-400 x 10^9/L). Bone marrow aspiration showed hypocellularity, suggesting pancytopenia.
+
+The patient's medications were reviewed, and naproxen was identified as the potential causative agent. The NSAID was discontinued, and the patient was started on iron supplementation and erythropoietin for anemia management.
+
+Over a period of six weeks, the patient's CBC showed gradual improvement. Hemoglobin level increased to 10.5 g/dL, white blood cell count to 6 x 10^9/L, and platelet count to 120 x 10^9/L. The recovery underscores the importance of careful medication review in cases of unexplained pancytopenia.
+
+Keywords: Drug-induced pancytopenia, Naproxen, Rare side effects, Anemia, Bone marrow aspiration
+
+This case highlights the importance of considering drug-induced pancytopenia in the differential diagnosis of unexplained cytopenias. Clinicians should be aware of the potential for common medications like naproxen to cause such rare but serious side effects.

@@ -1,0 +1,11 @@
+Title: An Unusual Case of Recurrent Cholestatic Jaundice in a Young Adult
+
+Abstract
+
+A 25-year-old Caucasian male presented to the emergency department with a three-week history of progressive pruritus, dark urine, and pale stools. The patient reported no significant medical history but did mention a family history of gallstones and liver disease. On physical examination, the patient appeared jaundiced, with scleral icterus and palmar erythema. Laboratory results revealed a total bilirubin level of 15.4 mg/dL (normal range: 0.2-1.3 mg/dL), alanine aminotransferase (ALT) of 68 U/L (normal range: <45 U/L), aspartate aminotransferase (AST) of 97 U/L (normal range: <40 U/L), and alkaline phosphatase (ALP) of 310 U/L (normal range: 46-125 U/L). Ultrasound imaging revealed a normal gallbladder, but liver biopsy showed cholestatic hepatitis with ductular reaction and bile plugs.
+
+Further evaluation included magnetic resonance cholangiopancreatography (MRCP), which demonstrated no obvious obstructive lesions in the biliary tree. A liver-specific immunoglobulin G antibody test was positive, suggesting an autoimmune etiology. The patient was initially treated with prednisone and ursodeoxycholic acid, but his symptoms persisted. Following a multidisciplinary consultation, a diagnosis of primary biliary cholangitis (PBC) was made, and the patient was started on ursodiol and obeticholic acid.
+
+After six months of treatment, the patient's bilirubin levels had decreased to 2.1 mg/dL, ALT was within normal limits, and pruritus had resolved. The case highlights the importance of recognizing PBC, especially in young patients with a family history of liver disease, as early diagnosis can lead to improved outcomes through targeted therapy.
+
+Keywords: Primary Biliary Cholangitis (P

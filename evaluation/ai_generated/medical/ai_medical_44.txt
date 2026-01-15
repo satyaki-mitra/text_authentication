@@ -1,0 +1,15 @@
+Title: A Case Study on the Management of Refractory Atrial Fibrillation in an Elderly Patient
+
+Abstract
+
+Background: Refractory atrial fibrillation (AF) remains a significant challenge in cardiology, particularly in elderly patients due to increased comorbidities and polypharmacy. This case report presents the management of refractory AF in an 85-year-old female with a history of hypertension, diabetes mellitus, chronic obstructive pulmonary disease (COPD), and stroke.
+
+Case Presentation: The patient presented with palpitations and a persistent irregular pulse for three weeks. Initial electrocardiogram (ECG) confirmed AF with a rapid ventricular response. Despite aggressive rate control attempts with multiple antiarrhythmic drugs, the AF remained refractory. A transthoracic echocardiogram revealed enlarged left atrium and moderate mitral regurgitation.
+
+Intervention: Given the refractory nature of the AF and the patient's comorbidities, a catheter ablation was considered. However, due to the high risk associated with sedation and prolonged procedure duration, we opted for an alternative approach - left atrial appendage closure (LAAC) using the Watchman device. The procedure was performed successfully under local anesthesia. Post-procedure, the patient was managed with aspirin and clopidogrel for six months, followed by aspirin monotherapy.
+
+Outcome: The patient experienced immediate AF termination post-procedure, and her symptoms significantly improved. Follow-up ECG showed sinus rhythm. During the one-year follow-up, the patient remained in sinus rhythm with no major adverse events.
+
+Conclusion: This case highlights the successful use of LAAC as an alternative to catheter ablation for refractory AF management in high-risk elderly patients. The procedure's minimal invasiveness, shorter procedural time, and reduced sedation requirement make it a promising approach in such cases. Further studies are needed to evaluate the long-term safety and efficacy of this technique.
+
+Keywords: Atrial Fibrillation, Refractory, Elderly, Left Atrial Appendage Closure, Watchman Device

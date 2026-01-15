@@ -1,0 +1,40 @@
+Title: Documentation for Enhanced Search Feature in XYZ Application v3.0
+
+1. Overview
+
+The Enhanced Search Feature is a significant improvement to the search functionality within the XYZ Application. This new version offers advanced search capabilities, improving user experience and efficiency by providing more accurate and relevant results.
+
+2. Key Features
+
+   - **Filtering:** Users can now filter their searches based on various parameters such as date range, specific categories, or keywords to refine the search results.
+
+   - **Predictive Search:** As users type in their search query, predictive suggestions will appear, helping them find what they're looking for more quickly and accurately.
+
+   - **Fuzzy Search:** The Enhanced Search Feature supports fuzzy matching, which allows it to return results that are similar to the user's search term even if the spelling is incorrect or incomplete.
+
+   - **Saved Searches:** Users can save their frequent searches for easy access and future reference.
+
+3. Usage Instructions
+
+   - To initiate a search, click on the "Search" icon located at the top of the application interface.
+
+   - In the search bar, enter your query and press Enter or click the magnifying glass icon.
+
+   - If predictive search is enabled (default setting), suggestions will appear as you type. Click on a suggestion to go directly to that result.
+
+   - To filter your search results, use the filters available in the left sidebar. You can also refine your search by using advanced operators like AND, OR, NOT, and parentheses for complex queries.
+
+   - To save a search, click on the "Save Search" button located under the search bar after performing a search. Enter a name for the saved search and click "Save."
+
+4. Configuration Options
+
+Administrators can configure various aspects of the Enhanced Search Feature from the Admin Dashboard:
+
+   - Enable/disable predictive search.
+   - Enable/disable fuzzy matching.
+   - Customize the filter options available to users.
+   - Configure the number of results displayed per page and the maximum number of saved searches for each user.
+
+5. Limitations
+
+   - Fuzzy search may not always provide accurate results, especially for queries with multiple words or

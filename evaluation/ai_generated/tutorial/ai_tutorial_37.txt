@@ -1,0 +1,44 @@
+Title: Beginner's Guide to Coding in Python: Creating Your First Program
+
+In this tutorial, we will guide you through the process of creating your first Python program. By the end of it, you'll be able to write, run, and understand a simple Python script!
+
+**Step 1: Installation**
+
+First, ensure that Python is installed on your computer. You can download it from the official website: https://www.python.org/downloads/
+
+Once downloaded, follow the installation instructions for your operating system.
+
+After installation, verify that Python was successfully installed by opening a command prompt or terminal window and typing:
+```
+python --version
+```
+You should see the version of Python displayed on the screen.
+
+**Step 2: Writing Your First Program**
+
+Next, let's create our first Python script. Open any text editor (Notepad on Windows, TextEdit on MacOS, or gedit on Linux). We will write a simple program that prints "Hello, World!" to the console.
+
+```python
+print("Hello, World!")
+```
+Save this file with the extension .py, for example, `hello_world.py`.
+
+**Step 3: Running Your Program**
+
+To run your Python script, open a command prompt or terminal window, navigate to the directory where you saved your `hello_world.py` file, and enter the following command:
+
+```
+python hello_world.py
+```
+You should see "Hello, World!" printed on the console, confirming that your program runs successfully!
+
+**Step 4: Understanding Your Code**
+
+Now let's break down what we wrote in our code:
+
+- `print()` is a built-in function in Python used to display output on the screen.
+- `("Hello, World!")` is the argument passed to the print function, which contains the text that will be displayed on the console.
+
+**Step 5: Next Steps**
+
+Congratulations on creating your first Python program! To further explore Python, check out online resources like Codecademy (https://www.codecademy.com/learn/learn-python) and W3Schools (https://www.w3schools.com/python/) for interactive lessons and exercises

@@ -1,0 +1,13 @@
+Title: A Case Study of Refractory Atrial Fibrillation Successfully Treated with Catheter Ablation
+
+Background: Refractory atrial fibrillation (AFib) is a challenging condition to manage, often requiring multiple pharmacological interventions and frequent hospitalizations. This case report presents an unusual response to catheter ablation in a patient with long-standing persistent AFib.
+
+Case Presentation: A 65-year-old female with a 12-year history of refractory atrial fibrillation, despite multiple antiarrhythmic drug therapies and two prior attempts at catheter ablation, presented to our institution seeking further treatment options. The patient reported frequent episodes of palpitations, fatigue, and shortness of breath. On examination, her heart rate was irregularly fast at 140 bpm, and electrocardiogram showed typical AFib pattern.
+
+Intervention: After careful consideration and informed consent, the patient underwent a third catheter ablation procedure using 3D mapping system. The left atrium (LA) was accessed via transseptal puncture, and a circular mapping catheter was positioned in the LA chamber. The LA was divided into anatomical segments for detailed electro-anatomic mapping, which revealed extensive complex fractionated atrial electrograms in the posterior LA and pulmonary veins (PV).
+
+The ablation strategy focused on isolating the PVs, left atrial appendage, and complex fractionated atrial electrograms within the posterior LA. Ablation lines were created using a high-power irrigated tip catheter, resulting in a complete isolation of all PVs, and elimination of the majority of complex fractionated atrial electrograms in the posterior LA.
+
+Outcome: Immediately following the procedure, the patient's heart rhythm normalized to sinus bradycardia, and she was discharged home on oral anticoagulation therapy and beta-blockers for rate control. At 6-month follow-up, the patient remained in normal sinus rhythm without any AFib episodes or palpitations.
+
+Conclusion: This case report highlights the successful treatment of refractory atrial fibrillation with catheter ablation following multiple unsuccessful attempts. The detailed electro-anatomic mapping and targeted ablation strategy

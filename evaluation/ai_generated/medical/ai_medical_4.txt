@@ -1,0 +1,11 @@
+Title: A Rare Case of Autoimmune Hepatitis Masquerading as Acute Viral Hepatitis
+
+Background: Autoimmune hepatitis (AIH) is an autoimmune liver disease characterized by hepatocellular injury, inflammation, and hypergammaglobulinemia. Diagnosis can be challenging due to its non-specific symptoms and the need for excluding other causes of liver disease, such as viral hepatitis.
+
+Case Presentation: A 45-year-old female presented with a three-week history of fatigue, anorexia, nausea, and jaundice. Initial laboratory tests revealed elevated liver enzymes (ALT: 200 U/L, AST: 150 U/L, Bilirubin: 6 mg/dL), positive anti-nuclear antibodies (ANA) titer of 1:320, and a normal hepatitis panel. The patient denied any history of drug or alcohol use.
+
+Upon admission, the patient was diagnosed with acute viral hepatitis based on the initial laboratory findings. However, the liver function tests did not improve over the following week despite supportive care. Further evaluation revealed an elevated IgG level (2100 mg/dL), positive anti-smooth muscle antibodies (ASMA) and anti-liver kidney microsome type 1 antibodies (anti-LKM1). The patient met the International Autoimmune Hepatitis Group criteria for definite AIH.
+
+Treatment: The patient was initiated on prednisone (60 mg daily) and azathioprine (150 mg daily). After four weeks of treatment, the liver function tests significantly improved (ALT: 70 U/L, AST: 60 U/L, Bilirubin: 2.5 mg/dL), and the patient reported a significant improvement in symptoms.
+
+Conclusion: This case highlights the importance of considering AIH in patients with acute liver injury and positive ANA, even when viral hepatitis is initially suspected. Early recognition and treatment of AIH can prevent progressive liver damage and improve patient outcomes. Close monitoring of liver function tests and autoantibody levels is essential for appropriate management.

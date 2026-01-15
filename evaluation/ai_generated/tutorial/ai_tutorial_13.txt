@@ -1,0 +1,51 @@
+Title: A Step-by-Step Guide for Beginners to Create a Simple Web Page Using HTML and CSS
+
+**Introduction**
+
+In this tutorial, we will guide you through creating your first simple web page using basic HTML (HyperText Markup Language) and CSS (Cascading Style Sheets). By the end of this tutorial, you'll have a good understanding of how to structure a web page with HTML and style it using CSS.
+
+**Step 1: Setting Up Your Text Editor**
+
+First, you need a text editor to write your HTML and CSS code. Some popular options include Visual Studio Code, Sublime Text, or Notepad++ (for Windows). Install one of these editors on your computer.
+
+**Step 2: Creating an HTML File**
+
+Create a new file named `index.html` in your text editor. This is the standard name for the main web page.
+
+**Step 3: Basic HTML Structure**
+
+Add the following code to create the basic structure of your webpage:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My First Web Page</title>
+</head>
+<body>
+    <!-- Your content will go here -->
+</body>
+</html>
+```
+
+**Step 4: Adding Content**
+
+Now let's add some simple content to our webpage. Replace `<!-- Your content will go here -->` with the following code:
+
+```html
+<h1>Welcome to My First Web Page!</h1>
+<p>This is a simple web page created using HTML and CSS.</p>
+```
+
+**Step 5: Adding Basic Styles Using Inline CSS**
+
+You can style your webpage by adding some basic CSS directly inside the HTML file. Let's give our `h1` tag a different color and make it larger:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=

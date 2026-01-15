@@ -1,0 +1,48 @@
+Title: A Step-by-Step Guide for Beginners to Create a Simple Website Using HTML, CSS, and JavaScript
+
+1. **Setting Up the Environment**
+   - Download and install a code editor like Visual Studio Code, Sublime Text, or Atom.
+   - Install a web browser (Google Chrome, Mozilla Firefox, Microsoft Edge, etc.) if you haven't already.
+
+2. **Creating Project Folder and Files**
+   - Create a new folder on your computer for the project. Name it as per your preference.
+   - Inside this folder, create three files: `index.html` (for HTML), `styles.css` (for CSS), and `script.js` (for JavaScript).
+
+3. **Writing HTML Structure** (`index.html`)
+   - Open the `index.html` file in your code editor.
+   - Write the basic structure of an HTML5 document:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My First Website</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Your HTML content will go here -->
+    <script src="script.js"></script>
+</body>
+</html>
+```
+
+   - Replace "My First Website" in the `<title>` tag with a more descriptive title for your website.
+
+4. **Designing the Webpage with CSS** (`styles.css`)
+   - Open the `styles.css` file in your code editor.
+   - To style the body, you can write:
+
+```css
+body {
+    background-color: lightblue;
+    font-family: Arial, sans-serif;
+}
+```
+
+   - You can add more CSS rules to customize your webpage as desired.
+
+5. **Adding Content and Basic Structure with HTML** (`index.html`)
+   - Go back to the `index.html` file.
+   - Inside the `<body>` tag, write some content

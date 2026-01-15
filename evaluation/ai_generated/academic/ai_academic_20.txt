@@ -1,0 +1,15 @@
+Title: An Examination of the Impact of Digital Transformation on Organizational Agility: A Comparative Study Across Industries
+
+Abstract:
+
+In the rapidly evolving business landscape, digital transformation has emerged as a critical driver of organizational success. This study aims to delve into the intricate relationship between digital transformation and organizational agility, focusing on how different industries navigate this digital shift while maintaining their agile capacities.
+
+The research employs a mixed-methods approach, combining quantitative data analysis with qualitative case studies from various sectors. The primary data was collected through surveys that assessed the extent of digital transformation and organizational agility across multiple dimensions. Secondary data were sourced from industry reports and scholarly literature to provide context and support the findings.
+
+The study reveals a significant positive correlation between digital transformation and organizational agility. Industries that have embraced digital transformation more aggressively, such as technology, media, and telecommunications, demonstrate higher levels of agility compared to traditional sectors like manufacturing or finance. However, the results also underscore the challenges these industries face in balancing digital innovation with the need for agile adaptability.
+
+The qualitative analysis further illuminates the strategies adopted by leading organizations in achieving digital-agility synergy. Findings indicate that successful organizations focus on fostering a culture of innovation, investing in human capital development, and leveraging technology to streamline processes.
+
+This research contributes to the existing literature by providing empirical evidence supporting the positive impact of digital transformation on organizational agility. The study also offers practical insights for managers seeking to navigate the complexities of digital transformation while maintaining agile capabilities. Future research could delve deeper into the specific strategies employed by successful organizations and explore the role of leadership in driving digital-agility synergy.
+
+Keywords: Digital Transformation, Organizational Agility, Industry Comparison, Mixed Methods, Strategic Management

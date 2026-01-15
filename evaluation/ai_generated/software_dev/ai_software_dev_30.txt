@@ -1,0 +1,49 @@
+Title: Dive into Dependency Injection in Java: Understanding and Implementing with Spring Framework
+
+Overview:
+
+Dependency Injection (DI) is a design pattern that aims to improve modularity, testability, and reusability in software applications by decoupling dependencies between components. This article will delve into the concept of Dependency Injection using the popular Java framework - Spring, and provide you with a practical understanding and implementation guide.
+
+Prerequisites:
+
+- Basic knowledge of Java programming language and OOP concepts
+- Familiarity with Maven or Gradle for project setup
+
+Introduction to Dependency Injection (DI):
+
+In traditional object-oriented programming, objects are responsible for creating their dependencies, which leads to tight coupling between components. Dependency Injection aims to invert this relationship by having external components provide the dependencies, thus achieving loose coupling and promoting maintainability and testability.
+
+Spring Framework:
+
+Spring is an open-source Java framework that provides comprehensive support for developing enterprise applications. It includes various modules such as Spring Core, Spring MVC, Spring Data, etc., but we will focus on Spring Core for the purpose of this article.
+
+Setting up a Spring project with Maven:
+
+1. Create a new Maven project and add the following dependencies to your `pom.xml` file:
+
+```xml
+<dependencies>
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-context</artifactId>
+        <version>5.3.14</version>
+    </dependency>
+    <!-- Optional: Spring Test for unit testing -->
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-test</artifactId>
+        <version>5.3.14</version>
+        <scope>test</scope>
+    </dependency>
+</dependencies>
+```
+
+2. Configure Spring by adding the following lines to your main application class:
+
+```java
+@Configuration
+public class AppConfig {
+}
+```
+
+3. Create a simple service example, let's call it `GreetingService`. This service will have a dependency on a `MessageProvider` interface:

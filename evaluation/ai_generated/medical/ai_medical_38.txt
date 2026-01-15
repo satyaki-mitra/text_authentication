@@ -1,0 +1,13 @@
+Title: A Case Study of Refractory Asthma Management in a Pediatric Patient
+
+Abstract
+
+This case report presents an 11-year-old male patient, previously diagnosed with persistent asthma, who experienced recurrent exacerbations despite adherence to standard asthma management guidelines. The patient had been on a combination of inhaled corticosteroids (ICS), long-acting beta-2 agonists (LABA), and short-acting bronchodilators (SABA) for three years, yet continued to experience nightly coughing, wheezing, and shortness of breath.
+
+Initial evaluation included spirometry, which showed a forced expiratory volume in 1 second (FEV1) of 60% predicted and a peak expiratory flow rate (PEFR) of 55% predicted. The patient's allergy workup was negative for common asthma triggers, and he had no history of smoking or exposure to environmental irritants.
+
+Given the refractory nature of the patient's symptoms, a specialist consultation was sought. After thorough examination, it was determined that the patient may be experiencing poor inhaler technique due to his young age and lack of understanding regarding proper use. The specialist recommended a session with a respiratory therapist for inhaler technique instruction and demonstration.
+
+Following this intervention, the patient's asthma symptoms improved significantly. Spirometry results showed an increase in FEV1 to 80% predicted and PEFR to 75% predicted within three months. The patient reported reduced nocturnal coughing, wheezing, and shortness of breath, allowing him to resume normal daily activities without limitations.
+
+This case highlights the importance of addressing proper inhaler technique, particularly in pediatric patients with asthma, as it can significantly impact symptom control and quality of life. Further studies are needed to determine the most effective methods for teaching proper inhaler technique to children and their caregivers.

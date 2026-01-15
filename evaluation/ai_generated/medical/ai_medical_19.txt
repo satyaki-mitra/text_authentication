@@ -1,0 +1,11 @@
+Title: A Rare Case of Primary Amyloidosis: An Unusual Presentation and Challenging Diagnosis
+
+Abstract
+
+Background: Primary systemic amyloidosis (PSA) is a rare, protein-misfolding disorder characterized by extracellular accumulation of abnormal immunoglobulin light chain fibrils. Its clinical manifestations are diverse and often mimic other common diseases, leading to diagnostic challenges.
+
+Case Presentation: A 65-year-old Caucasian male presented with a two-month history of progressive dyspnea, orthostatic hypotension, and non-pruritic macular erythema on the dorsum of both hands. He had no significant past medical history except for hypertension managed with medications. Physical examination revealed puffy eyelids, peripheral edema, hepatosplenomegaly, and ecchymoses on the lower extremities. Laboratory investigations showed mild anemia, elevated serum creatinine level, and abnormal liver function tests. A diagnostic workup including computed tomography (CT) scan of the chest, abdomen, and pelvis, echocardiogram, and bone marrow aspiration were performed but yielded inconclusive results. Notably, serum and urine immunofixation electrophoresis (IFE) revealed a monoclonal kappa light chain with no corresponding myeloma cells in the bone marrow. Subsequent rectal biopsy confirmed amyloid deposition via Congo red staining. Genetic testing identified mutations in the immunoglobulin heavy chain (IGH) gene, confirming the diagnosis of PSA.
+
+Intervention and Outcome: The patient was initiated on chemotherapy with bortezomib, cyclophosphamide, dexamethasone, and daratumumab (VCDD). After six cycles of therapy, there was a significant improvement in his symptoms, as evidenced by resolution of peripheral edema, normalization of liver function tests, and improvement in renal function.
+
+Conclusion: This case highlights the diagnostic challenges associated with primary systemic amyloidosis due to its varied clinical presentation. Early recognition and prompt treatment are crucial for improving patient outcomes. The combination of VCDD regimen appears to be

@@ -1,0 +1,13 @@
+Title: Unusual Presentation of Chronic Lymphocytic Leukemia Masquerading as Recurrent Pneumonia
+
+Case Presentation:
+
+A 65-year-old Caucasian male, non-smoker with no significant past medical history, presented to the emergency department (ED) for the third time in four months with complaints of recurrent cough, dyspnea, and persistent fever. The patient had been treated empirically for bacterial pneumonia on each occasion without improvement.
+
+Upon admission, vital signs revealed a temperature of 38.5°C, heart rate of 120 beats per minute, respiration rate of 24 breaths per minute, and oxygen saturation of 93% on room air. Chest examination showed bilateral crackles, and chest X-ray demonstrated patchy infiltrates in both lungs.
+
+Laboratory results were significant for a white blood cell count (WBC) of 150.2 × 10^9/L with lymphocytes constituting 83% of the total WBC, hemoglobin level of 8 g/dL, and platelet count of 140 × 10^9/L. Further investigations including flow cytometry confirmed a diagnosis of chronic lymphocytic leukemia (CLL).
+
+The patient was initially misdiagnosed due to the atypical presentation of CLL, which presented as recurrent pneumonia-like symptoms rather than the more common constitutional symptoms such as fatigue and weight loss. The patient was subsequently started on a regimen of chemoimmunotherapy with rituximab and fludarabine, resulting in a significant improvement in symptoms and laboratory findings.
+
+This case underscores the importance of considering less common diagnostic possibilities, even when initial presentations appear straightforward, to ensure prompt and accurate diagnosis and appropriate management for optimal patient outcomes.

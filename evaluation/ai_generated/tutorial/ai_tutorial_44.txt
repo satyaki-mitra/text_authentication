@@ -1,0 +1,46 @@
+Title: Beginner's Guide to Using LaTeX for Writing Documents
+
+Introduction:
+LaTeX is a powerful typesetting system widely used for academic and technical writing. This guide will walk you through the basic steps of setting up and using LaTeX for writing your first document.
+
+Step 1: Installation
+- Download TeX Live from the official website (https://www.tug.org/texlive/) or a package manager like MacTeX (for macOS) or MiKTeX (for Windows).
+- Follow the installation instructions provided by the respective distributor.
+
+Step 2: Editor Setup
+- Choose an editor to write your LaTeX documents. Some popular options include TeXstudio, Overleaf, and Visual Studio Code with LaTeX extensions.
+- Install and configure your chosen editor following its specific instructions.
+
+Step 3: Creating a New Document
+- Open your chosen editor and create a new LaTeX document by either selecting "File > New File" or "File > New > LaTeX Document."
+- You should see a preconfigured template with the following code:
+
+```latex
+\documentclass{article}
+\usepackage{lipsum} % This package is for generating dummy text. You can remove it later.
+
+\begin{document}
+
+Hello, World!
+
+\end{document}
+```
+
+Step 4: Writing Your Document
+- Replace "Hello, World!" with the content of your document.
+- To insert a new section, use the `\section{}` command followed by the title of the section. For example:
+
+```latex
+\section{Introduction}
+Your text here...
+```
+
+Step 5: Compiling Your Document
+- Press Fn + G (or the corresponding shortcut in your editor) to compile the document and generate a PDF file.
+- The first compilation may take longer due to the need for TeX Live to download additional files.
+- If there are any errors, they will be displayed in the console or log window of your editor. You can then correct them before compiling again.
+
+Step 6: Formatting Your Document
+- LaTeX provides numerous packages and commands to format your document. Some common ones include:
+  - `\textbf{}` for bold text
+  - `\

@@ -1,0 +1,27 @@
+Title: Clause Regarding Confidentiality and Non-Disclosure
+
+1. Confidential Information
+
+In this Agreement, "Confidential Information" refers to any information that is either identified as confidential at the time of disclosure or should be reasonably understood by the receiving party to be confidential given the nature of the information and the circumstances surrounding its disclosure. Confidential Information may include, but is not limited to, technical data, trade secrets, business and marketing plans, financial data, and customer lists.
+
+2. Obligations of the Receiving Party
+
+The receiving party agrees to maintain the confidentiality of the Confidential Information and use such information solely for the purposes of this Agreement or as otherwise explicitly authorized in writing by the disclosing party. The receiving party will not, without the prior written consent of the disclosing party, disclose any Confidential Information to third parties or use it for its own benefit or that of any third party.
+
+3. Exceptions to Confidentiality Obligations
+
+The obligations set forth in this clause do not apply to any information which:
+
+(a) was publicly known at the time of disclosure;
+(b) becomes publicly known after disclosure through no fault of the receiving party;
+(c) is learned by the receiving party through legitimate means other than from the disclosing party or a disclosed third party;
+(d) is approved for release in writing by the disclosing party; or
+(e) is required to be disclosed by law, court order, or subpoena.
+
+4. Return of Confidential Information
+
+Upon termination of this Agreement, or upon the request of the disclosing party at any time prior to such termination, the receiving party will promptly return all documents and materials containing Confidential Information in its possession. The receiving party may retain one copy for archival purposes, provided that it maintains the confidentiality of such copy and does not disclose or use it except as expressly permitted under this clause.
+
+5. Injunctive Relief
+
+The parties acknowledge that any breach by the receiving party of its obligations under this clause may cause irreparable harm to the disclosing party for which monetary damages would be an inadequate remedy. Accordingly, the disclosing party shall be entitled to seek injunctive relief and specific performance to enforce the terms of this clause, without

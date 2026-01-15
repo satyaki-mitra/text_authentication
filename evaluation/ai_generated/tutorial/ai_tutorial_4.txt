@@ -1,0 +1,29 @@
+Title: A Step-by-Step Guide for Beginners: Navigating a Basic Linux System
+
+**Objective:** This guide will help you understand the basics of navigating and interacting with a Linux system. By the end, you'll be able to navigate directories, create files, and execute commands.
+
+**Materials Needed:** A Linux-based operating system (such as Ubuntu or Debian) and an internet connection.
+
+**Step 1: Accessing the Terminal**
+- Open your preferred web browser on your computer.
+- Search for "Linux Live CD/USB download" and choose a distribution suitable for your hardware (e.g., Ubuntu, Debian, etc.).
+- Follow the instructions to create a bootable USB or download an ISO file to a virtual machine like VirtualBox or VMware.
+- Insert the USB into your computer or start the virtual machine.
+- Restart your computer and follow the distribution's boot menu instructions (usually by pressing F12, ESC, or Del during startup) to select your bootable media.
+
+**Step 2: Login to the System**
+- The login screen will appear. By default, most Linux distributions use a user called "admin" or "ubuntu" with no password (unless you've changed it). Enter this username and press enter.
+- If prompted for a password, leave it blank unless you have changed the password during installation.
+
+**Step 3: Understanding the Command Line Interface (CLI)**
+The command line interface is where you can execute commands to perform tasks on your Linux system. You will see a blinking cursor, which indicates that the system is ready for input.
+
+**Step 4: Navigating Directories**
+- To view the current directory, type `pwd` (present working directory) and press enter.
+- To list files in the current directory, type `ls` and press enter.
+
+**Step 5: Changing Directories**
+- To navigate to a specific directory, use the command `cd [directory_name]`. For example, to access the Documents directory, you would type `cd Documents`.
+
+**Step 6: Creating Files and Directories**
+- To create a new file, use the command `touch [file_name]`. For instance, if you

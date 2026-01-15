@@ -1,0 +1,13 @@
+Title: A Rare Case of Autoimmune Hepatitis Presenting as Acute Liver Failure in a Young Female
+
+Abstract:
+
+We present an unusual case of a 27-year-old female patient who presented to our emergency department with acute hepatic encephalopathy, jaundice, and coagulopathy. The initial laboratory results revealed markedly elevated liver function tests (ALT: 3000 U/L, AST: 2500 U/L, bilirubin: 18 mg/dL), with a low albumin level (2.0 g/dL) and prothrombin time (PT) prolongation (INR: 4.2). The patient had no history of alcohol consumption, medication use, or known liver disease.
+
+Upon further investigation, autoimmune hepatitis was suspected due to the presence of positive antinuclear antibodies (ANA) and anti-smooth muscle antibodies (ASMA), high IgG levels, and normal IgA and IgM levels. Liver biopsy confirmed the diagnosis of autoimmune hepatitis type 1 with severe liver inflammation and interface hepatitis.
+
+The patient was immediately treated with prednisone 60 mg daily, azathioprine 100 mg twice a day, and intravenous immunoglobulin (IVIG) for three days. Despite the aggressive treatment, her condition initially deteriorated due to the severity of acute liver failure. However, after two weeks, there was significant improvement in her liver function tests, with a gradual decline in PT and bilirubin levels.
+
+This case highlights the importance of considering autoimmune hepatitis as a differential diagnosis in young patients presenting with acute liver failure without an apparent cause. Early recognition and aggressive treatment can lead to improved outcomes, even in severe cases such as this one. Furthermore, it emphasizes the need for prompt management in such cases, as delays in treatment may result in worsening of the patient's condition due to the rapid progression of acute liver failure.
+
+Keywords: Autoimmune Hepatitis, Acute Liver Failure, Young Adult, Aggressive Treatment, Improved Outcome

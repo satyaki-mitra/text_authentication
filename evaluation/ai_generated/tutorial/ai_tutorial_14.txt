@@ -1,0 +1,49 @@
+Title: Step-by-Step Tutorial for Beginners: Creating a Basic Website Using HTML, CSS, and JavaScript
+
+Objective: By the end of this tutorial, you will have created your first simple website using HTML, CSS, and JavaScript.
+
+Prerequisites:
+1. A text editor (e.g., Visual Studio Code, Sublime Text) installed on your computer
+2. Basic understanding of operating systems (e.g., Windows, macOS, Linux)
+3. Familiarity with file navigation in your operating system
+4. Ability to open web browsers (e.g., Google Chrome, Mozilla Firefox)
+
+Materials:
+1. Text editor
+2. Notepad or any simple text editor for backup purposes
+3. Web browser (for testing the website)
+
+Steps:
+
+Step 1: Create a new folder and open it in your text editor
+
+1. Open your operating system's File Explorer/Finder and create a new folder named "MyFirstWebsite"
+2. Navigate to this folder using your text editor (e.g., Visual Studio Code, Sublime Text)
+
+Step 2: Create an HTML file for the structure of your website
+
+1. In the text editor, create a new file and name it "index.html" (without any extensions)
+2. Save the file in the "MyFirstWebsite" folder
+
+Step 3: Write basic HTML code for the structure of the webpage
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My First Webpage</title>
+    <!-- Adding CSS and JavaScript files later -->
+</head>
+<body>
+    <h1>Welcome to My First Webpage!</h1>
+    <p>This is a simple example of an HTML webpage.</p>
+</body>
+</html>
+```
+
+Step 4: Save the HTML file and open it in a web browser
+
+1. Save the "index.html" file in your text editor
+2. Open your web browser (e.g., Google Chrome, Mozilla

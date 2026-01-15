@@ -1,0 +1,39 @@
+Title: Getting Started with Python Programming for Beginners
+
+1. **Installation of Python**
+
+   - Download Python from the official website: https://www.python.org/downloads/
+   - Choose the version that suits your operating system (Windows, MacOS, Linux). For beginners, it's recommended to use the latest version of Python 3.
+   - Follow the installation instructions provided by the setup wizard.
+
+2. **Setting Up a Text Editor or IDE**
+
+   - A text editor is used to write your code, and an Integrated Development Environment (IDE) provides additional features like autocompletion, debugging tools, and more. Some popular options include:
+     - IDLE (Python's built-in text editor)
+     - Visual Studio Code
+     - PyCharm (Community Edition)
+     - Jupyter Notebook (for data science projects)
+
+3. **Writing Your First Python Program**
+
+   - Open your chosen text editor or IDE and create a new file, typically with a .py extension.
+   - Type the following code in the file:
+
+```python
+print("Hello, World!")
+```
+
+   - Save the file and run it by either clicking "Run" within your IDE, or by opening the command prompt/terminal (Ctrl+Shift+Enter on Windows or Command+Return on Mac) and navigating to the directory containing your .py file. Then execute the command `python filename.py`
+   - You should see "Hello, World!" printed in the console.
+
+4. **Understanding Basic Python Syntax**
+
+   - Variables: Store data values. Assign a value to a variable using the equals sign (=). For example:
+     ```python
+     x = 5
+     name = "John"
+     ```
+   - Data Types: Python has several built-in data types such as integers, floats, strings, lists, and dictionaries.
+   - Indentation: Python uses indentation to define blocks of code. Four spaces are typically used for indentation.
+   - Functions: A group of statements that perform a specific task. Use the `def` keyword to create functions.
+   - Comments: Started with a hash symbol (#) and are used to explain your code.

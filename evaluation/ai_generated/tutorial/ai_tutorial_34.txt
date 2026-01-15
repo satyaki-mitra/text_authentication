@@ -1,0 +1,39 @@
+Title: A Beginner's Guide to Using a Text Editor for Coding
+
+1. **Introduction**
+   Welcome to the world of coding! In this tutorial, we will guide you through setting up and using a text editor for coding, specifically Visual Studio Code (VS Code). VS Code is a free, open-source, and popular code editor developed by Microsoft.
+
+2. **Download and Installation**
+   - Visit the official website: https://code.visualstudio.com/
+   - Click on 'Download for Windows', 'Download for macOS', or 'Download for Linux' depending on your operating system.
+   - Run the installer, follow the prompts to complete the installation process.
+
+3. **Opening VS Code**
+   After successful installation, you can find the Visual Studio Code icon in your application folder or start menu. Click on it to open the editor.
+
+4. **Exploring the Interface**
+   - The main areas of the interface are:
+     a) Activity Bar (left side): Contains various views like Explorer, Terminal, Debug, and Extensions.
+     b) Editor (center): Where you write your code.
+     c) Sidebar (left or right, depending on your settings): Displays file structure of the current project.
+     d) Status Bar (bottom): Shows information about the active document, such as line and character counts.
+
+5. **Creating a New File**
+   - Click on 'File' in the top menu bar.
+   - Select 'New File' or 'New Window'. A new blank file will be created for you to start coding.
+
+6. **Writing Code**
+   - You can start writing your code in the editor area. For example, if you want to write a simple HTML page, you might write:
+     ```html
+     <!DOCTYPE html>
+     <html lang="en">
+       <head>
+         <meta charset="UTF-8" />
+         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+         <title>My First Web Page</title>
+       </head>
+       <body>
+         <h1>Hello World!</h1>
+       </body>
+     </html>
+     ```

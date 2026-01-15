@@ -1,0 +1,28 @@
+Case Title: Smith v. Johnson
+
+Court: Supreme Court of the State of New York, County of Albany
+
+Docket Number: 2021-CA-003456
+
+Judge: Hon. Judge Jane Doe
+
+Date of Decision: January 1, 2022
+
+Claimant/Plaintiff: John Smith
+
+Defendant/Respondent: Jane Johnson
+
+Facts:
+The Plaintiff, John Smith, brings this action against the Defendant, Jane Johnson, for breach of contract. The parties entered into a written agreement on September 1, 2021, regarding the sale and purchase of real property located at 123 Main Street, Albany, New York (the "Property"). Specifically, the Defendant agreed to sell and convey the Property to the Plaintiff for a total purchase price of $500,000. The agreement contained a clause stipulating that the Defendant would have no right to rescind or terminate the contract without the Plaintiff's written consent.
+
+The Defendant, however, unilaterally terminated the contract on December 15, 2021, without providing the Plaintiff with prior written notice or consent. The Plaintiff contends that the Defendant's actions constitute a breach of contract and seeks damages in the amount of $500,000, being the total purchase price, as well as reasonable attorney's fees and costs incurred in bringing this action.
+
+Issues:
+1. Whether the Defendant's unilateral termination of the contract constitutes a breach of contract.
+2. If so, what remedies are available to the Plaintiff for the Defendant's breach of contract.
+
+Holding:
+The Court finds that the Defendant's unilateral termination of the contract without the Plaintiff's written consent constitutes a breach of contract. The Plaintiff is entitled to damages in the amount of $500,000, being the total purchase price, as well as reasonable attorney's fees and costs incurred in bringing this action.
+
+Reasoning:
+The Court finds that the Defendant's actions were a clear violation of the express terms of the contract, which stip

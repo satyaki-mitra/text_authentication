@@ -1,0 +1,11 @@
+Title: Unusual Presentation of Chronic Lymphocytic Leukemia: A Case Study
+
+Background: Chronic Lymphocytic Leukemia (CLL) is the most common leukemia in adults, typically presenting with lymphadenopathy, hepatosplenomegaly, and peripheral blood lymphocytosis. However, atypical presentations can occur, making diagnosis challenging.
+
+Case Presentation: A 65-year-old male patient presented to the emergency department with a four-week history of progressive lower extremity weakness, gait impairment, and urinary incontinence. The patient denied any fever, night sweats, or weight loss. On physical examination, there were no palpable lymph nodes, hepatosplenomegaly, or skin lesions. Neurological examination revealed left-sided hemiparesis with decreased reflexes.
+
+Initial investigations including complete blood count (CBC), comprehensive metabolic panel, and urinalysis were unremarkable. However, a repeat CBC showed a lymphocytosis of 70.5 x 10^9/L (reference range: 1.0-4.8 x 10^9/L) with an absolute lymphocyte count (ALC) of 63.2 x 10^9/L. A peripheral blood smear revealed a monoclonal B-cell population accounting for 57% of white blood cells. Flow cytometry confirmed the diagnosis of CLL, with the presence of CD5+, CD19+, CD23+, and CD20 dim/negative leukemia cells.
+
+The patient was subsequently admitted to the hematology department for further management. The initial response to chemotherapy was significant, with a decrease in the ALC to 34 x 10^9/L following the first cycle of fludarabine, cyclophosphamide, and rituximab (FCR).
+
+Conclusion: This case highlights an atypical presentation of CLL, manifesting as neurological symptoms without typical lymphadenopathy or hepatosplenomegaly. Early recognition of such presentations is crucial for timely diagnosis and initiation

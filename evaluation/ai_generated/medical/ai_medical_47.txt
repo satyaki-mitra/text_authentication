@@ -1,0 +1,13 @@
+Title: A Rare Case of Concomitant Giant Cell Arteritis and Polymyalgia Rheumatica: Challenges in Diagnosis and Management
+
+Abstract:
+
+We present an intriguing case report of a 72-year-old Caucasian female who presented with a constellation of symptoms including severe headaches, jaw claudication, tender and aching neck muscles, and generalized muscle pain. The patient's initial presentation was marked by fever, weight loss, and fatigue, which raised suspicion for an underlying systemic inflammatory disorder.
+
+Laboratory investigations revealed a high erythrocyte sedimentation rate (ESR) of 100 mm/h and a C-reactive protein (CRP) level of 25 mg/L. A temporal artery biopsy was performed, which showed extensive inflammation and granuloma formation consistent with giant cell arteritis (GCA). Simultaneously, the patient also met the criteria for polymyalgia rheumatica (PMR) as defined by the American College of Rheumatology, including bilateral shoulder pain and elevated ESR and CRP levels.
+
+The concomitant presence of GCA and PMR posed a diagnostic challenge, as it is estimated to occur in only 10-20% of cases. The patient was initiated on high-dose corticosteroid therapy, with a gradual taper over a six-month period. Close monitoring for treatment response and side effects was essential due to the patient's advanced age and pre-existing comorbidities.
+
+The successful management of this case highlights the importance of maintaining a high index of suspicion for GCA in patients presenting with symptoms suggestive of PMR, particularly when the ESR is markedly elevated. Additionally, it underscores the need for a multidisciplinary approach in managing these complex and potentially debilitating conditions.
+
+Keywords: Giant Cell Arteritis, Polymyalgia Rheumatica, Concomitant Presentation, Diagnostic Challenges, Management Strategies

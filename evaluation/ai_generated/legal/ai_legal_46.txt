@@ -1,0 +1,27 @@
+Case Title: Smith v. Jones
+
+Court: Supreme Court of New York, County of Kings
+
+Docket Number: 20-CV-3456
+
+Date of Decision: October 15, 2021
+
+Judge: Hon. Jane Doe
+
+Parties:
+1. Plaintiff: John Smith (hereinafter "Plaintiff")
+2. Defendant: Jane Jones (hereinafter "Defendant")
+
+Facts:
+The Plaintiff, John Smith, brought an action against the Defendant, Jane Jones, alleging breach of contract and intentional interference with contractual relations. The Plaintiff entered into a written agreement with the Defendant on March 1, 2020, for the sale of certain real property located at 123 Main Street, New York, NY (the "Property"). According to the Plaintiff, the Defendant agreed to purchase the Property for $500,000 and made a deposit of $50,000. However, on May 15, 2020, the Defendant allegedly refused to complete the sale and failed to make the remaining payments as required by the agreement. Furthermore, the Plaintiff claims that the Defendant intentionally interfered with the Plaintiff's contractual relations by persuading a third party to purchase the Property for less than the agreed price.
+
+Issue:
+Whether the Defendant breached the contract for the sale of the Property and intentionally interfered with the Plaintiff's contractual relations.
+
+Holding:
+The Court finds that the Defendant breached the contract for the sale of the Property by failing to make the remaining payments as required by the agreement and intentionally interfering with the Plaintiff's contractual relations.
+
+Reasoning:
+1. Breach of Contract: The Court finds that the Defendant failed to perform her obligations under the contract, specifically by not making the remaining payments for the sale of the Property. The deposit made by the Defendant was insufficient to satisfy the purchase price outlined in the agreement.
+
+2. Intentional Interference with Contractual Relations: The Court also finds that the Defendant intentionally interfered with the Plaintiff's contractual relations. The Defendant, through her actions, induced a third party

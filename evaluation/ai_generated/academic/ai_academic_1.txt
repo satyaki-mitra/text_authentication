@@ -1,0 +1,15 @@
+Title: An Examination of the Impact of Cognitive Behavioral Therapy on Depression and Anxiety Symptoms Amongst College Students
+
+Abstract
+
+This study aims to investigate the effectiveness of Cognitive Behavioral Therapy (CBT) in alleviating symptoms of depression and anxiety among college students. The research is grounded in the theoretical frameworks of cognitive-behavioral theory, which posits that individuals' thoughts, feelings, and behaviors are interconnected, and that altering maladaptive thought patterns can lead to improvements in emotional well-being (Beck, 1967).
+
+The study employed a quasi-experimental design with a pre-post test control group methodology. Participants were recruited from a diverse pool of college students across two institutions, one serving as the treatment group (CBT intervention) and the other as the comparison group (waitlist control). The sample size consisted of 200 participants, with an equal distribution between groups to ensure comparability.
+
+Data collection spanned a period of eight weeks, during which both groups completed standardized self-report measures of depression and anxiety symptoms at pre-treatment, post-treatment, and follow-up. The primary outcome measures were the Beck Depression Inventory-II (BDI-II) and the State-Trait Anxiety Inventory (STAI).
+
+Preliminary findings suggest that students who underwent CBT demonstrated significant reductions in depression (t(98) = 10.43, p < .001) and anxiety symptoms (t(98) = 8.56, p < .001) compared to the control group at post-treatment. Furthermore, these improvements were maintained at the three-month follow-up.
+
+The findings support the efficacy of CBT in addressing depression and anxiety symptoms among college students, reaffirming its utility as a valuable treatment approach for this population (Hofmann et al., 2012). However, it is important to acknowledge potential limitations such as selection bias, lack of generalizability, and the need for longer-term follow-ups.
+
+Future research should focus on implementing CBT interventions in real-world settings, exploring factors that may moderate treatment outcomes, and investigating the long-term effects of CBT on mental health among college students. This

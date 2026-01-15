@@ -1,0 +1,13 @@
+Title: A Case Study on Refractory Hypertension Management in a Middle-Aged Female Patient
+
+Abstract
+
+This case report presents the management of a 52-year-old Caucasian female with a history of essential hypertension, obesity, and type II diabetes mellitus. The patient was first diagnosed with hypertension at the age of 40, and over the subsequent years, her blood pressure remained persistently elevated despite various antihypertensive medications. Her initial treatment included thiazide diuretics, angiotensin-converting enzyme inhibitors (ACEIs), and calcium channel blockers (CCBs) in combination, yet her blood pressure remained at 160/95 mmHg.
+
+The patient's lifestyle factors were assessed and found to be suboptimal, with a sedentary lifestyle, poor diet quality, and excessive alcohol consumption. A comprehensive education on diet, exercise, stress management, and alcohol moderation was provided, along with the recommendation for weight loss. The patient was also evaluated for secondary hypertension, but no causes were identified.
+
+After a detailed discussion regarding the potential benefits and risks of adding an additional antihypertensive medication to her current regimen, the decision was made to initiate a mineralocorticoid receptor antagonist (MRA), spironolactone, 25 mg daily. After one month, the patient's blood pressure decreased to 140/85 mmHg, and after three months, it further dropped to 130/75 mmHg.
+
+In conclusion, this case highlights the difficulty in managing refractory hypertension in patients with multiple comorbidities. The addition of an MRA proved effective in controlling blood pressure levels in this particular patient. However, continuous follow-up and close monitoring are crucial to ensure optimal management and prevent potential drug interactions or side effects.
+
+Keywords: Hypertension, Refractory hypertension, Mineralocorticoid receptor antagonist (MRA), Spironolactone, Essential hypertension, Type II diabetes mellitus, Comorbidities.

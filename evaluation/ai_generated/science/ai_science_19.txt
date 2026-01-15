@@ -1,0 +1,19 @@
+Phenomenon: Aurora Borealis (Northern Lights) and Aurora Australis (Southern Lights)
+
+Explanation:
+
+The aurora borealis, also known as the Northern Lights, and the aurora australis, or Southern Lights, are natural light displays that occur in polar regions. These fascinating phenomena are caused by interactions between solar particles and Earth's magnetic field.
+
+1. Solar Activity: The primary source of energy for auroras is the sun. Solar flares and coronal mass ejections (CMEs) release charged particles, primarily electrons and protons, into space. These particles travel towards Earth at high speeds.
+
+2. Interaction with Earth's Magnetic Field: As the solar particles approach Earth, they are deflected by the planet's magnetic field. The magnetic field lines create a protective 'shield' around our planet, but they also funnel the charged particles towards the poles, where the magnetic field lines converge.
+
+3. Collision with Atmosphere: Once the charged particles reach Earth's upper atmosphere (approximately 80 to 600 kilometers above sea level), they collide with molecules and atoms of gases like oxygen and nitrogen.
+
+4. Energy Release: During these collisions, the energy from the solar particles is transferred to the atmospheric gas molecules. The excited gas molecules then release this energy in the form of photons, or light particles.
+
+5. Light Display: When the gas molecules return to their ground state, they emit photons at specific wavelengths, which correspond to different colors. Oxygen emissions produce green and red lights, while nitrogen produces blue and purple hues. The movement of these charged particles and subsequent light emission create the beautiful, swirling patterns we know as auroras.
+
+6. Geomagnetic Activity: The strength and frequency of auroras are influenced by geomagnetic activity, which can be affected by solar wind speed and the occurrence of solar flares or CMEs. Auroras are more likely to occur during periods of increased solar activity, such as solar maximum – a peak in sunspot and flare activity that occurs approximately every 11 years.
+
+7. Location: The aurora zone extends around both poles and is typically located within 25 to 30

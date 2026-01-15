@@ -1,0 +1,40 @@
+Title: Understanding Dependency Injection in Java
+
+Dependency Injection (DI) is a design pattern that separates the construction of an object graph from its business logic, promoting loose coupling, testability, and reusability in software development. This concept is widely used in Java for creating modular and maintainable applications.
+
+Key Concepts:
+1. Dependencies: These are external classes or resources that a class relies on to function correctly.
+2. Coupling: The degree to which one class knows about another class, often measured by the number of direct references between them. High coupling can lead to inflexible and hard-to-maintain code.
+3. Inversion of Control (IoC): Instead of classes creating their dependencies directly, they are provided or injected from an external source. This inverts the traditional control flow, allowing for greater flexibility and testability.
+
+Dependency Injection in Java can be implemented using various frameworks such as Spring, Google Guice, and CDI (Contexts and Dependency Injection for Java EE). However, basic DI can also be achieved with simple techniques like constructor injection, setter injection, and field injection.
+
+1. Constructor Injection: Injecting dependencies through a class's constructor allows the injected objects to be part of the object's state from creation. This approach promotes encapsulation since constructors are used for initializing state, reducing mutable fields.
+
+```java
+public class Service {
+    private final Repository repository;
+
+    public Service(Repository repository) {
+        this.repository = repository;
+    }
+
+    // Business logic using the injected Repository...
+}
+```
+
+2. Setter Injection: Injecting dependencies via setter methods enables more flexible configuration after an object has been instantiated but promotes higher coupling due to mutable state.
+
+```java
+public class Service {
+    private Repository repository;
+
+    public void setRepository(Repository repository) {
+        this.repository = repository;
+    }
+
+    // Business logic using the injected Repository...
+}
+```
+
+3. Field Injection: This approach involves directly annotating fields with dependency injection framework-specific annotations for automatic wiring during object creation. It simplifies code but may compromise encapsulation and testability due to
