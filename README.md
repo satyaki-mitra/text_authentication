@@ -138,6 +138,66 @@ Each domain is configured with specific thresholds for the six detection metrics
 ### Architecture (Dark‑themed Mermaid)
 
 ```mermaid
+%%{init: {
+  "theme": "dark",
+  "themeVariables": {
+    "fontSize": "12px",
+    "fontFamily": "Segoe UI, Helvetica, Arial, sans-serif"
+  }
+}}%%
+flowchart TD
+    classDef frontend fill:#4CAF50,stroke:#2E7D32,color:white;
+    classDef api fill:#2196F3,stroke:#0D47A1,color:white;
+    classDef orchestrator fill:#FF9800,stroke:#E65100,color:white;
+    classDef metrics fill:#9C27B0,stroke:#4A148C,color:white;
+    classDef core fill:#607D8B,stroke:#263238,color:white;
+    classDef storage fill:#795548,stroke:#3E2723,color:white;
+
+    A[Web UI<br/>📄 Upload & Input]:::frontend
+    B[Dashboard<br/>📊 Live Results]:::frontend
+
+    C[FastAPI<br/>🔐 Auth • ⚡ Rate Limit]:::api
+
+    D[Domain Classifier]:::orchestrator
+    E[Preprocessor]:::orchestrator
+    F[Metric Coordinator]:::orchestrator
+
+    P1[Perplexity]:::metrics
+    P2[Entropy]:::metrics
+    P3[Structural]:::metrics
+    P4[Linguistic]:::metrics
+    P5[Semantic]:::metrics
+    P6[Stability]:::metrics
+
+    G[Evidence Aggregator<br/>⚖️ Ensemble + Calibration]:::core
+    H[Reporter<br/>📝 Highlights • PDF/JSON]:::core
+    I["Models<br/>🤗 HF Cache"]:::storage
+    J[(Storage<br/>💾 Logs • Reports)]:::storage
+
+    A --> C
+    B --> C
+    C --> D
+    D --> E
+    E --> F
+    F --> P1
+    F --> P2
+    F --> P3
+    F --> P4
+    F --> P5
+    F --> P6
+    P1 --> G
+    P2 --> G
+    P3 --> G
+    P4 --> G
+    P5 --> G
+    P6 --> G
+    G --> H
+    H --> C
+    I --> F
+    C --> J
+```
+
+```mermaid
 %%{init: {'theme': 'dark'}}%%
 flowchart LR
     subgraph FE [Frontend Layer]
