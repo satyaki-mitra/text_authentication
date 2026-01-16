@@ -1,0 +1,57 @@
+**API Endpoint: User Profile**
+
+**Summary**
+
+The User Profile API endpoint allows clients to retrieve and update user profile information. This endpoint is used to manage user profiles, including retrieving existing profiles, creating new profiles, updating existing profiles, and deleting profiles.
+
+**HTTP Methods**
+
+* **GET**: Retrieve a user's profile
+* **POST**: Create a new user profile
+* **PUT**: Update an existing user profile
+* **DELETE**: Delete a user's profile
+
+**Request Parameters**
+
+* **username**: The username of the user whose profile is being retrieved, created, updated, or deleted.
+* **profile_id**: The unique identifier of the profile to be retrieved, updated, or deleted.
+
+**Response Formats**
+
+* **JSON**: The default response format. All responses will be in JSON format unless specified otherwise.
+
+**GET Request**
+
+### Retrieve a User Profile
+
+* **URL**: `/api/users/{username}/profile`
+* **Method**: `GET`
+* **Parameters**: None
+* **Returns**: A JSON object containing the user's profile information, including:
+	+ `id`: The unique identifier of the profile.
+	+ `username`: The username of the user.
+	+ `name`: The full name of the user.
+	+ `email`: The email address of the user.
+	+ `phone_number`: The phone number of the user.
+
+### Example Response
+```json
+{
+  "id": 123,
+  "username": "john_doe",
+  "name": "John Doe",
+  "email": "johndoe@example.com",
+  "phone_number": "+1-555-1234"
+}
+```
+
+**POST Request**
+
+### Create a New User Profile
+
+* **URL**: `/api/users/{username}/profile`
+* **Method**: `POST`
+* **Parameters**:
+	+ `name`: The full name of the user.
+	+ `email`: The email address of the user.
+	+ `phone_number

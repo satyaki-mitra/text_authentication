@@ -1,0 +1,49 @@
+**Endpoint:** `/users/{userId}/orders`
+
+**Method:** `GET`
+
+**Description:**
+
+This API endpoint allows you to retrieve a list of orders associated with a specific user. The endpoint takes a single path parameter, `{userId}`, which identifies the user whose orders are being retrieved.
+
+**Path Parameters:**
+
+* `{userId}` (required): The ID of the user whose orders are being retrieved. This should be a unique identifier for the user in your system.
+
+**Query Parameters:**
+
+* `limit` (optional): The maximum number of orders to return per page. Default is 20.
+* `offset` (optional): The starting point for the page of orders. Default is 0.
+* `sort` (optional): The field by which to sort the orders. Acceptable values are:
+	+ `created_at`: Sort by order creation date
+	+ `updated_at`: Sort by order last update date
+	+ `amount`: Sort by order total amount
+
+**Request Example:**
+
+```http
+GET /users/1234/orders?limit=5&offset=0&sort=created_at HTTP/1.1
+Host: example.com
+Content-Type: application/json
+```
+
+**Response:**
+
+The response will be a JSON object containing an array of order objects, with the following properties:
+
+* `id`: The unique ID of the order.
+* `userId`: The ID of the user who placed the order.
+* `amount`: The total amount of the order.
+* `created_at`: The date and time when the order was created.
+* `updated_at`: The date and time when the order was last updated.
+
+Example response:
+```json
+{
+  "orders": [
+    {
+      "id": 1,
+      "userId": 1234,
+      "amount": 10.99,
+      "created_at": "2022-07-01T12:00:00Z",
+      "updated_at": "

@@ -1,0 +1,49 @@
+**API Endpoint: User Information**
+
+**Path:** `/api/v1/users/{userId}`
+
+**Method:** `GET`
+
+**Description:** This API endpoint returns information about a specific user.
+
+**Request Parameters:**
+
+* **`userId`**: A unique identifier for the user (required). The value must be a valid UUID.
+	+ Type: string
+	+ Example: `123e4567-e89b-12d3-a456-426614174000`
+
+**Response:**
+
+The API endpoint returns a JSON object containing the following information about the specified user:
+
+* **`id`**: A unique identifier for the user (same as the `userId` parameter).
+	+ Type: string
+	+ Example: `123e4567-e89b-12d3-a456-426614174000`
+* **`name`**: The user's full name.
+	+ Type: string
+	+ Example: `"John Doe"`
+* **`email`**: The user's email address.
+	+ Type: string
+	+ Example: `johndoe@example.com`
+* **`role`**: The user's role (e.g., "admin", "user").
+	+ Type: string
+	+ Example: `"admin"`
+
+**Error Handling:**
+
+* If the requested `userId` does not exist, the API endpoint returns a 404 Not Found response with an error message.
+* If there is an internal server error, the API endpoint returns a 500 Internal Server Error response with an error message.
+
+**Example Response:**
+```json
+{
+  "id": "123e4567-e89b-12d3-a456-426614174000",
+  "name": "John Doe",
+  "email": "johndoe@example.com",
+  "role": "admin"
+}
+```
+**Security Considerations:**
+
+* This API endpoint requires authentication and authorization to ensure only authorized users can access user information.
+*

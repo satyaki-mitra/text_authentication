@@ -1,0 +1,65 @@
+**Endpoint:** `GET /users/{id}`
+
+**Purpose:** Retrieve a specific user's information by their unique ID.
+
+**Path Parameters:**
+
+* `{id}`: The unique identifier of the user to retrieve (required).
+
+**Query Parameters:** None
+
+**Request Body:** Empty (no request body is required or accepted).
+
+**HTTP Method:** `GET`
+
+**Response:**
+
+The response will contain the requested user's information in JSON format. The response includes:
+
+* `id` (string): The unique identifier of the user.
+* `name` (string): The full name of the user.
+* `email` (string): The email address of the user.
+* `role` (string): The role or job title of the user.
+
+Example Response:
+```json
+{
+  "id": "12345",
+  "name": "John Doe",
+  "email": "johndoe@example.com",
+  "role": "Software Engineer"
+}
+```
+
+**Error Handling:**
+
+* **404 Not Found:** If the requested user ID does not exist, a 404 error will be returned with a message indicating that the user was not found.
+* **500 Internal Server Error:** If an unexpected error occurs while processing the request, a 500 error will be returned.
+
+Example Error Response:
+```json
+{
+  "error": {
+    "code": 404,
+    "message": "User not found"
+  }
+}
+```
+
+**Rate Limiting:**
+
+This API endpoint is subject to rate limiting. The maximum number of requests per minute is 100. If the request limit is exceeded, a `429 Too Many Requests` error will be returned.
+
+Example Error Response:
+```json
+{
+  "error": {
+    "code": 429,
+    "message": "Too many requests (exceeded rate limit)"
+  }
+}
+```
+
+**Security Considerations:**
+
+* Authentication: This API endpoint requires authentication using a valid API key or token

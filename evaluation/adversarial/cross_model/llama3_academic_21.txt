@@ -1,0 +1,13 @@
+Title: Novel Insights into the Mechanisms of Microglial-Mediated Synaptic Pruning during Neurodevelopmental Plasticity
+
+Abstract:
+
+Microglia, the resident immune cells of the central nervous system, play a crucial role in shaping neural circuits through their involvement in synaptic pruning, a process essential for refining neural connections during neurodevelopment. Recent studies have shed light on the complex mechanisms underlying microglial-mediated synaptic pruning, providing new avenues for understanding and potentially modulating this process.
+
+Our research group has recently demonstrated that microglia utilize a unique combination of receptors, including CD14 and TREM2, to recognize and engulf synaptically released neuronal vesicles, thereby pruning redundant or dysfunctional connections. This process is mediated by the upregulation of the pro-inflammatory cytokine TNF-α, which activates microglial scavenger receptors, leading to the engulfment of synaptic vesicles.
+
+Notably, our findings suggest that microglial-mediated synaptic pruning is not a passive process, but rather an active mechanism regulated by neuronal activity and experience. We show that sensory stimulation induces the release of neurotransmitters, such as glutamate, which activate microglial receptors, thereby increasing their phagocytic activity and promoting synaptic pruning.
+
+These novel insights have significant implications for our understanding of neurodevelopmental plasticity and may provide therapeutic targets for neurological disorders characterized by aberrant neural connectivity. Moreover, our findings highlight the importance of considering the complex interactions between neurons and microglia in shaping neural circuits during development and adulthood.
+
+Future studies will focus on elucidating the precise molecular mechanisms underlying microglial-mediated synaptic pruning and exploring its potential role in neurological disorders, such as Alzheimer's disease and autism spectrum disorder.

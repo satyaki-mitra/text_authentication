@@ -17,7 +17,7 @@ def count_samples(dir_path: Path) -> int:
 
 human_count       = count_samples(Path("evaluation/human"))
 ai_count          = count_samples(Path("evaluation/ai_generated"))
-paraphrased_count = count_samples(Path("evaluation/adversarial/paraphrased"))
+paraphrased_count = count_samples(Path("evaluation/adversarial/paraphrased")) 
 cross_model_count = count_samples(Path("evaluation/adversarial/cross_model"))
 
 metadata          = {"dataset_name"      : "TEXT-AUTH-Eval",
@@ -56,7 +56,7 @@ metadata          = {"dataset_name"      : "TEXT-AUTH-Eval",
                                             "Human texts sourced exclusively from public, auto-downloadable datasets",
                                            ],
                      "license"           : "CC BY / Public Domain / Fair Use — for research only",
-                     "created_date"      : "2025",
+                     "created"           : "2025",
                      "compatible_with"   : "TEXT-AUTH v1.0.0",
                     }
 

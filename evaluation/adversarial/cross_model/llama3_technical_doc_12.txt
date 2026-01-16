@@ -1,0 +1,46 @@
+**API Endpoint: Get User Information**
+
+**URL:** `https://api.example.com/users/{userId}`
+
+**Method:** GET
+
+**Description:** This API endpoint returns detailed information about a specific user, including their profile data and any relevant metadata.
+
+**Request Parameters:**
+
+* **{userId} (required)**: The unique identifier of the user for whom you want to retrieve information. This can be an integer or a string, depending on the authentication mechanism used.
+
+**Response:**
+
+The response will contain the following fields:
+
+* **id**: The unique identifier of the user.
+* **name**: The user's full name.
+* **email**: The user's email address.
+* **profile_picture**: A URL pointing to the user's profile picture.
+* **created_at**: The timestamp when the user account was created.
+* **updated_at**: The timestamp when the user's information was last updated.
+
+**Example Response:**
+```json
+{
+  "id": 123,
+  "name": "John Doe",
+  "email": "john.doe@example.com",
+  "profile_picture": "https://example.com/pictures/johndoe.jpg",
+  "created_at": "2022-01-01T12:00:00Z",
+  "updated_at": "2022-02-15T14:30:00Z"
+}
+```
+**Error Handling:**
+
+* **404 (Not Found)**: If the specified user ID does not exist, a 404 error will be returned with an empty response body.
+* **401 (Unauthorized)**: If the request is unauthorized or lacks valid authentication credentials, a 401 error will be returned with an empty response body.
+
+**Rate Limiting:**
+
+This API endpoint has a rate limit of 100 requests per minute per IP address. Exceeding this limit may result in temporary or permanent blocking of your IP address.
+
+**Authentication:**
+
+To access this API endpoint, you must provide valid authentication credentials

@@ -1,0 +1,48 @@
+**API Endpoint: `/users/{userId}/orders`**
+
+**Description:**
+This API endpoint allows you to retrieve the orders associated with a specific user.
+
+**HTTP Method:** GET
+
+**Path Parameters:**
+
+* `userId`: The unique identifier of the user whose orders you want to retrieve. This must be a valid, non-empty string in the format `YYYY-MM-DD-HH-MM-SS-S` (e.g., `2022-01-01-12-34-56-78`).
+
+**Query Parameters:**
+
+* None
+
+**Request Body:** None
+
+**Response:**
+The response will be a JSON object containing an array of order objects, each representing a single order associated with the specified user. Each order object will contain the following properties:
+
+* `orderId`: A unique identifier for the order.
+* `orderDate`: The date and time when the order was placed.
+* `total`: The total cost of the order.
+* `status`: The status of the order (e.g., "pending", "shipped", "delivered", etc.).
+
+Example Response:
+```json
+{
+  "orders": [
+    {
+      "orderId": "ORD-123456789",
+      "orderDate": "2022-01-15T12:34:56.000Z",
+      "total": 50.99,
+      "status": "pending"
+    },
+    {
+      "orderId": "ORD-234567890",
+      "orderDate": "2022-02-10T14:30:00.000Z",
+      "total": 25.00,
+      "status": "shipped"
+    }
+  ]
+}
+```
+**Error Handling:**
+
+* **404 Not Found:** If the specified `userId` does not exist or has no associated orders, the API will return a 404 error with an empty response body.
+* **500 Internal Server Error:** If there is an internal error processing the request (e

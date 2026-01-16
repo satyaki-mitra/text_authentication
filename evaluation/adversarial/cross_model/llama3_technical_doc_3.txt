@@ -1,0 +1,50 @@
+**API Endpoint: Get User Information**
+
+**Endpoint:** `GET /users/{userId}`
+
+**Description:** This API endpoint allows clients to retrieve detailed information about a specific user.
+
+**Path Parameters:**
+
+* `{userId}` (required): The unique identifier of the user for whom you want to retrieve information. This parameter is case-sensitive and must match the format of the user's ID in your system.
+
+**Request Headers:**
+
+* `Authorization`: Your API key or authentication token, if required.
+* `Content-Type`: `application/json` (default)
+
+**Query Parameters:**
+
+* None
+
+**Response:**
+
+The response will be a JSON object containing the requested user information. The following fields are included:
+
+* `id`: The unique identifier of the user.
+* `name`: The user's full name.
+* `email`: The user's email address.
+* `phone`: The user's phone number (if available).
+* `address`: A JSON object containing the user's address information:
+	+ `street`: The street address.
+	+ `city`: The city.
+	+ `state`: The state or province.
+	+ `zip`: The zip code or postal code.
+* `created`: The date and time when the user account was created (UTC).
+* `updated`: The date and time when the user's information was last updated (UTC).
+
+**Example Response:**
+```json
+{
+  "id": 123456,
+  "name": "John Doe",
+  "email": "johndoe@example.com",
+  "phone": "+1-555-555-5555",
+  "address": {
+    "street": "123 Main St",
+    "city": "Anytown",
+    "state": "CA",
+    "zip": "12345"
+  },
+  "created": "2022-01-01T12:00:00Z",
+  "updated": "2022-02-15T14:30

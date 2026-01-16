@@ -1,0 +1,50 @@
+**API Endpoint: User Profile Retrieval**
+
+**Endpoint URL:** `https://api.example.com/v1/users/:userId/profile`
+
+**Method:** GET
+
+**Description:**
+
+The `getUserProfile` endpoint retrieves the profile information of a specific user, as identified by their unique `userId`. This endpoint is useful for applications that require access to a user's profile data, such as displaying profile information on a dashboard or updating a user's profile settings.
+
+**Path Parameters:**
+
+* `userId`: The unique identifier of the user whose profile information is being retrieved. (Required)
+
+**Query Parameters:** None
+
+**Request Body:** Empty request body (i.e., no JSON payload)
+
+**Response:**
+
+The response will contain the user's profile information in a JSON format, with the following properties:
+
+* `id`: The unique identifier of the user.
+* `name`: The full name of the user.
+* `email`: The email address associated with the user account.
+* `phoneNumber`: The phone number associated with the user account (if available).
+* `profileImage`: A URL pointing to the user's profile image (if available).
+
+**Example Response:**
+```json
+{
+  "id": 123,
+  "name": "John Doe",
+  "email": "johndoe@example.com",
+  "phoneNumber": "+1-555-555-5555",
+  "profileImage": "https://example.com/profile-images/johndoe.jpg"
+}
+```
+**Error Handling:**
+
+* **404 Not Found**: If the specified `userId` is not found, a `404 Not Found` error will be returned.
+* **500 Internal Server Error**: If an internal server error occurs while processing the request, a `500 Internal Server Error` will be returned.
+
+**Rate Limiting:**
+
+This endpoint has a rate limit of 10 requests per minute. Exceeding this limit may result in errors or throttling.
+
+**Authentication:**
+
+To access this endpoint

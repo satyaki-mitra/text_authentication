@@ -1,0 +1,56 @@
+**Endpoint:** `GET /users/{id}`
+
+**Summary:**
+
+ Retrieves information about a specific user with the given ID.
+
+**Parameters:**
+
+* **`id`**: The unique identifier of the user to retrieve. This parameter is required and must be an integer.
+	+ Example: `123`
+	+ Pattern: `\d+`
+
+**Query Parameters:**
+
+* **`fields`**: A comma-separated list of fields to include in the response (e.g., "name,email,phone"). If not provided, all fields will be included. (Optional)
+	+ Example: `name,email`
+	+ Pattern: `[\w]+,(?1)*`
+
+**Request Body:**
+
+* **None** - This is a read-only endpoint and does not accept any data in the request body.
+
+**Response:**
+
+* **HTTP Status Code:** 200 OK if the user is found, or 404 Not Found if no user with the given ID exists.
+* **Content-Type:** `application/json`
+* **Response Body:**
+```json
+{
+  "id": 123,
+  "name": "John Doe",
+  "email": "johndoe@example.com",
+  "phone": "+1 (555) 123-4567"
+}
+```
+**Error Handling:**
+
+* If no user with the given ID is found, a 404 Not Found error will be returned.
+* If an invalid or malformed request is received, a 400 Bad Request error will be returned.
+
+**Security Considerations:**
+
+* This endpoint does not require authentication or authorization.
+* This endpoint returns sensitive information about users. Access to this endpoint should be restricted to authorized personnel only.
+
+**Example Request:**
+
+`GET https://api.example.com/users/123?fields=name,email`
+
+**Example Response:**
+```json
+{
+  "id": 123,
+  "name": "John Doe",
+  "email": "johndoe@example.com"
+}

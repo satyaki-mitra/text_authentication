@@ -1,0 +1,55 @@
+**Endpoint: Get User Profile**
+
+**HTTP Method:** GET
+
+**URI Path:** `/users/{userId}/profile`
+
+**Description:**
+
+The `Get User Profile` endpoint allows clients to retrieve the profile information of a specified user. This endpoint returns the user's profile data, including their name, email address, and any custom fields defined in the application.
+
+**Request Parameters:**
+
+* **userId (required):** The unique identifier of the user whose profile is being requested.
+	+ Data Type: Integer
+	+ Example: `12345`
+
+**Response:**
+
+The response will be a JSON object containing the user's profile data. The response includes the following properties:
+
+* **id:** The unique identifier of the user.
+	+ Data Type: Integer
+* **name:** The full name of the user.
+	+ Data Type: String
+* **email:** The email address of the user.
+	+ Data Type: String
+* **customFields:** An array of custom fields defined in the application, along with their corresponding values for this user.
+	+ Data Type: Array of Objects (see below)
+* **createdAt:** The date and time when the user was created.
+	+ Data Type: Date
+
+**Custom Fields Response Format:**
+
+The `customFields` property will contain an array of objects, each representing a custom field defined in the application. Each object will have the following properties:
+
+* **name:** The name of the custom field.
+	+ Data Type: String
+* **value:** The value associated with this custom field for this user.
+	+ Data Type: String
+
+**Example Response:**
+
+```json
+{
+  "id": 12345,
+  "name": "John Doe",
+  "email": "johndoe@example.com",
+  "customFields": [
+    {
+      "name": "FavoriteColor",
+      "value": "blue"
+    },
+    {
+      "name": "Hobby",
+      "value

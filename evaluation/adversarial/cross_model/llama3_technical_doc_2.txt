@@ -1,0 +1,59 @@
+**API Endpoint: `GET /users/{userId}/orders`**
+
+**Purpose:** Retrieve a user's orders.
+
+**Path Parameters:**
+
+* `userId`: The unique identifier of the user whose orders to retrieve (required).
+
+**Query Parameters:** None
+
+**Request Body:** None
+
+**HTTP Methods:** GET
+
+**Authentication:** This endpoint requires authentication using JSON Web Tokens (JWT). To obtain a JWT token, please refer to our Authentication API documentation.
+
+**Rate Limiting:** This endpoint is subject to rate limiting. The limit is 100 requests per minute. Exceeding this limit may result in an error response.
+
+**Response:**
+
+* **HTTP Status Code:** 200 OK
+* **Content-Type:** application/json
+
+The response will contain a JSON object with the following structure:
+```json
+{
+    "orders": [
+        {
+            "orderId": 123,
+            "datePlaced": "2022-07-01T14:30:00.000Z",
+            "total": 100.99,
+            "status": "shipped"
+        },
+        {
+            "orderId": 456,
+            "datePlaced": "2022-06-15T10:45:00.000Z",
+            "total": 50.00,
+            "status": "pending"
+        }
+    ]
+}
+```
+**Error Responses:**
+
+* **HTTP Status Code:** 404 Not Found
+	+ Error message: "User not found"
+* **HTTP Status Code:** 401 Unauthorized
+	+ Error message: "Invalid authentication token"
+* **HTTP Status Code:** 429 Too Many Requests
+	+ Error message: "Rate limit exceeded"
+
+**Notes:**
+
+* The `datePlaced` field is in ISO 8601 format.
+* The `status` field can be one of the following values: "pending", "shipped", "cancelled".
+
+**Example Request:**
+```bash
+curl -X GET \

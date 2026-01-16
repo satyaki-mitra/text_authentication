@@ -1,0 +1,59 @@
+**API Endpoint: `/users`**
+
+### Overview
+
+The `/users` API endpoint allows you to retrieve a list of users from the system. This endpoint is used to fetch a collection of user data, including their profile information and any relevant metadata.
+
+### Request Parameters
+
+#### `page`: Optional integer parameter
+Specify the page number to retrieve (default: 1). The maximum page size is 100.
+
+Example: `?page=2`
+
+#### `limit`: Optional integer parameter
+Specify the number of users to return per page (default: 10, max: 100).
+
+Example: `?limit=25`
+
+### Response
+
+The `/users` API endpoint returns a JSON response containing an array of user objects. Each user object includes the following properties:
+
+* `id`: Unique identifier for the user
+* `name`: User's full name
+* `email`: User's email address
+* `role`: User's role (e.g., admin, standard)
+* `created_at`: Timestamp indicating when the user account was created
+
+Example response:
+```json
+[
+  {
+    "id": 12345,
+    "name": "John Doe",
+    "email": "johndoe@example.com",
+    "role": "admin",
+    "created_at": "2022-01-01T12:00:00Z"
+  },
+  {
+    "id": 67890,
+    "name": "Jane Smith",
+    "email": "janesmith@example.com",
+    "role": "standard",
+    "created_at": "2021-02-15T14:30:00Z"
+  }
+]
+```
+
+### Error Handling
+
+The `/users` API endpoint returns the following error responses:
+
+* `404 Not Found`: If no users are found matching the specified page and limit.
+* `500 Internal Server Error`: In case of an unexpected server-side error.
+
+Example error response:
+```json
+{
+  "error":

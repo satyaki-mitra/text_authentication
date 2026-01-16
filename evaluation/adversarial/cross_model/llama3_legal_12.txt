@@ -1,0 +1,17 @@
+Here is a draft of a formal legal clause about data privacy compliance:
+
+**Data Privacy Compliance**
+
+1. **Compliance with Applicable Laws**: [Party Name] agrees to comply with all applicable data protection laws and regulations, including but not limited to the General Data Protection Regulation (GDPR), the Health Insurance Portability and Accountability Act (HIPAA), and any other relevant federal, state, or local laws.
+
+2. **Data Processing**: [Party Name] shall only process Personal Data (as defined below) in accordance with the instructions of [Other Party's Representative], and for the purposes specified in this Agreement. [Party Name] shall not use or disclose Personal Data except as necessary to perform its obligations under this Agreement, or as permitted by applicable law.
+
+3. **Data Controllership**: [Other Party's Representative] shall be considered the "Controller" (as defined under GDPR) with respect to all Personal Data processed in connection with this Agreement, and [Party Name] shall be considered a "Processor". [Party Name] agrees to process such Personal Data only on behalf of and at the direction of [Other Party's Representative], and to take reasonable steps to ensure compliance with applicable data protection laws.
+
+4. **Data Subject Rights**: [Party Name] shall provide all necessary assistance to enable [Other Party's Representative] to respond to requests from Data Subjects (as defined below) regarding their rights under applicable data protection laws, including but not limited to the right of access, rectification, erasure, restriction, and portability.
+
+5. **Security Measures**: [Party Name] shall implement and maintain appropriate technical and organizational measures to ensure the confidentiality, integrity, and availability of all Personal Data processed in connection with this Agreement, including but not limited to:
+
+(a) Access controls: [Party Name] shall only permit authorized personnel to access Personal Data.
+
+(b) Data encryption: [Party Name] shall encrypt all Personal Data using a method deemed appropriate by [Other Party's Representative].

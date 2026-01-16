@@ -1,0 +1,13 @@
+Title: Investigating the Role of Microbiome-Modulating Compounds in Neuroprotection against Alzheimer's Disease
+
+Abstract:
+
+Alzheimer's disease (AD) is a complex and multifactorial disorder characterized by progressive cognitive decline, neurodegeneration, and amyloid plaques. Recent advances in microbiome research have highlighted the critical interplay between gut microbiota and brain function, suggesting that alterations in the microbiome may contribute to AD pathogenesis. Here, we investigate the therapeutic potential of microbiome-modulating compounds in preventing or slowing down neurodegenerative processes associated with AD.
+
+Using a combination of bioinformatics tools and in vitro experiments, we identified a panel of compounds derived from gut microbiota that exhibit potent anti-inflammatory and antioxidant activities. These compounds, including short-chain fatty acids (SCFAs) and polyphenolic metabolites, were found to modulate the activity of key neuroinflammatory signaling pathways, including NF-κB and JAK/STAT.
+
+To assess their therapeutic efficacy, we employed a well-established AD mouse model (APP/PS1 mice), which exhibits robust cognitive impairment and neuropathological features similar to those observed in human AD patients. We found that oral administration of microbiome-modulating compounds significantly improved cognitive performance, reduced neuroinflammation, and attenuated amyloid-β deposition in APP/PS1 mice.
+
+Furthermore, our study demonstrated that these compounds modulated the gut-brain axis by altering the expression of key neurotransmitters (e.g., serotonin, dopamine) and brain-derived neurotrophic factor (BDNF), which are crucial for maintaining neuronal health and function.
+
+These findings suggest that microbiome-modulating compounds may represent a novel therapeutic approach in AD prevention or treatment. By targeting the gut-brain axis, these compounds may help to reduce neuroinflammation, promote neural protection, and improve cognitive function in AD patients. Further studies are needed to fully elucidate the underlying mechanisms and to explore the potential translational applications of this research.

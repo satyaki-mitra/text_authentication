@@ -1,0 +1,54 @@
+**API Endpoint: GET /users/{userId}/orders**
+
+**Summary**
+Retrieve a user's orders by their unique ID.
+
+**Path Parameters**
+
+* **{userId}**: The ID of the user whose orders you want to retrieve. This is a required parameter and must be an integer value.
+
+**Query Parameters**
+
+* None
+
+**HTTP Methods**
+
+* **GET**: Retrieve the user's orders.
+* **HEAD**: Return only the HTTP headers (no body).
+
+**Response**
+The API returns a JSON response containing an array of order objects, each with the following properties:
+
+* **id**: The unique ID of the order.
+* **date**: The date and time the order was placed.
+* **total**: The total cost of the order.
+* **status**: The current status of the order (e.g., "pending", "shipped", "delivered").
+
+**Example Response**
+```json
+[
+  {
+    "id": 123,
+    "date": "2022-01-01T12:00:00Z",
+    "total": 10.99,
+    "status": "pending"
+  },
+  {
+    "id": 456,
+    "date": "2022-01-02T14:30:00Z",
+    "total": 5.99,
+    "status": "shipped"
+  }
+]
+```
+**Error Handling**
+
+* **404 Not Found**: If the user ID is invalid or does not exist, the API returns a 404 error with an empty response body.
+* **500 Internal Server Error**: If there is an internal server error (e.g., database query failure), the API returns a 500 error with an empty response body.
+
+**Rate Limiting**
+This endpoint is subject to rate limiting. Exceeding the allowed number of requests per minute will result in a **429 Too Many Requests** error.
+
+**Security Considerations**
+
+* This endpoint requires authentication and authorization to ensure that only authorized

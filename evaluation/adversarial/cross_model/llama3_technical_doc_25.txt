@@ -1,0 +1,61 @@
+**Endpoint:** `GET /orders`
+
+**Summary:**
+
+Retrieve a list of orders placed by customers. This endpoint returns an array of order objects, each containing information about the order.
+
+**Path Parameters:**
+
+* None
+
+**Query Parameters:**
+
+* `customer_id`: (optional) Filter orders by customer ID. Accepts a comma-separated list of IDs.
+* `status`: (optional) Filter orders by status. Accepts one of the following values:
+	+ `pending`
+	+ `shipped`
+	+ `delivered`
+	+ `cancelled`
+
+**Request Headers:**
+
+* `Authorization`: Required Bearer token for API authentication.
+* `Content-Type`: Optional header specifying the format of the response (e.g., `application/json`).
+
+**Response:**
+
+The endpoint returns a JSON object containing an array of order objects. Each order object has the following properties:
+
+* `id`: Unique identifier for the order.
+* `customer_id`: ID of the customer who placed the order.
+* `status`: Current status of the order (e.g., `pending`, `shipped`, etc.).
+* `total`: Total cost of the order.
+* `items`: Array of items in the order, with each item having:
+	+ `id`: Unique identifier for the item.
+	+ `name`: Name of the item.
+	+ `quantity`: Quantity of the item ordered.
+
+**Example Response:**
+```json
+[
+  {
+    "id": 1,
+    "customer_id": 123,
+    "status": "pending",
+    "total": 100.00,
+    "items": [
+      {
+        "id": 1,
+        "name": "Product A",
+        "quantity": 2
+      },
+      {
+        "id": 2,
+        "name": "Product B",
+        "quantity": 3
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "customer_id

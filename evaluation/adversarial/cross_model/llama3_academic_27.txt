@@ -1,0 +1,13 @@
+Title: Investigating the Role of MicroRNAs in Regulating Neuroplasticity and Neurodegeneration in Alzheimer's Disease
+
+Abstract:
+
+Alzheimer's disease (AD) is a complex neurodegenerative disorder characterized by cognitive decline, memory impairment, and progressive neuronal loss. Recent studies have implicated microRNAs (miRNAs) as key players in the regulation of neuroplasticity and neurodegeneration. miRNAs are small non-coding RNAs that modulate gene expression by binding to messenger RNA (mRNA) targets, thereby influencing cellular processes such as synaptic plasticity, neuronal differentiation, and cell survival.
+
+This study aimed to investigate the role of miRNAs in AD using a combination of bioinformatic, molecular biology, and behavioral approaches. We first performed a comprehensive analysis of miRNA expression profiles in post-mortem brain tissue from individuals with AD compared to healthy controls. Our results revealed significant alterations in miRNA-125b, -132, and -146a levels in AD brains.
+
+Next, we employed in vitro experiments using human neuroblastoma cells to investigate the functional consequences of these altered miRNA expressions. We found that overexpression of miR-125b and -132 led to increased neuronal apoptosis and reduced neurite outgrowth, while miR-146a downregulation promoted cell survival and enhanced synaptic plasticity.
+
+To further explore the relevance of our findings to AD pathophysiology, we used a well-established mouse model of AD (APP/PS1 mice) to examine the effects of modulating these miRNAs on cognitive performance. Our behavioral experiments revealed that miR-125b and -132 overexpression impaired learning and memory, whereas miR-146a downregulation improved spatial memory.
+
+In conclusion, this study provides novel insights into the role of miRNAs in regulating neuroplasticity and neurodegeneration in AD. Our findings suggest that alterations in miRNA-125b, -132, and -146a expression

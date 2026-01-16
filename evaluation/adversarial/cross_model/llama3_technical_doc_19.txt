@@ -1,0 +1,47 @@
+**API Endpoint: `/users/{id}`**
+
+### Description:
+
+The `/users/{id}` endpoint allows clients to retrieve information about a specific user by their unique ID. This endpoint is used to fetch detailed information about a user, including their profile data and any relevant metadata.
+
+### HTTP Request Method:
+
+* `GET`
+
+### URL Parameters:
+
+* `{id}` (required): The unique identifier of the user for which you want to retrieve information. This should be a UUID or a unique integer value.
+
+### Request Body:
+
+None
+
+### Response:
+
+The response will contain the requested user's profile data in JSON format, with the following structure:
+```json
+{
+  "id": "12345678-1234-5678-1234-5678123456",
+  "name": {
+    "first": "John",
+    "last": "Doe"
+  },
+  "email": "johndoe@example.com",
+  "phone_number": "+1 (555) 123-4567",
+  "profile_picture": "https://example.com/picture.png",
+  "metadata": [
+    {
+      "key": "department",
+      "value": "Engineering"
+    },
+    {
+      "key": "job_title",
+      "value": "Software Engineer"
+    }
+  ]
+}
+```
+### Response Codes:
+
+* `200 OK`: The request was successful, and the user's profile data is returned in the response body.
+* `404 Not Found`: The requested user ID does not exist or has been deleted.

@@ -1,0 +1,36 @@
+**API Endpoint: `GET /users/{userId}/orders`**
+
+### Overview
+
+The `GET /users/{userId}/orders` endpoint allows clients to retrieve the order history of a specific user. This endpoint is part of the `users` API namespace, which provides information about individual users and their associated data.
+
+### Request Parameters
+
+* **`userId`** (required): The unique identifier of the user whose orders are being requested. This parameter should be passed as a path variable in the URL.
+* **`limit`** (optional, default: 10): The maximum number of orders to return in a single response. Use this parameter to paginate large order sets.
+* **`offset`** (optional, default: 0): The starting point for pagination. Use this parameter in conjunction with `limit` to retrieve specific subsets of orders.
+
+### Response
+
+The API responds with a JSON object containing the following:
+
+* **`orders`** (array): A list of order objects, each representing an individual order.
+	+ **`orderId`**: Unique identifier for the order.
+	+ **`userId`**: The ID of the user who placed the order.
+	+ **`orderDate`**: The date and time when the order was placed.
+	+ **`total`**: The total cost of the order.
+* **`metadata`** (object): Additional metadata about the response, including:
+	+ **`totalOrders`**: The total number of orders available for the specified user.
+	+ **`nextOffset`**: The offset value to use when requesting the next page of orders.
+
+### Error Handling
+
+The API returns error responses in JSON format, with the following structure:
+
+* **`error`** (string): A brief description of the error.
+* **`code`** (integer): A unique error code for debugging purposes.
+* **`message`** (string): A detailed message describing the error.
+
+### HTTP Status Codes
+
+The API

@@ -1,0 +1,51 @@
+**API Endpoint: Get User Information**
+
+**Endpoint URL:** `/users/{userId}`
+
+**HTTP Method:** `GET`
+
+**Request Parameters:**
+
+* `userId`: The unique identifier of the user whose information is being requested (required)
+
+**Response:**
+
+The response will be in JSON format and contain the following properties:
+
+* `id`: The unique identifier of the user
+* `name`: The name of the user
+* `email`: The email address of the user
+* `role`: The role of the user (e.g. "admin", "user")
+
+**Example Response:**
+```json
+{
+  "id": 123,
+  "name": "John Doe",
+  "email": "johndoe@example.com",
+  "role": "admin"
+}
+```
+**Error Handling:**
+
+* **400 Bad Request**: If the `userId` parameter is missing or invalid, a 400 error will be returned with an error message indicating that the request was malformed.
+* **404 Not Found**: If the specified user does not exist, a 404 error will be returned with an error message indicating that the resource was not found.
+
+**Rate Limiting:**
+
+This API endpoint is subject to rate limiting. The maximum number of requests per minute is 100. Exceeding this limit will result in a `429 Too Many Requests` error being returned.
+
+**Security Considerations:**
+
+* This API endpoint requires authentication using an API key. You can obtain an API key by contacting our support team.
+* All data transmitted to and from this API endpoint is encrypted using SSL/TLS.
+
+**Versioning:**
+
+This API endpoint is versioned using the `Accept` header. To specify a particular version of the API, use the following formats:
+	+ `application/json;version=1`: Version 1 of the API
+	+ `application/json;version=2`: Version 2 of the API
+
+**Examples:**
+
+* Requesting user

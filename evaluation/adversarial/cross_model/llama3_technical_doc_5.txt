@@ -1,0 +1,56 @@
+**API Endpoint: `GET /users/{id}`**
+
+**Overview**
+
+The `GET /users/{id}` endpoint returns the details of a specific user identified by their unique ID.
+
+**Request Parameters**
+
+* **`id`**: The ID of the user to retrieve (required).
+	+ Type: UUID
+	+ Example: `123e4567-e89b-12d3-a456-426616446126`
+
+**Response**
+
+The response will be in JSON format and contain the following attributes:
+
+* **`id`**: The unique ID of the user.
+	+ Type: UUID
+* **`name`**: The full name of the user.
+	+ Type: String
+* **`email`**: The email address of the user.
+	+ Type: String
+* **`role`**: The role of the user (e.g. "admin", "user").
+	+ Type: String
+* **`created_at`**: The timestamp when the user was created.
+	+ Type: Date
+* **`updated_at`**: The timestamp when the user was last updated.
+	+ Type: Date
+
+**Error Handling**
+
+If an error occurs while processing the request, the API will return a JSON response with the following structure:
+
+* **`error`**: A brief description of the error (required).
+	+ Type: String
+* **`code`**: A unique code identifying the error (optional).
+	+ Type: Integer
+
+Example Error Response:
+```json
+{
+  "error": "User not found",
+  "code": 404
+}
+```
+**Rate Limiting**
+
+This API endpoint is subject to rate limiting. The maximum number of requests that can be made within a given time period is 100 per minute.
+
+**Caching**
+
+The response from this API endpoint is cacheable for 1 hour (3600 seconds).
+
+**Security Considerations**
+
+* Authentication: This API endpoint requires authentication using an access token. Please see

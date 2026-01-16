@@ -1,0 +1,54 @@
+**API Endpoint: Get Users**
+
+**Endpoint URL:** `https://api.example.com/users`
+
+**HTTP Method:** GET
+
+**Description:** Retrieve a list of users from the system.
+
+**Request Headers:**
+
+* **Authorization**: Required. Use Bearer token authentication.
+* **Accept**: Optional, but recommended to specify the format you want to receive the response in (e.g., `application/json`).
+* **Content-Type**: Not applicable for this GET request.
+
+**Query Parameters:**
+
+* **limit**: Optional, integer value specifying the number of users to return per page. Default is 20.
+* **offset**: Optional, integer value specifying the starting point for pagination. Default is 0.
+* **search**: Optional, string value searching for users by name or email.
+
+**Response:**
+
+The response will be in JSON format, with a maximum size of 1000 characters per user.
+
+* **users**: An array of objects containing the following properties:
+	+ **id**: Unique identifier for the user (integer).
+	+ **name**: The user's full name (string).
+	+ **email**: The user's email address (string).
+	+ **role**: The user's role (e.g., "admin", "user", etc.) (string).
+
+**Example Response:**
+```json
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "John Doe",
+      "email": "johndoe@example.com",
+      "role": "admin"
+    },
+    {
+      "id": 2,
+      "name": "Jane Smith",
+      "email": "janesmith@example.com",
+      "role": "user"
+    }
+  ]
+}
+```
+**Error Handling:**
+
+* **HTTP Status Code:** 400 (Bad Request) if the `Authorization` header is missing or invalid.
+* **HTTP Status Code:** 401 (Unauthorized) if the user is not authenticated.
+* **

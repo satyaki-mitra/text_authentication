@@ -1,0 +1,15 @@
+Here is a scholarly abstract on a recent scientific topic:
+
+**Title:** "Unveiling the Role of MicroRNAs in Regulating Immune Responses to Cancer Immunotherapy"
+
+**Abstract:**
+
+The rapid advancement of cancer immunotherapy has revolutionized the treatment landscape for various types of cancer. However, understanding the complex interplay between immune cells and tumor microenvironment (TME) is crucial for optimizing therapeutic outcomes. Recent studies have implicated microRNAs (miRNAs), small non-coding RNAs, in modulating immune responses to cancer immunotherapy. This abstract summarizes our findings on the regulatory role of miRNAs in shaping T-cell-mediated antitumor immunity.
+
+Using a combination of bioinformatic tools and experimental approaches, we identified a subset of miRNAs that are differentially expressed between responder and non-responder patients treated with checkpoint inhibitors. Our data reveal that miR-29a, a tumor-suppressive miRNA, is significantly upregulated in responders, whereas miR-21, an oncogenic miRNA, is overexpressed in non-responders.
+
+Functional studies demonstrate that miR-29a enhances T-cell effector functions by targeting key immune checkpoints, such as PD-L1 and CTLA4. In contrast, miR-21 promotes immunosuppressive signaling pathways, including the upregulation of FOXP3+ regulatory T cells. Furthermore, we show that miR-29a/21 dysregulation is associated with altered expression of genes involved in T-cell activation, proliferation, and apoptosis.
+
+These findings have important implications for the development of novel therapeutic strategies that integrate miRNA modulation with cancer immunotherapy. Our study highlights the potential of targeting miRNAs to enhance antitumor immunity and improve treatment outcomes in patients with advanced cancer. Future studies will investigate the mechanistic underpinnings of miR-29a/21-mediated immune regulation and explore the translational potential of this knowledge.
+
+**Keywords:** microRNAs, cancer immun

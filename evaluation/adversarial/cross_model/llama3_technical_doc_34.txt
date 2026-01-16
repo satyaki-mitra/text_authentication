@@ -1,0 +1,61 @@
+**API Endpoint: `GET /users/{id}`**
+
+### Description:
+
+Retrieve a user's details by their unique identifier.
+
+### Request Parameters:
+
+* **`id`**: The ID of the user to retrieve (required). Type: `integer`.
+
+### Request Example:
+
+```bash
+curl -X GET \
+  http://example.com/api/users/12345 \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer YOUR_API_KEY'
+```
+
+### Response:
+
+The API returns a JSON object containing the user's details.
+
+**Response Body:**
+
+```json
+{
+  "id": 12345,
+  "name": "John Doe",
+  "email": "johndoe@example.com",
+  "role": "admin"
+}
+```
+
+### Response Status Codes:
+
+* **200**: The user was found and the response body contains their details.
+* **404**: The user with the specified ID was not found.
+
+### Error Handling:
+
+If an error occurs while processing the request, the API will return a JSON object with the following structure:
+
+```json
+{
+  "error": {
+    "code": "INVALID_USER",
+    "message": "The user with the specified ID does not exist."
+  }
+}
+```
+
+### Notes:
+
+* The `id` parameter is required and must be an integer.
+* The API uses JSON Web Tokens (JWT) for authentication. Include a valid JWT in the `Authorization` header to authenticate your request.
+* This endpoint only returns public information about the user, such as their name and email address. For sensitive data, use the `GET /users/{id}/private` endpoint instead.
+
+### Changelog:
+
+* **2023-02-15**: Added support for retrieving users by ID.

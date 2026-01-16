@@ -1,0 +1,53 @@
+**API Endpoint: Get User Information**
+
+**Endpoint URL:** `https://api.example.com/users/{userId}`
+
+**HTTP Method:** GET
+
+**Request Parameters:**
+
+* **`userId`**: The unique identifier of the user to retrieve information about (required, string).
+* **`fields`**: A comma-separated list of fields to include in the response (optional, string).
+
+**Response:**
+
+The API endpoint returns a JSON object containing the requested user's information. The response will contain the following fields:
+
+* `id`: The unique identifier of the user.
+* `name`: The name of the user.
+* `email`: The email address of the user.
+* `role`: The role of the user (e.g., "admin", "user").
+* `created_at`: The date and time when the user was created.
+* `updated_at`: The date and time when the user's information was last updated.
+
+**Error Handling:**
+
+The API endpoint will return an error response in the following situations:
+
+* **404 Not Found**: If the specified `userId` does not exist.
+* **401 Unauthorized**: If the request is missing or invalid authentication credentials.
+* **500 Internal Server Error**: If an unexpected error occurs while processing the request.
+
+**Example Request:**
+
+```bash
+GET https://api.example.com/users/12345?fields=name,email,role
+```
+
+**Example Response:**
+
+```json
+{
+  "id": 12345,
+  "name": "John Doe",
+  "email": "johndoe@example.com",
+  "role": "user",
+  "created_at": "2022-01-01T12:00:00Z",
+  "updated_at": "2022-02-01T14:30:00Z"
+}
+```
+
+**Security Considerations:**
+
+* The API endpoint uses HTTPS to encrypt data in transit.
+* Authentication is required for all requests. See the [Authentication Guide](https

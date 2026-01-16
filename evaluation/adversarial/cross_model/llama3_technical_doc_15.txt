@@ -1,0 +1,57 @@
+**API Endpoint: `/users/{userId}/orders`**
+
+**Summary**
+
+Retrieve a user's orders by their unique `userId`.
+
+**Request Method**
+
+* **GET**
+* **HTTP Version**: 1.1
+* **Content-Type**: application/json
+
+**Path Parameters**
+
+* **`userId`**: The unique identifier of the user for whom you want to retrieve orders.
+
+**Query Parameters**
+
+* **None**
+
+**Response**
+
+A successful response will contain an array of order objects in JSON format.
+
+* **`orders`**: An array of order objects, each containing:
+	+ `orderId`: Unique identifier of the order.
+	+ `orderDate`: Date and time the order was placed (ISO 8601 format).
+	+ `totalPrice`: The total price of the order.
+	+ `status`: The current status of the order (e.g., "pending", "shipped", "delivered").
+
+Example Response:
+```json
+[
+  {
+    "orderId": 123,
+    "orderDate": "2022-01-01T12:00:00.000Z",
+    "totalPrice": 100.0,
+    "status": "pending"
+  },
+  {
+    "orderId": 124,
+    "orderDate": "2022-01-05T14:30:00.000Z",
+    "totalPrice": 50.0,
+    "status": "shipped"
+  }
+]
+```
+
+**Error Handling**
+
+* **`404 Not Found`**: If the `userId` is not found, a 404 error will be returned with an empty response body.
+* **`500 Internal Server Error`**: If there is an internal server error, a 500 error will be returned with an empty response body.
+
+**Security Considerations**
+
+* This API endpoint requires authentication using our standard authentication mechanism. See our [Authentication Guide](https://example.com/authentication-guide) for more information.
+* The `userId`

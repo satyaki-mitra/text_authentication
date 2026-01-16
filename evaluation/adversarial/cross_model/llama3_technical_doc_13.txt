@@ -1,0 +1,63 @@
+**API Endpoint: Get User Profile**
+
+**Endpoint URL:** `/users/{userId}/profile`
+
+**HTTP Method:** `GET`
+
+**Description:** Retrieves the profile information of a specific user.
+
+**Path Parameters:**
+
+* `{userId}` (required): The ID of the user whose profile to retrieve. Must be a valid numeric value.
+
+**Query Parameters:** None
+
+**Request Body:** None
+
+**Response:**
+
+* **HTTP Status Code:** 200 OK
+* **Content-Type:** `application/json`
+* **Response Body:** A JSON object containing the user's profile information, including:
+	+ `id`: The ID of the user.
+	+ `username`: The username of the user.
+	+ `email`: The email address of the user.
+	+ `name`: The full name of the user.
+	+ `bio`: A brief bio or description of the user.
+
+**Error Responses:**
+
+* **HTTP Status Code:** 404 Not Found
+	+ **Error Message:** User not found.
+	+ **Response Body:** None
+* **HTTP Status Code:** 500 Internal Server Error
+	+ **Error Message:** An internal error occurred. Please try again later.
+	+ **Response Body:** None
+
+**Security:**
+
+* This endpoint requires authentication using a valid API key or OAuth token.
+
+**Rate Limiting:**
+
+* This endpoint is subject to rate limiting to prevent abuse. The limit is 100 requests per minute.
+
+**Example Request:**
+```bash
+GET /users/123/profile HTTP/1.1
+Accept: application/json
+Authorization: Bearer YOUR_API_KEY
+```
+**Example Response:**
+```json
+{
+    "id": 123,
+    "username": "johnDoe",
+    "email": "johndoe@example.com",
+    "name": "John Doe",
+    "bio": "I'm a software developer with a passion for coding."
+}
+```
+**Changelog:**
+
+* v

@@ -1,0 +1,51 @@
+**API Endpoint: `GET /orders/{orderId}`**
+
+### Overview
+
+The `GET /orders/{orderId}` endpoint retrieves a specific order by its unique ID, allowing clients to access and retrieve detailed information about the order.
+
+### Request Parameters
+
+* **`orderId`:** A unique identifier for the order. The value should be a valid UUID (Universally Unique Identifier).
+
+Example: `123e4567-e89b-12d3-a456-426614174000`
+
+### Response
+
+The response to this endpoint will contain the requested order information in JSON format.
+
+**Order Object**
+
+* **`id`:** A unique identifier for the order.
+* **`customerName`:** The name of the customer associated with the order.
+* **`orderDate`:** The date and time when the order was placed.
+* **`totalAmount`:** The total amount charged to the customer for the order.
+* **`items`:** A list of items included in the order, each containing:
+	+ `id`: A unique identifier for the item.
+	+ `name`: The name of the item.
+	+ `quantity`: The quantity of the item ordered.
+
+Example Response:
+```json
+{
+  "id": "123e4567-e89b-12d3-a456-426614174000",
+  "customerName": "John Doe",
+  "orderDate": "2022-01-01T14:30:00.000Z",
+  "totalAmount": 100.99,
+  "items": [
+    {
+      "id": "item-1",
+      "name": "Product A",
+      "quantity": 3
+    },
+    {
+      "id": "item-2",
+      "name": "Product B",
+      "quantity": 2
+    }
+  ]
+}
+```
+### Error Handling
+
+If the requested order ID is invalid or cannot be found, the API will return a `404 Not Found

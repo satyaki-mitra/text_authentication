@@ -1,0 +1,45 @@
+**API Endpoint: Get User Information**
+
+### Overview
+
+The `GET /users/{userId}` API endpoint is used to retrieve detailed information about a specific user. This endpoint can be used by client applications to fetch user data, such as their name, email address, and role.
+
+### Request Parameters
+
+* **`userId`** (required): The unique identifier of the user for whom you want to retrieve information. This parameter should be a valid UUID.
+
+### Response
+
+The API endpoint returns a JSON object containing the requested user's information. The response format is as follows:
+
+```json
+{
+  "id": "<uuid>",
+  "name": "<string>",
+  "email": "<string>",
+  "role": "<string>",
+  "created_at": "<timestamp>",
+  "updated_at": "<timestamp>"
+}
+```
+
+* **`id`**: The unique identifier of the user.
+* **`name`**: The full name of the user.
+* **`email`**: The email address of the user.
+* **`role`**: The role assigned to the user (e.g., "admin", "moderator", etc.).
+* **`created_at`**: The timestamp when the user account was created.
+* **`updated_at`**: The timestamp when the user's information was last updated.
+
+### Response Codes
+
+The API endpoint returns the following response codes:
+
+* **200 OK**: The request was successful, and the user information is returned in the response body.
+* **404 Not Found**: The specified `userId` does not exist or is invalid.
+* **500 Internal Server Error**: An unexpected error occurred while processing the request.
+
+### Example Request
+
+To retrieve the user information for a specific user with the ID `123e4567-e89b-12d3-a456-426655440000`, you can send an HTTP GET request to the following URL:
+```bash
+https://api.example.com/users/123e4567-e89b-12

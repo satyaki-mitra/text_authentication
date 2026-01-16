@@ -1,0 +1,50 @@
+**API Endpoint: Get User Information**
+
+### Overview
+
+The `get_user_info` endpoint is used to retrieve information about a specific user. This endpoint accepts a single query parameter, `username`, and returns a JSON object containing the requested user's details.
+
+### Request Parameters
+
+* **username**: The username of the user whose information you want to retrieve. (Required)
+
+### Response Format
+
+The response will be in JSON format, with the following properties:
+
+* **id**: A unique identifier for the user.
+* **username**: The username associated with the user account.
+* **email**: The email address associated with the user account.
+* **name**: The full name of the user.
+* **role**: The role assigned to the user (e.g., "admin", "user", etc.).
+* **created_at**: The timestamp when the user account was created.
+* **updated_at**: The timestamp when the user account was last updated.
+
+### Request Example
+
+```http
+GET /api/users/get_user_info?username=johnDoe
+```
+
+### Response Example (JSON)
+
+```json
+{
+    "id": 1234,
+    "username": "johnDoe",
+    "email": "[john.doe@example.com](mailto:john.doe@example.com)",
+    "name": "John Doe",
+    "role": "user",
+    "created_at": "2022-01-01T12:00:00Z",
+    "updated_at": "2022-02-15T14:30:00Z"
+}
+```
+
+### Error Handling
+
+* **404 Not Found**: If the specified username is not found, a 404 error will be returned.
+* **500 Internal Server Error**: If there is an internal server error or the endpoint experiences technical difficulties, a 500 error will be returned.
+
+### Security Considerations
+
+* The `get_user_info` endpoint requires authentication to ensure only authorized users can access user information. To learn more

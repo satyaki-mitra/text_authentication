@@ -1,0 +1,61 @@
+**API Endpoint: Get User Information**
+
+**Endpoint URL:** `https://api.example.com/users/{userId}`
+
+**HTTP Method:** GET
+
+**Description:** Retrieves detailed information about a specific user.
+
+**Path Parameters:**
+
+* **`userId`**: The unique identifier of the user to retrieve information for. This is a required parameter.
+
+**Query Parameters:**
+
+* **None**
+
+**Request Headers:**
+
+* **`Authorization`:** A valid API token in the format `Bearer <token>`. See [Authentication](#authentication) section for more details.
+* **`Content-Type`:** Set to `application/json` for this endpoint.
+
+**Response:**
+
+The response will be a JSON object containing the user's information. The structure of the response is as follows:
+
+```json
+{
+  "id": <integer>,
+  "name": "<string>",
+  "email": "<string>",
+  "phoneNumber": "<string>",
+  "address": {
+    "street": "<string>",
+    "city": "<string>",
+    "state": "<string>",
+    "zip": "<string>"
+  },
+  "roles": [
+    "<role1>",
+    "<role2>",
+    ...
+  ]
+}
+```
+
+**Response Status Codes:**
+
+* **200 OK**: The request was successful, and the user information is returned.
+* **404 Not Found**: The specified `userId` does not exist in the system.
+
+**Authentication:**
+
+To access this endpoint, you need to provide a valid API token in the `Authorization` header. You can obtain an API token by contacting our support team or by using our authentication flow.
+
+**Rate Limiting:**
+
+This endpoint is rate-limited to prevent abuse. The maximum number of requests per minute is 100. If your application exceeds this limit, you will receive a `429 Too Many Requests` response.
+
+**Error Handling:**
+
+If an error occurs while processing the request, we return an error response with a JSON object containing the following

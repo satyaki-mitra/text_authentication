@@ -1,0 +1,47 @@
+**API Endpoint: Get User Information**
+
+**Endpoint:** `/api/users/{userId}`
+
+**HTTP Method:** GET
+
+**Description:** Retrieve information about a specific user.
+
+**Request Parameters:**
+
+* `userId`: The unique identifier of the user to retrieve information about. This is a required parameter and must be an integer.
+
+**Response:**
+
+The API endpoint returns a JSON object containing the requested user's information. The response will contain the following properties:
+
+* `id`: The unique identifier of the user.
+* `name`: The name of the user.
+* `email`: The email address of the user.
+* `role`: The role or job title of the user.
+
+**Example Response:**
+```json
+{
+  "id": 123,
+  "name": "John Doe",
+  "email": "johndoe@example.com",
+  "role": "Software Engineer"
+}
+```
+**Error Handling:**
+
+* **404 Not Found**: If the specified `userId` does not exist, the API will return a 404 error with an empty response body.
+* **500 Internal Server Error**: If there is an internal server error or any other unexpected error, the API will return a 500 error with an empty response body.
+
+**Rate Limiting:**
+
+This API endpoint has a rate limit of 100 requests per minute. Exceeding this limit may result in a `429 Too Many Requests` error being returned.
+
+**Caching:**
+
+The API endpoint returns cached data for a period of 1 hour. This means that if you request the same user information within an hour, you will receive the same response as if you had requested it previously.
+
+**Security Considerations:**
+
+* **Authentication**: The API requires authentication using our standard authentication mechanism.
+* **Authorization**: The API endpoint only returns data for users who have been authorized to access it.

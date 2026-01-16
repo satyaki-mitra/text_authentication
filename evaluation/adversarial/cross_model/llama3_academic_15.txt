@@ -1,0 +1,13 @@
+Title: Investigating the Role of MicroRNAs in the Pathogenesis of Alzheimer's Disease: A Systematic Review and Meta-Analysis
+
+Abstract:
+
+Alzheimer's disease (AD) is a complex neurodegenerative disorder characterized by cognitive decline, memory impairment, and accumulation of amyloid-β (Aβ) plaques and tau-containing neurofibrillary tangles. Recent evidence suggests that microRNAs (miRNAs), small non-coding RNAs, may play a crucial role in the pathogenesis of AD. This systematic review and meta-analysis aimed to investigate the relationship between miRNA expression and AD risk.
+
+We searched major biomedical databases, including PubMed, Scopus, and Web of Science, for studies examining miRNA profiles in AD patients versus controls. We included 25 eligible studies that reported miRNA expression levels or alterations in AD brains or biofluids. Our meta-analysis revealed that the expression of several miRNAs, including miR-125b, miR-132, miR-9, and miR-34a, was significantly altered in AD patients compared to controls.
+
+Notably, our findings suggest that these dysregulated miRNAs are involved in various molecular pathways implicated in AD pathogenesis, such as Aβ production, tau phosphorylation, and apoptosis. The altered expression of these miRNAs may contribute to the development and progression of AD by regulating gene expression, protein synthesis, and cellular homeostasis.
+
+Our study provides compelling evidence for the role of miRNAs in AD pathology and highlights their potential as novel biomarkers or therapeutic targets. Future studies should investigate the functional significance of these dysregulated miRNAs in AD and explore their application in diagnostic or treatment strategies. Overall, our findings contribute to a deeper understanding of the complex molecular mechanisms underlying AD and may ultimately lead to the development of effective therapies for this debilitating disease.
+
+Keywords: Alzheimer's disease, microRNA, miRNA, neurodegeneration, biomarker, therapy target.

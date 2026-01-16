@@ -1,0 +1,55 @@
+**API Endpoint: `/users/search`**
+
+**Overview**
+
+The `/users/search` endpoint is used to search for users within the system based on specific criteria. This endpoint returns a list of matching user records, along with relevant metadata.
+
+**Request Parameters**
+
+* **q**: The search query string (required). This parameter accepts a combination of keywords and filters, separated by spaces.
+* **filter**: A JSON object containing filter criteria (optional).
+	+ `username`: Filter results by username (exact match).
+	+ `email`: Filter results by email address (exact match).
+	+ `department`: Filter results by department ID or name.
+* **limit**: The maximum number of results to return (default: 20, max: 100).
+* **offset**: The starting point for pagination (default: 0).
+
+**Request Method**
+
+* **GET**
+
+**Request Example**
+
+```http
+GET /users/search?q=john+doe&filter={"username": "johndoe", "department": "Sales"}&limit=5&offset=0
+```
+
+**Response**
+
+The response will contain an array of user records, each with the following properties:
+
+* **id**: Unique identifier for the user.
+* **username**: The user's username.
+* **email**: The user's email address.
+* **department**: The user's department ID or name.
+* **metadata**: Additional metadata about the user (e.g., last login timestamp).
+
+**Response Example**
+
+```json
+[
+  {
+    "id": 123,
+    "username": "johndoe",
+    "email": "johndoe@example.com",
+    "department": "Sales",
+    "metadata": {
+      "last_login_timestamp": 1643723400
+    }
+  },
+  {
+    "id": 456,
+    "username": "johnsmith",
+    "email": "johnsmith@example.com",
+    "department": "Marketing",
+    "metadata

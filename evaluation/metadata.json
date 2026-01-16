@@ -1,0 +1,61 @@
+{
+    "dataset_name": "TEXT-AUTH-Eval",
+    "version": "1.0",
+    "total_samples": 1400,
+    "human_samples": 700,
+    "ai_samples": 700,
+    "challenge_samples": {
+        "paraphrased": 0,
+        "cross_model": 0
+    },
+    "domains": [
+        "general",
+        "academic",
+        "creative",
+        "ai_ml",
+        "software_dev",
+        "technical_doc",
+        "engineering",
+        "science",
+        "business",
+        "legal",
+        "medical",
+        "journalism",
+        "marketing",
+        "social_media",
+        "blog_personal",
+        "tutorial"
+    ],
+    "human_sources": {
+        "general": "Wikipedia",
+        "academic": "scientific_papers (arXiv abstracts)",
+        "creative": "Project Gutenberg / C4 filtered",
+        "ai_ml": "scientific_papers (arXiv with ML keywords)",
+        "software_dev": "C4 filtered (code/documentation keywords)",
+        "technical_doc": "C4 filtered (documentation keywords)",
+        "engineering": "scientific_papers (arXiv engineering)",
+        "science": "C4 filtered (scientific keywords)",
+        "business": "C4 filtered (business/financial keywords)",
+        "legal": "lex_glue / C4 filtered (legal keywords)",
+        "medical": "scientific_papers (PubMed abstracts)",
+        "journalism": "cnn_dailymail",
+        "marketing": "C4 filtered (marketing keywords)",
+        "social_media": "tweet_eval / C4 filtered (social keywords)",
+        "blog_personal": "C4 filtered (personal narrative keywords)",
+        "tutorial": "C4 filtered (tutorial/guide keywords)"
+    },
+    "ai_generation": {
+        "primary_model": "mistral:7b (via Ollama)",
+        "cross_model": "llama3:8b (via Ollama)",
+        "paraphrasing": "mistral:7b (via Ollama instruction-based rephrasing)"
+    },
+    "notes": [
+        "All AI-generated texts produced using local Ollama models to avoid Hugging Face downloads",
+        "Paraphrased set created by instructing mistral:7b to rephrase original AI texts",
+        "Cross-model set generated using llama3:8b (unseen during primary AI generation)",
+        "Human texts sourced exclusively from public, auto-downloadable datasets"
+    ],
+    "license": "CC BY / Public Domain / Fair Use \u2014 for research only",
+    "created": "2025",
+    "compatible_with": "TEXT-AUTH v1.0.0"
+}

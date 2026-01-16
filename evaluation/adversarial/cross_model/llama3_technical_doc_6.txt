@@ -1,0 +1,43 @@
+**API Endpoint: `/users`**
+
+**Description:**
+The `/users` endpoint is used to retrieve a list of users from the system. This endpoint can be used by client applications to fetch a list of users, including their basic information and any additional details that are specified in the request parameters.
+
+**Request Parameters:**
+
+* **limit**: The maximum number of users to return in the response (default: 10). Acceptable values: 1-100.
+* **offset**: The starting point for the user list (default: 0).
+* **filter**: A JSON object containing filter criteria. See the "Filter Criteria" section below.
+
+**Response:**
+
+The `/users` endpoint returns a JSON response containing an array of users. Each user object includes the following properties:
+
+* `id`: Unique identifier for the user.
+* `username`: The username chosen by the user.
+* `email`: The user's email address.
+* **profile**: An object containing additional profile information (e.g., name, bio).
+* **created_at`: Timestamp indicating when the user account was created.
+
+**Filter Criteria:**
+The `filter` parameter allows you to specify criteria for filtering the list of users. The filter object can contain the following properties:
+
+* `username_like`: A string pattern to match against usernames (e.g., "j%").
+* `email_like`: A string pattern to match against email addresses (e.g., "@example.com").
+* `profile_name_like`: A string pattern to match against profile names (e.g., "%John").
+
+**Example Request:**
+```
+GET /users?limit=20&offset=10&filter={"username_like": "j%"}
+```
+
+**Example Response:**
+```json
+{
+  "users": [
+    {
+      "id": 123,
+      "username": "john",
+      "email": "john@example.com",
+      "profile": {"name": "John Doe"},
+      "created_at": "

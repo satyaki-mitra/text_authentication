@@ -1,0 +1,53 @@
+**API Endpoint: Get User Information**
+
+**Endpoint URL:** `https://api.example.com/users/{userId}`
+
+**HTTP Method:** GET
+
+**Description:** This API endpoint returns detailed information about a specific user, including their profile data and any associated metadata.
+
+**Request Parameters:**
+
+* **{userId} (required):** The unique identifier of the user for which you want to retrieve information. This must be a valid UUID ( Universally Unique Identifier).
+
+**Response Format:** JSON
+
+**Response Structure:**
+
+The response will contain the following properties:
+
+* `id`: The unique identifier of the user.
+* `name`: The full name of the user.
+* `email`: The primary email address associated with the user account.
+* `profilePictureUrl`: The URL of the user's profile picture.
+* `bio`: A brief bio or description of the user.
+* `lastActive`: The timestamp of the user's most recent login or activity.
+
+**Error Handling:**
+
+If the requested user ID is invalid or does not exist, the API will return a 404 Not Found error response with the following structure:
+
+* `error`: "User not found"
+* `code`: 404
+
+**Security Considerations:**
+
+This endpoint requires authentication and authorization to access. Only authorized users with the necessary permissions can retrieve information about other users.
+
+**Rate Limiting:**
+
+To prevent abuse, this API endpoint is subject to rate limiting. Excessive requests may result in temporary or permanent blocking of your IP address.
+
+**Example Request:**
+```bash
+GET https://api.example.com/users/12345678
+```
+**Example Response:**
+```json
+{
+  "id": "12345678",
+  "name": "John Doe",
+  "email": "johndoe@example.com",
+  "profilePictureUrl": "https://example.com/john-doe-profile-picture.jpg",
+  "bio": "Software engineer and cat lover.",
+  "lastActive": "

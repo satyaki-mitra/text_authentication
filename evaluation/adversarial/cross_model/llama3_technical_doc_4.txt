@@ -1,0 +1,50 @@
+**API Endpoint: Get User Information**
+
+**Endpoint URL:** `https://api.example.com/users/{userId}`
+
+**HTTP Method:** GET
+
+**Request Parameters:**
+
+* **`userId`**: The ID of the user to retrieve information about (required, integer)
+	+ Example value: `12345`
+	+ Maximum length: 10 characters
+* **`fields`**: A comma-separated list of fields to include in the response (optional, string)
+	+ Example value: `"name,email,phoneNumber"`
+	+ Maximum length: 255 characters
+
+**Response:**
+
+The API returns a JSON object containing the user's information. The response includes the following fields:
+
+* **`id`**: The unique ID of the user (integer)
+* **`name`**: The user's full name (string)
+* **`email`**: The user's email address (string)
+* **`phoneNumber`**: The user's phone number (string)
+* **`address`**: The user's physical address (string)
+
+**Example Response:**
+```json
+{
+  "id": 12345,
+  "name": "John Doe",
+  "email": "johndoe@example.com",
+  "phoneNumber": "+1-555-555-5555",
+  "address": {
+    "street": "123 Main St",
+    "city": "Anytown",
+    "state": "CA",
+    "zip": "12345"
+  }
+}
+```
+**Error Handling:**
+
+* **`404 Not Found`**: If the user ID does not exist in the database, the API returns a `404 Not Found` error.
+* **`500 Internal Server Error`**: If an internal server error occurs while processing the request, the API returns a `500 Internal Server Error`.
+
+**Rate Limiting:**
+
+The API enforces rate limiting to prevent abuse. The rate limit is 100 requests per minute per IP address.
+
+**Caching:**

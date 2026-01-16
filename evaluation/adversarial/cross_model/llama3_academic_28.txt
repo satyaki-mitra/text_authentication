@@ -1,0 +1,13 @@
+Title: Uncovering the Mechanisms Underlying the Emergence of Self-Organizing Criticality in Complex Systems: A Study on the Interplay between Feedback Loops and Spatial Heterogeneity
+
+Abstract:
+
+Self-organizing criticality (SOC) is a phenomenon observed in various complex systems, characterized by the emergence of power-law distributions and scaling behavior. Despite its ubiquity, the underlying mechanisms governing SOC are still not fully understood. Recent studies have suggested that feedback loops and spatial heterogeneity play crucial roles in inducing SOC. However, the interplay between these two factors has remained largely unexplored.
+
+In this study, we investigate the dynamics of a paradigmatic model of interacting particles on a lattice, incorporating both feedback loops and spatial heterogeneity. Our simulations reveal that the emergence of SOC is contingent upon the balance between these two components. Specifically, we find that feedback loops promote the growth of clusters, while spatial heterogeneity introduces fluctuations that can lead to critical behavior.
+
+Our analysis reveals that the interplay between feedback loops and spatial heterogeneity gives rise to a non-trivial phase diagram, featuring multiple regimes with distinct scaling behaviors. We identify three regimes: (1) a subcritical regime characterized by trivial scaling, (2) an SOC regime exhibiting power-law distributions, and (3) a supercritical regime marked by rapid growth and eventual saturation.
+
+Our results provide new insights into the mechanisms underlying SOC, highlighting the importance of considering both feedback loops and spatial heterogeneity. The phase diagram we obtain can be applied to various complex systems, such as biological networks, social networks, and physical systems, providing a framework for understanding and predicting their behavior. Furthermore, our findings open avenues for exploring the interplay between these two components in other SOC models, shedding light on the universal features of critical phenomena.
+
+Keywords: self-organizing criticality, feedback loops, spatial heterogeneity, complex systems, phase transitions.
