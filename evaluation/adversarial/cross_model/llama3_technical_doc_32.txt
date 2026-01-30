@@ -1,53 +1,74 @@
-**API Endpoint: Get User Information**
+**API Documentation: User Profile Management System**
 
-**Endpoint URL:** `https://api.example.com/users/{userId}`
+The User Profile Management System (UPMS) is a RESTful API designed to manage user profiles across multiple platforms. This API provides a centralized hub for storing, retrieving, and updating user information, ensuring seamless integration with various systems.
 
-**HTTP Method:** GET
+**API Endpoints**
 
-**Request Parameters:**
+1. **/users**: Retrieves a list of all registered users.
+	* Method: GET
+	* Request Parameters: None
+	* Response:
+		+ Success (200 OK): A JSON array containing user profiles
+		+ Error (400 Bad Request): Invalid request or unauthorized access
+2. **/users/{userId}**: Retrieves a specific user's profile.
+	* Method: GET
+	* Request Parameters:
+		+ {userId}: Unique identifier for the target user
+	* Response:
+		+ Success (200 OK): The requested user's profile in JSON format
+		+ Error (404 Not Found): User not found or unauthorized access
+3. **/users**: Creates a new user profile.
+	* Method: POST
+	* Request Body:
+		+ username: String (required)
+		+ email: String (required)
+		+ password: String (required)
+	* Response:
+		+ Success (201 Created): The newly created user's profile in JSON format
+		+ Error (400 Bad Request): Invalid request or unauthorized access
+4. **/users/{userId}**: Updates an existing user's profile.
+	* Method: PUT
+	* Request Body:
+		+ username: String (optional)
+		+ email: String (optional)
+		+ password: String (optional)
+	* Response:
+		+ Success (200 OK): The updated user's profile in JSON format
+		+ Error (404 Not Found): User not found or unauthorized access
+5. **/users/{userId}**: Deletes a user's profile.
+	* Method: DELETE
+	* Request Parameters:
+		+ {userId}: Unique identifier for the target user
+	* Response:
+		+ Success (204 No Content): User profile deleted successfully
+		+ Error (404 Not Found): User not found or unauthorized access
 
-* **`userId`**: The unique identifier of the user to retrieve information about (required, string).
-* **`fields`**: A comma-separated list of fields to include in the response (optional, string).
+**Request Headers**
 
-**Response:**
+* `Authorization`: Required for authentication. Use the following format: `Bearer <access_token>`
+* `Content-Type`: Set to `application/json` for POST and PUT requests
 
-The API endpoint returns a JSON object containing the requested user's information. The response will contain the following fields:
+**Error Handling**
 
-* `id`: The unique identifier of the user.
-* `name`: The name of the user.
-* `email`: The email address of the user.
-* `role`: The role of the user (e.g., "admin", "user").
-* `created_at`: The date and time when the user was created.
-* `updated_at`: The date and time when the user's information was last updated.
+The UPMS API follows a RESTful error handling strategy, returning HTTP status codes that indicate the nature of the error.
 
-**Error Handling:**
+* **400 Bad Request**: Invalid request or unauthorized access
+* **404 Not Found**: User not found or unauthorized access
+* **500 Internal Server Error**: Unexpected server-side error
 
-The API endpoint will return an error response in the following situations:
+**Security Considerations**
 
-* **404 Not Found**: If the specified `userId` does not exist.
-* **401 Unauthorized**: If the request is missing or invalid authentication credentials.
-* **500 Internal Server Error**: If an unexpected error occurs while processing the request.
+The UPMS API employs robust security measures to ensure data integrity and confidentiality. These include:
 
-**Example Request:**
+* Authentication using JSON Web Tokens (JWT)
+* Data encryption for sensitive information
+* Secure communication channels (HTTPS) for all requests
 
-```bash
-GET https://api.example.com/users/12345?fields=name,email,role
-```
+**Usage Guidelines**
 
-**Example Response:**
+1. Use the `/users` endpoint to retrieve a list of all registered users or create a new user profile.
+2. Use the `/{userId}` endpoints to retrieve, update, or delete an existing user's profile.
+3. Ensure that API requests include valid authentication headers (e.g., `Authorization: Bearer <access_token>`).
+4. Handle errors according to the HTTP status codes returned by the API.
 
-```json
-{
-  "id": 12345,
-  "name": "John Doe",
-  "email": "johndoe@example.com",
-  "role": "user",
-  "created_at": "2022-01-01T12:00:00Z",
-  "updated_at": "2022-02-01T14:30:00Z"
-}
-```
-
-**Security Considerations:**
-
-* The API endpoint uses HTTPS to encrypt data in transit.
-* Authentication is required for all requests. See the [Authentication Guide](https
+By following these guidelines and utilizing the UP

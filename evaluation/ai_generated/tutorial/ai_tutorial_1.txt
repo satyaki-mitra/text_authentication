@@ -1,38 +1,30 @@
-Title: A Step-by-Step Guide for Beginners: Setting Up Your First WordPress Website
+Title: A Comprehensive Guide for Beginners: Setting Up an FTP Client on Windows 10
 
-**Objective:** By the end of this guide, you will learn how to set up your first WordPress website from scratch.
+This tutorial will guide you through the process of setting up an FTP (File Transfer Protocol) client on your Windows 10 computer. An FTP client allows you to transfer files between your local computer and a remote server, which is essential for web development or managing files on a remote host. We'll be using FileZilla, a free, open-source FTP client that offers a user-friendly interface.
 
-**Materials Needed:**
-1. Domain Name (ex: mywebsite.com)
-2. Web Hosting Service (ex: Bluehost, SiteGround, GoDaddy)
-3. WordPress Installation
-4. Choosing and Installing a Theme
-5. Customizing Your Website (Pages, Menus, Widgets)
-6. Adding Plugins for Enhanced Functionality
-7. Setting Up a Basic SEO Strategy
+**Step 1: Download and Install FileZilla**
 
-**Step 1: Choose a Domain Name**
-- Visit a domain registrar like GoDaddy, Namecheap, or Bluehost.
-- Search for and select an available domain name that represents your brand or website content.
-- Complete the registration process by providing necessary contact information and making payment.
+1.1 Visit the official FileZilla website (https://filezilla-project.org/) to download the appropriate version for Windows.
+1.2 Click on the "Download FileZilla Client" button, and save the file to your preferred location.
+1.3 Once the download is complete, run the installer by double-clicking the downloaded file.
+1.4 Follow the on-screen instructions to complete the installation process.
 
-**Step 2: Purchase Web Hosting**
-- Choose a reliable web hosting service such as Bluehost, SiteGround, or GoDaddy.
-- Select a hosting plan that fits your needs (Shared, VPS, Dedicated, or Managed WordPress).
-- Complete the signup process and make payment.
+**Step 2: Open FileZilla**
 
-**Step 3: Set Up Your Website with Your Hosting Provider**
-- Log in to your hosting provider's control panel (cPanel or Plesk).
-- Click on the "WordPress" icon in the main dashboard, then click "Install."
-- Follow the prompts to install WordPress. You'll need your domain name and email address for this step.
+2.1 Navigate to the FileZilla application in your Start menu or desktop shortcut and click to open it.
 
-**Step 4: Access Your Newly Installed WordPress Site**
-- Use the provided login credentials to log in to your new WordPress website.
-- Bookmark the login URL (ex: www.mywebsite.com/wp-admin) for easy access.
+**Step 3: Set Up Your FTP Site**
 
-**Step 5: Choose and Install a Theme**
-- In your WordPress dashboard, navigate to "Appearance" > "Themes."
-- Click on "Add New" to browse available themes, or click "Upload Theme" to upload a theme you've downloaded elsewhere.
-- Preview and install the chosen theme, then activate it.
+3.1 In the "Site Manager" window, click on "File" from the top menu, then select "Site Manager."
+3.2 Click on the "New Site" button at the bottom of the window to create a new connection profile.
+3.3 Give your site a recognizable name in the "Host" field (e.g., MyWebsite).
+3.4 Enter your FTP server's address, typically provided by your web host, in the "Host" field (e.g., ftp.example.com).
+3.5 In the "Port" field, enter the default FTP port number 21 unless otherwise specified by your web host.
+3.6 Enter your FTP username and password in their respective fields. These are also provided by your web host.
+3.7 Ensure the "Logon Type" is set to "Normal."
+3.8 Click on the "Connect" button at the bottom of the window to test the connection. If successful, you will be connected to your FTP server.
 
-**Step 6: Customize Your Website**
+**Step 4: Navigate Your Local and Remote Files**
+
+4.1 In the left pane (Local site), navigate to the folder containing the files you want to upload by using the file explorer-like interface.
+4.2 In the right pane (Remote site), you'll see the FTP server's root directory or the specified directory, depending on your web host's configuration. Navigate through the remote directories to locate the destination folder for

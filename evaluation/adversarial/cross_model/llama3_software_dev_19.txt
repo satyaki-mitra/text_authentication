@@ -1,0 +1,71 @@
+**Designing Scalable and Efficient APIs: A Guide to API Gateway Patterns**
+
+As developers, we're constantly striving to create robust, scalable, and efficient systems that meet the demands of growing user bases and increasing data traffic. One crucial aspect of achieving this is by designing a well-architected API that can handle varying loads and requests. In this documentation, we'll explore the concept of API gateways and provide practical examples of design patterns to help you create scalable and efficient APIs.
+
+**What is an API Gateway?**
+
+An API gateway is a critical component in modern software architectures that acts as an entry point for incoming requests from clients, such as web browsers, mobile apps, or other services. Its primary responsibility is to manage these requests, route them to the appropriate backend services, and handle various tasks like authentication, rate limiting, and caching.
+
+**API Gateway Patterns**
+
+To create a scalable and efficient API, we'll focus on two essential patterns: **Request Routing** and **Service Composition**.
+
+### Request Routing
+
+In this pattern, the API gateway acts as an intelligent dispatcher that directs incoming requests to the most suitable backend service. This can be achieved through various strategies:
+
+* **Path-based routing**: Route requests based on specific path patterns.
+* **Query parameter-based routing**: Route requests based on query parameters (e.g., `?sort=asc`).
+* **Header-based routing**: Route requests based on custom headers (e.g., `X-API-Key`).
+
+**Example:**
+
+Suppose you have a blog API with two primary services:
+
+* `GET /posts`: Retrieves a list of posts
+* `GET /post/:id`: Retrieves a specific post by ID
+
+To implement request routing, you can define a mapping like this:
+```json
+{
+  "/posts": {
+    "target": "posts-service",
+    "methods": ["GET"]
+  },
+  "/post/:id": {
+    "target": "post-service",
+    "methods": ["GET"]
+  }
+}
+```
+In this example, when the API gateway receives a request for `/posts`, it will forward it to the `posts-service`. Similarly, requests for `/post/:id` will be routed to the `post-service`.
+
+### Service Composition
+
+This pattern enables the creation of complex workflows by combining multiple backend services. The API gateway orchestrates these services to achieve a specific goal.
+
+* **Chaining**: Sequentially calls multiple services.
+* **Parallel processing**: Concurrently invokes multiple services and aggregates their results.
+
+**Example:**
+
+Suppose you have an e-commerce API with three primary services:
+
+* `GET /products`: Retrieves a list of products
+* `GET /orders/:id`: Retrieves a specific order by ID
+* `POST /orders`: Creates a new order
+
+To implement service composition, you can define a workflow like this:
+```json
+{
+  "/orders": {
+    "target": [
+      {"service": "products-service", "method": "GET"},
+      {"service": "order-service", "method": "POST"}
+    ]
+  }
+}
+```
+In this example, when the API gateway receives a request for `/orders`, it will first retrieve a list of products from `products-service` and then create a new order using `order-service`. The resulting order is then returned to the client.
+
+By incorporating these two patterns into your API design, you can create a scalable and efficient system that effectively manages incoming requests and routes them to the

@@ -1,23 +1,30 @@
-Title: Clause Regarding Confidentiality and Non-Disclosure
+Title: Data Processing Agreement (DPA) - Clause 4 - Data Subject Rights
 
-1. Confidential Information
+**Article 4: Data Subject Rights**
 
-1.1 In the course of performing services under this Agreement, each party (the "Receiving Party") may have access to confidential information of the other party (the "Disclosing Party"). The Receiving Party acknowledges that such confidential information is valuable and proprietary to the Disclosing Party, and agrees to protect and preserve it.
+1. **Obligations Regarding Data Subject Requests**
 
-1.2 For the purposes of this Agreement, "Confidential Information" shall mean any non-public, proprietary, or business-sensitive information disclosed by one party to the other, whether in written, oral, or electronic form, and including but not limited to technical data, trade secrets, product designs, financial data, marketing plans, customer lists, and business strategies.
+   (a) Each Party shall, to the extent required by applicable law, promptly notify the other Party if it receives a request from a Data Subject for access to, rectification, erasure, restriction of processing, portability, or objection to the processing of Personal Data. The receiving Party shall not respond to such request without first obtaining the prior written consent of the other Party, unless required by law to do so.
 
-2. Obligations of the Receiving Party
+   (b) If a Data Subject exercises any of its rights under applicable data protection laws with respect to Personal Data processed under this Agreement, the Parties agree that they will cooperate and take reasonable steps to assist each other in responding to such request in compliance with their respective obligations under applicable data protection laws.
 
-2.1 The Receiving Party shall keep all Confidential Information in strict confidence and shall not disclose or use any such information except as expressly permitted under this Agreement.
+2. **Cooperation Regarding Access Requests from Supervisory Authorities**
 
-2.2 The Receiving Party may disclose Confidential Information to its employees, contractors, agents, or representatives who have a need to know the information for the purposes of performing services under this Agreement, provided that each such person is bound by confidentiality obligations no less restrictive than those set forth in this Agreement.
+   (a) Each Party shall promptly inform the other Party if it receives a request or communication from a Supervisory Authority relating to the processing of Personal Data under this Agreement. The Parties shall cooperate, on a reasonable basis, to respond to any such requests or communications and provide each other with reasonable assistance necessary to enable either Party to comply with such requests or communications.
 
-2.3 The Receiving Party shall take reasonable measures to protect the Confidential Information from unauthorized disclosure or use, including but not limited to maintaining physical security over Confidential Information and limiting access to Confidential Information on a need-to-know basis.
+   (b) Each Party shall take into account the nature of the processing, the information available to it, and the reasonable cost of providing the requested information to the other Party when responding to a request from a Supervisory Authority.
 
-3. Exceptions to Confidentiality Obligations
+3. **Data Protection Impact Assessment**
 
-3.1 The obligations under this Clause shall not apply to any information that: (a) is or becomes generally available to the public through no fault of the Receiving Party; (b) was in the possession of the Receiving Party prior to receipt from the Disclosing Party; (c) is lawfully obtained by the Receiving Party from a third party without a breach of any obligation of confidentiality; or (d) is independently developed by employees of the Receiving Party without reference to or use of the Confidential Information.
+   (a) If either Party is required under applicable data protection laws to conduct a Data Protection Impact Assessment (DPIA), it shall involve the other Party without undue delay, and provide such assistance as is necessary for the DPIA, including sharing relevant information and documentation.
 
-4. Return of Confidential Information
+   (b) Each Party shall promptly inform the other Party if it becomes aware of any matters that may give rise to a high risk to the rights and freedoms of Data Subjects in relation to the processing of Personal Data under this Agreement.
 
-Upon termination or expiration of this Agreement, or upon the request of the Dis
+4. **Data Protection Officer**
+
+   If either Party appoints a Data Protection Officer (DPO) pursuant to applicable data protection laws, it shall promptly inform the other Party and provide contact details for the DPO. The Parties agree to cooperate with each other and, where appropriate, with the DPOs of each Party regarding their respective obligations under this Agreement and applicable data protection laws.
+
+For the purposes of this Clause:
+
+- "Data Subject" means an identified or identifiable natural person;
+- "Supervisory Authority" means any independent public authority responsible for monitoring the

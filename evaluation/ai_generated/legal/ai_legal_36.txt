@@ -1,7 +1,22 @@
-Clause: Indemnification and Hold Harmless Agreement
+Title: Data Processing Agreement ("DPA")
 
-In this Agreement, the indemnifying party (Indemnifier) agrees to hold harmless and indemnify the indemnified party (Indemnitee), its officers, directors, employees, agents, successors, and assigns against any and all losses, damages, liabilities, claims, actions, judgments, costs, and expenses (including reasonable attorneys' fees) that may arise from or in connection with any third-party claim resulting from the Indemnifier's breach of this Agreement, negligence, willful misconduct, or violation of any law or regulation.
+This Data Processing Agreement ("DPA") is entered into on [Insert Date] between [Your Company Name], a company incorporated under the laws of [Your Jurisdiction] with its registered office at [Your Registered Office Address] (hereinafter referred to as "Data Controller"), and [Customer's Company Name], a company incorporated under the laws of [Customer's Jurisdiction] with its registered office at [Customer's Registered Office Address] (hereinafter referred to as "Data Processor").
 
-Case Summary: United States ex rel. Barko v. Gilead Sciences, Inc., 872 F. Supp. 2d 1156 (N.D. Cal. 2012)
+WHEREAS:
 
-In this case, the plaintiff, a whistleblower under the False Claims Act, alleged that the defendant, Gilead Sciences, Inc., knowingly submitted false claims to federal healthcare programs for its drug Viread, used in the treatment of hepatitis C. The court held that the relator's allegations were sufficient to survive a motion to dismiss, as they contained sufficient factual detail to plausibly suggest that Gilead had violated the False Claims Act by knowingly submitting false claims for Viread. The case proceeded to trial, and Gilead ultimately settled with the government for $250 million.
+1. The Data Controller has engaged the Data Processor to process Personal Data on behalf of the Data Controller in accordance with the terms and conditions set out in a separate agreement between the parties ("Agreement");
+2. The processing of Personal Data by the Data Processor shall take place within the context of and for the purposes of the Agreement;
+3. Both Parties wish to implement additional data protection measures to meet their respective obligations under Regulation (EU) 2016/679 of the European Parliament and of the Council of 27 April 2016 on the protection of natural persons with regard to the processing of personal data and on the free movement of such data, and repealing Directive 95/46/EC (General Data Protection Regulation) ("GDPR");
+4. The Parties wish to set out their respective obligations in relation to the processing of Personal Data by the Data Processor;
+
+NOW, THEREFORE, in consideration of the mutual covenants contained herein and for good and valuable consideration, the receipt and sufficiency of which are hereby acknowledged, the Parties agree as follows:
+
+1. Definitions and Interpretation
+
+1.1 In this DPA, the following terms shall have the meanings set out below and cognate expressions shall be construed accordingly:
+
+   "Data Subject" means an individual who is the subject of Personal Data;
+
+   "Personal Data" means any information relating to an identified or identifiable natural person; an identifiable natural person is one who can be identified, directly or indirectly, in particular by reference to an identifier such as a name, an identification number, location data, an online identifier or to one or more factors specific to the physical, physiological, genetic, mental, economic, cultural or social identity of that natural person;
+
+   "Processing" means any operation or set of operations which is performed on Personal Data or on sets of Personal Data, whether or not by automated means, such as collection, recording, organization, structuring, storage, adaptation or alteration, retrieval, consultation, use, disclosure by transmission, dissemination or otherwise making available, alignment or combination, restriction, erasure or

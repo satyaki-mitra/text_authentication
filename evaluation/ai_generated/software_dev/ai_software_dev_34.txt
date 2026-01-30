@@ -1,27 +1,84 @@
-Title: Understanding the Dependency Injection Pattern in Software Development
+Title: Documentation on Observer Design Pattern with Java Implementation
 
-Introduction:
+## Introduction
 
-Dependency Injection (DI) is a design pattern that improves the modularity, testability, and maintainability of software applications by separating the dependency resolution from the object creation process. This article provides an overview of the Dependency Injection pattern, its benefits, and how it's applied in modern programming.
+The Observer Design Pattern is a behavioral design pattern that defines a one-to-many dependency between objects such that when one object changes state, all its dependents are notified and updated automatically. This pattern is particularly useful in implementing event-driven systems, real-time applications, or any scenario where there's a need for inter-object communication without the objects explicitly calling each other.
 
-Prerequisites:
+## Use Cases
 
-- Basic understanding of Object-Oriented Programming (OOP) concepts
-- Familiarity with a programming language (e.g., Java, C#, Python)
+1. **Weather Forecasting System:** In this system, weather data is collected by weather instruments and sent to the display system. When there are changes in weather conditions, the Observer pattern allows the display system to be automatically updated.
 
-Explanation:
+2. **Stock Market Application:** In a stock market application, multiple users can subscribe to stock updates. Whenever the price of a stock changes, all subscribed users receive an update.
 
-In traditional OOP applications, objects often have dependencies on other objects to perform their intended functionality. These dependencies are usually resolved by the object itself during its creation process, which can lead to tight coupling and hard-to-test code.
+## Java Implementation
 
-Dependency Injection aims to solve this problem by inverting control: instead of objects creating their own dependencies, they receive them from an external source (the "Injector" or "Container"). This decouples the object creation process from its dependencies and enables better modularity, testability, and maintainability.
+### Interface Definition
 
-Benefits:
+```java
+public interface Subject {
+    void attach(Observer observer);
+    void detach(Observer observer);
+    void notifyObservers();
+}
+```
 
-1. Loose Coupling: By separating the object creation process from its dependencies, Dependency Injection reduces coupling between different parts of an application, making it easier to change one component without affecting others.
-2. Testing Ease: With Dependency Injection, you can easily swap out real dependencies with mock objects for unit testing, allowing for more effective and efficient testing of your code.
-3. Improved Modularity: Dependency Injection makes it easier to organize your application into smaller, reusable modules that can be easily swapped in and out as needed.
-4. Simplified Configuration: Instead of hardcoding configuration details within your classes, you can manage them externally using Dependency Injection, making it simpler to adjust settings for different environments (e.g., development vs production).
+```java
+public interface Observer {
+    void update(Subject subject);
+}
+```
 
-Application in Modern Programming:
+### Concrete Subject Implementation
 
-Many popular programming frameworks and libraries support Dependency Injection out-of-the-box, including Spring (Java), .NET Core (C#), Django (Python), and AngularJS (JavaScript). These tools provide built-in dependency injection mechanisms that make it easy to implement the pattern in your code.
+```java
+import java.util.*;
+
+public class WeatherData implements Subject, Observable {
+    private float temperature;
+    private float humidity;
+    private float pressure;
+    private List<Observer> observers = new ArrayList<>();
+
+    public void measurementsChanged() {
+        notifyObservers();
+    }
+
+    @Override
+    public void attach(Observer observer) {
+        observers.add(observer);
+        observer.update(this);
+    }
+
+    @Override
+    public void detach(Observer observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (Observer observer : observers) {
+            observer.update(this);
+        }
+    }
+
+    // Other methods to set and get measurements
+}
+```
+
+### Concrete Observer Implementation
+
+```java
+public class CurrentConditionsDisplay implements Observer {
+    private float temperature;
+    private float humidity;
+    private WeatherData weatherData;
+
+    public CurrentConditionsDisplay(WeatherData weatherData) {
+        this.weatherData = weatherData;
+        weatherData.attach(this);
+    }
+
+    @Override
+    public void update(Subject subject) {
+        WeatherData data = (WeatherData) subject;
+        this.temperature = data.getTemperature

@@ -1,59 +1,51 @@
-**API Endpoint: `/users`**
+**API Documentation: User Profile Management**
 
-### Overview
+The User Profile Management API is a RESTful interface that enables developers to create, read, update, and delete user profiles for their applications. This API provides a secure and scalable way to manage user information, making it easy to integrate with existing systems.
 
-The `/users` API endpoint allows you to retrieve a list of users from the system. This endpoint is used to fetch a collection of user data, including their profile information and any relevant metadata.
+**Specifications**
 
-### Request Parameters
+* **Authentication**: The API uses JSON Web Tokens (JWT) for authentication. Developers must provide a valid JWT token in the `Authorization` header of each request.
+* **API Endpoints**:
+	+ `/profiles`: Retrieves a list of all user profiles.
+	+ `/profiles/{id}`: Retrieves a specific user profile by ID.
+	+ `/profiles`: Creates a new user profile.
+	+ `/profiles/{id}`: Updates an existing user profile.
+	+ `/profiles/{id}/delete`: Deletes a user profile.
+* **Request/Response Formats**: All requests and responses are in JSON format.
+* **Error Handling**: The API uses standard HTTP status codes to indicate errors. Error messages will be returned in the response body.
 
-#### `page`: Optional integer parameter
-Specify the page number to retrieve (default: 1). The maximum page size is 100.
+**Usage Guidelines**
 
-Example: `?page=2`
+### Authentication
 
-#### `limit`: Optional integer parameter
-Specify the number of users to return per page (default: 10, max: 100).
+1. To obtain a JWT token, send a `POST` request to `/auth/login` with a JSON payload containing your application's client ID and secret key.
+2. Use the obtained JWT token as the value for the `Authorization` header in all subsequent API requests.
 
-Example: `?limit=25`
+### Creating a User Profile
 
-### Response
+1. Send a `POST` request to `/profiles` with a JSON payload containing the new user profile data (e.g., name, email, password).
+2. The API will create a new user profile and return the profile ID in the response body.
 
-The `/users` API endpoint returns a JSON response containing an array of user objects. Each user object includes the following properties:
+### Retrieving a User Profile
 
-* `id`: Unique identifier for the user
-* `name`: User's full name
-* `email`: User's email address
-* `role`: User's role (e.g., admin, standard)
-* `created_at`: Timestamp indicating when the user account was created
+1. Send a `GET` request to `/profiles/{id}` replacing `{id}` with the desired profile ID.
+2. The API will return the requested user profile data in JSON format.
 
-Example response:
-```json
-[
-  {
-    "id": 12345,
-    "name": "John Doe",
-    "email": "johndoe@example.com",
-    "role": "admin",
-    "created_at": "2022-01-01T12:00:00Z"
-  },
-  {
-    "id": 67890,
-    "name": "Jane Smith",
-    "email": "janesmith@example.com",
-    "role": "standard",
-    "created_at": "2021-02-15T14:30:00Z"
-  }
-]
-```
+### Updating a User Profile
 
-### Error Handling
+1. Send a `PATCH` request to `/profiles/{id}` replacing `{id}` with the profile ID you wish to update.
+2. Provide a JSON payload containing the updated profile data.
+3. The API will update the profile and return the updated data in JSON format.
 
-The `/users` API endpoint returns the following error responses:
+### Deleting a User Profile
 
-* `404 Not Found`: If no users are found matching the specified page and limit.
-* `500 Internal Server Error`: In case of an unexpected server-side error.
+1. Send a `DELETE` request to `/profiles/{id}` replacing `{id}` with the profile ID you wish to delete.
+2. The API will delete the profile and return an empty response body.
 
-Example error response:
-```json
-{
-  "error":
+**Best Practices**
+
+* Always include the `Authorization` header with a valid JWT token in all API requests.
+* Use HTTPS for all API interactions to ensure secure transmission of data.
+* Handle errors by checking the HTTP status code and error message in each response.
+
+By following these guidelines, you can effectively use the User Profile Management API to manage user profiles in your application. If you have any questions or need further assistance, please refer to our comprehensive documentation or contact our support team.

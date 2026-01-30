@@ -1,0 +1,25 @@
+**Clinical Abstract**
+
+**Title:** Rare Case of Mucormycosis Presenting as Orbital Cellulitis in an Immunocompetent Individual: A Diagnostic and Therapeutic Challenge
+
+**Abstract:**
+
+Mucormycosis is a rare and aggressive fungal infection that typically affects immunocompromised individuals. We report a unique case of mucormycosis presenting as orbital cellulitis in a 35-year-old immunocompetent male, highlighting the challenges in diagnosis and management.
+
+A 35-year-old man presented to our emergency department with a 3-day history of severe headache, proptosis, and diplopia. Physical examination revealed marked swelling and erythema of the left eye, accompanied by limited extraocular movement. Laboratory tests showed elevated white blood cell count (15,000/mm³) and C-reactive protein (10 mg/dL). Imaging studies demonstrated a large soft tissue mass involving the orbit, with adjacent bone destruction.
+
+Given the patient's immunocompetence, we considered various causes of orbital cellulitis, including bacterial, viral, and fungal etiologies. However, initial cultures and blood work were negative for any pathogens. Further investigation revealed a high level of beta-D-glucan in the patient's serum (140 pg/mL), suggesting possible fungal involvement.
+
+A biopsy specimen was obtained from the affected tissue, which revealed angioinvasive Rhizopus oryzae (Mucormycosis) infection. The patient was promptly treated with intravenous amphotericin B and surgical debridement of the infected tissue.
+
+Post-operatively, the patient received a 14-day course of antifungal therapy, followed by oral itraconazole for an additional 6 weeks. Serial imaging studies showed significant resolution of the orbital mass, accompanied by marked improvement in visual acuity and extraocular movement.
+
+**Discussion:**
+
+Mucormycosis is typically seen in immunocompromised individuals, such as those with diabetes mellitus, solid organ transplants, or HIV/AIDS. Our case highlights the rarity of mucormycosis in an otherwise healthy individual. The diagnosis was challenging due to the patient's immunocompetence and negative initial cultures.
+
+**Conclusion:**
+
+This unique case underscores the importance of considering rare and unusual etiologies in patients with orbital cellulitis, particularly when laboratory results are inconclusive. Prompt recognition and treatment with antifungal therapy and surgical debridement can significantly improve outcomes for patients with mucormycosis.
+
+**Keywords:** Mucormycosis, Orbital cellulitis, Immunocompetent individual, Rare fungal infection.

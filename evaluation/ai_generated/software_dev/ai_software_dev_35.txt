@@ -1,22 +1,57 @@
-Title: Understanding the Concept of Dependency Injection in Software Development
+Title: Documentation on Dependency Injection in Java using Spring Framework
 
-In the realm of software development, one of the most effective techniques for building modular, testable, and maintainable applications is Dependency Injection (DI). This article aims to provide a comprehensive understanding of the concept, its benefits, and how it's implemented.
+Dependency Injection (DI) is a design pattern that eases the development and maintenance of applications by reducing hardcoded dependencies between classes. This article explains the implementation of Dependency Injection in Java using the Spring Framework, highlighting use cases, trade-offs, best practices, and providing code examples.
 
-**What is Dependency Injection?**
+**Introduction**
 
-Dependency Injection (DI) is a design pattern that separates the construction and management of object dependencies from the business logic itself. Instead of hard-coding or constructing dependencies within a class, DI allows you to pass these dependencies as arguments during object instantiation or at runtime.
+Spring is an open-source framework that provides comprehensive support for Dependency Injection (DI), making it easier to build modular applications with improved testability and maintainability. The Spring DI container manages the lifecycle of application objects, ensuring they are created and connected as needed while minimizing tight coupling between components.
 
-**Why Use Dependency Injection?**
+**Use Cases**
 
-1. **Modularity**: By separating dependencies, classes become more modular and easier to test independently. This promotes reusability and reduces the complexity of individual components.
-2. **Testability**: With DI, you can easily swap real dependencies with test doubles (e.g., mocks) during testing, making your codebase easier to test and increasing the overall quality of your application.
-3. **Decoupling**: Dependency Injection helps decouple classes, reducing the dependencies between them. This makes your application more flexible and adaptable to changes in the future.
-4. **Loose Coupling**: By injecting dependencies rather than constructing them within a class, you create loose coupling. This means that changes to one component have minimal impact on others, further improving maintainability and reducing the risk of regressions.
+1. Loosely Coupled Code: By allowing containers to manage object dependencies, the application code remains loosely coupled, reducing the impact when changes occur in either a dependency or its implementation.
+2. Improved Testability: DI makes it easier to write unit tests as the test harness can control the behavior of the components by injecting mocks and stubs for dependencies.
+3. Reduced Boilerplate Code: The Spring framework provides annotations and a configuration file (application.properties or application.yml) to reduce the amount of boilerplate code needed for setting up DI.
 
-**Implementing Dependency Injection**
+**Implementation - Spring Bean Configuration**
 
-Dependency Injection can be implemented using various techniques:
+Spring manages objects through beans, which are configured in XML files or Java-based configuration classes. Here's an example of a bean configuration class:
 
-1. **Constructor Injection**: Dependencies are passed as arguments when instantiating a class. This is often considered the best practice for injecting dependencies, as it ensures that all required dependencies are available at object creation time and makes it clear which dependencies a class requires.
-2. **Setter Injection**: Dependencies are set through setter methods after an object has been instantiated. While this can make testing more challenging due to the need to call setters, it allows for greater flexibility in cases where dependencies may change at runtime.
-3. **Interface Injection (or Method Injection)**: An interface or abstract class is used to define a contract for a dependency, and concrete implementations are injected as needed
+```java
+import org.springframework.context.annotation.*;
+
+@Configuration
+public class AppConfig {
+    @Bean
+    public Service service() {
+        return new Service(repository());
+    }
+
+    @Bean
+    public Repository repository() {
+        return new Repository();
+    }
+}
+```
+
+In this example, `Service` and `Repository` are components that depend on each other. By configuring them as beans and using the `@Bean` annotation, Spring will manage their lifecycle and inject dependencies where needed.
+
+**Use of Autowired Annotation**
+
+To allow Spring to inject a dependency, use the `@Autowired` annotation:
+
+```java
+import org.springframework.beans.factory.annotation.*;
+
+public class Service {
+    @Autowired
+    private Repository repository;
+
+    // ... other service methods here
+}
+```
+
+When the `Service` bean is created, Spring will inject an instance of `Repository` by looking for it in the configuration and using constructor-based injection.
+
+**Trade-offs and Best Practices**
+
+1. Overuse of DI: While DI offers numerous benefits, overusing it can

@@ -1,0 +1,16 @@
+Title: Data Handling Agreement ("Agreement")
+
+Under the terms of this agreement, dated [Date], entered into between [Your Company Name], a company based in [Your Jurisdiction] with headquarters at [Your Address], referred to as the "Data Controller," and [Recipient's Company Name], a business incorporated in [Recipient's Jurisdiction] with its main office at [Recipient's Address], known as the "Data Processor," certain Personal Data will be managed according to this agreement.
+
+The handling of Personal Data is subject to Regulation (EU) 2016/679, adopted by the European Parliament and Council on April 27, 2016, which pertains to data protection and the movement of such data across borders, replacing Directive 95/46/EC, commonly known as the General Data Protection Regulation ("GDPR").
+
+In this agreement:
+
+1. Definitions and Interpretations
+  1. "Individual" is a term used to denote an identifiable natural person.
+  2. "Personal Information" pertains to any data related to an individual that can be directly or indirectly identified, using details such as a name, identification number, location data, online identifier, or other characteristics specific to the physical, genetic, mental, economic, cultural, or social identity of the individual.
+  3. "Processing" refers to any operation performed on Personal Information, whether by automated means or not, including but not limited to collection, recording, organization, storage, modification, retrieval, use, transmission, dissemination, alignment, restriction, deletion, or destruction.
+  4. "Controller" is the individual or entity that determines the purposes and methods of Personal Information processing, whether alone or jointly with others; if the purposes and means are established by Union or Member State law, the specific criteria for Controller appointment may be outlined in such legislation.
+  5. "Processor" denotes any person or entity which processes Personal Data on behalf of the Controller.
+
+This agreement outlines the terms under which the Data Processor will manage the specified Personal Data on behalf of the Data Controller in compliance with the GDPR regulations.

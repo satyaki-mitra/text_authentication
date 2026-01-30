@@ -1,34 +1,59 @@
-Title: Documentation for Image Resizing Feature in XYZ Application
+**API Documentation: Weather Forecast REST Endpoint**
 
-1. Introduction
+**Endpoint Description:**
 
-   This document provides a detailed explanation of the Image Resizing feature within the XYZ Application. The Image Resizing feature allows users to adjust the size of images within the application, ensuring optimal performance and user experience.
+This API provides weather forecast data for a given location based on latitude and longitude coordinates.
 
-2. Overview
+**Base URL:** `https://weather-api.example.com/v1`
 
-   The Image Resizing feature is accessible through the 'Edit' menu or directly from the image preview window. Users can choose between preset sizes or input custom dimensions for their images.
+**Weather Forecast Endpoint:** `/weather-forecast`
 
-3. Feature Description
+**Authentication Requirements:**
 
-   3.1 Accessing the Image Resizer
-       - Via Edit Menu: Click on the 'Edit' menu and select 'Resize Image'.
-       - Via Image Preview: Right-click on the image preview and choose 'Resize Image'.
+Access to this endpoint requires an API key for authentication. The API key should be sent as a header named `X-API-Key`.
 
-   3.2 Preset Sizes
-       The Image Resizer offers several preset sizes, including thumbnail, small, medium, large, and original size. These presets are designed to meet common needs but can be manually adjusted if necessary.
+**Request Parameters:**
 
-   3.3 Custom Dimensions
-       Users have the option to input custom dimensions for their images in pixels (width and height). The aspect ratio is maintained by default, but users can choose to adjust it separately as well.
+| Parameter      | Data Type  | Description                                             | Required |
+|---------------|-----------|---------------------------------------------------------|----------|
+| lat            | float     | Latitude of the location in degrees                     | Yes      |
+| lng            | float     | Longitude of the location in degrees                    | Yes      |
+| units          | string    | The unit system for temperature (either 'metric' or 'imperial') | No       |
+| api_key        | string    | Your API key for authentication                         | Yes      |
 
-4. User Interface
+**Example Request:**
 
-   Upon accessing the Image Resizer, a new window will open displaying the current image's size, preset options, custom input fields for dimensions, and an option to maintain aspect ratio. Users can select their preferred resizing method and click 'Apply' to save changes or 'Cancel' to discard them.
+```bash
+curl -H "X-API-Key: YOUR_API_KEY" https://weather-api.example.com/v1/weather-forecast?lat=40.7128&lng=-74.0060&units=metric
+```
 
-5. Considerations
+**Response Parameters:**
 
-   - The Image Resizer aims to provide a balance between image quality and performance. Images may lose some quality when significantly resized, especially if the aspect ratio is changed drastically.
-   - Users are advised to save their work regularly to avoid potential data loss during image resizing operations.
+| Parameter        | Data Type  | Description                                             |
+|------------------|-----------|---------------------------------------------------------|
+| location         | object     | Contains the name and coordinates of the location      |
+| current          | object     | Current weather conditions at the given location       |
+| forecast         | array      | An array of objects, each representing a future hour's weather forecast |
 
-6. Conclusion
+**Example Response:**
 
-   The Image Resizing feature in XYZ Application ensures flexibility for users by providing various resizing options. By understanding how this feature works, users can optimize their images and enhance the overall user experience within the application.
+```json
+{
+  "location": {
+    "name": "New York",
+    "coordinates": {
+      "latitude": 40.7128,
+      "longitude": -74.0060
+    }
+  },
+  "current": {
+    "temperature": 23.5,
+    "humidity": 67,
+    "weather_description": "Partly Cloudy"
+  },
+  "forecast": [
+    {
+      "time": "2022-10-01T14:00:00",
+      "temperature": 23.9,
+      "humidity": 68,
+      "weather_description": "Cloudy

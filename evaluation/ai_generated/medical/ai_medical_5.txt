@@ -1,13 +1,15 @@
-Title: An Uncommon Presentation of Pemphigus Vulgaris: A Case Study
+Title: A Case Study on Successful Treatment of Severe Acute Pancreatitis with Early Intervention and Nutrition Support
 
-Abstract:
+Abstract
 
-We present an intriguing case of a 58-year-old Caucasian male, previously healthy with no known allergies, who presented with a two-month history of painful oral and genital lesions. The patient reported a gradual onset of symptoms, initially manifesting as multiple, fluid-filled blisters on the tongue and buccal mucosa, which subsequently spread to the penis and scrotum.
+Background: Acute pancreatitis (AP) is a common gastrointestinal disorder, often caused by gallstones or alcohol abuse. The disease spectrum ranges from mild, self-limiting cases to severe, life-threatening illnesses requiring intensive care management. Early diagnosis and appropriate treatment are crucial for favorable outcomes.
 
-Physical examination revealed numerous tense, flaccid bullous lesions with erythematous bases, primarily affecting the oral cavity, genitalia, and extensor surfaces of the limbs. Nikolsky sign was positive, confirming the diagnosis of autoimmune blistering disease. Direct immunofluorescence (DIF) analysis of a perilesional biopsy specimen from the buccal mucosa demonstrated intercellular deposition of IgG and C3 along the basement membrane zone, consistent with pemphigus vulgaris (PV).
+Case Presentation: A 58-year-old male presented to the emergency department with severe abdominal pain, nausea, and vomiting. The patient reported a history of chronic alcohol abuse but denied any gallstones or family history of pancreatic diseases. Physical examination revealed a tender, distended abdomen, and laboratory tests showed elevated serum amylase (1200 U/L) and lipase (800 U/L), confirming the diagnosis of acute pancreatitis. The patient was classified as severe acute pancreatitis (SAP) due to persistent abdominal pain, hypotension, and elevated C-reactive protein (CRP).
 
-The patient was initially treated with oral prednisone at an initial dose of 1mg/kg/day, which led to partial resolution of symptoms. However, due to concerns about potential side effects and the need for a more targeted approach, treatment was switched to rituximab, a monoclonal antibody targeting CD20-positive B cells. After four infusions over an eight-week period, complete remission was achieved with no recurrence at six-month follow-up.
+Diagnostic Approach: Computed tomography (CT) scan revealed a dilated pancreatic duct without evidence of necrosis. Serum calcium, glucose, and electrolytes were normal, while lactic acid was slightly elevated at 2.3 mmol/L. The patient was managed in the intensive care unit with fluid resuscitation, analgesia, and antibiotics for presumed infection.
 
-This case underscores the importance of considering PV in the differential diagnosis of oral and genital blistering lesions, even in atypical presentations. Furthermore, it highlights the potential benefits of using rituximab as a treatment for refractory or steroid-dependent cases of PV.
+Treatment: Early enteral nutrition (EN) was initiated via nasojejunal tube due to concerns about gut ischemia. Intravenous immunoglobulin (IVIG) was administered to reduce the risk of pancreatic autoimmune attacks and modulate the inflammatory response. The patient received prophylactic enoxaparin for venous thromboembolism and was closely monitored for infection, renal, and respiratory complications.
 
-Keywords: Pemphigus Vulgaris, Autoimmune Blistering Disease, Rituximab, Oral Lesions, Genital Lesions
+Outcomes: Over a week, the patient's abdominal pain subsided, blood tests showed improvement (amylase 300 U/L, lipase 200 U/L), and CRP decreased from 150 mg/L to 70 mg/L. The patient was gradually weaned off analgesia and antibiotics, and the nasojejunal tube was removed after confirming oral intake tolerance. The patient was discharged home in good condition, with a follow-up appointment scheduled for monitoring pancreatic function.
+
+Discussion: This case highlights the importance

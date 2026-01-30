@@ -51,3 +51,6 @@ validation/
 data/validation_data/
 logs/
 notebooks/
+config/*.txt
+services/*.txt
+metrics/*.txt

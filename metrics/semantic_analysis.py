@@ -18,13 +18,26 @@ from config.threshold_config import get_threshold_for_domain
 class SemanticAnalysisMetric(BaseMetric):
     """
     Semantic coherence and consistency analysis
+
+    Mathematical Foundation:
+    ------------------------
+    - Cosine Similarity: sim = (A · B) / (||A|| × ||B||)
+    - Coherence: Average similarity between adjacent sentences
+    - Consistency: 1 - variance(all_similarities)
     
-    Measures (Aligned with Documentation):
-    - Semantic similarity between sentences
+    Measures:
+    ---------
+    - Semantic similarity between sentences (using sentence transformers)
     - Topic consistency across text
     - Coherence and logical flow
     - Repetition patterns and redundancy
     - Contextual consistency
+    
+    Interpretation:
+    ---------------
+    - Very high coherence (> 0.85) can indicate synthetic text (too perfect)
+    - Medium coherence (0.5-0.75) is typical for human writing
+    - Low coherence (< 0.5) indicates poor quality (human or AI)
     """
     def __init__(self):
         super().__init__(name        = "semantic_analysis",
@@ -71,10 +84,10 @@ class SemanticAnalysisMetric(BaseMetric):
             semantic_thresholds                         = domain_thresholds.semantic
             
             # Calculate comprehensive semantic features
-            features                                    = self._calculate_semantic_features(text)
+            features                                    = self._calculate_semantic_features(text = text)
             
-            # Calculate raw semantic score (0-1 scale)
-            raw_semantic_score, confidence              = self._analyze_semantic_patterns(features)
+            # Calculate raw semantic score (0-1 scale) with confidence
+            raw_semantic_score, confidence              = self._analyze_semantic_patterns(features = features)
             
             # Apply domain-specific thresholds to convert raw score to probabilities
             synthetic_prob, authentic_prob, hybrid_prob = self._apply_domain_thresholds(raw_score  = raw_semantic_score, 
@@ -214,19 +227,19 @@ class SemanticAnalysisMetric(BaseMetric):
 
     def _get_sentence_embeddings(self, sentences: List[str]) -> np.ndarray:
         """
-        Get semantic embeddings for sentences
+        Get semantic embeddings for sentences using sentence transformer
         """
         try:
             if not self.sentence_model:
-                return None
+                return None, None
             
             # Filter out very short sentences that might cause issues
-            valid_sentences = [s for s in sentences if len(s.strip()) > semantic_analysis_params.MIN_VALID_SENTENCE_LENGTH]
+            valid_sentences = [s for s in sentences if (len(s.strip()) > semantic_analysis_params.MIN_VALID_SENTENCE_LENGTH)]
             if not valid_sentences:
                 return None, None
             
             # Encode sentences to get embeddings
-            embeddings = self.sentence_model.encode(valid_sentences)
+            embeddings      = self.sentence_model.encode(valid_sentences)
             
             # Check if embeddings are valid
             if ((embeddings is None) or (len(embeddings) == 0)):
@@ -241,9 +254,13 @@ class SemanticAnalysisMetric(BaseMetric):
 
     def _calculate_coherence(self, similarity_matrix: np.ndarray) -> float:
         """
-        Calculate overall text coherence : Higher coherence = more logically connected sentences
+        Calculate overall text coherence using adjacent sentence similarity
+        
+        Formula: coherence = mean(similarity(sent_i, sent_i+1))
+        
+        Higher coherence = more logically connected sentences
         """
-        params = semantic_analysis_params
+        params                = semantic_analysis_params
         
         if (similarity_matrix.size == 0):
             return params.MIN_PROBABILITY
@@ -262,15 +279,19 @@ class SemanticAnalysisMetric(BaseMetric):
 
     def _calculate_consistency(self, similarity_matrix: np.ndarray) -> float:
         """
-        Calculate topic consistency throughout the text : Lower variance in similarities = more consistent
+        Calculate topic consistency throughout the text
+        
+        Formula: consistency = 1 - variance(all_similarities) * scale_factor
+        
+        Lower variance in similarities = more consistent
         """
-        params = semantic_analysis_params
+        params           = semantic_analysis_params
         
         if (similarity_matrix.size == 0):
             return params.MIN_PROBABILITY
         
         # Calculate variance of similarities (lower variance = more consistent)
-        all_similarities = similarity_matrix[np.triu_indices_from(similarity_matrix, k=1)]
+        all_similarities = similarity_matrix[np.triu_indices_from(similarity_matrix, k = 1)]
         if (len(all_similarities) == 0):
             return params.MIN_PROBABILITY
         
@@ -283,7 +304,7 @@ class SemanticAnalysisMetric(BaseMetric):
 
     def _detect_repetition_patterns(self, sentences: List[str], similarity_matrix: np.ndarray) -> float:
         """
-        Detect repetition patterns in semantic content : AI text sometimes shows more semantic repetition
+        Detect repetition patterns in semantic content: Generated text sometimes shows more semantic repetition
         """
         params = semantic_analysis_params
         
@@ -295,7 +316,8 @@ class SemanticAnalysisMetric(BaseMetric):
         total_comparisons = 0
         
         for i in range(len(sentences)):
-            for j in range(i + 2, len(sentences)):  # Skip adjacent sentences
+            # Skip adjacent sentences
+            for j in range(i + 2, len(sentences)):  
                 # High semantic similarity
                 if (similarity_matrix[i, j] > params.REPETITION_SIMILARITY_THRESHOLD):  
                     repetition_count += 1
@@ -313,7 +335,9 @@ class SemanticAnalysisMetric(BaseMetric):
 
     def _calculate_topic_drift(self, similarity_matrix: np.ndarray) -> float:
         """
-        Calculate topic drift throughout the text : Higher drift = less focused content
+        Calculate topic drift throughout the text
+        
+        Higher drift = less focused content
         """
         params = semantic_analysis_params
         
@@ -347,7 +371,7 @@ class SemanticAnalysisMetric(BaseMetric):
         """
         Calculate contextual consistency using keyword and entity analysis
         """
-        params = semantic_analysis_params
+        params    = semantic_analysis_params
         
         if (len(sentences) < params.MIN_SENTENCES_FOR_ANALYSIS):
             return params.MIN_PROBABILITY
@@ -386,9 +410,9 @@ class SemanticAnalysisMetric(BaseMetric):
         """
         Calculate coherence across text chunks for whole-text analysis
         """
-        params = semantic_analysis_params
-        chunks = list()
-        words  = text.split()
+        params  = semantic_analysis_params
+        chunks  = list()
+        words   = text.split()
         
         # Create overlapping chunks
         overlap = int(chunk_size * params.CHUNK_OVERLAP_RATIO)
@@ -413,9 +437,23 @@ class SemanticAnalysisMetric(BaseMetric):
 
     def _analyze_semantic_patterns(self, features: Dict[str, Any]) -> tuple:
         """
-        Analyze semantic patterns to determine RAW semantic score (0-1 scale)
+        Analyze semantic patterns to determine raw semantic score (0-1 scale)
+        
+        Returns:
+        --------
+        (raw_score, confidence) where:
+        - raw_score: Higher = more synthetic-like
+        - confidence: Based on sample size and agreement
+        
+        Coherence Interpretation:
+        -------------------------
+        - Very high coherence (> 0.9): Suspiciously perfect = synthetic
+        - High coherence (0.85-0.9): Very good but possibly synthetic
+        - Medium-high (0.75-0.85): Good human writing
+        - Medium (0.5-0.75): Normal human writing
+        - Low (< 0.5): Poor quality (human or AI)
         """
-        params = semantic_analysis_params
+        params            = semantic_analysis_params
         
         # Check feature validity first
         required_features = ['coherence_score', 'consistency_score', 'repetition_score', 'topic_drift_score', 'coherence_variance']
@@ -429,68 +467,98 @@ class SemanticAnalysisMetric(BaseMetric):
         # Initialize synthetic indicator list
         synthetic_indicators = list()
 
-        # AI text often has very high coherence (too perfect)
-        if (features['coherence_score'] > params.COHERENCE_HIGH_THRESHOLD):
-            # Suspiciously high coherence
-            synthetic_indicators.append(params.STRONG_SYNTHETIC_WEIGHT)
-       
-        elif (features['coherence_score'] > params.COHERENCE_MEDIUM_THRESHOLD):
-            # Moderate coherence
-            synthetic_indicators.append(params.MEDIUM_SYNTHETIC_WEIGHT)
-       
-        else:
-            # Low coherence - more human-like
-            synthetic_indicators.append(params.LOW_SYNTHETIC_WEIGHT)
+        # Coherence Scoring (non-overlapping conditions)
+        coherence            = features['coherence_score']
         
-        # Very high consistency suggests AI (unnaturally consistent)
-        if (features['consistency_score'] > params.CONSISTENCY_HIGH_THRESHOLD):
-            synthetic_indicators.append(params.STRONG_SYNTHETIC_WEIGHT)
+        if (coherence > params.COHERENCE_SUSPICIOUS_THRESHOLD):
+            # Suspiciously high coherence (> 0.9)
+            synthetic_indicators.append(params.COHERENCE_SUSPICIOUS_SYNTHETIC_WEIGHT)
         
-        elif (features['consistency_score'] > params.CONSISTENCY_MEDIUM_THRESHOLD):
-            synthetic_indicators.append(params.MODERATE_SYNTHETIC_WEIGHT)
+        elif (coherence > params.COHERENCE_HIGH_THRESHOLD):
+            # Very high coherence (0.85-0.9)
+            synthetic_indicators.append(params.COHERENCE_HIGH_SYNTHETIC_WEIGHT)
         
-        else:
-            synthetic_indicators.append(params.VERY_LOW_SYNTHETIC_WEIGHT)
+        elif (coherence > params.COHERENCE_MEDIUM_HIGH_THRESHOLD):
+            # Good coherence (0.75-0.85) - normal human writing
+            synthetic_indicators.append(params.COHERENCE_MEDIUM_SYNTHETIC_WEIGHT)
         
-        # High repetition suggests AI
-        if (features['repetition_score'] > params.REPETITION_HIGH_THRESHOLD):
-            synthetic_indicators.append(params.MODERATE_SYNTHETIC_WEIGHT)
+        elif (coherence > params.COHERENCE_MEDIUM_LOW_THRESHOLD):
+            # Medium coherence (0.65-0.75) - typical human
+            synthetic_indicators.append(params.COHERENCE_LOW_SYNTHETIC_WEIGHT)
         
-        elif (features['repetition_score'] > params.REPETITION_MEDIUM_THRESHOLD):
-            synthetic_indicators.append(params.VERY_WEAK_SYNTHETIC_WEIGHT)
+        elif (coherence > params.COHERENCE_LOW_THRESHOLD):
+            # Lower coherence (0.5-0.65) - still okay
+            synthetic_indicators.append(params.COHERENCE_LOW_SYNTHETIC_WEIGHT)
         
         else:
-            synthetic_indicators.append(params.LOW_SYNTHETIC_WEIGHT)
+            # Very low coherence (< 0.5) - poor quality
+            synthetic_indicators.append(params.COHERENCE_INCOHERENT_SYNTHETIC_WEIGHT)
         
-        # Very low topic drift suggests AI (stays too focused)
-        if (features['topic_drift_score'] < params.TOPIC_DRIFT_LOW_THRESHOLD):
-            synthetic_indicators.append(params.MODERATE_SYNTHETIC_WEIGHT)
+        # Very high consistency suggests Generated (unnaturally consistent)
+        consistency = features['consistency_score']
         
-        elif (features['topic_drift_score'] < params.TOPIC_DRIFT_MEDIUM_THRESHOLD):
-            synthetic_indicators.append(params.WEAK_SYNTHETIC_WEIGHT)
+        if (consistency > params.CONSISTENCY_HIGH_THRESHOLD):
+            synthetic_indicators.append(params.CONSISTENCY_STRONG_SYNTHETIC_WEIGHT)
         
-        else:
-            synthetic_indicators.append(params.VERY_LOW_SYNTHETIC_WEIGHT)
-        
-        # Low coherence variance across chunks suggests AI
-        if (features['coherence_variance'] < params.COHERENCE_VARIANCE_LOW_THRESHOLD):
-            synthetic_indicators.append(params.MODERATE_SYNTHETIC_WEIGHT)
-        
-        elif (features['coherence_variance'] < params.COHERENCE_VARIANCE_MEDIUM_THRESHOLD):
-            synthetic_indicators.append(params.VERY_WEAK_SYNTHETIC_WEIGHT)
+        elif (consistency > params.CONSISTENCY_MEDIUM_THRESHOLD):
+            synthetic_indicators.append(params.CONSISTENCY_MODERATE_SYNTHETIC_WEIGHT)
         
         else:
-            synthetic_indicators.append(params.LOW_SYNTHETIC_WEIGHT)
+            synthetic_indicators.append(params.CONSISTENCY_WEAK_SYNTHETIC_WEIGHT)
         
-        # Calculate raw score and confidence
-        if synthetic_indicators:
-            raw_score  = np.mean(synthetic_indicators)
-            confidence = params.MAX_PROBABILITY - (np.std(synthetic_indicators) / params.CONFIDENCE_STD_NORMALIZER)
-            confidence = max(params.MIN_CONFIDENCE, min(params.MAX_CONFIDENCE, confidence))
+        # High repetition suggests Generated Text
+        repetition = features['repetition_score']
+        
+        if (repetition > params.REPETITION_HIGH_THRESHOLD):
+            synthetic_indicators.append(params.REPETITION_HIGH_SYNTHETIC_WEIGHT)
+        
+        elif (repetition > params.REPETITION_MEDIUM_THRESHOLD):
+            synthetic_indicators.append(params.REPETITION_MEDIUM_SYNTHETIC_WEIGHT)
         
         else:
-            raw_score  = params.NEUTRAL_PROBABILITY
-            confidence = params.NEUTRAL_CONFIDENCE
+            synthetic_indicators.append(params.REPETITION_LOW_SYNTHETIC_WEIGHT)
+        
+        # Very low topic drift suggests Synthetic (stays too focused)
+        topic_drift = features['topic_drift_score']
+        
+        if (topic_drift < params.TOPIC_DRIFT_LOW_THRESHOLD):
+            synthetic_indicators.append(params.TOPIC_DRIFT_LOW_SYNTHETIC_WEIGHT)
+        
+        elif (topic_drift < params.TOPIC_DRIFT_MEDIUM_THRESHOLD):
+            synthetic_indicators.append(params.TOPIC_DRIFT_MEDIUM_SYNTHETIC_WEIGHT)
+        
+        else:
+            synthetic_indicators.append(params.TOPIC_DRIFT_HIGH_SYNTHETIC_WEIGHT)
+        
+        # Low coherence variance across chunks suggests Synthetic
+        variance = features['coherence_variance']
+        
+        if (variance < params.COHERENCE_VARIANCE_LOW_THRESHOLD):
+            synthetic_indicators.append(params.VARIANCE_LOW_SYNTHETIC_WEIGHT)
+        
+        elif (variance < params.COHERENCE_VARIANCE_MEDIUM_THRESHOLD):
+            synthetic_indicators.append(params.VARIANCE_MEDIUM_SYNTHETIC_WEIGHT)
+        
+        else:
+            synthetic_indicators.append(params.VARIANCE_HIGH_SYNTHETIC_WEIGHT)
+        
+        # Calculate raw score
+        raw_score            = np.mean(synthetic_indicators) if synthetic_indicators else params.NEUTRAL_PROBABILITY
+        
+        # Factor 1: Agreement between indicators (lower std = higher confidence)
+        agreement_confidence = 1.0 - min(1.0, np.std(synthetic_indicators) / params.CONFIDENCE_STD_NORMALIZER)
+        
+        # Factor 2: Sample size adequacy
+        num_sentences        = features.get('num_sentences', 0)
+        num_chunks           = features.get('num_chunks_analyzed', 0)
+        sentence_confidence  = min(1.0, num_sentences / params.MIN_SENTENCES_FOR_CONFIDENCE)
+        chunk_confidence     = min(1.0, num_chunks / params.MIN_CHUNKS_FOR_CONFIDENCE)
+        sample_confidence    = (sentence_confidence + chunk_confidence) / 2.0
+        
+        # Combine factors
+        confidence           = (params.CONFIDENCE_BASE + params.CONFIDENCE_STD_FACTOR * agreement_confidence + params.CONFIDENCE_SAMPLE_FACTOR * sample_confidence)
+        
+        confidence           = max(params.MIN_CONFIDENCE, min(params.MAX_CONFIDENCE, confidence))
         
         return raw_score, confidence
     
@@ -502,7 +570,7 @@ class SemanticAnalysisMetric(BaseMetric):
         mixed_indicators = list()
         params           = semantic_analysis_params
         
-        # Moderate coherence values might indicate mixing
+        # Moderate coherence values might indicate mixing (0.55-0.75)
         if (params.COHERENCE_MIXED_MIN <= features['coherence_score'] <= params.COHERENCE_MIXED_MAX):
             mixed_indicators.append(params.WEAK_HYBRID_WEIGHT)
         

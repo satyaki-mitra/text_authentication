@@ -1,26 +1,60 @@
-Title: Understanding TypeScript, A Superpowered JavaScript
+Title: Documentation on Dependency Injection using Spring Framework in Java
 
 Introduction:
+Dependency Injection (DI) is a software design pattern that allows us to manage dependencies between classes efficiently. Instead of hardcoding dependencies within a class, we inject them from an external source such as a container or factory. This approach promotes loose coupling, makes our code more modular, and simplifies testing.
 
-TypeScript, developed by Microsoft, is a statically typed, open-source programming language that builds on JavaScript to add optional types, classes, and modules with the goal of improving coding efficiency, reducing errors, and making larger JavaScript applications more manageable.
+In this documentation, we will discuss the implementation of Dependency Injection using Spring Framework in Java.
 
-Key Features:
+**Spring Framework Overview:**
+Spring Framework is an open-source Java platform that provides a comprehensive solution for building enterprise-level applications. It includes several modules like Core, Web, Data Access, AOP, and Security. For this discussion, we will focus on the Spring Core module, which offers Dependency Injection functionality.
 
-1. Type System:
-   TypeScript offers static typing, which enables developers to catch errors during development itself rather than in runtime. This helps in writing robust code that is easier to maintain and understand. With TypeScript, you can declare variables, functions, and interfaces with specific types like number, string, boolean, array, tuple, enum, any, void, never, and user-defined types.
+**Implementing Dependency Injection with Spring:**
 
-2. Classes and Interfaces:
-   TypeScript allows developers to create classes and interfaces for structuring code in a more object-oriented way. Classes can be used to define objects with properties and methods, while interfaces describe the structure of an object without providing its implementation. This helps in creating modular, reusable components.
+1. **Setting up a Spring Project:**
+   First, you need to add Spring dependencies to your Maven or Gradle project. For Maven:
 
-3. Modules:
-   TypeScript supports ES6 modules, making it easier to organize large-scale JavaScript projects by dividing them into smaller, manageable files. This allows for better encapsulation and code sharing between different parts of an application.
+   ```xml
+   <dependencies>
+       <dependency>
+           <groupId>org.springframework</groupId>
+           <artifactId>spring-context</artifactId>
+           <version>5.3.10</version>
+       </dependency>
+   </dependencies>
+   ```
 
-4. Enhanced Tooling:
-   TypeScript provides a rich ecosystem with tools like Visual Studio Code, which offers advanced features such as IntelliSense (code completion), debugging, and refactoring that can significantly improve developer productivity.
+2. **Defining Beans:**
+   Beans are the objects managed by Spring's container (ApplicationContext). To define a bean, you create a Java class annotated with `@Component` and configure its properties using fields or setter methods. Here is an example:
 
-5. Gradual Typing:
-   TypeScript allows developers to adopt static typing gradually by allowing them to incrementally add types to their existing JavaScript codebase without immediately requiring type definitions for everything. This makes it easier for teams to transition from JavaScript to TypeScript over time.
+   ```java
+   @Component
+   public class Database {
+       private String name;
 
-Conclusion:
+       // constructor, getters, and setters
+   }
+   ```
 
-TypeScript is a powerful addition to the JavaScript ecosystem, aimed at improving developer productivity and reducing errors in larger-scale projects by providing optional types, classes, interfaces, and modules. As more companies embrace TypeScript, it's becoming an increasingly important skill for modern web developers to master.
+3. **Configuring Beans:**
+   To configure the beans, you create a configuration class annotated with `@Configuration`. Inside this class, you can use `@Bean` to define how each bean should be created:
+
+   ```java
+   @Configuration
+   public class AppConfig {
+       @Bean
+       public Database database() {
+           return new Database();
+       }
+   }
+   ```
+
+4. **Creating the ApplicationContext:**
+   The `ApplicationContext` is the Spring container that manages the beans. You can create it using the `AnnotationConfigApplicationContext` class:
+
+   ```java
+   public class Main {
+       public static void main(String[] args) {
+           AnnotationConfigApplicationContext context =
+                   new AnnotationConfigApplicationContext(AppConfig.class);
+
+           Database database = context.getBean(Database.class);

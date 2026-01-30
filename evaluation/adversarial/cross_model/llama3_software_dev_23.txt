@@ -1,0 +1,95 @@
+**Design Pattern: Model-View-ViewModel (MVVM)**
+
+In this document, we will explore the Model-View-ViewModel (MVVM) design pattern and its implementation in software development.
+
+**What is MVVM?**
+
+The Model-View-ViewModel (MVVM) pattern is a software architecture that separates an application's logic into three interconnected components: Model, View, and ViewModel. This pattern is particularly useful for building scalable, maintainable, and testable applications with complex user interfaces.
+
+**Components of MVVM:**
+
+1. **Model**: The Model represents the business logic and data of the application. It encapsulates the underlying data and operations that affect the data. In a real-world scenario, this could be a database or a file system.
+2. **View**: The View is responsible for rendering the user interface (UI) components and handling user input. This includes widgets, forms, and other UI elements.
+3. **ViewModel**: The ViewModel acts as an intermediary between the Model and View. It exposes properties and commands that can be used to manipulate the underlying data and operations.
+
+**Benefits of MVVM:**
+
+1. **Separation of Concerns**: MVVM allows for a clear separation of concerns between the business logic, presentation layer, and user interface.
+2. **Testability**: The ViewModel's decoupling from the View makes it easier to write unit tests for the application's logic.
+3. **Reusability**: The Model and ViewModel can be reused across multiple views and applications.
+
+**Implementation Example:**
+
+Suppose we're building a simple todo list application with MVVM architecture.
+
+```csharp
+// Model (TodoItem)
+public class TodoItem
+{
+    public string Title { get; set; }
+    public bool IsCompleted { get; set; }
+
+    public void Complete()
+    {
+        IsCompleted = true;
+    }
+}
+
+// ViewModel (TodoViewModel)
+public class TodoViewModel
+{
+    private List<TodoItem> _todoItems;
+
+    public TodoViewModel(List<TodoItem> todoItems)
+    {
+        _todoItems = todoItems;
+    }
+
+    public List<TodoItem> TodoItems => _todoItems;
+
+    public ICommand AddTodoItemCommand { get; set; }
+
+    public void AddTodoItem(string title)
+    {
+        var newTodoItem = new TodoItem
+        {
+            Title = title,
+            IsCompleted = false
+        };
+
+        _todoItems.Add(newTodoItem);
+    }
+}
+
+// View (TodoView.xaml.cs)
+public partial class TodoView : Window
+{
+    private TodoViewModel _viewModel;
+
+    public TodoView()
+    {
+        InitializeComponent();
+
+        _viewModel = new TodoViewModel(new List<TodoItem>());
+
+        DataContext = _viewModel;
+    }
+
+    private void AddButton_Click(object sender, RoutedEventArgs e)
+    {
+        var title = TitleInput.Text;
+        _viewModel.AddTodoItem(title);
+    }
+}
+```
+
+In this example:
+
+1. The `TodoItem` model represents a single todo item with its properties (title and completion status).
+2. The `TodoViewModel` exposes a list of todo items, as well as an `AddTodoItemCommand` that allows the user to add new todo items.
+3. The `TodoView` window displays the todo list and provides an input field for adding new todo items.
+
+**Best Practices:**
+
+1. Keep the Model simple and focused on data storage and manipulation.
+2. Use a robust MV

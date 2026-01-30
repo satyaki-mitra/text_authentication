@@ -1,27 +1,70 @@
-Title: Technical Documentation - Feature Overview: User Authentication and Authorization
+Title: API Documentation - User Management Endpoint
 
-1. Introduction
-   This document provides an overview of the User Authentication and Authorization feature in our software application. The feature ensures secure access to user accounts, enforces data privacy, and manages different levels of permissions for users.
+## User Management REST Endpoint
 
-2. Feature Description
-   The User Authentication and Authorization system is a component that handles account creation, login/logout processes, password management, and role-based access control (RBAC). It's designed to provide secure access to the application and protect sensitive data from unauthorized access.
+### Description
 
-3. Key Components
-   - **User Registration**: Allows new users to create an account using email or social media accounts integration. The system ensures password security by enforcing complexity rules and storing hashed passwords.
+This API provides endpoints for managing user accounts within our application. The main functionalities include creating, retrieving, updating, and deleting user accounts. All operations are performed over the HTTPS protocol to ensure data security.
 
-   - **Login/Logout**: Users can log in with their credentials (email and password) or use single sign-on (SSO) for easier access. Upon successful login, the user is granted an authenticated session, which is terminated upon logout.
+### Authentication Requirements
 
-   - **Password Management**: Users can reset their passwords using email verification, and a secure password strength meter guides users during password creation.
+All requests to this endpoint require a valid API key for authentication. The API key should be included in the `Authorization` header with the prefix `Bearer`. For example:
 
-   - **Role-Based Access Control (RBAC)**: Assigns different levels of permissions to users based on their roles within the system. This ensures that users only have access to the data and functionality relevant to their role.
+```
+Authorization: Bearer <your_api_key>
+```
 
-4. Implementation Details
-   The User Authentication and Authorization feature is implemented using industry-standard libraries such as Passport.js for Node.js applications, Firebase Authentication for web applications, and other secure authentication libraries for mobile platforms.
+### Endpoints
 
-5. Best Practices
-   - Use strong passwords and enable two-factor authentication (2FA) for additional security.
-   - Regularly update your account information and follow password management best practices.
-   - Report any suspicious activities or unauthorized access attempts to our support team immediately.
+#### 1. Create User (POST /users)
 
-6. Future Enhancements
-   The User Authentication and Authorization feature will continue to be improved, with plans to add biometric authentication methods and more granular role permissions in future releases.
+Creates a new user account.
+
+**Request Parameters**
+
+| Parameter         | Data Type          | Description                                                             |
+|-------------------|--------------------|-------------------------------------------------------------------------|
+| name              | String             | The user's full name                                                    |
+| email             | String             | A unique email address for the user                                     |
+| password          | String             | The user's chosen password (encrypted before storage)                  |
+| role              | Enum ('admin', 'user') | The user's role within the application (either admin or regular user) |
+
+**Response Parameters**
+
+| Parameter         | Data Type          | Description                               |
+|-------------------|--------------------|-------------------------------------------|
+| id                | Integer            | The created user's unique identifier      |
+| name              | String             | The user's full name                       |
+| email             | String             | The user's email address                   |
+| role              | Enum ('admin', 'user')| The user's role within the application    |
+
+**Example Request**
+
+```bash
+POST /users HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer <your_api_key>
+
+{
+  "name": "John Doe",
+  "email": "john.doe@example.com",
+  "password": "<encrypted_password>",
+  "role": "user"
+}
+```
+
+**Error Codes**
+
+| Code   | Description                         |
+|--------|-------------------------------------|
+| 401    | Unauthorized: Invalid or missing API key |
+| 409    | Conflict: Email address already in use |
+
+#### 2. Get User (GET /users/:id)
+
+Retrieves the details of a specific user.
+
+**Request Parameters**
+
+| Parameter   | Data Type | Description                             |
+|-------------|----------

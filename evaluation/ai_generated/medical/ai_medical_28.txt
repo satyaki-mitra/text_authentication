@@ -1,13 +1,15 @@
-Title: A Case of Recurrent Staphylococcus aureus Sepsis in an Immunocompromised Patient
+Title: A Case Study on the Successful Management of Refractory Gastroesophageal Variceal Hemorrhage in a Cirrhotic Patient
 
-Background: A 65-year-old male, with a history of chronic lymphocytic leukemia (CLL), currently undergoing chemotherapy, presented to the emergency department for the third time within three months due to symptoms of recurrent sepsis. Each episode was characterized by fever, chills, and myalgias, along with laboratory findings indicative of sepsis.
+Abstract
 
-Presenting Complaints: The patient reported a two-day history of high-grade fever (up to 104°F), severe chills, and myalgia in multiple joints. He also complained of shortness of breath and an overall feeling of malaise.
+Background: Gastroesophageal variceal hemorrhage (GVH) is a life-threatening complication in patients with cirrhosis, carrying high morbidity and mortality rates. This case report presents an unusual but successful management strategy for refractory GVH in a cirrhotic patient who failed initial endoscopic and pharmacological interventions.
 
-Past Medical History: The patient has a past medical history significant for CLL diagnosed three years ago. He is currently receiving chemotherapy (Fludarabine, Cyclophosphamide, and Rituximab) for disease management.
+Case Presentation: A 58-year-old male with a history of alcoholic liver disease (Child-Pugh Class B) and esophageal varices presented with hematemesis and melena, indicating active GVH. Initial endoscopic band ligation was unsuccessful due to extensive bleeding, followed by failed sclerotherapy sessions due to rebleeding. The patient was subsequently treated with terlipressin, a vasoactive intestinal peptide analogue, in combination with prophylactic antibiotics and transjugular intrahepatic portosystemic shunt (TIPS) placement.
 
-Physical Examination: On physical examination, the patient appeared ill with tachycardia (heart rate 120 beats per minute), fever (temperature 104°F), and respiratory rate of 24 breaths per minute. His lungs were bilaterally dull to percussion and he had decreased breath sounds, consistent with bibasilar consolidation. The abdomen was soft, non-tender, and non-distended.
+Diagnostic Approach: Diagnosis was established through esophagogastroduodenoscopy (EGD), which revealed large esophageal varices with active bleeding. Laboratory investigations confirmed the presence of portal hypertension, with an elevated international normalized ratio (INR) and thrombocytopenia.
 
-Laboratory Findings: Initial laboratory results revealed leukopenia (white blood cell count 2.5 x 10^3/mcL), thrombocytopenia (platelet count 68 x 10^3/mcL), elevated C-reactive protein level of 279 mg/L, and procalcitonin level of 8 ng/mL. Blood cultures grew Staphylococcus aureus sensitive to ceftaroline, vancomycin, linezolid, and daptomycin.
+Treatment: Given the refractory nature of the GVH, the patient was administered terlipressin to improve hemostasis through splanchnic vasoconstriction. Concurrently, prophylactic antibiotics were initiated to prevent bacterial translocation and spontaneous bacterial peritonitis (SBP). As a last resort, TIPS procedure was performed to reduce portal pressure and decrease variceal bleeding.
 
-Interventions: The patient was immediately started on intravenous antibiotics (ceftaroline) and empiric antifungal therapy (voriconazole). He also received fluid resuscitation for hypotension and oxygen supplementation
+Outcomes: Following the combined therapy, the patient experienced rapid hemostasis with stabilization of vital signs and resolution of melena. No further episodes of GVH were reported during the 6-month follow-up period. The TIPS procedure was effective in lowering portal pressure, as evidenced by a reduction in INR levels.
+
+Discussion: This case highlights an alternative treatment strategy for refractory GVH. Terlipressin, combined with prophylactic antibiotics and TIPS placement, effectively controlled the acute bleeding episode and prevented further rebleeding. Further research is warranted to determine the optimal dosage regimen and duration of terlipressin therapy in managing refractory GVH, as well as its impact on long-term survival.

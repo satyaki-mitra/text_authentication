@@ -1,58 +1,63 @@
-Title: An In-depth Look at the Observer Design Pattern in JavaScript
+Title: Documentation on Dependency Injection in Java Using Spring Framework
 
-In this article, we'll delve into the Observer Design Pattern and its practical implementation using JavaScript. This pattern is a powerful way to manage relationships between objects efficiently and dynamically. Let's get started!
+Introduction
 
-**What is the Observer Design Pattern?**
+Dependency Injection (DI) is a software design pattern that addresses the problem of managing dependencies between objects in a system. It's an essential principle in developing maintainable, testable, and scalable applications. This documentation explains the implementation of Dependency Injection in Java using the Spring Framework.
 
-The Observer Design Pattern defines a one-to-many dependency relationship between objects, where an "observable" object (subject) maintains a list of its dependents ("observers"), notifies them automatically about any state changes. This pattern promotes loose coupling and enables the effective management of dynamic relationships between objects.
+Spring Framework
 
-**Use Case in JavaScript:**
+Spring is a popular open-source Java framework that provides a comprehensive solution for building modern enterprise applications. It offers features like DI, aspect-oriented programming, data access, and web application development.
 
-In JavaScript, the Observer Design Pattern can be implemented using events for handling observer-observable communication. Here's a step-by-step breakdown:
+Dependency Inversion Principle (DIP)
 
-1. **Define an Observable class:**
-   An observable object should have methods to add and remove observers, as well as a method for notifying them when its state changes.
+To understand Dependency Injection, we need to first understand the Dependency Inversion Principle (DIP), one of the five SOLID principles. DIP states that high-level modules should not depend on low-level modules; both should depend on abstractions. This separation allows for easier testing, maintenance, and scalability of our codebase.
 
-```javascript
-class Observable {
-  constructor() {
-    this._observers = [];
-  }
+Implementing Dependency Injection in Spring
 
-  subscribe(observer) {
-    this._observers.push(observer);
-  }
+In Spring, DI is achieved through the Configuration classes (such as XML configurations or annotations like @Configuration). We can define our beans (objects) and their dependencies within these configuration files. Spring's DI container then manages the life cycle of these beans and injects them into other beans when required.
 
-  unsubscribe(observer) {
-    const index = this._observers.indexOf(observer);
-    if (index !== -1) this._observers.splice(index, 1);
-  }
+Here's a simple example demonstrating DI in Spring:
 
-  notify() {
-    this._observers.forEach((observer) => observer.update());
-  }
+```java
+// Service interface
+public interface MessageService {
+    void sendMessage(String message);
+}
+
+// Concrete implementation of the service
+@Component
+public class EmailMessageService implements MessageService {
+    @Override
+    public void sendMessage(String message) {
+        // Sending email with the provided message
+    }
+}
+
+// Configuration class
+@Configuration
+public class AppConfig {
+
+    @Bean
+    public MessageService messageService() {
+        return new EmailMessageService();
+    }
 }
 ```
 
-2. **Define an Observer class:**
-   An observer object should have a method to update its state when notified by the observable object.
+In this example, we define an interface `MessageService` and its concrete implementation `EmailMessageService`. In our configuration class `AppConfig`, we create a bean for the `MessageService` instance using the `@Bean` annotation. Spring will manage the lifecycle of this bean and inject it wherever required through constructor injection (in this case) or setter injection.
 
-```javascript
-class Observer {
-  constructor(name) {
-    this._name = name;
-  }
+```java
+// Controller using MessageService
+@Controller
+public class ExampleController {
+    private final MessageService messageService;
 
-  update() {
-    console.log(`${this._name} has been updated`);
-  }
-}
-```
+    public ExampleController(MessageService messageService) {
+        this.messageService = messageService;
+    }
 
-3. **Create observable and observer instances:**
-   Now, let's create an instance of the Observable class and add some Observer objects to it:
-
-```javascript
-const subject = new Observable();
-const observer1 = new Observer('Observer 1');
-const observer2 = new Ob
+    @RequestMapping("/example")
+    public String handleRequest() {
+        messageService.sendMessage("Hello World!");
+        return "example";
+    }

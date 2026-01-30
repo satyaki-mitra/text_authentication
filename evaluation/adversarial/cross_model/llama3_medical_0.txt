@@ -1,0 +1,30 @@
+**Case Report: Rare Presentation of Cerebral Vasculitis in a Young Adult**
+
+Abstract:
+
+We present the case of a 25-year-old male who presented with a rare and unusual manifestation of cerebral vasculitis, a debilitating autoimmune disorder affecting blood vessels in the brain. The patient's symptoms were characterized by sudden onset of severe headache, altered mental status, and seizures, which progressed to hemiparesis and aphasia.
+
+Medical History:
+
+The patient had no prior medical history, and physical examination was normal apart from mild hypertension (130/90 mmHg). Laboratory tests revealed elevated erythrocyte sedimentation rate (ESR) of 80 mm/hour and C-reactive protein (CRP) level of 10 mg/dL. Magnetic Resonance Imaging (MRI) of the brain demonstrated multifocal, bilateral lesions consistent with vasculitis.
+
+Clinical Course:
+
+The patient's symptoms worsened over several days, prompting hospitalization. Initial diagnostic workup included a lumbar puncture, which revealed elevated protein and white blood cell counts in cerebrospinal fluid (CSF). A computed tomography (CT) scan of the brain showed multiple areas of restricted diffusion, consistent with cerebral edema.
+
+After a thorough evaluation, the patient was diagnosed with cerebral vasculitis secondary to microscopic polyangiitis. Treatment commenced with high-dose corticosteroids (100 mg/day), followed by induction therapy with rituximab and cyclophosphamide. The patient's symptoms gradually improved over several weeks, with complete resolution of seizures and hemiparesis.
+
+Outcome:
+
+At six-month follow-up, the patient had made a full recovery, with no residual neurological deficits or further episodes of vasculitis. Serial MRI scans demonstrated resolution of brain lesions, suggesting successful treatment.
+
+Discussion:
+
+Cerebral vasculitis is a rare and potentially life-threatening condition characterized by inflammation and damage to blood vessels in the brain. Our case highlights the importance of considering this diagnosis in young adults presenting with acute neurological symptoms, particularly headache, altered mental status, and seizures. Prompt recognition and initiation of immunosuppressive therapy can significantly improve outcomes in patients with cerebral vasculitis.
+
+References:
+
+1. Jennette JC, et al. Antineutrophil cytoplasmic autoantibody-associated diseases: a review. Am J Med 1997;102(3):235-45.
+2. Stone JR, et al. Microscopic polyangiitis presenting as cerebral vasculitis. Neurology 2001;56(11):1630-33.
+
+**Disclosure:** The authors have no financial or other conflicts of interest related to this case report.

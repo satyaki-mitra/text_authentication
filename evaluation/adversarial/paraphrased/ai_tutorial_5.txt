@@ -1,0 +1,46 @@
+Title: Establishing an Apache Web Server on Ubuntu 20.04 LTS for Web Hosting: A Beginner's Guide
+
+Embark on a journey to set up an Apache web server on Ubuntu 20.04 LTS, a pivotal step in launching websites and web applications. Let us delve into the process!
+
+**Preparatory Steps:**
+1. Ensure your system is up-to-date: `sudo apt-get update`
+2. Securely install necessary tools: `sudo apt-get install software-properties-common`
+
+**Step 1: Installing Apache Web Server**
+
+To deploy the Apache web server, we'll employ the apt package manager:
+
+```bash
+sudo apt-get install apache2
+```
+
+Upon completion of installation, initiate and enable the Apache service for automated boot-up:
+
+```bash
+sudo systemctl start apache2
+sudo systemctl enable apache2
+```
+
+**Step 2: Verification of Installation**
+
+To ascertain whether Apache is operational, execute this command:
+
+```bash
+sudo systemctl status apache2
+```
+
+If Apache is successfully installed and functioning, you should witness an "active (running)" status. Access your server's IP address in a web browser to view the default Apache test page.
+
+**Step 3: Grasping Apache's Directory Layout**
+
+Apache manages crucial files and directories within its main directory situated at `/var/www/html`. The aforementioned test page, as well as other default website files, are housed here.
+
+**Caution:**
+Avoid inadvertently deleting or modifying vital files within the `/var/www/` directory without understanding their purpose.
+
+**Step 4: Creation of a New Website**
+
+To create a fresh website, follow these steps:
+
+1. Traverse to Apache's main directory: `cd /var/www/`
+2. Construct a new directory for your website: `sudo mkdir mywebsite` (substitute "mywebsite

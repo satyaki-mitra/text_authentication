@@ -1,37 +1,51 @@
-Title: Documentation for Data Synchronization Feature in XYZ Application
+Title: API Documentation - User Management Endpoint
 
-1. Overview
+## 1. Introduction
 
-The Data Synchronization Feature is an essential component of the XYZ Application, designed to ensure seamless data transfer between the application and external data sources or other applications. This feature facilitates real-time updates, minimizing potential discrepancies and improving overall efficiency.
+This document outlines the functionality, parameters, authentication requirements, and usage notes for our REST endpoint dedicated to user management operations.
 
-2. Functionality
+## 2. Endpoint Description
 
-The Data Synchronization Feature automates the process of updating data within the XYZ Application by fetching new data from external sources or pushing updated data to them based on user-defined schedules or triggers.
+The User Management API provides a set of endpoints that enable you to create, read, update, and delete user accounts in your application. This document focuses on the `/users` endpoint.
 
-3. Key Components
+- **Base URL:** `https://your-api-base-url.com`
+- **Endpoint:** `/users`
 
-   - Sync Engine: The core component responsible for managing and executing data synchronization tasks.
-   - Data Mapping: A feature that allows users to map the structure of the source data to the target application's format, ensuring accurate data transfer.
-   - Error Handling: Mechanisms to handle errors during the synchronization process, such as network issues, data validation failures, or conflicts.
-   - Scheduling & Triggers: Users can set up schedules for automatic data synchronization or trigger a sync manually based on specific conditions.
+## 3. Request Parameters
 
-4. Usage Instructions
+### 3.1 For POST requests (Create User)
 
-   A. Configuring Data Synchronization
-      - Navigate to the Settings > Data Synchronization menu.
-      - Click 'Add New Sync' to create a new synchronization task.
-      - Select the data source and destination, and define the sync direction (import or export).
-      - Map the source and target data fields as needed.
-      - Set up scheduling & triggers based on user requirements.
-      - Save the configuration and enable the sync task.
+| Parameter Name | Data Type   | Description                                       |
+|----------------|------------|---------------------------------------------------|
+| `name`         | `string`   | The user's full name                             |
+| `email`        | `string`   | A unique email address for the user              |
+| `password`     | `string`   | The user's password (encrypted before storage)  |
+| `role`         | `string`   | The user's role within the system (e.g., admin, user) |
 
-   B. Manual Synchronization
-      - Navigate to the Settings > Data Synchronization menu.
-      - Click 'Run Now' next to the desired synchronization task to trigger a manual sync.
+### 3.2 For GET requests (Read User)
 
-5. Error Handling & Troubleshooting
-   In case of errors during data synchronization, users will be notified with error messages detailing the issue and potential solutions. Users can also view a log of previous synchronization activities within the application.
+No additional parameters are required for retrieving a specific user by its unique ID in the path.
 
-6. Best Practices
-   - Test new synchronization tasks thoroughly before enabling them in production to minimize potential errors.
-   - Keep data mapping configurations up-to-date as changes occur in the external
+### 3.3 For PUT/PATCH requests (Update User)
+
+| Parameter Name | Data Type   | Description                                      |
+|----------------|------------|--------------------------------------------------|
+| `id`           | `integer`  | The user's unique identifier                    |
+| `name`         | `string`   | The updated user's full name                    |
+| `email`        | `string`   | The updated user's email address                |
+| `password`     | `string`   | The updated user's password (encrypted before storage) |
+| `role`         | `string`   | The updated user's role within the system       |
+
+## 4. Response Parameters
+
+### 4.1 For Successful Responses
+
+| Parameter Name | Data Type    | Description                               |
+|----------------|-------------|-------------------------------------------|
+| `status_code`  | `integer`   | The HTTP status code (e.g., 200, 201)     |
+| `data`         | `object`    | The data related to the user operation    |
+
+### 4.2 For Error Responses
+
+| Parameter Name | Data Type    | Description                               |
+|----------------|-------------|-------------------------------------------|

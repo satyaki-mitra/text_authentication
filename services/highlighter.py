@@ -28,16 +28,18 @@ class TextHighlighter:
     - Ensemble-assisted probability aggregation
     - Hybrid content detection
     - Explainable tooltips
+    
     """
-    # Color thresholds - 4 categories
-    COLOR_THRESHOLDS             = [(0.00, 0.40, "authentic", "#d1fae5", "Likely authentically written"),    # Authentic: Synthetic probability < 0.4
-                                    (0.40, 0.60, "uncertain", "#fef3c7", "Uncertain authorship"),            # Uncertain: 0.4 ≤ Synthetic probability < 0.6
-                                    (0.60, 0.80, "hybrid", "#e9d5ff", "Mixed synthetic/authentic content"),  # Hybrid: 0.6 ≤ Synthetic probability < 0.8 OR explicit hybrid detection
-                                    (0.80, 1.01, "synthetic", "#fee2e2", "Likely synthetically generated"),  # Synthetic: Synthetic probability ≥ 0.8
+   # Color thresholds - 4 categories
+    COLOR_THRESHOLDS             = [(0.00, 0.40, "authentic", "#d1fae5", "Likely authentically written"),
+                                    (0.40, 0.60, "uncertain", "#fef3c7", "Uncertain authorship"),
+                                    (0.60, 0.80, "hybrid", "#e9d5ff", "Mixed synthetic/authentic content"),
+                                    (0.80, 1.01, "synthetic", "#fee2e2", "Likely synthetically generated"),
                                    ]
     
     # Hybrid detection thresholds
-    HYBRID_PROB_THRESHOLD        = 0.25  # Minimum hybrid probability to classify as hybrid
+    HYBRID_PROB_THRESHOLD        = 0.25
+
 
     def __init__(self, domain: Domain = Domain.GENERAL, ensemble_classifier: Optional[EnsembleClassifier] = None):
         """
@@ -45,7 +47,7 @@ class TextHighlighter:
         
         Arguments:
         ----------
-            domain                    { Domain }       : Text domain for adaptive thresholding
+            domain                   { Domain }        : Text domain for adaptive thresholding
 
             ensemble_classifier { EnsembleClassifier } : Optional ensemble for sentence-level analysis
         """
@@ -70,26 +72,45 @@ class TextHighlighter:
                                      )
 
 
-    def generate_highlights(self, text: str, metric_results: Dict[str, MetricResult], ensemble_result: Optional[EnsembleResult] = None,
+    def _create_default_ensemble(self) -> EnsembleClassifier:
+        """
+        Create default ensemble classifier
+        """
+        try:
+            return EnsembleClassifier(calibration_temperature = 1.3,      
+                                      min_metrics_required    = 3,            
+                                      execution_mode          = "sequential",       
+                                     )
+        except Exception as e:
+            logger.warning(f"Failed to create default ensemble: {e}. Using fallback configuration.")
+            # Fallback with more lenient requirements
+            return EnsembleClassifier(calibration_temperature = 1.5,         # Softer calibration for uncertain cases
+                                      min_metrics_required    = 2,           # Lower threshold to handle partial metric availability
+                                      execution_mode          = "sequential"
+                                     )
+
+
+
+    def generate_highlights(self, text: str, metric_results: Dict[str, MetricResult], ensemble_result: Optional[EnsembleResult] = None, 
                             enabled_metrics: Optional[Dict[str, bool]] = None, use_sentence_level: bool = True) -> List[HighlightedSentenceResult]:
         """
         Generate sentence-level highlights with ensemble integration
         
         Arguments:
         ----------
-            text                    { str }       : Original text
+            text               { str }            : Original text
 
-            metric_results          { dict }      : Results from all metrics
+            metric_results     { dict }           : Results from all metrics
             
             ensemble_result    { EnsembleResult } : Optional document-level ensemble result
             
-            enabled_metrics         { dict }      : Dict of metric_name -> is_enabled
+            enabled_metrics    { dict }           : Dict of metric_name -> is_enabled
             
-            use_sentence_level      { bool }      : Whether to compute sentence-level probabilities
+            use_sentence_level { bool }           : Whether to compute sentence-level probabilities
             
         Returns:
         --------
-                         { list }                 : List of HighlightedSentenceResult objects
+            { list }                              : List of HighlightedSentenceResult objects
         """
         try:
             # Validate inputs
@@ -130,7 +151,7 @@ class TextHighlighter:
                                                                                                                                      weights         = weights,
                                                                                                                                     )
                     
-                    # Apply domain-specific adjustments with limits
+                    # Apply domain-specific adjustments
                     synthetic_prob                       = self._apply_domain_specific_adjustments(sentence        = sentence,
                                                                                                    synthetic_prob  = synthetic_prob,
                                                                                                    sentence_length = len(sentence.split()),
@@ -145,147 +166,147 @@ class TextHighlighter:
                     # Get confidence level
                     confidence_level                     = get_confidence_level(confidence)
                     
-                    # Get color class (consider hybrid content)
+                    # Get color class
                     color_class, color_hex, tooltip_base = self._get_color_for_probability(synthetic_prob    = synthetic_prob,
                                                                                            is_hybrid_content = is_hybrid_content,
                                                                                            hybrid_prob       = hybrid_prob,
                                                                                           )
                     
-                    # Generate enhanced tooltip
-                    tooltip                              = self._generate_ensemble_tooltip(sentence          = sentence,
-                                                                                           synthetic_prob    = synthetic_prob,
-                                                                                           authentic_prob    = authentic_prob,
-                                                                                           hybrid_prob       = hybrid_prob,
-                                                                                           confidence        = confidence,
-                                                                                           confidence_level  = confidence_level,
-                                                                                           tooltip_base      = tooltip_base,
-                                                                                           breakdown         = breakdown,
-                                                                                           is_hybrid_content = is_hybrid_content,
+                    # Generate tooltip
+                    tooltip                              = self._generate_ensemble_tooltip(sentence         = sentence,
+                                                                                           synthetic_prob   = synthetic_prob,
+                                                                                           authentic_prob   = authentic_prob,
+                                                                                           hybrid_prob      = hybrid_prob,
+                                                                                           confidence       = confidence,
+                                                                                           confidence_level = confidence_level,
+                                                                                           tooltip_base     = tooltip_base,
+                                                                                           breakdown        = breakdown,
                                                                                           )
                     
-                    highlighted_sentences.append(HighlightedSentenceResult(text                  = sentence,
-                                                                           synthetic_probability = synthetic_prob,
-                                                                           authentic_probability = authentic_prob,
-                                                                           hybrid_probability    = hybrid_prob,
-                                                                           confidence            = confidence,
-                                                                           confidence_level      = confidence_level,
-                                                                           color_class           = color_class,
-                                                                           tooltip               = tooltip,
-                                                                           index                 = idx,
-                                                                           is_hybrid_content     = is_hybrid_content,
-                                                                           metric_breakdown      = breakdown,
-                                                                          )
-                                                )
+                    # Create result object
+                    highlighted_sentence                 = HighlightedSentenceResult(text                  = sentence,
+                                                                                     synthetic_probability = synthetic_prob,
+                                                                                     authentic_probability = authentic_prob,
+                                                                                     hybrid_probability    = hybrid_prob,
+                                                                                     confidence            = confidence,
+                                                                                     confidence_level      = confidence_level,
+                                                                                     color_class           = color_class,
+                                                                                     tooltip               = tooltip,
+                                                                                     index                 = idx,
+                                                                                     is_hybrid_content     = is_hybrid_content,
+                                                                                     metric_breakdown      = breakdown,
+                                                                                    )
+                    
+                    highlighted_sentences.append(highlighted_sentence)
                 
                 except Exception as e:
-                    logger.warning(f"Failed to process sentence {idx}: {e}")
-                    # Add fallback sentence
-                    highlighted_sentences.append(self._create_fallback_sentence(sentence, idx))
+                    logger.error(f"Error highlighting sentence {idx}: {e}")
+                    # Add fallback highlighting for this sentence
+                    highlighted_sentences.append(self._create_fallback_sentence_result(sentence = sentence,
+                                                                                       index    = idx,
+                                                                                       error    = str(e),
+                                                                                      )
+                                                )
             
             return highlighted_sentences
+            
+        except Exception as e:
+            logger.error(f"Error generating highlights: {e}")
+            return self._handle_highlighting_error(text, str(e))
+
+
+    def _split_sentences_with_fallback(self, text: str) -> List[str]:
+        """
+        Split text into sentences with fallback
+        """
+        try:
+            processed = self.text_processor.process(text)
+            if processed.is_valid and processed.sentences:
+                return processed.sentences
         
         except Exception as e:
-            logger.error(f"Highlight generation failed: {e}")
-            return self._create_error_fallback(text, metric_results)
+            logger.warning(f"Text processor failed, using simple split: {e}")
+        
+        # Fallback: simple sentence splitting
+        return [s.strip() for s in re.split(r'[.!?]+', text) if s.strip()]
 
 
     def _handle_empty_text(self, text: str, metric_results: Dict[str, MetricResult], ensemble_result: Optional[EnsembleResult]) -> List[HighlightedSentenceResult]:
         """
-        Handle empty input text
+        Handle empty text input
         """
-        if ensemble_result:
-            return [self._create_fallback_sentence(text           = "No text content",
-                                                   index          = 0,
-                                                   synthetic_prob = ensemble_result.synthetic_probability,
-                                                   authentic_prob = ensemble_result.authentic_probability,
-                                                  )
-                   ]
-
-        return [self._create_fallback_sentence("No text content", 0)]
+        logger.warning("Empty text provided to highlighter")
+        return [HighlightedSentenceResult(text                  = "[No text to analyze]",
+                                          synthetic_probability = 0.5,
+                                          authentic_probability = 0.5,
+                                          hybrid_probability    = 0.0,
+                                          confidence            = 0.0,
+                                          confidence_level      = ConfidenceLevel.VERY_LOW,
+                                          color_class           = "uncertain",
+                                          tooltip               = "No text provided for analysis",
+                                          index                 = 0,
+                                          is_hybrid_content     = False,
+                                          metric_breakdown      = {},
+                                         )
+               ]
 
 
     def _handle_no_sentences(self, text: str, metric_results: Dict[str, MetricResult], ensemble_result: Optional[EnsembleResult]) -> List[HighlightedSentenceResult]:
         """
         Handle case where no sentences could be extracted
         """
-        if text and text.strip():
-            # Treat entire text as one sentence
-            return [self._create_fallback_sentence(text.strip(), 0)]
-        
-        return [self._create_fallback_sentence("No processable content", 0)]
-
-
-    def _create_fallback_sentence(self, text: str, index: int, synthetic_prob: float = 0.5, authentic_prob: float = 0.5) -> HighlightedSentenceResult:
-        """
-        Create a fallback sentence when processing fails
-        """
-        confidence_level             = get_confidence_level(0.3)
-        color_class, _, tooltip_base = self._get_color_for_probability(synthetic_prob    = synthetic_prob,
-                                                                       is_hybrid_content = False,
-                                                                       hybrid_prob       = 0.0,
-                                                                      )
-        
-        return HighlightedSentenceResult(text                  = text,
-                                         synthetic_probability = synthetic_prob,
-                                         authentic_probability = authentic_prob,
-                                         hybrid_probability    = 0.0,
-                                         confidence            = 0.3,
-                                         confidence_level      = confidence_level,
-                                         color_class           = color_class,
-                                         tooltip               = f"Fallback: {tooltip_base}\nProcessing failed for this sentence",
-                                         index                 = index,
-                                         is_hybrid_content     = False,
-                                         metric_breakdown      = {"fallback": synthetic_prob},
-                                        )
-
-
-    def _create_error_fallback(self, text: str, metric_results: Dict[str, MetricResult]) -> List[HighlightedSentenceResult]:
-        """
-        Create fallback when entire processing fails
-        """
-        return [HighlightedSentenceResult(text                  = text[:100] + "..." if len(text) > 100 else text,
+        logger.warning("No sentences found in text")
+        return [HighlightedSentenceResult(text                  = text[:200] + "..." if len(text) > 200 else text,
                                           synthetic_probability = 0.5,
                                           authentic_probability = 0.5,
                                           hybrid_probability    = 0.0,
-                                          confidence            = 0.1,
-                                          confidence_level      = get_confidence_level(0.1),
+                                          confidence            = 0.0,
+                                          confidence_level      = ConfidenceLevel.VERY_LOW,
                                           color_class           = "uncertain",
-                                          tooltip               = "Error in text processing",
+                                          tooltip               = "Could not parse text into sentences",
                                           index                 = 0,
                                           is_hybrid_content     = False,
-                                          metric_breakdown      = {"error": 0.5},
+                                          metric_breakdown      = {},
                                          )
                ]
- 
 
-    def _split_sentences_with_fallback(self, text: str) -> List[str]:
+
+    def _create_fallback_sentence_result(self, sentence: str, index: int, error: str) -> HighlightedSentenceResult:
         """
-        Split text into sentences with comprehensive fallback handling
+        Create fallback result for sentences that couldn't be analyzed
         """
-        try:
-            sentences          = self.text_processor.split_sentences(text)
-            filtered_sentences = [s.strip() for s in sentences if len(s.strip()) >= 3]
-            
-            if filtered_sentences:
-                return filtered_sentences
-            
-            # Fallback: split by common sentence endings
-            fallback_sentences = re.split(r'[.!?]+', text)
-            fallback_sentences = [s.strip() for s in fallback_sentences if len(s.strip()) >= 3]
-            
-            if fallback_sentences:
-                return fallback_sentences
-            
-            # Ultimate fallback: treat as single sentence if meaningful
-            if text.strip():
-                return [text.strip()]
-            
-            return []
-            
-        except Exception as e:
-            logger.warning(f"Sentence splitting failed, using fallback: {e}")
-            # Return text as single sentence
-            return [text] if text.strip() else []
+        return HighlightedSentenceResult(text                  = sentence,
+                                         synthetic_probability = 0.5,
+                                         authentic_probability = 0.5,
+                                         hybrid_probability    = 0.0,
+                                         confidence            = 0.0,
+                                         confidence_level      = ConfidenceLevel.VERY_LOW,
+                                         color_class           = "uncertain",
+                                         tooltip               = f"Analysis failed: {error}",
+                                         index                 = index,
+                                         is_hybrid_content     = False,
+                                         metric_breakdown      = {},
+                                        )
+
+
+    def _handle_highlighting_error(self, text: str, error: str) -> List[HighlightedSentenceResult]:
+        """
+        Handle complete highlighting failure
+        """
+        logger.error(f"Complete highlighting failure: {error}")
+        return [HighlightedSentenceResult(text                  = text[:500] + "..." if len(text) > 500 else text,
+                                          synthetic_probability = 0.5,
+                                          authentic_probability = 0.5,
+                                          hybrid_probability    = 0.0,
+                                          confidence            = 0.0,
+                                          confidence_level      = ConfidenceLevel.VERY_LOW,
+                                          color_class           = "uncertain",
+                                          tooltip               = f"Highlighting system error: {error}",
+                                          index                 = 0,
+                                          is_hybrid_content     = False,
+                                          metric_breakdown      = {},
+                                         )
+               ]
 
 
     def _calculate_sentence_ensemble_probability(self, sentence: str, metric_results: Dict[str, MetricResult], weights: Dict[str, float], ensemble_result: Optional[EnsembleResult] = None) -> Tuple[float, float, float, float, Dict[str, float]]:

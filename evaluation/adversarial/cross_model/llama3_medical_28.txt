@@ -1,0 +1,23 @@
+Title: Case Report: Successful Management of Severe Pulmonary Embolism in a Patient with Pre-Existing Atrial Fibrillation
+
+Abstract:
+
+A 62-year-old woman presented to the emergency department with acute onset of dyspnea, chest pain, and syncope. She had a history of atrial fibrillation (AFib) and was taking warfarin as anticoagulant therapy. Physical examination revealed tachypnea, tachycardia, and hypotension. Initial laboratory tests showed elevated troponin levels, D-dimer positivity, and normal blood pressure.
+
+Computed tomography pulmonary angiogram (CTPA) confirmed a severe proximal pulmonary embolism (PE) affecting the left mainstem bronchial artery. The patient was immediately started on intravenous heparin and norepinephrine to maintain blood pressure. Echocardiogram revealed right ventricular strain, and cardiac troponin levels continued to rise.
+
+The patient was taken to the operating room for thrombectomy using a catheter-based device. After successful removal of the embolus, the patient's hemodynamics improved, and she was transferred to the intensive care unit (ICU) for further management.
+
+Post-procedure anticoagulation was maintained with heparin, followed by warfarin. The patient received enoxaparin for deep vein thrombosis prophylaxis. Serial echocardiograms showed gradual improvement in right ventricular function.
+
+The patient was discharged on post-operative day 5, with no evidence of recurrent PE or AFib. At follow-up, she had normal cardiac enzymes and echocardiogram findings.
+
+Discussion:
+
+This case highlights the importance of prompt recognition and management of severe PE in patients with pre-existing cardiovascular disease. The presence of AFib increased the risk of PE, emphasizing the need for careful monitoring and anticoagulation therapy. Successful thrombectomy using a catheter-based device minimized the risk of recurrent PE and improved hemodynamics.
+
+Conclusion:
+
+Severe pulmonary embolism can have devastating consequences in patients with pre-existing cardiovascular disease. Prompt recognition, aggressive anticoagulation, and effective thrombolytic therapy are essential for optimal outcomes. This case demonstrates the importance of multidisciplinary collaboration between cardiology, pulmonology, and interventional radiology to provide comprehensive care for complex patients.
+
+Keywords: pulmonary embolism, atrial fibrillation, catheter-based thrombectomy, right ventricular strain.

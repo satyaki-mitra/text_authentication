@@ -1,31 +1,57 @@
-Title: User Authentication Feature Documentation
+Title: Product API Documentation
 
-1. Overview
+## Endpoint Description
 
-The User Authentication feature is an essential component of our application, providing secure access to user accounts and personal data. This document outlines the functionality, architecture, and usage of the User Authentication feature in our software.
+The `/products` endpoint provides a RESTful interface for managing product resources in our system. This endpoint supports CRUD (Create, Read, Update, Delete) operations on products.
 
-2. Functionality
+## Request Parameters
 
-The User Authentication feature enables users to register new accounts, log in to existing accounts, reset their passwords, and manage account security settings. The feature ensures that only authorized users can access their personal data and perform actions within the application.
+### HTTP Methods
 
-3. Architecture
+- **GET** : Retrieve a list of all products or retrieve specific product by ID.
+- **POST** : Create a new product.
+- **PUT** : Update an existing product.
+- **DELETE** : Delete an existing product.
 
-The User Authentication feature consists of several components:
+### Request Body Parameters (for POST and PUT requests)
 
-   - **User Authentication Service**: Responsible for handling user registration, login, password reset requests, and account security settings updates. The service communicates with external identity providers (e.g., Google, Facebook) when users opt to sign up or log in using their existing accounts from these services.
+| Parameter       | Data Type         | Description                                                                                                |
+|-----------------|-------------------|------------------------------------------------------------------------------------------------------------|
+| id              | integer           | Unique identifier for the product. Required when updating an existing product.                             |
+| name            | string            | Name of the product.                                                                                      |
+| description     | string            | Description of the product.                                                                               |
+| price           | float             | Price of the product in USD.                                                                              |
+| stock           | integer           | Current stock quantity of the product.                                                                    |
+| category_id     | integer           | ID of the product's category.                                                                             |
 
-   - **JWT Authentication**: Utilizes JSON Web Tokens (JWT) for secure user authentication. Upon successful login, the User Authentication Service generates a JWT token and sends it to the client application. The token is used to authenticate subsequent requests made by the client to protected resources within the application.
+### Query Parameters (for GET requests)
 
-   - **OAuth2**: Integrates OAuth 2.0 protocol for secure authentication with third-party identity providers, such as Google and Facebook. This allows users to sign up or log in using their existing accounts from these services.
+| Parameter   | Data Type | Description                                | Default Value        |
+|------------|----------|--------------------------------------------|-----------------------|
+| id         | integer  | Filter results by product ID.              | None (all products)   |
+| limit      | integer  | Limit the number of returned products.     | 20                    |
+| offset     | integer  | Offset the starting point of returned data. | 0                     |
 
-4. Usage
+## Response Parameters
 
-Users can interact with the User Authentication feature through the client application's user interface:
+### Success Response (2xx)
 
-   - **Registration**: Users can create a new account by providing required information, such as email, password, and username. Optionally, users can sign up using their existing accounts from supported third-party identity providers (e.g., Google, Facebook).
+- **Status** : HTTP status code indicating success.
+- **Data**   : The response data, e.g., list of products or a single product object.
 
-   - **Login**: Users can log in to their accounts using either their email/password combination or their accounts from supported third-party identity providers. Upon successful login, the user receives a JWT token and is redirected to the application's dashboard.
+### Error Responses (4xx and 5xx)
 
-   - **Password Reset**: In case users forget their password, they can request a reset link via email. The link allows them to set a new password for their account.
+- **Status** : HTTP status code indicating an error.
+- **Message** : A human-readable description of the error.
 
-   - **Security Settings**: Users can manage their security settings, such as updating their email address or password
+## Authentication Requirements
+
+All requests to this endpoint require an API key for authentication. The API key should be included in the `Authorization` header with the format: `API_KEY <your_api_key>`.
+
+## Example Requests
+
+### Get all products (limit=20, offset=0)
+
+```bash
+GET /products HTTP/1.1
+Host: your-domain.com

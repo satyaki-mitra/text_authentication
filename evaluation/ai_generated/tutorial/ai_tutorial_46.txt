@@ -1,35 +1,62 @@
-Title: Guide to Creating Your First Website with WordPress
+Title: A Comprehensive Guide for Beginners: How to Install and Configure Apache, MySQL, and PHP (LAMP Stack) on Ubuntu 20.04 LTS
 
-**Step 1: Setting Up a Domain and Hosting Account**
+This tutorial will guide you through the process of installing and configuring the LAMP stack (Apache, MySQL, and PHP) on an Ubuntu 20.04 LTS server. By the end of this tutorial, you'll have a functional web development environment ready for your projects.
 
-1. Choose a domain registrar like Namecheap, GoDaddy, or Bluehost. Purchase a domain name that represents your website's purpose.
+**Prerequisites:**
+1. A fresh installation of Ubuntu Server 20.04 LTS (Focal Fossa)
+2. SSH access to the server with a user account that has sudo privileges
+3. Basic understanding of Linux command line and terminal navigation
 
-2. If you didn't purchase hosting along with the domain, sign up for web hosting services such as Bluehost, SiteGround, or DreamHost. Ensure they offer one-click WordPress installation.
+**Step 1: Update your system**
+Before we start installing software, let's ensure our system is up-to-date:
 
-**Step 2: Installing WordPress**
+```bash
+sudo apt-get update
+sudo apt-get upgrade
+```
 
-1. Log in to your host's control panel (cPanel).
+**Step 2: Install Apache**
+Now, let's install the web server - Apache.
 
-2. Look for the 'WordPress' icon, usually found under 'Software' or 'Autoinstallers'. Click on it and follow the instructions to install WordPress on your domain.
+```bash
+sudo apt-get install apache2
+```
 
-3. After installation, you will receive login credentials via email. Use these to access your WordPress dashboard at www.yourdomain.com/wp-admin.
+After installation is complete, enable and start the Apache service:
 
-**Step 3: Customizing Your Website**
+```bash
+sudo systemctl enable apache2
+sudo systemctl start apache2
+```
 
-1. Visit the WordPress Dashboard and explore its interface. Familiarize yourself with Menus, Pages, Posts, Comments, Appearance, Plugins, Users, and Settings.
+**Step 3: Test Apache**
+To check if Apache is running correctly, visit your server's IP address in a web browser. You should see the "It works!" message from the default Apache test page.
 
-2. Choose a theme from the Appearance > Themes section. You can either use a free theme or purchase a premium one. Click 'Activate' to apply the selected theme.
+**Step 4: Install MySQL**
+Next, we'll install the database management system - MySQL Server:
 
-3. Customize your theme by navigating to Appearance > Customize. Here you can change various settings like site title, tagline, colors, background images, and more.
+```bash
+sudo apt-get install mysql-server
+```
 
-**Step 4: Adding Content**
+During installation, you will be asked to set a password for the `root` user. Make sure to use a strong and secure password.
 
-1. Go to Pages > Add New to create a new page or post. Give it a title and write the content in the editor.
+**Step 5: Secure the MySQL Installation**
+To enhance security, it's essential to run the MySQL database secure installation script:
 
-2. Use 'Blocks' to format your text, add images, videos, galleries, etc. You can also install additional blocks through Plugins > Add New > Search for desired block and click Install & Activate.
+```bash
+sudo mysql_secure_installation
+```
 
-3. Once done, publish or update the page/post by clicking the Publish button in the top-right corner.
+Follow the prompts to set a strong password for the MySQL `root` user, remove anonymous users, disallow remote root login, and remove the test database and access to it.
 
-**Step 5: Customizing Further (Optional)**
+**Step 6: Install PHP**
+Now let's install PHP with some essential extensions:
 
-1. To add functionality to your site, go to Plugins > Add New. Search for plugins that offer features you want, like contact forms, SEO tools, social media integration,
+```bash
+sudo apt-get install php libapache2-mod-php php-mysql php-cli
+```
+
+After installation, enable the PHP module for Apache:
+
+``

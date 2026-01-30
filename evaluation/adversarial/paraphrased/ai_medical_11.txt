@@ -1,0 +1,12 @@
+Title: Overcoming Severe COVID-19 in an Immunocompromised Individual: A Unique Case Study
+
+Introduction:
+Coronavirus disease 2019 (COVID-19), caused by the pathogen SARS-CoV-2, poses a substantial risk to susceptible populations, particularly immunocompromised individuals. This report presents an extraordinary case of a high-risk, immunocompromised patient successfully recovering from severe COVID-19.
+
+Case Description:
+A 60-year-old male with a history of chronic lymphocytic leukemia (CLL) undergoing chemotherapy was admitted to the emergency department with persistent fever, cough, and shortness of breath for three days. The patient had been recently hospitalized due to an acute CLL exacerbation and was receiving rituximab treatment when diagnosed with COVID-19. Upon admission, a chest X-ray revealed bilateral lung infiltrates indicative of viral pneumonia. A subsequent RT-PCR test confirmed the SARS-CoV-2 infection. The patient was immediately isolated and commenced on empirical antiviral treatment consisting of remdesivir, dexamethasone, and prophylactic enoxaparin. Given the patient's compromised immune system, tocilizumab was also administered.
+
+Diagnostic Procedure:
+The diagnostic procedure included a thorough medical history, physical examination, various laboratory tests, and imaging studies. RT-PCR testing of nasopharyngeal swabs was conducted for SARS-CoV-2 identification. Complete blood count (CBC), a comprehensive metabolic panel (CMP), and lactate dehydrogenase (LDH) were utilized to assess the patient's condition. A chest X-ray and computed tomography pulmonary angiogram (CTPA) were performed for radiological evaluation of lung involvement and ruling out other possible causes, such as pulmonary embolism.
+
+Treatment Methodology:

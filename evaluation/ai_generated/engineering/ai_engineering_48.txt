@@ -1,0 +1,35 @@
+Title: Performance Analysis and Recommendations for the Optimization of Server Infrastructure in a Cloud-Based Application
+
+1. Introduction
+
+The purpose of this report is to analyze the current server infrastructure design within our cloud-based application (hereafter referred to as the "App"), identify performance bottlenecks, propose optimizations, and recommend best practices for future development. The App serves a significant user base, with an average daily active user count exceeding 100,000.
+
+2. System Overview
+
+The App's server infrastructure is composed of several layers, including load balancers, application servers, databases, and caching systems. Each component has specific configurations that contribute to the overall system performance (see Table 1 for a summary of the current setup).
+
+3. Performance Analysis
+
+Upon evaluation, it was observed that the App's response times experienced noticeable delays during peak usage hours, resulting in user complaints and potential loss of revenue. To isolate the causes, we conducted load testing simulations under varying loads and analyzed the results using various performance metrics (see Table 2 for a summary).
+
+Based on our findings, it is evident that the primary bottlenecks lie within the application servers, particularly during periods of high traffic. The limited CPU capacity and insufficient memory allocation are causing delays in processing requests and rendering responses, ultimately leading to suboptimal user experience.
+
+4. Design Constraints
+
+In order to maintain compatibility with existing codebase and minimize disruptions to end-users, we must adhere to the following design constraints:
+
+   a. Minimal modifications to application servers' configurations
+   b. Scalability limitations within the current cloud provider
+   c. Minimization of costs associated with infrastructure upgrades
+
+5. Recommendations
+
+In light of the identified performance issues and design constraints, we propose the following recommendations to optimize the App's server infrastructure:
+
+   a. Implement horizontal scaling by adding additional application servers to handle increased loads during peak usage hours. This approach minimizes modifications to existing configurations while ensuring improved response times and user experience.
+
+   b. Leverage caching systems more effectively by optimizing cache policies, configuring more aggressive expiration times, and utilizing third-party CDN services for static content delivery. This reduces the load on application servers and decreases the time required to render responses.
+
+   c. Prioritize database query optimization by identifying slow queries, implementing indexing strategies, and considering database partitioning techniques to distribute data more evenly across available resources. This improves the overall efficiency of data access and reduces the response times for database-intensive operations.
+
+   d. Monitor system performance using comprehensive monitoring tools to proactively identify potential bottlenecks and implement corrective measures before they negatively impact end-users. Regular audits should

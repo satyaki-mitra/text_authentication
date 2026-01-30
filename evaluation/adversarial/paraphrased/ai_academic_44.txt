@@ -1,0 +1,19 @@
+Title: Examining the Effects of Global Warming on Arctic Char Population Variability in Subarctic Regions: A Longitudinal Examination
+
+Introduction
+
+Global warming has significantly impacted ecosystems globally, including aquatic biota. This study seeks to unveil the influence of global warming on the population variability of Arctic char (Salvelinus alpinus) in subarctic regions, with a focus on the Kvarken-Tornio waterway, a distinctive transboundary ecosystem shared by Finland and Sweden.
+
+Methodology
+
+The study adopts a multidisciplinary approach that incorporates ecological, geographical, and climatological viewpoints. Over two decades (1998-2019), longitudinal data were collected to track fluctuations in water temperature, salinity, and other environmental factors affecting Arctic char populations. Additionally, an extensive examination of the fish's life history traits, including growth rates, reproductive success, and mortality patterns, was conducted using tagging and recapture methods.
+
+Results
+
+Key findings demonstrate a substantial rise in water temperature during the study period, which correlated positively with alterations in Arctic char population variability. Warmer temperatures have resulted in shifts in distribution ranges, modifications in life history traits (e.g., delayed maturation and altered growth rates), and heightened mortality rates, particularly among juvenile populations. Furthermore, the study underscores the significance of comprehending the interaction between global warming, environmental factors, and life history traits in predicting future population trends of Arctic char in subarctic regions.
+
+Implications
+
+These findings carry profound implications, emphasizing the susceptibility of aquatic species to global warming and necessitating comprehensive management strategies that address changing environmental conditions. This research provides substantial insight into the effects of global warming on freshwater fish populations in subarctic regions, contributing significantly to conservation efforts aimed at preserving this crucial ecosystem. Future research should concentrate on devising adaptive management strategies tailored to the specific requirements of Arctic char populations as they navigate the challenges posed by climate change.
+
+Con

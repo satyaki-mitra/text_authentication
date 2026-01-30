@@ -1,0 +1,91 @@
+**Document Title:** Implementing Domain-Driven Design (DDD) with Repositories and Entity Framework Core
+
+**Overview:**
+
+Domain-Driven Design (DDD) is an approach to software development that emphasizes understanding the core business domain of your application and translating it into code. In this documentation, we'll explore how to implement DDD principles using repositories and Entity Framework Core in a .NET application.
+
+**Domain Modeling:**
+
+In DDD, you start by modeling your business domain using entities, value objects, and aggregates. Entities represent the core concepts of your domain, such as customers or orders. Value objects are immutable classes that represent small, meaningful concepts like money or dates. Aggregates are groups of entities that can be treated as a single unit.
+
+For example, let's say you're building an e-commerce application with a "Customer" entity and a "Order" entity. You might define them as follows:
+```csharp
+public class Customer : Entity
+{
+    public Guid Id { get; set; }
+    public string Name { get; set; }
+    public DateTime Birthdate { get; set; }
+}
+
+public class Order : Entity
+{
+    public Guid Id { get; set; }
+    public Guid CustomerId { get; set; }
+    public DateTime OrderDate { get; set; }
+}
+```
+**Repositories:**
+
+In DDD, repositories are used to encapsulate the logic of retrieving and saving domain entities. You can think of them as mediators between your domain models and the underlying data storage.
+
+For example, you might create a "CustomerRepository" class that provides methods for getting customers by ID or searching for customers:
+```csharp
+public interface ICustomerRepository
+{
+    Customer GetById(Guid id);
+    IEnumerable<Customer> SearchByBirthdate(DateTime birthdate);
+}
+
+public class CustomerRepository : ICustomerRepository
+{
+    private readonly DbContext _dbContext;
+
+    public CustomerRepository(DbContext dbContext)
+    {
+        _dbContext = dbContext;
+    }
+
+    public Customer GetById(Guid id) => _dbContext.Customers.Find(id);
+
+    public IEnumerable<Customer> SearchByBirthdate(DateTime birthdate) =>
+        _dbContext.Customers.Where(c => c.Birthdate >= birthdate);
+}
+```
+**Entity Framework Core:**
+
+To integrate your domain models with Entity Framework Core, you'll need to create a DbContext class that maps your entities to the database.
+
+For example:
+```csharp
+public class CustomerDbContext : DbContext
+{
+    public DbSet<Customer> Customers { get; set; }
+}
+
+public class OrderDbContext : DbContext
+{
+    public DbSet<Order> Orders { get; set; }
+}
+```
+**Practical Example:**
+
+Let's say you want to retrieve a customer by their ID and then retrieve all their orders. You would use the "CustomerRepository" to get the customer, and then use the "OrderRepository" to get the orders:
+```csharp
+public class CustomerService
+{
+    private readonly ICustomerRepository _customerRepository;
+    private readonly IOrderRepository _orderRepository;
+
+    public CustomerService(ICustomerRepository customerRepository, IOrderRepository orderRepository)
+    {
+        _customerRepository = customerRepository;
+        _orderRepository = orderRepository;
+    }
+
+    public void GetCustomerAndOrders(Guid customerId)
+    {
+        var customer = _customerRepository.GetById(customerId);
+        if (customer == null) return;
+
+        var orders = _orderRepository.GetByCustomerId(customerId);
+        foreach (var order in orders)

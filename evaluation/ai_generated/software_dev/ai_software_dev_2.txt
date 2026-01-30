@@ -1,32 +1,70 @@
-Title: Understanding the Functional Programming Pattern - Map, Reduce, and Filter in JavaScript
+Title: Documentation on Dependency Injection in Java using Spring Framework
 
-Functional Programming (FP) is a programming paradigm that emphasizes the use of functions as first-class citizens and immutability to solve problems. One of its popular techniques is the Map, Reduce, and Filter (MRF) pattern, which helps in handling collections effectively without mutating them. In this article, we will explore these three methods in JavaScript.
+Introduction:
 
-1. **Map**
-   Map is a higher-order function that applies a provided function to each element of an array or other iterable object and returns a new array with the results. The original data remains unchanged.
+Dependency Injection (DI) is a software design pattern that eliminates hardcoding dependencies by allowing an object's dependencies to be passed from an external source, such as a framework or container, at runtime. This promotes loose coupling and improves testability, maintainability, and scalability of the application.
 
-```javascript
-const numbers = [1, 2, 3, 4, 5];
-const squaredNumbers = numbers.map(num => num * num);
-console.log(squaredNumbers); // Output: [1, 4, 9, 16, 25]
+In this documentation, we will explore the implementation of Dependency Injection in Java using the Spring Framework, one of the most popular IoC (Inversion of Control) containers.
+
+Prerequisites:
+
+- Familiarity with Java programming language
+- Basic understanding of Object-Oriented Programming concepts
+- Knowledge of Maven or Gradle for project setup and dependency management
+
+Setup:
+
+1. Create a new Spring Boot project using either Spring Initializr (https://start.spring.io/) or your preferred IDE's plugin (e.g., Spring Starter Project in IntelliJ IDEA).
+
+2. Add the required dependencies for DI, such as Spring Core and Spring Context:
+
+```xml
+<dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-context</artifactID>
+    <version>5.3.14</version>
+</dependency>
 ```
 
-2. **Reduce**
-   Reduce is another higher-order function that reduces an array or iterable object to a single value by iteratively applying a provided function to the accumulator and each element in the array, starting from an optional initialValue.
+Implementation:
 
-```javascript
-const numbers = [1, 2, 3, 4, 5];
-const sum = numbers.reduce((total, num) => total + num, 0);
-console.log(sum); // Output: 15
+Let's consider an example of a simple application with three components: `Database`, `UserService`, and `EmailService`. The `UserService` depends on both the `Database` and `EmailService`.
+
+1. Define the interfaces and classes:
+
+```java
+// Database interface
+public interface Database {
+    void connect();
+    void disconnect();
+}
+
+// EmailService class
+@Component
+public class EmailService implements EmailSender {
+    // ... implementation details
+}
+
+// UserService class
+@Component
+public class UserService implements IUserService {
+    private final Database database;
+    private final EmailSender emailSender;
+
+    public UserService(Database database, EmailSender emailSender) {
+        this.database = database;
+        this.emailSender = emailSender;
+    }
+
+    // ... implementation details
+}
 ```
 
-3. **Filter**
-   Filter is a higher-order function that creates a new array with all elements that pass the test provided by the callback function. It does not modify the original data.
+2. Configure the Spring container in the `application.properties` or `application.yml` file:
 
-```javascript
-const numbers = [1, 2, 3, 4, 5];
-const evenNumbers = numbers.filter(num => num % 2 === 0);
-console.log(evenNumbers); // Output: [2, 4]
-```
+```yaml
+spring.main.web-application-type=none
 
-By using Map, Reduce, and Filter, you can write more concise and maintainable code in JavaScript by adhering to the principles of functional programming. These methods are essential tools for any developer working with arrays or iterable objects in modern JavaScript projects.
+# Configure the Database bean
+spring.datasource.driverClassName=com.mysql.cj.jdbc.Driver
+spring.datasource.url=jdbc:mysql://localhost:3306/mydatabase?useSSL

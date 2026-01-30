@@ -1,0 +1,26 @@
+**Case Report: Unusual Presentation of Primary Cutaneous Amyloidosis**
+
+Abstract:
+
+We report an uncommon case of primary cutaneous amyloidosis (PCA) presenting as a rare combination of papular and nodular lesions on the trunk and extremities. A 45-year-old woman presented with a 6-month history of progressively worsening skin lesions, characterized by numerous small, firm papules and larger nodules measuring up to 2 cm in diameter. Physical examination revealed extensive involvement of the trunk, arms, and legs.
+
+Laboratory tests showed normal complete blood count (CBC), electrolyte panel, and renal function tests. Serum protein electrophoresis demonstrated a monoclonal IgA lambda spike, which prompted further evaluation. Histopathological examination of a skin biopsy specimen showed characteristic deposition of amyloid fibrils in the dermis, confirmed by Congo red staining.
+
+Imaging studies revealed no evidence of systemic involvement or organomegaly. The patient's symptoms and signs were consistent with PCA, a rare condition characterized by the production of abnormal proteins (amyloids) that accumulate in cutaneous tissues, causing skin lesions.
+
+The patient was treated with topical corticosteroids and oral doxycycline, which resulted in partial improvement of skin lesions. However, the disease continued to progress, and we opted for surgical excision of the largest nodules, followed by systemic therapy with melphalan and prednisone.
+
+**Discussion:**
+
+PCA is a rare variant of amyloidosis that primarily affects cutaneous tissues. The papular-nodular presentation reported here is unusual, as most cases present with solitary or multiple small nodules (senile amyloidosis). Our case highlights the importance of considering PCA in the differential diagnosis of unusual skin lesions, particularly when accompanied by a monoclonal IgA spike.
+
+**Conclusion:**
+
+This case report emphasizes the need for a high index of suspicion and thorough diagnostic evaluation to identify rare cases of PCA. The combination of clinical, laboratory, and histopathological features can lead to an accurate diagnosis, which guides appropriate management and treatment. Further research is needed to better understand the pathophysiology and optimal therapeutic approaches for this uncommon condition.
+
+**References:**
+
+1. Cohen PR, Kurzrock R. Primary cutaneous amyloidosis: a review of 100 cases. J Am Acad Dermatol. 2003;48(5):735-745.
+2. Merlin G, et al. Amyloidosis: pathogenesis and clinical syndromes. Blood Rev. 2017;31(4):249-262.
+
+**Key Words:** Primary cutaneous amyloidosis, papular-nodular lesions, monoclonal IgA spike, skin biopsy, Congo red staining.

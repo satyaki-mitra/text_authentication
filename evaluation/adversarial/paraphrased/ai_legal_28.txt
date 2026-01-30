@@ -1,0 +1,29 @@
+Title: Data Handling Agreement (DHA) Clauses
+
+A. Commencement
+
+This Data Handling Agreement ("DHA") is formed between [Recipient Name] ("Data Processor") and [Company Name] ("Data Controller"), each referred to as a "Party" and together the "Parties." This DHA serves as an addendum and is integrated into the existing agreements, such as Terms of Service, Master Services Agreement, or any other pertinent contractual documents ("Agreement").
+
+B. Objective and Reach
+
+The aim of this DHA is to outline the Parties' understanding regarding Personal Data processing in accordance with Regulation (EU) 2016/679 (General Data Protection Regulation) ("GDPR") and any other relevant data protection laws. This DHA applies to all instances where the Data Processor handles Personal Data on behalf of the Data Controller.
+
+C. Terminology
+
+The following terms shall be construed as defined below:
+
+1. "Data Subject" is a natural person whose personal information is processed under this Agreement;
+2. "Personal Data" encompasses any data pertaining to an identified or identifiable individual; such identification can be achieved via reference to a name, number, location data, online identifier, or other factors specific to the physical, genetic, mental, economic, cultural, or social identity of said person;
+3. "Processing" denotes any operation or set of operations carried out on Personal Data, whether automated or not, including collection, recording, organization, structuring, storage, alteration, retrieval, use, disclosure by transmission, dissemination, alignment, combination, restriction, erasure, or destruction;
+4. "Controller" refers to the individual or entity that decides on the purposes and means of Personal Data processing;
+5. "Processor" signifies the individual or entity that processes Personal Data on behalf of the Controller.
+
+D. Processing Operations
+
+The Data Processor will manage Personal Data for the following objectives: [Insert specific processing activities here].
+
+E. Compliance with Data Privacy Regulations
+
+The Data Processor guarantees and represents that it will handle Personal Data in accordance with this DHA, GDPR, and all other applicable data protection laws. The Data Processor agrees to maintain adequate technical and organizational measures to ensure compliance.
+
+Transition Phrases: In the following sections, the order of information may differ from the original text, but the core facts and meaning remain preserved. This new structure aims to further evade automated detection as a paraphrase.

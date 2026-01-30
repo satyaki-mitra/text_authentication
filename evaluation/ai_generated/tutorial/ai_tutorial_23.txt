@@ -1,48 +1,57 @@
-Title: A Step-by-Step Guide for Beginners to Create a Simple Website Using HTML, CSS, and JavaScript
+Title: A Comprehensive Guide for Beginners: Installing Node.js and Creating a Simple Server
 
-1. **Setting Up the Environment**
-   - Download and install a code editor like Visual Studio Code, Sublime Text, or Atom.
-   - Install a web browser (Google Chrome, Mozilla Firefox, Microsoft Edge, etc.) if you haven't already.
+This tutorial will walk you through the process of installing Node.js on your computer and creating a simple server using Express.js – a popular web application framework for Node.js. By the end, you'll have a basic understanding of setting up a Node.js project and running a local server.
 
-2. **Creating Project Folder and Files**
-   - Create a new folder on your computer for the project. Name it as per your preference.
-   - Inside this folder, create three files: `index.html` (for HTML), `styles.css` (for CSS), and `script.js` (for JavaScript).
+**Step 1: Install Node.js**
 
-3. **Writing HTML Structure** (`index.html`)
-   - Open the `index.html` file in your code editor.
-   - Write the basic structure of an HTML5 document:
+Before we begin, ensure that you have Java Runtime Environment (JRE) installed on your computer. You can download it from [Oracle JRE Downloads](https://www.oracle.com/java/technologies/javase-jre8-downloads.html).
 
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My First Website</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <!-- Your HTML content will go here -->
-    <script src="script.js"></script>
-</body>
-</html>
+1.1 Visit the official Node.js website at https://nodejs.org/.
+
+1.2 Click on the "Download" button to navigate to the download page.
+
+1.3 Choose an installer that matches your operating system (Windows, MacOS, or Linux).
+
+1.4 Run the installer and follow the instructions provided by the setup wizard. During installation, make sure to check the box to add Node.js to the system's PATH environment variable.
+
+**Step 2: Verify Node.js Installation**
+
+To ensure that Node.js is correctly installed, open a command prompt (Windows) or terminal (Mac/Linux), and type the following command:
+
+```bash
+node -v
 ```
 
-   - Replace "My First Website" in the `<title>` tag with a more descriptive title for your website.
+You should see the installed version of Node.js displayed on your screen. For example, it may appear as "v14.15.0".
 
-4. **Designing the Webpage with CSS** (`styles.css`)
-   - Open the `styles.css` file in your code editor.
-   - To style the body, you can write:
+**Step 3: Install npm (Node Package Manager)**
 
-```css
-body {
-    background-color: lightblue;
-    font-family: Arial, sans-serif;
-}
+npm is a package manager for Node.js that allows you to download and manage external libraries and dependencies for your projects. If it wasn't installed during the Node.js installation process, execute the following command in your terminal or command prompt:
+
+```bash
+npm install -g npm@latest
 ```
 
-   - You can add more CSS rules to customize your webpage as desired.
+Once again, verify the installation by typing:
 
-5. **Adding Content and Basic Structure with HTML** (`index.html`)
-   - Go back to the `index.html` file.
-   - Inside the `<body>` tag, write some content
+```bash
+npm -v
+```
+
+**Step 4: Install Express.js**
+
+Express.js is a popular web application framework for Node.js that simplifies the development process. To install it, run the following command in your terminal or command prompt:
+
+```bash
+npm install express
+```
+
+**Step 5: Create a New Project Directory**
+
+Create a new directory for your project by running:
+
+```bash
+mkdir my-first-node-app && cd my-first-node-app
+```
+
+**Step 6: Initialize the Node.js

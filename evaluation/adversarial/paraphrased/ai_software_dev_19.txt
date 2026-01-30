@@ -1,0 +1,49 @@
+Title: Dependency Management Patterns in C#: Utilizing Constructor Injection for Class Dependencies
+
+The concept of Dependency Management is a design philosophy that aims to segregate the creation and management of dependencies among components. This method fosters loose coupling, enhancing code testability, maintainability, and expandability. This guide delves into the application of Dependency Management through Constructor Injection in C#.
+
+**Scenario:**
+Consider a straightforward application composed of two classes: `CustomerManager` and `EmailDispatcher`. The `CustomerManager` requires the assistance of the `EmailDispatcher` for sending email alerts to clients. Without Dependency Management, the `CustomerManager` would generate an instance of `EmailDispatcher`, thereby violating the Single Duty Principle (SDP) by integrating two aspects: service execution and dependency creation.
+
+**Execution:**
+
+First, let's outline our interfaces:
+
+```csharp
+public interface ICustomerManager
+{
+    void SendAlert(string message);
+}
+
+public interface IEmailDispatcher
+{
+    void DispatchEmail(string recipient, string subject, string content);
+}
+```
+
+Following that, implement the concrete classes:
+
+```csharp
+public class CustomerManager : ICustomerManager
+{
+    private readonly IEmailDispatcher _emailDispatcher;
+
+    public CustomerManager(IEmailDispatcher emailDispatcher)
+    {
+        _emailDispatcher = emailDispatcher;
+    }
+
+    public void SendAlert(string message)
+    {
+        // ... send alert logic
+        _emailDispatcher.DispatchEmail("customer@example.com", "Alert", message);
+    }
+}
+
+public class EmailDispatcher : IEmailDispatcher
+{
+    // ... implementation details omitted for brevity
+}
+```
+
+Now, we can utilize a Dependency Management tool to handle the dependencies

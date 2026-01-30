@@ -1,0 +1,31 @@
+# Weather Prediction API: Access Point for Meteorological Data
+
+## Overview
+
+This API offers weather predictions for a designated location. The API leverages OpenWeatherMap's free service to acquire the data.
+
+## API Address
+
+```http
+GET /api/v1/meteorological-forecast?lat={lat}&lon={long}&measurement_units={unit}&API_KEY={API_ACCESS}
+```
+
+## Query Parameters
+
+| Parameter     | Data Type  | Explanation                               |
+|---------------|-----------|-------------------------------------------|
+| `lat`         | decimal   | Represents the geographical latitude.    |
+| `lon`         | decimal   | Indicates the longitude of the location.  |
+| `unit`        | string    | Defines the unit system (e.g., 'Celsius' or 'Fahrenheit'). Default is 'Celsius'.|
+| `API_ACCESS`  | string    | Your API access key for authorization. Retrieve one from [OpenWeatherMap](https://signup.openweathermap.org/). |
+
+## Output Parameters
+
+| Parameter           | Data Type   | Explanation                               |
+|---------------------|------------|-------------------------------------------|
+| `coord`             | object      | Holds the location's latitude and longitude.       |
+| `weather_forecast`  | array       | A series of weather forecast objects, each describing a day.    |
+| `weather_forecast[].description`  | string     | Brief explanation of the current weather conditions.      |
+| `weather_forecast[].icon_url`     | string     | URL to an icon symbolizing the weather state.         |
+| `main_data`          | object      | Includes temperature, humidity, and pressure data.       |
+| `main_

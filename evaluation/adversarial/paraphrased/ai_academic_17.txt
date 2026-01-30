@@ -1,0 +1,13 @@
+Title: Evaluating the Efficacy of Cognitive Behavioral Therapy in Ameliorating Depression in Adolescents: A Randomized, Controlled Experiment
+
+Introduction:
+Depression poses a substantial public health challenge, particularly within the adolescent demographic. Its incidence is rapidly increasing globally, with detrimental consequences on academic success, social interactions, and long-term psychological wellbeing. While Cognitive Behavioral Therapy (CBT), a proven psychotherapeutic approach, has demonstrated effectiveness in alleviating depression symptoms among adults, its utility in treating adolescent depression is understudied.
+
+Research Design:
+To assess the potential of CBT in mitigating depressive symptoms amongst adolescents aged 13 to 18, a randomized controlled trial was conducted. The study included 200 participants who were randomly allocated to either a CBT intervention group or a standby control group. The CBT sessions, consisting of 16 weekly meetings, each lasting 50 minutes, were led by licensed psychotherapists trained in CBT. The assessments took place at the start, conclusion, and three-month post-intervention using standardized measures such as the Children's Depression Inventory (CDI) and Beck Depression Inventory-II (BDI-II).
+
+Primary Results:
+Significant reductions in depressive symptoms were observed within the CBT group compared to the control group following the intervention and three-month follow-up. Specifically, the CBT group experienced an average reduction of 14.2 points on the CDI and 13.5 points on the BDI-II, whereas the control group displayed minimal improvement. Calculations of effect sizes indicated substantial impacts for both measures (Cohen's d exceeding 1.0). Furthermore, findings suggested that compliance with the CBT intervention correlated positively with improvements in depressive symptoms.
+
+Consequences:
+The findings of this study offer compelling evidence supporting the efficacy of CBT in reducing depression amongst adolescents. These results underscore the importance of incorporating CBT into mental health service delivery for adoles

@@ -1,0 +1,29 @@
+Title: A Step-by-Step Tutorial for Novices: Installing WordPress on a Local Development Environment Utilizing MAMP (Mac, Apache, MySQL, PHP)
+
+This tutorial will guide you through the process of setting up WordPress on your local development environment by using MAMP. Upon completion, you'll have a functional WordPress installation that serves as a platform for practice and experimentation without affecting your live site.
+
+**Preliminary Requirements:**
+1. A Mac computer operating macOS.
+2. Obtain MAMP from its [official website](https://www.mamp.info/en/downloads/) (free trial accessible).
+
+**Step 1: Install MAMP Procedure**
+   - Locate and double-click the downloaded .dmg file to initiate the installation process.
+   - Adhere to the on-screen guidelines to complete the setup. Upon installation, MAMP will be stored in your Applications folder.
+
+**Step 2: Launch and Start Server**
+   - Traverse to your Applications folder and launch the MAMP application.
+   - Click the "Start Servers" button at the window's bottom to activate Apache and MySQL servers.
+   - Monitor the Mac menu bar for a small icon; ensure both Apache and MySQL are active by checking their respective icons.
+
+**Step 3: Database Creation**
+   - Inside the MAMP application, access the "PHPMyAdmin" tab.
+   - From the left sidebar, click "Database," then press the "Create new database" button.
+   - Designate a name for your database (e.g., wordpress) and confirm by clicking "Create." Take note of the chosen name as it will be needed later.
+
+**Step 4: Acquire WordPress**
+   - Navigate to the [WordPress download page](https://wordpress.org/download/) to obtain the most recent version of WordPress.
+   - Extract the downloaded .zip file. A folder named "wordpress" should appear.
+
+**Step 5: Configure WordPress for Local Development**
+   - Open Finder, navigate to the "Applications" folder, and then launch the "MAMP" application.
+   - In the MAMP window, click on the

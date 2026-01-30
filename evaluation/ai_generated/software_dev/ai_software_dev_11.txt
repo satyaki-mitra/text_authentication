@@ -1,26 +1,66 @@
-Title: Understanding the Benefits and Usage of Dependency Injection in Software Development
+Title: Documentation on Dependency Injection in Java using Spring Framework
 
 Introduction:
 
-Dependency Injection (DI) is an essential design pattern that enhances the modularity, testability, and maintainability of software applications, particularly in object-oriented programming languages. By using DI, developers can decouple the dependencies among objects and facilitate a more flexible application structure, promoting better code organization and easier testing.
+Dependency Injection (DI) is a software design pattern that allows the removal of hardcoded dependencies by an external entity at runtime. This promotes loose coupling, makes code more testable, and simplifies application maintenance. This documentation focuses on Dependency Injection in Java using the Spring Framework.
 
 Prerequisites:
 
-To fully grasp Dependency Injection, familiarity with object-oriented programming concepts is necessary. Key topics include classes, interfaces, inheritance, and polymorphism. Familiarity with a specific programming language such as Java, C#, or Python would also be helpful for understanding the practical implementation of DI in those respective environments.
+- Basic understanding of Object-Oriented Programming (OOP) concepts.
+- Familiarity with Java programming language.
+- Knowledge of Maven or Gradle for project setup and dependency management.
+- Understanding of Spring Framework (Spring Core, Spring Beans, Autowiring).
 
-Explanation:
+Setup:
 
-1. Traditional approach (Constructor/Setter Injection):
-In traditional object-oriented programming, objects depend on other objects to perform their intended functions. These dependencies are often defined in constructors or setters when creating a new instance of an object. This approach can lead to tight coupling between classes and make the code less testable and harder to maintain.
+To get started, first set up a new Maven project in your IDE of choice. Add the Spring Web and Spring Context dependencies to your `pom.xml`.
 
-2. Dependency Injection:
-Dependency Injection aims to address these issues by inverting the control flow from the traditional approach. Instead of objects creating their own dependencies, they receive them as arguments or through a setter method when being instantiated or configured. By doing so, dependencies are provided (injected) from an external source, making it easier to swap out components and test individual parts of the application in isolation.
+```xml
+<dependencies>
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-webmvc</artifactId>
+        <version>5.3.20</version>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-context</artifactId>
+        <version>5.3.20</version>
+    </dependency>
+</dependencies>
+```
 
-3. Benefits:
-- Decoupling: Dependency Injection helps to decouple objects from one another, allowing for greater flexibility in the design and composition of the application.
-- Testability: By injecting dependencies at runtime, developers can easily swap real implementations with mock or test doubles during unit testing, ensuring that individual components function correctly without the influence of external factors.
-- Maintenance: With dependency injection, changes to the application's architecture or the addition of new features become more manageable as objects are not tightly coupled to one another.
-- Modularity: Dependency Injection encourages the creation of modular, reusable components that can be easily swapped out and integrated with other parts of the application.
+Create a simple controller with a dependency on a service class:
 
-4. Implementation:
-Dependency Injection can
+```java
+package com.example.demo;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+
+@Controller
+public class SimpleController {
+    private final SimpleService simpleService;
+
+    public SimpleController(SimpleService simpleService) {
+        this.simpleService = simpleService;
+    }
+
+    @GetMapping("/")
+    public String greet(Model model) {
+        model.addAttribute("greeting", simpleService.getGreeting());
+        return "greeting";
+    }
+}
+```
+
+In the code above, `SimpleController` depends on a `SimpleService`. To apply Dependency Injection, we'll need to configure Spring Beans for both classes.
+
+Spring Bean Configuration:
+
+Create an application context configuration file named `application-context.xml` in the `src/main/resources` directory:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"

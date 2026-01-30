@@ -1,50 +1,60 @@
-**API Endpoint: Get User Information**
+**API Documentation: User Profile Management System**
 
-### Overview
+The User Profile Management System is a RESTful API designed to manage user profiles, providing a centralized platform for storing and retrieving user information. This document outlines the API's specifications, usage guidelines, and best practices.
 
-The `get_user_info` endpoint is used to retrieve information about a specific user. This endpoint accepts a single query parameter, `username`, and returns a JSON object containing the requested user's details.
+**Overview**
 
-### Request Parameters
+The User Profile Management System allows users to create, update, and retrieve their profiles, enabling seamless authentication and authorization across various applications. The system consists of two primary endpoints:
 
-* **username**: The username of the user whose information you want to retrieve. (Required)
+1. **/users**: Handles user profile management (create, read, update, delete)
+2. **/auth**: Manages user authentication and authorization
 
-### Response Format
+**Specifications**
 
-The response will be in JSON format, with the following properties:
+### Endpoints
 
-* **id**: A unique identifier for the user.
-* **username**: The username associated with the user account.
-* **email**: The email address associated with the user account.
-* **name**: The full name of the user.
-* **role**: The role assigned to the user (e.g., "admin", "user", etc.).
-* **created_at**: The timestamp when the user account was created.
-* **updated_at**: The timestamp when the user account was last updated.
+* **/users**:
+	+ **POST**: Create a new user profile
+		- Request Body: `{"username": string, "email": string, "password": string}`
+		- Response: 201 Created with the newly created user's ID
+	+ **GET**: Retrieve a user's profile by username or email
+		- Query Parameters: `username` or `email`
+		- Response: 200 OK with the user's profile data
+	+ **PUT**: Update a user's profile
+		- Request Body: `{"username": string, "email": string, "password": string}`
+		- Response: 200 OK with an updated user's ID
+	+ **DELETE**: Delete a user's profile
+		- Query Parameter: `username`
+		- Response: 204 No Content
 
-### Request Example
+* **/auth**:
+	+ **POST**: Authenticate a user and obtain an access token
+		- Request Body: `{"username": string, "password": string}`
+		- Response: 200 OK with the access token
+	+ **GET**: Verify an access token
+		- Query Parameter: `access_token`
+		- Response: 200 OK if valid, 401 Unauthorized otherwise
 
-```http
-GET /api/users/get_user_info?username=johnDoe
-```
+### Authentication and Authorization
 
-### Response Example (JSON)
-
-```json
-{
-    "id": 1234,
-    "username": "johnDoe",
-    "email": "[john.doe@example.com](mailto:john.doe@example.com)",
-    "name": "John Doe",
-    "role": "user",
-    "created_at": "2022-01-01T12:00:00Z",
-    "updated_at": "2022-02-15T14:30:00Z"
-}
-```
+The API uses JSON Web Tokens (JWT) for authentication. When a user logs in, they receive a JWT that must be included with subsequent requests to verify their identity.
 
 ### Error Handling
 
-* **404 Not Found**: If the specified username is not found, a 404 error will be returned.
-* **500 Internal Server Error**: If there is an internal server error or the endpoint experiences technical difficulties, a 500 error will be returned.
+The API returns standard HTTP status codes to indicate the outcome of each request. Additionally, error messages are provided in the response body whenever an error occurs.
 
-### Security Considerations
+**Usage Guidelines**
 
-* The `get_user_info` endpoint requires authentication to ensure only authorized users can access user information. To learn more
+1. **User Profile Creation**: Use the `/users` endpoint's `POST` method to create a new user profile.
+2. **Authentication**: Use the `/auth` endpoint's `POST` method to authenticate and obtain an access token.
+3. **Authorization**: Include the obtained access token in subsequent requests to verify your identity and authorize access to protected resources.
+4. **Profile Retrieval**: Use the `/users` endpoint's `GET` method to retrieve a user's profile by username or email.
+5. **Profile Updates**: Use the `/users` endpoint's `PUT` method to update a user's profile.
+
+**Best Practices**
+
+1. Always include an `Authorization` header with your requests, containing the obtained access token.
+2. Handle errors by checking the HTTP status code and error message in the response body.
+3. Verify that the user is authenticated and authorized before granting access to protected resources.
+
+By following these guidelines and specifications, you can effectively integrate the User Profile Management System into your applications and provide a seamless user experience.

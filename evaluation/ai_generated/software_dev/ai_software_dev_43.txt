@@ -1,26 +1,63 @@
-Title: Understanding Dependency Injection in Software Development
+Title: Documentation on Implementing the Observer Design Pattern in Java with Best Practices
 
 Introduction:
+The Observer Design Pattern is a behavioral software design pattern that defines a one-to-many dependency between objects, allowing them to be notified automatically of any changes that occur in the subject (or observable) object. This pattern is particularly useful when you have multiple objects that need to keep their state synchronized with each other, or when you want to implement an event-driven architecture.
 
-Dependency Injection (DI) is a design pattern that improves the modularity, testability, and reusability of object-oriented software systems by decoupling the dependencies among objects. By separating the creation and management of object dependencies from their business logic, Dependency Injection enables developers to create more flexible and maintainable codebases.
+In this document, we will discuss the implementation of the Observer Design Pattern in Java, including code examples, use cases, trade-offs, and best practices for professional developers.
 
-Key Concepts:
+Implementation:
+To implement the Observer Design Pattern in Java, we define two main interfaces – `Subject` (also known as Observable) and `Observer` (also known as Observable). The Subject maintains a list of observers and notifies them whenever its state changes, while the Observer updates its own state based on the new state of the subject.
 
-1. Dependencies:
-In programming, a dependency refers to a relationship where one class or module relies on another for its functionality. This can lead to tight coupling between different parts of the system, making it difficult to modify or extend the codebase without causing unintended consequences.
+Here's an example implementation:
 
-2. Coupling and Cohesion:
-Coupling is a measure of how closely two modules are interconnected in a software system. High coupling indicates that the modules depend heavily on each other, while low coupling means they are loosely connected. Cohesion, on the other hand, measures the degree to which the responsibilities and functions of a single module are related to one another.
+```java
+// Subject interface
+public interface Subject {
+    void registerObserver(Observer observer);
+    void removeObserver(Observer observer);
+    void notifyObservers();
+}
 
-3. Dependency Injection Principles:
-The main principles of Dependency Injection can be summarized as follows:
-   - Inversion of Control (IoC): Instead of creating dependencies within the class itself, they are provided by an external source, such as a container or factory.
-   - Loose Coupling: By decoupling objects from their dependencies, changes to one part of the system have minimal impact on others.
-   - High Cohesion: Dependencies are explicitly defined and managed, promoting a clear separation of responsibilities among different modules.
+// Observer interface
+public interface Observer {
+    void update(Subject subject);
+}
 
-4. DI Containers:
-A DI container is a software component that manages the creation and configuration of objects by injecting their dependencies. This allows developers to define the relationships between components at runtime and simplifies the process of managing complex dependency graphs. Popular DI containers include Spring, Autofac, and Angular's Dependency Injection system.
+// Concrete Subject implementation
+import java.util.*;
 
-5. Types of Dependency Injection:
-   - Constructor Injection: Dependencies are passed to a class constructor when it is instantiated. This method promotes strong encapsulation and makes the classes more testable.
-   - Setter Injection: Dependencies are set through public setter methods after an object
+public class WeatherData implements Subject {
+    private float temperature;
+    private float humidity;
+    private float pressure;
+    private List<Observer> observers = new ArrayList<>();
+
+    public void registerObserver(Observer observer) {
+        observers.add(observer);
+    }
+
+    public void removeObserver(Observer observer) {
+        observers.remove(observer);
+    }
+
+    public void notifyObservers() {
+        for (Observer observer : observers) {
+            observer.update(this);
+        }
+    }
+
+    // Other methods to set temperature, humidity, and pressure, and notify observers
+}
+```
+
+In this example, the `WeatherData` class represents the subject that maintains the current weather data (temperature, humidity, and pressure). It can register observers (e.g., weather display devices) and notify them whenever the weather changes. The `Observer` interface is not implemented directly but rather by concrete observer classes, such as:
+
+```java
+// Concrete Observer implementation - Display
+public class CurrentConditionsDisplay implements Observer {
+    private float temperature;
+    private float humidity;
+    private float pressure;
+
+    public void update(Subject subject) {
+        WeatherData weatherData = (WeatherData) subject;

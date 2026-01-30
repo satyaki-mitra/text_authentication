@@ -1,59 +1,93 @@
-Title: Understanding the Dependency Injection Pattern in Software Development
+Title: Documentation on Observer Design Pattern with C# Example
 
-The Dependency Injection (DI) pattern is a design principle commonly used in object-oriented programming to achieve loose coupling between classes, making the code more modular, testable, and easier to maintain.
+Introduction:
 
-In traditional programming, a class often depends on other classes for its functionality, creating an interdependence that can be hard to manage and test. The Dependency Injection pattern aims to solve this issue by inverting the control of dependency creation and management from the consumer (class) to the provider (container or factory).
+The Observer Design Pattern is a behavioral design pattern that defines a one-to-many dependency between objects so that when one object changes its state, all its dependents are notified and updated automatically. This pattern is particularly useful in implementing event-driven systems and maintaining loose coupling between objects that interact with each other.
 
-Here's a simple example using Java:
+Implementation:
 
-1. **Without Dependency Injection:**
+In C#, the Observer Design Pattern can be implemented using interfaces for both subjects (the object being observed) and observers (the objects observing).
 
-```java
-public class EmailService {
-    private SMTP smtp;
+1. Subject Interface:
 
-    public EmailService(SMTP smtp) {
-        this.smtp = smtp;
-    }
-
-    // methods using the SMTP object
-}
-
-public class SMTP {
-    // email sending implementation
+```csharp
+public interface ISubject
+{
+    void Attach(IObserver observer);
+    void Detach(IObserver observer);
+    void Notify();
 }
 ```
 
-In this example, `EmailService` depends on the `SMTP` class to send emails. If we want to use a different email service (like Gmail), we would need to modify the EmailService class, which can lead to tight coupling and maintenance issues.
+2. Observer Interface:
 
-2. **With Dependency Injection:**
-
-In this approach, we separate the dependency resolution from the class itself:
-
-```java
-public interface EmailSender {
-    void sendEmail(String to, String subject, String body);
+```csharp
+public interface IObserver
+{
+    void Update(ISubject subject);
 }
+```
 
-public class SMTP implements EmailSender {
-    // email sending implementation
-}
+3. Concrete Subject:
 
-public class Gmail implements EmailSender {
-    // gmail email sending implementation
-}
+```csharp
+public class WeatherData : ISubject
+{
+    private List<IObserver> _observers = new List<IObserver>();
+    private float _temperature;
+    private float _humidity;
+    private float _pressure;
 
-public class EmailService {
-    private final EmailSender sender;
-
-    public EmailService(EmailSender sender) {
-        this.sender = sender;
+    public void MeasurementsChanged()
+    {
+        Notify();
     }
 
-    public void sendEmail(String to, String subject, String body) {
-        sender.sendEmail(to, subject, body);
+    public void SetMeasurements(float temperature, float humidity, float pressure)
+    {
+        _temperature = temperature;
+        _humidity = humidity;
+        _pressure = pressure;
+        MeasurementsChanged();
+    }
+
+    public void Attach(IObserver observer)
+    {
+        _observers.Add(observer);
+    }
+
+    public void Detach(IObserver observer)
+    {
+        _observers.Remove(observer);
+    }
+
+    public void Notify()
+    {
+        foreach (var observer in _observers)
+        {
+            observer.Update(this);
+        }
     }
 }
 ```
 
-In the Dependency Injection version, we define an interface `EmailSender`, and create different implementations (SMTP and Gmail). The EmailService class now only depends on the EmailSender interface and receives an instance of the desired implementation through the constructor. This way, we
+4. Concrete Observer:
+
+```csharp
+public class CurrentConditionsDisplay : IObserver
+{
+    private float _temperature;
+    private float _humidity;
+    private float _pressure;
+
+    public void Update(ISubject subject)
+    {
+        var weatherData = (WeatherData)subject;
+        _temperature = weatherData.Temperature;
+        _humidity = weatherData.Humidity;
+        _pressure = weatherData.Pressure;
+        Display();
+    }
+
+    public void Display()
+    {

@@ -1,11 +1,27 @@
-Title: A Rare Case of Primary Amyloidosis: An Unusual Presentation and Challenging Diagnosis
+Title: An Unusual Case of Recurrent Pneumocystis jirovecii Pneumonia in a Post-Transplant Recipient: A Case Report and Literature Review
 
 Abstract
 
-Background: Primary systemic amyloidosis (PSA) is a rare, protein-misfolding disorder characterized by extracellular accumulation of abnormal immunoglobulin light chain fibrils. Its clinical manifestations are diverse and often mimic other common diseases, leading to diagnostic challenges.
+Pneumocystis jirovecii pneumonia (PJP) is an opportunistic infection commonly observed in immunocompromised individuals, particularly those who have undergone organ transplantation. We present a case of recurrent PJP in a 58-year-old male patient who received a heart transplant six months prior to presentation. The patient's medical history also included diabetes mellitus and hypertension.
 
-Case Presentation: A 65-year-old Caucasian male presented with a two-month history of progressive dyspnea, orthostatic hypotension, and non-pruritic macular erythema on the dorsum of both hands. He had no significant past medical history except for hypertension managed with medications. Physical examination revealed puffy eyelids, peripheral edema, hepatosplenomegaly, and ecchymoses on the lower extremities. Laboratory investigations showed mild anemia, elevated serum creatinine level, and abnormal liver function tests. A diagnostic workup including computed tomography (CT) scan of the chest, abdomen, and pelvis, echocardiogram, and bone marrow aspiration were performed but yielded inconclusive results. Notably, serum and urine immunofixation electrophoresis (IFE) revealed a monoclonal kappa light chain with no corresponding myeloma cells in the bone marrow. Subsequent rectal biopsy confirmed amyloid deposition via Congo red staining. Genetic testing identified mutations in the immunoglobulin heavy chain (IGH) gene, confirming the diagnosis of PSA.
+Patient Presentation:
 
-Intervention and Outcome: The patient was initiated on chemotherapy with bortezomib, cyclophosphamide, dexamethasone, and daratumumab (VCDD). After six cycles of therapy, there was a significant improvement in his symptoms, as evidenced by resolution of peripheral edema, normalization of liver function tests, and improvement in renal function.
+The patient initially presented with non-productive cough, fever, and progressive dyspnea over a period of two weeks. He had no significant chest pain or hemoptysis. His past medical history, along with recent immunosuppressant therapy for transplant rejection, raised suspicion for PJP.
 
-Conclusion: This case highlights the diagnostic challenges associated with primary systemic amyloidosis due to its varied clinical presentation. Early recognition and prompt treatment are crucial for improving patient outcomes. The combination of VCDD regimen appears to be
+Diagnostic Approach:
+
+A chest X-ray revealed bilateral interstitial infiltrates, and a subsequent bronchoalveolar lavage (BAL) confirmed the presence of Pneumocystis jirovecii trophozoites using Gomori methenamine silver (GMS) staining. The patient's CD4+ T-cell count was 10 cells/mm3, indicating profound immunosuppression.
+
+Treatment:
+
+The patient was immediately started on high-dose trimethoprim-sulfamethoxazole (TMP-SMX) therapy for 21 days. Due to severe side effects from TMP-SMX, the regimen was switched to pentamidine isethionate intravenously for three consecutive days. The patient's respiratory symptoms improved significantly following this change in treatment.
+
+Outcomes:
+
+However, two months post-treatment, the patient again developed fever and cough, with subsequent BAL confirming recurrent PJP. A dose adjustment of immunosuppressants and prolonged TMP-SMX therapy (28 days) were initiated. The patient showed gradual improvement and was eventually discharged with a planned follow-up.
+
+Research Methodology and Findings:
+
+A literature review was conducted to evaluate the incidence, risk factors, and management strategies for recurrent PJP in post-transplant recipients. The review included studies published between 1990 and 2020, focusing on adult heart transplant patients.
+
+The findings indicated that the incidence of recurrent PJP ranged from 6% to 37%, with a higher incidence observed in heart transplant recip

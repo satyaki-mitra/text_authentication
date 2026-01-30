@@ -1,45 +1,90 @@
-Title: Docker Compose - Simplifying Multi-container Distributed Applications
+Title: Documentation on Observer Design Pattern in Java with Best Practices
 
-Docker Compose is an open-source tool for defining and running multi-container Docker applications. It allows developers to easily define, manage, and scale complex distributed applications using Docker containers. With Docker Compose, you can:
+Introduction:
+The Observer Design Pattern is a behavioral design pattern that defines a one-to-many dependency between objects so that when one object changes state, all its dependents are notified and updated automatically. This pattern is especially useful in real-time applications, event handling systems, and data binding in GUI applications.
 
-1. Define a multi-container application in a single YAML file called docker-compose.yml, which contains service definitions for each container making up the application. This provides a centralized location to configure your application's services and their relationships.
+Implementation:
+In Java, the Observer Design Pattern can be implemented using interfaces for both subjects (the observable object) and observers (objects that are dependent on the subject).
 
-```yaml
-version: '3'
-services:
-  web:
-    build: .
-    ports:
-      - "5000:5000"
-    depends_on:
-      - db
+```java
+public interface Subject {
+    void attach(Observer observer);
+    void detach(Observer observer);
+    void notifyObservers();
+}
 
-  db:
-    image: postgres
-    environment:
-      POSTGRES_USER: myuser
-      POSTGRES_PASSWORD: secretpassword
+public interface Observer {
+    void update();
+}
 ```
 
-2. Start, stop, and manage all containers in the application with a single command (e.g., `docker-compose up`). This starts the services defined in the docker-compose.yml file and brings them to a running state, creating networks, volumes, and links as necessary.
+Subject class:
 
-3. Scale your application by specifying multiple instances of a service or using environment variables to configure each instance differently. For example:
+```java
+import java.util.*;
 
-```yaml
-version: '3'
-services:
-  web:
-    image: mywebapp
-    deploy:
-      replicas: 5
+public class WeatherData implements Subject {
+    private float temperature;
+    private float humidity;
+    private float pressure;
+    private List<Observer> observers = new ArrayList<>();
+
+    public void measurementsChanged() {
+        notifyObservers();
+    }
+
+    @Override
+    public void attach(Observer observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void detach(Observer observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (Observer observer : observers) {
+            observer.update();
+        }
+    }
+
+    // setters and getters for temperature, humidity, and pressure
+}
 ```
 
-4. Use environment files (e.g., .env) to store sensitive information like API keys, database passwords, or configuration values that should not be hardcoded in the docker-compose file.
+Observer class:
 
-5. Define and use custom Docker build steps to create a custom base image for your application, ensuring consistency across different environments.
+```java
+public abstract class Observer {
+    private Subject subject;
 
-6. Easily test changes to your application by updating the docker-compose.yml file and running `docker-compose up` again without manually building or starting each container.
+    public void setSubject(Subject subject) {
+        this.subject = subject;
+        subject.attach(this);
+    }
 
-7. Use extensions like Docker Compose Exec and Docker Compose Logs to interact with and monitor your containers more easily during development and deployment processes.
+    public abstract void update();
+}
 
-By using Docker Compose
+public class CurrentConditionsDisplay extends Observer {
+    private float temperature;
+    private float humidity;
+
+    @Override
+    public void update() {
+        // get updated values from the WeatherData object
+        this.temperature = subject.getTemperature();
+        this.humidity = subject.getHumidity();
+        display();
+    }
+
+    private void display() {
+        System.out.println("Current conditions: " + temperature + "°C, " + humidity + "%");
+    }
+}
+```
+
+Use Case:
+In this example, a `WeatherData` object represents the subject (observable object), and it has observers such as `CurrentConditionsDisplay`, `StatisticsDisplay

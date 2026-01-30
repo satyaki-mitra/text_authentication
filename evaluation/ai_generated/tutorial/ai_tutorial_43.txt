@@ -1,40 +1,35 @@
-Title: Beginner's Guide to Using Microsoft Excel
+Title: A Step-by-Step Guide for Beginners: Setting Up a Local Development Environment Using WAMP Server on Windows
 
-**Step 1: Launching Excel**
+This tutorial will guide you through the process of setting up a local development environment using the WAMP (Windows, Apache, MySQL, PHP) server on your Windows computer. By following these steps, you'll be able to create, test, and manage dynamic web applications locally before publishing them online.
 
-- Open your computer and locate the Microsoft Office application.
-- Double click on "Microsoft Excel" or search for it in your Start menu.
+**Step 1: Downloading and Installing WAMP Server**
 
-**Step 2: Understanding the Interface**
+1.1 Visit the official WAMPServer website (http://www.wampserver.com/) and click on the "Download" button for the latest version.
 
-- The Excel window has several components: Ribbon, Formula Bar, Gridlines, Column Letters, Row Numbers, and Cell Cursors.
+1.2 Choose the 64-bit or 32-bit version depending on your operating system, then click on the "Save" option to download the installer file.
 
-**Step 3: Creating a New Workbook**
+**Step 2: Installing WAMP Server**
 
-- Click on "Blank workbook" in the "Personal Workbook" section or press `Ctrl + N` to create a new workbook.
+2.1 Locate the downloaded file (wampserverX.X.exe) and double-click it to start the installation process.
 
-**Step 4: Navigating Through the Grid**
+2.2 Click "Next" on the initial setup screen, then select the Custom (Advanced) installation option.
 
-- Use the arrow keys, scroll bars, Page Up/Page Down, Home, End, PgUp, and PgDn keys to navigate through the grid.
+2.3 On the next screen, leave all options checked unless you have specific reasons to uncheck some of them. Click "Next."
 
-**Step 5: Entering Data**
+2.4 Choose the destination folder for your WAMP installation. By default, it should be C:\wamp64 or C:\wamp32, depending on your system type. Click "Install" to begin the installation process.
 
-- Click on a cell (cell A1 by default) and start typing to enter data. You can also use AutoFill to enter repeated data quickly.
+2.5 During the installation, you may encounter a UAC (User Account Control) prompt asking for permission to install the software. Click "Yes" to continue.
 
-**Step 6: Formatting Cells**
+2.6 Once the installation is complete, click "Finish." The WAMP server will automatically start after the installation.
 
-- Use the Home tab on the Ribbon to change font, size, color, and style of text, as well as cell background color.
+**Step 3: Configuring WAMP Server Settings**
 
-**Step 7: Performing Basic Mathematical Operations**
+3.1 Open your web browser and navigate to http://localhost in the address bar. You should see the WAMPServer - Localhost page indicating that the server is running correctly.
 
-- Click on a cell where you want the result, enter an equal sign (=), select the cells containing the numbers to be operated, and then press Enter to perform addition (+), subtraction (-), multiplication (*), or division (/).
+3.2 If you don't see the WAMPServer page, go to the system tray (lower right corner) and make sure that the green WAMP Server icon is present. If it's not, click on the red cross icon next to it, then restart your computer and try again.
 
-**Step 8: AutoSum Feature**
+**Step 4: Exploring the WAMP Folder Structure**
 
-- To calculate the sum of a range of cells, click on the cell where you want the total, go to the Home tab > Editing group > AutoSum (the icon looks like an ABC with a square around it) > select AutoSum from the dropdown menu. Excel will automatically highlight and sum the selected cells.
-
-**Step 9: Copying and Pasting Data**
-
-- Select the data you want to copy, right-click, and choose Copy or press `Ctrl + C`. Navigate to the destination cell(s) and right-click, choosing Paste or pressing `Ctrl + V`.
-
-**Step 10: Saving
+4.1 Locate the WAMP folder in your system (C:\wamp64 or C:\wamp32). Inside this folder, you'll find several subfolders that are essential for your local development environment:
+   - `www`: This is the root directory for your web applications.
+   -

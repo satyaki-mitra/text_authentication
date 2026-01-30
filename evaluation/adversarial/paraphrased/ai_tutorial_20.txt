@@ -1,0 +1,32 @@
+Guide for Novices: Establishing a Personal Development Environment Using Laravel on Windows Computers
+
+This guide provides a step-by-step process to establish a local development environment for Laravel on Windows systems. By following this guide, you will be capable of creating and managing your own Laravel projects in a personal setting. Let's begin!
+
+**Step 1: Set Up Composer (PHP Dependency Manager)**
+
+Composer is a PHP dependency manager that helps manage the libraries used within your project. To install it, please adhere to the steps below:
+
+1.1 Navigate to the official Composer website (https://getcomposer.org/) and click on "Download" under the "Composer - Stable" section. Select the PHP executable (Phar) file suitable for your system architecture.
+
+1.2 Unzip the downloaded .zip file into a folder of preference, usually C:\Program Files\. Change this folder's name to "composer".
+
+1.3 Add the composer directory to your system's PATH:
+   - Right-click on My Computer (or This PC) and choose Properties.
+   - In System Properties, navigate to the Advanced System Settings tab and click Environment Variables.
+   - Under System Variables, locate the Path variable, select it, and click Edit.
+   - Click New and input the path to your composer directory: C:\Program Files\composer (if installed in the default location).
+   - Confirm changes by clicking OK on all dialog boxes and close all windows.
+
+**Step 2: Install Git (Source Code Management System)**
+
+Git is a widely-used source code management system that facilitates collaboration between developers and manages project history. To install it, follow these steps:
+
+2.1 Visit the official Git website (https://git-scm.com/download/win) and click on "Download for Windows" in the latest release section.
+
+2.2 Execute the downloaded .exe file and follow the installation wizard's prompts to complete the installation. During setup, you may opt to install Git from the command line and integrate it with your shell if preferred.
+
+**Step 3: Set Up PHP**
+
+Laravel necessitates a specific version of PHP for operation. In this guide, we will utilize XAMPP as our web server and PHP distribution. Follow these steps to set it up:
+
+3.1 Navigate to the

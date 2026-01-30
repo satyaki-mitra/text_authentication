@@ -1,46 +1,65 @@
-**API Endpoint: Get User Information**
+**API Documentation: User Profile Management System**
 
-**URL:** `https://api.example.com/users/{userId}`
+**Overview**
 
-**Method:** GET
+The User Profile Management System (UPMS) is a RESTful API designed to manage user profiles, including personal information, preferences, and authentication credentials. This documentation provides an overview of the API's functionality, technical specifications, and usage guidelines.
 
-**Description:** This API endpoint returns detailed information about a specific user, including their profile data and any relevant metadata.
+**Technical Specifications**
 
-**Request Parameters:**
+* **API Version:** 1.0
+* **Protocol:** HTTP/1.1
+* **Encoding:** UTF-8
+* **Authentication:** OAuth 2.0 (see Authentication section)
+* **Response Formats:** JSON (default), XML (optional)
 
-* **{userId} (required)**: The unique identifier of the user for whom you want to retrieve information. This can be an integer or a string, depending on the authentication mechanism used.
+### Endpoints
 
-**Response:**
+The UPMS API exposes the following endpoints:
 
-The response will contain the following fields:
+* **GET /users**: Retrieves a list of all registered users.
+* **GET /users/{username}**: Returns detailed information about a specific user.
+* **POST /users**: Creates a new user account with provided credentials and profile data.
+* **PUT /users/{username}**: Updates an existing user's profile information.
+* **DELETE /users/{username}**: Deletes a user account.
 
-* **id**: The unique identifier of the user.
-* **name**: The user's full name.
-* **email**: The user's email address.
-* **profile_picture**: A URL pointing to the user's profile picture.
-* **created_at**: The timestamp when the user account was created.
-* **updated_at**: The timestamp when the user's information was last updated.
+### Request Parameters
 
-**Example Response:**
+The following parameters are accepted in API requests:
+
+* **username** (string): The username of the user being queried or updated. Required for GET, PUT, and DELETE requests.
+* **email** (string): The email address associated with the user's profile. Optional for POST and PUT requests.
+* **password** (string): The new password for the user account. Required for POST requests.
+
+### Response Formats
+
+The UPMS API returns responses in JSON format by default. To request an XML response, add the `Accept` header to your request with a value of `application/xml`.
+
+### Authentication
+
+The UPMS API uses OAuth 2.0 authentication to secure access to user profile data. To authenticate, include an `Authorization` header with a valid OAuth token in your request.
+
+* **OAuth Token**: A unique token issued by the UPMS server after successful login or registration.
+* **Token Format**: Bearer token (e.g., `Bearer YOUR_TOKEN_HERE`)
+
+### Error Handling
+
+The UPMS API returns errors in JSON format, including:
+
+* **Error Code** (integer): A unique code identifying the error type.
+* **Error Message** (string): A human-readable description of the error.
+
+Example error response:
 ```json
 {
-  "id": 123,
-  "name": "John Doe",
-  "email": "john.doe@example.com",
-  "profile_picture": "https://example.com/pictures/johndoe.jpg",
-  "created_at": "2022-01-01T12:00:00Z",
-  "updated_at": "2022-02-15T14:30:00Z"
+  "error_code": 404,
+  "error_message": "User not found"
 }
 ```
-**Error Handling:**
+### API Usage Guidelines
 
-* **404 (Not Found)**: If the specified user ID does not exist, a 404 error will be returned with an empty response body.
-* **401 (Unauthorized)**: If the request is unauthorized or lacks valid authentication credentials, a 401 error will be returned with an empty response body.
+1. Always include an `Authorization` header with a valid OAuth token in your requests.
+2. Use the correct endpoint for each operation (e.g., GET for retrieving data, POST for creating new data).
+3. Provide all required parameters and ensure they meet the specified formats and constraints.
+4. Handle errors by checking the response code and error message.
 
-**Rate Limiting:**
-
-This API endpoint has a rate limit of 100 requests per minute per IP address. Exceeding this limit may result in temporary or permanent blocking of your IP address.
-
-**Authentication:**
-
-To access this API endpoint, you must provide valid authentication credentials
+By following these guidelines and adhering to the technical specifications outlined in this documentation, you can effectively utilize the User Profile Management System API to manage user profiles and authentication credentials.

@@ -1,0 +1,16 @@
+Title: A Clinical Examination of Effective Gastrointestinal Stromal Tumor (GIST) Management Using Regorafenib Following Imatinib Mesylate Resistance
+
+Introduction:
+Gastrointestinal stromal tumors (GISTs) constitute the most prevalent mesenchymal cancers of the gastrointestinal tract, representing approximately 1% of all gastric malignancies. The introduction of Imatinib Mesylate, a tyrosine kinase inhibitor, has significantly altered the treatment dynamics of GIST due to its targeted action against c-Kit and platelet-derived growth factor receptor (PDGFR) alpha/beta. Despite this, instances of GIST resistant to initial Imatinib therapy remain problematic.
+
+Patient Profile:
+A 62-year-old female experienced a one-year progression of abdominal pain and weight loss. Upon endoscopic ultrasound, a 5cm x 4cm tumor was identified in the stomach's antrum, diagnosed as GIST through cytological examination. Initially, Imatinib at a dosage of 400mg daily was administered. However, after six months, CT scans displayed disease progression with multiple liver metastases. Given the tumor's resistant nature to initial treatment, secondary therapeutic options were considered.
+
+Diagnostic Procedure:
+A series of tests, including CT scans, MRI, and cytogenetic analysis of both primary and metastatic lesions, were carried out to better understand the case. The GIST was discovered to contain a PDGFRα-activating mutation (D842V), indicating potential resistance to Imatinib.
+
+Treatment Strategy:
+In light of the resistant GIST, Regorafenib, an oral multikinase inhibitor approved for treating refractory GIST, was prescribed as a replacement therapy. The initial dose was 160mg daily, with adjustments made based on tolerance and effectiveness evaluations.
+
+Results:
+Following three months of Regorafenib therapy, a follow-up CT scan indicated a

@@ -1,0 +1,9 @@
+Title: Effective Management of Intractable Myasthenia Gravis: A Case Study on Plasmapheresis and Rituximab Therapy
+
+Myasthenia Gravis (MG), an autoimmune neuromuscular ailment marked by fluctuating muscle weakness, fatigue, and impaired nerve-muscle transmission, is the focus of this case study. This report details the successful treatment of an intractable MG patient using plasmapheresis and Rituximab therapy.
+
+Presentation: A 65-year-old woman exhibited symptoms including double vision (diplopia), drooping eyelids (ptosis), difficulty swallowing (dysphagia), and overall muscle weakness. The patient's medical history included hypertension, type II diabetes mellitus, and a recent thymoma diagnosis. Given bulbar, ocular, and limb involvement, the Myasthenia Gravis Foundation of America (MGFA) classified the case as MGFA class III. Despite therapy with prednisone, azathioprine, and pyridostigmine, symptoms persisted and worsened over several months.
+
+Investigation: The MG diagnosis was confirmed through a positive Edrophonium test, Tensilon test, and elevated anti-acetylcholine receptor (AChR) antibodies in the blood. A computerized tomography (CT) scan verified the presence of a thymoma, supporting the diagnosis of thymoma-associated MG.
+
+Intervention: Due to the refractory nature of the patient's MG, plasmapheresis was initiated as an urgent measure to eliminate circulating antibodies and enhance neuromuscular transmission. Subsequent treatment involved Rituximab, a chimeric monoclonal antibody that targets CD20+ B cells, administered intravenously at 375 mg/m² weekly for four weeks. This aims to deplete the pathogenic B cells producing AChR antibodies.

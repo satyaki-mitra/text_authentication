@@ -1,0 +1,33 @@
+Title: Establishing a Local Web Development Environment on Windows with the WAMP Server: A Step-by-Step Guide for Novices
+
+In this article, we will walk you through establishing a local web development environment on your Windows machine using the WAMP server. This setup enables you to design, test, and administer websites locally prior to their live deployment on the internet. Let us embark on this journey!
+
+**Step 1: Acquisition and Installation of WAMP Server**
+
+1.1 Navigate to the official WAMPServer website at https://sourceforge.net/projects/wampserver/
+
+1.2 Click the "Download" button to access the most recent version of WAMPServer.
+
+1.3 Opt for either the 64-bit or 32-bit installation, contingent on your specific Windows OS variant.
+
+**Step 2: Execution of the Installer**
+
+2.1 Identify the downloaded .exe file (WAMPServer_x.x.x_VCxx_64dts-apache2-4.x.x-php7.x.x.exe) and double-click it to initiate the installation process.
+
+**Step 3: Adherence to the Installation Wizard**
+
+3.1 Proceed through the Welcome screen by clicking "Next," followed by agreeing to the license agreement by checking the box and clicking "Next."
+
+3.2 Select Custom (Advanced) setup for a more nuanced installation process control.
+
+3.3 Choose the location where you desire to install WAMPServer. The default is C:\wamp64. Click "Next."
+
+3.4 In the Ready to Install window, click "Install" to begin the installation.
+
+**Step 4: Configuration of WAMP Server Settings**
+
+4.1 Upon completion of the installation, check the box that says, "Launch WAMPServer now?" Then click "Finish."
+
+4.2 If a security alert appears, click "Run" to proceed.
+
+4.3 A web browser window will open displaying the WAMPServer localhost page (http://localhost). This indicates that WAMP

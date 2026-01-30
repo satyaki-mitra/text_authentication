@@ -1,41 +1,73 @@
-Title: Documentation for the "Real-Time Data Synchronization Feature"
+Title: API Documentation - User Management Endpoint
 
-1. Overview
+## User Management REST Endpoint
 
-The Real-Time Data Synchronization (RTDS) feature is an integral part of our software solution, designed to maintain consistency across multiple instances or devices by automatically updating data in real-time. This ensures that all users have access to the most current information at any given moment.
+### Overview
 
-2. Key Components
+This document outlines the specifications for our User Management REST endpoint. The endpoint provides CRUD (Create, Read, Update, Delete) functionalities for managing user accounts within the system.
 
-   a. Data Synchronizer: Responsible for detecting and propagating changes in data between connected instances.
+### Endpoint Description
 
-   b. Conflict Resolution Mechanism: Handles cases where simultaneous updates occur on different devices to ensure data integrity.
+The User Management endpoint is hosted at `https://api.example.com/users`. It communicates using HTTP methods: POST, GET, PUT, and DELETE to manage users.
 
-   c. Network Communication Layer: Enables real-time communication between various instances of the software.
+### Authentication Requirements
 
-3. Functionality
+All interactions with the User Management API require authentication using JSON Web Tokens (JWT). The token should be included in the `Authorization` header of every request with the prefix "Bearer ". For more information on JWT implementation, refer to our [Authentication Documentation](https://api.example.com/docs/authentication).
 
-   a. Continuous Data Synchronization: The RTDS feature continually monitors changes in local data and propagates them to other connected devices or instances.
+### Request Parameters
 
-   b. Conflict Detection and Resolution: When simultaneous updates occur on different devices, the conflict resolution mechanism will determine which update takes precedence based on predefined rules (e.g., last write wins).
+#### POST /users (Create)
 
-   c. Real-time Notifications: Users are notified about data synchronization events, such as successful updates or conflicts that require manual intervention.
+```json
+{
+  "username": "string",
+  "password": "string",
+  "email": "string",
+  "first_name": "string",
+  "last_name": "string"
+}
+```
 
-4. Configuration
+#### GET /users/:id (Read)
 
-The Real-Time Data Synchronization feature can be enabled/disabled on a per-instance basis through the software's configuration settings. Additionally, users may customize conflict resolution rules to suit their specific needs.
+No request parameters are required for this endpoint. The `:id` should be provided as a path parameter to retrieve specific user information.
 
-5. Integration with Other Features
+#### PUT /users/:id (Update)
 
-The RTDS feature is designed to work seamlessly with other components of our software solution, ensuring that all features operate in harmony and provide a consistent user experience across platforms.
+```json
+{
+  "username": "string",
+  "email": "string",
+  "first_name": "string",
+  "last_name": "string"
+}
+```
 
-6. Best Practices
+#### DELETE /users/:id (Delete)
 
-   a. Network Stability: Ensure a stable network connection between instances for optimal performance of the RTDS feature.
+No request body is required for this endpoint. The `:id` should be provided as a path parameter to delete the specific user account.
 
-   b. Conflict Resolution Rules: Carefully configure conflict resolution rules to maintain data integrity while minimizing potential disruptions.
+### Response Parameters
 
-   c. User Training: Train users on how to utilize and interpret real-time notifications to maximize efficiency and minimize errors.
+#### Success Responses
 
-7. Limitations
+The responses will include a JSON object with status and data properties.
 
-While the RTDS feature aims to provide near-instant updates, there may be situations where delays occur due to network latency or other factors beyond our control
+For successful operations, the status will always be 200 (OK) or 204 (No Content). The data property contains information related to the user account:
+
+```json
+{
+  "status": "success",
+  "data": {
+    "id": "integer",
+    "username": "string",
+    "email": "string",
+    "first_name": "string",
+    "last_name": "string"
+  }
+}
+```
+
+#### Error Responses
+
+In case of an error, the response will include a JSON object with status, message, and data properties. The `status` property will indicate the HTTP status code (e.g., 401 for Unauthorized). The `

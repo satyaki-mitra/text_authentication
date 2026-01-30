@@ -1,0 +1,31 @@
+Title: Data Processing Contract - Article 4: Subject's Data Rights
+
+Article 4: Subject's Data Rights
+
+4.1 Obligations Concerning Subject's Request Obligations
+
+4.1.1 The Data Processor, upon the choice of the Data Controller, will aid in fulfilling the Data Controller's obligations under Articles 12 to 22 and Article 34 of GDPR regarding responses to subjects exercising their rights (herein referred to as "Subject Requests"). The Data Processor's assistance encompasses, but is not limited to, offering reasonable cooperation and aid for the Data Controller to comply with such obligations.
+
+4.1.2 The Data Processor will immediately notify the Data Controller if it receives a request from a subject in relation to this Processing, unless EU Law deems it necessary to prevent such notification due to significant public interest reasons.
+
+4.2 Responses to Subject Requests
+
+4.2.1 Upon receiving a Subject Request, the Data Processor, at the choice of the Data Controller:
+
+(a) will provide the Data Controller with the necessary information and cooperation for the Data Controller to respond directly to the subject; or
+
+(b) if requested by the Data Controller, will take reasonable steps (at the Data Controller's expense) to help in complying with the Subject Request, such as modifying, correcting, deleting, or restricting the processing of Personal Data.
+
+4.3 Obligations Concerning Access by Subjects
+
+4.3.1 The Data Processor will implement suitable technical and organizational measures to enable the Data Controller to prove compliance with Articles 5(1)(a) to (e) and 25 to 39 of the GDPR, as far as the processing activities conducted by the Data Processor are concerned.
+
+4.3.2 The Data Processor will maintain documentation of all processing categories performed under this Agreement, including a description of the technical and organizational security measures implemented, and make it available to the Data Controller upon request.
+
+4.4 Breach Notification
+
+In case of a personal data breach, the Data Processor will notify the Data Controller immediately, providing all essential information necessary for the Data Controller to comply with its obligations under Articles 33 and 34 of the GDPR.
+
+4.5 Compliance with Laws and Regulations
+
+In executing its responsibilities under this Article, the Data Processor will adhere

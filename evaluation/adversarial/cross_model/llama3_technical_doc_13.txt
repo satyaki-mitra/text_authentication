@@ -1,63 +1,45 @@
-**API Endpoint: Get User Profile**
+**System: Real-Time Weather Forecasting API**
 
-**Endpoint URL:** `/users/{userId}/profile`
+The Real-Time Weather Forecasting API is a cloud-based platform that provides current and forecasted weather conditions for various locations around the world. This API allows developers to integrate real-time weather data into their applications, enabling users to access accurate and up-to-date weather information.
 
-**HTTP Method:** `GET`
+**Specifications:**
 
-**Description:** Retrieves the profile information of a specific user.
+* **API Endpoints:**
+	+ `/weather/current`: Returns current weather conditions (temperature, humidity, wind speed, etc.) for a specific location.
+	+ `/weather/forecast`: Returns forecasted weather conditions (high and low temperatures, precipitation, etc.) for a specific location over the next 7 days.
+* **API Request Methods:**
+	+ HTTP GET requests are used to retrieve data from the API endpoints.
+* **API Response Formats:**
+	+ JSON (default) or XML formats can be specified in the `Accept` header of the request.
+* **API Authentication:**
+	+ API key is required for authentication. You can obtain an API key by registering on our website and creating a developer account.
 
-**Path Parameters:**
+**Usage Guidelines:**
 
-* `{userId}` (required): The ID of the user whose profile to retrieve. Must be a valid numeric value.
+1. **Authentication:** To use the API, you must first obtain an API key by registering on our website and creating a developer account.
+2. **Endpoint URLs:** Use the following URLs to access the API endpoints:
+	+ `https://api.weatherforecast.com/weather/current` (current weather conditions)
+	+ `https://api.weatherforecast.com/weather/forecast` (weather forecast for the next 7 days)
+3. **Request Parameters:**
+	+ `location`: Specify the location for which you want to retrieve weather data. You can use the following formats:
+		- City name (e.g., "New York")
+		- Zip code (e.g., "10001")
+		- Latitude and longitude coordinates (e.g., "40.7128, -74.0060")
+4. **Query Parameters:**
+	+ `units`: Specify the units of measurement for temperature and wind speed:
+		- `imperial` (default): Fahrenheit, miles per hour
+		- `metric`: Celsius, kilometers per hour
+5. **Response:** The API response will contain a JSON or XML object with the requested weather data.
 
-**Query Parameters:** None
+**Error Handling:**
 
-**Request Body:** None
-
-**Response:**
-
-* **HTTP Status Code:** 200 OK
-* **Content-Type:** `application/json`
-* **Response Body:** A JSON object containing the user's profile information, including:
-	+ `id`: The ID of the user.
-	+ `username`: The username of the user.
-	+ `email`: The email address of the user.
-	+ `name`: The full name of the user.
-	+ `bio`: A brief bio or description of the user.
-
-**Error Responses:**
-
-* **HTTP Status Code:** 404 Not Found
-	+ **Error Message:** User not found.
-	+ **Response Body:** None
-* **HTTP Status Code:** 500 Internal Server Error
-	+ **Error Message:** An internal error occurred. Please try again later.
-	+ **Response Body:** None
-
-**Security:**
-
-* This endpoint requires authentication using a valid API key or OAuth token.
+* If an invalid request is made, the API will return a 400 Bad Request error response.
+* If the location specified in the request cannot be found, the API will return a 404 Not Found error response.
+* If any other unexpected errors occur, the API will return a 500 Internal Server Error response.
 
 **Rate Limiting:**
 
-* This endpoint is subject to rate limiting to prevent abuse. The limit is 100 requests per minute.
+* To prevent abuse and ensure fair usage of our API, we impose rate limits on requests. You can make up to 100 requests per minute, with a maximum of 10,000 requests per day.
+* If you exceed these limits, the API will return a 429 Too Many Requests error response.
 
-**Example Request:**
-```bash
-GET /users/123/profile HTTP/1.1
-Accept: application/json
-Authorization: Bearer YOUR_API_KEY
-```
-**Example Response:**
-```json
-{
-    "id": 123,
-    "username": "johnDoe",
-    "email": "johndoe@example.com",
-    "name": "John Doe",
-    "bio": "I'm a software developer with a passion for coding."
-}
-```
-**Changelog:**
-
-* v
+By following these guidelines and specifications, you can successfully integrate the Real-Time Weather Forecasting API into your applications and provide users with accurate and up-to-date weather information.

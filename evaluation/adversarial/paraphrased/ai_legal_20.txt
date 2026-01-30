@@ -1,0 +1,31 @@
+Title: Data Handling Protocol - Excerpt from Contractual Addendum
+
+I. Establishment and Parties Involved
+
+1.1 This Data Handling Protocol ("Agreement") is executed by [Data Controller Name] ("Entity A") and [Data Processor Name] ("Entity B"), each referred to as a "Party" and collectively as the "Parties."
+
+1.2 The Parties have consented to this Agreement, which serves as an essential component of the primary contract(s) through which Entity B offers services to Entity A (the "Agreement"). This Protocol shall take effect starting on [Effective Date].
+
+II. Purpose and Application
+
+2.1 The objective of this Protocol is to fulfill the Parties' obligations, as stipulated by Regulation (EU) 2016/679 ("GDPR"), in relation to the management of Personal Data by Entity B on behalf of Entity A.
+
+III. Terminology and Interpretation
+
+3.1 Terms used within this Protocol retain their meanings as defined under GDPR, unless specified otherwise herein. Furthermore, the following terms shall have the following meanings:
+
+(a) "Data Breach" refers to an unauthorized or accidental incident resulting in the destruction, loss, modification, unauthorized disclosure of, or access to, Personal Data during transmission, storage, or processing.
+
+IV. Processor's Responsibilities
+
+4.1 Entity B shall:
+
+(a) process Personal Data only upon receiving documented instructions from Entity A, unless legally obligated by Union or Member State law to which Entity B is subject; in such cases, Entity B will notify Entity A of the applicable legal requirement prior to processing, unless the law explicitly forbids such disclosure on grounds of public interest.
+
+(b) ensure that all individuals authorized to handle Personal Data have agreed to maintain confidentiality or are bound by a statutory duty of secrecy.
+
+(c) implement suitable technical and organizational measures designed to provide an adequate level of security based on the associated risks, such measures may include but are not limited to: data pseudonymization, encryption, ensuring system and service confidentiality, integrity, availability, resilience; restoring access and availability of Personal Data in a timely manner following a physical or technical incident; regular testing, evaluation, and assessment of the effectiveness of these security measures.
+
+V. Subcontracting
+
+5.1 Entity B will not engage another processor ("Sub

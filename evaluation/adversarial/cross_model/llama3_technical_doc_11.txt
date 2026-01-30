@@ -1,65 +1,69 @@
-**Endpoint:** `GET /users/{id}`
+**API Documentation: User Profile Management System**
 
-**Purpose:** Retrieve a specific user's information by their unique ID.
+**Overview**
 
-**Path Parameters:**
+The User Profile Management System (UPMS) is an application programming interface (API) designed to manage user profiles, including personal information, preferences, and interests. The UPMS provides a centralized platform for collecting, storing, and retrieving user data, allowing developers to integrate the system into their applications.
 
-* `{id}`: The unique identifier of the user to retrieve (required).
+**Specifications**
 
-**Query Parameters:** None
+### Request and Response Formats
 
-**Request Body:** Empty (no request body is required or accepted).
+* All requests and responses are sent in JSON format.
+* HTTP methods used: POST (create), GET (read), PUT (update), DELETE (delete).
 
-**HTTP Method:** `GET`
+### Endpoints
 
-**Response:**
+* **Create User**: `POST /users`
+	+ Request body: `username`, `email`, `password` (hashed)
+	+ Response: Created user object with unique ID
+* **Read User**: `GET /users/{id}`
+	+ Path parameter: `id` (unique user identifier)
+	+ Response: User object with profile information
+* **Update User**: `PUT /users/{id}`
+	+ Path parameter: `id` (unique user identifier)
+	+ Request body: Updated user data (e.g., name, email, interests)
+	+ Response: Updated user object
+* **Delete User**: `DELETE /users/{id}`
+	+ Path parameter: `id` (unique user identifier)
+	+ Response: Success message indicating deletion
 
-The response will contain the requested user's information in JSON format. The response includes:
+### Authentication and Authorization
 
-* `id` (string): The unique identifier of the user.
-* `name` (string): The full name of the user.
-* `email` (string): The email address of the user.
-* `role` (string): The role or job title of the user.
+* API uses JSON Web Tokens (JWT) for authentication.
+* Each request must include a valid JWT token in the `Authorization` header.
+* Authorized requests will be verified against the UPMS's access control list (ACL).
 
-Example Response:
+### Error Handling
+
+* The API returns error responses in JSON format with the following structure:
+	+ `error`: Error message
+	+ `code`: Error code (e.g., 400, 404, 500)
+* Developers should handle errors by checking the `error` and `code` properties of the response.
+
+### Usage Guidelines
+
+1. **Register**: Before using the API, register your application with UPMS to obtain an API key.
+2. **Authentication**: Include a valid JWT token in each request's `Authorization` header.
+3. **Rate Limiting**: The API has rate limiting in place to prevent abuse. Check the response headers for `X-RateLimit-Limit` and `X-RateLimit-Remaining` to avoid excessive requests.
+4. **Data Integrity**: Always validate user input data before processing it through the API.
+
+**Example Request**
+
+To create a new user:
+```bash
+curl -X POST \
+  http://api.upms.com/users \
+  -H 'Content-Type: application/json' \
+  -d '{"username": "johnDoe", "email": "johndoe@example.com", "password": "hashed_password"}'
+```
+**Example Response**
+
+A successful create request will return a JSON object with the newly created user's ID:
 ```json
 {
-  "id": "12345",
-  "name": "John Doe",
-  "email": "johndoe@example.com",
-  "role": "Software Engineer"
+  "id": 123,
+  "username": "johnDoe",
+  "email": "johndoe@example.com"
 }
 ```
-
-**Error Handling:**
-
-* **404 Not Found:** If the requested user ID does not exist, a 404 error will be returned with a message indicating that the user was not found.
-* **500 Internal Server Error:** If an unexpected error occurs while processing the request, a 500 error will be returned.
-
-Example Error Response:
-```json
-{
-  "error": {
-    "code": 404,
-    "message": "User not found"
-  }
-}
-```
-
-**Rate Limiting:**
-
-This API endpoint is subject to rate limiting. The maximum number of requests per minute is 100. If the request limit is exceeded, a `429 Too Many Requests` error will be returned.
-
-Example Error Response:
-```json
-{
-  "error": {
-    "code": 429,
-    "message": "Too many requests (exceeded rate limit)"
-  }
-}
-```
-
-**Security Considerations:**
-
-* Authentication: This API endpoint requires authentication using a valid API key or token
+By following these guidelines and specifications, developers can effectively integrate the UPMS into their applications to manage user profiles efficiently.

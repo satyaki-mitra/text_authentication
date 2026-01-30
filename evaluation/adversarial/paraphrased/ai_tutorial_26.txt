@@ -1,0 +1,27 @@
+Title: A Step-by-Step Guide on Installing Linux Ubuntu Operating System on a Personal PC
+
+This instructional guide walks you through the installation process of the Linux operating system, specifically Ubuntu, onto your personal computer. By adhering to these steps, you will grasp how to manufacture bootable media, safeguard data, and conduct a pristine installation of Ubuntu.
+
+**Items Required:**
+1. Personal computing device with an accessible USB stick (minimum 8GB) or DVD writer
+2. Latest Ubuntu ISO file, obtainable from [ubuntu.com](http://ubuntu.com)
+3. External data storage drive (optional but advisable for data protection)
+4. Internet connectivity
+
+**Step 1: Retrieve and Authenticate the Ubuntu ISO File:**
+- Browse to [ubuntu.com](http://ubuntu.com).
+- Select "Download" and opt for the most recent version of Ubuntu (Long Term Support releases offer prolonged assistance).
+- Save the ISO file onto your device. Ensure its authenticity using tools such as HashCalculate or sha256sum.
+
+**Step 2: Construct a Bootable USB Stick:**
+- Insert the USB stick into your computer.
+- Retrieve Rufus (a complimentary utility for constructing bootable USB sticks) from [Rufus' official website](https://rufus.akeo.ie/).
+- Launch Rufus, select the downloaded Ubuntu ISO file, and specify your USB stick as the target device.
+- Guarantee that the partition scheme is set to "GPT" for UEFI systems or "MBR" for BIOS systems. Click "Start" to manufacture the bootable USB.
+
+**Step 3: Secure Important Data (Optional but Recommended):**
+- Connect an external data storage drive to your computer.
+- Transfer all crucial files from your internal hard drive to the backup drive to safeguard against data loss during the installation process.
+
+**Step 4: Initiate Boot from the USB Stick:**
+- Restart your computer and access the boot menu by pressing the relevant key (often F12, Esc, or Del). The keys may vary depending on

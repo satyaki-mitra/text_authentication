@@ -1,0 +1,10 @@
+Title: Assessing the Effect of Vegetarian Diets on Heart Health: A Systematic Review and Meta-Analysis Study
+
+Introduction:
+Heart disease is a primary cause of global illness and death, prompting research into effective preventive measures. Recent studies suggest that diets rich in plants might offer substantial benefits for heart health. This systematic review and meta-analysis aim to collate existing evidence on the relationship between vegetarian diets and the risk of heart disease.
+
+Research Procedure:
+A broad search was initiated across five databases (PubMed, Scopus, Web of Science, Cochrane Library, and Google Scholar) from their inception up until March 2021, utilizing predefined keywords and MeSH terms. Eligible studies were observational ones (cohort, case-control, or cross-sectional) that examined the link between vegetarian diets and heart disease risk factors or outcomes. Two reviewers independently screened titles and abstracts, determined eligibility, and collected data using a standardized form. The Newcastle-Ottawa Scale was utilized to evaluate bias risk. Meta-analyses employed random-effects models with inverse-variance weighting.
+
+Significant Results:
+In total, 52 studies (comprising 1,308,947 participants) qualified for inclusion. Findings demonstrated a strong association between increased adherence to vegetarian diets and reduced risks of heart disease mortality (Relative Risk (RR) = 0.86; 95% Confidence Interval (CI): 0.83-0.89), coronary heart disease (CHD) mortality (RR = 0.79; 95% CI: 0.74-0.84), and incident CHD (RR = 0.82; 95% CI: 0.76-0.88

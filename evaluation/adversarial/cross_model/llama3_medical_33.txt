@@ -1,0 +1,23 @@
+Title: A Rare Case of Hypoparathyroidism Presenting as Severe Hypercalcemia in a Young Adult
+
+Abstract:
+
+We report an unusual case of hypoparathyroidism presenting as severe hypercalcemia in a 25-year-old woman. The patient was admitted to our hospital with symptoms of muscle weakness, fatigue, and paresthesia in her hands and feet. Laboratory tests revealed elevated calcium levels (>14 mg/dL) and normal phosphorus levels.
+
+Upon further evaluation, the patient's parathyroid hormone (PTH) levels were found to be undetectable (<1 pg/mL), consistent with hypoparathyroidism. A thorough physical examination did not reveal any obvious abnormalities in the thyroid gland or neck. The patient's medical history was unremarkable, except for a previous diagnosis of papillary thyroid cancer treated with surgery and radioactive iodine 5 years prior.
+
+A review of the patient's medical records revealed that her PTH levels had been within normal limits during her initial evaluation and treatment. However, her calcium levels had been consistently elevated (>10 mg/dL) over the past year, despite no apparent cause or symptoms.
+
+The patient was treated with calcitonin and bisphosphonate therapy to manage her hypercalcemia, and her calcium levels gradually returned to normal. A repeat PTH level 6 weeks later confirmed undetectable levels, confirming the diagnosis of hypoparathyroidism.
+
+Discussion:
+
+This case highlights the importance of considering rare endocrine disorders in patients with unexplained elevations in calcium levels. Hypoparathyroidism is a rare condition characterized by deficient PTH production, typically resulting in hypocalcemia. However, our patient presented with severe hypercalcemia, likely due to the compensatory response of her body to maintain normal calcium levels.
+
+The association between thyroid cancer and hypoparathyroidism has been well-documented, although most cases present with hypocalcemia. Our case adds to the growing evidence that some patients may develop hypoparathyroidism years after treatment for thyroid cancer, potentially due to radiation-induced damage to the parathyroid glands.
+
+Conclusion:
+
+This case emphasizes the need for a high index of suspicion and thorough evaluation in patients presenting with unexplained elevations in calcium levels. The diagnosis of hypoparathyroidism can be challenging, especially when presenting as hypercalcemia. Further research is needed to fully understand the pathophysiology behind this rare condition and its potential association with thyroid cancer treatment.
+
+Keywords: Hypoparathyroidism, Hypercalcemia, Thyroid Cancer, Endocrine Disorders

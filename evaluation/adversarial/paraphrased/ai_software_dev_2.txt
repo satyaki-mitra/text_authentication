@@ -1,0 +1,42 @@
+Title: Dependency Injection in Java Using the Spring Framework: A Comprehensive Guide
+
+   Overview:
+
+   This guide delves into the practical application of Dependency Injection (DI) within the context of Java, utilizing the popular Spring Framework as an Inversion of Control (IoC) container. By adopting this pattern, you can avoid hardcoding dependencies and foster loose coupling, ultimately enhancing your application's testability, maintainability, and scalability.
+
+   Pre-requisites:
+
+   1. Proficiency in the Java programming language
+   2. Basic grasp of Object-Oriented Programming principles
+   3. Familiarity with Maven or Gradle for project setup and dependency management
+
+   Commencement:
+
+   1. Initiate a new Spring Boot project through Spring Initializr (https://start.spring.io/) or your preferred IDE's plugin (such as the Spring Starter Project in IntelliJ IDEA).
+
+   2. Incorporate the necessary DI dependencies, including Spring Core and Spring Context:
+
+      ```xml
+      <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-context</artifactId>
+          <version>5.3.14</version>
+      </dependency>
+      ````
+
+   Practical Application:
+
+   Consider a minimalist application comprising three components: `Database`, `UserService`, and `EmailService`. The `UserService` is reliant on both the `Database` and `EmailService`.
+
+   1. Establish interface definitions and classes:
+
+      ```java
+      // Database Interface
+      public interface DataRepository {
+          void establishConnection();
+          void terminateConnection();
+      }
+
+      // EmailService Class
+      @Component
+      public class EmailDispatcher implements EmailDis

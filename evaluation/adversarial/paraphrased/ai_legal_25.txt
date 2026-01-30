@@ -1,0 +1,30 @@
+Title: Data Processing Agreement (DPA) - Article 4 - Individual Data Rights
+
+**Section 4: Individual Data Rights Obligations**
+
+1. **Party Responsibilities for Data Subject Requests**
+
+   a) Each party shall, to the extent necessary by law, swiftly inform the other party when it receives a demand from an individual for access to, correction, deletion, restriction, transfer, or objection to the processing of Personal Data. The receiving party must not respond without obtaining the prior written consent of the other party unless legally compelled.
+
+   b) If an individual exercises any rights under relevant privacy laws regarding data processed under this agreement, both parties agree to collaborate and make reasonable efforts to help each other comply with these requests in line with their respective obligations under privacy laws.
+
+2. **Cooperation on Access Requests from Regulatory Bodies**
+
+   a) Each party shall promptly inform the other if it receives a request or communication from a regulatory body related to data processing under this agreement. The parties will collaborate, on a necessary basis, to address such requests or communications and provide each other with the required assistance to facilitate either party's compliance.
+
+   b) In responding to a request from a regulatory body, each party shall consider the nature of processing, information available, and the cost of providing the requested data to the other party.
+
+3. **Data Protection Impact Assessment Collaboration**
+
+   a) If either party is legally obligated to carry out a Data Protection Impact Assessment (DPIA), it will involve the other party without undue delay, offering any necessary assistance for the DPIA, including sharing relevant information and documentation.
+
+   b) Each party shall notify the other immediately if it becomes aware of issues that could potentially pose a significant risk to individuals' rights and freedoms in relation to data processing under this agreement.
+
+4. **Data Protection Officer Collaboration**
+
+   If either party appoints a Data Protection Officer (DPO) due to privacy laws, they shall promptly inform the other party and provide contact details for the DPO. The parties agree to collaborate with each other and, where appropriate, with the DPOs of each party on their respective obligations under this agreement and privacy laws.
+
+For the sake of clarity in this section:
+
+- "Individual" refers to a specific or identifiable natural person;
+- "Regulatory Body" signifies an independent public authority responsible for overseeing data protection matters.

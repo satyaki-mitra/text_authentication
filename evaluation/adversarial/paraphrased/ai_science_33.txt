@@ -1,0 +1,11 @@
+Title: The Unveiling of Gravitational Undulations and Their Consequences for Cosmology
+
+Gravitational undulations (GUs), minute perturbations in the structure of spacetime hypothesized by Albert Einstein's general theory of relativity (GTR) a century past, were eventually identified by the Laser Interferometer Gravitational-Wave Detector (LIGOD) in 2015. This pioneering discovery ushered in a fresh epoch for cosmology, offering an entirely novel perspective to scrutinize the cosmos and corroborating GTR on an unparalleled scale.
+
+Gravitational undulations are instigated when colossal entities accelerate or decelerate, yielding temporary distortions in spacetime that propagate as waves at the speed of light. In accordance with GTR, a gravitational field can be perceived as a warping of spacetime engendered by mass and energy. When a duo of massive celestial bodies, such as black holes or neutron stars, orbit each other, they exert forces on one another that result in gradual alterations in their trajectories. These changing movements produce a wave-like fluctuation in the surrounding spacetime, which radiates outwards as a gravitational undulation.
+
+The detection of GUs hinges on highly sensitive laser interferometers such as LIGOD and its European counterpart, Virgo. Such instruments employ lengthy, perpendicular arms (approximately 4 kilometers apiece) consisting of laser beams that reflect off mirrors at the extremities. When a gravitational undulation traverses, it subtly alters the lengths of the arms, causing a minor disparity in the path lengths traveled by the laser beams. This negligible deviation results in a discernible alteration in the interference pattern observed by photodetectors situated at the end of each arm.
+
+On September 14, 2015, LIGOD registered a signal from two black holes coalescing roughly 1.3 billion light-years distant. The detection was subsequently authenticated by both LIGOD observatories and Virgo, marking the first direct observation of gravitational undulations. Since then, multiple additional GU events have been detected, offering valuable insights into assorted cosmological phenomena.
+
+The discovery of GUs bears far-reaching implications for our comprehension of the cosmos. By permitting us to observe occurrences previously beyond reach

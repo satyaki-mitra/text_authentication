@@ -1,35 +1,70 @@
-Title: Documentation for Feature X: Real-Time Data Processing
+Title: API Documentation - User Management Endpoint
 
-1. Introduction
+## User Management Endpoint
 
-Feature X is an innovative addition to our software, designed to enable real-time data processing. This functionality allows users to analyze and react to data as it is generated, providing unprecedented speed and efficiency in decision-making processes.
+The `User Management` endpoint provides a RESTful interface for creating, reading, updating, and deleting user accounts in our system. This document outlines the details of each operation supported by this endpoint.
 
-2. Feature Overview
+### Base URL
 
-Real-Time Data Processing (RTDP) is a feature that continuously monitors incoming data streams and processes them immediately. The processed data can be visualized in real-time through various charts, graphs, and dashboards within the software interface.
+All requests should be directed to the base URL: `https://api.example.com/v1`
 
-3. Key Benefits
+### Authentication Requirements
 
-- Improved efficiency: By processing data as it arrives, users can make informed decisions quickly and effectively.
-- Enhanced responsiveness: Real-time insights allow for prompt reactions to changing circumstances, minimizing potential losses or missed opportunities.
-- Increased accuracy: Reduced delays in data analysis lead to more accurate results and forecasts.
+All API calls require authentication using an API key in the `Authorization` header. The API key can be obtained by registering a developer account on our platform.
 
-4. Technical Specifications
+Example:
+```bash
+Authorization: Bearer YOUR_API_KEY
+```
 
-- Compatibility: RTDP is compatible with various data sources such as databases, APIs, and streaming services.
-- Scalability: The feature can handle large volumes of data, ensuring smooth performance even under heavy loads.
-- Customizability: Users can configure the feature to process data according to their specific needs and preferences.
+### Endpoints
 
-5. User Guide
+#### 1. Create User (POST /users)
 
-To enable Real-Time Data Processing, follow these steps:
+Create a new user in the system.
 
-1. Navigate to the Feature X settings page within the software interface.
-2. Select the desired data source or sources from the available options.
-3. Configure the settings according to your requirements, such as selecting the data fields to be processed and defining any filters or transformations needed.
-4. Start the RTDP process by clicking the "Start Processing" button.
-5. Monitor the real-time data processing results in the visualization dashboard provided.
+##### Request Parameters
 
-6. Troubleshooting and Support
+| Parameter      | Data Type    | Description                               | Required |
+| -------------- | ------------ | ----------------------------------------- | -------- |
+| name           | string       | The user's full name                      | Yes      |
+| email          | string       | A unique email address for the user       | Yes      |
+| password       | string       | The user's password (must be hashed)      | Yes      |
+| role           | enum         | The user's role (admin, standard, etc.)   | No       |
 
-In case of any issues with Real-Time Data Processing, please refer to our comprehensive support documentation or contact our technical support team for assistance. We are committed to helping you make the most out of this powerful feature.
+##### Response Parameters
+
+| Parameter  | Data Type    | Description                               |
+| ---------- | ------------ | ----------------------------------------- |
+| id         | integer      | The newly created user's unique identifier |
+| name       | string       | The user's full name                      |
+| email      | string       | A unique email address for the user       |
+| role       | enum         | The user's role (admin, standard, etc.)   |
+
+##### Example Request
+
+```bash
+POST /users HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer YOUR_API_KEY
+
+{
+    "name": "John Doe",
+    "email": "john.doe@example.com",
+    "password": "hashed_password",
+    "role": "admin"
+}
+```
+
+##### Error Codes
+
+| Code | Description                       |
+|------|-----------------------------------|
+| 401   | Unauthorized: Invalid or missing API key      |
+| 422   | Unprocessable Entity: Invalid request data format |
+
+#### 2. Read User (GET /users/:id)
+
+Retrieve information about a specific user by their unique ID.
+
+#####

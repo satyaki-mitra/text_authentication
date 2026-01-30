@@ -1,45 +1,79 @@
-Title: Documentation for the "Real-Time Data Streaming" Feature in Application X
+Title: API Documentation - User Management Endpoint
 
-1. Overview
+## User Management Endpoint
 
-The Real-Time Data Streaming feature allows the application to continuously receive and process data in real-time from various sources, ensuring seamless and up-to-date information flow within the system. This documentation aims to provide a comprehensive understanding of the feature's functionality, usage, and configuration.
+### Description
 
-2. Functionality
+The `User Management` endpoint provides a RESTful interface for managing user-related operations such as creating, reading, updating, and deleting users.
 
-The Real-Time Data Streaming feature enables the application to:
-   - Connect to multiple data sources (e.g., databases, APIs, message queues)
-   - Receive data from connected sources in real-time
-   - Process incoming data according to predefined rules and logic
-   - Publish processed data to other parts of the system or external services
+### Request Methods
 
-3. Usage
+* **POST** `/api/v1/users`: Create a new user
+* **GET** `/api/v1/users/{id}`: Retrieve details of an existing user by ID
+* **PUT** `/api/v1/users/{id}`: Update the details of an existing user by ID
+* **DELETE** `/api/v1/users/{id}`: Delete a user by ID
 
-To use the Real-Time Data Streaming feature, follow these steps:
+### Authentication Requirements
 
-   3.1 Configuration
-      - Navigate to the application's configuration settings.
-      - Configure the desired data sources and their respective connection parameters (e.g., database URL, API endpoint).
-      - Define the data processing rules for each connected source.
+All requests to this endpoint require authentication using the `Authorization` header. The header should contain a valid JWT token. More information about how to obtain and manage tokens can be found in the [Authentication Guide](authentication-guide.md).
 
-   3.2 Starting the Data Streaming Service
-      - Start or restart the Real-Time Data Streaming service to initiate data reception from connected sources.
-      - Monitor the service logs for any error messages or warnings.
+### Request Parameters
 
-4. Configuration Options
+#### Create User (POST)
 
-The Real-Time Data Streaming feature offers several configuration options, including:
-   - Data source connection settings (e.g., authentication credentials, polling interval)
-   - Data processing rules (e.g., data filtering, transformation functions)
-   - Error handling policies (e.g., retry attempts, error notifications)
-   - Output destinations for processed data (e.g., internal databases, external APIs)
+```
+Content-Type: application/json
+Authorization: Bearer {your_token}
 
-5. Best Practices
+{
+    "username": "string",
+    "email": "string",
+    "password": "string"
+}
+```
 
-To ensure optimal performance and reliability of the Real-Time Data Streaming feature, consider the following best practices:
-   - Limit the number of connected sources based on the system's processing capacity.
-   - Implement proper error handling mechanisms to minimize data loss or inconsistencies.
-   - Monitor the service logs regularly for any performance issues or potential errors.
+* `username`: The unique username for the user (required, string)
+* `email`: The email address associated with the user (required, string)
+* `password`: The password for the user (required, string)
 
-6. Troubleshooting
+#### Get User (GET)
 
-If you encounter any issues while using the Real-Time Data Streaming feature
+```
+Authorization: Bearer {your_token}
+```
+
+* No additional request parameters are required for this operation. The server will return the details of the requested user based on the provided ID in the URL.
+
+#### Update User (PUT)
+
+```
+Content-Type: application/json
+Authorization: Bearer {your_token}
+
+{
+    "username": "string",
+    "email": "string",
+    "password": "string"
+}
+```
+
+* `id`: The ID of the user to be updated (required, integer)
+* `username`: The new username for the user (optional, string)
+* `email`: The new email address associated with the user (optional, string)
+* `password`: The new password for the user (optional, string)
+
+#### Delete User (DELETE)
+
+```
+Authorization: Bearer {your_token}
+```
+
+* `id`: The ID of the user to be deleted (required, integer)
+
+### Response Parameters
+
+All responses will have a common structure:
+
+```
+{
+    "status": "success" |

@@ -1,0 +1,33 @@
+**Weather Prediction API: REST Interface for Climate Forecast**
+
+**Endpoint Characteristics:**
+
+This platform offers climate predictions for a specific location, determined by latitude and longitude coordinates.
+
+**Base URL:** `https://climatepredictions-api.provider.com/version1`
+
+**Climate Prediction Endpoint:** `/climate-forecast`
+
+**Authentication Prerequisites:**
+
+Authorization to access this endpoint necessitates an API key. This key should be sent within a header named `X-AUTH-KEY`.
+
+**Input Parameters:**
+
+| Parameter        | Data Type  | Explanation                                            | Mandatory |
+|------------------|-----------|--------------------------------------------------------|-----------|
+| lat              | decimal   | Latitude of the location in degrees                    | Yes       |
+| lng              | decimal   | Longitude of the location in degrees                   | Yes       |
+| units            | string    | Temperature measurement system (either 'Celsius' or 'Fahrenheit') | Optional  |
+| api_key          | text      | Your API key for authentication                        | Yes       |
+
+**Sample Request:**
+
+```bash
+curl -H "X-AUTH-KEY: YOUR_API_KEY" https://climatepredictions-api.provider.com/version1/climate-forecast?lat=40.7128&lng=-74.0060&units=Celsius
+```
+
+**Response Parameters:**
+
+| Parameter        | Data Type  | Explanation                                            |
+|------------------|-----------|--------------------------------------------------------|

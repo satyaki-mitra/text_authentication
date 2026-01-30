@@ -1,33 +1,71 @@
-Title: Understanding the Functional Programming Concept in JavaScript with ES6 Syntax
+Title: Documentation on Dependency Injection in C# using Constructor Injection
 
-Functional Programming (FP) is a programming paradigm that emphasizes the use of functions as first-class citizens, immutable data, and avoiding shared state or side effects. In recent years, functional programming has gained popularity due to its benefits such as easier testing, concurrency management, and code reusability.
+Dependency Injection (DI) is a software design pattern that separates the construction of an object from its behavior, thus improving modularity, testability, and maintainability. This document explains the implementation of Dependency Injection using Constructor Injection in C#.
 
-In JavaScript, with the introduction of ES6 (EcmaScript 6), several features have been added that make it easier to write functional-style code. Let's explore some of these features:
+**Use Case**
 
-1. Arrow Functions: Arrow functions are a more concise syntax for defining functions in JavaScript. They use the `=>` symbol instead of the traditional `function` keyword. Here is an example:
+Consider a simple example: A `DatabaseService` class that requires an instance of `IDatabaseConnection` to perform its operations. Instead of hardcoding the dependency within the `DatabaseService`, we can use Dependency Injection to inject the required dependency at runtime.
 
-```javascript
-// Traditional function
-const add = function(a, b) {
-  return a + b;
-};
+```csharp
+public interface IDatabaseConnection
+{
+    void Connect();
+}
 
-// Arrow function
-const addArrow = (a, b) => a + b;
+public class SqlServerConnection : IDatabaseConnection
+{
+    public void Connect()
+    {
+        Console.WriteLine("Connected to SQL Server");
+    }
+}
+
+public class DatabaseService
+{
+    private readonly IDatabaseConnection _connection;
+
+    public DatabaseService(IDatabaseConnection connection)
+    {
+        _connection = connection;
+    }
+
+    public void PerformOperations()
+    {
+        _connection.Connect();
+        // Other operations...
+    }
+}
 ```
 
-2. Higher-Order Functions: A higher-order function is a function that takes one or more functions as arguments, returns a function, or does both. In ES6, several built-in JavaScript functions are higher-order functions, such as `map`, `filter`, and `reduce`. Here's an example using the `map` function:
+In the above example, `DatabaseService` is constructed with an instance of `IDatabaseConnection`. This way, we can easily swap the concrete implementation (e.g., replace `SqlServerConnection` with `MySQLConnection`) without modifying `DatabaseService`.
 
-```javascript
-const numbers = [1, 2, 3, 4, 5];
-const squaredNumbers = numbers.map(num => num * num);
-console.log(squaredNumbers); // Output: [1, 4, 9, 16, 25]
+**Implementation: Container and Registration**
+
+To manage the dependencies and their instantiation, we use a DI container like Microsoft's `SimpleInjector`. First, install it via NuGet package. Then, register the required services and their dependencies with the container during application startup.
+
+```csharp
+var container = new Container();
+container.Register<IDatabaseConnection, SqlServerConnection>();
+container.Register<DatabaseService>(Lifestyle.Transient);
 ```
 
-3. Immutable Data: Immutability is a key principle in functional programming. It means that once data is created, it cannot be changed—only new values can be generated based on existing ones. In JavaScript, you can use libraries like Immutable.js or use techniques such as spreading arrays (`...`) and object spread syntax (`{ ...existingObject }`) to work with immutable data:
+**Use of DI Container in Service Construction**
 
-```javascript
-// Mutable data
-let array = [1, 2, 3];
-array.push(4); // Modifying the original array
-console.log(array); // Output: [
+To inject the dependencies during service construction, we use the `container.GetInstance<T>()` method while creating an instance of our services, such as `DatabaseService`.
+
+```csharp
+public class Program
+{
+    static void Main(string[] args)
+    {
+        var container = new Container();
+        container.Register<IDatabaseConnection, SqlServerConnection>();
+        container.Register<DatabaseService>(Lifestyle.Transient);
+
+        var databaseService = container.GetInstance<DatabaseService>();
+        databaseService.PerformOperations();
+    }
+}
+```
+
+**Trade-offs and Best

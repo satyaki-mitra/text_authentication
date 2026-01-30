@@ -1,13 +1,21 @@
-Title: A Rare Case of Autoimmune Hepatitis Presenting as Acute Liver Failure in a Young Female
+Title: A Novel Case of Acute Intermittent Porphyria Presenting as Abdominal Crisis: A Diagnostic Challenge and Management Approach
 
-Abstract:
+Abstract
 
-We present an unusual case of a 27-year-old female patient who presented to our emergency department with acute hepatic encephalopathy, jaundice, and coagulopathy. The initial laboratory results revealed markedly elevated liver function tests (ALT: 3000 U/L, AST: 2500 U/L, bilirubin: 18 mg/dL), with a low albumin level (2.0 g/dL) and prothrombin time (PT) prolongation (INR: 4.2). The patient had no history of alcohol consumption, medication use, or known liver disease.
+Acute Intermittent Porphyria (AIP) is a rare, autosomal dominant metabolic disorder characterized by neurovisceral attacks. This case report aims to highlight the diagnostic challenges and management strategies in a 45-year-old female patient who presented with an acute abdomen, leading to a delayed diagnosis of AIP.
 
-Upon further investigation, autoimmune hepatitis was suspected due to the presence of positive antinuclear antibodies (ANA) and anti-smooth muscle antibodies (ASMA), high IgG levels, and normal IgA and IgM levels. Liver biopsy confirmed the diagnosis of autoimmune hepatitis type 1 with severe liver inflammation and interface hepatitis.
+Case Presentation:
 
-The patient was immediately treated with prednisone 60 mg daily, azathioprine 100 mg twice a day, and intravenous immunoglobulin (IVIG) for three days. Despite the aggressive treatment, her condition initially deteriorated due to the severity of acute liver failure. However, after two weeks, there was significant improvement in her liver function tests, with a gradual decline in PT and bilirubin levels.
+The patient, a 45-year-old Caucasian female, presented to the emergency department with severe abdominal pain, nausea, vomiting, constipation, and peripheral neuropathy for three days. She reported no history of similar episodes but had a family history of unexplained ailments and premature deaths. On physical examination, she was afebrile with tachycardia (120 bpm) and hypertension (180/100 mmHg). Abdominal exam revealed diffuse tenderness and guarding without rebound or rigidity. Initial laboratory investigations showed leukocytosis (WBC 15.6 x 10^3/μL), elevated CRP (12 mg/L), and normocytic anemia (Hb 9 g/dL). Abdominal CT scan revealed multiple appendiceal wall thickenings suggestive of appendicitis, leading to an initial laparoscopic appendectomy. However, post-operative course was complicated by persistent abdominal pain, recurrent vomiting, and worsening neuropathy.
 
-This case highlights the importance of considering autoimmune hepatitis as a differential diagnosis in young patients presenting with acute liver failure without an apparent cause. Early recognition and aggressive treatment can lead to improved outcomes, even in severe cases such as this one. Furthermore, it emphasizes the need for prompt management in such cases, as delays in treatment may result in worsening of the patient's condition due to the rapid progression of acute liver failure.
+Diagnostic Approach:
 
-Keywords: Autoimmune Hepatitis, Acute Liver Failure, Young Adult, Aggressive Treatment, Improved Outcome
+Given the atypical presentation and poor response to initial treatment, further investigations were pursued. Urine porphyrins analysis revealed increased delta-aminolevulinic acid (ALA) and porphobilinogen (PBG), leading to a suspicion of porphyria. Fecal porphyrins analysis confirmed the diagnosis of AIP. Genetic testing revealed a mutation in the gene encoding hydroxymethylbilane synthase (HMBS).
+
+Treatment and Outcomes:
+
+The patient was managed with hematin therapy (intravenous iron sucrose) and glucose loading, followed by carbohydrate-restricted diet. Symptomatic treatment for neuropathy included magnesium sulfate and analgesics. The patient showed significant improvement within a week, with resolution of abdominal pain, normalization of hematological parameters, and recovery from neuropathy.
+
+Discussion:
+
+AIP is often

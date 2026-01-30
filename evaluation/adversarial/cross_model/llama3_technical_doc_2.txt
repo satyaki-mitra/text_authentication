@@ -1,59 +1,53 @@
-**API Endpoint: `GET /users/{userId}/orders`**
+**System Documentation: User Authentication API**
 
-**Purpose:** Retrieve a user's orders.
+**Overview**
 
-**Path Parameters:**
+The User Authentication API is a RESTful API designed to provide a secure and efficient way for users to authenticate themselves and access protected resources. The API utilizes industry-standard protocols and cryptographic algorithms to ensure the confidentiality, integrity, and authenticity of user data.
 
-* `userId`: The unique identifier of the user whose orders to retrieve (required).
+**API Specifications**
 
-**Query Parameters:** None
+* **Authentication Methods**: The API supports three authentication methods:
+	+ Username/Password: Users can authenticate using a username and password combination.
+	+ OAuth 2.0: The API supports OAuth 2.0 for secure authentication with third-party applications.
+	+ JWT (JSON Web Token): The API generates and verifies JSON Web Tokens (JWT) for token-based authentication.
+* **API Endpoints**:
+	+ `/login`: Handles username/password authentication requests.
+	+ `/oauth/token`: Handles OAuth 2.0 token requests.
+	+ `/jwt/issue`: Generates a JWT token for token-based authentication.
+	+ `/jwt/verify`: Verifies a JWT token and returns user information.
+* **API Request/Response Formats**: The API uses JSON (JavaScript Object Notation) as the primary data format for request and response bodies.
 
-**Request Body:** None
+**Usage Guidelines**
 
-**HTTP Methods:** GET
+1. **Username/Password Authentication**:
+	* Send a POST request to `/login` with the following parameters:
+		+ `username`: The user's username.
+		+ `password`: The user's password (hashed).
+	* The API will respond with a JSON object containing the authenticated user's information, including their ID and roles.
+2. **OAuth 2.0 Authentication**:
+	* Send a POST request to `/oauth/token` with the following parameters:
+		+ `grant_type`: Set to "password" for username/password authentication.
+		+ `username`: The user's username.
+		+ `password`: The user's password (hashed).
+	* The API will respond with an OAuth 2.0 token, which can be used to access protected resources.
+3. **JWT Authentication**:
+	* Send a POST request to `/jwt/issue` with the following parameters:
+		+ `username`: The user's username.
+		+ `password`: The user's password (hashed).
+	* The API will respond with a JSON Web Token (JWT) containing the authenticated user's information.
+	* To verify a JWT token, send a POST request to `/jwt/verify` with the following parameters:
+		+ `token`: The JWT token to be verified.
+	* The API will respond with a JSON object containing the authenticated user's information.
 
-**Authentication:** This endpoint requires authentication using JSON Web Tokens (JWT). To obtain a JWT token, please refer to our Authentication API documentation.
+**Security Considerations**
 
-**Rate Limiting:** This endpoint is subject to rate limiting. The limit is 100 requests per minute. Exceeding this limit may result in an error response.
+1. **Encryption**: All communication between clients and the API is encrypted using TLS (Transport Layer Security) protocol.
+2. **Password Hashing**: Passwords are hashed using industry-standard algorithms, such as bcrypt or Argon2.
+3. **JSON Web Tokens**: JWT tokens are signed using a secret key to prevent tampering.
 
-**Response:**
+**Troubleshooting**
 
-* **HTTP Status Code:** 200 OK
-* **Content-Type:** application/json
+1. **Error Handling**: The API returns JSON-formatted error messages for all requests.
+2. **Debugging Tools**: The API provides debugging tools, such as request logs and response headers, to aid in troubleshooting.
 
-The response will contain a JSON object with the following structure:
-```json
-{
-    "orders": [
-        {
-            "orderId": 123,
-            "datePlaced": "2022-07-01T14:30:00.000Z",
-            "total": 100.99,
-            "status": "shipped"
-        },
-        {
-            "orderId": 456,
-            "datePlaced": "2022-06-15T10:45:00.000Z",
-            "total": 50.00,
-            "status": "pending"
-        }
-    ]
-}
-```
-**Error Responses:**
-
-* **HTTP Status Code:** 404 Not Found
-	+ Error message: "User not found"
-* **HTTP Status Code:** 401 Unauthorized
-	+ Error message: "Invalid authentication token"
-* **HTTP Status Code:** 429 Too Many Requests
-	+ Error message: "Rate limit exceeded"
-
-**Notes:**
-
-* The `datePlaced` field is in ISO 8601 format.
-* The `status` field can be one of the following values: "pending", "shipped", "cancelled".
-
-**Example Request:**
-```bash
-curl -X GET \
+By following these guidelines and specifications, you can effectively use the User Authentication API to authenticate users and access protected resources securely.

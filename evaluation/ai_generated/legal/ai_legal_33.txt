@@ -1,19 +1,23 @@
-Clause: Non-Disclosure Agreement (NDA)
+Title: Data Processing Agreement ("DPA")
 
-1. Confidential Information: For the purposes of this Agreement, "Confidential Information" shall refer to any information disclosed by one party ("Discloser") to another party ("Receiving Party"), either directly or indirectly, in writing, orally, or by visual demonstration, that is designated as confidential or that a reasonable person would understand to be confidential under the circumstances.
+This Data Processing Agreement ("Agreement") is entered into on [Date] by and between [Your Company Name], a company organized under the laws of [Your Jurisdiction] with its principal place of business at [Your Address] ("Data Controller"), and [Recipient's Company Name], a company organized under the laws of [Recipient's Jurisdiction] with its principal place of business at [Recipient's Address] ("Data Processor").
 
-2. Purpose: The Receiving Party agrees to maintain the Confidential Information in strict confidence for the sole purpose of evaluating potential business dealings between the Discloser and the Receiving Party.
+WHEREAS, Data Controller has engaged Data Processor to process certain Personal Data on behalf of Data Controller in accordance with this Agreement;
 
-3. Obligations: The Receiving Party agrees not to disclose any Confidential Information to third parties without the prior written consent of the Discloser, except as may be required by law or a court order. In such cases, the Receiving Party shall provide the Discloser with prompt notice and reasonable assistance in seeking protection of the Confidential Information.
+WHEREAS, the processing of Personal Data shall be governed by Regulation (EU) 2016/679 of the European Parliament and of the Council of 27 April 2016 on the protection of natural persons with regard to the processing of personal data and on the free movement of such data, and repealing Directive 95/46/EC (General Data Protection Regulation) ("GDPR");
 
-4. Exclusions: The obligations set forth above shall not apply to information that (a) is publicly known at the time of disclosure or becomes publicly known through no fault of the Receiving Party; (b) was in the possession of the Receiving Party prior to disclosure by the Discloser without a confidentiality obligation; (c) is lawfully obtained from a third party without a breach of any duty; or (d) is developed independently by the Receiving Party.
+NOW, THEREFORE, in consideration of the mutual covenants contained herein, the parties agree as follows:
 
-5. Term: This NDA shall remain in effect for a period of five (5) years from the date of execution, unless terminated earlier by written agreement of the parties.
+1. Definitions and Interpretations
 
-6. Remedies: The Discloser acknowledges that any breach of this Agreement may result in irreparable harm for which damages would be an insufficient remedy, and therefore, the Discloser shall be entitled to seek equitable relief, including but not limited to, injunction, specific performance, or other appropriate equitable relief.
+1.1 In this Agreement, the following terms shall have the meanings set out below and cognate expressions shall be construed accordingly:
 
-7. Governing Law: This NDA shall be governed by and construed in accordance with the laws of the state in which the Discloser is domiciled.
+  1.1.1 "Data Subject" means an identified or identifiable natural person;
 
-Case Summary: Smith v. Johnson (20X1)
+  1.1.2 "Personal Data" means any information relating to an identified or identifiable natural person; an identifiable natural person is one who can be identified, directly or indirectly, in particular by reference to an identifier such as a name, an identification number, location data, an online identifier or to one or more factors specific to the physical, physiological, genetic, mental, economic, cultural or social identity of that natural person;
 
-In Smith v. Johnson, the plaintiff, a software developer, entered into a Non-Dis
+  1.1.3 "Processing" means any operation or set of operations which is performed on Personal Data or on sets of Personal Data, whether or not by automated means, such as collection, recording, organization, structuring, storage, adaptation or alteration, retrieval, consultation, use, disclosure by transmission, dissemination or otherwise making available, alignment or combination, restriction, erasure or destruction;
+
+  1.1.4 "Controller" means the natural or legal person, public authority, agency or other body which, alone or jointly with others, determines the purposes and means of the processing of Personal Data; where the purposes and means of such processing are determined by Union or Member State law, the Controller or the specific criteria for its nomination may be provided for by Union or Member State law;
+
+  1.1.5 "Processor

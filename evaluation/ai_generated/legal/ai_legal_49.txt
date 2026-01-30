@@ -1,29 +1,35 @@
-Title: Clause Regarding Confidentiality and Non-Disclosure Agreement (NDA)
+Title: Data Processing Agreement (DPA) - Controller to Processor Clauses
 
-1. Definition and Interpretation
+1. Introduction
 
-1.1 In this Agreement, "Parties" shall refer to the Disclosing Party and the Receiving Party. The Disclosing Party is the entity that discloses confidential information, while the Receiving Party is the entity that receives such confidential information.
+1.1 This Data Processing Agreement ("Agreement") is entered into between [Controller's Name] ("Controller") and [Processor's Name] ("Processor"), each a "Party" and together the "Parties."
 
-1.2 "Confidential Information" encompasses any technical or business information disclosed by one party to another under this Agreement, including but not limited to trade secrets, proprietary data, and non-public financial or marketing information.
+1.2 The Parties have agreed to this DPA in order to comply with their respective obligations under Regulation (EU) 2016/679 of the European Parliament and of the Council on the protection of natural persons with regard to the processing of personal data and on the free movement of such data, and repealing Directive 95/46/EC ("GDPR").
 
-2. Obligations of the Parties
+1.3 This Agreement supplements the main agreement between the Parties governing the Processor's provision of services to the Controller (the "Main Agreement"). In the event of any conflict or inconsistency between this DPA and the Main Agreement, this DPA shall prevail to the extent of such conflict or inconsistency.
 
-2.1 The Receiving Party agrees to maintain the confidentiality of all Confidential Information received from the Disclosing Party, using at least the same degree of care as it uses to protect its own confidential information of a similar nature.
+2. Definitions
 
-2.2 The Receiving Party shall not use or disclose any Confidential Information for any purpose other than as necessary to evaluate potential business deals between the Parties.
+2.1 Capitalized terms used but not defined in this DPA shall have the meanings given to them in the GDPR or the Main Agreement.
 
-3. Exceptions to Confidentiality Obligations
+3. Processing of Personal Data
 
-3.1 The obligations under this Agreement do not extend to information that: (i) is or becomes publicly available through no fault of the Receiving Party; (ii) was in the possession of the Receiving Party prior to receipt from the Disclosing Party; (iii) is lawfully obtained by the Receiving Party from a third party without a breach of any obligation of confidentiality; or (iv) is independently developed by employees of the Receiving Party who had no access to such information.
+3.1 The Controller hereby appoints the Processor as a processor for the processing of personal data on behalf of the Controller, as more particularly described in Schedule 1 (Details of the Data Processing).
 
-4. Term and Termination
+4. Compliance with Laws and Regulations
 
-4.1 This Agreement shall remain in effect for a period of five years from the date of signing, unless earlier terminated by either party upon providing written notice to the other.
+4.1 Each Party shall comply with all laws, regulations, and industry standards applicable to its activities under this Agreement.
 
-5. Remedies
+4.2 The Processor shall process the personal data only for the purposes set out in Schedule 1 (Details of the Data Processing) and in accordance with the Controller's documented instructions as updated from time to time.
 
-5.1 In the event of a breach or threatened breach of this Agreement, the Disclosing Party shall be entitled to seek equitable relief, including but not limited to injunctive relief and damages, in addition to any other remedies available at law or in equity.
+5. Rights and Obligations of the Parties
 
-6. Miscellaneous Provisions
+5.1 The Controller warrants that it has obtained any necessary permissions and authorizations required for the transfer of personal data to the Processor under this Agreement, including any required data protection registrations, notifications, or approvals.
 
-6.1 This Agreement constitutes the entire agreement between the Parties regarding the subject matter hereof, superseding all prior and
+5.2 The Processor shall implement appropriate technical and organizational measures to ensure a level of security appropriate to the risk, taking into account the state of the art, the costs of implementation, and the nature, scope, context, and purposes of processing as well as the risks involved for the rights and freedoms of natural persons.
+
+5.3 The Processor shall promptly notify the Controller if it becomes aware of any accidental or unauthorized access to or destruction, loss, or alteration of personal data.
+
+6. Subprocessing
+
+6.1 The Processor may engage third-party

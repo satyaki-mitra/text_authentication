@@ -1,29 +1,33 @@
-Case Title: Smith v. Jones
+Title: Data Protection Policy - Confidentiality Clause
 
-Court: Supreme Court of the State of New York, County of X
+1. Introduction
 
-Docket Number: ABC-123456
+This Confidentiality Clause (the "Clause") is an integral part of any agreement between the Parties (collectively referred to as the "Agreement"), and is intended to protect confidential information exchanged between them. The terms used in this Clause shall have the meanings set forth in the Agreement, or as otherwise defined herein.
 
-Date: January 1, 20XX
+2. Scope and Duration
 
-Judges: Judge X (Presiding), Judge Y, Judge Z
+2.1 This Clause shall apply to all Confidential Information disclosed by one Party (the "Disclosing Party") to the other Party (the "Receiving Party"), whether before, on, or after the effective date of this Agreement.
 
-Plaintiff(s): John Smith
+2.2 The obligations under this Clause shall survive termination or expiration of the Agreement for a period of five (5) years unless otherwise agreed in writing by the Parties.
 
-Defendant(s): Jane Jones
+3. Definition of Confidential Information
 
-Counsel for Plaintiff(s): Attorney A
+3.1 For the purposes of this Clause, "Confidential Information" means any information disclosed by the Disclosing Party to the Receiving Party that is not generally known to the public or to which the Receiving Party would have limited access in the normal course of business. Confidential Information includes, but is not limited to, technical data, trade secrets, and business, financial, and customer information.
 
-Counsel for Defendant(s): Attorney B
+4. Obligations of the Receiving Party
 
-Clause or Case Summary:
+4.1 The Receiving Party agrees to use the Confidential Information solely for the purpose of performing its obligations under the Agreement and shall not disclose such Confidential Information to any third party without the prior written consent of the Disclosing Party, except as required by law or a valid order of a court or other governmental body.
 
-In the matter of Smith v. Jones, the Court considered a dispute concerning a breach of contract and tortious interference with contractual relations. The plaintiff, John Smith, alleged that the defendant, Jane Jones, entered into an agreement to purchase certain real property from Mr. Smith but subsequently failed to make the agreed-upon payments, thereby breaching the contract.
+4.2 The Receiving Party shall take reasonable measures to protect the secrecy of and avoid unauthorized disclosure or use of the Confidential Information. Such measures shall include, but are not limited to, maintaining the confidentiality of the Confidential Information, restricting access to the Confidential Information to those employees who need such access for the performance of their duties under the Agreement, and implementing appropriate physical, electronic, and procedural safeguards to secure the Confidential Information.
 
-Additionally, Mr. Smith asserted that Ms. Jones had intentionally interfered with his subsequent negotiations to sell the same property to a third party, causing damages in excess of $100,000. The defendant denied these allegations and contended that the contract was invalid due to mutual misunderstandings regarding the purchase price and payment terms.
+5. Exceptions to Obligations
 
-Upon reviewing the evidence presented by both parties, the Court found in favor of John Smith. Specifically, the Court held that the contract between Mr. Smith and Ms. Jones was validly executed, and the defendant had breached its terms by failing to make payments as agreed. Furthermore, the Court determined that Jane Jones' actions in interfering with Mr. Smith's subsequent negotiations constituted tortious interference, resulting in damages to Mr. Smith.
+5.1 The obligations under this Clause shall not apply to any information that:
 
-The Court granted judgment in favor of John Smith, awarding him the remaining balance due under the contract and compensatory damages for the loss of the third-party sale, totaling $125,000. The Court also ordered Jane Jones to pay reasonable attorney's fees and costs associated with the litigation.
+5.1.1 Is or becomes publicly known through no fault of the Receiving Party;
 
-This case serves as a reminder that parties entering into contracts must fulfill their obligations in good faith and that tortious interference with contractual relations can give rise to significant legal consequences for those who act maliciously to harm another party's business interests.
+5.1.2 Was in the possession of the Receiving Party prior to receipt from the Disclosing Party;
+
+5.1.3 Is lawfully obtained by the Receiving Party from a third party without a breach of any obligation of confidentiality; or
+
+5.1.4 Is developed independently by the Re

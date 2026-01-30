@@ -1,26 +1,39 @@
-Title: A Step-by-Step Guide for Beginners on Using a Basic Text Editor
+Title: A Comprehensive Guide for Beginners: Setting Up a Local Development Environment for a WordPress Website
 
-1. **Introduction**
-   - This guide will help you navigate a basic text editor, which is essential for coding and writing simple scripts. We will be using Notepad (Windows) or TextEdit (Mac) as examples of these editors.
+In this tutorial, we will guide you through the process of setting up a local development environment for a WordPress website on your computer. This will allow you to build, test, and experiment with your WordPress site without affecting your live website or public internet access.
 
-2. **Step 1: Open Your Text Editor**
-   - On Windows, search for "Notepad" in the Start menu and click on it.
-   - On Mac, open Finder and then Applications > TextEdit.
+**Step 1: Install and Set Up MAMP (Mac) / WAMP (Windows) / LAMP (Linux)**
 
-3. **Step 2: Creating a New File**
-   - In both Notepad and TextEdit, you can create a new file by going to "File" > "New" or by pressing `Ctrl + N` (Windows) or `Cmd + N` (Mac).
+MAMP (for Mac), WAMP (for Windows), and LAMP (for Linux) are all free software packages that provide a local development environment for running WordPress. For this tutorial, we will use MAMP as an example.
 
-4. **Step 3: Typing Text**
-   - Once the new window opens, you can start typing your text inside the blank area. This could be anything from writing a simple story to coding a basic script.
+1.1 Download the appropriate version of MAMP from its official website: https://www.mamp.info/en/downloads/
 
-5. **Step 4: Saving Your File**
-   - After you've typed your text, go to "File" > "Save As." In the window that appears, name your file and choose where to save it (usually in Documents). Click "Save" when done.
+1.2 Install MAMP by following the on-screen instructions during setup. Ensure that you select the option to add MAMP to your system's PATH.
 
-6. **Step 5: Opening Saved Files**
-   - To open a saved file, go to "File" > "Open" and navigate to the location of your saved file. Select the file and click "Open."
+1.3 After installation, open MAMP and click "Start Servers" to launch Apache and MySQL. If the servers start successfully, you should see a green status for both in the MAMP interface.
 
-7. **Step 6: Basic Text Editor Limitations**
-   - Keep in mind that basic text editors do not have advanced features like syntax highlighting, code completion, or debugging tools found in Integrated Development Environments (IDEs). If you plan on doing more complex coding, it's recommended to learn how to use an IDE.
+**Step 2: Install WordPress Locally**
 
-8. **Step 7: Exploring More**
-   - Now that you have a basic understanding of using a text editor, feel free to explore its other features such as search and replace, finding lines, and adjusting the font and colors. These options can usually be found under "Edit" or by right-clicking within the editor.
+2.1 Download the latest version of WordPress from its official website: https://wordpress.org/download/
+
+2.2 Extract the downloaded zip file to a convenient location on your computer, such as the Documents folder.
+
+**Step 3: Configure Your Local Development Environment**
+
+3.1 Open the Finder (Mac) or File Explorer (Windows), navigate to the extracted WordPress directory, and locate the 'wp-config-sample.php' file. Rename this file to 'wp-config.php'.
+
+3.2 Open the newly named wp-config.php file in a text editor like Sublime Text or Notepad++.
+
+3.3 Locate the following lines of code:
+
+```
+// ** MySQL settings - You can get this info from your web host ** //
+define('DB_NAME', 'database_name_here');
+define('DB_USER', 'username_here');
+define('DB_PASSWORD', 'password_here');
+define('DB_HOST', 'localhost');
+```
+
+3.4 Replace the placeholders ('database_name_here', 'username_here', and 'password_here') with the appropriate values for a new MySQL database that you create in your MAMP phpMyAdmin interface. You can find this by going to http://localhost:8888/phpmyadmin in your web browser.
+
+3.5 Save the wp-config.php file

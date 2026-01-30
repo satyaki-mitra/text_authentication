@@ -1,25 +1,60 @@
-Title: Documentation for the "Real-Time Data Synchronization Feature"
+Title: API Documentation - User Management REST Endpoint
 
-1. Overview
-   The Real-Time Data Synchronization (RTDS) feature is designed to ensure that all instances of our application maintain consistent and up-to-date data across multiple devices or platforms in real-time. This feature eliminates the need for manual data updates and reduces the risk of data inconsistencies.
+## User Management REST Endpoint
 
-2. Compatibility
-   The RTDS feature is compatible with all versions of our application from version 3.0 onwards. It supports synchronization across various operating systems, including Windows, macOS, Linux, iOS, and Android.
+### Description
 
-3. Implementation Details
-   The RTDS uses a combination of peer-to-peer networking and cloud storage to achieve real-time data synchronization. Each device acts as both a client and a server, exchanging updates with other devices within the same network. Simultaneously, changes are also sent to the cloud storage for backup and cross-network synchronization.
+This document outlines the User Management REST endpoint for our API. It provides details on how to interact with user-related resources, including creating, retrieving, updating, and deleting users.
 
-4. Data Conflict Resolution
-   In case of data conflicts (e.g., two users editing the same record simultaneously), our RTDS feature employs a last-write-wins policy. The most recent update will overwrite the previous one, ensuring that no data loss occurs.
+### Endpoints
 
-5. Performance Optimization
-   To minimize network traffic and ensure efficient data synchronization, the RTDS only sends delta updates (changes made to the data) instead of the entire dataset. This optimization reduces bandwidth usage and improves overall performance.
+#### Create User (POST)
 
-6. Security Measures
-   Data privacy and security are prioritized in the RTDS feature. All transmitted data is encrypted using AES-256 encryption, ensuring that sensitive information remains secure during transmission. In addition, user authentication is enforced to prevent unauthorized access to your data.
+```
+https://api.example.com/users
+```
 
-7. Enabling/Disabling Real-Time Data Synchronization
-   Users can enable or disable the RTDS feature from the application settings menu. By default, the RTDS is enabled for new installations. Disabling the feature may improve performance on devices with limited resources but will result in data inconsistencies across devices.
+Creates a new user in the system.
 
-8. Troubleshooting and Support
-   If you encounter any issues related to the Real-Time Data Synchronization feature, please consult our online support resources or contact our customer service team for assistance. Detailed
+#### Retrieve User (GET)
+
+```
+https://api.example.com/users/{user_id}
+```
+
+Retrieves details for a specific user by ID.
+
+#### Update User (PUT)
+
+```
+https://api.example.com/users/{user_id}
+```
+
+Updates the details of an existing user by ID.
+
+#### Delete User (DELETE)
+
+```
+https://api.example.com/users/{user_id}
+```
+
+Deletes a specific user by ID from the system.
+
+### Request Parameters
+
+| Parameter         | Data Type     | Description                                                                    |
+|-------------------|---------------|------------------------------------------------------------------------------|
+| `user_id`          | `string`      | (Optional, Get/Delete) The unique identifier for a user in the system.       |
+| `name`             | `string`      | (POST/PUT) The name of the user.                                            |
+| `email`            | `string`      | (POST/PUT) The email address of the user.                                   |
+| `password`         | `string`      | (POST) The password for the new user.                                        |
+| `role`             | `string`      | (Optional, PUT) The role of the user (e.g., 'admin', 'user').               |
+
+### Response Parameters
+
+| Parameter         | Data Type     | Description                                                                    |
+|-------------------|---------------|------------------------------------------------------------------------------|
+| `status_code`     | `integer`     | The HTTP status code (e.g., 200 for success, 4xx/5xx for errors).            |
+| `data`            | `object`      | (Optional) The data returned with the response (e.g., user details in GET).   |
+| `message`         | `string`      | A message describing the result of the request (e.g., 'User created successfully').|
+| `errors`          | `array`       | (Optional, POST/PUT) An array of error messages if validation fails or an error occurs.|

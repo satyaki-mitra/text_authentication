@@ -1,54 +1,37 @@
-**API Endpoint: GET /users/{userId}/orders**
+**System: Real-time Analytics API**
 
-**Summary**
-Retrieve a user's orders by their unique ID.
+The Real-time Analytics API is a cloud-based platform that provides real-time insights and analytics for businesses, enabling them to make data-driven decisions quickly and efficiently. The API enables developers to integrate the power of real-time analytics into their applications, providing instant access to aggregated and filtered data.
 
-**Path Parameters**
+**Specifications:**
 
-* **{userId}**: The ID of the user whose orders you want to retrieve. This is a required parameter and must be an integer value.
+* **API Endpoints:**
+	+ `GET /data`: Retrieve real-time data aggregated by hour, day, week, or month.
+	+ `GET /filters`: Retrieve a list of available filters for data aggregation (e.g., geographic location, user demographics).
+	+ `POST /data/:filter`: Apply a filter to the retrieved data and retrieve the filtered results.
+* **Data Types:**
+	+ `integer`: Unique identifier for each data point.
+	+ `datetime`: Timestamp representing when the data was recorded.
+	+ `string`: Textual representation of the data (e.g., user agent, IP address).
+	+ `float`: Numerical value representing the data (e.g., page views, revenue).
+* **Authentication:**
+	+ API keys: Obtain a unique API key by registering on the Real-time Analytics website.
+	+ Authentication tokens: Include the API key in the HTTP Authorization header for each request.
 
-**Query Parameters**
+**Usage Guidelines:**
 
-* None
+1. **Authorization:** Before making any requests to the API, ensure you have obtained an API key and are using it correctly.
+2. **Rate Limiting:** The API enforces a rate limit of 100 requests per minute to prevent abuse. If you need higher limits, contact our support team.
+3. **Data Retrieval:** Use the `GET /data` endpoint to retrieve real-time data aggregated by hour, day, week, or month. You can filter the data using the `POST /data/:filter` endpoint.
+4. **Error Handling:** The API returns error responses in JSON format, with a status code indicating the type of error (e.g., 404 for Not Found, 401 for Unauthorized).
+5. **Data Output:** The API returns data in JSON format, with each response containing the requested data points and any applicable metadata (e.g., timestamp, aggregation level).
 
-**HTTP Methods**
+**Example Request:**
 
-* **GET**: Retrieve the user's orders.
-* **HEAD**: Return only the HTTP headers (no body).
-
-**Response**
-The API returns a JSON response containing an array of order objects, each with the following properties:
-
-* **id**: The unique ID of the order.
-* **date**: The date and time the order was placed.
-* **total**: The total cost of the order.
-* **status**: The current status of the order (e.g., "pending", "shipped", "delivered").
-
-**Example Response**
-```json
-[
-  {
-    "id": 123,
-    "date": "2022-01-01T12:00:00Z",
-    "total": 10.99,
-    "status": "pending"
-  },
-  {
-    "id": 456,
-    "date": "2022-01-02T14:30:00Z",
-    "total": 5.99,
-    "status": "shipped"
-  }
-]
+```bash
+curl -X GET \
+  https://api.realtimeanalytics.com/data?aggregation=hour&start=2022-01-01T00:00:00Z&end=2022-01-31T23:59:59Z \
+  -H 'Authorization: Bearer YOUR_API_KEY' \
+  -H 'Content-Type: application/json'
 ```
-**Error Handling**
 
-* **404 Not Found**: If the user ID is invalid or does not exist, the API returns a 404 error with an empty response body.
-* **500 Internal Server Error**: If there is an internal server error (e.g., database query failure), the API returns a 500 error with an empty response body.
-
-**Rate Limiting**
-This endpoint is subject to rate limiting. Exceeding the allowed number of requests per minute will result in a **429 Too Many Requests** error.
-
-**Security Considerations**
-
-* This endpoint requires authentication and authorization to ensure that only authorized
+This request retrieves real-time data aggregated by hour for the specified date range, with metadata including timestamps and aggregation levels.

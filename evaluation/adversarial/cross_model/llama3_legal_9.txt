@@ -1,17 +1,35 @@
-Here is a draft of a formal legal clause about data privacy compliance:
+**ARTICLE IV: CONFIDENTIALITY AND INTELLECTUAL PROPERTY**
 
-**DATA PRIVACY COMPLIANCE**
+**SECTION 1: CONFIDENTIAL INFORMATION**
 
-1. **Compliance with Applicable Laws**: [Company Name] shall comply with all applicable laws and regulations relating to the protection of personal data, including but not limited to: [list specific laws and regulations, such as the General Data Protection Regulation (GDPR), Health Insurance Portability and Accountability Act (HIPAA), etc.].
+1.1 Definitions. For purposes of this Article, "Confidential Information" means all information disclosed by one Party (the "Disclosing Party") to the other Party (the "Receiving Party"), whether orally or in writing, that is marked as confidential or that a reasonable person would consider confidential under the circumstances.
 
-2. **Data Processing**: [Company Name] shall only process personal data in a manner that is consistent with the purposes for which it was collected or processed, and shall ensure that any third-party processors or sub-processors are compliant with applicable laws and regulations regarding data processing.
+1.2 Confidential Treatment. The Receiving Party shall treat all Confidential Information with the same degree of care and confidentiality that it uses to protect its own confidential information, but in no event less than reasonable care.
 
-3. **Data Subject Rights**: [Company Name] shall respect the rights of data subjects to access, correct, delete, and otherwise manage their personal data in accordance with applicable laws and regulations, including but not limited to: [list specific rights, such as right of access, correction, erasure, etc.].
+1.3 Permitted Disclosures. The Receiving Party may disclose Confidential Information only:
 
-4. **Security Measures**: [Company Name] shall implement and maintain reasonable security measures to protect against unauthorized access, use, disclosure, alteration, or destruction of personal data, including but not limited to: [list specific security measures, such as encryption, firewalls, password protection, etc.].
+(a) to its employees, contractors, or agents who have a need to know and are bound by confidentiality obligations; or
 
-5. **Data Breach Notification**: In the event of a breach of personal data, [Company Name] shall notify affected individuals and relevant regulatory authorities in accordance with applicable laws and regulations regarding data breach notification, including but not limited to: [list specific notification requirements, such as time frames for notification, content of notification, etc.].
+(b) as required by law, regulation, or court order, provided that the Receiving Party gives prompt written notice to the Disclosing Party of such disclosure.
 
-6. **Data Retention**: [Company Name] shall retain personal data only for the period necessary to achieve the purposes for which it was collected or processed, and shall ensure that any retained data is properly anonymized or deleted in accordance with applicable laws and regulations regarding data retention.
+**SECTION 2: INTELLECTUAL PROPERTY RIGHTS**
 
-7. **Audits and
+2.1 Ownership. Each Party shall retain all right, title, and interest in and to its Intellectual Property (as defined below), including any patents, copyrights, trademarks, trade secrets, and other intellectual property rights, whether developed before or after the Effective Date of this Agreement.
+
+2.2 License Grant. Each Party grants the other Party a non-exclusive license to use, modify, reproduce, and distribute its Intellectual Property solely for the purposes of performing its obligations under this Agreement.
+
+2.3 Representations and Warranties. Each Party represents and warrants that:
+
+(a) it has the right to grant the licenses and permissions contemplated in this Article; and
+
+(b) its Intellectual Property does not infringe or misappropriate any third-party intellectual property rights.
+
+**SECTION 3: INTELLECTUAL PROPERTY INFRINGEMENT**
+
+3.1 Indemnification. The Party whose Intellectual Property is allegedly infringed (the "Claimant") shall notify the other Party in writing of such alleged infringement, and the Claimant and the other Party shall cooperate to resolve the issue promptly.
+
+3.2 Defense and Settlement. If a claim or allegation of intellectual property infringement is made against either Party, the Claimant shall have the right to control the defense and settlement of such claim, at its own expense. The Claimant shall keep the other Party informed of all material developments in the case.
+
+**SECTION 4: SURVIVAL**
+
+This Article IV shall survive the expiration or termination of this Agreement for a period of five (5) years from the Effective Date, during which time each Party shall maintain the confidentiality and protect the Intellectual Property as provided in this Article.

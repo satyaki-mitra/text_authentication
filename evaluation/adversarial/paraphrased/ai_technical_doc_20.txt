@@ -1,0 +1,38 @@
+Title: API for Pet Adoption - Acquire a Furry Friend via PetStore
+
+## Acquiring a Furry Friend Endpoint
+
+The `Acquire a Furry Friend` endpoint enables users to adopt pets from the PetStore. This is an HTTP POST operation that initiates the pet adoption process for a specific animal.
+
+### Endpoint Details
+
+`POST /store/animals/{animalId}/adoption`
+
+### Request Specifications
+
+#### Essential:
+- `animalId` (string): The distinctive identifier of the pet to be adopted. This can be found within the `id` field in the animal's response from the `GET /store/animals` endpoint.
+
+#### Optional:
+- `customerName` (string): The name of the customer adopting the pet. If omitted, the default system-generated name will be utilized.
+
+### Response Specifications
+
+#### Successful Response (200 OK):
+- `animalId` (string): The unique identifier of the adopted pet, which corresponds to the supplied `animalId`.
+- `customerName` (string): The name of the customer who adopted the animal. If not included in the request, this field will contain the default system-generated name.
+- `statusMessage` (string): A confirmation message indicating a successful adoption, such as: "Animal successfully adopted by {customerName}."
+
+#### Error Response (400 Bad Request):
+- `errorCode` (integer): A unique error code to identify the nature of the encountered issue. Refer to the [Error Codes](#error-codes) section for further details.
+- `errorMessage` (string): A readable description of the error that occurred.
+
+### Authentication Regulations
+
+This endpoint necessitates authentication using an API key. The API key should be included in the request header, using the key `x-api-key`.
+
+### Example Requests
+
+#### Successful Adoption Request:
+```bash
+POST

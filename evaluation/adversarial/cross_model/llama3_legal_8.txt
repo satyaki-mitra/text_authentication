@@ -1,31 +1,43 @@
-Here is a draft of a formal legal clause about data privacy compliance:
+**ARTICLE V: CONFIDENTIALITY AND PROPRIETARY RIGHTS**
 
-**DATA PRIVACY COMPLIANCE**
+1. **DEFINITIONS**. For the purposes of this Article, "Confidential Information" means all non-public information disclosed by either Party to the other in connection with this Agreement, whether orally or in writing, including but not limited to trade secrets, business strategies, customer lists, financial data, and intellectual property.
 
-1. **Definition**: For the purposes of this Agreement, "Personal Data" means any information that identifies or relates to an individual, including but not limited to name, address, phone number, email address, IP address, and other information that is considered personal data under applicable law.
+2. **CONFIDENTIALITY OBLIGATIONS**. Each Party agrees to keep Confidential Information confidential and not to disclose such information to any third party without the prior written consent of the other Party. The receiving Party shall use the same degree of care in protecting the Confidential Information as it uses for its own confidential information, but in no event less than reasonable care.
 
-2. **Compliance with Applicable Laws**: Each party agrees to comply with all applicable laws and regulations related to the processing of Personal Data, including but not limited to:
+3. **EXEMPTIONS**. The confidentiality obligations set forth above shall not apply to any Confidential Information that:
 
-a) The General Data Protection Regulation (GDPR) of the European Union;
+a) is or becomes generally available to the public through no fault of the receiving Party;
 
-b) The California Consumer Privacy Act (CCPA);
+b) was lawfully in possession of the receiving Party prior to the disclosure by the disclosing Party;
 
-c) The Health Insurance Portability and Accountability Act (HIPAA); and
+c) is lawfully obtained from a third party who has the right to disclose such information; or
 
-d) Any other applicable privacy laws or regulations.
+d) is required to be disclosed by applicable laws, regulations, or judicial process.
 
-3. **Data Processing**: Each party agrees that it will process Personal Data in compliance with the requirements set forth in this Agreement, including but not limited to:
+4. **PROPRIETARY RIGHTS**. The Parties agree that all intellectual property rights in and to any Confidential Information shall remain the property of the disclosing Party. The receiving Party agrees not to use or exploit the Confidential Information for its own benefit or to the detriment of the disclosing Party.
 
-a) Obtaining valid consent from individuals prior to collecting, using, or disclosing their Personal Data;
+5. **RETURN OF CONFIDENTIAL INFORMATION**. Upon request by the disclosing Party, the receiving Party shall return all Confidential Information and destroy any copies thereof.
 
-b) Providing clear and conspicuous notice of its data practices to individuals whose Personal Data is collected, used, or disclosed;
+6. **INDEMNIFICATION**. The receiving Party agrees to indemnify and hold harmless the disclosing Party against any claims, damages, or expenses arising from any breach of this Article V by the receiving Party.
 
-c) Implementing and maintaining reasonable administrative, technical, and physical safeguards to protect the confidentiality, integrity, and availability of Personal Data;
+7. **SURVIVAL**. The confidentiality obligations set forth in this Article shall survive the termination or expiration of this Agreement for a period of five (5) years following such termination or expiration.
 
-d) Not selling, renting, or otherwise transferring Personal Data to third parties without the prior consent of the individual whose data is being transferred; and
+By executing this Agreement, each Party acknowledges that it has read, understands, and agrees to be bound by the terms and conditions of this Article V.
 
-e) Allowing individuals to exercise their rights under applicable laws, including but not limited to the right to access, correct, delete, or object to the processing of their Personal Data.
+IN WITNESS WHEREOF, the Parties have executed this Agreement as of the date first above written.
 
-4. **Breach Notification**: Each party agrees that it will notify the other party within [insert timeframe] in the event of a breach of Personal Data, as required by applicable law.
+**PARTY A**
 
-5. **Indemnification**: Each party agrees to indemnify and hold harmless the other party against any claims,
+Signature: ______________________
+
+Print Name: ______________________
+
+Date: _______________________
+
+**PARTY B**
+
+Signature: ______________________
+
+Print Name: ______________________
+
+Date: _______________________

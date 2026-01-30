@@ -1,0 +1,63 @@
+**API Documentation: User Profile Management**
+
+The User Profile Management API is designed to allow developers to manage user profiles, including creating, reading, updating, and deleting profiles. This API provides a robust set of endpoints for retrieving and manipulating user profile data.
+
+**Endpoints**
+
+### 1. `POST /profiles`: Create a New User Profile
+
+* **Request Body**: A JSON object containing the new user profile data, including:
+	+ `name`: The user's full name (string)
+	+ `email`: The user's email address (string)
+	+ `phone`: The user's phone number (string)
+	+ `address`: The user's address information (object with keys: `street`, `city`, `state`, and `zip`)
+* **Response**: A JSON object representing the newly created profile, including a unique `profile_id` key
+
+### 2. `GET /profiles/{profile_id}`: Retrieve a User Profile
+
+* **Path Parameter**: `profile_id` (integer)
+* **Request Body**: None
+* **Response**: A JSON object representing the requested user profile, including:
+	+ `name`: The user's full name (string)
+	+ `email`: The user's email address (string)
+	+ `phone`: The user's phone number (string)
+	+ `address`: The user's address information (object with keys: `street`, `city`, `state`, and `zip`)
+
+### 3. `PUT /profiles/{profile_id}`: Update a User Profile
+
+* **Path Parameter**: `profile_id` (integer)
+* **Request Body**: A JSON object containing the updated profile data, including:
+	+ `name`: The user's full name (string)
+	+ `email`: The user's email address (string)
+	+ `phone`: The user's phone number (string)
+	+ `address`: The user's address information (object with keys: `street`, `city`, `state`, and `zip`)
+* **Response**: A JSON object representing the updated profile
+
+### 4. `DELETE /profiles/{profile_id}`: Delete a User Profile
+
+* **Path Parameter**: `profile_id` (integer)
+* **Request Body**: None
+* **Response**: A JSON object indicating success or failure of the deletion operation
+
+**Error Handling**
+
+The API will return error responses in the following formats:
+
+* **400 Bad Request**: If the request body is invalid or missing required fields.
+* **404 Not Found**: If a requested profile does not exist.
+* **500 Internal Server Error**: If an unexpected error occurs.
+
+**Usage Guidelines**
+
+1. Authentication: All requests to the API must include authentication headers (e.g., `Authorization: Bearer YOUR_TOKEN`).
+2. Rate Limiting: The API has rate limits in place to prevent abuse. Developers should respect these limits to avoid errors.
+3. Data Validation: Always validate user input data to ensure it conforms to expected formats and constraints.
+
+**Example Code**
+
+Here is an example of how to create a new user profile using the `POST /profiles` endpoint:
+```bash
+curl -X POST \
+  http://api.example.com/profiles \
+  -H 'Content-Type: application/json' \
+  -d '{"name": "John Doe", "email": "johndoe@example.com", "phone": "555-1234", "address": {"street": "123 Main St

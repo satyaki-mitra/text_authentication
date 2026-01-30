@@ -73,7 +73,7 @@ class Settings(BaseSettings):
     DATABASE_URL                      : Optional[str] = Field(default = None, env = "DATABASE_URL")
     
     # Security
-    SECRET_KEY                        : str           = Field(default = "your-secret-key-change-in-production", env = "SECRET_KEY")
+    SECRET_KEY                        : str           = Field(default = "secret-key-change-in-production", env = "SECRET_KEY")
     API_KEY_ENABLED                   : bool          = False
     
     # Feature Flags

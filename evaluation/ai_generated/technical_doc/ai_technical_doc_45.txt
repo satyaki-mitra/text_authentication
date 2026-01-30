@@ -1,27 +1,59 @@
-Title: Documentation for Feature - Auto-Save Function
+**API Documentation: Weather Forecast REST Endpoint**
 
-1. Introduction
-   The Auto-Save feature is an integral part of our software, designed to automatically save the user's progress at regular intervals, minimizing data loss and ensuring smooth workflow. This document provides detailed information about the Auto-Save function, its settings, and its implications on the overall user experience.
+**Endpoint Description:**
 
-2. Functionality Overview
-   The Auto-Save function is a background process that runs concurrently with the main application. It periodically saves the current state of the software (including all open documents and their content) to the local storage or cloud, depending on the user's settings.
+This API provides weather forecast information for a given location. The endpoint uses OpenWeatherMap's API to fetch the data.
 
-3. Key Features
-   - Automatic saving: The software will save the user's work at regular intervals, as determined by the Auto-Save settings.
-   - Configurable interval: Users can adjust the Auto-Save interval to fit their working style and preferences, ranging from every few seconds to several minutes.
-   - Progress synchronization: If enabled, any changes made during an auto-save will be immediately synced across all devices where the user is logged in, ensuring consistency and up-to-date content.
+**Base URL:** `https://api.your-app.com/v1`
 
-4. User Interface (UI) Elements
-   The Auto-Save settings can be accessed through the software's main menu or toolbar, depending on the platform and version of the application. A small indicator will appear to notify users when an auto-save is being performed.
+**Endpoint:** `/weather_forecast`
 
-5. Implementation Details
-   - On local storage: Saved files are stored in a designated folder within the user's system, making them accessible even if the user disconnects from the internet.
-   - On cloud storage (if enabled): The software will connect to our secure servers to save and retrieve data, ensuring seamless access across multiple devices.
+**Authentication Requirements:**
 
-6. Best Practices and Recommendations
-   - Users are encouraged to enable cloud storage synchronization for collaborative work and to maintain consistency across devices.
-   - Adjusting the Auto-Save interval to a frequency that suits the user's workstyle can help minimize potential data loss and enhance productivity.
-   - To avoid conflicts or overwriting changes, users should close documents before making significant modifications, especially when working collaboratively.
+Access to this endpoint requires an API key. The key should be included in every request as a header, with the name "Authorization".
 
-7. Troubleshooting and Error Handling
-   In case of errors during auto-save operations, the software will attempt to recover
+**Request Parameters:**
+
+- **location (required)** : The location for which you want to fetch the weather forecast. It can be either a city name or a geographical coordinate in the format of `latitude,longitude`.
+  - Data Type: String or GeoJson Point
+
+- **units (optional)** : The type of units for the temperature. Supported values are "metric" and "imperial". Default is "metric".
+  - Data Type: String
+
+**Example Requests:**
+
+1. To fetch weather forecast for London, use the following request:
+
+```bash
+GET /weather_forecast?location=London HTTP/1.1
+Authorization: Api-Key Your-API-Key
+```
+
+2. To fetch weather forecast for coordinates (37.7749, -122.4194) and use imperial units, use the following request:
+
+```bash
+GET /weather_forecast?location=37.7749,-122.4194&units=imperial HTTP/1.1
+Authorization: Api-Key Your-API-Key
+```
+
+**Response Parameters:**
+
+- **status (required)** : The status of the request. Can be either "success" or "error".
+  - Data Type: String
+
+- **data (required)** : An object containing the weather forecast information if the request was successful, or an error message if the request failed.
+  - Data Type: Object
+
+    * **forecast** : An array of objects, each representing a day's forecast.
+      - Data Type: Array of JSON objects
+
+        * **date** : The date for which the forecast is provided.
+          - Data Type: String (ISO 8601 formatted)
+
+        * **temperature** : The temperature for the given date, in the units specified in the request.
+          - Data Type: Number
+
+        * **weather_description** : A description of the weather conditions for the given date.
+          - Data Type: String
+
+    * **error (if status is "error")** : A human-readable error

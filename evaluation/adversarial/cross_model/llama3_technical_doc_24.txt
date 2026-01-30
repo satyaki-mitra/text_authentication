@@ -1,47 +1,61 @@
-**API Endpoint: Get User Information**
+**API Documentation: User Management System**
 
-**Endpoint:** `/api/users/{userId}`
+**Overview**
+The User Management System (UMS) is a RESTful API designed to manage user accounts, authentication, and authorization for web applications. The UMS provides a secure and scalable way to store and retrieve user information, allowing developers to focus on building their application's core functionality.
 
-**HTTP Method:** GET
+**Specifications**
 
-**Description:** Retrieve information about a specific user.
-
-**Request Parameters:**
-
-* `userId`: The unique identifier of the user to retrieve information about. This is a required parameter and must be an integer.
-
-**Response:**
-
-The API endpoint returns a JSON object containing the requested user's information. The response will contain the following properties:
-
-* `id`: The unique identifier of the user.
-* `name`: The name of the user.
-* `email`: The email address of the user.
-* `role`: The role or job title of the user.
-
-**Example Response:**
+* **API Endpoints**
+	+ `GET /users`: Retrieve a list of all users
+	+ `GET /users/{id}`: Retrieve a single user by ID
+	+ `POST /users`: Create a new user account
+	+ `PUT /users/{id}`: Update an existing user's information
+	+ `DELETE /users/{id}`: Delete a user account
+* **API Request/Response Format**
+	+ Requests: JSON (application/json)
+	+ Responses: JSON (application/json)
+* **Authentication**
+	+ The UMS uses JSON Web Tokens (JWT) for authentication. Clients must include a valid JWT in the `Authorization` header of each request.
+	+ JWTs are issued upon successful login and expire after 30 minutes. Clients can refresh their JWT by making a `POST /login` request with the existing token.
+* **Error Handling**
+	+ The UMS returns errors in JSON format, containing a `code`, `message`, and optional `errors` array.
+	+ Example error response:
 ```json
 {
-  "id": 123,
-  "name": "John Doe",
-  "email": "johndoe@example.com",
-  "role": "Software Engineer"
+	"code": 401,
+	"message": "Invalid credentials",
+	"errors": [
+		{
+			"field": "username",
+			"error": "Username or password is incorrect"
+		}
+	]
 }
 ```
-**Error Handling:**
+**Usage Guidelines**
 
-* **404 Not Found**: If the specified `userId` does not exist, the API will return a 404 error with an empty response body.
-* **500 Internal Server Error**: If there is an internal server error or any other unexpected error, the API will return a 500 error with an empty response body.
+1. **Registration**: To create a new user account, make a `POST /users` request with the following payload:
+```json
+{
+	"username": "johnDoe",
+	"email": "johndoe@example.com",
+	"password": "mysecretpassword"
+}
+```
+2. **Authentication**: To authenticate and obtain a JWT, make a `POST /login` request with the username and password:
+```json
+{
+	"username": "johnDoe",
+	"password": "mysecretpassword"
+}
+```
+3. **Authorization**: Include the obtained JWT in the `Authorization` header of subsequent requests to access protected endpoints.
+4. **Error Handling**: Handle errors by checking the `code`, `message`, and `errors` arrays in the response.
 
-**Rate Limiting:**
+**Security Considerations**
 
-This API endpoint has a rate limit of 100 requests per minute. Exceeding this limit may result in a `429 Too Many Requests` error being returned.
+1. **Secure Storage**: Store user passwords securely using a salted hash algorithm (e.g., bcrypt).
+2. **Token Validation**: Validate JWTs upon receipt to ensure they are valid and not tampered with.
+3. **Rate Limiting**: Implement rate limiting on API requests to prevent brute-force attacks.
 
-**Caching:**
-
-The API endpoint returns cached data for a period of 1 hour. This means that if you request the same user information within an hour, you will receive the same response as if you had requested it previously.
-
-**Security Considerations:**
-
-* **Authentication**: The API requires authentication using our standard authentication mechanism.
-* **Authorization**: The API endpoint only returns data for users who have been authorized to access it.
+By following these guidelines, developers can integrate the User Management System into their application, providing a secure and scalable way to manage user accounts and authentication.

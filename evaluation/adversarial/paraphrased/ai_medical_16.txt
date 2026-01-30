@@ -1,0 +1,9 @@
+Title: An Illustrative Analysis of Efficient Management of Severe Acute Pancreatitis with Sepsis in a Juvenile Patient
+
+Introduction: Acute pancreatitis, especially its severe form (SAP), poses a significant threat to life, particularly among the pediatric population due to their predisposition towards rapid progression and complications. Early identification, robust management strategies, and prompt intervention are paramount for optimal results.
+
+Narrative: A 10-year-old boy sought emergency care, suffering from persistent abdominal pain, recurrent vomiting, and fever over a three-day period. His medical history was largely unremarkable save for the recent diagnosis of gallstones two weeks prior, yet hospital treatments had been postponed due to COVID-19-related delays. Upon examination, the patient displayed signs of acute illness, exhibiting a temperature of 38.5°C, elevated heart rate (140 beats per minute), and abdominal discomfort with indications of muscular tension and rebound pain. Laboratory assessments indicated leukocytosis (white blood cell count: 18,000 cells/mm³) and increased levels of serum amylase (1,500 U/L) and lipase (2,000 U/L). Subsequent diagnosis was established based on the Atlanta Criteria for SAP. Further investigation revealed sepsis stemming from cholangitis as a result of an obstructed common bile duct caused by the gallstone.
+
+Approach to Diagnosis: Preliminary imaging consisted of abdominal ultrasound and computed tomography (CT) scans, which corroborated pancreatitis with signs of necrosis and cholelithiasis coupled with common bile duct obstruction. A magnetic resonance cholangiopancreatography (MRCP) was conducted to delve further into the biliary system's anatomy.
+
+Treatment Strategy: The patient was admitted to the pediatric intensive care unit (PICU). Treatment encompassed fluid resuscitation, pain alleviation,

@@ -1,0 +1,39 @@
+Title: Performance Analysis of a Proposed Load Balancing System for Distributed Web Applications
+
+Executive Summary
+
+The increasing demand for scalable web applications has necessitated the development of efficient load balancing systems to ensure seamless user experience and high system availability. This technical report presents an analysis of a proposed load balancing system design, focusing on its specifications, performance evaluation, design constraints, and recommendations for improvement.
+
+1. System Design Overview
+
+The proposed load balancing solution consists of the following key components:
+
+a) Front-end Load Balancer (FELB): Responsible for distributing incoming user requests to the appropriate backend servers based on specific algorithms such as Round Robin, Least Connections, or IP Hash.
+
+b) Backend Servers: Handles the processing of user requests and serves responses back to the clients. These servers can be horizontally scaled by adding more instances when needed.
+
+c) Health Checker Module: Periodically verifies the status of each backend server to ensure they are operational, allowing the FELB to redirect traffic away from failing servers.
+
+d) Session Stickiness Feature: Ensures that once a user is connected to a specific backend server, subsequent requests from that user are routed back to the same server for improved performance and consistency.
+
+2. Performance Analysis
+
+To evaluate the efficiency of the proposed load balancing system, we conducted several tests using synthetic workloads simulating varying numbers of concurrent users accessing the web application. The results showed the following:
+
+a) Request Latency: Average request latency decreased as more backend servers were added, demonstrating improved response times and increased scalability.
+
+b) Throughput: Maximum throughput scaled linearly with the number of backend servers, indicating efficient load distribution and minimal bottlenecks in the system.
+
+c) Failover Time: The proposed solution exhibited rapid failover times when a backend server went down, reducing downtime and ensuring high system availability.
+
+3. Design Constraints
+
+a) Session Stickiness: While session stickiness improves user experience by minimizing connection reestablishment overhead, it may lead to hotspots if not properly managed, requiring careful configuration of the algorithm used.
+
+b) Scalability: To handle large numbers of concurrent users, the proposed load balancing system must be designed to accommodate horizontal scaling of backend servers without impacting overall performance or introducing new bottlenecks.
+
+c) Cost Efficiency: Implementing a cost-effective solution is crucial for minimizing operational expenses and maximizing return on investment. This can be achieved through optimized hardware selection, efficient resource allocation, and intelligent load balancing algorithms.
+
+4. Recommendations
+
+To further improve the proposed load balancing system design, we suggest the following recommendations

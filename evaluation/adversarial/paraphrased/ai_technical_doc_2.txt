@@ -1,0 +1,42 @@
+Title: Managing User Accounts via API Endpoint
+
+## Managing User Accounts
+
+The `User Account Management` interface facilitates handling user accounts within the system. It adheres to RESTful principles and employs HTTPS for secure communication.
+
+### Description of Endpoints
+
+1. Create a new account: `POST /api/v1/accounts/new`
+2. View specific user details: `GET /api/v1/accounts/{AccountID}`
+3. Update an existing account: `PUT /api/v1/accounts/{AccountID}`
+4. Delete an account: `DELETE /api/v1/accounts/{AccountID}`
+
+### Parameters for Requests
+
+#### Creating a New Account (POST)
+
+| Parameter   | Data Type | Description                                     |
+|-------------|----------|-------------------------------------------------|
+| `username`  | string   | The username of the account holder.            |
+| `email`     | string   | A unique email address for the account.         |
+| `password`  | string   | The password for the new account.               |
+| `user_type` | string   | The user type assigned to the account (e.g., admin, regular). |
+
+#### Retrieving User Details (GET)
+
+| Parameter | Data Type | Description                             |
+|-----------|----------|-----------------------------------------|
+| `AccountID`  | integer  | The unique ID of the account to access.   |
+
+#### Updating Account Details (PUT)
+
+| Parameter   | Data Type | Description                                      |
+|-------------|----------|--------------------------------------------------|
+| `username`  | string   | The updated username of the account holder.     |
+| `email`     | string   | An updated email address for the account (optional).  |
+| `password`  | string   | An updated password for the account (optional).      |
+| `user_type` | string   | An updated user type assigned to the account (optional).   |
+
+#### Deleting an Account (DELETE)
+
+No parameters are required in this request. The account is deleted based on the

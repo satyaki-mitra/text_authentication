@@ -1,0 +1,25 @@
+**ARTICLE III: TERM AND TERMINATION**
+
+**3.1 Term.** The term of this Agreement shall commence on the Effective Date and shall continue for a period of [insert number] years, commencing on the first day of the month following the Effective Date (the "Initial Term"). Upon expiration of the Initial Term, this Agreement shall automatically renew for successive periods of [insert number] years, unless either Party gives written notice to the other Party of its intention not to renew at least [insert time period] days prior to the end of the then-current term.
+
+**3.2 Termination.** Either Party may terminate this Agreement upon written notice to the other Party if:
+
+(a) The other Party fails to comply with any material provision of this Agreement, and such failure is not cured within [insert number] days after receipt of written notice from the non-breaching Party;
+
+(b) The other Party becomes insolvent or files a petition in bankruptcy that is not dismissed within [insert number] days; or
+
+(c) A court of competent jurisdiction enters an order dissolving or winding up the other Party's business, and such order is not appealed or stayed within [insert number] days.
+
+**3.3 Effect of Termination.** Upon termination of this Agreement:
+
+(a) All rights and obligations of the Parties shall cease, except as provided in subsections (b) and (c);
+
+(b) Each Party shall promptly return all Confidential Information and any other materials received from the other Party under this Agreement;
+
+(c) The following provisions of this Agreement shall survive termination: [insert specific provisions].
+
+**3.4 Survival.** Sections 2.5, 3.1, and 4.6 (as applicable) shall survive expiration or termination of this Agreement.
+
+**3.5 Notice.** Any notice required by this Article III shall be in writing and delivered to the other Party at its principal place of business or such other address as the Parties may designate in writing from time to time.
+
+This Article III sets forth the term and termination provisions of this Agreement. The term of this Agreement is [insert number] years, with an automatic renewal provision for successive periods of [insert number] years unless written notice is provided by either Party prior to the end of the then-current term. The Agreement may be terminated upon written notice if the other Party fails to comply with a material provision, becomes insolvent, or a court enters an order dissolving or winding up the other Party's business. Upon termination, all rights and obligations cease except as provided in subsections (b) and (c), and certain provisions survive expiration or termination.

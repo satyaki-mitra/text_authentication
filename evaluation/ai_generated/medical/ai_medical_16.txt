@@ -1,15 +1,15 @@
-Title: A Rare Case of Refractory Pemphigus Foliaceus with Successful Treatment using Intravenous Immune Globulin (IVIG)
+Title: A Case Study on Successful Management of Severe Acute Pancreatitis Complicated by Sepsis in a Pediatric Patient
 
-Abstract:
+Abstract
 
-We present an unusual case of a 54-year-old Caucasian female who was admitted to our dermatology department due to an extensive, treatment-resistant pemphigus foliaceus (PF) rash over her entire body. The patient's medical history included a recent diagnosis of Graves' disease and a subsequent remission following radioactive iodine therapy three months prior.
+Background: Severe acute pancreatitis (SAP) is a life-threatening condition, particularly in pediatric patients due to their susceptibility to rapid progression and complications. Early recognition, aggressive management, and timely intervention are crucial for favorable outcomes.
 
-Upon admission, the patient presented with widespread erythematous papules, vesicles, and bullae, accompanied by scaling and crusting lesions on her face, trunk, and extremities. Skin biopsy results confirmed a diagnosis of PF, as demonstrated by acantholysis in suprabasal epidermis with neutrophilic infiltration.
+Case Presentation: A 10-year-old male patient presented to the emergency department with a three-day history of persistent abdominal pain, vomiting, and fever. The patient's medical history was unremarkable except for a recent gallstone diagnosed two weeks ago but not yet treated due to COVID-19-related hospital delays. On examination, the patient appeared acutely ill with a temperature of 38.5°C, tachycardia (heart rate: 140 bpm), and abdominal tenderness with guarding and rebound tenderness. Laboratory investigations revealed leukocytosis (white blood cell count: 18,000 cells/mm³) and elevated serum amylase (1,500 U/L) and lipase (2,000 U/L). The patient was diagnosed with SAP based on Atlanta Criteria. Further workup revealed sepsis secondary to cholangitis due to obstructed common bile duct caused by the gallstone.
 
-Initially, treatment consisted of high-dose oral corticosteroids (prednisone 60 mg daily) and azathioprine (150 mg daily). Despite intensive therapy over a period of two months, the patient's condition worsened, with new lesions emerging and a significant increase in itching and pain.
+Diagnostic Approach: Initial imaging included abdominal ultrasound and computed tomography (CT) scan, which confirmed pancreatitis with signs of necrosis and cholelithiasis with common bile duct obstruction. Magnetic resonance cholangiopancreatography (MRCP) was performed to further assess the biliary tree.
 
-Given the refractory nature of the disease, we initiated an intravenous immune globulin (IVIG) regimen at 2 g/kg over five days. Following the first IVIG infusion, the patient reported immediate relief from itching and a reduction in new lesions' appearance. Over the subsequent weeks, the patient's condition continued to improve, with complete resolution of symptoms observed after four IVIG treatments (every three weeks).
+Treatment: The patient was immediately managed in the pediatric intensive care unit (PICU). Supportive care included fluid resuscitation, pain management, and nutritional support. Antibiotics were initiated based on sepsis workup results. Endoscopic retrograde cholangiopancreatography (ERCP) was performed for bile duct decompression and stone extraction.
 
-To our knowledge, this is one of the few reported cases of PF successfully treated with IVIG, particularly in a patient with a concurrent autoimmune disorder. This case highlights the importance of considering alternative treatment options for refractory PF and emphasizes the potential benefits of IVIG therapy in managing this debilitating disease.
+Outcomes: The patient's condition stabilized following ERCP and antibiotic therapy. The patient remained in the PICU for a week before being transferred to the general ward. The patient made a full recovery with no residual complications.
 
-Keywords: Pemphigus Foliaceus, Refractory, Intravenous Immune Globulin (IVIG), Autoimmune Disorder, Treatment Resistance
+Discussion: This case highlights the importance of early recognition and aggressive management of SAP in pediatric patients, particularly those with underlying risk factors such as gallstones. ERCP proved effective for bile duct decompression and stone extraction in this

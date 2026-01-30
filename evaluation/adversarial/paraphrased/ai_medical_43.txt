@@ -1,0 +1,9 @@
+Title: Successful Management of Recalcitrant Intestinal Stromal Tumor (IST) utilizing Imatinib and Sunitinib
+
+Introduction: Intestinal stromal tumors (ISTs), being the most prevalent mesenchymal cancers of the gastrointestinal tract, account for roughly 1% of all gastrointestinal cancer diagnoses. These tumors typically express an activated c-KIT tyrosine kinase receptor and/or platelet-derived growth factor receptor alpha (PDGFR-α), making them amenable to targeted therapeutic approaches.
+
+Case Description: A 65-year-old woman presented with a three-month history of escalating abdominal discomfort, nausea, and weight loss. Upon radiographic examination through computed tomography (CT), a substantial, heterogeneously enhancing mass was detected in the proximal jejunum, measuring approximately 12 cm x 8 cm. An endoscopic ultrasound confirmed a submucosal tumor with irregular borders, characteristic of an IST. Immunohistochemical analysis for CD117 and DOG1 returned positive results, confirming the diagnosis of an IST. The patient's tumor was situated unfavorably in the midgut region and displayed a high mitotic rate (20 mitoses per 50 high-power fields), indicating a substantial risk of recurrence according to the National Institutes of Health (NIH) risk assessment system.
+
+Diagnostic Strategy: The patient commenced treatment with Imatinib, a selective inhibitor of KIT and PDGFR, at a daily dosage of 400 mg. After two months, a follow-up CT scan revealed no significant changes in the tumor size, suggesting resistance to Imatinib therapy. Subsequently, the patient was prescribed Sunitinib, another multi-kinase inhibitor that targets KIT and PDGFR.
+
+Therapeutic Intervention: The patient experienced minimal side effects while adapting to Sunitinib. After four months of treatment, a follow-up CT scan demonstrated a substantial reduction in the tumor size (6 cm x 4 cm) and no new lesions, indicating

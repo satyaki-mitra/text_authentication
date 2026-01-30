@@ -1,24 +1,43 @@
-Title: Clause for Confidentiality and Non-Disclosure Agreement (NDA)
+Title: Data Protection Policy Statement
 
-1. Definition and Interpretation:
-In this Agreement, the "Disclosing Party" refers to the party who discloses confidential information, and the "Receiving Party" refers to the one who receives such confidential information.
+1. Introduction
 
-2. Purpose:
-The purpose of this agreement is to protect any non-public, proprietary, or confidential information ("Confidential Information") that may be disclosed by the Disclosing Party to the Receiving Party in connection with their business relationship.
+1.1 This Data Protection Policy Statement ("Policy") sets out the obligations of [Company Name], a company incorporated in [Jurisdiction] (the "Company"), regarding data protection and the rights of individuals ("Data Subjects") in respect of their personal data under EU General Data Protection Regulation (Regulation (EU) 2016/679) ("GDPR").
 
-3. Scope of Confidential Information:
-The Confidential Information includes but is not limited to technical data, trade secrets, and financial and business information disclosed either directly or indirectly by the Disclosing Party to the Receiving Party. However, Confidential Information does not include any information that: (a) was already known to the Receiving Party at the time of disclosure; (b) becomes publicly available through no fault of the Receiving Party; (c) is learned by the Receiving Party through legitimate means other than from the Disclosing Party or a disclosure recipient subject to obligations of confidentiality; or (d) is independently developed by the Receiving Party without reference to the Confidential Information.
+1.2 The GDPR defines "personal data" as any information relating to an identified or identifiable natural person.
 
-4. Obligations of the Parties:
-(a) The Receiving Party agrees to hold the Confidential Information in strict confidence and not to disclose it to any third party, except with the Disclosing Party's prior written consent or as required by law.
+2. The Company's Commitment
 
-(b) The Receiving Party further agrees to take reasonable precautions to protect the confidentiality of the Confidential Information, including maintaining it in secure locations and restricting access on a need-to-know basis.
+2.1 The Company is committed to the protection of personal data and respecting the privacy rights of Data Subjects. The Company will adhere to the principles of GDPR, which include processing personal data lawfully, fairly, and in a transparent manner.
 
-5. Duration:
-The obligations under this agreement shall continue for a period of five (5) years from the date of disclosure, unless otherwise agreed upon in writing by both parties.
+3. Lawful, Fair, and Transparent Processing
 
-6. Termination:
-This agreement shall terminate upon written notice from either party if the other party breaches any of its obligations under this agreement and fails to cure such breach within thirty (30) days after receipt of written notice specifying the nature of the breach.
+3.1 To ensure its processing of personal data is lawful, fair, and transparent, the Company will maintain up-to-date records of all processing activities under its responsibility, including:
+   - The purpose(s) for which personal data is processed;
+   - The categories of Data Subjects and personal data types;
+   - The recipients or categories of recipients to whom the personal data is disclosed;
+   - The retention period for storing the personal data;
+   - Details of transfers of personal data to third country or international organization.
 
-7. Miscellaneous:
-(a) This agreement constitutes the entire agreement between the
+4. Lawful Basis for Processing
+
+4.1 The Company will only process personal data if it has a lawful basis for doing so. The possible lawful bases for processing are:
+   - Consent of the Data Subject;
+   - Performance of a contract with the Data Subject or to take steps at the request of the Data Subject before entering into a contract;
+   - Compliance with a legal obligation to which the Company is subject;
+   - Protection of the vital interests of the Data Subject or another person;
+   - The Company's legitimate interests, except where such interests are overridden by the fundamental rights and freedoms of the Data Subject.
+
+5. Rights of Data Subjects
+
+5.1 Data Subjects have several rights under GDPR, including:
+   - The right to access their personal data;
+   - The right to rectification of inaccurate or incomplete personal data;
+   - The right to erasure of their personal data (the "right to be forgotten");
+   - The right to restrict the processing of their personal data;
+   - The right to object to the processing of their personal data; and
+   - The right to data portability.
+
+6. Consent
+
+6.1 Where consent is relied upon as a lawful

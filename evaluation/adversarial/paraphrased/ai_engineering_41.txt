@@ -1,0 +1,41 @@
+Title: Evaluation of a Proposed System for Balanced Load Distribution in Distributed Web Applications
+
+Summary
+
+In response to the escalating need for scalable web applications, this report delves into an evaluation of a proposed system design for balanced load distribution. The focus is on its features, performance assessment, design restrictions, and potential enhancements.
+
+1. System Description
+
+The proposed load distribution scheme comprises the following vital components:
+
+a) Front-end Load Balancer (FELB): Directs incoming user requests to suitable backend servers according to defined algorithms such as Round Robin, Least Connections, or IP Hash.
+
+b) Backend Servers: Process user requests and dispatch responses to clients. These servers can be augmented by additional instances during peak demand.
+
+c) Monitoring Module: Regularly assesses the status of each backend server to ensure they function correctly, thereby rerouting traffic away from non-operational servers.
+
+d) Session Affinity Feature: Ensures that a user connected to a specific backend server will receive subsequent requests from the same server for better performance and consistency.
+
+2. Performance Evaluation
+
+To measure the system's efficiency, we carried out tests using synthetic workloads simulating various numbers of simultaneous users accessing the web application. The outcomes revealed:
+
+a) Response Time: Average response time reduced as more backend servers were incorporated, signifying enhanced reaction times and increased scalability.
+
+b) Capacity: Maximum capacity scaled proportionately with the number of backend servers, indicating efficient load division and minimal system bottlenecks.
+
+c) Failover Speed: The proposed solution demonstrated swift failover times when a backend server failed, minimizing downtime and ensuring high availability.
+
+3. Design Limitations
+
+a) Session Affinity: Although session affinity enhances user experience by reducing reconnection overhead, it may lead to congestion if improperly managed, necessitating careful configuration of the employed algorithm.
+
+b) Scalability: To cater to large numbers of simultaneous users, the proposed load distribution system must be designed to support horizontal scaling of backend servers without negatively affecting overall performance or introducing new bottlenecks.
+
+c) Cost-effectiveness: A cost-efficient solution is essential for minimizing operational costs and maximizing returns on investment. This can be achieved through optimal hardware selection, efficient resource allocation, and intelligent load distribution algorithms.
+
+4. Suggestions for Improvement
+
+To further optimize the proposed load distribution system design, we propose the following suggestions:
+
+- Optimization of the session affinity algorithm to minimize potential congestion

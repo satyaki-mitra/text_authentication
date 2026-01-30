@@ -1,13 +1,15 @@
-Title: An Unusual Case of Immunoglobulin A Nephropathy in a Pediatric Patient
+Title: A Case Study on Successful Management of Refractory Angioedema in a Pediatric Patient Utilizing Ecallantide
 
-Background: Immunoglobulin A (IgA) nephropathy, also known as Berger's disease, is the most common primary glomerulonephritis worldwide. It primarily affects young adults but can occur in pediatric patients. Here, we present an unusual case of IgA nephropathy in a 10-year-old child.
+Abstract
 
-Case Presentation: A previously healthy 10-year-old boy presented with a two-week history of hematuria and edema. His medical history was unremarkable, except for an episode of streptococcal pharyngitis one month prior. Physical examination revealed pitting edema on both lower extremities, and urinalysis showed red blood cells and hematuria with normal protein levels.
+Background: Angioedema, a clinical manifestation of the bradykinin-mediated pathway, is characterized by rapid swelling of deep tissues. Although typically self-limiting, refractory angioedema can pose significant morbidity and mortality risks, particularly in pediatric patients. This case report highlights the successful management of a refractory angioedema episode in a 9-year-old patient using ecallantide, an FDA-approved plasma kallikrein inhibitor.
 
-Investigations: Renal function tests were within normal limits. Urine IgA level was significantly elevated (205 mg/dL, normal range < 67 mg/dL). Serum complement levels were normal. Kidney biopsy showed mesangial proliferative glomerulonephritis with predominantly IgA deposits, consistent with a diagnosis of IgA nephropathy.
+Case Presentation: A 9-year-old male with no known allergies presented to the emergency department with acute onset facial swelling that had progressed over a period of 24 hours. The swelling involved the tongue, lips, and eyelids, and was accompanied by dysphagia, odynophagia, and dyspnea. The patient's medical history was significant for recurrent angioedema attacks triggered by emotional stress, physical exertion, or upper respiratory infections, with limited responses to conventional treatments including antihistamines, corticosteroids, and C1 esterase inhibitor concentrate.
 
-Treatment: The patient was initiated on oral prednisone (1 mg/kg per day) and aspirin (80 mg/day). ACE inhibitors were also started for blood pressure control.
+Diagnostic Approach: The patient's presentation was consistent with angioedema. Laboratory tests revealed normal levels of complement components C3 and C4, suggestive of a non-hereditary angioedema (NHAE) caused by an increased activity of plasma kallikrein rather than deficiency in C1 esterase inhibitor.
 
-Outcome and Follow-up: After two months of treatment, the patient's hematuria had resolved, and edema was significantly reduced. Renal function remained normal. The patient is currently under close follow-up with regular monitoring of urine protein levels and renal function tests.
+Treatment: Given the patient's refractory response to conventional treatments, ecallantide was administered at a dosage of 30 mg subcutaneously every 8 hours. The swelling began to resolve within 4 hours post-treatment, and after 24 hours, complete resolution was achieved.
 
-Conclusion: This case underscores the importance of considering IgA nephropathy in pediatric patients presenting with hematuria, even in the absence of a known predisposing factor. Early diagnosis and appropriate management can lead to a favorable prognosis, as demonstrated in this case. Further studies are needed to elucidate the etiology and optimal treatment strategies for IgA nephropathy in pediatric patients.
+Outcomes: Over the subsequent week, the patient remained symptom-free without experiencing any adverse effects from ecallantide treatment. Follow-up visits revealed that prophylactic use of ecallantide effectively prevented future angioedema attacks triggered by emotional stress or upper respiratory infections.
+
+Discussion: This case study underscores the utility of ecallantide as a safe and effective treatment option for refractory angioedema in pediatric patients. Ecallantide's ability to selectively inhibit plasma kallikrein offers an alternative treatment strategy for NHAE patients who do not respond to conventional therapies. Future research should focus on long-term safety and efficacy of ecallantide in pediatric

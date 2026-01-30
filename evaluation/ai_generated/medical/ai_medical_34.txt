@@ -1,13 +1,15 @@
-Title: A Rare Case of Multiple Myeloma Manifesting as Spinal Cord Compression in a Young Adult
+Title: A Case Study on Successful Management of Recurrent Severe Pseudomonas aeruginosa Pneumonia in a Cystic Fibrosis Patient
 
 Abstract
 
-We present an unusual case of a 26-year-old previously healthy male patient who presented with acute onset lower extremity weakness, sensory deficits, and urinary retention. Neurological examination revealed signs of spinal cord compression at the thoracic level. Magnetic Resonance Imaging (MRI) of the spine confirmed an epidural mass lesion at T7-T8 vertebrae. Following initial treatment with high-dose dexamethasone, a bone marrow biopsy revealed plasma cell dyscrasia consistent with Multiple Myeloma (MM).
+Background: Pseudomonas aeruginosa (P. aeruginosa) is a significant opportunistic pathogen often complicating respiratory disorders, especially in cystic fibrosis (CF) patients. This case study reports an unusual presentation and successful management strategy of a recurrent severe P. aeruginosa pneumonia in a CF patient.
 
-Laboratory findings included elevated serum M-protein, β2-microglobulin, and lactate dehydrogenase levels. Immunoelectrophoresis showed a monoclonal IgG kappa band. Cytogenetic analysis revealed t(4;14) translocation, a characteristic genetic abnormality in MM.
+Case Presentation: A 30-year-old male with a known history of CF presented with an acute exacerbation of the disease characterized by increased cough, purulent sputum production, and progressive dyspnea over two weeks. His medical history included frequent hospitalizations due to recurrent P. aeruginosa pneumonia. On admission, laboratory tests revealed elevated inflammatory markers (CRP: 150 mg/L, WBC: 13.5 G/L), and sputum culture confirmed the presence of P. aeruginosa sensitive to ceftazidime. Chest X-ray showed bilateral patchy infiltrates, consistent with pneumonia.
 
-The patient was initiated on induction therapy with bortezomib, lenalidomide, dexamethasone (VLd), and underwent radiotherapy for the spinal cord compression. After six cycles of VLd, there was a significant improvement in his neurological symptoms and a partial response according to International Myeloma Working Group criteria.
+Diagnostic Approach: Given the patient's history of recurrent P. aeruginosa infection and severe disease course, additional investigations were carried out. Sputum analysis for P. aeruginosa biofilm formation revealed a high density, suggesting chronic colonization and potentially antimicrobial resistance mechanisms. A genetic test confirmed the CFTR mutation (F508del).
 
-This case underscores the importance of considering MM in young adults presenting with spinal cord compression, even in the absence of typical MM symptoms. Early recognition and aggressive treatment can lead to improved outcomes, as demonstrated by our patient's initial response to therapy. Further long-term follow-up is necessary to assess the efficacy of this treatment regimen in managing both the hematological and neurological manifestations of MM.
+Treatment: The patient was initially treated with intravenous ceftazidime, along with inhaled tobramycin, airway clearance therapy, and supportive care. However, considering the high density of P. aeruginosa biofilm in sputum samples, we introduced aerosolized polymyxin B (aPMB) as an adjunctive therapy. After 10 days of aPMB administration, the patient showed significant improvement in clinical symptoms and inflammatory markers.
 
-Keywords: Multiple Myeloma, Spinal Cord Compression, Young Adult, Bortezomib, Lenalidomide, Dexamethasone
+Outcomes: The patient was discharged with improved oxygen saturation levels and reduced respiratory distress. Follow-up sputum cultures after two weeks revealed a significant decrease in P. aeruginosa density, suggesting the effectiveness of the combined therapy. The patient continued regular home treatments, including aPMB and routine CF medications, reporting no exacerbations at 6-month follow-up.
+
+Discussion: Recurrent severe P. aeruginosa pneumonia is a significant challenge in CF management due to biofilm formation and potential antimicrobial resistance. This case highlights the potential benefits of aPMB as an

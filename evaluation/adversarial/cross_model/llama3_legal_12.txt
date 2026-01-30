@@ -1,17 +1,56 @@
-Here is a draft of a formal legal clause about data privacy compliance:
+**SECTION 5: TERMINATION OF AGREEMENT**
 
-**Data Privacy Compliance**
+**5.1 DEFINITIONS**
 
-1. **Compliance with Applicable Laws**: [Party Name] agrees to comply with all applicable data protection laws and regulations, including but not limited to the General Data Protection Regulation (GDPR), the Health Insurance Portability and Accountability Act (HIPAA), and any other relevant federal, state, or local laws.
+For the purposes of this Section, the following terms shall have the meanings set forth below:
 
-2. **Data Processing**: [Party Name] shall only process Personal Data (as defined below) in accordance with the instructions of [Other Party's Representative], and for the purposes specified in this Agreement. [Party Name] shall not use or disclose Personal Data except as necessary to perform its obligations under this Agreement, or as permitted by applicable law.
+* "Notice Period" means [insert time period, e.g. thirty (30) days];
+* "Termination Date" means the date on which the Agreement terminates in accordance with this Section;
+* "Reasonable Efforts" means [insert description of reasonable efforts, e.g. providing written notice to the other party and returning all confidential information].
 
-3. **Data Controllership**: [Other Party's Representative] shall be considered the "Controller" (as defined under GDPR) with respect to all Personal Data processed in connection with this Agreement, and [Party Name] shall be considered a "Processor". [Party Name] agrees to process such Personal Data only on behalf of and at the direction of [Other Party's Representative], and to take reasonable steps to ensure compliance with applicable data protection laws.
+**5.2 TERMINATION FOR CONVENIENCE**
 
-4. **Data Subject Rights**: [Party Name] shall provide all necessary assistance to enable [Other Party's Representative] to respond to requests from Data Subjects (as defined below) regarding their rights under applicable data protection laws, including but not limited to the right of access, rectification, erasure, restriction, and portability.
+Either party may terminate this Agreement at any time upon [insert number] days' prior written notice to the other party. The Termination Date shall be the date specified in such notice.
 
-5. **Security Measures**: [Party Name] shall implement and maintain appropriate technical and organizational measures to ensure the confidentiality, integrity, and availability of all Personal Data processed in connection with this Agreement, including but not limited to:
+**5.3 TERMINATION FOR DEFAULT**
 
-(a) Access controls: [Party Name] shall only permit authorized personnel to access Personal Data.
+If either party fails to perform or comply with any term, condition, or obligation of this Agreement, and such failure is not cured within the Notice Period, the non-defaulting party may terminate this Agreement upon providing written notice to the defaulting party. The Termination Date shall be the date specified in such notice.
 
-(b) Data encryption: [Party Name] shall encrypt all Personal Data using a method deemed appropriate by [Other Party's Representative].
+**5.4 EFFECT OF TERMINATION**
+
+Upon termination of this Agreement:
+
+* All obligations and liabilities of the parties arising under or in connection with this Agreement shall cease, except for those which are intended to survive termination;
+* Each party shall return all confidential information and proprietary materials belonging to the other party; and
+* The parties agree to take Reasonable Efforts to assist each other in preserving confidentiality and protecting the intellectual property rights of the other party.
+
+**5.5 SURVIVAL OF OBLIGATIONS**
+
+The following obligations shall survive termination of this Agreement:
+
+* Each party's obligation to keep confidential all information disclosed by the other party;
+* The parties' indemnification obligations;
+* The parties' representations and warranties; and
+* The parties' duties to comply with applicable laws and regulations.
+
+**5.6 GOVERNING LAW**
+
+This Section 5 shall be governed by and construed in accordance with the laws of [insert state/country]. Any disputes arising under or in connection with this Agreement shall be resolved through [insert dispute resolution mechanism, e.g. arbitration].
+
+IN WITNESS WHEREOF, the parties have executed this Agreement as of the date first above written.
+
+**PARTY A**
+
+Signature: __________________________
+
+Print Name: ______________________________
+
+Date: __________________________________
+
+**PARTY B**
+
+Signature: __________________________
+
+Print Name: ______________________________
+
+Date: __________________________________

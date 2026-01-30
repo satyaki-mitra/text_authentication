@@ -1,0 +1,55 @@
+Title: API for User Management: REST Interface
+
+## Managing Users via RESTful API
+
+### Introduction
+
+This guide details the User Management API, an RESTful interface designed to handle user accounts within our system. The API offers functionalities to create, read, modify, and delete user profiles. Access authorization is necessary for all interactions.
+
+### API Description
+
+The base URL for the User Management API is `https://api.example.com/v1`. All subsequent sections refer to endpoints relative to this base URL.
+
+### Request Details
+
+#### General Parameters
+
+- `Authorization: Bearer <token>` - Mandatory for authentication. Obtain tokens through OAuth 2.0 flow.
+
+#### Specific Parameters by Endpoint
+
+##### New User Registration (POST /users)
+
+- `Content-Type: application/json` - Structure of the request body.
+- `Data` - JSON object containing user details (refer below).
+
+##### Retrieve User Information (GET /users/:userId)
+
+- `Path variables`:
+  - `:userId` - Unique identifier for the user to fetch.
+
+##### Update User Details (PUT /users/:userId)
+
+- `Content-Type: application/json` - Structure of the request body.
+- `Data` - JSON object containing updated user details (refer below).
+- `Path variables`:
+  - `:userId` - Unique identifier for the user to modify.
+
+##### Delete User Profile (DELETE /users/:userId)
+
+- `Path variables`:
+  - `:userId` - Unique identifier for the user to remove.
+
+### Response Details
+
+#### General Responses
+
+- `200 OK` - Successful response. The response body varies per endpoint and is described below.
+- `401 Unauthorized` - Incorrect or expired token.
+- `403 Forbidden` - Insufficient permissions to execute the requested action.
+- `404 Not Found` - The specified resource could not be located.
+- `500 Internal Server Error` - An unforeseen error occurred on our end.
+
+#### Specific Responses by Endpoint
+
+##### New

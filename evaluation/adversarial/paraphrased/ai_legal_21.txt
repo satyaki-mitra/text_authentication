@@ -1,0 +1,33 @@
+Title: Data Protection and Processing Agreement (DPP Agreement)
+
+Agreement Between Parties
+
+1. Establishment of the DPP Agreement
+
+This Data Protection and Processing Agreement ("DPP Agreement") is established between the Data Controller ("Data Owner") and the Data Processor ("Data Manager"), each a "Party" and together the "Parties." The DPP Agreement serves to fulfill the obligations required of both parties under Regulation (EU) 2016/679, also known as the General Data Protection Regulation (GDPR). This agreement is an extension of any existing contracts between the Parties (the "Primary Agreement").
+
+2. Definitions and Interpretation
+
+For clarity in this DPP Agreement, terms defined in Annex A will hold their assigned meanings. For all other undefined capitalized terms, meanings provided within the Primary Agreement shall apply.
+
+3. Data Processing Obligations
+
+The Data Manager is obligated to process Personal Data exclusively for the purposes and within the scope outlined in the Primary Agreement, and only as instructed by the Data Owner (the "Designated Purpose"). The Data Manager will not utilize the Personal Data for any purpose beyond the Designated Purpose, unless mandated by law. If such a situation arises, the Data Manager will promptly notify the Data Owner of this requirement, provided that the law does not restrict such notification on grounds of public interest.
+
+4. Legal Compliance and Confidentiality
+
+The Data Manager must adhere to all relevant laws, regulations, and industry standards pertaining to data protection, including but not limited to GDPR. The Data Manager will ensure that employees involved in the processing activities understand the confidential nature of the Personal Data and are bound by a confidentiality agreement or are subject to an appropriate statutory obligation of confidentiality.
+
+5. Implementation of Security Measures
+
+The Data Manager must establish and maintain adequate technical and organizational measures to safeguard the Personal Data against accidental or unauthorized destruction, loss, modification, disclosure, or access, particularly for data transmitted over a network. Detailed information regarding these security measures is provided in Annex B.
+
+6. Assistance with Data Subject Rights
+
+To facilitate the Data Owner's fulfillment of obligations related to exercising data subjects' rights under GDPR's Chapter III, the Data Manager will implement appropriate technical and organizational measures, as feasible.
+
+7. Amendments to the DPP Agreement
+
+Any modifications or updates to this DPP Agreement must be mutually agreed upon in writing by both Parties.
+
+8. Governing Law and Jur

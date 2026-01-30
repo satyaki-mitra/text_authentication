@@ -1,0 +1,28 @@
+**ARTICLE III: INDEMNIFICATION AND HOLD HARMLESS**
+
+1. **Definitions**: For the purposes of this Article, "Indemnifying Party" means [Name], and "Indemnitee" means [Name].
+
+2. **Indemnification Obligation**: The Indemnifying Party shall indemnify and hold harmless the Indemnitee from and against any and all Claims, Demands, Losses, Damages, Expenses, or Liabilities (collectively, "Losses") arising out of or resulting from:
+a) Any breach by the Indemnifying Party of its obligations under this Agreement;
+b) Any act or omission of the Indemnifying Party that is not in accordance with applicable laws or regulations; or
+c) Any damage to property or injury to persons caused by the Indemnifying Party's activities, including but not limited to any failure to comply with industry standards or best practices.
+
+3. **Conditions Precedent**: The indemnification obligation set forth in Section 2 shall be subject to the following conditions precedent:
+a) The Indemnitee must have given the Indemnifying Party prompt written notice of the Losses;
+b) The Indemnitee must have made a good faith effort to mitigate any Losses; and
+c) The Indemnifying Party must have been provided with reasonable information and cooperation in connection with the investigation, defense, or settlement of the Losses.
+
+4. **Exclusions**: The indemnification obligation set forth in Section 2 shall not apply to:
+a) Any Losses caused by the gross negligence or willful misconduct of the Indemnitee;
+b) Any Losses arising out of any Claim, Demand, or suit that is finally adjudged to have been brought without just cause; or
+c) Any Losses arising out of any Claim, Demand, or suit that is settled with the prior written consent of the Indemnifying Party.
+
+5. **Survival**: The provisions of this Article shall survive the expiration or termination of this Agreement and shall continue in full force and effect for a period of [number] years after such expiration or termination.
+
+6. **Entire Agreement**: This Article constitutes the entire agreement between the parties regarding indemnification and holds harmless, and supersedes all prior negotiations, understandings, and agreements.
+
+7. **Amendments**: This Article may not be amended or modified except in writing signed by both parties.
+
+**EFFECTIVE DATE**: This Article shall become effective as of [date] and shall remain in effect until the expiration or termination of this Agreement.
+
+By executing this Agreement, each party acknowledges that it has read, understands, and agrees to be bound by the terms and conditions of this Article.

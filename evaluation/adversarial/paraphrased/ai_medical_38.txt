@@ -1,0 +1,17 @@
+Title: An Illustrative Account of Effective Pancreatitis Management in a Patient with Septic Shock Resulting from Gallstone Impaction
+
+Introduction
+
+In the realm of acute abdominal disorders, pancreatitis (PA) is a prevalent condition frequently linked to gallstones. This report details an instance where severe PA, accompanied by sepsis, was successfully managed in a patient with gallstone disease.
+
+Narrative
+
+A 58-year-old female sought emergency care, suffering from persistent epigastric pain localized to the back region for three days, coupled with symptoms of nausea and vomiting. The patient's health background encompassed hypertension, type II diabetes mellitus, and gallstone affliction. Initial lab results exhibited elevated amylase (1500 U/L) and lipase (2000 U/L), corroborating the diagnosis of acute PA. Given persistent abdominal pain, an elevated white blood cell count (14.5 x 10^9/L), and serum lactate levels surpassing 2 mmol/L, the patient was classified as having critical PA according to the Revised Atlanta Criteria.
+
+Investigative Procedure
+
+A CT scan of the abdomen disclosed necrotizing PA with surrounding peripancreatic fluid accumulation. Additionally, the examination identified gallstones and their impacted presence within the common bile duct. Subsequent diagnostic measures included a percutaneous transhepatic cholangiogram, which verified the obstruction of the common bile duct by a large stone.
+
+Therapeutic Intervention
+
+The patient was admitted to the intensive care unit (ICU) for vigilant monitoring and supportive treatment, including fluid restoration, pain alleviation, and nutritional maintenance via total parenteral nutrition (TPN). Antibiotics were administered due to sepsis development. To address the gallstone impaction, an endoscopic retrograde cholangiopancreatography (ERCP) was conducted for stone removal and stenting of the common bile duct.

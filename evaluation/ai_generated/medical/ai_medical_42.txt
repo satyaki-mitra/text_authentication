@@ -1,11 +1,15 @@
-Title: A Rare Case of Recurrent Pemphigus Vulgaris with Successful Management
+Title: A Case Study on Successful Management of Severe Psoriatic Arthritis with Biologic Therapy: Adalimumab
 
-Abstract:
+Abstract
 
-We present an unusual case of a 60-year-old Caucasian male who presented repeatedly over a two-year period with symptoms suggestive of pemphigus vulgaris (PV), a rare autoimmune blistering disorder. The patient initially reported multiple, painful, flaccid bullae on the oral mucosa and extremities, accompanied by erosions and crusting. Direct immunofluorescence (DIF) from skin biopsy revealed intercellular IgG deposits, confirming a diagnosis of PV.
+Background: Psoriatic arthritis (PsA) is a chronic inflammatory joint disease associated with psoriasis, affecting approximately 0.3-1% of the general population. The disease can manifest as a wide spectrum of symptoms, ranging from mild joint pain to severe polyarthritis, leading to significant morbidity and reduced quality of life (QoL). This case report aims to illustrate the successful management of a patient with severe PsA using biologic therapy - Adalimumab.
 
-The patient was initially treated with systemic corticosteroids, which resulted in partial remission but recurrence occurred after three months. Subsequently, the patient was managed with azathioprine and rituximab due to steroid-induced side effects and treatment refractoriness. After a six-month course of rituximab, the patient experienced a complete remission, as evidenced by resolution of lesions and normalization of DIF results.
+Case Presentation: A 45-year-old Caucasian male presented with a 10-year history of psoriasis plaques on his elbows, knees, and scalp, accompanied by progressive polyarthritis over the past three years. He reported morning stiffness lasting more than one hour, swollen and painful joints, fatigue, and reduced mobility in both hands and feet. The modified Health Assessment Questionnaire (mHAQ) score was 2.5, indicating high disability. Laboratory findings revealed elevated erythrocyte sedimentation rate (ESR), C-reactive protein (CRP), and rheumatoid factor (RF). X-ray imaging showed joint space narrowing, bone erosion, and osteophyte formation consistent with PsA. Skin biopsy confirmed psoriasis.
 
-This case underscores the importance of early recognition and aggressive management of pemphigus vulgaris to minimize morbidity and prevent recurrences. It also highlights the utility of rituximab in managing steroid-refractory PV, offering a promising treatment option for patients who do not respond well to corticosteroids alone.
+Diagnostic Approach: Given the patient's history of psoriasis, joint symptoms, and laboratory findings, the diagnosis of PsA was made based on the Classification Criteria for Psoriatic Arthritis (CASPAR) and American College of Rheumatology (ACR)/European League Against Rheumatism (EULAR) guidelines.
 
-Keywords: Pemphigus Vulgaris, Autoimmune Blistering Disorder, Rituximab, Azathioprine, Treatment Refractoriness
+Treatment: Initially, the patient was treated with methotrexate, but due to inadequate response and intolerable side effects, the treatment regimen was switched to Adalimumab, a tumor necrosis factor-alpha (TNFα) inhibitor. The patient received subcutaneous Adalimumab 40mg every other week.
+
+Outcomes: After 12 weeks of therapy, the patient reported significant improvement in joint pain and morning stiffness, with a reduction in mHAQ score to 1.0. X-ray imaging revealed stabilization of joint damage. The patient continued Adalimumab treatment for two years, maintaining clinical remission with minimal side effects.
+
+Discussion: This case demonstrates the effectiveness of biologic therapy in managing severe PsA. T

@@ -1,11 +1,15 @@
-Title: A Rare Case of Autoimmune Hepatitis Masquerading as Acute Viral Hepatitis
+Title: A Case Study on Successful Management of Severe Acute Pancreatitis Complicated by Acute Respiratory Distress Syndrome (ARDS)
 
-Background: Autoimmune hepatitis (AIH) is an autoimmune liver disease characterized by hepatocellular injury, inflammation, and hypergammaglobulinemia. Diagnosis can be challenging due to its non-specific symptoms and the need for excluding other causes of liver disease, such as viral hepatitis.
+Abstract
 
-Case Presentation: A 45-year-old female presented with a three-week history of fatigue, anorexia, nausea, and jaundice. Initial laboratory tests revealed elevated liver enzymes (ALT: 200 U/L, AST: 150 U/L, Bilirubin: 6 mg/dL), positive anti-nuclear antibodies (ANA) titer of 1:320, and a normal hepatitis panel. The patient denied any history of drug or alcohol use.
+Background: Acute pancreatitis (AP) is a common acute abdominal disorder with varied presentations and outcomes. A severe form, necrotizing pancreatitis, can complicate with systemic inflammatory response syndrome (SIRS), multi-organ dysfunction, and even death. This case study presents an exemplary management of a patient with severe acute pancreatitis complicated by Acute Respiratory Distress Syndrome (ARDS).
 
-Upon admission, the patient was diagnosed with acute viral hepatitis based on the initial laboratory findings. However, the liver function tests did not improve over the following week despite supportive care. Further evaluation revealed an elevated IgG level (2100 mg/dL), positive anti-smooth muscle antibodies (ASMA) and anti-liver kidney microsome type 1 antibodies (anti-LKM1). The patient met the International Autoimmune Hepatitis Group criteria for definite AIH.
+Case Presentation: A 52-year-old male presented to the emergency department with epigastric abdominal pain, nausea, and vomiting for three days. His medical history included hypertension and hyperlipidemia. On physical examination, tenderness was noted in the upper abdomen with a white blood cell count of 16.5 x 10^9/L (normal range: 4-11 x 10^9/L) and serum amylase level of 278 U/L (normal range: 30-110 U/L). Abdominal ultrasound revealed a swollen pancreas with peripancreatic fluid collections, confirming the diagnosis of acute necrotizing pancreatitis.
 
-Treatment: The patient was initiated on prednisone (60 mg daily) and azathioprine (150 mg daily). After four weeks of treatment, the liver function tests significantly improved (ALT: 70 U/L, AST: 60 U/L, Bilirubin: 2.5 mg/dL), and the patient reported a significant improvement in symptoms.
+Subsequently, the patient developed progressive hypoxemia and required mechanical ventilation due to ARDS. The treatment strategy included aggressive fluid resuscitation, broad-spectrum antibiotics, nutritional support, pain management, and intensive care unit monitoring. A computed tomography-guided percutaneous drainage of the pancreatic necrosis was performed to alleviate pressure on other organs and reduce inflammation.
 
-Conclusion: This case highlights the importance of considering AIH in patients with acute liver injury and positive ANA, even when viral hepatitis is initially suspected. Early recognition and treatment of AIH can prevent progressive liver damage and improve patient outcomes. Close monitoring of liver function tests and autoantibody levels is essential for appropriate management.
+During hospitalization, the patient's condition improved gradually. The serum amylase level decreased to 85 U/L after five days and reached normal levels after ten days. The white blood cell count normalized within a week. The patient was successfully weaned off mechanical ventilation on the eleventh day due to significant improvement in oxygenation index.
+
+Discussion: Early diagnosis, aggressive management, and timely interventions played crucial roles in the successful recovery of this patient. The utilization of percutaneous drainage for pancreatic necrosis not only reduced the pressure on other organs but also facilitated infection control. The early detection and management of ARDS, a life-threatening complication of severe acute pancreatitis, were crucial in this patient's survival.
+
+Conclusion: This case underscores the importance

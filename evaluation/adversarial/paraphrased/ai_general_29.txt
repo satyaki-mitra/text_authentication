@@ -1,0 +1,19 @@
+Title: Wave Spectrum of Electromagnetism
+
+The wave spectrum of electromagnetism encompasses an array of energy waves that exhibit electric and magnetic fields oscillating in unison. Herein, we delve into the fundamental aspects of this spectrum's composition.
+
+Energy waves traverse from prodigious wavelength lengths (minimal frequencies) to minuscule wavelength lengths (maximum frequencies). The wave spectrum of electromagnetism can be generally categorized into seven domains: Radio Frequencies, Microwaves, Heat Radiation, Visible Light, Ultraviolet Rays, X-rays, and Gamma Beams.
+
+Firstly, Radio Frequencies (3 kilohertz to 300 gigahertz) constitute the longest waves in this spectrum, serving purposes such as radio broadcasts, television, cellular devices, and satellite communications.
+
+Subsequently, Microwaves (0.3 – 300 gigahertz) are utilized for applications including satellite communication, microwave ovens, radar systems, remote sensing, and more. These waves exhibit wavelength lengths shorter than those of Radio Frequencies but longer than Heat Radiation.
+
+Thirdly, Heat Radiation (0.74 – 400 terahertz) is emitted by warm objects as thermal energy. Its applications include night vision devices, thermal imaging, remote sensing, and the like.
+
+Fourthly, the portion of this spectrum visible to human eyes falls within Visible Light (400-790 nanometers). Sunlight encompasses a continuous range of visible light, alongside ultraviolet and infrared radiation.
+
+Fifthly, Ultraviolet Rays (10 – 400 nanometers) possess higher energy and shorter wavelengths than Visible Light. They play a vital role in human skin's vitamin D production; however, excessive exposure may lead to sunburn and potentially contribute to skin cancer.
+
+Sixthly, X-rays (0.01 – 10 nanometers) represent high-energy waves of electromagnetism that can permeate dense materials such as bone and metal. They are employed in medical imaging, radiation therapy, and security screening technologies.
+
+Lastly, G

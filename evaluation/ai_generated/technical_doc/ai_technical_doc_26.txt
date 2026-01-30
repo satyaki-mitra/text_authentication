@@ -1,39 +1,53 @@
-Title: Documentation for Real-Time Data Streaming Feature in XYZ Application
+Title: Weather Forecast API Documentation
 
-1. Overview
+## Introduction
 
-The Real-Time Data Streaming feature allows the application to receive and process data in real-time, providing immediate insights and updates based on ongoing events or activities. This feature is designed to improve the efficiency and responsiveness of our application by minimizing delays in data processing and visualization.
+Welcome to the Weather Forecast API! This API provides real-time and forecasted weather data for various locations around the world.
 
-2. Functionality
+### Endpoint Description
 
-The Real-Time Data Streaming feature receives data from various sources, such as sensors, APIs, or databases, and processes it in real-time. The processed data is then displayed to the user through charts, graphs, or other visual representations within the application interface.
+The main endpoint is `GET /weather` which retrieves current weather conditions and a 5-day forecast for a specified location.
 
-3. Architecture
+### Request Parameters
 
-The Real-Time Data Streaming architecture consists of three main components:
+| Parameter    | Data Type          | Required | Description                                                                               |
+|--------------|--------------------|----------|-------------------------------------------------------------------------------------------|
+| `location`   | String             | Yes      | The city name or geographical coordinates (e.g., "New York" or "40.7128,-74.0060")        |
+| `units`      | String             | No       | Specify the units for temperature and wind speed. Valid values: `metric`, `imperial`, or `auto` (default) |
+| `apiKey`     | String             | Yes      | A unique API key to authenticate your requests                                          |
 
-   a. Data Source Connectors: These connectors handle communication with various data sources and convert raw data into a standard format that can be processed by our application.
+### Authentication Requirements
 
-   b. Data Processor: This component receives the formatted data from the connectors, applies any necessary transformations or filters, and passes it on to the Visualization Layer.
+To access the Weather Forecast API, you must have a valid API key. You can obtain an API key by creating an account on our website or contacting our support team. The `apiKey` should be included in every request header with the format:
 
-   c. Visualization Layer: This layer displays the processed data in a user-friendly format, such as charts, graphs, or tables, within the application interface.
+```
+Authorization: Bearer [YourAPIKey]
+```
 
-4. Configuration
+### Example Requests
 
-To enable the Real-Time Data Streaming feature, developers can configure the following settings in their application:
+#### Request 1 (Current Weather)
 
-   a. Data Source Connectors: Configure the connectors to communicate with specific data sources and define any necessary parameters for data retrieval or transformation.
+```
+GET /weather?location=New%20York&units=metric HTTP/1.1
+Host: api.example.com
+Authorization: Bearer [YourAPIKey]
+```
 
-   b. Data Processor Settings: Set up rules for filtering, aggregating, or transforming the incoming data before it is passed to the Visualization Layer.
+#### Request 2 (5-Day Forecast)
 
-   c. Visualization Options: Customize how the processed data is displayed to users, such as choosing chart types, adjusting visual properties, or setting update intervals.
+```
+GET /weather?location=40.7128,-74.0060&units=imperial HTTP/1.1
+Host: api.example.com
+Authorization: Bearer [YourAPIKey]
+```
 
-5. Best Practices
+### Response Parameters
 
-To optimize the performance and efficiency of the Real-Time Data Streaming feature, consider the following best practices:
-
-   a. Limit the number of active data sources for each application instance to avoid overwhelming the system with too much data.
-
-   b. Use efficient data transformation techniques, such as aggregation or filtering, to reduce the amount of processed data and improve processing speed.
-
-   c. Optim
+| Parameter             | Data Type         | Description                                                                                |
+|-----------------------|-------------------|--------------------------------------------------------------------------------------------|
+| `location`            | String            | The requested location                                                                    |
+| `current`             | Object            | Current weather data                                                                      |
+| `forecast`            | Array of objects   | 5-day forecast data for the specified location                                           |
+| `current.temperature` | Number            | The current temperature in the requested units (Celsius or Fahrenheit)                    |
+| `current.humidity`    | Number            |

@@ -1,0 +1,45 @@
+Title: API for User Administration - Endpoint for Handling User Operations
+
+## Managing Users via the API
+
+### Overview
+
+The `User Administration` API offers a RESTful framework to execute user-related tasks, such as creating, retrieving, modifying, and deleting user profiles.
+
+### HTTP Methods
+
+* **POST** at `/v1/api/users`: Insert a new user profile
+* **GET** using `/v1/api/users/{user_id}`: Retrieve information about an existing user based on their unique ID
+* **PUT** with `/v1/api/users/{user_id}`: Update the details of an already-existing user utilizing their assigned ID
+* **DELETE** using `/v1/api/users/{user_id}`: Remove a user by referencing their specific ID
+
+### Authentication Prerequisites
+
+All operations within this API necessitate authentication, which can be achieved through the usage of an `Authorization` header. The header must incorporate a valid JSON Web Token (JWT). Additional information about token procurement and management can be found in the [Authentication Manual](manual-authentication.md).
+
+### Request Data
+
+#### Creating a User (POST)
+
+```
+Content-Type: application/json
+Authorization: Bearer {your_token}
+
+{
+    "username": "string",
+    "email": "string",
+    "password": "string"
+}
+```
+
+* `username`: A unique user identifier (required, string)
+* `email`: The email address associated with the user's account (required, string)
+* `password`: The password for securing the user's account (required, string)
+
+#### Retrieving a User (GET)
+
+```
+Authorization: Bearer {your_token}
+```
+
+* No extra request data is necessary for this operation. The server will furnish information about the requested user using the provided `user_id` within the URL

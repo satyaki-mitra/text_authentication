@@ -1,0 +1,16 @@
+Title: Efficient Alleviation of Intractable Angina Pectoris through Coronary Artery Bypass Surgery
+
+Introduction:
+The management of Intractable Angina Pectoris (IAP), a recalcitrant clinical condition marked by persistent chest pain despite maximum medical therapy, poses significant challenges. This case study showcases the effective treatment of such a patient through Coronary Artery Bypass Surgery (CABS).
+
+Case Description:
+A 65-year-old male, non-smoker and diabetic type 2 patient with hypertension, was experiencing recurrent chest pain despite optimal medication. His symptoms were classified as Canadian Cardiovascular Society (CCS) class IV, and an electrocardiogram (ECG) revealed prolonged ST-segment depression in the anterior leads. Echocardiography demonstrated severe three-vessel Coronary Artery Disease (CAD) with a left ventricular ejection fraction (LVEF) of 40%. Given these findings, he was diagnosed with IAP due to extensive CAD and refractory symptoms despite optimal medical management.
+
+Diagnostic Procedure:
+Given the stubborn nature of the patient's symptoms, an invasive diagnostic procedure was initiated. Coronary angiography confirmed the presence of severe three-vessel CAD with the left anterior descending (LAD) and circumflex arteries showing 90% and 80% blockage respectively, while the right coronary artery (RCA) was completely blocked.
+
+Treatment Strategy:
+A surgical intervention through Coronary Artery Bypass Surgery (CABS) was planned for the patient. During surgery, a left internal mammary artery (LIMA) graft was connected to the LAD, and saphenous vein grafts were used to bypass the occluded RCA and the 80% blockage in the circumflex artery.
+
+Post-operative Results:
+Following the surgery, the patient's chest pain significantly diminished, enabling his discharge with CCS class I symptoms. A subsequent ECG showed normal sinus rhythm without ST segment depression. The LVEF improved to

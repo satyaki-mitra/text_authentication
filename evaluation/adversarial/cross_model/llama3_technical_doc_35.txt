@@ -1,0 +1,82 @@
+**API Documentation: Order Management System**
+
+The Order Management System (OMS) is a RESTful API designed to manage orders, products, and customers for e-commerce businesses. This documentation provides an overview of the API's features, endpoints, request/response formats, and usage guidelines.
+
+**Endpoints**
+
+1. **Create Order**: `POST /orders`
+	* Request Body: JSON object with order details (customer ID, order date, items, total)
+	* Response: Created order ID
+2. **Get Order**: `GET /orders/{orderId}`
+	* Path Parameter: Order ID
+	* Response: Order details in JSON format
+3. **Update Order**: `PUT /orders/{orderId}`
+	* Path Parameter: Order ID
+	* Request Body: Updated order details (partial update supported)
+	* Response: Updated order details
+4. **Delete Order**: `DELETE /orders/{orderId}`
+	* Path Parameter: Order ID
+	* Response: 200 OK or error message
+5. **Get Orders**: `GET /orders`
+	* Query Parameters: `customer_id`, `start_date`, `end_date` (optional)
+	* Response: List of orders in JSON format
+
+**Request/Response Formats**
+
+* Request bodies: JSON (UTF-8 encoded)
+* Responses: JSON (UTF-8 encoded)
+
+**Error Handling**
+
+* HTTP status codes:
+	+ 200 OK: Successful request
+	+ 400 Bad Request: Invalid request data
+	+ 404 Not Found: Resource not found
+	+ 500 Internal Server Error: Server error
+* Error response format: JSON object with `error` property
+
+**Usage Guidelines**
+
+1. **Authentication**: The API uses OAuth 2.0 for authentication. Obtain an access token by contacting the API's authorization server.
+2. **Rate Limiting**: The API has rate limits in place to prevent abuse. Please refer to the API's documentation for details on allowed request frequencies.
+3. **Caching**: Caching is recommended to reduce the number of requests made to the API.
+
+**Example Request**
+
+Create an order with items:
+```json
+POST /orders HTTP/1.1
+Content-Type: application/json
+
+{
+  "customer_id": 123,
+  "order_date": "2023-02-15T14:30:00Z",
+  "items": [
+    {
+      "product_id": 456,
+      "quantity": 2
+    },
+    {
+      "product_id": 789,
+      "quantity": 1
+    }
+  ]
+}
+```
+**Example Response**
+
+Created order:
+```json
+HTTP/1.1 201 Created
+
+{
+  "order_id": 12345,
+  "customer_id": 123,
+  "order_date": "2023-02-15T14:30:00Z",
+  "total": 100.00,
+  ...
+}
+```
+**Contact Information**
+
+For questions, feedback, or technical support, please contact [api-support@example.com](mailto:api-support@example.com).

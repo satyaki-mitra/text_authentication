@@ -1,29 +1,67 @@
-Title: Documentation for the Automated Data Validation Feature in XYZ Application v1.2
+Title: API Documentation - User Management REST Endpoint
 
-1. Overview
+## User Management API
 
-The Automated Data Validation (ADV) is an integral feature of the XYZ Application, designed to ensure the quality and integrity of data input by users. This feature automatically validates user-entered data against predefined rules, helping to prevent errors and maintain system efficiency.
+### Overview
 
-2. Key Features
+This document outlines the User Management API, a RESTful endpoint for managing user accounts within our system. The API provides operations to create, read, update, and delete user accounts. Authentication is required for all requests.
 
-   a. Real-Time Validation: The ADV performs checks on user input as it is entered, providing immediate feedback and preventing incorrect data from being saved.
+### Endpoint Description
 
-   b. Customizable Rules: System administrators can configure validation rules according to specific business needs or industry standards, ensuring that the feature is tailored to the organization's requirements.
+The base URL for the User Management API is `https://api.example.com/v1`. All endpoints described below are relative to this base URL.
 
-   c. Error Notifications: If invalid data is detected during validation, users are notified with clear and concise error messages, guiding them on how to correct the issue before resubmitting the data.
+### Request Parameters
 
-   d. Data Consistency: By enforcing uniformity in data format and content, the ADV helps maintain a clean database and enhances overall system performance.
+#### Common Parameters
 
-3. Implementation Details
+- `Authorization: Bearer <access_token>` - Required for authentication. Access tokens should be obtained via OAuth 2.0 flow.
 
-   a. Validation Rules: Custom validation rules can be created using a combination of regular expressions, custom functions, or predefined rule sets provided by XYZ Application. These rules are defined in the Admin Panel and can be associated with specific fields or data types.
+#### Specific Parameters per Endpoint
 
-   b. Error Handling: Upon detecting invalid data, the ADV will display an error message containing the field name, the reason for the error, and suggested corrective actions. The error message is displayed in a user-friendly format to minimize confusion and maximize efficiency.
+##### Create User (POST /users)
 
-   c. Rule Prioritization: In cases where multiple validation rules apply to a single data entry, the ADV will prioritize rules based on their order of creation or according to custom priority settings defined by administrators. This ensures that the most relevant rule is always applied first.
+- `content-type: application/json` - Request body format.
+- `body` - JSON object containing user data (see below).
 
-4. User Guide
+##### Read User (GET /users/:id)
 
-   a. Creating Validation Rules: To create a new validation rule, navigate to the Admin Panel and select "Validation Rules" from the menu. From there, you can define your custom rule and save it for use in the application.
+- `path variables`:
+  - `:id` - The unique identifier for the user to retrieve.
 
-   b. Managing Validated Data: Upon encountering an error during data entry, users will be presented
+##### Update User (PUT /users/:id)
+
+- `content-type: application/json` - Request body format.
+- `body` - JSON object containing updated user data (see below).
+- `path variables`:
+  - `:id` - The unique identifier for the user to update.
+
+##### Delete User (DELETE /users/:id)
+
+- `path variables`:
+  - `:id` - The unique identifier for the user to delete.
+
+### Response Parameters
+
+#### Common Responses
+
+- `200 OK` - Successful response. Response body varies per endpoint and is specified below.
+- `401 Unauthorized` - Incorrect or expired access token.
+- `403 Forbidden` - The user does not have sufficient permissions to perform the requested action.
+- `404 Not Found` - The requested resource could not be found.
+- `500 Internal Server Error` - An unexpected error occurred on our end.
+
+#### Specific Responses per Endpoint
+
+##### Create User (POST /users)
+
+- `201 Created` - A new user was successfully created. The response body includes the created user's details in JSON format.
+
+##### Read User (GET /users/:id)
+
+- `200 OK` - The requested user's details are returned in JSON format.
+
+##### Update User (PUT /users/:id)
+
+- `200 OK` - The user was successfully updated. The response body includes the updated user's details in JSON format.
+
+#####

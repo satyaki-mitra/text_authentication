@@ -1,46 +1,33 @@
-Title: Beginner's Guide to Using LaTeX for Writing Documents
+Title: A Step-by-Step Guide for Beginners: Setting Up a Local Development Environment for WordPress Using WAMP Server
 
-Introduction:
-LaTeX is a powerful typesetting system widely used for academic and technical writing. This guide will walk you through the basic steps of setting up and using LaTeX for writing your first document.
+This tutorial will walk you through the process of setting up a local development environment for WordPress using WAMP (Windows, Apache, MySQL, PHP) server. By the end of this guide, you'll have a functional local WordPress installation that allows you to build and test websites without affecting your live site.
 
-Step 1: Installation
-- Download TeX Live from the official website (https://www.tug.org/texlive/) or a package manager like MacTeX (for macOS) or MiKTeX (for Windows).
-- Follow the installation instructions provided by the respective distributor.
+**Step 1: Download and Install WAMP Server**
 
-Step 2: Editor Setup
-- Choose an editor to write your LaTeX documents. Some popular options include TeXstudio, Overleaf, and Visual Studio Code with LaTeX extensions.
-- Install and configure your chosen editor following its specific instructions.
+First, visit the official WAMPServer website (https://sourceforge.net/projects/wampserver/) and download the latest version suitable for your system. Once downloaded, run the installer to start the installation process. During setup, you can accept all default settings unless specified otherwise:
 
-Step 3: Creating a New Document
-- Open your chosen editor and create a new LaTeX document by either selecting "File > New File" or "File > New > LaTeX Document."
-- You should see a preconfigured template with the following code:
+1. Choose the language of your preference.
+2. Check "LAMP" if you want to also install MySQL and PHP, or choose "WAMP" for just Apache, MySQL, and PHP.
+3. Select the installation directory (default is C:\wamp64).
+4. Select the bit version (32-bit or 64-bit) that matches your operating system.
+5. Choose the components you want to install (Apache, MySQL, PHP, and additional tools).
+6. Configure the Apache and MySQL services to start automatically with Windows.
+7. Allow access to the WAMP server through the firewall.
+8. Set an administrative password for MySQL.
+9. Create a shortcut on your desktop and start the WAMP server after installation.
 
-```latex
-\documentclass{article}
-\usepackage{lipsum} % This package is for generating dummy text. You can remove it later.
+**Step 2: Verify Installation**
 
-\begin{document}
+After installation, open your web browser and navigate to `http://localhost` in your address bar. If everything is set up correctly, you should see the WAMPServer welcome page. If not, make sure Apache and MySQL are running (you can check their status in the WAMP server tray icon menu).
 
-Hello, World!
+**Step 3: Install PHPMyAdmin**
 
-\end{document}
-```
+To manage your databases easily, we'll install PHPMyAdmin. In the WAMP tray icon menu, go to "WAMP" > "PHPMyAdmin" > "Server version." Click on the download link for the latest PHPMyAdmin and follow the installation instructions provided in the zip file:
 
-Step 4: Writing Your Document
-- Replace "Hello, World!" with the content of your document.
-- To insert a new section, use the `\section{}` command followed by the title of the section. For example:
+1. Extract the contents of the downloaded zip file into the `www` directory (C:\wamp64\www).
+2. Rename the extracted folder to simply "phpmyadmin."
+3. In your web browser, navigate to `http://localhost/phpmyadmin`. Enter the MySQL root password you set during installation when prompted.
 
-```latex
-\section{Introduction}
-Your text here...
-```
+**Step 4: Install WordPress Locally**
 
-Step 5: Compiling Your Document
-- Press Fn + G (or the corresponding shortcut in your editor) to compile the document and generate a PDF file.
-- The first compilation may take longer due to the need for TeX Live to download additional files.
-- If there are any errors, they will be displayed in the console or log window of your editor. You can then correct them before compiling again.
-
-Step 6: Formatting Your Document
-- LaTeX provides numerous packages and commands to format your document. Some common ones include:
-  - `\textbf{}` for bold text
-  - `\
+Now it's time to download and install WordPress on your local development environment:

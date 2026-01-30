@@ -1,32 +1,70 @@
-Title: Documentation for the "Real-Time Data Streaming Feature" in XYZ Application
+Title: API Documentation - User Registration Endpoint
 
-1. Introduction
-   - Brief overview of the Real-Time Data Streaming (RTDS) feature and its purpose within the XYZ application.
-   - Explanation of how this feature enables continuous, real-time data transmission between the application and external devices or systems.
+## 1. Introduction
 
-2. System Requirements
-   - Minimum hardware and software requirements for both the XYZ application and the connected devices to ensure seamless RTDS functionality.
-   - Network configuration details (e.g., connection type, port numbers) necessary for successful data streaming.
+This document provides an overview of the REST API's `/api/v1/users` endpoint, which is responsible for user registration. This endpoint allows clients to create new users by sending a POST request containing required parameters.
 
-3. Feature Description
-   - Detailed explanation of how the RTDS feature functions within the XYZ application, including the steps involved in setting up and managing real-time data streams.
-   - Discussion of the supported data formats (e.g., JSON, CSV) and the methods for encoding/decoding data during transmission.
+## 2. Endpoint Description
 
-4. Configuration Guidelines
-   - Instructions on how to configure the XYZ application for RTDS functionality, including details on setting up connection parameters and establishing security measures.
-   - Explanation of any required changes or modifications to connected devices' settings for successful data streaming.
+The User Registration endpoint (`POST /api/v1/users`) accepts JSON-formatted requests with user registration details and returns a response indicating the success or failure of the operation.
 
-5. Usage Examples
-   - Provide examples of real-world scenarios where the RTDS feature can be utilized effectively within the XYZ application.
-   - Step-by-step guidance on setting up and managing real-time data streams in these scenarios, highlighting any potential pitfalls or best practices to follow.
+## 3. Request Parameters
 
-6. Troubleshooting and Maintenance
-   - Guidelines for identifying and resolving common issues related to the RTDS feature, such as connection errors, dropped data packets, or performance degradation.
-   - Recommendations for maintaining optimal performance of the RTDS feature over time, including regular checks and updates to connected devices and network configurations.
+### Required Parameters
 
-7. Compatibility and Integration
-   - List of supported external devices and systems that can be integrated with the XYZ application's RTDS feature.
-   - Explanation of any limitations or restrictions on integration, as well as methods for working around these issues if possible.
+Parameter | Data Type | Description
+----------|----------|------------
+email      | string   | The user's unique email address.
+password   | string   | The user's password, encrypted before storing in the database.
+name       | string   | The user's full name.
 
-8. Security Considerations
-   - Discussion of security measures in place to protect data during transmission, including encryption and authentication protocols.
+### Optional Parameters (for enhanced user profiles)
+
+Parameter | Data Type | Description
+----------|----------|------------
+bio        | string   | A brief description about the user.
+avatar_url | string   | URL of the user's profile picture.
+
+## 4. Authentication Requirements
+
+Authentication is required for all requests to this endpoint. The client must include an `Authorization` header with every request, containing a valid JWT token. For more information on obtaining and managing tokens, refer to the [Authentication API](authentication-api.md) documentation.
+
+## 5. Example Requests
+
+### Request (with required parameters)
+
+```http
+POST /api/v1/users HTTP/1.1
+Host: api.example.com
+Content-Type: application/json
+Authorization: Bearer <JWT_TOKEN>
+
+{
+  "email": "john.doe@example.com",
+  "password": "secure_password",
+  "name": "John Doe"
+}
+```
+
+### Request (with optional parameters)
+
+```http
+POST /api/v1/users HTTP/1.1
+Host: api.example.com
+Content-Type: application/json
+Authorization: Bearer <JWT_TOKEN>
+
+{
+  "email": "jane.doe@example.com",
+  "password": "strong_password",
+  "name": "Jane Doe",
+  "bio": "Software Engineer at Example Inc.",
+  "avatar_url": "https://example.com/profile-pictures/jane.jpg"
+}
+```
+
+## 6. Response Parameters
+
+Parameter | Data Type | Description
+----------|----------|------------
+id         | integer  | The unique

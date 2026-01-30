@@ -1,13 +1,17 @@
-Title: An Unusual Case of Refractory Neutropenia in an Immunocompetent Patient
+Title: A Case Study on Successful Management of Severe Psoriatic Arthritis through Adalimumab Therapy
 
 Abstract
 
-A 52-year-old female, with no significant past medical history, presented to the emergency department (ED) with a two-week history of recurrent fevers and fatigue. Physical examination was unremarkable except for pallor. Laboratory findings revealed a markedly low absolute neutrophil count (ANC) of 0.5 x10^9/L (normal range: 1.8-7.8 x10^9/L), hemoglobin of 10 g/dL, and platelets of 250 x10^9/L. The patient did not have any history of chemotherapy or radiation therapy, and there were no signs of infection or inflammation.
+Background: Psoriatic arthritis (PsA) is a chronic inflammatory disease characterized by joint pain, swelling, and skin lesions. This case study highlights an effective management strategy for severe PsA utilizing Adalimumab, a Tumor Necrosis Factor-α (TNF-α) inhibitor.
 
-Over the next three weeks, the patient was hospitalized for intensive work-up including bone marrow aspiration and biopsy, which revealed a normocellular marrow with a paucity of myeloid precursors and mature neutrophils (<1%). Flow cytometry did not show any clonal abnormalities. A diagnosis of cyclic neutropenia was initially considered but was ruled out due to the absence of periodic fever, rash, or splenomegaly.
+Case Presentation: A 45-year-old Caucasian female presented with a six-year history of polyarticular arthritis and psoriatic plaques on the elbows, knees, and scalp. The patient reported persistent pain, morning stiffness, and functional limitation in daily activities. Dactylitis, enthesitis, and sacroiliac joint involvement were also observed. The Disease Activity Score-28 (DAS28) was 6.4, indicating high disease activity.
 
-Further investigation revealed an autoantibody against granulocyte-macrophage colony-stimulating factor (GM-CSF) in the patient's serum, which was confirmed by functional assays. The patient was diagnosed with Autoimmune Neutropenia and initiated on daily subcutaneous injections of recombinant human GM-CSF. After one month of treatment, the ANC increased to 2.5 x10^9/L, and the patient's symptoms resolved.
+Diagnostic Approach: The diagnosis of PsA was confirmed based on the CASPAR criteria (Clinical vs. radiographic axial versus peripheral arthritis, Nail psoriasis, Objective joint tenderness and swelling, Psoriasis family history, Asymmetrical arthritis, Reiter's-like extra-articular manifestations) and MRI findings showing synovitis and enthesitis.
 
-This case highlights an uncommon presentation of autoimmune neutropenia in an immunocompetent individual, emphasizing the importance of considering this diagnosis in patients with refractory neutropenia of unknown cause. The response to recombinant human GM-CSF further supports its role as a potential treatment option for such cases.
+Treatment: The patient was initiated on Adalimumab (40mg every other week) following the failure of methotrexate therapy. After two months, the dose was adjusted to 40mg weekly due to inadequate response. Simultaneously, topical corticosteroids and calcipotriol were used for skin lesions management.
 
-Keywords: Autoimmune Neutropenia, Cyclic Neutropenia, Granulocyte-
+Outcomes: Following six months of Adalimumab treatment, the patient's DAS28 score decreased significantly to 3.2, indicating a good clinical response (minimal disease activity). The patient reported significant reduction in joint pain and functional improvement, with no new or worsening skin lesions. No adverse events related to Adalimumab were reported during the observation period.
+
+Discussion: This case demonstrates the effectiveness of Adalimumab in managing severe PsA. Early introduction of a TNF-α inhibitor such as Adalimumab can lead to significant improvements in disease activity, joint pain, and functional status in patients with PsA who have an inadequate response to conventional therapy. However, careful monitoring for potential adverse events is necessary when using biologic agents.
+
+Future Research: Further research is needed to investigate the long-term efficacy and safety of Adalimumab in managing

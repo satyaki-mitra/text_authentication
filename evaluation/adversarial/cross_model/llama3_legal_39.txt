@@ -1,0 +1,52 @@
+**SECTION 1: DEFINITIONS**
+
+For the purposes of this Agreement, the following terms shall have the meanings set forth below:
+
+* "Agreement" means this Agreement as amended or modified from time to time in accordance with its terms.
+* "Party" refers to either the [insert party name], individually and collectively, as applicable.
+* "Effective Date" means [insert effective date of agreement].
+* "Term" refers to the period commencing on the Effective Date and ending on the expiration or termination of this Agreement, whichever occurs first.
+* "Confidential Information" means any information disclosed by one Party to the other in connection with this Agreement, whether written or oral, that is not generally known to the public or previously publicly disclosed.
+
+**SECTION 2: OBLIGATIONS AND REPRESENTATIONS**
+
+Each Party represents and warrants that:
+
+* it has the full power and authority to enter into this Agreement;
+* its execution of this Agreement will not violate any applicable laws, regulations, or agreements; and
+* it will comply with all applicable laws and regulations in performing its obligations under this Agreement.
+
+**SECTION 3: CONFIDENTIALITY AND NON-DISCLOSURE**
+
+During the Term and for a period of [insert number] years thereafter, each Party agrees to:
+
+* keep Confidential Information confidential and not disclose such information to any third party; and
+* use such information only for the purpose of performing its obligations under this Agreement.
+
+**SECTION 4: INDEMNIFICATION AND DEFENSE**
+
+Each Party shall indemnify and hold harmless the other Party from and against any claims, damages, or losses arising out of:
+
+* the breach by the indemnifying Party of its obligations under this Agreement; or
+* the use of Confidential Information in accordance with this Agreement.
+
+**SECTION 5: TERMINATION AND EXPIRATION**
+
+This Agreement may be terminated upon [insert number] days' written notice to the other Party. Upon termination, each Party shall:
+
+* return all Confidential Information and any copies thereof; and
+* destroy or delete such information from its systems and records.
+
+**SECTION 6: GOVERNING LAW AND VENUE**
+
+This Agreement shall be governed by and construed in accordance with the laws of [insert jurisdiction]. Any disputes arising out of this Agreement will be resolved through [insert method of dispute resolution], as applicable.
+
+IN WITNESS WHEREOF, each Party has executed this Agreement as of the date first above written.
+
+[Signature]
+
+**[Party Name]**
+
+Date: ______________________
+
+Please note that this is a sample and should not be used without consulting with a legal professional to ensure it meets your specific needs and complies with relevant laws and regulations.

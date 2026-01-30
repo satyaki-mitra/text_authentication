@@ -1,0 +1,13 @@
+Title: Electromagnetic Wave Spectrum Examination
+
+The electromagnetic wave spectrum encompasses an extensive categorization of diverse electromagnetic waves, arranged according to their frequency, wavelength, and energy. This fundamental notion stretches from the highly energetic gamma rays to the less energetic radio waves, incorporating various forms of light and radiation critical for our daily lives and scientific comprehension.
+
+Electromagnetic (EM) waves are characterized by the oscillation of electric and magnetic fields that propagate through space as self-enclosed, individualized energy packets referred to as photons. These waves traverse at the speed of light (approximately 299,792 kilometers per second in a vacuum) and manifest properties such as reflection, refraction, absorption, and diffraction - attributes similar to sound waves.
+
+The electromagnetic wave spectrum can be segmented into several domains based on frequency, wavelength, or energy:
+
+1. Gamma Rays (γ): These radiation waves exhibit the highest frequencies (≥3 x 10^19 Hz) and shortest wavelengths (≤10^-11 m), imbuing them with immense energy and ionizing capabilities. They are emitted by radioactive isotopes, nuclear reactions, and certain celestial bodies. Although they possess numerous industrial and medical applications, their high energy can pose a threat to living organisms.
+
+2. X-rays (X): Possessing frequencies lower than gamma rays (3 x 10^16 Hz to 3 x 10^19 Hz) and longer wavelengths (10^-11 m to 10^-8 m), x-rays also display ionizing properties. They are primarily employed in medical imaging, fluorescence diagnostics, and scientific research.
+
+3. Ultraviolet (UV) Radiation: This radiation's frequency range spans approximately 7 x 10^14 Hz to 3 x 10^16 Hz, with wavelengths varying from 10^-7 m to 4 x 10^-7 m. It is emitted by the sun and significantly contributes to photosynthesis and vitamin D production

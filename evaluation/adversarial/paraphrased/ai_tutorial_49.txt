@@ -1,0 +1,54 @@
+Title: Setting Up the LAMP Stack on Ubuntu 20.04: A Step-by-Step Guide for Novices
+
+This article outlines the process of deploying a Linux, Apache, MySQL, and PHP (LAMP) stack on an Ubuntu 20.04 server, assuming you have fundamental familiarity with Linux commands and access to your Ubuntu server via SSH.
+
+**Step 1: System Preparation**
+
+Prior to initiating the installation process, it's essential that your system is updated. To achieve this, launch a terminal window (or connect via SSH) and execute these commands:
+
+```
+sudo update-apt-get
+sudo upgrade-apt-get
+```
+
+**Step 2: Apache Installation**
+
+Next up, we will install the Apache web server:
+
+```
+sudo install apache2
+```
+
+Once installed, activate and start the service using these commands:
+
+```
+sudo check-status apache2
+sudo enable apache2
+sudo start apache2
+```
+
+**Step 3: Apache Verification**
+
+To confirm that Apache is functioning correctly, access your server's IP address through a web browser. If the installation was successful, you should observe the "It works!" message displayed by Apache.
+
+**Step 4: MySQL Server Installation**
+
+We will now install MySQL:
+
+```
+sudo install mysql-server
+```
+
+During setup, you'll be prompted to establish a password for the root user. It is advisable to use a robust password and safeguard it securely, as it will be necessary later when configuring PHP.
+
+**Step 5: MySQL Server Hardening**
+
+It is recommended to execute the security script that comes with MySQL to enhance the server's configuration. To accomplish this, run:
+
+```
+sudo mysql_script_security
+```
+
+Follow the prompts to set a password for the MySQL root user and perform additional adjustments to bolster your server's security.
+
+**Step 6:

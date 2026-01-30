@@ -1,9 +1,15 @@
-Title: A Rare Case of Chronic Idiopathic Urticaria in a Pediatric Patient
+Title: A Case Study on the Successful Management of Refractory Status Epilepticus in a Pediatric Patient Using High-Dose Levetiracetam
 
-Background: Chronic idiopathic urticaria (CIU) is an uncommon condition characterized by recurrent episodes of pruritus and wheals lasting more than six weeks without identifiable causes. It primarily affects adults, with fewer than 5% of cases reported in pediatric patients.
+Abstract
 
-Case Presentation: A 12-year-old female presented to the clinic with a three-month history of daily pruritic hives and angioedema involving her face, limbs, and trunk. The symptoms were not associated with specific triggers or allergens. Physical examination revealed bilateral periorbital edema and multiple erythematous papules and wheels. Laboratory investigations, including complete blood count, liver function tests, thyroid function tests, and comprehensive metabolic panel, were within normal limits. Skin prick testing for common allergens was negative. A skin biopsy confirmed the diagnosis of CIU.
+Background: Refractory status epilepticus (RSE) is a life-threatening neurological emergency characterized by persistent, uncontrolled seizures despite adequate antiepileptic drug (AED) therapy. RSE poses significant challenges in pediatric patients due to their developing central nervous system and unique pharmacokinetics. This case report demonstrates the successful management of RSE in a 7-year-old male using high-dose levetiracetam.
 
-Intervention: The patient was treated with a daily oral antihistamine (cetirizine 10 mg) and intermittent short-term corticosteroids (prednisone 20 mg/day for five days every three weeks). After six months of treatment, the frequency and severity of symptoms significantly decreased.
+Case Presentation: The patient, a previously healthy 7-year-old boy, presented to the emergency department with a 3-hour history of tonic-clonic seizures. Despite initial treatment with lorazepam and phenytoin, his seizures persisted, meeting criteria for RSE. Given his young age and continuous seizure activity, high-dose levetiracetam was initiated at 100 mg/kg per day, divided into three doses. The patient's seizure activity ceased within hours of the initial dose, and he was discharged home on a maintenance dose of 60 mg/kg per day.
 
-Conclusion: This case underscores the importance of considering CIU in pediatric patients with persistent unexplained hives, even though it is relatively uncommon in this age group. Early recognition and appropriate management can significantly improve the quality of life for these patients. Further research is needed to understand the underlying mechanisms and develop more effective treatment strategies for CIU.
+Diagnostic Approach: Diagnosis of RSE was based on the International League Against Epilepsy (ILAE) criteria, which include continuous seizure activity for more than 5 minutes or two or more seizures without recovery of consciousness between events. Initial workup included a comprehensive metabolic panel, complete blood count, toxicology screen, and electroencephalogram (EEG). Brain imaging was deferred due to the patient's stable clinical status and response to treatment.
+
+Treatment: The initial management involved benzodiazepines and phenytoin, which were ineffective in controlling seizures. High-dose levetiracetam was chosen for its rapid onset of action, minimal drug interactions, and favorable safety profile in pediatric patients.
+
+Outcomes: The patient's seizure activity ceased within hours of the initial high-dose levetiracetam administration. He was discharged home with no residual neurological deficits and has remained seizure-free for over six months since the initial event, with gradual tapering of his AED regimen.
+
+Discussion: This case demonstrates the successful use of high-dose levetiracetam in managing RSE in a pediatric patient. The rapid onset of action and favorable safety profile make it an attractive option for treating refractory seizures, particularly in young patients with

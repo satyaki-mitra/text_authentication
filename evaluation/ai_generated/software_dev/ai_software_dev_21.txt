@@ -1,34 +1,81 @@
-Title: Understanding the Concept of Functional Programming in JavaScript (FP in JS)
+Title: Documentation on Observer Design Pattern Implementation in Java
 
-Functional Programming (FP) is an influential and declarative programming paradigm, emphasizing the use of functions as first-class citizens with higher-order functions, immutability, and pure functions. Incorporating FP concepts can significantly improve code readability, testability, performance, and reusability in JavaScript, especially when dealing with asynchronous operations.
+Introduction:
 
-In this article, we'll explore some key aspects of Functional Programming in JavaScript:
+The Observer Design Pattern is a behavioral design pattern that defines a one-to-many dependency between objects so that when an object changes its state, all its dependents are notified and updated automatically. This pattern is particularly useful in implementing event handling systems, data-binding, and distributed communication.
 
-1. First-Class Functions and Higher-Order Functions:
-   - First-class functions refer to functions that can be passed as arguments to other functions, returned by other functions, and assigned as values to variables. In JS, functions are indeed first-class citizens since they fulfill all the criteria.
-   - Higher-order functions are functions that take one or more functions as arguments (taking a callback) or return a function as output (mapping or filtering arrays).
+In this documentation, we will explore the implementation of the Observer Design Pattern using Java.
 
-Example: map(), filter(), reduce() and forEach() from the Array prototype in JavaScript are examples of higher-order functions.
+Implementation:
 
-```javascript
-const numbers = [1, 2, 3, 4];
-const doubledNumbers = numbers.map(num => num * 2);
-```
+1. Defining the Subject (Observable):
 
-2. Pure Functions: A pure function is a function that always returns the same result given the same input and has no side effects (modifying variables outside of its own scope). This makes testing much easier since you can depend on the output solely based on the input provided.
+The Subject, or Observable, represents the object that maintains a list of its dependents (Observers) and notifies them automatically when its state changes. In Java, we can implement the Subject as an abstract class or interface.
 
-Example:
-```javascript
-function add(x, y) {
-  return x + y;
+```java
+public interface Subject {
+    void registerObserver(Observer observer);
+    void removeObserver(Observer observer);
+    void notifyObservers();
 }
-
-// Pure function, always returns the same result given the same input.
-console.log(add(3, 4)); // 7
-console.log(add(3, 4)); // 7 (same output as before)
 ```
 
-3. Immutability: Unlike mutable data structures, immutable objects cannot be changed once they are created. In FP, instead of modifying existing objects, we create new ones when needed, ensuring predictable behavior and making it easier to reason about our code.
+2. Defining the Observer:
 
-Example: Using the `Object.assign()` method in JavaScript:
-```javascript
+The Observer represents an object that is dependent on a Subject and updates itself when the state of the Subject changes.
+
+```java
+public interface Observer {
+    void update(Subject subject);
+}
+```
+
+3. Implementing Concrete Subject (Concrete Observable):
+
+A concrete Subject maintains a list of its observers and notifies them when its state changes.
+
+```java
+import java.util.*;
+
+public class ConcreteSubject implements Subject {
+    private List<Observer> observers = new ArrayList<>();
+    // State attribute
+    private int state;
+
+    public void addObserver(Observer observer) {
+        observers.add(observer);
+    }
+
+    public void removeObserver(Observer observer) {
+        observers.remove(observer);
+    }
+
+    public void notifyObservers() {
+        for (Observer observer : observers) {
+            observer.update(this);
+        }
+    }
+
+    // Other methods and attributes related to the state management of the subject
+}
+```
+
+4. Implementing Concrete Observers:
+
+Concrete Observers are dependent on a concrete Subject and update themselves when the state of the Subject changes.
+
+```java
+public class ConcreteObserver1 implements Observer {
+    private String name;
+
+    public ConcreteObserver1(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public void update(Subject subject) {
+        // Update the observer based on the new state of the Subject
+        System.out.println("Concrete Observer 1: State changed to " + ((ConcreteSubject)subject).getState());
+    }
+}
+```

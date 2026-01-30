@@ -1,49 +1,67 @@
-**Endpoint:** `/users/{userId}/orders`
+**System Name:** Cloud Storage API
 
-**Method:** `GET`
+**Overview:**
 
-**Description:**
+The Cloud Storage API is a RESTful interface that enables users to store, manage, and retrieve files in the cloud. The API provides a simple and intuitive way to interact with stored data, making it easy to integrate with existing applications or build new ones.
 
-This API endpoint allows you to retrieve a list of orders associated with a specific user. The endpoint takes a single path parameter, `{userId}`, which identifies the user whose orders are being retrieved.
+**API Endpoints:**
 
-**Path Parameters:**
+1. **GET /files**: Retrieves a list of files stored in the user's account.
+	* Query parameters:
+		+ `limit`: Maximum number of files to retrieve (default: 10).
+		+ `offset`: Starting index for file retrieval (default: 0).
+2. **POST /files**: Creates a new file and stores it in the user's account.
+	* Request body:
+		+ `file_name`: Name of the file to be created.
+		+ `file_content`: Content of the file to be created.
+3. **GET /files/{file_id}**: Retrieves metadata about a specific file.
+4. **PUT /files/{file_id}**: Updates the metadata of a specific file.
+5. **DELETE /files/{file_id}**: Deletes a specific file.
 
-* `{userId}` (required): The ID of the user whose orders are being retrieved. This should be a unique identifier for the user in your system.
+**Request and Response Formats:**
 
-**Query Parameters:**
+* Requests are made in JSON format.
+* Responses are also in JSON format, with the following structure:
+	+ `status`: HTTP status code (e.g., 200 OK, 404 Not Found).
+	+ `data`: File metadata or content, depending on the request method.
 
-* `limit` (optional): The maximum number of orders to return per page. Default is 20.
-* `offset` (optional): The starting point for the page of orders. Default is 0.
-* `sort` (optional): The field by which to sort the orders. Acceptable values are:
-	+ `created_at`: Sort by order creation date
-	+ `updated_at`: Sort by order last update date
-	+ `amount`: Sort by order total amount
+**Authentication and Authorization:**
 
-**Request Example:**
+To use the Cloud Storage API, you must authenticate using your user account credentials. The API supports OAuth 2.0 for authorization.
 
-```http
-GET /users/1234/orders?limit=5&offset=0&sort=created_at HTTP/1.1
-Host: example.com
-Content-Type: application/json
-```
+1. **OAuth 2.0 Flow:**
+	* Register your application with our platform to obtain a client ID.
+	* Redirect users to our authorization URL, which includes their client ID and requested permissions.
+	* User approves the request and is redirected back to your application with an authorization code.
+	* Your application exchanges the authorization code for an access token, which can be used to make API requests.
 
-**Response:**
+**Error Handling:**
 
-The response will be a JSON object containing an array of order objects, with the following properties:
+The Cloud Storage API returns error responses in JSON format, with the following structure:
 
-* `id`: The unique ID of the order.
-* `userId`: The ID of the user who placed the order.
-* `amount`: The total amount of the order.
-* `created_at`: The date and time when the order was created.
-* `updated_at`: The date and time when the order was last updated.
+* `error`: Error message or description.
+* `code`: HTTP status code (e.g., 400 Bad Request, 500 Internal Server Error).
 
-Example response:
+**Rate Limiting:**
+
+To prevent abuse and ensure fair use of our services, we enforce rate limits on API requests. The rate limit is based on the number of requests made within a certain time frame.
+
+1. **Request Rate:** Maximum 100 requests per minute.
+2. **Time Frame:** Within a 1-minute window.
+
+**Example Request:**
+
+To create a new file using the Cloud Storage API, you can send a POST request with the following JSON payload:
 ```json
 {
-  "orders": [
-    {
-      "id": 1,
-      "userId": 1234,
-      "amount": 10.99,
-      "created_at": "2022-07-01T12:00:00Z",
-      "updated_at": "
+    "file_name": "example.txt",
+    "file_content": "Hello, world!"
+}
+```
+This request would create a new file named `example.txt` with the content `"Hello, world!"`.
+
+**Troubleshooting:**
+
+If you encounter issues while using the Cloud Storage API, refer to our troubleshooting guide for common problems and solutions.
+
+By following these guidelines and specifications, you can efficiently integrate the Cloud Storage API into your application and take advantage of its features and capabilities.

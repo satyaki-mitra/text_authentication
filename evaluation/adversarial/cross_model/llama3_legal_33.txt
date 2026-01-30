@@ -1,0 +1,39 @@
+**ARTICLE IV: INDEMNIFICATION AND HOLD HARMLESS**
+
+The Parties agree that in the event of any claim, demand, or lawsuit arising out of or related to this Agreement, the indemnifying Party shall be responsible for the defense thereof at its own expense.
+
+**Section 1. Indemnification**
+
+The indemnitee Party hereby agrees to hold harmless and indemnify the indemnifying Party against any and all claims, damages, losses, costs, and expenses (including attorneys' fees) arising out of or related to the following:
+
+(a) Any breach by the indemnitee Party of its obligations under this Agreement; or
+
+(b) Any misrepresentation or untrue statement made by the indemnitee Party in connection with this Agreement.
+
+The indemnifying Party shall have the right to control the defense and settlement of any such claim, demand, or lawsuit. The indemnitee Party agrees to cooperate fully with the indemnifying Party in the defense of any such claim, demand, or lawsuit.
+
+**Section 2. Limits on Indemnification**
+
+Notwithstanding anything to the contrary contained herein, the total aggregate liability of the indemnifying Party under this Article IV shall not exceed [insert amount or percentage]. The indemnifying Party's obligation to indemnify and hold harmless the indemnitee Party shall be limited to the extent that such indemnification is permitted by applicable law.
+
+**Section 3. Notification**
+
+In the event any claim, demand, or lawsuit arises out of or related to this Agreement, the indemnitee Party shall promptly notify the indemnifying Party in writing thereof. The notice shall include a description of the circumstances giving rise to the claim, demand, or lawsuit, and shall be provided within [insert timeframe].
+
+**Section 4. Governing Law**
+
+This Article IV shall be governed by and construed in accordance with the laws of the State of [insert state]. Any disputes arising out of or related to this Article IV shall be resolved through binding arbitration in accordance with the rules of the American Arbitration Association.
+
+IN WITNESS WHEREOF, the Parties have executed this Agreement as of the date first above written.
+
+**By:** ______________________________________
+**For:** ______________________________________
+
+**Signature:** ______________________________________
+**Date:** _______________________________________
+
+**By:** ______________________________________
+**For:** ______________________________________
+
+**Signature:** ______________________________________
+**Date:** _______________________________________

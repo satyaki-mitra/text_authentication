@@ -1,0 +1,24 @@
+Title: User Management Interface - API for System Users
+
+## Managing API for Users
+
+### Endpoint Explanation
+
+This API offers endpoints designed for user management within our system. The `/users` endpoint serves multiple functions, including creation, retrieval, modification, and deletion of user profiles.
+
+### Input Parameters
+
+| Parameter          | Data Type   | Must Provide? | Description                                                                                                       |
+|--------------------|------------|--------------|-------------------------------------------------------------------------------------------------------------------|
+| `operation`        | `string`   | Yes           | Operation to execute on the user: create, read, update, or delete.                                                |
+| `user_id`          | `integer`  | Optional      | Unique identifier for the user (for updating and deleting operations).                                             |
+| `username`         | `string`   | Required (create) / Optional (update) | The assigned username for the user.                                                                                |
+| `password`         | `string`   | Required (create) / Optional (update) | Encrypted password for the user (plaintext storage not supported).                                               |
+| `email`            | `string`   | Required      | The email address of the user.                                                                                    |
+| `first_name`       | `string`   | Optional      | First name of the user.                                                                                          |
+| `last_name`        | `string`   | Optional      | Last name of the user.                                                                                           |
+| `roles`            | `array`    | Optional      | List of roles granted to the user (e.g., ["admin", "user"]).                                                     |
+
+### Authentication Guidelines
+
+All requests necessitate authentication via API keys. The API key should be included in the request header

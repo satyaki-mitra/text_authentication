@@ -1,0 +1,59 @@
+**System Name:** Cloud Storage API (CSAPI)
+
+**Overview:**
+The Cloud Storage API (CSAPI) is a RESTful web service that provides a secure and efficient way to store, manage, and retrieve large amounts of data in the cloud. The API allows developers to interact with their cloud storage accounts programmatically, enabling them to automate tasks, integrate with other applications, and provide users with more flexibility and control over their stored data.
+
+**API Endpoints:**
+The CSAPI has several endpoints that perform various operations on files and folders:
+
+* **/files**: Creates a new file or retrieves an existing one.
+	+ Methods: `POST` (create), `GET` (retrieve)
+	+ Parameters:
+		- `name`: The name of the file to create or retrieve.
+		- `content-type`: The MIME type of the file content (optional).
+* **/folders**: Creates a new folder or retrieves an existing one.
+	+ Methods: `POST` (create), `GET` (retrieve)
+	+ Parameters:
+		- `name`: The name of the folder to create or retrieve.
+* **/files/{fileId}**: Retrieves or updates a specific file.
+	+ Methods: `GET` (retrieve), `PUT` (update)
+	+ Parameters:
+		- `fileId`: The unique identifier of the file.
+* **/folders/{folderId}**: Retrieves or updates a specific folder.
+	+ Methods: `GET` (retrieve), `PUT` (update)
+	+ Parameters:
+		- `folderId`: The unique identifier of the folder.
+
+**Request and Response Formats:**
+The CSAPI uses JSON (JavaScript Object Notation) for request and response bodies. All requests must include a `Content-Type` header set to `application/json`. Responses will also have a `Content-Type` header set to `application/json`, containing the requested data in JSON format.
+
+**Authentication:**
+To access the CSAPI, you need to authenticate your API requests using OAuth 2.0 with JWT (JSON Web Token) bearer tokens. You can obtain an access token by sending a request to the `/token` endpoint with your credentials. Set the `Authorization` header of each subsequent request to include the obtained access token.
+
+**Error Handling:**
+The CSAPI returns error responses in JSON format, including:
+
+* **HTTP Status Code**: The HTTP status code indicating the type of error (e.g., 400 for bad request).
+* **Error Message**: A human-readable description of the error.
+* **Error Code**: A unique identifier for the error.
+
+**Usage Guidelines:**
+
+1. Use the `POST` method to create a new file or folder, and provide the required parameters in the request body.
+2. Use the `GET` method to retrieve an existing file or folder, and specify the desired file or folder ID in the URL path.
+3. Use the `PUT` method to update an existing file or folder, and provide the updated data in the request body.
+4. Handle errors by checking the HTTP status code and error message in the response.
+
+**Example Request:**
+```bash
+POST /files HTTP/1.1
+Host: csapi.example.com
+Content-Type: application/json
+Authorization: Bearer <access-token>
+
+{
+    "name": "example.txt",
+    "content-type": "text/plain"
+}
+```
+In this example, the request creates a

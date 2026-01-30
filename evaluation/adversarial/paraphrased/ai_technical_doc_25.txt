@@ -1,0 +1,63 @@
+Title: User Account Management API
+
+## User Account Management Interface
+
+### Overview
+
+This interface presents a RESTful architecture for managing system user accounts. It facilitates actions such as creation, retrieval, modification, and deletion of user data.
+
+### Endpoint Address
+
+`https://api.exemplary.com/v1/users`
+
+### Authentication Rules
+
+All interactions with this interface necessitate authentication via JSON Web Tokens (JWT). The `Authorization` header must carry a valid JWT token for verification purposes.
+
+Example:
+```
+Authorization: Bearer {your_token_here}
+```
+
+### Request Parameters
+
+#### New User Registration (POST)
+
+- **Content-Type:** `application/json`
+
+```json
+{
+  "username": "<string>",
+  "email": "<email>",
+  "password": "<string>",
+  "role": "<role_name>"
+}
+```
+
+#### User Retrieval (GET)
+
+- **URL Parameters:** `user_id` - Obligatory, integer user identifier
+
+Example:
+`https://api.exemplary.com/v1/users/456`
+
+#### User Modification (PUT)
+
+- **Content-Type:** `application/json`
+
+```json
+{
+  "username": "<string>",
+  "email": "<email>",
+  "password": "<string>",
+  "role": "<role_name>"
+}
+```
+
+- **URL Parameters:** `user_id` - Obligatory, integer user identifier
+
+#### User Deletion (DELETE)
+
+- **URL Parameters:** `user_id` - Obligatory, integer user identifier
+
+### Response Parameters

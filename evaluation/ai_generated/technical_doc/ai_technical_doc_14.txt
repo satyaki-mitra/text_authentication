@@ -1,28 +1,50 @@
-Title: Technical Documentation - Feature Overview: Real-Time Analytics Dashboard
+**API Documentation - Weather Forecast Service**
 
-1. Introduction
-   The Real-Time Analytics Dashboard is a newly developed feature designed to provide users with real-time data visualization and analytics for their applications. This feature enhances the user's ability to monitor, analyze, and make informed decisions based on the dynamic performance of their applications in real-time.
+**Endpoint Description:**
 
-2. Feature Description
-   The Real-Time Analytics Dashboard presents various metrics such as user activity, response times, error rates, and resource usage, all updated continuously to reflect the current state of the application. Users can customize the dashboard to display specific metrics that are relevant to their needs.
+This API provides weather forecast information for a given location. It uses OpenWeatherMap as the primary data source.
 
-3. Key Components
-   a) Data Collection: The feature collects data from various sources within the application, including user interactions, server logs, and API calls, among others. This data is then processed and made available for real-time analysis.
+**Base URL:** `https://weather-api.example.com/v1`
 
-   b) Real-Time Visualization: The dashboard provides interactive visualizations of the collected data, allowing users to understand trends, identify patterns, and spot anomalies quickly.
+**Endpoints:**
 
-   c) Customizable Metrics: Users can customize the metrics they want to monitor, ensuring that the information displayed is relevant to their specific use case.
+1. **Get Weather Forecast**
+   - Method: `GET`
+   - Endpoint: `/forecast`
 
-   d) Alerts and Notifications: The feature includes an alert system that notifies users of critical events or issues in real-time, helping them respond promptly to ensure optimal application performance.
+**Request Parameters:**
 
-4. Usage Instructions
-   a) Accessing the Dashboard: Users can access the Real-Time Analytics Dashboard through the main application interface.
+| Parameter     | Data Type  | Description                                                                           | Required |
+|---------------|-----------|---------------------------------------------------------------------------------------|----------|
+| location      | String    | The location for which to get the weather forecast. Example: "New York, NY"          | Yes      |
+| units         | String    | The unit system for the temperature and wind speed. Supported values are `metric` and `imperial`. Default is `metric`  | No       |
+| api_key       | String    | Your API key for authentication. Obtain it from [OpenWeatherMap](https://openweathermap.org/api)  | Yes      |
 
-   b) Customizing Metrics: To customize the metrics displayed on the dashboard, navigate to the 'Settings' menu and select 'Dashboard Configuration'. From here, users can add or remove metrics as desired.
+**Example Request:**
 
-   c) Understanding Visualizations: Each visualization provides a tooltip with detailed information about the data being presented. Users are encouraged to hover over elements for more details.
+```bash
+GET https://weather-api.example.com/v1/forecast?location=New+York,NY&units=imperial&api_key=YOUR_API_KEY
+```
 
-   d) Alerts and Notifications: Custom alerts can be configured within the 'Alerts' section of the Settings menu. Users will receive notifications via email or in-app messages when an alert is triggered.
+**Response Parameters:**
 
-5. System Requirements
-   The Real-Time Analytics Dashboard requires a stable internet connection and sufficient system resources to
+| Parameter    | Data Type  | Description                                                                |
+|--------------|-----------|----------------------------------------------------------------------------|
+| location     | String    | The requested location                                                      |
+| temperature  | Number    | The current temperature in the requested unit system                         |
+| humidity     | Number    | The current humidity in percentage                                           |
+| wind_speed   | Number    | The current wind speed in miles per hour or meters per second, depending on units |
+| forecast     | Array     | An array of forecasts for the next 5 days, each containing a date, temperature and description |
+
+**Error Codes:**
+
+| Code     | Description                               |
+|----------|-------------------------------------------|
+| 401      | Unauthorized - Invalid or missing API key |
+| 404      | Not Found - Invalid location              |
+
+**Usage Notes:**
+
+- Replace `YOUR_API_KEY` with your actual API key obtained from OpenWeatherMap.
+- The forecast includes the date, temperature, and a brief description of the weather condition for each day.
+- For more information on OpenWeatherMap data structure, please refer to their [documentation](https://openweathermap.org/

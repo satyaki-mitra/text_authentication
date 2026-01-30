@@ -1,40 +1,99 @@
-Title: Documentation for the Real-Time Data Synchronization Feature in XYZ Application
+Title: API Documentation - User Management Endpoint
 
-1. Introduction
-   - Overview of the Real-Time Data Synchronization (RTDS) feature
-   - Purpose and benefits of using RTDS in the XYZ application
+## User Management Endpoint
 
-2. Feature Description
-   - Explanation of how RTDS works within the XYZ application
-   - Detailed description of the components involved in the RTDS process
+### Description
 
-3. Implementation
-   - Step-by-step guide for enabling and configuring the RTDS feature
-   - Configuration options available for customizing the RTDS behavior
+This endpoint provides a RESTful interface for managing user accounts within the system. It allows for creation, retrieval, updates, and deletion of user data.
 
-4. Usage Scenarios
-   - Examples of real-world situations where the RTDS feature is particularly useful
-   - Explanation of how RTDS can help improve data consistency and efficiency in these scenarios
+### Endpoint URL
 
-5. Best Practices
-   - Recommendations for optimizing the performance of the RTDS feature
-   - Tips for troubleshooting common issues that may arise when using RTDS
+`https://api.example.com/v1/users`
 
-6. Limitations and Known Issues
-   - Description of any known limitations or issues with the RTDS feature
-   - Workarounds or solutions for these limitations and issues
+### Authentication Requirements
 
-7. Compatibility and Dependencies
-   - Information about which versions of the XYZ application support the RTDS feature
-   - Any dependencies on other software components or system requirements
+All requests to this endpoint require authentication using JSON Web Tokens (JWT). The `Authorization` header must contain a valid JWT token for authentication.
 
-8. Testing and Validation
-   - Instructions for testing the RTDS feature to ensure proper functionality
-   - Details about the testing methodology used to verify the effectiveness of RTDS
+Example:
+```
+Authorization: Bearer {your_token_here}
+```
 
-9. Support and Maintenance
-   - Contact information for technical support related to the RTDS feature
-   - Information about future updates or improvements to the RTDS feature
+### Request Parameters
 
-10. Change Log
-    - A record of changes made to the RTDS feature over time, including version numbers, dates, and brief descriptions of each update
+#### Create User (POST)
+
+- **Content-Type:** `application/json`
+
+```json
+{
+  "username": "<string>",
+  "email": "<email>",
+  "password": "<string>",
+  "role": "<role_name>"
+}
+```
+
+#### Retrieve User (GET)
+
+- **URL Parameters:** `id` - Required, integer user ID
+
+Example:
+`https://api.example.com/v1/users/123`
+
+#### Update User (PUT)
+
+- **Content-Type:** `application/json`
+
+```json
+{
+  "username": "<string>",
+  "email": "<email>",
+  "password": "<string>",
+  "role": "<role_name>"
+}
+```
+
+- **URL Parameters:** `id` - Required, integer user ID
+
+#### Delete User (DELETE)
+
+- **URL Parameters:** `id` - Required, integer user ID
+
+### Response Parameters
+
+#### Successful Responses (2xx)
+
+A successful response will contain a JSON object with the requested data or an empty body for DELETE requests.
+
+Example:
+```json
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "id": 123,
+  "username": "john_doe",
+  "email": "john.doe@example.com",
+  "role": "admin"
+}
+```
+
+#### Error Responses (4xx/5xx)
+
+Error responses will contain a JSON object with an error message and appropriate HTTP status code.
+
+Example:
+```json
+HTTP/1.1 401 Unauthorized
+Content-Type: application/json
+
+{
+  "error": "Invalid or missing token"
+}
+```
+
+### Usage Notes
+
+- All requests should include the `Authorization` header with a valid JWT token.
+- The `role`

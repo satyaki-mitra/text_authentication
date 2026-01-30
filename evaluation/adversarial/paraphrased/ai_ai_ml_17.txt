@@ -1,0 +1,20 @@
+Title: Unraveling Decision-Making Agents in Artificial Intelligence: Q-Learning, Deep Q Networks, and Future Exploration
+
+Artificial Intelligence (AI) subfield Machine Learning (ML) encompasses Reinforcement Learning (RL), which concentrates on autonomous agents learning to decide through interaction with an environment. The aim is for the agent to develop a policy, a state-to-action mapping, that maximizes cumulative reward over time in some sense. This concept has revolutionized AI agents' ability to tackle intricate tasks without explicit programming or prior knowledge.
+
+Mathematical Perspective:
+In RL, an agent navigates through an environment following the Markov Decision Process (MDP). An MDP consists of state set S, action set A, transition probabilities P(s'|s,a), rewards R(s,a,s'), and discount factor γ. In each time step t, the agent perceives state st, chooses action at, obtains reward rt, moves to new state s'(t+1) with probability P(s'(t+1)|st,at), and updates its state-action value estimation.
+
+The primary goal is to discover an optimal policy π*, which maximizes the anticipated cumulative discounted reward:
+
+Gt = ∑γk=0 rtk+1
+
+where Gt signifies total reward accrued from time step t, rt are individual rewards, and γ (0≤γ<1) gauges the importance of immediate versus future rewards.
+
+Real-World Applications:
+The practicality of RL has been substantiated in numerous real-world scenarios. One notable instance is game playing, as demonstrated by AlphaGo, where RL was employed to self-learn superior Go skills. In robotics, RL can be utilized for autonomous learning of locomotion or manipulation abilities. Additionally, RL is increasingly adopted in reinforcement-based control systems to optimize resource allocation and energy consumption in smart grids.
+
+Q-Learning:
+A prominent RL technique is Q-learning, which entails approximating the optimal action-value function Q(s,a), representing the expected cumulative reward starting from state s with action a. The Q-function can be iteratively updated using the Bellman optimality equation:
+
+Q(s,a) ⟹ (

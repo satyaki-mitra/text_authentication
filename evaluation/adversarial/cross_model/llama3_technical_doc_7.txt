@@ -1,61 +1,76 @@
-**API Endpoint: Get User Information**
+**API Documentation: User Profile Management System**
 
-**Endpoint URL:** `https://api.example.com/users/{userId}`
+**Overview**
 
-**HTTP Method:** GET
+The User Profile Management System is a RESTful API designed to manage user profiles for various applications. The API provides a set of endpoints to create, read, update, and delete (CRUD) user profiles, as well as retrieve profile information.
 
-**Description:** Retrieves detailed information about a specific user.
+**Endpoints**
 
-**Path Parameters:**
+### 1. Create User Profile
 
-* **`userId`**: The unique identifier of the user to retrieve information for. This is a required parameter.
+* **Method:** POST
+* **Endpoint:** `/users`
+* **Request Body:**
+	+ `username`: string (required)
+	+ `email`: string (required)
+	+ `password`: string (required)
+	+ `name`: string (optional)
+	+ `address`: object (optional)
+	+ `phone`: string (optional)
+* **Response:** HTTP 201 Created, with the newly created user profile in JSON format
 
-**Query Parameters:**
+### 2. Retrieve User Profile
 
-* **None**
+* **Method:** GET
+* **Endpoint:** `/users/{username}`
+* **Path Parameters:**
+	+ `{username}`: string (required)
+* **Query Parameters:**
+	+ `fields`: string (optional) - comma-separated list of fields to include in the response
+* **Response:** HTTP 200 OK, with the user profile in JSON format
 
-**Request Headers:**
+### 3. Update User Profile
 
-* **`Authorization`:** A valid API token in the format `Bearer <token>`. See [Authentication](#authentication) section for more details.
-* **`Content-Type`:** Set to `application/json` for this endpoint.
+* **Method:** PUT
+* **Endpoint:** `/users/{username}`
+* **Path Parameters:**
+	+ `{username}`: string (required)
+* **Request Body:**
+	+ `name`: string (optional)
+	+ `address`: object (optional)
+	+ `phone`: string (optional)
+* **Response:** HTTP 200 OK, with the updated user profile in JSON format
 
-**Response:**
+### 4. Delete User Profile
 
-The response will be a JSON object containing the user's information. The structure of the response is as follows:
+* **Method:** DELETE
+* **Endpoint:** `/users/{username}`
+* **Path Parameters:**
+	+ `{username}`: string (required)
+* **Response:** HTTP 204 No Content
 
-```json
-{
-  "id": <integer>,
-  "name": "<string>",
-  "email": "<string>",
-  "phoneNumber": "<string>",
-  "address": {
-    "street": "<string>",
-    "city": "<string>",
-    "state": "<string>",
-    "zip": "<string>"
-  },
-  "roles": [
-    "<role1>",
-    "<role2>",
-    ...
-  ]
-}
-```
+**Security Considerations**
 
-**Response Status Codes:**
+* All API requests require authentication using a username and password.
+* Passwords are hashed and stored securely.
+* User profiles are encrypted at rest.
 
-* **200 OK**: The request was successful, and the user information is returned.
-* **404 Not Found**: The specified `userId` does not exist in the system.
+**Error Handling**
 
-**Authentication:**
+* The API returns standard HTTP error codes for errors, such as 400 Bad Request (invalid request), 401 Unauthorized (authentication failed), and 404 Not Found (user profile not found).
+* For invalid requests, the API returns a JSON response with an error message and details.
 
-To access this endpoint, you need to provide a valid API token in the `Authorization` header. You can obtain an API token by contacting our support team or by using our authentication flow.
+**Usage Guidelines**
 
-**Rate Limiting:**
+1. **Authentication:** Before making any API calls, authenticate using your username and password.
+2. **Request Body:** Always include the required fields in the request body, as specified for each endpoint.
+3. **Error Handling:** Handle errors by checking the HTTP status code and response payload.
+4. **Rate Limiting:** The API enforces rate limiting to prevent abuse.
 
-This endpoint is rate-limited to prevent abuse. The maximum number of requests per minute is 100. If your application exceeds this limit, you will receive a `429 Too Many Requests` response.
+**Technical Requirements**
 
-**Error Handling:**
+* **HTTP Method:** Use HTTP 1.1 or later.
+* **JSON Format:** Use JSON (JavaScript Object Notation) as the data format for requests and responses.
+* **Character Encoding:** Use UTF-8 character encoding.
 
-If an error occurs while processing the request, we return an error response with a JSON object containing the following
+By following these guidelines, you can effectively use the User Profile Management System API to manage user profiles for your applications.

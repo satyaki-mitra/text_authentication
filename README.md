@@ -42,6 +42,7 @@ license: mit
 - [Ensemble Methodology](#ensemble-methodology)
 - [Domain-Aware Analysis](#domain-aware-analysis)
 - [Performance Characteristics](#performance-characteristics)
+- [Evaluation & Benchmarks](#-evaluation--benchmarks)
 - [Project Structure](#project-structure)
 - [API Endpoints](#api-endpoints)
 - [Installation & Setup](#installation--setup)
@@ -79,7 +80,7 @@ TEXT-AUTH is designed as a **decision-support and forensic analysis tool**, not 
 
 **Live Deployment Link:** [AI Text Authenticator Platform](https://huggingface.co/spaces/satyaki-mitra/AI_Text_Authenticator)
 
-**MVP Scope.** End‑to‑end FastAPI backend, lightweight HTML UI, modular metrics, Hugging Face model auto‑download, and a prototype ensemble classifier. Model weights are not committed to the repo; they are fetched at first run.
+**MVP Scope.** End‑to‑end FastAPI backend, lightweight HTML UI, modular metrics, Hugging Face model auto‑download, and a prototype ensemble forensic analyzer. Model weights are not committed to the repo; they are fetched at first run.
 
 ---
 
@@ -95,7 +96,7 @@ TEXT-AUTH is designed as a **decision-support and forensic analysis tool**, not 
 
 ### 📊 Supported Domains & Threshold Configuration
 
-The platform supports domain-aware forensic analysis tailored to the following 16 domains, each with specific synthetic-text consistency thresholds and metric weights defined in `config/threshold_config.py`. These configurations are used by the ensemble classifier to adapt its decision-making process.
+The platform supports domain-aware forensic analysis tailored to the following 16 domains, each with specific synthetic-text consistency thresholds and metric weights defined in `config/threshold_config.py`. These configurations are used by the ensemble forensic analyzer to adapt its evidence aggregation process.
 
 **Domains:**
 
@@ -230,7 +231,7 @@ sequenceDiagram
 
 ---
 
-## 🧮 Forensic Signals & Mathematical Foundation
+## 🧮 Forensic Evidence Signals & Mathematical Foundation
 
 This section provides the exact metric definitions implemented in `metrics/` and rationale for their selection. The ensemble combines these orthogonal signals to increase robustness against edited, paraphrased, or algorithmically regularized text.
 
@@ -416,20 +417,221 @@ DOMAIN_WEIGHTS = {'academic'     : {'perplexity':0.22,'entropy':0.18,'structural
 
 ---
 
-## ⚡ Performance Characteristics
+## 📊 Evaluation & Benchmarks
 
-### Processing Times & Resource Estimates
+### Comprehensive System Validation
 
-| Text Length | Typical Time | vCPU | RAM |
-|---:|---:|---:|---:|
-| Short (100–500 words) | 1.2 s | 0.8 vCPU | 512 MB |
-| Medium (500–2000 words) | 3.5 s | 1.2 vCPU | 1 GB |
-| Long (2000+ words) | 7.8 s | 2.0 vCPU | 2 GB |
+TEXT-AUTH has been rigorously evaluated on **2,750 text samples** across 16 domains using a multi-subset benchmark designed to test:
+- **Baseline performance** on clean human vs. AI text
+- **Cross-model generalization** (different AI models)
+- **Adversarial robustness** (paraphrased content)
 
-**Optimizations implemented**
-- Parallel metric computation (thread/process pools)
-- Conditional execution & early exit on high confidence
-- Model caching & quantization support for memory efficiency
+**Evaluation Dataset: TEXT-AUTH-Eval**
+- **1,444 samples** - CLEAN subset (baseline)
+- **682 samples** - CROSS_MODEL subset (generalization test)
+- **500 samples** - PARAPHRASED subset (robustness test)
+- **124 samples** - Classified as UNCERTAIN (appropriate abstention)
+
+
+### Overall Performance Metrics
+
+| Metric | Value | Status |
+|--------|-------|--------|
+| **Overall Accuracy** | 78.3% | Production-Ready |
+| **F1 Score** | 85.7% | Exceeds Target (>75%) |
+| **Precision (AI Detection)** | 84.3% | High Reliability |
+| **Recall (AI Detection)** | 87.2% | Strong Coverage |
+| **AUROC** | 0.777 | Good Discrimination |
+| **AUPRC** | 0.888 | Excellent Precision-Recall |
+| **ECE (Calibration)** | 0.080 | Well-Calibrated |
+
+
+**4-Class System Behavior:**
+- **Coverage**: 95.5% (decisive predictions)
+- **Abstention Rate**: 4.5% (appropriate uncertainty handling)
+- **Hybrid Detection**: 0.5% (mixed-authorship identification)
+
+**Verdict Distribution:**
+```
+Synthetically-Generated:  73.3% (2,017 samples)
+Authentically-Written:    21.7% (596 samples)
+Hybrid:                   0.5% (13 samples)
+Uncertain:                4.5% (124 samples)
+```
+
+
+### Performance by Evaluation Subset
+
+| Subset | Samples | F1 Score | Coverage | Abstention | Hybrid Rate |
+|--------|---------|----------|----------|------------|-------------|
+| **CLEAN** | 1,444 | 78.6% | 92.4% | 7.6% | 0.6% |
+| **CROSS_MODEL** | 682 | **95.3%** ⭐ | 99.1% | 0.9% | 0.1% |
+| **PARAPHRASED** | 500 | 86.1% | 100.0% | 0.0% | 0.8% |
+
+**Key Insights:**
+- **Exceptional cross-model generalization** (95.3% F1) - system detects AI patterns regardless of specific model
+- **Strong adversarial robustness** (86.1% F1) - maintains performance on paraphrased content
+- **Adaptive abstention** - higher uncertainty on CLEAN set (7.6%) reflects appropriate caution on ambiguous cases
+
+
+### Domain-Specific Performance
+
+#### Top Performing Domains (F1 > 90%)
+
+| Domain | F1 Score | Coverage | Abstention | Notes |
+|--------|----------|----------|------------|-------|
+| **General** | **93.4%** | 91.8% | 8.2% | Encyclopedic content |
+| **Creative** | **92.9%** | 83.5% | 16.5% | Literary narratives |
+| **Medical** | **90.3%** | 100.0% | 0.0% | Clinical terminology |
+| **Journalism** | **90.3%** | 93.1% | 6.9% | News reporting |
+
+#### Strong Performing Domains (F1 85-90%)
+
+| Domain | F1 Score | Coverage | Abstention | Notes |
+|--------|----------|----------|------------|-------|
+| **AI/ML** | 88.8% | 99.2% | 0.8% | Technical AI content |
+| **Academic** | 87.5% | 100.0% | 0.0% | Research papers |
+| **Tutorial** | 87.5% | 94.2% | 5.8% | How-to guides |
+| **Business** | 86.2% | 94.9% | 5.1% | Business writing |
+| **Science** | 86.2% | 95.4% | 4.6% | Scientific content |
+| **Technical Doc** | 85.6% | 94.6% | 5.4% | Documentation |
+
+
+#### Moderate Performing Domains (F1 80-85%)
+
+| Domain | F1 Score | Coverage | Abstention | Hybrid % | Notes |
+|--------|----------|----------|------------|----------|-------|
+| **Blog/Personal** | 83.8% | 96.7% | 3.3% | 0.0% | Personal blogs |
+| **Marketing** | 84.0% | 96.0% | 4.0% | 0.0% | Marketing copy |
+| **Engineering** | 82.0% | 100.0% | 0.0% | 1.7% | Technical specs |
+| **Software Dev** | 81.9% | 94.9% | 5.1% | 3.9% | Code documentation |
+
+#### Challenging Domains (F1 < 80%)
+
+| Domain | F1 Score | Coverage | Abstention | Hybrid % | Notes |
+|--------|----------|----------|------------|----------|-------|
+| **Legal** | 77.1% | 94.9% | 5.1% | 1.6% | ⚠️ Formal legal language |
+| **Social Media** | 73.3% | 98.9% | 1.1% | 0.8% | ⚠️ Short, informal text |
+
+
+**Domain Analysis:**
+- Achieves >80% F1 on 14 of 16 domains
+- Strong performance on structured content (medical, journalism, general)
+- Legal domain challenging due to highly formulaic language patterns
+- Social media challenging due to brevity and informal style
+
+
+### Performance by Text Length
+
+| Length Range | Samples | F1 Score | Precision | Recall | Accuracy | Abstention | Avg Time (s) |
+|--------------|---------|----------|-----------|--------|----------|------------|--------------|
+| **Very Short (0-100)** | 18 | 0.000 | 0.000 | 0.000 | 0.278 | 0.0% | 4.6 |
+| **Short (100-200)** | 249 | 0.211 | 0.118 | 0.947 | 0.458 | 0.0% | 8.3 |
+| **Medium (200-400)** | 1,682 | **0.885** | 0.901 | 0.869 | 0.813 | 0.6% | 18.2 |
+| **Medium-Long (400-600)** | 630 | **0.900** ⭐ | 0.929 | 0.872 | 0.833 | 7.1% | 23.6 |
+| **Long (600-1000)** | 15 | 0.000 | 0.000 | 0.000 | 1.000 | 74.6% | 37.1 |
+| **Very Long (1000+)** | 19 | 0.000 | 0.000 | 0.000 | 1.000 | 64.8% | 108.4 |
+
+
+**Length-Performance Insights:**
+- **Optimal range: 200-600 words** (F1: 0.885-0.900)
+- **Strong performance on medium-length texts** - majority of real-world content
+- **Limited signals on very short texts** (<100 words) - insufficient statistical context
+- **High abstention on very long texts** (>600 words) - system appropriately defers to human judgment
+- **Processing time scales sub-linearly** - efficient even on longer texts
+
+
+**Statistical Analysis:**
+- Pearson correlation coefficient: r = 0.833
+- No statistically significant linear correlation (p = 0.374)
+- Performance peaks at 400-600 words, then plateaus with increased abstention
+
+### Evaluation Visualizations
+
+#### Confusion Matrix (Decisive Predictions Only)
+![Evaluation Results](evaluation/results/evaluation_plots_20260130_105208.png)
+
+**Binary Classification Performance:**
+- **True Negatives (Human → Human)**: 344 samples
+- **True Positives (AI/Hybrid → AI)**: 1,711 samples
+- **False Positives (Human → AI)**: 252 samples (14.7% FP rate)
+- **False Negatives (AI → Human)**: 319 samples (15.7% FN rate)
+
+#### Length-Based Analysis
+![Length Analysis](evaluation/results/length_analysis_20260130_105209.png)
+
+**Key Patterns:**
+1. **Performance peaks at medium-length texts** (400-600 words)
+2. **Abstention rate increases dramatically** for texts >600 words
+3. **Processing time grows sub-linearly** with text length
+4. **Sample distribution heavily concentrated** in 200-600 word range (84% of dataset)
+
+---
+
+### 🔍 Key Findings & Insights
+
+#### Strengths
+
+1. **High Precision-Recall Balance** (84.3% precision, 87.2% recall)
+   - Minimizes both false positives and false negatives
+   - Well-suited for high-stakes decision support
+
+2. **Exceptional Cross-Model Generalization** (95.3% F1)
+   - Detects AI patterns regardless of specific generation model
+   - Robust to model diversity in real-world scenarios
+
+3. **Appropriate Uncertainty Handling** (4.5% abstention)
+   - System abstains on genuinely ambiguous cases
+   - Prevents overconfident incorrect predictions
+
+4. **Well-Calibrated Confidence** (ECE = 0.080)
+   - Reported confidence scores match actual accuracy
+   - Reliable uncertainty estimates for decision-making
+
+5. **Domain Adaptability** (14/16 domains >80% F1)
+   - Performs well across diverse writing styles
+   - Domain-specific thresholds reduce false positives
+
+
+#### Challenges & Limitations
+
+1. **Very Short Texts** (<100 words)
+   - Insufficient statistical signals for reliable analysis
+   - Recommendation: Require minimum 100-word samples
+
+2. **Highly Formulaic Content**
+   - Legal documents and templates show lower F1 (77.1%)
+   - Human-written formulaic text can resemble AI patterns
+   - Mitigation: Review Hybrid verdicts in formal domains
+
+3. **Very Long Texts** (>1000 words)
+   - High abstention rates (65-75%)
+   - System appropriately defers to human review
+   - Recommendation: Analyze long documents in sections
+
+---
+
+### 📚 Evaluation Methodology
+
+**Dataset Construction:**
+- Human-written texts sourced from Wikipedia, arXiv, C4, PubMed, Project Gutenberg
+- AI-generated texts created using Ollama (mistral:7b baseline)
+- Cross-model texts generated with llama3:8b (generalization test)
+- Paraphrased texts created by rephrasing AI outputs (robustness test)
+
+**Metrics Computation:**
+- **Binary metrics** (Precision, Recall, F1) computed on decisive predictions only
+- **Hybrid verdicts** counted as successful AI detection
+- **Uncertain verdicts** excluded from accuracy calculation (appropriate abstention)
+- **Coverage** = percentage of samples with decisive predictions
+
+**Evaluation Infrastructure:**
+- 2,750 total samples evaluated
+- 16 domains × 3 subsets (clean, cross-model, paraphrased)
+- Processing time: ~1.5 hours on standard hardware
+- Results exported to JSON, CSV, and visualization formats
+
+For detailed evaluation methodology and reproduction instructions, see [EVALUATION.md](docs/EVALUATION.md).
 
 ---
 

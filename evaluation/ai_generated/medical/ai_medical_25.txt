@@ -1,13 +1,15 @@
-Title: A Rare Case of Chronic Intestinal Pseudo-Obstruction in a Pediatric Patient
+Title: A Case Study on Successful Management of Acute Pancreatitis Complicated by Sepsis in a Post-ERCP Patient
 
-Abstract:
+Abstract
 
-We present an unusual case of a 12-year-old male patient who was admitted to our pediatric department due to recurrent abdominal pain, vomiting, and constipation for the past six months. The patient's medical history was unremarkable with no previous surgeries or significant familial medical issues.
+Background: Acute pancreatitis (AP) is a common gastrointestinal disorder, often induced by endoscopic retrograde cholangiopancreatography (ERCP). The complications of AP, such as sepsis, can lead to significant morbidity and mortality. This case report illustrates an effective management approach for acute pancreatitis complicated by sepsis in a post-ERCP patient.
 
-Upon initial examination, the patient appeared malnourished and showed signs of severe dehydration. Laboratory tests revealed an elevated white blood cell count (WBC: 15.2 x 10^3/µL) and a slightly increased C-reactive protein (CRP: 12 mg/dL). Abdominal X-ray showed multiple air-fluid levels, suggesting mechanical obstruction. However, contrast enema revealed no evidence of anatomic obstruction.
+Case Presentation: A 65-year-old male with a history of choledocholithiasis presented with epigastric abdominal pain, nausea, and vomiting for three days following an uncomplicated ERCP procedure. The initial laboratory results revealed leukocytosis (14.5 x 10^3/μL), elevated serum amylase (257 U/L) and lipase (896 U/L), and C-reactive protein (CRP, 212 mg/L). The patient was diagnosed with acute pancreatitis based on the Atlanta criteria. On hospital day three, the patient developed fever (39°C), tachycardia, hypotension, and respiratory failure, indicative of sepsis. Computed tomography (CT) scan revealed necrotizing pancreatitis with signs of infection. The patient was immediately administered broad-spectrum antibiotics, fluids for resuscitation, and vasopressors for blood pressure support.
 
-A diagnosis of Chronic Intestinal Pseudo-Obstruction (CIPO) was made based on the absence of a mechanical cause for the symptoms and the response to nasogastric suction and intravenous fluids. The patient was managed conservatively with nasogastric suction, total parenteral nutrition, and pain control.
+Diagnostic Approach: Given the progression to sepsis, a percutaneous drainage of the necrotic collection under CT guidance was performed on hospital day four. A sample from the drainage site was sent for microbiology culture. The patient was also monitored closely for organ failure and received intensive care unit (ICU) management.
 
-After four weeks of hospitalization, the patient showed significant improvement in symptoms and was discharged with a plan for regular follow-ups, dietary modifications, and drug therapy (e.g., erythromycin) to aid intestinal motility.
+Treatment: The patient responded well to the aggressive treatment, with resolution of sepsis symptoms within 48 hours. The antibiotics were adjusted based on the microbiology culture results, which identified Enterococcus faecium as the causative organism. The patient remained in the ICU for ten days and was transitioned to a regular ward after stabilization.
 
-This case underscores the importance of considering rare conditions such as CIPO in pediatric patients presenting with symptoms suggestive of mechanical obstruction but lacking definitive radiological findings. Early recognition and appropriate management can lead to improved outcomes for these patients.
+Outcomes: The patient made a full recovery and was discharged after 15 days of hospitalization. Follow-up CT scan revealed resolution of the necrotic collection, and the patient reported no persisting symptoms at the three-month follow-up visit.
+
+Conclusion: This case highlights the importance of close monitoring and aggressive management in patients with acute p

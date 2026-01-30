@@ -1,30 +1,37 @@
-Case Title: Smith v. Johnson
+Title: Data Processing Agreement (DPA) Clause
 
-Court: Supreme Court of the State of New York, County of XYZ
+1. Introduction
 
-Case No.: ABC-123456
+This Data Processing Agreement ("DPA") is entered into between [Client Name] ("Client") and [Service Provider Name] ("Service Provider"), effective as of the Effective Date set forth in the Master Service Agreement or any other agreement governing the use of the Services (the "Agreement"). This DPA supplements the Agreement and is intended to meet the requirements of Data Protection Legislation.
 
-Date: January 1, 20XX
+2. Definitions
 
-Judgment:
+In this DPA, the following terms shall have the meanings set out below and cognate terms shall be construed accordingly:
 
-In the matter between John Doe Smith, Plaintiff, and Jane Doe Johnson, Defendant, the Court hereby issues the following judgment:
+"Data Protection Legislation" means all applicable data protection and privacy legislation in force from time to time including the General Data Protection Regulation (EU) 2016/679;
 
-WHEREAS, this action arises out of a dispute concerning breach of contract in regards to the sale of real property located at 123 Main Street, Anytown, USA (the "Property") between the Plaintiff and the Defendant;
+"Personal Data" means any information relating to an identified or identifiable natural person;
 
-WHEREAS, on March 15, 20XX, a written agreement of sale was executed by both parties, wherein the Defendant agreed to sell and convey the Property to the Plaintiff for the sum of $500,000 (the "Purchase Price");
+"Data Subject" means an identified or identifiable natural person;
 
-WHEREAS, the Plaintiff has alleged that the Defendant failed to comply with the terms of the agreement, specifically by failing to transfer clear title to the Property;
+"Processing" means any operation or set of operations which is performed upon Personal Data, whether or not by automatic means, such as collection, recording, organization, structuring, storage, adaptation or alteration, retrieval, consultation, use, disclosure by transmission, dissemination or otherwise making available, alignment or combination, restriction, erasure or destruction;
 
-WHEREAS, on June 30, 20XX, the Plaintiff notified the Defendant of their intention to terminate the agreement and seek damages for breach;
+"Controller" means the natural or legal person, public authority, agency or other body which, alone or jointly with others, determines the purposes and means of the Processing of Personal Data;
 
-WHEREAS, the Plaintiff has provided evidence that demonstrates the Defendant's inability to transfer clear title due to outstanding liens against the Property;
+"Processor" means a natural or legal person, public authority, agency or other body which processes Personal Data on behalf of the Controller.
 
-WHEREAS, the Defendant has failed to provide a valid defense or counterclaim in response to the Plaintiff's allegations;
+3. Processor's Obligations
 
-NOW, THEREFORE, IT IS ORDERED THAT:
+3.1 The Service Provider acknowledges and agrees that it is acting as a Processor in relation to the Personal Data processed pursuant to this Agreement. The Service Provider shall:
 
-1. The Defendant is hereby found guilty of breach of contract as defined by Section 14(a) of the General Obligations Law of the State of New York.
-2. The Plaintiff shall be awarded actual damages in the amount of $50,000, representing the costs incurred to investigate and remedy the Defendant's failure to transfer clear title to the Property.
-3. The Defendant is hereby ordered to pay the Plaintiff the sum of $50,000 within 45 days from the date of this judgment.
-4. The Plaintiff shall be entitled to interest
+(a) process the Personal Data only on documented instructions from the Client, unless required to do so by applicable law to which the Service Provider is subject; in such a case, the Service Provider shall inform the Client of that legal requirement before processing, unless that law prohibits such information on important grounds of public interest;
+
+(b) ensure that persons authorized to process the Personal Data have committed themselves to confidentiality or are under an appropriate statutory obligation of confidentiality;
+
+(c) implement appropriate technical and organizational measures to ensure a level of security appropriate to the risk, including inter alia as appropriate:
+
+   (i) the pseudonymization and encryption of Personal Data;
+
+   (ii) ensuring ongoing confidentiality, integrity, availability and resilience of processing systems and services;
+
+   (iii) ensuring that availability of and access to Personal Data

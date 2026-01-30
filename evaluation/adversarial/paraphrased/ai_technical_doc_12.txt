@@ -1,0 +1,51 @@
+Title: API Guide - Managing User Accounts via Endpoint
+
+## Handling User Accounts through the Endpoint
+
+The `User Management` API offers a RESTful service for managing user accounts within our system. This guide covers the details of the endpoint, request parameters, response formats, authentication prerequisites, sample requests, error codes, and usage guidelines.
+
+### Overview of the Endpoint
+
+The User Management API is accessible at `https://api.yourdomain.com/v1/users`. This service supports creating, retrieving, updating, and deleting user accounts.
+
+### Request Structure
+
+#### HTTP Methods:
+- `GET`: Retrieve a list of users or a specific user based on ID.
+- `POST`: Create a new user account.
+- `PUT`: Modify an existing user account.
+- `DELETE`: Remove an existing user account.
+
+#### Request Data (for POST and PUT methods)
+
+```json
+{
+  "user_id": "",
+  "username": "",
+  "password": "",
+  "email": "",
+  "first_name": "",
+  "last_name": ""
+}
+```
+- `user_id` (string, optional): Unique identifier for the user. If omitted during creation, the server will assign one automatically.
+- `username` (string, mandatory): The username for the user account.
+- `password` (string, mandatory): The password for the user account.
+- `email` (string, mandatory): The email address associated with the user account.
+- `first_name` (string, optional): The first name of the user.
+- `last_name` (string, optional): The last name of the user.
+
+### Response Format
+
+#### Successful Responses
+
+```json
+{
+  "user_id": "",
+  "username": "",
+  "email": "",
+  "first_name": "",
+  "last_name": ""
+}
+```
+- `user_id` (string): Unique identifier for

@@ -1,0 +1,41 @@
+Title: User Account Management API Endpoint
+
+## Managing User Accounts
+
+This guide details the `User Account Management` endpoint of our API, which facilitates creating, reading, updating, and deleting user accounts.
+
+### Endpoint Overview
+
+#### URL Base:
+`https://api.example.com/v1`
+
+#### Endpoint:
+`/accounts/users`
+
+### HTTP Verbs and Usage
+
+- `GET`: Retrieve a list of users (paginated).
+- `POST`: Register a new user account.
+- `PATCH`: Modify an existing user account.
+- `DELETE`: Remove an existing user account.
+
+#### GET Request Query Parameters
+
+| Parameter Name | Data Type | Description                              | Default Value  | Is Required |
+|----------------|----------|------------------------------------------|---------------|-------------|
+| limit          | integer  | Maximum number of users per page response | 20            | No          |
+| offset         | integer  | Starting index for the paginated list    | 0             | No          |
+| sort           | string   | Sorting order (asc or desc)             | asc           | No          |
+| column         | string   | Sorted column name                      | None          | No          |
+
+#### Request Bodies for POST, PATCH Requests
+
+| Parameter Name | Data Type | Description                                                               | Is Required |
+|----------------|----------|---------------------------------------------------------------------------|-------------|
+| id             | string   | Unique identifier of the user (auto-generated upon creation)           | No          |
+| username       | string   | Username for the account (must be unique)                                  | Yes         |
+| password       | string   | Password for the account (securely stored; never sent over API)            | Yes         |
+| email          | string   | Email address for the user (must be unique and valid)                      | Yes         |
+| first_name     | string   | First name of the user                                                    | No          |
+| last_name      | string   | Last name of the user                                                     | No          |
+| roles

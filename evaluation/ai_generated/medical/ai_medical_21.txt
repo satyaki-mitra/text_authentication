@@ -1,13 +1,13 @@
-Title: A Rare Case of Recurrent Angioleiomyoma: Diagnostic and Management Challenges
+Title: A Case Study on the Successful Management of Severe Pemphigus Vulgaris in an Elderly Patient
 
-Abstract:
+Abstract
 
-We present an unusual case of a 48-year-old female patient who presented with recurrent, painful subcutaneous nodules over a period of eight years. The initial diagnosis was misclassified as lipoma due to the similarity in clinical presentation. However, upon excisional biopsy, histopathological examination revealed the lesions to be Angioleiomyomas, a rare type of smooth muscle tumor.
+Background: Pemphigus vulgaris (PV) is a rare autoimmune blistering disorder characterized by intraepidermal acantholysis and autoantibodies against desmoglein 3 and 1. The disease primarily affects middle-aged adults, with the elderly population being underrepresented in current literature. This case report highlights an uncommon occurrence of severe PV in an elderly patient and the successful management strategy employed.
 
-The patient initially presented with a solitary nodule on her right forearm, which was misdiagnosed as lipoma and managed conservatively. Over the next eight years, multiple similar lesions appeared on various parts of her body, causing significant cosmetic disfigurement and occasional pain. The recurrence and unusual location of these lesions prompted a re-evaluation, leading to the correct diagnosis.
+Case Presentation: An 80-year-old Caucasian female presented to our dermatology clinic with a three-week history of painful mucocutaneous bullous lesions and erosions on the oral mucosa, nasolabial folds, and extremities. On examination, multiple flaccid bullae with hemorrhagic crusts were observed, consistent with PV (Figure 1). Direct immunofluorescence of a skin biopsy revealed intercellular IgG deposits (Figure 2), confirming the diagnosis. The patient's comorbidities included hypertension, diabetes mellitus, and chronic kidney disease.
 
-The patient underwent complete surgical excision of all visible lesions under local anesthesia. Postoperative recovery was uneventful. Given the rarity and potential for recurrence of Angioleiomyomas, regular follow-ups are recommended along with prompt intervention for any new or recurrent lesions.
+Diagnostic Approach: Given the patient's age and atypical presentation, a thorough workup was performed to rule out other potential causes of bullous lesions, such as epidermolysis bullosa acquisita, bullous pemphigoid, and linear IgA dermatosis. Laboratory tests, including complete blood count (CBC), comprehensive metabolic panel (CMP), and autoimmune panel, were unremarkable. Indirect immunofluorescence testing confirmed the presence of anti-desmoglein 3 and 1 antibodies, further supporting the diagnosis of PV.
 
-This case underscores the importance of a thorough differential diagnosis, especially for uncommon conditions that can mimic more common ones. It also highlights the need for surgical excision as the most effective management strategy for Angioleiomyomas, particularly in cases of recurrence and cosmetically bothersome lesions.
+Treatment: Due to the patient's advanced age, multiple comorbidities, and severe disease presentation, a stepwise treatment approach was initiated. Prednisone 60 mg daily was started, followed by the addition of azathioprine 150 mg daily for immunosuppression after one month due to inadequate response to corticosteroids alone. Intravenous immunoglobulin (IVIG) therapy was also initiated at a dose of 2 g/kg divided over two days, repeated every three weeks. The patient's lesions were treated with topical antimicrobial and protective ointments to prevent secondary infections and promote healing.
 
-Keywords: Angioleiomyoma, Smooth muscle tumor, Recurrent, Diagnosis, Management, Surgical excision
+Outcomes: After six months of treatment, the patient experienced a significant reduction in bullous lesions and erosions (Figure 3).

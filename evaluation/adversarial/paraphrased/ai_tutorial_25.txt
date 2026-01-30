@@ -1,0 +1,27 @@
+Title: Establishing a Local WordPress Development Environment Utilizing WAMP Server - A Guide for Novices
+
+In this manual, we will walk you through the process of constructing a local development environment for WordPress using the WAMP (Windows, Apache, MySQL, PHP) server. This setup is crucial if you aim to create and test your WordPress websites locally prior to their public release online.
+
+**Step 1: Obtain and Install WAMP Server**
+
+1.1 Navigate to the official WAMPServer website at <https://sourceforge.net/projects/wampserver/>, download the most recent version of the WAMP server compatible with your system specifications. Opt for either the Basic or Pro edition according to your preferences.
+
+1.2 Upon download completion, run the installer file and follow the guidelines to finalize the installation process. During setup, you'll be prompted to specify a directory for WAMP, default is C:\wamp64. Ensure that this location is committed to memory, as it will be referenced throughout the tutorial.
+
+**Step 2: Activate the WAMP Server Services**
+
+2.1 Once installed, locate the WAMP manager icon in your system tray (typically positioned at the bottom right of your screen). Right-click on it and select "Start All Services" or click on the Apache and MySQL icons to activate them individually.
+
+2.2 Upon starting both services, a green status symbol should appear next to each service's icon in the WAMP manager tray, signifying that they are functioning correctly.
+
+**Step 3: Access PHPMyAdmin Interface**
+
+3.1 Launch your web browser and input "localhost" into the address bar. You will be re-directed to the WAMPServer homepage where you can access PHPMyAdmin by clicking on the "PHPMyAdmin" link under the "Tools" section.
+
+3.2 Input your MySQL username (root) and password (which is initially empty, though it should be altered later). Click "Go" to enter the PHPMyAdmin interface for managing databases.
+
+**Step 4: Acquire and Install WordPress**
+
+4.1 Travel to the official WordPress website at <https://wordpress.org/> and click on the "Download WordPress" button. Select the latest version of WordPress and download the .zip file.
+
+4.2 Unzip the retrieved .zip file into a new folder within your W

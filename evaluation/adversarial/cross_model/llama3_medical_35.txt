@@ -1,0 +1,23 @@
+**Clinical Abstract: A Rare Case of Paroxysmal Nocturnal Hemoglobinuria**
+
+Title: Paroxysmal nocturnal hemoglobinuria: a rare diagnosis in a young adult patient.
+
+Abstract:
+
+Paroxysmal nocturnal hemoglobinuria (PNH) is a rare, acquired hematopoietic disorder characterized by the presence of PNH clones in peripheral blood. We report a case of a 25-year-old male who presented with symptoms of fatigue, dyspnea, and dark urine. Laboratory tests revealed anemia, thrombocytopenia, and mild neutropenia.
+
+Upon further evaluation, we detected a positive Ham test, which is a diagnostic marker for PNH. The patient's bone marrow biopsy showed a hypocellular marrow with no evidence of fibrosis or infiltrative disease. Flow cytometry analysis demonstrated a 15% positivity for glycophorin A (GPA) on granulocytes, confirming the diagnosis of PNH.
+
+The patient was started on oral anticoagulation therapy and intravenous immunoglobulin to prevent thrombotic complications. He received regular blood transfusions to manage his anemia. After six months of treatment, the patient's symptoms resolved, and his laboratory tests normalized.
+
+Discussion:
+
+PNH is a rare disorder characterized by a clonal expansion of hematopoietic stem cells with a mutation in the PIGA gene, leading to the production of dysfunctional erythrocytes, leukocytes, and platelets. The diagnosis of PNH typically requires a combination of laboratory tests, including the Ham test, flow cytometry, and bone marrow biopsy.
+
+Our case highlights the importance of considering PNH in young adult patients presenting with unexplained anemia, thrombocytopenia, or neutropenia. Prompt diagnosis and treatment can significantly improve patient outcomes by preventing thrombotic complications and reducing the risk of progression to aplastic anemia.
+
+Conclusion:
+
+This case report underscores the need for heightened awareness among healthcare providers of PNH as a potential underlying cause of unexplained hemolysis, particularly in young adult patients. Early detection and management can lead to improved quality of life and reduced morbidity for these individuals.
+
+**Keywords:** Paroxysmal nocturnal hemoglobinuria, Ham test, flow cytometry, bone marrow biopsy, anemia, thrombocytopenia, neutropenia

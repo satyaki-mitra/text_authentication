@@ -1,0 +1,11 @@
+Title: Unusual Response to Immunotherapy in an Elderly Patient Battling Advanced Malignant Pleural Mesothelioma
+
+Introduction: The aggressive and uncommon malignancy, Malignant Pleural Mesothelioma (MPM), often linked to asbestos exposure, carries a grim outlook. Standard treatment methods such as chemotherapy, surgery, or radiotherapy provide limited success rates and survival benefits. Immunotherapeutic agents like pembrolizumab have shown promise in certain cases, but their efficacy in the elderly population is yet to be fully established.
+
+Case Study: A 78-year-old former shipyard worker, with a history of prolonged asbestos exposure, experienced progressing breathlessness and dry cough over a three-month period. Physical examination indicated weaker lung sounds on the left side, while chest X-ray revealed left pleural effusion. Diagnostic thoracentesis confirmed MPM, and a subsequent Positron Emission Tomography-Computed Tomography (PET-CT) scan depicted multiple nodules in both lungs and enlarged mediastinal lymph nodes. The patient's health status was classified as Eastern Cooperative Oncology Group Performance Status 2 (ECOG PS 2).
+
+Given the patient's advanced age, poor health status, and widespread disease, initial treatment focused on symptom management via palliative care. After discussing potential benefits and risks with the patient, a decision was made to administer immunotherapy using pembrolizumab due to its favorable safety profile. The patient received an initial dose of 200 mg intravenously every three weeks.
+
+Follow-up assessments demonstrated remarkable improvement post treatment. After two cycles of pembrolizumab, the patient's breathlessness and cough significantly reduced (ECOG PS 1), and a repeat PET-CT scan revealed a significant decrease in the size of lung nodules and resolution of mediastinal lymphadenopathy. The patient continued to respond positively to treatment for 18 months, experiencing minimal side effects and no disease progression.
+
+Discussion: This case report underscores an uncommon response to pembrolizumab in an elderly patient with advanced MPM. While the majority of immunotherapy trials exclude older adults due to safety and efficacy concerns, our case suggests that this treatment approach could benefit some elderly patients

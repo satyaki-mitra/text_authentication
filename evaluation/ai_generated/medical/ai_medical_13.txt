@@ -1,15 +1,15 @@
-Title: An Uncommon Case of Drug-Induced Pancytopenia: A Case Study
+Title: A Case Study on Successful Treatment of Refractory Gastroesophageal Variceal Hemorrhage with TIPS Procedure
 
-Abstract:
+Abstract
 
-We present an interesting and rare case of drug-induced pancytopenia secondary to the use of a commonly prescribed nonsteroidal anti-inflammatory drug (NSAID), naproxen. The patient, a 58-year-old female with a history of rheumatoid arthritis, presented with symptoms of fatigue, pallor, and recurrent infections over a period of three months.
+Background: Gastroesophageal variceal (GEV) hemorrhage is a life-threatening complication of portal hypertension, often occurring in patients with liver cirrhosis. Despite advancements in endoscopic and pharmacologic therapies, refractory GEV bleeding remains a significant challenge. Transjugular intrahepatic portosystemic shunt (TIPS) has emerged as a potential salvage option for such cases.
 
-Upon admission, complete blood count (CBC) revealed a hemoglobin level of 7 g/dL (normal range: 12-15 g/dL), white blood cell count of 2.5 x 10^9/L (normal range: 4-11 x 10^9/L), and a platelet count of 30 x 10^9/L (normal range: 150-400 x 10^9/L). Bone marrow aspiration showed hypocellularity, suggesting pancytopenia.
+Case Presentation: A 62-year-old male patient with a history of alcohol-induced liver cirrhosis and Child-Pugh Class B liver disease presented with hematemesis and melena, suggestive of GEV hemorrhage. Despite repeated endoscopic sclerotherapy sessions, the patient continued to experience recurrent bleeding. The patient's Model for End-stage Liver Disease (MELD) score was 18 upon admission, indicating a high risk of mortality.
 
-The patient's medications were reviewed, and naproxen was identified as the potential causative agent. The NSAID was discontinued, and the patient was started on iron supplementation and erythropoietin for anemia management.
+Diagnostic Approach: An initial esophagogastroduodenoscopy confirmed the presence of large esophageal varices and active bleeding. A CT scan with contrast revealed significant portal hypertension, while an angiography further demonstrated the dilated esophageal veins and a portal pressure gradient of 20 mmHg, confirming refractory GEV hemorrhage.
 
-Over a period of six weeks, the patient's CBC showed gradual improvement. Hemoglobin level increased to 10.5 g/dL, white blood cell count to 6 x 10^9/L, and platelet count to 120 x 10^9/L. The recovery underscores the importance of careful medication review in cases of unexplained pancytopenia.
+Treatment: Given the patient's poor response to endoscopic therapy and high MELD score, it was decided to proceed with a TIPS procedure. The procedure was successful, resulting in an immediate reduction of the portal pressure gradient to 12 mmHg. Post-procedural management included antibiotics for infection prophylaxis and close monitoring for encephalopathy due to hepatic dysfunction.
 
-Keywords: Drug-induced pancytopenia, Naproxen, Rare side effects, Anemia, Bone marrow aspiration
+Outcomes: After TIPS placement, the patient's bleeding ceased immediately, and there were no further episodes of GEV hemorrhage during a six-month follow-up period. The MELD score improved to 12, indicating reduced mortality risk. However, the patient developed mild hepatic encephalopathy one month post-procedure, which was managed conservatively with lactulose and neomycin.
 
-This case highlights the importance of considering drug-induced pancytopenia in the differential diagnosis of unexplained cytopenias. Clinicians should be aware of the potential for common medications like naproxen to cause such rare but serious side effects.
+Discussion: This case highlights the potential benefits of TIPS in managing refractory GEV hemorrhage. The procedure not only led to the cessation of bleeding but also improved the patient's MELD score, suggesting a reduced risk of mortality. However, it is essential to consider the potential risks associated with TIPS, such as hepatic en

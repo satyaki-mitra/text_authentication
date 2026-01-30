@@ -1,0 +1,22 @@
+**Clinical Abstract:**
+
+**Title:** A Rare Case of Takotsubo Cardiomyopathy Associated with Hypothyroidism and Prolonged QT Interval
+
+**Introduction:** Takotsubo cardiomyopathy, also known as stress cardiomyopathy or broken heart syndrome, is a rare condition characterized by transient left ventricular dysfunction triggered by emotional or physical stress. We report a unique case of Takotsubo cardiomyopathy in a 65-year-old woman with underlying hypothyroidism and prolonged QT interval, highlighting the importance of considering this diagnosis in patients presenting with atypical chest pain.
+
+**Case Report:** Our patient presented to the emergency department with complaints of severe chest pressure and shortness of breath. Her medical history was significant for hypothyroidism and hypertension. Initial electrocardiogram (ECG) revealed a prolonged QT interval (540 ms), which prompted further evaluation. Cardiac troponin I levels were elevated at 0.8 ng/mL, consistent with myocardial injury.
+
+Echocardiography demonstrated a left ventricular ejection fraction (LVEF) of 25%, with hypokinesis in the anterolateral and apical regions. Coronary angiogram was normal, excluding obstructive coronary artery disease. Cardiac magnetic resonance imaging revealed a pattern consistent with Takotsubo cardiomyopathy.
+
+**Discussion:** Our case highlights the importance of considering Takotsubo cardiomyopathy in patients presenting with atypical chest pain and cardiac biomarker elevation, particularly in those with underlying hypothyroidism. The prolonged QT interval in our patient suggests an increased risk of torsades de pointes, emphasizing the need for close monitoring and prophylactic measures.
+
+The coexistence of hypothyroidism and Takotsubo cardiomyopathy is rare, but not unprecedented. Hypothyroidism can contribute to the development of cardiac arrhythmias and QT prolongation, increasing the risk of malignant ventricular tachyarrhythmias.
+
+**Conclusion:** This case underscores the importance of considering Takotsubo cardiomyopathy in patients presenting with atypical chest pain and cardiac biomarker elevation, even in the presence of underlying hypothyroidism. A high index of suspicion is necessary to identify this condition promptly, as timely recognition can significantly impact patient outcomes.
+
+**Key Points:**
+
+* Rare case of Takotsubo cardiomyopathy associated with hypothyroidism and prolonged QT interval
+* Importance of considering this diagnosis in patients presenting with atypical chest pain
+* Coexistence of hypothyroidism and Takotsubo cardiomyopathy is rare, but not unprecedented
+* Close monitoring and prophylactic measures are necessary to prevent malignant ventricular tachyarrhythmias.

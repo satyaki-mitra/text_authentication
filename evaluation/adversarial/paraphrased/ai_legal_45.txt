@@ -1,0 +1,29 @@
+Title: Data Handling Agreement - Clause 4: Individual Rights
+
+4. Data Subject Rights Management
+
+4.1 Data Controller Informed of Subject Requests
+
+4.1.1 Upon receiving a request from an individual (hereafter "Data Subject") for access, modification, deletion, or restriction of their personal data (referred to as "Data Subject Request"), the Data Processor shall notify the Data Controller immediately, provided that this is legally permissible. The Data Processor will not respond to such a request without prior written consent from the Data Controller, unless mandated by law.
+
+4.1.2 Upon receiving any Data Subject Request, the Data Processor will collaborate with the Data Controller and take reasonable steps to aid the Data Controller in fulfilling its obligations under this Agreement and applicable data protection laws. This may include providing the Data Controller with necessary information and assistance to respond to the request.
+
+4.2 Responding to Data Subject Requests
+
+4.2.1 The Data Processor shall respond to a Data Subject Request promptly, and within the timeframe prescribed by applicable data protection laws. The response will be directed to the Data Subject, unless local law requires it to be addressed to the Data Controller.
+
+4.2.2 If the Data Processor is unable to fully address a Data Subject Request within the required timeframe, it shall provide the Data Subject with a written explanation outlining the reasons for the delay and the estimated response time.
+
+4.3 Data Export Requests
+
+4.3.1 If personal data is processed automatically under this Agreement, at the request of the Data Controller, the Data Processor will provide the Data Subject with a copy of their data in a commonly used, machine-readable format.
+
+4.3.2 The Data Processor may charge a reasonable fee for any such data export requests, based on administrative costs. However, the fee should not impose an unreasonable burden on the Data Subject.
+
+4.4 Data Breach Notification
+
+4.4.1 In case of a data breach, the Data Processor shall comply with its obligations under Clause 7 (Data Security) and immediately inform the Data Controller of the breach. The notification shall include details about the nature of the breach, the affected individuals, and measures taken or proposed to rectify the breach and minimize potential harm.
+
+4.5 Documentation of Processing Activities
+
+4.5.1 The Data Processor will maintain records of all processing activities carried out under this Agreement, including logs of Data Subject Requests. These records shall be made available to the Data Controller upon request.

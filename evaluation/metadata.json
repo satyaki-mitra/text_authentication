@@ -1,12 +1,12 @@
 {
     "dataset_name": "TEXT-AUTH-Eval",
     "version": "1.0",
-    "total_samples": 1400,
-    "human_samples": 700,
-    "ai_samples": 700,
+    "total_samples": 7502,
+    "human_samples": 781,
+    "ai_samples": 781,
     "challenge_samples": {
-        "paraphrased": 0,
-        "cross_model": 0
+        "paraphrased": 2500,
+        "cross_model": 3440
     },
     "domains": [
         "general",

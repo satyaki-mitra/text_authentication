@@ -17,22 +17,33 @@ class MultiPerturbationStabilityMetric(BaseMetric):
     """
     Multi-Perturbation Stability Metric (MPSM) 
     
-    A hybrid approach for combining multiple perturbation techniques for robust synthetic-generated text detection
+    A hybrid approach combining multiple perturbation techniques for robust synthetic-generated text detection
+    based on proper statistical foundations and DetectGPT methodology.
+    
+    Key Concept:
+    - Synthetic text has smoother log-likelihood surfaces (more stable under perturbation)
+    - Human text has rougher log-likelihood surfaces (less stable under perturbation)
     
     Measures:
-    - Text stability under random perturbations
-    - Likelihood curvature analysis
-    - Masked token prediction analysis
+    - Stability Score: Mean absolute log-probability difference between original and perturbed texts
+      → Lower stability indicates synthetic text (text remains predictable after perturbations)
+      → Higher stability indicates authentic text (text becomes less predictable after perturbations)
+    
+    - Curvature Score: Variance of log-probability differences across perturbations
+      → Lower curvature indicates smoother likelihood surface (more synthetic)
+      → Higher curvature indicates rougher likelihood surface (more authentic)
+    
+    - Variance Analysis: Consistency of stability across text chunks
 
     Perturbation Methods:
     - Word deletion & swapping
-    - RoBERTa mask filling
+    - DistilRoBERTa mask filling (DetectGPT-inspired, lighter than T5)
     - Synonym replacement
-    - Chunk-based stability Analysis
+    - Chunk-based stability analysis
     """
     def __init__(self):
         super().__init__(name        = "multi_perturbation_stability",
-                         description = "Text stability analysis under multi-perturbations techniques",
+                         description = "Text stability analysis using log-probability perturbations",
                         )
         
         self.gpt_model      = None
@@ -50,7 +61,7 @@ class MultiPerturbationStabilityMetric(BaseMetric):
         try:
             logger.info("Initializing MultiPerturbationStability metric...")
             
-            # Load GPT-2 model for likelihood calculation
+            # Load GPT-2 model for log-probability calculation
             model_manager = get_model_manager()
             gpt_result    = model_manager.load_model(model_name = "multi_perturbation_base")
             
@@ -109,8 +120,8 @@ class MultiPerturbationStabilityMetric(BaseMetric):
             
             # Test GPT-2 model
             if self.gpt_model and self.gpt_tokenizer:
-                gpt_likelihood = self._calculate_likelihood(text = test_text)
-                logger.info(f"GPT-2 test - Likelihood: {gpt_likelihood:.4f}")
+                gpt_log_prob = self._calculate_log_probability(text = test_text)
+                logger.info(f"GPT-2 test - Log-probability: {gpt_log_prob:.4f}")
             
             else:
                 logger.error("GPT-2 model not loaded")
@@ -141,7 +152,7 @@ class MultiPerturbationStabilityMetric(BaseMetric):
 
     def compute(self, text: str, **kwargs) -> MetricResult:
         """
-        Compute MultiPerturbationStability analysis with FULL DOMAIN THRESHOLD INTEGRATION
+        Compute MultiPerturbationStability analysis
         """
         try:
             if ((not text) or (len(text.strip()) < self.params.MIN_TEXT_LENGTH_FOR_ANALYSIS)):
@@ -244,7 +255,7 @@ class MultiPerturbationStabilityMetric(BaseMetric):
 
     def _calculate_stability_features(self, text: str) -> Dict[str, Any]:
         """
-        Calculate comprehensive MultiPerturbationStability features with diagnostic logging
+        Calculate comprehensive MultiPerturbationStability features
         """
         if not self.gpt_model or not self.gpt_tokenizer:
             return self._get_default_features()
@@ -253,74 +264,66 @@ class MultiPerturbationStabilityMetric(BaseMetric):
             # Preprocess text for better analysis
             processed_text        = self._preprocess_text_for_analysis(text = text)
             
-            # Calculate original text likelihood
-            original_likelihood   = self._calculate_likelihood(text = processed_text)
-            logger.debug(f"Original likelihood: {original_likelihood:.4f}")
+            # Calculate original text log-probability
+            original_log_prob     = self._calculate_log_probability(text = processed_text)
+            logger.debug(f"Original log-probability: {original_log_prob:.4f}")
             
-            # Generate perturbations and calculate perturbed likelihoods
+            # Generate perturbations and calculate perturbed log-probabilities
             perturbations         = self._generate_perturbations(text = processed_text)
             logger.debug(f"Generated {len(perturbations)} perturbations")
 
-            perturbed_likelihoods = list()
+            perturbed_log_probs   = list()
             
             for idx, perturbed_text in enumerate(perturbations):
                 if (perturbed_text and (perturbed_text != processed_text)):
-                    likelihood = self._calculate_likelihood(text = perturbed_text)
+                    log_prob = self._calculate_log_probability(text = perturbed_text)
                     
-                    if (likelihood > self.params.ZERO_TOLERANCE):
-                        perturbed_likelihoods.append(likelihood)
-                        logger.debug(f"Perturbation {idx}: likelihood={likelihood:.4f}")
+                    if (abs(log_prob) > self.params.ZERO_TOLERANCE):
+                        perturbed_log_probs.append(log_prob)
+                        logger.debug(f"Perturbation {idx}: log_prob={log_prob:.4f}")
             
-            logger.info(f"Valid perturbations: {len(perturbed_likelihoods)}/{len(perturbations)}")
+            logger.info(f"Valid perturbations: {len(perturbed_log_probs)}/{len(perturbations)}")
             
             # Calculate stability metrics
-            if perturbed_likelihoods and (len(perturbed_likelihoods) >= self.params.MIN_VALID_PERTURBATIONS):
-                stability_score          = self._calculate_stability_score(original_likelihood   = original_likelihood, 
-                                                                           perturbed_likelihoods = perturbed_likelihoods,
+            if perturbed_log_probs and (len(perturbed_log_probs) >= self.params.MIN_VALID_PERTURBATIONS):
+                # STABILITY: Mean absolute log-probability difference
+                stability_score          = self._calculate_stability_score(original_log_prob   = original_log_prob, 
+                                                                           perturbed_log_probs = perturbed_log_probs,
                                                                           )
 
-                curvature_score          = self._calculate_curvature_score(original_likelihood   = original_likelihood, 
-                                                                           perturbed_likelihoods = perturbed_likelihoods,
+                # CURVATURE: Variance of log-probability differences
+                curvature_score          = self._calculate_curvature_score(original_log_prob   = original_log_prob, 
+                                                                           perturbed_log_probs = perturbed_log_probs,
                                                                           )
 
-                variance_score           = np.var(perturbed_likelihoods) if (len(perturbed_likelihoods) > 1) else 0.0
-                avg_perturbed_likelihood = np.mean(perturbed_likelihoods)
+                variance_score           = np.var(perturbed_log_probs) if (len(perturbed_log_probs) > 1) else 0.0
+                avg_perturbed_log_prob   = np.mean(perturbed_log_probs)
                 
                 logger.info(f"Stability: {stability_score:.3f}, Curvature: {curvature_score:.3f}")
             
             else:
                 # Use meaningful defaults when perturbations fail
-                stability_score          = self.params.DEFAULT_STABILITY_SCORE  # Assume more authentic-like when no perturbations work
+                stability_score          = self.params.DEFAULT_STABILITY_SCORE  # Assume neutral when no perturbations work
                 curvature_score          = self.params.DEFAULT_CURVATURE_SCORE
                 variance_score           = self.params.DEFAULT_PERTURBATION_VARIANCE
-                avg_perturbed_likelihood = original_likelihood * 0.9  # Assume some drop
+                avg_perturbed_log_prob   = original_log_prob * 1.1  # Assume slight increase
                 logger.warning("No valid perturbations, using fallback values")
-            
-            # Calculate likelihood ratio
-            likelihood_ratio             = original_likelihood / avg_perturbed_likelihood if avg_perturbed_likelihood > self.params.ZERO_TOLERANCE else 1.0
             
             # Chunk-based analysis for whole-text understanding
             chunk_stabilities            = self._calculate_chunk_stability(text = processed_text)
             stability_variance           = np.var(chunk_stabilities) if chunk_stabilities else self.params.DEFAULT_STABILITY_VARIANCE 
             avg_chunk_stability          = np.mean(chunk_stabilities) if chunk_stabilities else stability_score
             
-            # Better normalization to prevent extreme values
-            normalized_stability         = min(1.0, max(0.0, stability_score))
-            normalized_curvature         = min(1.0, max(0.0, curvature_score))
-            normalized_likelihood_ratio  = min(self.params.MAX_LIKELIHOOD_RATIO, max(self.params.MIN_LIKELIHOOD_RATIO, likelihood_ratio)) / self.params.MAX_LIKELIHOOD_RATIO
-            
-            return {"original_likelihood"         : round(original_likelihood, 4),
-                    "avg_perturbed_likelihood"    : round(avg_perturbed_likelihood, 4),
-                    "likelihood_ratio"            : round(likelihood_ratio, 4),
-                    "normalized_likelihood_ratio" : round(normalized_likelihood_ratio, 4),
-                    "stability_score"             : round(normalized_stability, 4),
-                    "curvature_score"             : round(normalized_curvature, 4),
-                    "perturbation_variance"       : round(variance_score, 4),
-                    "avg_chunk_stability"         : round(avg_chunk_stability, 4),
-                    "stability_variance"          : round(stability_variance, 4),
-                    "num_perturbations"           : len(perturbations),
-                    "num_valid_perturbations"     : len(perturbed_likelihoods),
-                    "num_chunks_analyzed"         : len(chunk_stabilities),
+            return {"original_log_prob"         : round(original_log_prob, 4),
+                    "avg_perturbed_log_prob"    : round(avg_perturbed_log_prob, 4),
+                    "stability_score"           : round(stability_score, 4),
+                    "curvature_score"           : round(curvature_score, 4),
+                    "perturbation_variance"     : round(variance_score, 4),
+                    "avg_chunk_stability"       : round(avg_chunk_stability, 4),
+                    "stability_variance"        : round(stability_variance, 4),
+                    "num_perturbations"         : len(perturbations),
+                    "num_valid_perturbations"   : len(perturbed_log_probs),
+                    "num_chunks_analyzed"       : len(chunk_stabilities),
                    }
             
         except Exception as e:
@@ -328,20 +331,31 @@ class MultiPerturbationStabilityMetric(BaseMetric):
             return self._get_default_features()
     
 
-    def _calculate_likelihood(self, text: str) -> float:
+    def _calculate_log_probability(self, text: str) -> float:
         """
-        Calculate proper log-likelihood using token probabilities
-        Inspired by DetectGPT's likelihood calculation approach
+        Calculate average negative log-probability per token using cross-entropy loss
+
+        Mathematical foundation:
+        ------------------------
+            negative_log_prob     = -log P(token | context) = CrossEntropyLoss
+            avg_negative_log_prob = mean(negative_log_prob over all tokens)
+        
+        Returns: 
+        --------
+            float in range [~1.0, ~15.0] where:
+            - Lower values (~1-3)   = very predictable text (potentially synthetic)
+            - Higher values (~5-10) = less predictable text (potentially human)
+            - Values are positive (absolute value of negative log-probability)
         """
         try:
             # Check text length before tokenization
             if (len(text.strip()) < self.params.MIN_TEXT_LENGTH_FOR_PERTURBATION):
                 # Return reasonable baseline
-                return self.params.DEFAULT_LIKELIHOOD  
+                return self.params.DEFAULT_LOG_PROB  
 
             if not self.gpt_model or not self.gpt_tokenizer:
-                logger.warning("GPT model not available for likelihood calculation")
-                return self.params.DEFAULT_LIKELIHOOD
+                logger.warning("GPT model not available for log-probability calculation")
+                return self.params.DEFAULT_LOG_PROB
 
             # Ensure tokenizer has pad token
             if self.gpt_tokenizer.pad_token is None:
@@ -361,47 +375,53 @@ class MultiPerturbationStabilityMetric(BaseMetric):
             
             # Minimum tokens for meaningful analysis
             if ((input_ids.numel() == 0) or (input_ids.size(1) < self.params.MIN_TOKENS_FOR_LIKELIHOOD)):
-                return self.params.DEFAULT_LIKELIHOOD
+                return self.params.DEFAULT_LOG_PROB
             
-            # Calculate proper log-likelihood using token probabilities
+            # Calculate negative log-likelihood using PROPER cross-entropy loss
             with torch.no_grad():
-                outputs        = self.gpt_model(input_ids, 
-                                                attention_mask = attention_mask,
-                                               )
+                outputs = self.gpt_model(input_ids, 
+                                        attention_mask = attention_mask,
+                                       )
                 
-                logits         = outputs.logits
+                logits  = outputs.logits
                 
-                # Calculate log probabilities for each token
-                log_probs      = torch.nn.functional.log_softmax(logits, dim = -1)
+                # Shift for next-token prediction (standard language modeling)
+                shift_logits    = logits[:, :-1, :].contiguous()
+                shift_labels    = input_ids[:, 1:].contiguous()
+                shift_attention = attention_mask[:, 1:].contiguous()
                 
-                # Get the log probability of each actual token
-                log_likelihood = 0.0
-                token_count    = 0
+                # Calculate cross-entropy loss (negative log-likelihood) per token
+                loss_fct        = torch.nn.CrossEntropyLoss(reduction = 'none')
+                losses          = loss_fct(shift_logits.view(-1, shift_logits.size(-1)),
+                                          shift_labels.view(-1),
+                                         )
                 
-                for i in range(input_ids.size(1) - 1):
-                    # Only consider non-padding tokens
-                    if (attention_mask[0, i] == 1):       
-                        token_id        = input_ids[0, i + 1]  # Next token prediction
-                        log_prob        = log_probs[0, i, token_id]
-                        log_likelihood += log_prob.item()
-                        token_count    += 1
+                # Reshape and mask out padding tokens
+                losses          = losses.view(shift_labels.size())
+                masked_losses   = losses * shift_attention
                 
-                # Normalize by token count to get average log likelihood per token
-                if (token_count > 0):
-                    avg_log_likelihood = log_likelihood / token_count
-
+                # Average over non-padding tokens
+                num_tokens      = shift_attention.sum()
+                
+                if (num_tokens > 0):
+                    avg_neg_log_prob = masked_losses.sum() / num_tokens
+                
                 else:
-                    avg_log_likelihood = 0.0
+                    avg_neg_log_prob = torch.tensor(self.params.DEFAULT_LOG_PROB)
+                
+                result = avg_neg_log_prob.item()
             
-            # Convert to positive scale and normalize
-            normalized_likelihood = max(self.params.MIN_LIKELIHOOD, min(self.params.MAX_LIKELIHOOD, -avg_log_likelihood))
+            # Sanity check: log-probabilities should be in reasonable range
+            result = max(self.params.LOG_PROB_SANITY_MAX, 
+                        min(abs(self.params.LOG_PROB_SANITY_MIN), abs(result)))
             
-            return normalized_likelihood
+            # Return positive value for easier interpretation
+            return abs(result)
             
         except Exception as e:
-            logger.warning(f"Likelihood calculation failed: {repr(e)}")
+            logger.warning(f"Log-probability calculation failed: {repr(e)}")
             # Return reasonable baseline on error
-            return self.params.DEFAULT_LIKELIHOOD  
+            return self.params.DEFAULT_LOG_PROB  
     
 
     def _generate_perturbations(self, text: str) -> List[str]:
@@ -677,69 +697,52 @@ class MultiPerturbationStabilityMetric(BaseMetric):
         return [p for p in perturbations if p and p != text][:3]
     
 
-    def _calculate_stability_score(self, original_likelihood: float, perturbed_likelihoods: List[float]) -> float:
+    def _calculate_stability_score(self, original_log_prob: float, perturbed_log_probs: List[float]) -> float:
         """
-        Calculate text stability score with normalization : synthetic text typically shows larger likelihood drops under perturbation than authentic text
+        Stability calculation based on DetectGPT methodology
+        
+        Stability = mean(|original_log_prob - perturbed_log_prob|)
+        
+        Interpretation:
+        - Low stability (< 0.5) = small differences = smooth surface = SYNTHETIC
+        - High stability (> 1.5) = large differences = rough surface = AUTHENTIC
         """
-        if ((not perturbed_likelihoods) or (original_likelihood <= self.params.ZERO_TOLERANCE)):
-            # Assume more authentic-like when no data
-            return self.params.DEFAULT_STABILITY_SCORE  
-        
-        # Calculate relative likelihood drops
-        relative_drops = list()
-        
-        for pl in perturbed_likelihoods:
-            if (pl > self.params.ZERO_TOLERANCE):
-                # Use relative drop to handle scale differences
-                relative_drop = (original_likelihood - pl) / original_likelihood
-                
-                # Clamp to [0, 1]
-                relative_drops.append(max(0.0, min(1.0, relative_drop))) 
-        
-        if not relative_drops:
+        if not perturbed_log_probs:
             return self.params.DEFAULT_STABILITY_SCORE
         
-        avg_relative_drop = np.mean(relative_drops)
+        # Calculate absolute differences 
+        differences = [abs(original_log_prob - plp) for plp in perturbed_log_probs]
         
-        # Normalization based on empirical observations : synthetic text typically shows larger drops
-        if (avg_relative_drop > self.params.RELATIVE_DROP_HIGH_THRESHOLD):
-            # Strong synthetic indicator
-            stability_score = self.params.STABILITY_HIGH_THRESHOLD  
-
-        elif (avg_relative_drop > self.params.RELATIVE_DROP_MEDIUM_THRESHOLD):
-            # Intermediate values
-            stability_score = self.params.STABILITY_MEDIUM_THRESHOLD + (avg_relative_drop - self.params.RELATIVE_DROP_MEDIUM_THRESHOLD) * 1.5  
-
-        elif (avg_relative_drop > self.params.RELATIVE_DROP_LOW_THRESHOLD):
-            # Lower values
-            stability_score = self.params.STABILITY_LOW_THRESHOLD + (avg_relative_drop - self.params.RELATIVE_DROP_LOW_THRESHOLD) * 2.0  
+        # Mean absolute difference (proper stability measure)
+        mean_diff   = np.mean(differences)
         
-        else:
-            # Very low values
-            stability_score = avg_relative_drop * 2.0  
-
-        return min(1.0, max(0.0, stability_score))
+        # Return raw mean difference (no arbitrary scaling)
+        return mean_diff
     
 
-    def _calculate_curvature_score(self, original_likelihood: float, perturbed_likelihoods: List[float]) -> float:
+    def _calculate_curvature_score(self, original_log_prob: float, perturbed_log_probs: List[float]) -> float:
         """
-        Calculate likelihood curvature score with better scaling : Measures how "curved" the likelihood surface is around the text
+        Curvature calculation
+        
+        Curvature = variance(|original_log_prob - perturbed_log_prob|) * scaling_factor
+        
+        Measures the consistency of perturbation effects:
+        - Low curvature (< 0.1) = consistent effects = smooth = SYNTHETIC
+        - High curvature (> 0.5) = inconsistent effects = rough = AUTHENTIC
         """
-        if ((not perturbed_likelihoods) or (original_likelihood <= self.params.ZERO_TOLERANCE)):
+        if (len(perturbed_log_probs) < 2):
             return self.params.DEFAULT_CURVATURE_SCORE
         
-        # Calculate variance of likelihood changes
-        likelihood_changes = [abs(original_likelihood - pl) for pl in perturbed_likelihoods]
+        # Calculate absolute differences
+        differences     = [abs(original_log_prob - plp) for plp in perturbed_log_probs]
         
-        if (len(likelihood_changes) < 2):
-            return self.params.DEFAULT_CURVATURE_SCORE
-            
-        change_variance = np.var(likelihood_changes)
+        # Variance of differences (measures surface roughness)
+        variance        = np.var(differences)
         
-        # Typical variance for meaningful analysis
-        curvature_score = min(1.0, change_variance * self.params.CURVATURE_SCALING_FACTOR)  
+        # Scale for interpretability (variance is typically very small)
+        scaled_variance = variance * self.params.CURVATURE_SCALING_FACTOR
         
-        return curvature_score
+        return min(1.0, scaled_variance)
     
 
     def _calculate_chunk_stability(self, text: str) -> List[float]:
@@ -748,8 +751,8 @@ class MultiPerturbationStabilityMetric(BaseMetric):
         """
         stabilities = list()
         words       = text.split()
-        chunk_size = self.params.CHUNK_SIZE_WORDS
-        overlap = int(chunk_size * self.params.CHUNK_OVERLAP_RATIO)
+        chunk_size  = self.params.CHUNK_SIZE_WORDS
+        overlap     = int(chunk_size * self.params.CHUNK_OVERLAP_RATIO)
         
         # Create overlapping chunks
         for i in range(0, len(words), chunk_size - overlap):
@@ -757,9 +760,9 @@ class MultiPerturbationStabilityMetric(BaseMetric):
             
             if (len(chunk) > self.params.MIN_CHUNK_LENGTH):
                 try:
-                    chunk_likelihood = self._calculate_likelihood(text = chunk)
+                    chunk_log_prob = self._calculate_log_probability(text = chunk)
                     
-                    if (chunk_likelihood > self.params.ZERO_TOLERANCE):
+                    if (abs(chunk_log_prob) > self.params.ZERO_TOLERANCE):
                         # Generate a simple perturbation for this chunk
                         chunk_words = chunk.split()
                         
@@ -769,11 +772,11 @@ class MultiPerturbationStabilityMetric(BaseMetric):
                             indices_to_keep      = np.random.choice(len(chunk_words), len(chunk_words) - delete_count, replace=False)
                             perturbed_chunk      = ' '.join([chunk_words[i] for i in sorted(indices_to_keep)])
                             
-                            perturbed_likelihood = self._calculate_likelihood(text = perturbed_chunk)
+                            perturbed_log_prob   = self._calculate_log_probability(text = perturbed_chunk)
 
-                            if (perturbed_likelihood > self.params.ZERO_TOLERANCE):
-                                stability = (chunk_likelihood - perturbed_likelihood) / chunk_likelihood
-                                stabilities.append(min(1.0, max(0.0, stability)))
+                            if (abs(perturbed_log_prob) > self.params.ZERO_TOLERANCE):
+                                stability = abs(chunk_log_prob - perturbed_log_prob)
+                                stabilities.append(stability)
 
                 except Exception:
                     continue
@@ -783,10 +786,17 @@ class MultiPerturbationStabilityMetric(BaseMetric):
 
     def _analyze_stability_patterns(self, features: Dict[str, Any]) -> tuple:
         """
-        Analyze MultiPerturbationStability patterns with better feature weighting
+        Analyze MultiPerturbationStability patterns
+        
+        Returns:
+        --------
+        (raw_score, confidence) where raw_score in [0, 1]:
+        - 0.0 = strongly authentic (high stability, high curvature)
+        - 0.5 = uncertain
+        - 1.0 = strongly synthetic (low stability, low curvature)
         """
         # Check feature validity first
-        required_features = ['stability_score', 'curvature_score', 'normalized_likelihood_ratio', 'stability_variance', 'perturbation_variance']
+        required_features = ['stability_score', 'curvature_score', 'stability_variance']
         
         valid_features    = [features.get(feat, 0) for feat in required_features if features.get(feat, 0) > self.params.ZERO_TOLERANCE]
         
@@ -798,65 +808,74 @@ class MultiPerturbationStabilityMetric(BaseMetric):
         # Initialize synthetic_indicator list
         synthetic_indicators    = list()
         
-        # Better weighting based on feature reliability
+        # Stability Interpretation: Lower = more synthetic
         stability = features['stability_score']
-        if (stability > self.params.STABILITY_HIGH_THRESHOLD):
-            synthetic_indicators.append(self.params.STABILITY_STRONG_THRESHOLD * self.params.STABILITY_WEIGHT)
+        if (stability < self.params.STABILITY_STRONG_SYNTHETIC):
+            synthetic_indicators.append(self.params.PROB_WEIGHT_STRONG * self.params.STABILITY_WEIGHT)
         
-        elif (stability > self.params.STABILITY_MEDIUM_THRESHOLD):
-            synthetic_indicators.append(self.params.STABILITY_MEDIUM_STRONG_THRESHOLD * self.params.STABILITY_WEIGHT)
+        elif (stability < self.params.STABILITY_MODERATE_SYNTHETIC):
+            synthetic_indicators.append(self.params.PROB_WEIGHT_MODERATE * self.params.STABILITY_WEIGHT)
         
-        elif (stability > self.params.STABILITY_LOW_THRESHOLD):
-            synthetic_indicators.append(self.params.STABILITY_MODERATE_THRESHOLD * self.params.STABILITY_WEIGHT)
+        elif (stability < self.params.STABILITY_WEAK_SYNTHETIC):
+            synthetic_indicators.append(self.params.PROB_WEIGHT_WEAK * self.params.STABILITY_WEIGHT)
+        
+        elif (stability < self.params.STABILITY_AUTHENTIC):
+            synthetic_indicators.append(self.params.PROB_WEIGHT_NEUTRAL * self.params.STABILITY_WEIGHT)
         
         else:
-            synthetic_indicators.append(self.params.STABILITY_WEAK_THRESHOLD * self.params.STABILITY_WEIGHT)
+            synthetic_indicators.append(self.params.PROB_WEIGHT_AUTHENTIC * self.params.STABILITY_WEIGHT)
         
-        # High curvature score suggests synthetic
+        # Curvature Interpretation: Lower = more synthetic
         curvature = features['curvature_score']
-        if (curvature > self.params.CURVATURE_HIGH_THRESHOLD):
-            synthetic_indicators.append(self.params.CURVATURE_STRONG_THRESHOLD * self.params.CURVATURE_WEIGHT)
+        if (curvature < self.params.CURVATURE_STRONG_SYNTHETIC):
+            synthetic_indicators.append(self.params.PROB_WEIGHT_STRONG * self.params.CURVATURE_WEIGHT)
         
-        elif (curvature > self.params.CURVATURE_MEDIUM_THRESHOLD):
-            synthetic_indicators.append(self.params.CURVATURE_MEDIUM_THRESHOLD * self.params.CURVATURE_WEIGHT)
+        elif (curvature < self.params.CURVATURE_MODERATE_SYNTHETIC):
+            synthetic_indicators.append(self.params.PROB_WEIGHT_MODERATE * self.params.CURVATURE_WEIGHT)
         
-        elif (curvature > self.params.CURVATURE_LOW_THRESHOLD):
-            synthetic_indicators.append(self.params.CURVATURE_MODERATE_THRESHOLD * self.params.CURVATURE_WEIGHT)
+        elif (curvature < self.params.CURVATURE_WEAK_SYNTHETIC):
+            synthetic_indicators.append(self.params.PROB_WEIGHT_WEAK * self.params.CURVATURE_WEIGHT)
         
-        else:
-            synthetic_indicators.append(self.params.CURVATURE_WEAK_THRESHOLD * self.params.CURVATURE_WEIGHT)
-        
-        # High likelihood ratio suggests synthetic (original much more likely than perturbations)
-        ratio = features['normalized_likelihood_ratio']
-        if (ratio > self.params.LIKELIHOOD_RATIO_HIGH_THRESHOLD):
-            synthetic_indicators.append(self.params.RATIO_STRONG_THRESHOLD * self.params.RATIO_WEIGHT)
-        
-        elif (ratio > self.params.LIKELIHOOD_RATIO_MEDIUM_THRESHOLD):
-            synthetic_indicators.append(self.params.RATIO_MEDIUM_THRESHOLD * self.params.RATIO_WEIGHT)
-        
-        elif (ratio > self.params.LIKELIHOOD_RATIO_LOW_THRESHOLD):
-            synthetic_indicators.append(self.params.RATIO_MODERATE_THRESHOLD * self.params.RATIO_WEIGHT)
+        elif (curvature < self.params.CURVATURE_AUTHENTIC):
+            synthetic_indicators.append(self.params.PROB_WEIGHT_NEUTRAL * self.params.CURVATURE_WEIGHT)
         
         else:
-            synthetic_indicators.append(self.params.RATIO_WEAK_THRESHOLD * self.params.RATIO_WEIGHT)
+            synthetic_indicators.append(self.params.PROB_WEIGHT_AUTHENTIC * self.params.CURVATURE_WEIGHT)
         
-        # Low stability variance suggests synthetic (consistent across chunks)
-        stability_var = features['stability_variance']
-        if (stability_var < self.params.STABILITY_VARIANCE_VERY_LOW):
-            synthetic_indicators.append(self.params.VARIANCE_STRONG_THRESHOLD * self.params.VARIANCE_WEIGHT)
+        # Variance Interpretation: Lower = more synthetic (consistent across chunks)
+        variance = features['stability_variance']
+        if (variance < self.params.VARIANCE_STRONG_SYNTHETIC):
+            synthetic_indicators.append(self.params.PROB_WEIGHT_STRONG * self.params.VARIANCE_WEIGHT)
         
-        elif (stability_var < self.params.STABILITY_VARIANCE_LOW):
-            synthetic_indicators.append(self.params.VARIANCE_MODERATE_THRESHOLD * self.params.VARIANCE_WEIGHT)
-
+        elif (variance < self.params.VARIANCE_MODERATE_SYNTHETIC):
+            synthetic_indicators.append(self.params.PROB_WEIGHT_MODERATE * self.params.VARIANCE_WEIGHT)
+        
+        elif (variance < self.params.VARIANCE_WEAK_SYNTHETIC):
+            synthetic_indicators.append(self.params.PROB_WEIGHT_WEAK * self.params.VARIANCE_WEIGHT)
+        
+        elif (variance < self.params.VARIANCE_AUTHENTIC):
+            synthetic_indicators.append(self.params.PROB_WEIGHT_NEUTRAL * self.params.VARIANCE_WEIGHT)
+        
         else:
-            synthetic_indicators.append(self.params.VARIANCE_WEAK_THRESHOLD * self.params.VARIANCE_WEIGHT)
+            synthetic_indicators.append(self.params.PROB_WEIGHT_AUTHENTIC * self.params.VARIANCE_WEIGHT)
         
         # Calculate raw score and confidence
         if synthetic_indicators:
-            total_weight = (self.params.STABILITY_WEIGHT + self.params.CURVATURE_WEIGHT + self.params.RATIO_WEIGHT + self.params.VARIANCE_WEIGHT)
-            raw_score    = sum(synthetic_indicators) / total_weight
-            weights      = [self.params.STABILITY_WEIGHT, self.params.CURVATURE_WEIGHT, self.params.RATIO_WEIGHT, self.params.VARIANCE_WEIGHT]
-            confidence   = self.params.CONFIDENCE_BASE + (self.params.CONFIDENCE_STD_FACTOR * (1.0 - (np.std([x / weights[i] for i, x in enumerate(synthetic_indicators)]) if len(synthetic_indicators) > 1 else 0.5)))
+            total_weight            = (self.params.STABILITY_WEIGHT + self.params.CURVATURE_WEIGHT + self.params.VARIANCE_WEIGHT)
+            raw_score               = sum(synthetic_indicators) / total_weight
+            
+            # Confidence: Based on perturbation success and signal agreement
+            num_valid               = features.get('num_valid_perturbations', 0)
+            perturbation_confidence = min(1.0, num_valid / self.params.NUM_PERTURBATIONS)
+            
+            # Calculate agreement between signals
+            weights                 = [self.params.STABILITY_WEIGHT, self.params.CURVATURE_WEIGHT, self.params.VARIANCE_WEIGHT]
+            normalized_indicators   = [si / weights[i] for i, si in enumerate(synthetic_indicators)]
+            agreement               = 1.0 - (np.std(normalized_indicators) if len(normalized_indicators) > 1 else 0.5)
+            
+            confidence = (self.params.CONFIDENCE_BASE + 
+                         self.params.CONFIDENCE_PERTURBATION_FACTOR * perturbation_confidence +
+                         self.params.CONFIDENCE_AGREEMENT_FACTOR * agreement)
        
         else:
             raw_score  = self.params.NEUTRAL_PROBABILITY
@@ -874,24 +893,27 @@ class MultiPerturbationStabilityMetric(BaseMetric):
         hybrid_indicators = list()
         
         # Moderate stability values might indicate mixing
-        if (self.params.STABILITY_MIXED_MIN <= features['stability_score'] <= self.params.STABILITY_MIXED_MAX):
+        stability = features['stability_score']
+        if (self.params.STABILITY_MIXED_MIN <= stability <= self.params.STABILITY_MIXED_MAX):
             hybrid_indicators.append(self.params.WEAK_HYBRID_WEIGHT)
        
         else:
             hybrid_indicators.append(self.params.MINIMAL_HYBRID_WEIGHT)
         
         # High stability variance suggests mixed content
-        if (features['stability_variance'] > self.params.STABILITY_VARIANCE_MIXED_HIGH):
+        stability_variance = features['stability_variance']
+        if (stability_variance > self.params.STABILITY_VARIANCE_HIGH):
             hybrid_indicators.append(self.params.MODERATE_HYBRID_WEIGHT)
 
-        elif (features['stability_variance'] > self.params.STABILITY_VARIANCE_MIXED_MEDIUM):
+        elif (stability_variance > self.params.STABILITY_VARIANCE_MEDIUM):
             hybrid_indicators.append(self.params.VERY_WEAK_HYBRID_WEIGHT)
 
         else:
             hybrid_indicators.append(self.params.MINIMAL_HYBRID_WEIGHT)
         
-        # Inconsistent likelihood ratios
-        if (self.params.LIKELIHOOD_RATIO_MIXED_MIN <= features['normalized_likelihood_ratio'] <= self.params.LIKELIHOOD_RATIO_MIXED_MAX):
+        # Moderate curvature might indicate mixing
+        curvature = features['curvature_score']
+        if (self.params.CURVATURE_MIXED_MIN <= curvature <= self.params.CURVATURE_MIXED_MAX):
             hybrid_indicators.append(self.params.WEAK_HYBRID_WEIGHT)
 
         else:
@@ -905,18 +927,16 @@ class MultiPerturbationStabilityMetric(BaseMetric):
         """
         Return more meaningful default features
         """
-        return {"original_likelihood"         : self.params.DEFAULT_ORIGINAL_LIKELIHOOD,
-                "avg_perturbed_likelihood"    : self.params.DEFAULT_AVG_PERTURBED_LIKELIHOOD,
-                "likelihood_ratio"            : self.params.DEFAULT_LIKELIHOOD_RATIO,
-                "normalized_likelihood_ratio" : self.params.DEFAULT_NORMALIZED_LIKELIHOOD_RATIO,
-                "stability_score"             : self.params.DEFAULT_STABILITY_SCORE, 
-                "curvature_score"             : self.params.DEFAULT_CURVATURE_SCORE,
-                "perturbation_variance"       : self.params.DEFAULT_PERTURBATION_VARIANCE,
-                "avg_chunk_stability"         : self.params.DEFAULT_AVG_CHUNK_STABILITY,
-                "stability_variance"          : self.params.DEFAULT_STABILITY_VARIANCE,
-                "num_perturbations"           : 0,
-                "num_valid_perturbations"     : 0,
-                "num_chunks_analyzed"         : 0,
+        return {"original_log_prob"         : self.params.DEFAULT_ORIGINAL_LOG_PROB,
+                "avg_perturbed_log_prob"    : self.params.DEFAULT_AVG_PERTURBED_LOG_PROB,
+                "stability_score"           : self.params.DEFAULT_STABILITY_SCORE, 
+                "curvature_score"           : self.params.DEFAULT_CURVATURE_SCORE,
+                "perturbation_variance"     : self.params.DEFAULT_PERTURBATION_VARIANCE,
+                "avg_chunk_stability"       : self.params.DEFAULT_AVG_CHUNK_STABILITY,
+                "stability_variance"        : self.params.DEFAULT_STABILITY_VARIANCE,
+                "num_perturbations"         : 0,
+                "num_valid_perturbations"   : 0,
+                "num_chunks_analyzed"       : 0,
                }
     
 

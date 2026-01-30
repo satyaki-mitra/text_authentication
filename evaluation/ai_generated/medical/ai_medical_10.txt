@@ -1,13 +1,17 @@
-Title: A Rare Case of Pheochromocytoma Masquerading as Acute Myocardial Infarction
+Title: A Case Study on Successful Management of Acute Myeloid Leukemia in an Elderly Patient: An Unusual Response to FLAG-IDA Chemotherapy Regimen
 
-Abstract:
+Abstract
 
-We present an unusual case of a 47-year-old female patient, a non-smoker with no significant past medical history, who presented to the emergency department (ED) with severe chest pain and shortness of breath. The symptoms were sudden in onset and intensified over a few hours, prompting the initial diagnosis of an acute myocardial infarction (AMI).
+Acute Myeloid Leukemia (AML) is a hematological malignancy characterized by the rapid proliferation of abnormal myeloblasts, impairing normal hematopoiesis. The incidence of AML increases significantly with age, and optimal treatment strategies for elderly patients remain a challenge due to their increased susceptibility to chemotherapy-related toxicities. This case report highlights an unusual response to the FLAG-IDA (Fludarabine, Cytarabine, Idarubicin, and Ara-C) chemotherapy regimen in an 80-year-old female patient with previously untreated AML.
 
-Upon arrival, the patient exhibited vital signs consistent with severe sympathetic activation: blood pressure 210/130 mmHg, heart rate 145 bpm, and respiratory rate 26 breaths per minute. Electrocardiogram (ECG) showed sinus tachycardia with ST-segment elevation in multiple leads. Troponin levels were significantly elevated, further supporting the AMI diagnosis.
+Case Presentation:
 
-However, due to atypical features and the patient's young age, a more comprehensive workup was initiated. Abdominal computed tomography (CT) revealed a 6 cm adrenal mass, leading to the eventual diagnosis of pheochromocytoma—a neuroendocrine tumor arising from the adrenal medulla.
+An 80-year-old Caucasian woman presented to the emergency department with a two-week history of fatigue, recurrent episodes of respiratory infections, and easy bruising. Physical examination revealed pallor, ecchymosis, and splenomegaly. Laboratory investigations revealed leukocytosis (white blood cell count: 45.6 x10^9/L), anemia (hemoglobin: 7.8 g/dL), and thrombocytopenia (platelet count: 30 x10^9/L). Bone marrow aspiration and biopsy confirmed AML with a high blast percentage (85%). Cytogenetic analysis revealed the presence of t(8;21)(q22;q22), a favorable prognostic marker.
 
-The patient underwent an uneventful laparoscopic adrenalectomy, and pathology confirmed the diagnosis. Postoperatively, the patient's symptoms resolved, blood pressure normalized, and follow-up ECG showed no evidence of myocardial injury.
+Diagnostic Approach:
 
-This case highlights the importance of considering rare etiologies in patients presenting with symptoms typically associated with acute coronary syndrome, especially in younger individuals without traditional cardiovascular risk factors. Early recognition and appropriate management can lead to favorable outcomes, as demonstrated in this patient's successful surgery and subsequent recovery.
+The patient was initially evaluated for infection due to her clinical presentation. However, laboratory results indicated a hematological malignancy. Further evaluation included complete blood count, peripheral blood smear, bone marrow aspiration and biopsy, cytogenetic analysis, and flow cytometry. The patient was subsequently diagnosed with AML based on these findings.
+
+Treatment:
+
+Given the patient's advanced age and comorbidities (hypertension, diabetes mellitus, and chronic obstructive pulmonary disease), a standard induction therapy with an anthracycline-based regimen was deemed high-risk. Therefore, a modified FLAG-IDA regimen was chosen. The treatment consisted of Fludarabine 30 mg/m² on days 1-5, Idarubicin 12 mg/m² on day 1, and Cytarabine

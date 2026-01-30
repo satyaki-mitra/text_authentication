@@ -1,36 +1,47 @@
-Here is a draft of a formal legal clause about data privacy compliance:
+**ARTICLE III: CONFIDENTIALITY AND INTELLECTUAL PROPERTY**
 
-**DATA PRIVACY COMPLIANCE**
+Section 1. Confidential Information.
 
-[Insert Company Name] ("Company") recognizes the importance of protecting the personal and confidential information of its customers, employees, and partners (collectively, "Data Subjects"). In order to ensure compliance with applicable laws and regulations regarding data privacy, including but not limited to the General Data Protection Regulation (GDPR), California Consumer Privacy Act (CCPA), and other relevant data protection statutes, the following provisions shall apply:
+The Parties agree that all information exchanged or disclosed during the course of this Agreement shall be considered confidential and proprietary to one or both of the Parties, as applicable. "Confidential Information" means any and all information related to the Parties' businesses, including but not limited to, trade secrets, know-how, inventions, patents, trademarks, copyrights, and other intellectual property rights.
 
-**1. Compliance Obligations**
+Section 2. Confidentiality Obligations.
 
-The Company will comply with all applicable data privacy laws and regulations, including but not limited to:
+Each Party agrees that it shall:
 
-* Processing personal data only as necessary for legitimate business purposes;
-* Ensuring that all processing activities are transparent, fair, and lawful;
-* Providing adequate notice to Data Subjects regarding the collection, use, and disclosure of their personal data;
-* Obtaining valid consent from Data Subjects prior to collecting, using, or disclosing their personal data;
-* Maintaining accurate records of all data processing activities;
-* Implementing appropriate technical and organizational measures to protect personal data against unauthorized access, use, or disclosure;
+(a) use the Confidential Information solely for the purpose of fulfilling its obligations under this Agreement;
 
-**2. Data Protection Officer**
+(b) keep all Confidential Information confidential and not disclose such information to any third party without prior written consent from the disclosing Party; and
 
-The Company will designate a Data Protection Officer ("DPO") who will be responsible for ensuring compliance with this clause and applicable data privacy laws and regulations. The DPO shall:
+(c) take all reasonable measures to prevent unauthorized disclosure or use of the Confidential Information.
 
-* Develop and implement policies and procedures to ensure compliance;
-* Conduct regular audits and risk assessments to identify potential vulnerabilities;
-* Investigate any reported breaches or incidents involving personal data;
-* Collaborate with relevant stakeholders, including employees, customers, and partners;
+Section 3. Exclusions.
 
-**3. Data Subject Rights**
+The confidentiality obligations set forth in Section 2 shall not apply to:
 
-The Company will respect the rights of Data Subjects under applicable data privacy laws and regulations, including but not limited to:
+(a) information that is or becomes publicly available through no fault of the receiving Party;
 
-* The right to access their personal data;
-* The right to rectify or erase their personal data;
-* The right to restrict processing or object to processing;
-* The right to data portability;
+(b) information already known to the receiving Party at the time of disclosure; or
 
-**4. Breach Notification
+(c) information developed independently by the receiving Party without reference to the Confidential Information.
+
+Section 4. Ownership and License.
+
+The Parties acknowledge that all intellectual property rights, including but not limited to patents, trademarks, copyrights, and trade secrets, are and shall remain the exclusive property of each Party, as applicable. Each Party grants to the other a non-exclusive license to use, reproduce, distribute, and display the Confidential Information solely for the purpose of fulfilling its obligations under this Agreement.
+
+Section 5. Returns.
+
+Upon termination or expiration of this Agreement, each Party agrees to return all Confidential Information in its possession or control to the disclosing Party, or destroy such information and certify that it has been destroyed.
+
+**By executing this Agreement, the Parties acknowledge that they have read, understand, and agree to be bound by the terms and conditions set forth in Article III.**
+
+IN WITNESS WHEREOF, the Parties have executed this Agreement as of the date first above written.
+
+[Signature]
+[Name]
+[Title]
+[Date]
+
+[Signature]
+[Name]
+[Title]
+[Date]

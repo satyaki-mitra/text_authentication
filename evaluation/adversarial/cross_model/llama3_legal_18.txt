@@ -1,24 +1,26 @@
-Here is a sample formal legal clause about data privacy compliance:
+**ARTICLE III: TERM AND TERMINATION**
 
-**Data Privacy Compliance**
+1. **TERM**: The term of this Agreement shall commence on the Effective Date and shall continue for a period of [X] years, subject to termination as provided in this Article.
 
-1. **Definitions**: For purposes of this Clause, "Personal Data" means any information that relates to an identified or identifiable individual, including but not limited to name, address, phone number, email address, IP address, login credentials, and any other personal information.
+2. **TERMINATION FOR CAUSE**: Either Party may terminate this Agreement upon written notice to the other Party if the other Party fails to comply with any material provision of this Agreement and such failure is not cured within [X] days after receipt of written notice thereof.
 
-2. **Compliance with Applicable Laws**: [Name of Company] (the "Company") shall comply with all applicable data privacy laws, regulations, and guidelines in the jurisdictions where it operates, including but not limited to the General Data Protection Regulation ("GDPR"), the California Consumer Privacy Act ("CCPA"), and any other relevant laws or regulations that may be enacted from time to time.
+3. **TERMINATION WITHOUT CAUSE**: Upon [X] days' written notice, either Party may terminate this Agreement without cause; provided that the non-terminating Party has paid all sums due and owing to the terminating Party under this Agreement at the time of termination.
 
-3. **Data Collection**: The Company shall only collect Personal Data when necessary for the performance of its obligations under this [Agreement/Contract], and such collection shall be done in a manner that is fair, transparent, and lawful.
+4. **SURVIVAL**: The provisions of Article II (Confidentiality) shall survive the termination or expiration of this Agreement for a period of [X] years from the date of termination or expiration.
 
-4. **Data Processing**: The Company shall process all Personal Data in accordance with the applicable data privacy laws and regulations, and shall ensure that any third-party processors or sub-processors are also subject to appropriate data protection measures.
+5. **RETURN OF PROPERTY**: Upon termination or expiration of this Agreement, each Party shall promptly return to the other Party all confidential information, proprietary materials, and other property belonging to the other Party, including but not limited to all copies, extracts, summaries, and analyses made by or on behalf of such Party.
 
-5. **Data Subject Rights**: The Company shall provide all individuals whose Personal Data it collects or processes (the "Data Subjects") with the following rights:
+6. **OBLIGATIONS AFTER TERMINATION**: The obligations and duties of the Parties under this Agreement shall survive termination or expiration of this Agreement for a period of [X] years from the date of termination or expiration, including but not limited to the payment of sums due and owing to the other Party.
 
-* The right of access to their Personal Data;
-* The right to rectify inaccurate or incomplete Personal Data;
-* The right to erasure ("right to be forgotten");
-* The right to restriction of processing;
-* The right to object to processing; and
-* The right to data portability.
+7. **DISPUTE RESOLUTION**: Any dispute arising out of or related to the interpretation, performance, or breach of this Agreement shall be resolved through mediation in accordance with the rules of the American Arbitration Association (AAA) and any applicable federal or state law. The Parties agree that the laws of [State] shall govern the construction and interpretation of this Agreement.
 
-6. **Breach Notification**: In the event that there is a breach of Personal Data, the Company shall notify the affected Data Subjects promptly, and in any event within [time frame], and shall provide such notification in accordance with applicable laws and regulations.
+8. **NOTICE**: All notices, demands, and communications under this Agreement shall be in writing and delivered personally or by certified mail, return receipt requested, to the respective Parties at their addresses specified below:
 
-7. **Data Security**: The Company shall implement and maintain appropriate technical and organizational
+[Party A's Address]
+[Party B's Address]
+
+9. **AMENDMENTS**: This Agreement may not be amended, modified, or supplemented except by a written instrument executed by both Parties.
+
+10. **GOVERNING LAW**: The laws of [State] shall govern the construction and interpretation of this Agreement, without giving effect to any principles of conflicts of law.
+
+By executing this Agreement, each Party acknowledges that it has read, understands, and agrees to be bound by the terms and conditions of this Article III.

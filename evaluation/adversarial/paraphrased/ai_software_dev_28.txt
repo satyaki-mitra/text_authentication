@@ -1,0 +1,64 @@
+Title: Pattern for Observer Design with Java Application Example
+
+## Overview
+
+The Observer Design Pattern outlines a many-to-one relationship between objects, ensuring that when an object experiences a state change, all connected entities are notified and refreshed automatically. This pattern is advantageous in establishing event handling systems distributed across multiple locations, real-time data representation, and monitoring applications.
+
+## Application Scenarios
+
+1. **Stock Monitor:** In a stock tracking application, multiple viewers (users) may exhibit interest in the share price of specific companies. When stock prices alter, all users receive immediate updates.
+
+2. **Weather Prediction:** Within a weather forecast platform, devices or applications subscribed to it can be updated when there are changes in temperature or weather conditions.
+
+## Java Implementation
+
+### Interfaces and Abstract Classes
+
+```java
+interface EventEmitter {
+    void addListener(EventListener listener);
+    void removeListener(EventListener listener);
+    void triggerEvent();
+}
+
+abstract class Listener {
+    protected EventEmitter emitter;
+
+    public void update() {
+        // Code for updating the listener's state upon notification.
+    }
+
+    public void setEmitter(EventEmitter emitter) {
+        this.emitter = emitter;
+        this.emitter.addListener(this);
+    }
+}
+```
+
+### Concrete EventEmitter (WeatherObservable in our example)
+
+```java
+class WeatherObservable implements EventEmitter {
+    private float temperature;
+    private float humidity;
+    private float pressure;
+    private List<EventListener> listeners = new ArrayList<>();
+
+    public void stateChanged() {
+        triggerEvent();
+    }
+
+    // Methods for setting and getting data values.
+}
+```
+
+### Concrete Listeners (Display in our example)
+
+```java
+class CurrentWeatherDisplay implements Listener {
+    private float temperature;
+    private float humidity;
+    private float pressure;
+
+    public void onEvent(float temperature, float humidity, float pressure) {
+        this.temperature = temperature;

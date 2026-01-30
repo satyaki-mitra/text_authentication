@@ -1,37 +1,69 @@
-Title: Documentation for the "Real-Time Data Synchronization" Feature in XYZ Application
+**API Documentation**
 
-1. Overview
+Title: User Management API
 
-The Real-Time Data Synchronization (RTDS) feature is an integral part of the XYZ Application that ensures data consistency across multiple instances or devices in real-time. This document provides a detailed explanation of how the RTDS function operates, its benefits, and system requirements.
+Description: This API provides endpoints for managing user-related operations such as registration, login, profile update, and more.
 
-2. Features and Benefits
+## Endpoints
 
-   - Ensures consistent data across all connected devices/instances, eliminating discrepancies caused by local updates.
-   - Improves operational efficiency by reducing manual data reconciliation efforts.
-   - Facilitates seamless collaboration among team members working on the same project or dataset.
-   - Reduces potential errors and risks associated with outdated or inconsistent data.
+### User Registration
 
-3. System Requirements
+#### Request
 
-   - Compatible Operating Systems: Windows, macOS, Linux (supported versions may vary)
-   - Minimum hardware specifications: 2GB RAM, 1GHz processor, 500MB disk space
-   - Network Connectivity: Stable internet connection for cloud-based RTDS or local area network for peer-to-peer synchronization.
-   - XYZ Application Version: 3.0.0 and above (check the latest version on our official website)
+```http
+POST /api/users
+Content-Type: application/json
+```
 
-4. Setup and Configuration
+#### Parameters
 
-To enable Real-Time Data Synchronization, follow these steps:
+| Name      | Type   | Description                                             | Required | Example                         |
+| --------- | ------ | ------------------------------------------------------- | -------- | ------------------------------- |
+| username  | string | A unique identifier for the user.                       | Yes      | "john_doe"                      |
+| email     | string | The user's email address, used for password recovery.   | Yes      | "johndoe@example.com"          |
+| password  | string | The user's secure password, encrypted before storage.  | Yes      | "secure_password_hash"          |
+| firstName | string | The user's first name.                                  | No       | "John"                          |
+| lastName  | string | The user's last name.                                   | No       | "Doe"                           |
 
-  1. Install or update XYZ Application to the latest version on each device/instance.
-  2. Launch the application and navigate to the settings menu.
-  3. Select "Real-Time Data Synchronization" from the list of available features.
-  4. Choose your preferred synchronization method (cloud-based or peer-to-peer).
-  5. Provide necessary credentials or configure network settings as required for your selected synchronization method.
+#### Response
 
-5. Troubleshooting and Support
+```http
+HTTP/1.1 201 Created
+Content-Type: application/json
 
-In case you encounter any issues with the Real-Time Data Synchronization feature, please refer to our online help center or contact our technical support team at support@xyzapp.com.
+{
+  "user_id": 1,
+  "username": "john_doe",
+  "email": "johndoe@example.com"
+}
+```
 
-6. Conclusion
+#### Authentication Requirements
 
-The Real-Time Data Synchronization feature offers significant advantages for users looking to improve data consistency and collaboration within their teams. By ensuring seamless updates across multiple devices/instances
+None for this endpoint as it is used for user registration and does not require an existing user account.
+
+### User Login
+
+#### Request
+
+```http
+POST /api/users/login
+Content-Type: application/json
+```
+
+#### Parameters
+
+| Name     | Type   | Description                                        | Required | Example                         |
+| -------- | ------ | --------------------------------------------------| -------- | ------------------------------- |
+| email    | string | The user's email address used for authentication.  | Yes      | "johndoe@example.com"          |
+| password | string | The user's secure password, encrypted before use.  | Yes      | "secure_password_hash"          |
+
+#### Response
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "token

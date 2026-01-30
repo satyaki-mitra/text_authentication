@@ -1,0 +1,92 @@
+**System: Weather Forecast API**
+
+The Weather Forecast API is a RESTful API that provides real-time weather data and forecasts to users. The API is designed to be easy to use, scalable, and secure.
+
+**API Specifications:**
+
+* **Base URL:** `https://api.weatherforecast.com`
+* **Version:** 1.0
+* **HTTP Methods:**
+	+ GET: Retrieve weather data for a specific location or forecast.
+	+ POST: Submit a request for a customized weather forecast.
+* **Query Parameters:**
+	+ `location`: The latitude and longitude coordinates of the location (required).
+	+ `unit`: The unit of measurement for temperature, precipitation, etc. (optional, default is Celsius).
+	+ `forecast`: The type of forecast desired (e.g., "hourly", "daily", or "weekly") (optional).
+
+**API Endpoints:**
+
+1. **GET /weather**: Retrieve current weather data for a specific location.
+	* Request: `https://api.weatherforecast.com/weather?location=37.7749,-122.4194`
+	* Response:
+```json
+{
+  "weather": {
+    "condition": "Sunny",
+    "temperature": 22,
+    "precipitation": 0.01
+  }
+}
+```
+2. **GET /forecast**: Retrieve a forecast for a specific location.
+	* Request: `https://api.weatherforecast.com/forecast?location=37.7749,-122.4194&forecast=daily`
+	* Response:
+```json
+{
+  "forecast": [
+    {
+      "date": "2023-02-20",
+      "condition": "Partly Cloudy",
+      "temperature": 25,
+      "precipitation": 0.05
+    },
+    ...
+  ]
+}
+```
+3. **POST /forecast**: Submit a request for a customized weather forecast.
+	* Request:
+```json
+{
+  "location": {
+    "latitude": 37.7749,
+    "longitude": -122.4194
+  },
+  "units": {
+    "temperature": "Fahrenheit"
+  },
+  "forecast_type": "hourly"
+}
+```
+* Response:
+```json
+{
+  "forecast": [
+    {
+      "date": "2023-02-20",
+      "condition": "Cloudy",
+      "temperature": 55,
+      "precipitation": 0.10
+    },
+    ...
+  ]
+}
+```
+
+**Usage Guidelines:**
+
+1. To use the API, send a GET request to one of the above endpoints with the required query parameters.
+2. For POST requests, submit a JSON object containing the location, units, and forecast type.
+3. All responses will be in JSON format.
+4. The API supports gzip compression for faster data transfer.
+5. To ensure secure communication, use HTTPS (SSL/TLS) when interacting with the API.
+
+**Error Handling:**
+
+1. If an invalid request is sent, the API will return a 400 Bad Request error response.
+2. If a location cannot be found or there is an issue retrieving weather data, the API will return a 404 Not Found error response.
+3. For any other errors, the API will return a 500 Internal Server Error response.
+
+**Support:**
+
+If you have questions or need assistance with using the Weather Forecast API, please contact our support

@@ -1,0 +1,74 @@
+Title: User Administration API Endpoint
+
+## User Administration Interface
+
+### Overview
+
+This interface enables management of user accounts within the system. The endpoint is equipped to perform CRUD (Create, Read, Update, Delete) actions and is accessible via HTTPS petitions.
+
+### Authentication Prerequisites
+
+All transactions with this interface necessitate the employment of HTTP Basic authentication, utilizing legitimate API keys. These keys can be acquired from the [API Key Administration portal](https://your-app-api-keys.com).
+
+### URL
+
+`<https://your-app-api.com/v1/users>`
+
+### Request Specifications
+
+#### Creation Operation (POST)
+
+```
+Content-Type: application/json
+Authorization: Basic API_KEY_BASE64
+
+{
+  "username": "string",
+  "email": "string",
+  "password": "string"
+}
+```
+
+#### Retrieval Operation (GET)
+
+```
+Authorization: Basic API_KEY_BASE64
+```
+
+#### Modification Operation (PUT)
+
+```
+Content-Type: application/json
+Authorization: Basic API_KEY_BASE64
+
+{
+  "username": "string",
+  "email": "string",
+  "password": "string"
+}
+```
+
+#### Deletion Operation (DELETE)
+
+```
+Authorization: Basic API_KEY_BASE64
+```
+
+### Response Elements
+
+#### Successful Results
+
+All successful outcomes will deliver a JSON object with the subsequent structure:
+
+```json
+{
+  "status": "success",
+  "data": {
+    // The specific data varies depending on the operation (user object for create/update, user ID for delete)
+  }
+}
+```
+
+#### Error Results
+
+Error responses will deliver a JSON object with the following structure

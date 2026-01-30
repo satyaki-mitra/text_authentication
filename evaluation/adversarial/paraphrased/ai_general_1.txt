@@ -1,0 +1,11 @@
+Title: Wave of Light Energy Spectrum
+
+The spectrum of electromagnetic energy encompasses all forms of waves that traverse at the speed of light, featuring oscillating electric and magnetic fields perpendicular to each other. This spectrum spans an extensive range of wavelengths and frequencies, from gamma rays to radio waves.
+
+Energy emission from charged particles undergoing acceleration or deceleration is responsible for generating electromagnetic radiation. These occurrences may transpire in various ways across nature, such as through nuclear decay, atomic transitions, friction, or heating of charges. The broad spectrum is partitioned into distinct regions based on their unique characteristics, wavelengths, frequencies, and applications.
+
+The shortest waves within the electromagnetic energy spectrum are gamma rays, spanning a wavelength range from zero to approximately 1 femto meter (1x10^-15 m) and frequencies between 3x10^20 Hz and 3x10^24 Hz. Gamma rays exhibit high penetrative and ionizing properties, primarily generated during radioactive isotope decay or in particle accelerators. They are utilized for cancer treatment and industrial sterilization yet carry potential health risks due to their immense energy levels.
+
+Subsequent to gamma rays, X-rays emerge, boasting wavelengths extending from roughly 1 femto meter to 0.1 nanometer (1x10^-9 m) and frequencies between 3x10^16 Hz and 3x10^20 Hz. X-rays find application in medical imaging techniques such as radiography and computed tomography, providing non-invasive visualization of internal body structures.
+
+Ultraviolet (UV) radiation encompasses wavelengths between approximately 0.1 nanometer and 400 nanometers (4x10^-7 m), frequencies between 3x10^15 Hz and 7.9x10^14 Hz, and is classified into three sub-regions: UV-A, UV-B, and UV-C. These regions differ in their capacity to inflict damage upon living tissue, with UV-C being the most harmful but significantly filtered by Earth's ozone layer

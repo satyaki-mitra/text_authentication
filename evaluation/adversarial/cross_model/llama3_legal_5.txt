@@ -1,45 +1,38 @@
-Here's a draft of a formal legal clause about data privacy compliance:
+**SECTION 4: CONFIDENTIALITY AND PROPRIETARY INFORMATION**
 
-**DATA PRIVACY COMPLIANCE**
+The Parties agree that certain information, including but not limited to trade secrets, confidential business information, and proprietary data, shall be kept confidential and protected by this Agreement.
 
-1. **COMPLIANCE WITH APPLICABLE LAWS AND REGULATIONS**: [PARTY A] and [PARTY B] (collectively, the "Parties") shall comply with all applicable laws and regulations regarding the collection, use, processing, storage, transmission, disclosure, and protection of personal data ("Personal Data"), including but not limited to:
+**DEFINITIONS**
 
-a. The General Data Protection Regulation (GDPR) of the European Union;
+For the purposes of this Section, the following terms shall have the meanings indicated:
 
-b. The California Consumer Privacy Act (CCPA);
+* "Confidential Information" means all information disclosed or made available to a Party (the "Disclosing Party") by the other Party (the "Receiving Party"), whether written or oral, that is not generally known in the industry and that the Disclosing Party considers to be confidential or proprietary.
+* "Proprietary Information" means any Confidential Information that is embodied in or represented by intellectual property rights, including but not limited to patents, copyrights, trademarks, trade secrets, and any applications therefor.
 
-c. The Gramm-Leach-Bliley Act (GLBA);
+**CONFIDENTIALITY OBLIGATIONS**
 
-d. The Health Insurance Portability and Accountability Act (HIPAA);
+The Receiving Party agrees:
 
-e. Any other applicable data privacy laws and regulations.
+1. To maintain the confidentiality of all Confidential Information disclosed by the Disclosing Party;
+2. Not to use or disclose any Confidential Information for its own benefit or the benefit of others, except as permitted under this Agreement or with the prior written consent of the Disclosing Party;
+3. To take reasonable steps to prevent unauthorized disclosure or use of Confidential Information, including but not limited to:
+	* Limiting access to Confidential Information to employees and agents having a need to know;
+	* Using passwords, encryption, and other security measures to protect Confidential Information; and
+	* Returning or destroying all Confidential Information upon the expiration or termination of this Agreement.
+4. To notify the Disclosing Party promptly in writing if the Receiving Party becomes aware of any unauthorized disclosure or use of Confidential Information.
 
-2. **DATA PROTECTION POLICIES AND PROCEDURES**: Each Party shall maintain data protection policies and procedures that comply with the above-mentioned laws and regulations, including:
+**PROPRIETARY INFORMATION**
 
-a. Data breach notification procedures;
+The Receiving Party acknowledges that the Proprietary Information is and shall remain the exclusive property of the Disclosing Party, and agrees not to:
 
-b. Data subject access requests processes;
+1. Use or disclose any Proprietary Information for its own benefit or the benefit of others;
+2. File, prosecute, or abandon any application for intellectual property rights related to the Proprietary Information;
+3. Allow any third party to use or disclose any Proprietary Information.
 
-c. Data retention and deletion schedules;
+**TERM AND TERMINATION**
 
-d. Employee training programs for handling Personal Data.
+The confidentiality obligations under this Section shall survive the expiration or termination of this Agreement for a period of five (5) years following the date of termination, after which all Confidential Information and Proprietary Information shall be returned or destroyed.
 
-3. **SECURITY MEASURES**: The Parties shall implement and maintain reasonable security measures to protect against unauthorized access, use, disclosure, modification, or destruction of Personal Data, including:
+**GOVERNING LAW**
 
-a. Firewalls and intrusion detection systems;
-
-b. Encryption technologies;
-
-c. Access controls and authentication protocols;
-
-d. Regular security audits and penetration testing.
-
-4. **DATA TRANSFERS**: The Parties shall ensure that any transfers of Personal Data outside the European Economic Area (EEA) or other jurisdictions are done in compliance with applicable laws and regulations, including but not limited to:
-
-a. Standard Contractual Clauses for International Transfers;
-
-b. Binding Corporate Rules (BCRs);
-
-c. Certification under a recognized data protection framework.
-
-5. **DATA SUBJECT RIGHTS**: The Parties shall respect the rights of data subjects regarding their Personal Data
+This Section shall be governed by and construed in accordance with the laws of [STATE/COUNTRY], without giving effect to any principles of conflicts of law that may provide for the application of laws from another jurisdiction.

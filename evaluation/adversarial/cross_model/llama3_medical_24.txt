@@ -1,0 +1,27 @@
+**Case Report: Unusual Presentation of Pneumocystis jirovecii Pneumonia in an Immunocompetent Patient**
+
+We present the unusual case of a 35-year-old immunocompetent male who presented with symptoms suggestive of community-acquired pneumonia (CAP), but was ultimately diagnosed with Pneumocystis jirovecii pneumonia (PJP).
+
+The patient initially sought medical attention for a 3-day history of dyspnea, non-productive cough, and mild chest discomfort. He denied any recent travel, sick contacts, or known exposure to infectious diseases. Physical examination revealed fever, tachypnea, and diffuse bilateral crackles on auscultation. Chest radiography (CXR) demonstrated patchy bilateral infiltrates consistent with CAP.
+
+Initial laboratory results showed a white blood cell count of 12,000 cells/µL, with 80% neutrophils; serum lactate dehydrogenase (LDH) was elevated at 350 IU/L. Respiratory virus panel and blood cultures were negative for pathogens.
+
+Despite empirical treatment with ceftriaxone and azithromycin for presumed CAP, the patient's symptoms worsened over the next 48 hours, with increasing shortness of breath, fever, and hypoxemia (PaO2/FiO2 ratio <200). A repeat CXR showed progression of infiltrates.
+
+Further evaluation revealed a positive PJP DNA by polymerase chain reaction (PCR) on bronchoalveolar lavage (BAL) fluid. Serum testing for antibodies against Pneumocystis jirovecii was also positive, indicating recent infection.
+
+The patient was started on trimethoprim-sulfamethoxazole (TS) therapy and made a slow but eventual recovery over the next 2 weeks.
+
+**Discussion**
+
+PJP is typically associated with immunosuppression, particularly in individuals with human immunodeficiency virus (HIV) or those receiving immunosuppressive therapy. Our case highlights an unusual presentation of PJP in an immunocompetent patient, which underscores the importance of considering this diagnosis even in patients without known risk factors.
+
+The patient's symptoms and radiographic findings were initially consistent with CAP, leading to a delay in diagnosing the true etiology. The elevation in LDH and PCR-confirmed PJP on BAL fluid supported the diagnosis.
+
+This case emphasizes the need for continued vigilance in diagnosing opportunistic infections, even in immunocompetent patients, particularly in light of the increasing prevalence of PJP in certain populations (e.g., older adults, smokers).
+
+**Conclusion**
+
+Pneumocystis jirovecii pneumonia can occur in immunocompetent individuals, and clinicians must remain aware of this possibility to ensure timely and effective treatment. A high index of suspicion and consideration of PCR testing on BAL fluid may be necessary to diagnose PJP in patients without known risk factors.
+
+**Keywords:** Pneumocystis jirovecii pneumonia; Immunocompetent patient; Unusual presentation; Diagnostic challenge

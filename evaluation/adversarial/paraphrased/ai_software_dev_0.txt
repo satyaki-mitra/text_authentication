@@ -1,0 +1,43 @@
+Title: Guide on Dependent Injection Strategy Utilizing C# and Autofac
+
+Guidance
+
+Dependent Injection (DI) is a design pattern in software engineering that fosters flexible, object-oriented architectures. Indispensable for constructing maintainable and testable applications, particularly in large-scale projects, this document provides an overview of DI's integration with Autofac, a widely used dependency injection toolkit for .NET developers.
+
+Autofac Integration
+
+To begin utilizing Autofac, install the Autofac NuGet package within your project via:
+
+```bash
+Install-Package Autofac
+```
+
+Component and Dependency Registration
+
+The first step in employing Autofac involves registering components (services) and their dependencies within a `ContainerBuilder`. Here's an illustration of registering a service `IUserService` that requires another service `IRepository`:
+
+```csharp
+var builder = new ContainerBuilder();
+builder.RegisterType<UserService>().As<IUserService>();
+builder.RegisterType<Repository>().As<IRepository>();
+```
+
+In this example, we have registered the `UserService` as an implementation of `IUserService`, and `Repository` as an implementation of `IRepository`. This implies that when a request for an `IUserService` instance is made, Autofac will produce an `UserService` object containing a dependency on `Repository`.
+
+Instance Retrieval with Autofac
+
+To obtain instances from the container, utilize the `Build()` method:
+
+```csharp
+using (var container = builder.Build())
+{
+    var userService = container.Get<IUserService>();
+    // Use the userService here...
+}
+```
+
+Best Practices and Considerations
+
+1. **Inversion of Control (IoC):** The fundamental principle behind DI is IoC, which denotes that the flow of control in your application should not be dictated by the objects generated within it. Instead, objects should be produced, and their dependencies provided from an external source.
+
+2. **Loose Coupling:** Through DI, you can create loos

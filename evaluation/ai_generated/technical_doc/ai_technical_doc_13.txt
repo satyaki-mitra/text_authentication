@@ -1,32 +1,58 @@
-Title: Documentation for Automated Backup Feature in XYZ Software v3.0
+Title: Product Management API - Get Products
 
-1. Overview
+## Description
 
-The Automated Backup feature is an essential component of the XYZ Software v3.0 that allows users to schedule, manage, and automate backups of their data securely. This document provides a comprehensive understanding of how to use, configure, and troubleshoot this feature.
+The `GET /products` endpoint provides a way to retrieve a list of all available products in the system. This is a read-only operation that does not modify any data within the system.
 
-2. Prerequisites
-   - Minimum system requirements: Please refer to the System Requirements section in the XYZ Software v3.0 User Manual for detailed information on the necessary hardware and software specifications.
-   - Administrator privileges are required to configure and manage backup settings.
+## Authentication Requirements
 
-3. Feature Description
+To access this endpoint, you must include an API key in the `Authorization` header of your request. The API key should be provided to you upon registration or account setup with our service.
 
-The Automated Backup feature offers users the ability to schedule daily, weekly, or monthly backups of their data. The backups can be stored locally, on a network drive, or in cloud storage services supported by XYZ Software v3.0 (e.g., Google Drive, Dropbox).
+Example:
 
-4. Setting Up Automated Backup
+```
+Authorization: Bearer <Your_API_Key>
+```
 
-To set up the Automated Backup feature:
+## Request Parameters
 
-   1. Launch XYZ Software v3.0.
-   2. Navigate to the Settings menu and select "Backup" from the list.
-   3. In the Backup Settings window, configure the following options:
-      - Destination: Choose where you want your backup files to be stored (Local drive, Network drive, or Cloud storage).
-      - Schedule: Select the frequency of backups (Daily, Weekly, Monthly) and the specific days/times for each backup.
-   4. Click "Save" to save your settings. The Automated Backup will commence according to your specified schedule.
+This endpoint does not require any specific request parameters. However, you can optionally filter the results by using query parameters:
 
-5. Managing Backups
+- `limit` (optional, integer): Specify the maximum number of items to return per page. Default value is 20. Maximum value is 100.
+- `offset` (optional, integer): Skip a specified number of items in the results. Default value is 0.
+- `sort_by` (optional, string): Sort the results by a specific product attribute. Supported attributes include: `id`, `name`, `price`, and `created_at`. Default sorting order is ascending. To sort in descending order, append `desc` to the attribute name, like so: `sort_by=price_desc`.
 
-You can view a list of all backups, their status, and size by navigating to the Backup menu and selecting "View Backup History." From here, you can also delete individual backup files or restore data from a specific backup.
+## Response Parameters
 
-6. Troubleshooting
-   - If you encounter any issues with the Automated Backup feature, consult the XYZ Software v3.0 Troubleshooting Guide for potential solutions.
-   - For more complex problems, contact our dedicated support team at [support@xyzsoftware.com](mailto
+The response will be a JSON array containing objects representing each product. Each object includes the following properties:
+
+- `id` (integer): Unique identifier for the product.
+- `name` (string): The name of the product.
+- `description` (string): A brief description of the product.
+- `price` (float): The current price of the product, in USD.
+- `created_at` (string, format YYYY-MM-DD HH:MM:SS): The date and time when the product was created.
+
+Example Response:
+
+```json
+[
+  {
+    "id": 1,
+    "name": "Product A",
+    "description": "This is Product A.",
+    "price": 9.99,
+    "created_at": "2022-01-01 12:34:56"
+  },
+  {
+    "id": 2,
+    "name": "Product B",
+    "description": "This is Product B.",
+    "price": 19.99,
+    "created_at": "2022-01-01 15:37:23"
+  }
+]
+```
+
+## Error Codes
+
+Possible error codes and

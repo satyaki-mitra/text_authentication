@@ -1,0 +1,10 @@
+Title: An Uncommon Incident of Gastrointestinal Stromal Tumor (GIST) Responsiveness to Imatinib Resuscitation Post-Sunitinib Progression - A Case Study
+
+Introduction:
+Gastrointestinal stromal tumors (GISTs), the predominant mesenchymal neoplasms in the gastrointestinal tract, affect approximately 15 individuals per million annually. Imatinib, a tyrosine kinase inhibitor (TKI), is the standard first-line therapy for advanced or metastatic GIST. However, resistance to imatinib can result in disease progression, necessitating alternative treatment options. This case report explores an uncommon response of refractory GIST to reintroduced imatinib following disease progression after sunitinib treatment.
+
+Case Description:
+A 62-year-old male patient reported a four-month history of sporadic abdominal pain and weight loss. Imaging investigations identified a 10 cm tumor in the gastric antrum, leading to a tentative diagnosis of GIST. The initial treatment involved daily doses of 400 mg imatinib for six months, which resulted in partial response. After twelve months, computed tomography (CT) scans signaled disease progression. Subsequently, sunitinib was administered at 50 mg daily for three weeks, followed by one week off-cycle. Six months later, CT scans indicated progressive disease. Intriguingly, upon reintroduction of imatinib at the same initial dose, the patient displayed a complete response after two months, as confirmed by subsequent imaging studies.
+
+Diagnostic Procedure:
+The GIST diagnosis was substantiated through histological examination of the tumor biopsy specimen, which revealed spindle cells accompanied by a characteristic immunohistochemical profile (CD117 and CD34 positive; S-100 protein negative). Fluorescence in situ hybridization (FISH) confirmed the presence of a platelet-derived growth factor receptor alpha (PDGFRA) exon 18 mutation, associated with imatinib sensitivity

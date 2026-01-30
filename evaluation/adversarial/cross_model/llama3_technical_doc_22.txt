@@ -1,55 +1,74 @@
-**API Endpoint: `/users/search`**
+**API Documentation: Weather Station Data Retrieval**
 
 **Overview**
+The Weather Station Data Retrieval API provides access to real-time weather data from various weather stations around the world. This API is designed for developers, researchers, and enthusiasts who need accurate and reliable weather information.
 
-The `/users/search` endpoint is used to search for users within the system based on specific criteria. This endpoint returns a list of matching user records, along with relevant metadata.
+**Technical Specifications**
 
-**Request Parameters**
+* **API Endpoint:** `https://weatherapi.example.com/v1/data`
+* **HTTP Method:** GET
+* **Request Parameters:**
+	+ `station_id`: Unique identifier of the weather station (required)
+	+ `start_date` and `end_date`: Date range for which data is requested (optional, default is current date range)
+	+ `data_type`: Type of weather data to retrieve (e.g., temperature, humidity, wind speed) (optional, default is all available data types)
+* **Response Format:** JSON
+* **Response Structure:**
+	+ `station_id`: Unique identifier of the weather station
+	+ `timestamp`: Timestamp of the data point in UTC format
+	+ `data_points`: Array of weather data points with the following fields:
+		- `type`: Type of weather data (e.g., temperature, humidity, wind speed)
+		- `value`: Value of the weather data
+		- `unit`: Unit of measurement for the weather data
 
-* **q**: The search query string (required). This parameter accepts a combination of keywords and filters, separated by spaces.
-* **filter**: A JSON object containing filter criteria (optional).
-	+ `username`: Filter results by username (exact match).
-	+ `email`: Filter results by email address (exact match).
-	+ `department`: Filter results by department ID or name.
-* **limit**: The maximum number of results to return (default: 20, max: 100).
-* **offset**: The starting point for pagination (default: 0).
+**Usage Guidelines**
 
-**Request Method**
+1. **Authentication:** No authentication is required to access the API.
+2. **Rate Limiting:** The API has a rate limit of 100 requests per hour. Exceeding this limit may result in errors or temporary blocking.
+3. **Data Quality:** Weather data is collected from various sources and undergoes quality control checks. However, the accuracy and completeness of the data cannot be guaranteed.
+4. **API Versioning:** The API uses semantic versioning (e.g., `v1`). New features and updates will be introduced in new versions.
 
-* **GET**
+**Example Request**
 
-**Request Example**
+`https://weatherapi.example.com/v1/data?station_id=US12345&start_date=2022-01-01&end_date=2022-01-31`
 
-```http
-GET /users/search?q=john+doe&filter={"username": "johndoe", "department": "Sales"}&limit=5&offset=0
-```
-
-**Response**
-
-The response will contain an array of user records, each with the following properties:
-
-* **id**: Unique identifier for the user.
-* **username**: The user's username.
-* **email**: The user's email address.
-* **department**: The user's department ID or name.
-* **metadata**: Additional metadata about the user (e.g., last login timestamp).
-
-**Response Example**
-
+**Example Response**
 ```json
-[
-  {
-    "id": 123,
-    "username": "johndoe",
-    "email": "johndoe@example.com",
-    "department": "Sales",
-    "metadata": {
-      "last_login_timestamp": 1643723400
+{
+  "station_id": "US12345",
+  "timestamp": "2022-01-01T12:00:00Z",
+  "data_points": [
+    {
+      "type": "temperature",
+      "value": 25.5,
+      "unit": "Celsius"
+    },
+    {
+      "type": "humidity",
+      "value": 60,
+      "unit": "%"
+    },
+    {
+      "type": "wind_speed",
+      "value": 10.2,
+      "unit": "m/s"
     }
-  },
-  {
-    "id": 456,
-    "username": "johnsmith",
-    "email": "johnsmith@example.com",
-    "department": "Marketing",
-    "metadata
+  ]
+}
+```
+**Error Handling**
+
+The API returns errors in JSON format with the following structure:
+
+* `error_code`: Error code (e.g., `INVALID_REQUEST`)
+* `error_message`: Human-readable error message
+* `details`: Additional information about the error (optional)
+
+Example Error Response:
+```json
+{
+  "error_code": "INVALID_REQUEST",
+  "error_message": "Invalid station ID format",
+  "details": ["The provided station ID is not valid"]
+}
+```
+By following these guidelines and using the Weather Station Data Retrieval API, you can access reliable and accurate weather data to power your applications and projects.

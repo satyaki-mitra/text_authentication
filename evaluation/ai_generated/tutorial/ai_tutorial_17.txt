@@ -1,36 +1,35 @@
-Title: A Step-by-Step Guide for Beginners: Setting Up Your First WordPress Website
+Title: A Step-by-Step Guide for Beginners: Installing a Local Development Environment with WAMP Server
 
-**Step 1: Gathering Necessary Tools**
+In this tutorial, we'll walk you through the process of setting up a local development environment using WAMP (Windows, Apache, MySQL, PHP) server on your Windows computer. This guide is perfect for beginners who want to start web development but don't know where to begin.
 
-Before we start, you'll need the following tools:
-- Domain Name (e.g., yourwebsite.com)
-- Web Hosting Account (e.g., Bluehost, SiteGround, or GoDaddy)
-- FTP Client (FileZilla, Cyberduck, or File Manager within cPanel)
-- Text Editor (Notepad, Sublime Text, or Atom)
+**Step 1: Download and Install WAMP Server**
 
-**Step 2: Purchasing a Domain and Web Hosting Account**
+Visit the official WAMPServer website at http://www.wampserver.com/en/. Click on the "Download" button to download the latest version of WAMPServer. Choose the 64-bit or 32-bit version depending on your system architecture.
 
-1. Choose a domain name registrar like Namecheap, GoDaddy, or Bluehost.
-2. Register your desired domain name.
-3. If you haven't already, sign up for a web hosting account with the same provider (if available) or choose another hosting service that suits your needs.
-4. Once signed up, navigate to your hosting control panel, usually cPanel.
+Once the download is complete, run the installer and follow the prompts to install WAMPServer on your computer. During installation, you'll be asked to choose components for installation; ensure that all options are selected.
 
-**Step 3: Installing WordPress**
+**Step 2: Launch the WAMP Server Control Panel**
 
-1. In your cPanel dashboard, find the "Softaculous Apps" or "WordPress" icon.
-2. Click on it and select "Install Now".
-3. Enter your website details (e.g., site name, description, admin username, password, and email). Choose a strong password for security purposes.
-4. Select a suitable protocol and choose the appropriate settings for database and tables.
-5. Click on "Install WordPress" to complete the installation.
+After installation, find the WAMPServer icon in your system tray and right-click it. From the context menu, select "Launch WAMPServer" to open the WAMP server control panel.
 
-**Step 4: Accessing Your New WordPress Site**
+**Step 3: Familiarize Yourself with the Dashboard**
 
-1. Once the installation is done, you'll receive important information like your site URL and admin username/password.
-2. Open a web browser and visit your new site URL (e.g., www.yourwebsite.com).
-3. Enter the admin credentials you provided during WordPress setup to log in for the first time.
+The WAMP server control panel consists of several sections: Apache, MySQL, PHP, and Services. The green icon in each section indicates that the respective service is running; red means it's stopped.
 
-**Step 5: Customizing Your Site**
+You'll also notice two icons at the top: one for stopping or starting all services, and another to open a local web browser.
 
-1. After logging in, you'll be redirected to the WordPress dashboard.
-2. To customize your site, navigate to "Appearance" > "Themes". You can choose from free or premium themes available within WordPress or upload a custom theme using an FTP client.
-3. Once you have chosen
+**Step 4: Ensure All Services Are Running**
+
+Before proceeding, ensure that all services (Apache, MySQL, PHP) are running by clicking on their respective green start buttons if they're red. A green Apache icon with a white checkmark indicates that the server is ready to serve web pages.
+
+**Step 5: Access the Local Web Server**
+
+To access your local web server, click on the browser icon at the top of the WAMP server control panel. This will launch your default browser and display the WAMPServer welcome page.
+
+**Step 6: Create a New Website Folder**
+
+To create a new website, navigate to the "www" folder located in your WAMP installation directory (usually C:\wamp64\www). Inside this folder, you can create subfolders for each of your projects. For instance, you might name a new project folder "mywebsite" and place it inside the www folder.
+
+**Step 7: Test Your Website**
+
+Within your newly created project folder (e.g., mywebsite), create an "index.php"

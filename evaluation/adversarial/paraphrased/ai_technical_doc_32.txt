@@ -1,0 +1,38 @@
+Title: User Account Creation through API - Registration Endpoint
+
+## Registration Endpoint Details
+
+### Overview
+
+This API offers a RESTful endpoint for the creation of new user accounts. The endpoint handles POST requests containing registration details to set up an account within the system.
+
+### Endpoint Address
+
+`https://api.example.com/v1/users/register`
+
+### Request Parameters
+
+| Parameter Label | Data Type  | Description                                       | Is Mandatory | Example                         |
+|----------------|-----------|--------------------------------------------------|---------------|---------------------------------|
+| account_identifier | String    | Unique label for the user account               | Yes           | `john_doe`                      |
+| email_address   | String    | Unique electronic mail address for the user account  | Yes          | `john.doe@example.com`         |
+| password        | String    | Secret code for the user's account              | Yes           | `securePassword123`             |
+| first_name      | String    | The user's given name                            | Optional      | `John`                          |
+| last_name       | String    | The user's surname                                | Optional      | `Doe`                           |
+
+### Authentication Obligations
+
+This endpoint doesn't demand authentication. Nevertheless, subsequent API interactions may require an access token, which will be provided following a successful registration.
+
+### Sample Request
+
+```bash
+POST https://api.example.com/v1/users/register HTTP/1.1
+Content-Type: application/json
+
+{
+  "account_identifier": "john_doe",
+  "email_address": "john.doe@example.com",
+  "password": "securePassword123",
+  "first_name": "John",
+  "last_name": "Doe

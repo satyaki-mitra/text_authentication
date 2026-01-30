@@ -1,52 +1,71 @@
-Title: A Step-by-Step Guide to Creating Your First Web Page using HTML and CSS
+Title: A Step-by-Step Guide for Beginners: Setting Up a Local Development Environment with Node.js and Express
 
-**Step 1: Setting Up the Environment**
+In this tutorial, we will walk you through setting up a local development environment for building web applications using Node.js and the Express framework. By following these steps, you'll have a strong foundation to start learning and creating your own projects.
 
-1.1 Install a Code Editor: Download a free code editor like Visual Studio Code, Sublime Text, or Atom. These editors are beginner-friendly and easy to use.
+**Prerequisites:**
+1. Basic understanding of HTML, CSS, and JavaScript
+2. Familiarity with command line interfaces (CLI) or terminals
+3. Installation of Node.js (version 14 or later) - https://nodejs.org/en/download/
 
-1.2 Install Live Server Extension (for VS Code): This extension will automatically serve the HTML files for you locally so you can see your webpage in action without needing to set up a server.
+**Step 1: Installing NPM (Node Package Manager)**
+NPM is a package manager for Node.js that allows you to easily install and manage libraries and dependencies for your projects. To install NPM, open your terminal or command prompt and run the following command:
 
-**Step 2: Creating Your First HTML Document**
-
-2.1 Open your code editor and create a new file with a `.html` extension, such as "index.html".
-
-2.2 Add the following basic structure inside the file:
-
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My First Web Page</title>
-</head>
-<body>
-    <h1>Welcome to My First Web Page!</h1>
-</body>
-</html>
+```bash
+npm install -g npm
 ```
 
-2.3 Save the file and open it in your web browser by clicking on "Open with Live Server" if you're using VS Code or following the appropriate steps for other code editors. You should now see a simple webpage displaying: "Welcome to My First Web Page!"
+**Step 2: Verifying the Installation**
+To verify that both Node.js and NPM have been installed correctly, simply run these commands in your terminal:
 
-**Step 3: Styling Your Web Page with CSS**
-
-3.1 In your HTML file, add the following line right before the `</head>` tag:
-
-```html
-<link rel="stylesheet" href="styles.css">
+```bash
+node --version
+npm --version
 ```
 
-3.2 Create a new file called "styles.css" in the same directory as your HTML file and add some basic styling:
+You should see the respective versions of Node.js and NPM displayed on your screen.
 
-```css
-body {
-    background-color: #f0f8ff;
-}
+**Step 3: Creating a New Project Directory**
+Navigate to the desired directory using `cd`, then create a new project folder with the following command:
 
-h1 {
-    color: navy;
-    text-align: center;
-}
+```bash
+mkdir my-express-app
+cd my-express-app
 ```
 
-3.3 Save the "styles.css" file and refresh your web browser. You should see that the background of your web
+**Step 4: Initializing the Project and Installing Express**
+Initialize your project as an NPM workspace by running:
+
+```bash
+npm init -y
+```
+
+Then, install Express and save it as a dependency in the `package.json` file:
+
+```bash
+npm install express
+```
+
+**Step 5: Writing Your First Express Application**
+Create a new file called `app.js` inside your project directory. Open this file and paste the following code:
+
+```javascript
+const express = require('express');
+const app = express();
+
+app.get('/', (req, res) => {
+  res.send('Hello World!');
+});
+
+app.listen(3000, () => {
+  console.log('App running on port 3000!');
+});
+```
+
+**Step 6: Running Your Express Application**
+In your terminal, run the following command to start your application:
+
+```bash
+node app.js
+```
+
+You should see a message saying

@@ -1,0 +1,30 @@
+Title: A Detailed Tutorial for Novices: Setting Up a Local Development Environment Utilizing WAMP (Windows, Apache, MySQL, PHP) Server on Your PC
+
+This instructional piece will walk you through the process of establishing a local development environment using the WAMP (Windows-Apache-MySQL-PHP) server on your personal computer. By adhering to these steps, you'll be adequately prepared to commence constructing dynamic web applications directly from your own system.
+
+**Step 1: Obtain and Install WAMP Server**
+
+Navigate to the official WAMPServer website (https://sourceforge.net/projects/wampserver/) and download the most recent version compatible with your Windows operating system. After downloading, execute the installer file to initiate the installation process.
+
+During the installation, you'll be presented with several options including:
+- _WAMPServer:_ Opt for this to install the entire package.
+- _MySQL:_ Select if you wish to set up a MySQL database server.
+- _PHP:_ Choose the PHP versions you prefer (recommended is 7.x).
+- _APC:_ An optional caching system for PHP applications.
+- _phpMyAdmin:_ A web-based tool for managing databases via a graphical interface.
+
+**Step 2: Initiate WAMP Server Control Panel**
+
+Upon installation, find the WAMPServer icon on your desktop and double-click it to launch the WAMP server control panel.
+
+**Step 3: Commence Services**
+
+Within the WAMP control panel, ensure that the Apache and MySQL services are stopped prior to starting them for the first time. To accomplish this, click on the red stop sign next to each service. After a brief interval, you can click on the green start arrow to initiate both services.
+
+**Step 4: Validate Installation**
+
+To confirm that your installation was successful, open any web browser and input `http://localhost` in the address bar. If all goes well, you should see the WAMPServer homepage displayed.
+
+**Step 5: Accessing phpMyAdmin**
+
+Within the PHPMyAdmin section of the WAMP control panel, click on the blue link to open phpMyAdmin within your web browser (http://localhost/phpmyadmin). Here, you can create and manage dat

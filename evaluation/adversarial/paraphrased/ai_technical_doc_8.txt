@@ -1,0 +1,40 @@
+Title: PetStore API - Order Creation Interface
+
+## Overview of the Endpoint
+
+Utilizing the `POST /create_order` endpoint enables the initiation of a new order within the PetStore. To ensure that only authenticated users can make purchases, this endpoint necessitates proper authentication.
+
+## Request Details
+
+| Parameter         | Type  | Explanation                                                                                    |
+|-------------------|-------|----------------------------------------------------------------------------------------------|
+| `order_identifier`| String| A distinct identifier for the order; if omitted, a unique ID will be automatically assigned.|
+| `customer_id`     | Number| The identification number of the customer placing the order.                                |
+| `pet_id`          | Number| The unique identifier for the pet being acquired.                                           |
+| `order_quantity`  | Number| The amount of the selected pet to be purchased.                                             |
+| `delivery_date`   | Date  | The anticipated delivery date for the order, if provided; if unspecified, the current date will be used. |
+
+## Authentication Prerequisites
+
+All requests sent to this endpoint must incorporate an `Authorization` header with a legitimate token. Acquire the token via authentication using the `POST /authenticate_user` endpoint.
+
+Example:
+```
+Authorization: Bearer {token}
+```
+
+## Example Request
+
+An example of a successful order creation request might appear as follows:
+
+```bash
+POST /create_order HTTP/1.1
+Host: petstore.swagger.io
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {token}
+
+{
+  "order_identifier": "ABCDEF",
+  "customer_id": 1,
+  "pet_

@@ -1,0 +1,31 @@
+Title: Establishing a WordPress Site from Scratch for Novices: A Comprehensive Guide on Creating a Fundamental WordPress Website
+
+In this guide, we will walk you through the process of establishing a fundamental WordPress website from its inception. Upon completion of this tutorial, you will possess your own functional WordPress site primed for customization and content population.
+
+**Essential Items:**
+1. A unique domain (e.g., example.net)
+2. Web hosting provider
+3. FTP client (such as FileZilla) or cPanel access (for transferring files)
+4. Email account for site management
+5. WordPress installation package
+
+**Step 1: Domain Name and Hosting Provider Selection**
+- Navigate to a domain registrar like GoDaddy, Namecheap, or Bluehost to procure your preferred domain name.
+- Select a web hosting service that offers easy WordPress installations, such as Bluehost, SiteGround, or DreamHost.
+- Register for the hosting plan and adhere to their instructions to tie your domain with the hosting account.
+
+**Step 2: Email Account Creation**
+- If offered by your web host, establish an email address specifically for site management (e.g., [admin@example.net](mailto:admin@example.net)).
+- Set up forwarding for common inquiries like contact@ or info@ yourdomain.com to route emails to this new account.
+
+**Step 3: Accessing Hosting Account and File Manager**
+- Log into the control panel provided by your web host (such as cPanel, Plesk).
+- Find the "File Manager" or "File Transfer Protocol (FTP)" section. This area will allow you to upload necessary files.
+
+**Step 4: Uploading WordPress Files**
+- Obtain the latest version of WordPress from wordpress.org.
+- Extract the downloaded ZIP file and find the wp-content, wp-includes, and wp-config-sample.php directories within it.
+- Utilize an FTP client like FileZilla or directly through your host's File Manager to transfer these three directories into the public_html folder of your website (root directory).
+
+**Step 5: Configuring WordPress Settings**
+- Navigate to your website by typing the domain name in a web browser (

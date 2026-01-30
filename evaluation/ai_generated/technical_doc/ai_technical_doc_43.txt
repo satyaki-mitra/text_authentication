@@ -1,31 +1,58 @@
-Title: User Authentication Feature in XYZ Application
+Title: API Documentation - User Management Endpoint
 
-1. Overview
+## User Management API
 
-The User Authentication feature is an essential component of the XYZ Application, enabling secure access and user management. This document provides a detailed description of the functionality, architecture, and usage of this feature.
+### Overview
 
-2. Functionality
+This document describes the User Management API, which enables you to interact with user resources in our system. The API uses RESTful principles and communicates over HTTP.
 
-   The User Authentication feature allows users to create, manage, and secure their accounts within the application. Key functionalities include:
+### Base URL
 
-   - Registration: Users can register for an account using their email addresses and creating passwords.
-   - Login: Users can log in to their accounts using their registered email addresses and passwords.
-   - Password Recovery: In case of forgotten passwords, users can request a reset link via email.
-   - Account Management: Registered users can view, edit, and delete their personal information, change passwords, and manage their account settings.
+All requests should be directed to `https://api.yourdomain.com/v1` unless otherwise specified.
 
-3. Architecture
+### Authentication
 
-   The User Authentication feature is built using modern web development technologies, ensuring scalability, security, and performance. Key components include:
+To ensure secure access, all requests require an API key in the `Authorization` header with the value `Bearer <API_KEY>`. You can obtain your API key from the [Developer Portal](https://developer.yourdomain.com/).
 
-   - Frontend: Built using ReactJS, the frontend provides a user-friendly interface for registration, login, password recovery, and account management.
-   - Backend: Developed with Node.js and Express.js, the backend handles user authentication requests, data storage, and interaction with external APIs like email services for password recovery.
-   - Database: MongoDB is used as the primary database to store user accounts, their personal information, and authentication tokens.
+### Endpoint: Users
 
-4. Implementation Details
+#### Description
 
-   - Registration: Users input their email addresses and desired passwords. The system checks for existing email addresses and ensures that password requirements are met before creating a new account.
-   - Login: Upon entering their email addresses and passwords, users are authenticated using hashed and salted passwords to ensure security. If successful, an authentication token is generated and sent back to the client in JSON Web Token (JWT) format.
-   - Password Recovery: Users input their email addresses to request a password reset link. The system sends a unique recovery link via email, which users can follow to reset their passwords.
-   - Account Management: Registered users can access their account settings page, where they can view, edit, and delete their personal information, change passwords, and manage other settings like two-factor authentication.
+This endpoint manages user resources within the system, allowing you to create, retrieve, update, and delete users.
 
-5.
+#### Request Parameters
+
+##### Create User (POST /users)
+
+| Parameter          | Data Type      | Description                                             |
+|--------------------|---------------|---------------------------------------------------------|
+| name               | string        | The user's name                                         |
+| email              | string        | A unique email address for the user                     |
+| password           | string        | The user's password (hashed before sending)             |
+| role               | string        | The user's role (e.g., admin, standard)                 |
+
+##### Get User (GET /users/:id)
+
+| Parameter   | Data Type    | Description                     |
+|-------------|-------------|---------------------------------|
+| id          | integer      | The unique ID of the user        |
+
+##### Update User (PATCH /users/:id)
+
+| Parameter   | Data Type    | Description                     |
+|-------------|-------------|---------------------------------|
+| id          | integer      | The unique ID of the user        |
+| name        | string       | The updated user's name           |
+| email       | string       | The updated user's email address  |
+| password    | string       | The updated user's password (hashed before sending) |
+| role        | string       | The updated user's role            |
+
+##### Delete User (DELETE /users/:id)
+
+| Parameter   | Data Type    | Description                     |
+|-------------|-------------|---------------------------------|
+| id          | integer      | The unique ID of the user        |
+
+#### Response Parameters
+
+All responses will have a `status` field indicating whether the request was successful (e.g., `success: true`) or not (e.g., `error: "Invalid API key"`). Successful responses for create, update, and delete operations will include the

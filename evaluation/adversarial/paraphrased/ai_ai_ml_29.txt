@@ -1,0 +1,25 @@
+Title: Understanding Deep Q-Networks (DQNs) and Their Application in Decision-Making Games
+
+Deep Q-Networks (DQNs), a branch of Artificial Intelligence (AI), enable agents to make informed decisions by engaging with their surroundings. The objective is to optimize a long-term, cumulative score through trial-and-error interactions within the environment. DQN stands out as one of the most effective strategies in this domain due to its integration of Convolutional Neural Networks (CNNs) and Q-learning, a value estimation technique.
+
+The fundamental concept behind DQNs revolves around Q(s, a), which signifies the anticipated reward associated with selecting action 'a' in state 's'. The aim is to discover the optimal Q-function that maximizes the total reward.
+
+Using mathematical notation, DQNs can be illustrated via the Bellman equation:
+
+Q(s,a) = Σ[r*R(s,a,s')*(1 - γ)^n] + γ * max_a' Q(s', a')
+
+In this equation,
+- s and s' denote states,
+- a and a' represent actions,
+- r symbolizes the instantaneous reward,
+- R(s,a,s') refers to the total reward from state 's' to 's', resulting from action 'a',
+- γ (0 < γ < 1) represents the discount factor that emphasizes immediate rewards over future rewards.
+
+Within DQNs, the Q-function is approximated by a neural network. The agent engages with the environment, gathers experiences (state, action, reward, subsequent state), and adjusts the neural network weights based on the Bellman equation through a learning process called temporal difference learning:
+
+Q(s_t, a_t) ≤ Q(s_t, a_t) + α * [r_t + γ * max_a' Q(s_(t+1), a') - Q(s_t, a_t)]
+
+Here,
+- α symbolizes the learning rate.
+
+To combat overfitting, DQNs incorporate several tactics: experience replay, target Q-network, and prior

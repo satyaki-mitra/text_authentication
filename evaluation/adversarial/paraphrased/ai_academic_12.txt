@@ -1,0 +1,13 @@
+Title: Investigating the Role of Cognitive Behavioral Therapy (CBT) in Ameliorating Depression Symptoms Among Adolescents: A Randomized, Controlled Study
+
+Introduction:
+The adolescent period, characterized by marked emotional and cognitive transformations, has witnessed an alarming increase in depressive disorders. This surge poses a significant public health challenge globally. Cognitive Behavioral Therapy (CBT), a psychotherapeutic approach with proven efficacy in adult depression management, remains under-explored in treating adolescent depression.
+
+Research Design:
+This research employed a randomized controlled trial involving 150 adolescents, aged between 13 and 18 years, diagnosed with Major Depressive Disorder (MDD) according to DSM-5 criteria. The study participants were randomly assigned into either the CBT intervention group or a waitlist control group. The CBT intervention comprised 16 weekly sessions, each lasting approximately 50 minutes, delivered by psychotherapists qualified in CBT. The Hamilton Depression Rating Scale (HAM-D) was utilized as the primary outcome measure, administered at baseline, post-intervention, and a three-month follow-up.
+
+Principal Results:
+Post-intervention results demonstrated a significant decrease in depression symptoms for the CBT group relative to the control group (t = -10.75, p < 0.001). The effect size was substantial (Cohen's d = 1.23), signifying significant improvement in depressive symptomatology following CBT intervention. At the three-month follow-up, the CBT group continued to exhibit statistically significant and clinically meaningful improvements compared to the control group (t = -7.56, p < 0.001).
+
+Conclusions:
+The findings support the efficacy of CBT in mitigating depression symptoms among adolescents diagnosed with MDD. The large effect size suggests that CBT could be a valuable intervention for addressing the growing public health issue of adolescent depression. Future research should delve into integrating CBT as a standard treatment for adolescent depression within clinical settings and identify potential

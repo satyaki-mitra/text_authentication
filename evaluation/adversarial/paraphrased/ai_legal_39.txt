@@ -1,0 +1,31 @@
+Title: Non-Disclosure Agreement - Secrecy Provisions
+
+A. Preamble
+
+This Secrecy Provisions (the "Provisions") is an essential element of any accord between the Parties (collectively referred to as the "Contract"), and serves to safeguard sensitive data shared amongst them. The terms used within this Provisions hold the meanings ascribed in the Contract, or as otherwise defined herein.
+
+B. Breadth and Duration
+
+B.1 These Provisions apply to all confidential data transmitted by one Party (the "Transmitting Party") to another (the "Receiving Party"), whether prior to, during, or following the effective date of the Contract.
+
+B.2 The commitments outlined within these Provisions persist beyond the termination or expiration of the Contract for a period of five (5) years, unless otherwise agreed upon in writing by both Parties.
+
+C. Definition of Confidential Data
+
+C.1 For the purposes of this Provisions, "Confidential Data" denotes any information disclosed by the Transmitting Party to the Receiving Party that is not commonly accessible or obtainable through routine business dealings. Confidential Data encompasses but is not limited to technical specifications, trade secrets, and commercial, financial, and client-related data.
+
+D. Responsibilities of the Receiving Party
+
+D.1 The Receiving Party agrees to utilize the Confidential Data solely for the purpose of fulfilling its obligations under the Contract and shall not disclose such Confidential Data to any external entity without prior written consent from the Transmitting Party, unless mandated by law or a valid court order issued by a competent authority.
+
+D.2 The Receiving Party is obliged to implement reasonable measures to maintain confidentiality and prevent unauthorized disclosure or utilization of the Confidential Data. Such precautions may include, but are not limited to, maintaining confidentiality protocols, restricting access to the Confidential Data to employees whose duties necessitate such access under the Contract, and implementing robust physical, digital, and operational safeguards to secure the Confidential Data.
+
+E. Exemptions from Responsibilities
+
+E.1 The obligations stated within these Provisions do not apply to any information that:
+
+E.1.1 Becomes publicly accessible without fault on the part of the Receiving Party;
+
+E.1.2 Was in possession of the Receiving Party before receipt from the Transmitting Party;
+
+E.1.

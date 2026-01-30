@@ -1,0 +1,24 @@
+**SECTION 12: LIMITATION OF LIABILITY**
+
+1. **LIMITATION ON INDIRECT DAMAGES**: The liability of [PARTY NAME] for any damages arising out of or related to this Agreement shall be limited to the total value of the services provided by [PARTY NAME] hereunder.
+
+2. **EXCLUSION OF CONSEQUENTIAL, INCIDENTAL, AND PUNITIVE DAMAGES**: In no event shall [PARTY NAME] be liable for any consequential, incidental, or punitive damages, including but not limited to loss of use, loss of profits, loss of data, or downtime, regardless of whether such damages were foreseeable or [PARTY NAME] had actual notice thereof.
+
+3. **EXCLUSION OF EXEMPLARY AND STATUTORY DAMAGES**: In no event shall [PARTY NAME] be liable for exemplary or statutory damages, including but not limited to attorney's fees and costs.
+
+4. **SOLE REMEDY**: The remedies provided in this Agreement are the exclusive remedies available to [PARTY NAME] or any third party claiming through [PARTY NAME].
+
+5. **LIMITATION ON AGGREGATE LIABILITY**: In no event shall [PARTY NAME]'s total liability arising out of or related to this Agreement exceed the total value of the services provided by [PARTY NAME] hereunder.
+
+6. **WAIVER OF CONSEQUENTIAL DAMAGES**: By executing this Agreement, each party hereby waives any and all claims against the other for consequential damages, including but not limited to loss of use, loss of profits, loss of data, or downtime.
+
+7. **SURVIVAL**: The provisions of this Section 12 shall survive the expiration or termination of this Agreement and apply to all disputes arising out of or related to this Agreement.
+
+**DEFINITIONS**
+
+For purposes of this Section 12:
+
+* "Consequential damages" means any loss, damage, or expense that is not a direct result of [PARTY NAME]'s breach of this Agreement, including but not limited to loss of use, loss of profits, loss of data, or downtime.
+* "Indirect damages" means any loss, damage, or expense that is not a direct result of [PARTY NAME]'s breach of this Agreement.
+
+By executing this Agreement, each party acknowledges that it has read and understands the terms and provisions of this Section 12 and agrees to be bound by them.

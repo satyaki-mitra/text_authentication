@@ -1,52 +1,68 @@
-Title: Understanding Dependency Injection in Java
+Title: Documentation on the Observer Design Pattern in Java
 
-Dependency injection (DI) is a design pattern that eases the managing and organizing of dependencies between classes, making applications more flexible, scalable, and maintainable. This approach is widely used in modern software development to improve separation of concerns and reduce coupling between objects.
+The Observer Design Pattern is a behavioral design pattern that defines a one-to-many dependency between objects so that when an object changes state, all its dependents are notified and updated automatically. This pattern is particularly useful for implementing events and notifications in applications that require real-time updates across multiple objects.
 
-In the context of Java, there are three main types of dependency injection: Constructor Injection, Setter Injection, and Field Injection.
-
-1. Constructor Injection:
-   Constructor injection involves passing dependencies as parameters when creating a new instance of a class. This approach ensures that objects are created with all required dependencies from the start, making it easier to manage and test them. Here's an example:
+**Use Case:** Consider a weather application where you have WeatherData (Subject) that stores weather data and a set of subscribers (Observers), such as temperature displays, weather history, and weather alerts. When the weather data changes, the WeatherData notifies all its Observers to update their information.
 
 ```java
-public class Service {
-    private final Repository repository;
-
-    public Service(Repository repository) {
-        this.repository = repository;
-    }
-
-    // ... other methods that use the repository
+public interface Subject {
+    void registerObserver(Observer observer);
+    void removeObserver(Observer observer);
+    void notifyObservers();
 }
 
-// and then, in the client code:
-Service service = new Service(new Repository());
-```
-
-2. Setter Injection:
-   Setter injection is a more flexible approach where dependencies are set after an object has been created. This is often accomplished using setter methods like `setRepository()`. Although it allows for greater flexibility in initializing objects, it can make the code less testable and prone to late-binding issues.
-
-```java
-public class Service {
-    private Repository repository;
-
-    public void setRepository(Repository repository) {
-        this.repository = repository;
-    }
-
-    // ... other methods that use the repository
+public interface Observer {
+    void update(Subject subject);
 }
 
-// and then, in the client code:
-Service service = new Service();
-service.setRepository(new Repository());
+public class WeatherData implements Subject, WeatherDataInterface {
+    private float temperature;
+    private float humidity;
+    private float pressure;
+    private List<Observer> observers = new ArrayList<>();
+
+    public void measurementsChanged() {
+        notifyObservers();
+    }
+
+    // Implementation of WeatherDataInterface methods
+
+    @Override
+    public void registerObserver(Observer observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(Observer observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (Observer observer : observers) {
+            observer.update(this);
+        }
+    }
+}
+
+public class WeatherDisplay implements Observer, DisplayElementInterface {
+    private Subject weatherData;
+    private float currentPressure;
+
+    public void display() {
+        // Display the temperature, humidity, and pressure data
+    }
+
+    @Override
+    public void update(Subject subject) {
+        WeatherData weatherData = (WeatherData) subject;
+        this.currentPressure = weatherData.getPressure();
+        display();
+    }
+}
 ```
 
-3. Field Injection:
-   Field injection is similar to setter injection but uses Java's @Autowired annotation (using Spring Framework) or Java Reflection API for injecting dependencies directly into class fields. This approach simplifies the code by eliminating the need for explicit setter methods, but it may lead to overuse of the @Autowired annotation and can make debugging more difficult.
+**Trade-offs:** The Observer pattern provides loose coupling between objects and makes it easy to add new observers or modify existing ones without affecting the Subject. However, it can lead to complex and difficult-to-maintain codebases due to the large number of interconnected objects. Also, there may be performance issues if notifications are sent frequently and multiple Observers exist for each Subject.
 
-```java
-import org.springframework.beans.factory.annotation.Autowired;
-
-public class Service {
-    @Autowired
-    private Repository repository;
+**Best Practices:**
+1. Implement a simple interface (Subject and Observer in this example) to ensure consistency among all

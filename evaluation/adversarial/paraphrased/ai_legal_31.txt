@@ -1,0 +1,29 @@
+Title: Privacy Protection Policy Declaration
+
+A. Introduction
+
+   A.1 This Privacy Protection Policy Declaration ("Declaration") outlines the responsibilities of [Company Name], a corporation established in [Jurisdiction] (the "Corporation"), concerning personal data privacy and the rights of individuals pertaining to their private information under relevant data protection laws, such as Regulation (EU) 2016/679 (General Data Protection Regulation or GDPR).
+
+   A.2 This Declaration serves as a foundation for the Corporation's management of personal data and aims to ensure that such data is processed in accordance with applicable data protection laws.
+
+   A.3 In this Declaration, "private information" refers to any details pertaining to an identifiable individual ("Data Subject"). An identifiable individual is one who can be recognized directly or indirectly, for instance, through the use of a name, identification number, location data, online identifier, or unique characteristics specific to the individual's physical, physiological, genetic, mental, economic, cultural, or social identity.
+
+B. Data Protection Principles
+
+The Corporation follows the principles of data protection as defined in Article 5 of the GDPR, which dictate that private information should be:
+
+   B.1 Processed legitimately, ethically, and transparently (Legitimacy, Ethics, Transparency);
+
+   B.2 Collected for explicitly stated and legitimate purposes and must not be processed in a way that contradicts these purposes (Purpose Specification);
+
+   B.3 Limited to the minimum necessary required for the stated purposes (Data Economy);
+
+   B.4 Accurate, and whenever necessary, updated to reflect the latest information; every reasonable effort should be made to erase or correct inaccurate private information without delay (Accuracy);
+
+   B.5 Stored for no longer than is required for the stated purposes; however, data may be preserved for extended periods if it will only be used for archival purposes in the public interest, scientific research, historical purposes, or statistical analysis (Retention Periods);
+
+   B.6 Processed securely to safeguard private information from unauthorized access, processing without authorization, and any accidental loss, destruction, or damage; this is achieved through appropriate technical or organizational measures (Security and Confidentiality).
+
+C. Basis for Processing Private Information
+
+   C.1 The Corporation can only process private information if it has a valid basis for doing so under applicable data protection laws.

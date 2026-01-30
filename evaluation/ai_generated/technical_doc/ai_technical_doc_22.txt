@@ -1,39 +1,63 @@
-Title: Documentation for the "Real-Time Data Streaming Feature" in XYZ Application
+**API Documentation - User Management System**
 
-1. Overview
+**Endpoint:** `POST /api/v1/users`
 
-The Real-Time Data Streaming (RTDS) feature is an essential component of the XYZ Application, designed to facilitate continuous and uninterrupted data transmission between devices or systems. This feature enables the application to process and display real-time data, providing users with up-to-date information and enhancing decision-making capabilities.
+**Description:** This API is used to create a new user in the system. The endpoint accepts JSON data containing user details.
 
-2. Functionality
+**Authentication Requirements:** All requests to this endpoint require an access token for authentication. The token should be included in the `Authorization` header with format: `Bearer {access_token}`.
 
-The RTDS feature collects, processes, and disseminates data in real-time, ensuring that the application's interface displays current information without any delay. This continuous data flow is achieved through an efficient communication protocol, which establishes a stable connection between devices or systems.
+**Request Parameters:**
 
-3. Key Components
+- `name` *(string, required)*: The full name of the user (First Name Last Name).
+- `email` *(string, required, unique)*: A unique email address for the user.
+- `password` *(string, required)*: The password for the user.
+- `role` _(enum: 'admin', 'user', default: 'user')_: The role of the user in the system (admin or user).
 
-   a) Data Collectors: These components are responsible for gathering data from various sources within the system or external devices. The data collectors may be integrated into the application or operated as standalone units, depending on the specific implementation.
+**Example Request:**
 
-   b) Communication Protocol: The RTDS feature uses a standardized communication protocol to exchange data between devices and systems. This protocol ensures compatibility and guarantees seamless data transmission.
+```bash
+POST /api/v1/users HTTP/1.1
+Host: yourdomain.com
+Authorization: Bearer {access_token}
+Content-Type: application/json
 
-   c) Data Processors: These components are responsible for analyzing and formatting incoming data before it is displayed in the application's interface. Data processors may perform various tasks such as filtering, aggregating, or transforming raw data into meaningful information.
+{
+  "name": "John Doe",
+  "email": "johndoe@example.com",
+  "password": "securepassword123",
+  "role": "admin"
+}
+```
 
-   d) User Interface (UI): The RTDS feature interacts with users through the application's UI, which displays real-time data and provides tools for monitoring and analyzing the data stream.
+**Response Parameters:**
 
-4. Implementation
+- `id` *(integer, read-only)*: The unique identifier for the user.
+- `name` *(string)*: The full name of the user.
+- `email` _(string)_: The email address of the user.
+- `role` _(enum: 'admin', 'user')_: The role of the user in the system.
 
-The implementation of the Real-Time Data Streaming feature involves several steps:
+**Example Response:**
 
-   a) Integrating data collectors to gather data from relevant sources.
+```json
+HTTP/1.1 201 Created
+Content-Type: application/json
 
-   b) Configuring the communication protocol, including establishing connections between devices or systems.
+{
+  "id": 1,
+  "name": "John Doe",
+  "email": "johndoe@example.com",
+  "role": "admin"
+}
+```
 
-   c) Setting up data processors to analyze and format incoming data.
+**Error Codes:**
 
-   d) Designing the UI to display real-time data in an intuitive and user-friendly manner.
+- `401 Unauthorized`: Invalid or missing access token.
+- `422 Unprocessable Entity`: Invalid input data provided.
+- `409 Conflict`: The email address is already in use.
 
-5. Best Practices
+**Usage Notes:**
 
-To optimize the performance of the RTDS feature, follow these best practices:
-
-   a) Use efficient data collectors that minimize latency and ensure smooth data flow.
-
-   b) Optimize data process
+- Always ensure to send the access token for authentication.
+- Password should be hashed before sending and stored securely in the database.
+- Use appropriate error handling when receiving error responses from this endpoint.

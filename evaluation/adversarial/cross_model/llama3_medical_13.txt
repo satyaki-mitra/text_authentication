@@ -1,0 +1,21 @@
+Title: Unusual Presentation of Cushing's Syndrome: A Case Report
+
+Abstract:
+
+We present the case of a 35-year-old female who was referred to our institution for evaluation of unusual symptoms and signs suggestive of endocrine disorder. The patient initially presented with excessive weight gain, central obesity, and hypertrichosis over several months. She also experienced hypertension, hypokalemia, and amenorrhea.
+
+Physical examination revealed truncal obesity, hirsutism, and purple striae on her abdomen. Laboratory tests showed elevated cortisol levels (>50 mcg/dL) with a normal ACTH level. A 24-hour urinary free cortisol (UFC) test was also elevated at 200 mcg/24 hours.
+
+Chest computed tomography (CT) scan revealed bilateral adrenal hyperplasia, consistent with Cushing's syndrome. Magnetic resonance imaging (MRI) of the pituitary gland showed a small non-functioning microadenoma.
+
+The patient underwent transsphenoidal surgery to remove the pituitary adenoma. Postoperatively, she was started on hydrocortisone replacement therapy and began experiencing gradual weight loss.
+
+Six months after surgery, her cortisol levels had normalized, and UFC test results decreased to 20 mcg/24 hours. Her blood pressure and serum potassium levels also returned to normal ranges.
+
+This case highlights the importance of considering Cushing's syndrome in patients with unexplained obesity, hirsutism, and hypertension. The diagnosis was facilitated by a thorough physical examination, laboratory tests, and imaging studies.
+
+The patient's presentation is unusual because most cases of Cushing's syndrome are caused by pituitary adenomas that stimulate cortisol production by the adrenal glands. In this case, the small non-functioning microadenoma likely suppressed ACTH secretion, leading to hypercortisolism and its characteristic symptoms.
+
+In conclusion, this case demonstrates the value of a comprehensive diagnostic approach in identifying an unusual presentation of Cushing's syndrome. Early recognition and treatment can lead to significant improvements in quality of life for these patients.
+
+Keywords: Cushing's syndrome, pituitary microadenoma, hypercortisolism, endocrine disorder.

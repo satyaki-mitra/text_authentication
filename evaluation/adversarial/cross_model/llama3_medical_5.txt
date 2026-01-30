@@ -1,0 +1,21 @@
+**Case Report:**
+
+**Title:** Rare Case of Mucormycosis Presenting as Orbital Cellulitis in an Immunocompetent Individual
+
+**Abstract:**
+
+Mucormycosis, a rare and potentially life-threatening fungal infection, typically affects immunocompromised individuals. We report a case of mucormycosis presenting as orbital cellulitis in a 35-year-old immunocompetent individual.
+
+A 35-year-old male presented to the emergency department with a 3-day history of severe pain and swelling in his left eye. He reported no underlying medical conditions, and had not traveled internationally recently. On examination, he had marked proptosis, chemosis, and lid edema consistent with orbital cellulitis. Imaging studies revealed a large soft tissue mass infiltrating the orbit, with extension into the surrounding sinuses.
+
+Laboratory results showed elevated white blood cell count (17,000/μL) and C-reactive protein level (12.5 mg/dL). Fungal cultures of the orbital lesion grew Rhizopus microsporus, confirming the diagnosis of mucormycosis.
+
+The patient underwent emergency sinusotomy and decompression of the orbit. He was started on intravenous amphotericin B and voriconazole, with gradual improvement in his clinical status over several weeks.
+
+Mucormycosis is a rare fungal infection caused by members of the Mucorales family. It typically affects immunocompromised individuals, such as those with diabetes mellitus or cancer. However, cases have been reported in immunocompetent hosts, often following trauma or surgical procedures that compromise the immune system.
+
+In this case, the patient's presentation with orbital cellulitis was typical of a bacterial infection, but the presence of fungal hyphae on histopathological examination led to the correct diagnosis. The prompt initiation of antifungal therapy likely contributed to the patient's favorable outcome.
+
+**Clinical Relevance:**
+
+This rare case highlights the importance of considering mucormycosis in the differential diagnosis of orbital cellulitis, even in immunocompetent individuals. Early recognition and treatment are critical to prevent dissemination of the infection and improve outcomes.

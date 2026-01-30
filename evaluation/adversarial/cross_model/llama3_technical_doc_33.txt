@@ -1,53 +1,57 @@
-**Endpoint:** `/api/v1/users`
+**System Documentation: Weather Forecast API**
 
-**HTTP Method:** `GET`
+**Overview**
 
-**Description:**
+The Weather Forecast API is a cloud-based platform that provides real-time weather data to applications, websites, and mobile devices. The API allows developers to retrieve current and forecasted weather conditions for locations worldwide.
 
-The `/api/v1/users` endpoint returns a list of all users in the system, along with their corresponding details.
+**API Specifications**
 
-**Request Parameters:**
+### Endpoints
 
-* **None**
+* **Current Weather**: Retrieves the current weather condition for a given location.
+	+ Path: `/weather/current`
+	+ Method: GET
+	+ Parameters:
+		- `location`: The latitude and longitude of the desired location (required)
+		- `units`: Units of measurement for temperature and wind speed (default: metric)
+* **Forecast**: Retrieves the weather forecast for a given location.
+	+ Path: `/weather/forecast`
+	+ Method: GET
+	+ Parameters:
+		- `location`: The latitude and longitude of the desired location (required)
+		- `units`: Units of measurement for temperature and wind speed (default: metric)
+		- `start_date`: The start date of the forecast period (optional, default: current date)
+		- `end_date`: The end date of the forecast period (optional, default: current date + 3 days)
 
-**Response:**
+### Response Format
 
-The response will be in JSON format and contain an array of user objects. Each user object will have the following properties:
+All API responses are in JSON format and contain the following properties:
 
-* `id`: The unique identifier for the user.
-* `name`: The full name of the user.
-* `email`: The email address associated with the user.
-* `role`: The role of the user (e.g., "admin", "moderator", "user").
+* **weather**: A detailed description of the current weather condition or forecast.
+* **temperature**: The current temperature or average temperature for the forecast period.
+* **wind_speed`: The current wind speed or average wind speed for the forecast period.
+* **humidity`: The current humidity or average humidity for the forecast period.
 
-Example Response:
-```json
-[
-  {
-    "id": 1,
-    "name": "John Doe",
-    "email": "johndoe@example.com",
-    "role": "user"
-  },
-  {
-    "id": 2,
-    "name": "Jane Smith",
-    "email": "janesmith@example.com",
-    "role": "moderator"
-  },
-  {
-    "id": 3,
-    "name": "Bob Johnson",
-    "email": "bobjohnson@example.com",
-    "role": "admin"
-  }
-]
+### Error Handling
+
+The API uses HTTP status codes to indicate errors. The possible error codes are:
+
+* 400: Bad Request (invalid input parameters)
+* 404: Not Found (location not found or invalid)
+* 500: Internal Server Error (server-side error)
+
+**Usage Guidelines**
+
+1. **Authentication**: No authentication is required for accessing the API.
+2. **Rate Limiting**: The API has a rate limit of 100 requests per hour per IP address.
+3. **Location Format**: Location coordinates should be provided in the format `latitude,longitude` (e.g., `37.7749,-122.4194`).
+4. **Units**: Temperature and wind speed units can be specified using the `units` parameter (metric or imperial).
+5. **Forecast Period**: The forecast period defaults to 3 days if not specified.
+
+**Example Request**
+
+To retrieve the current weather condition for New York City, send a GET request to:
+```bash
+https://api.weatherforecast.com/weather/current?location=40.7128,-74.0060&units=metric
 ```
-**Error Handling:**
-
-* **400 Bad Request:** If the request is malformed or missing required parameters, a `400 Bad Request` error will be returned with an error message.
-* **500 Internal Server Error:** In case of any internal server errors (e.g., database connectivity issues), a `500 Internal Server Error` will be returned.
-
-**Security Considerations:**
-
-* **Authentication:** This endpoint does not require authentication, as it is intended for public use. However, please note that sensitive information may still be exposed if an attacker gains access to the system.
-* **Rate Limiting:** To prevent abuse and denial-of-service attacks, this endpoint has a rate limit of 100
+This API is designed to be easy to use and integrate into your applications. If you have any questions or need further assistance, please refer to the API documentation or contact our support team.

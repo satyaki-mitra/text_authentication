@@ -1,0 +1,13 @@
+Title: Assessing the Effect of External Plant Chemical Supplements on Cognitive Abilities in Elderly Individuals: A Randomized Clinical Trial
+
+Introduction:
+The aging population worldwide is experiencing a surge, accompanied by an escalating prevalence of age-related cognitive deterioration and neurodegenerative disorders. Conventional pharmaceutical treatments offer limited effectiveness for these conditions, necessitating exploration of alternative approaches to alleviate cognitive impairment. This study investigates the impact of external plant chemical supplements on cognitive abilities in elderly individuals.
+
+Research Procedure:
+A double-blind, randomized, placebo-controlled trial was conducted with 200 autonomous elderly individuals (aged 65 and above) who exhibited mild cognitive impairment but remained cognitively intact as determined by a battery of neuropsychological tests. The participants were randomly divided into two groups: one group received a daily supplement containing standardized extracts from Ginkgo biloba, Curcuma longa, and Salvia officinalis (group A, n=100), while the other received an identical-looking placebo (group B, n=100) for a duration of six months. Assessments of cognitive abilities were conducted at the outset and conclusion of the intervention using the Montreal Cognitive Assessment (MoCA), Trail Making Test, and Stroop Color-Word Interference Test.
+
+Principal Results:
+Analysis revealed significant enhancements in overall cognitive performance (F(1, 196)=20.34, p<.001), executive functions (F(1, 196)=15.78, p<.001), and processing speed (F(1, 196)=13.14, p<.001) in group A compared to group B. No significant discrepancies were observed between the groups with respect to adverse events or changes in blood pressure, glucose levels, or body mass index.
+
+Conclusions:
+The findings suggest that external plant chemical supplements may positively influence cognitive abilities in elderly individuals exhibiting mild cognitive impairment. If

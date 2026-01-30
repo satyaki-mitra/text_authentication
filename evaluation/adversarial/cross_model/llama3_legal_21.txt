@@ -1,39 +1,39 @@
-Here is a draft of a formal legal clause about data privacy compliance:
+**ARTICLE III: CONFIDENTIALITY AND INTELLECTUAL PROPERTY**
 
-**DATA PRIVACY COMPLIANCE**
+This Article sets forth the parties' obligations regarding confidentiality, intellectual property, and proprietary information.
 
-1. **Applicability**: This clause applies to all Personal Data (as defined below) processed by [Company Name] ("Company") in connection with its products, services, and activities.
+**3.1 Confidential Information.** For purposes of this Agreement, "Confidential Information" means all information disclosed by one party to the other that is not generally known or available to the public, including but not limited to:
 
-2. **Definitions**:
+* Trade secrets;
+* Proprietary processes;
+* Technical data;
+* Financial information;
+* Business strategies; and
+* Non-public marketing and sales plans.
 
-a. "Personal Data" means any information that identifies or could reasonably be linked to an individual, including but not limited to names, addresses, phone numbers, email addresses, IP addresses, cookies, and other identifiers.
+**3.2 Confidentiality Obligations.** Each party agrees to:
 
-b. "Data Controller" means Company, which is responsible for determining the purposes and means of processing Personal Data.
+* Keep all Confidential Information confidential and not disclose it to any third party;
+* Use the same level of care in protecting Confidential Information as it would with its own confidential information;
+* Limit access to Confidential Information only to those employees, agents, or contractors who have a legitimate need to know; and
+* Not use or disclose Confidential Information for any purpose other than the purposes contemplated by this Agreement.
 
-c. "Data Processor" means any third-party service provider or agent that processes Personal Data on behalf of Company in accordance with its instructions.
+**3.3 Permitted Disclosures.** Each party may disclose Confidential Information:
 
-3. **Compliance**: Company shall comply with all applicable data privacy laws and regulations, including but not limited to:
+* To its employees, agents, or contractors with a legitimate need to know;
+* As required by law or court order; or
+* In connection with any legal proceedings.
 
-a. The General Data Protection Regulation (GDPR) of the European Union;
+**3.4 Ownership and Intellectual Property.**
 
-b. The California Consumer Privacy Act (CCPA);
+* The parties acknowledge that all intellectual property rights in and to their respective products, services, software, and other proprietary materials (the "IP") are and will remain the exclusive property of the party creating such IP.
+* Neither party grants the other party any interest or right in or to its IP, except as specifically provided in this Agreement.
 
-c. The Health Insurance Portability and Accountability Act (HIPAA); and
+**3.5 Indemnification.**
 
-d. Any other relevant federal, state, or local data privacy laws and regulations.
+* Each party agrees to indemnify and hold harmless the other party from any claims, damages, or losses arising from a breach of this Article III.
+* The indemnifying party shall notify the indemnified party promptly upon learning of any claim or potential claim that may be subject to indemnification.
 
-4. **Privacy Policies**: Company shall maintain accurate and up-to-date privacy policies that comply with applicable law and notify individuals of their rights to access, correct, and delete Personal Data. Company shall obtain prior consent from individuals before processing sensitive or special categories of Personal Data.
+**3.6 Survival.** The obligations set forth in this Article III will survive for a period of [X] years after the expiration or termination of this Agreement, regardless of whether such obligation is labeled as "surviving" or not.
 
-5. **Data Subject Rights**: Company shall respect the following data subject rights:
-
-a. The right to be informed about the processing of Personal Data;
-
-b. The right of access to Personal Data;
-
-c. The right to rectify inaccuracies in Personal Data;
-
-d. The right to erasure (also known as "the right to be forgotten"); and
-
-e. The right to restrict or object to processing of Personal Data.
-
-6. **Data Transfer**: Company shall ensure that any transfer
+By executing this Agreement, each party acknowledges that it has read, understands, and agrees to be bound by the terms and conditions set forth in Article III.

@@ -1,0 +1,35 @@
+Title: A Detailed Guide for Novices: Setting Up a Node.js Project and Building a Basic Server with Express.js
+
+This guide will guide you through the process of establishing Node.js on your device and constructing a fundamental server using Express.js – a widely utilized web application framework compatible with Node.js. Upon completion, you'll possess foundational knowledge about initiating a Node.js project and operating a local server.
+
+**Step 1: Prerequisites**
+
+To commence, verify that Java Runtime Environment (JRE) is installed on your computer. Procure it from [Oracle JRE Downloads](https://www.oracle.com/java/technologies/javase-jre8-downloads.html).
+
+**Step 1.1:** Navigate to the official Node.js website at https://nodejs.org/.
+
+**Step 1.2:** Click on the "Download" button to access the download page.
+
+**Step 1.3:** Select an installer appropriate for your operating system (Windows, macOS, or Linux).
+
+**Step 1.4:** Execute the installer and adhere to the instructions presented by the setup wizard. During installation, ensure that the box for adding Node.js to the system's PATH environment variable is ticked.
+
+**Step 2: Verify Node.js Installation**
+
+To authenticate that Node.js has been correctly installed, launch a command prompt (Windows) or terminal (macOS/Linux), and enter the following command:
+
+```bash
+node --version
+```
+
+The version of Node.js that was installed will be displayed on your screen. For instance, it could show as "v14.15.0".
+
+**Step 3: Install npm (Node Package Manager)**
+
+npm serves as a package manager for Node.js, enabling the download and management of external libraries and dependencies for your projects. If it was not installed during the Node.js installation process, execute the following command in your terminal or command prompt:
+
+```bash
+npm install -g npm@latest
+```
+
+Re

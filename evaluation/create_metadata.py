@@ -11,6 +11,9 @@ def count_samples(dir_path: Path) -> int:
         for domain_dir in dir_path.iterdir():
             if domain_dir.is_dir():
                 total += len(list(domain_dir.glob("*.txt")))
+
+            else:
+                total += len(list("*.txt"))
     
     return total
 

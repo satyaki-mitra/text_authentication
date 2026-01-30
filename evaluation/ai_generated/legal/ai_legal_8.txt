@@ -1,15 +1,37 @@
-Clause: Confidentiality and Non-Disclosure Agreement (NDA)
+Title: Data Processing Agreement (DPA) - Clause 3: Data Subject Rights
 
-Whereas, _[Party A]_ ("Disclosing Party") is the owner of certain confidential information ("Confidential Information"), and _[Party B]_ ("Receiving Party") desires to have access to such Confidential Information for the purposes set forth in this Agreement. In consideration of the mutual covenants contained herein, the parties hereto agree as follows:
+1. **Scope**
 
-1. Definition of Confidential Information: For the purpose of this Agreement, "Confidential Information" shall mean all technical and business information disclosed by the Disclosing Party to the Receiving Party, whether in written, oral or any other form, including but not limited to research, experimental work, developments, inventions, know-how, trade secrets, and designs.
+This Clause 3 (Data Subject Rights) is a part of the Data Processing Agreement ("Agreement") between the Controller, identified as [Controller's Name] with its registered office at [Controller's Address] ("Controller"), and the Processor, identified as [Processor's Name] with its registered office at [Processor's Address] ("Processor").
 
-2. Obligations of Receiving Party: The Receiving Party agrees to hold and maintain the Confidential Information in strictest confidence for the sole and exclusive use of the Disclosing Party. The Receiving Party shall not, without the prior written consent of the Disclosing Party, disclose any of the Confidential Information to third parties or use the same for any purpose outside the scope of this Agreement.
+2. **Data Subject Rights**
 
-3. Exceptions: The obligations set forth in Section 2 shall not apply to information which (a) is or becomes generally available to the public through no fault of the Receiving Party; (b) was in the possession of the Receiving Party prior to receipt from the Disclosing Party; (c) is learned by the Receiving Party through legitimate means other than from the Disclosing Party or Disclosing Party's representatives; or (d) is independently developed by employees of the Receiving Party who had no access to such information.
+2.1 The Processor shall, to the extent legally permitted and technically feasible, assist the Controller in fulfilling its obligations under Regulation (EU) 2016/679 of the European Parliament and of the Council of 27 April 2016 on the protection of natural persons with regard to the processing of personal data and on the free movement of such data, and repealing Directive 95/46/EC (General Data Protection Regulation) ("GDPR") and any other applicable data protection laws.
 
-4. Return of Confidential Information: Upon the termination of this Agreement, or at the Disclosing Party's request, the Receiving Party shall return to the Disclosing Party any and all records, notes, and other written, printed, or tangible materials in its possession pertaining to the Confidential Information.
+2.2 The Processor shall, at the Controller's request, provide reasonable assistance to enable the Controller to respond to:
 
-5. Remedies: The Disclosing Party shall have the right to seek injunctive relief and damages for any breach or threatened breach by the Receiving Party of any of its obligations under this Agreement.
+   2.2.1 requests from data subjects seeking to exercise their rights under the GDPR (including the right of access, rectification, erasure, restriction of processing, objection, and data portability); and
 
-6. Governing
+   2.2.2 any other correspondence, notification or complaint received from a data protection authority.
+
+3. **Cooperation and Assistance**
+
+3.1 The Processor shall, at the Controller's cost, provide all information necessary to demonstrate compliance with its obligations under this Agreement, the GDPR, and any other applicable data protection laws.
+
+3.2 The Processor shall promptly notify the Controller if it receives a request or notification that relates directly to the processing of Personal Data by the Processor under this Agreement.
+
+4. **Data Protection Impact Assessment**
+
+The Processor shall provide reasonable assistance to the Controller with any data protection impact assessments, and prior consultations with supervisory authorities or other competent data protection authorities, as required by the GDPR.
+
+5. **Subprocessors**
+
+If the Processor engages another processor (a "Subprocessor") for carrying out specific processing activities on behalf of the Controller, the Processor shall:
+
+   5.1 inform the Controller of any intended changes concerning the addition or replacement of Subprocessors; and
+
+   5.2 ensure that the Subprocessor agrees to comply with the same data protection obligations as set out in this Agreement.
+
+6. **Liability**
+
+The Processor's liability under this Clause 3 shall be subject to the limitations and exclusions

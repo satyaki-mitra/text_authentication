@@ -1,27 +1,36 @@
-Title: A Step-by-Step Guide for Beginners: Setting Up a Basic Home Network
+Title: A Step-by-Step Guide for Beginners: Setting Up a Basic WordPress Website
 
-**Introduction**
+In this tutorial, we will guide you through the process of setting up a basic WordPress website from scratch. By the end of this guide, you'll have your own functional WordPress site ready to customize and populate with content.
 
-This tutorial will guide you through the process of setting up a basic home network, which is essential for connecting multiple devices to share resources like internet connection, printers, and files. Let's get started!
+**Things You'll Need:**
+1. A domain name (e.g., mywebsite.com)
+2. Web hosting service
+3. FTP client (FileZilla) or cPanel access (for uploading files)
+4. An email account for site administration
+5. WordPress installation files
 
-**Materials Needed:**
+**Step 1: Choosing a Domain Name and Web Hosting Service**
+- Visit a domain registrar like GoDaddy, Namecheap, or Bluehost to purchase your desired domain name.
+- Choose a web hosting service that offers one-click WordPress installations, such as Bluehost, SiteGround, or DreamHost.
+- Sign up for the hosting plan and follow their instructions to connect your domain name with the hosting account.
 
-1. Modem (provided by your Internet Service Provider)
-2. Router (you can purchase one from a variety of brands)
-3. Ethernet cables (if needed to connect devices directly to the router)
-4. Wi-Fi enabled devices (e.g., computers, smartphones, tablets, smart TVs)
+**Step 2: Setting Up Your Email Account**
+- If provided by your web host, create an email account dedicated to managing your website (e.g., [admin@mywebsite.com](mailto:admin@mywebsite.com)).
+- Set up email forwarding for common inquiries like contact@ or info@ yourdomain.com to direct emails to this new account.
 
-**Step 1: Connecting Your Modem**
+**Step 3: Accessing Your Hosting Account and File Manager**
+- Log into the control panel provided by your web host (cPanel, Plesk, etc.)
+- Locate the "File Manager" or "File Transfer Protocol (FTP)" section. This will allow you to upload necessary files.
 
-1. Find a suitable location for your modem, ideally near an outlet and away from other electronic devices.
-2. Plug the modem into the power outlet.
-3. Connect the coaxial cable (provided by your Internet Service Provider) to the back of the modem's "COAX IN" port.
-4. If you have a cable modem, connect an Ethernet cable from one of the modem's LAN ports to the WAN port on your router.
+**Step 4: Uploading WordPress Files**
+- Download the latest version of WordPress from wordpress.org.
+- Extract the downloaded ZIP file and locate the wp-content, wp-includes, and wp-config-sample.php directories within it.
+- Using an FTP client like FileZilla or directly through your host's File Manager, upload these three directories to the public_html folder of your website (root directory).
 
-**Step 2: Setting Up Your Router**
+**Step 5: Configuring WordPress Settings**
+- Access your website by typing the domain name in a web browser (e.g., mywebsite.com).
+- Follow the on-screen instructions to complete the WordPress installation process, ensuring you keep your username and password secure.
+- When prompted for database information, use the details provided by your web host or created during signup.
 
-1. Plug your router into a power outlet and wait for the power LED to turn on.
-2. Connect the router to the modem using an Ethernet cable from one of the router's LAN ports to the modem's "Internet" or "ONLINE" port (it may vary depending on your modem model).
-3. Locate the router's IP address, usually printed on a label on the bottom or back of the device. Common default addresses include 192.168.0.1, 192.168.1.1, and 192.168.1.254.
-4. Open a web browser on any Wi-Fi enabled device connected to the network (preferably a computer or tablet). Type the router's IP address into the URL bar and press Enter.
-5. You will be prompted to enter a username and password, which are usually printed on the bottom or back of the router. If you haven'
+**Step 6: Logging into Your WordPress Dashboard**
+- After successful installation, log in to your WordPress dashboard using

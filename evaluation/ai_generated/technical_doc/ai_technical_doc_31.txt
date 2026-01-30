@@ -1,45 +1,83 @@
-Title: Documentation for Scheduled Backup Feature in XYZ Application
+Title: API Documentation - User Management Endpoint
 
-1. Overview
+## User Management Endpoint
 
-The Scheduled Backup feature is designed to automate the process of backing up user data within the XYZ application. This feature allows users to set regular intervals for creating backup copies of their data, ensuring data security and recovery in case of unexpected events such as system crashes or data loss.
+The `User Management` endpoint provides a RESTful interface for creating, retrieving, updating, and deleting user accounts in the system. This documentation outlines the specifics of the endpoint, its parameters, authentication requirements, example requests, error codes, and usage notes.
 
-2. Feature Description
+### Endpoint Description
 
-The Scheduled Backup feature enables users to schedule backups at predefined intervals (daily, weekly, or monthly). Users can also specify the time and date for the backup to run. Once scheduled, the application will automatically create a backup copy of the user's data according to the specified settings.
+- **Endpoint URL:** `https://api.example.com/v1/users`
+- **HTTP Method:** `GET`, `POST`, `PUT`, `DELETE`
+- **Rate Limit:** 60 requests per minute
+- **Authentication Required:** Yes (JWT Access Token)
 
-3. User Guide
+### Request Parameters
 
-3.1 Accessing Scheduled Backup Settings
+#### GET /users
 
-To access the Scheduled Backup settings:
-- Navigate to the main menu and click on 'Settings.'
-- In the left sidebar, select 'Backup & Sync.'
-- Click on 'Scheduled Backup' in the submenu.
+- **Parameters:** None
+- **Response Format:** JSON
 
-3.2 Configuring Scheduled Backup
+#### POST /users
 
-In the Scheduled Backup settings page:
-- Toggle the switch to enable or disable the Scheduled Backup feature.
-- Choose the desired backup interval (Daily, Weekly, Monthly).
-- Set the time and date for the scheduled backup.
-- Click 'Save' to apply the changes.
+- **Request Body (JSON):**
+```json
+{
+  "username": "string",
+  "email": "string",
+  "password": "string"
+}
+```
 
-3.3 Viewing and Modifying Scheduled Backups
+#### PUT /users/{id}
 
-To view or modify existing scheduled backups:
-- Navigate to the main menu and click on 'Settings.'
-- In the left sidebar, select 'Backup & Sync.'
-- Click on 'Scheduled Backup' in the submenu.
-- The list of scheduled backups will be displayed. To edit an existing backup, click on the 'Edit' button next to it.
+- **Parameters:**
+	+ `id`: Required, unique user identifier (integer)
+- **Request Body (JSON):**
+```json
+{
+  "username": "string",
+  "email": "string"
+}
+```
 
-4. Best Practices
+#### DELETE /users/{id}
 
-- Ensure that you have adequate storage space available for backing up your data.
-- Regularly review and test your backups to ensure they are functioning correctly.
-- Store backup copies in a secure location to prevent unauthorized access or accidental deletion.
-- Consider setting multiple backup intervals (e.g., daily, weekly, and monthly) to maintain comprehensive data protection.
+- **Parameters:**
+	+ `id`: Required, unique user identifier (integer)
 
-5. Troubleshooting
+### Response Parameters
 
-If you encounter any issues with the Scheduled Backup
+- **Response Format:** JSON
+- **Status Code:**
+    + 200 OK: Success
+    + 400 Bad Request: Invalid request data
+    + 401 Unauthorized: Missing or invalid access token
+    + 403 Forbidden: Insufficient permissions
+    + 404 Not Found: User not found
+    + 500 Internal Server Error: Unexpected error occurred
+
+#### Example Responses
+
+- **Success Response (200 OK):**
+```json
+{
+  "id": 1,
+  "username": "exampleUser",
+  "email": "example@example.com"
+}
+```
+
+- **Error Response (401 Unauthorized):**
+```json
+{
+  "error": "Unauthorized"
+}
+```
+
+### Usage Notes
+
+1. All requests must include a valid JWT access token in the `Authorization` header with format: `Bearer {access_token}`
+2. When creating new users, ensure that the provided email and username are unique within the system.
+3. Users can only update their own account information using the PUT endpoint.
+4. The DELETE endpoint will permanently delete

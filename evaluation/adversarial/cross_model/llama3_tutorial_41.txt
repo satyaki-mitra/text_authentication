@@ -1,0 +1,88 @@
+**Creating a Basic Website using HTML and CSS: A Step-by-Step Guide**
+
+In this guide, you will learn how to create a basic website using HyperText Markup Language (HTML) and Cascading Style Sheets (CSS). By the end of this tutorial, you will have a functional website that is easy to navigate.
+
+**Materials Needed:**
+
+* Text editor or IDE (Integrated Development Environment)
+* HTML and CSS reference materials (optional)
+
+**Step 1: Plan Your Website**
+
+Before starting, think about what your website will be about. Decide on the following:
+
+* Website title
+* Purpose of the website
+* Target audience
+
+Write down your ideas in a notebook or note-taking app.
+
+**Step 2: Create an HTML File**
+
+Open your text editor or IDE and create a new file with the .html extension (e.g., "mywebsite.html"). Type the following code:
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+	<title>My Website</title>
+</head>
+<body>
+	
+</body>
+</html>
+```
+
+* `!DOCTYPE html` declares the document type as HTML5.
+* `<html>` is the root element of your website.
+* `<head>` contains metadata about your website, such as the title.
+* `<body>` contains the content of your website.
+
+**Step 3: Add Content to Your Website**
+
+Replace the `<body>` tag with the following code:
+
+```html
+<body>
+	<h1>Welcome to My Website</h1>
+	<p>This is my first website.</p>
+</body>
+```
+
+* `<h1>` is a heading element that displays text in a large font size.
+* `<p>` is a paragraph element that contains a block of text.
+
+**Step 4: Create an External CSS File**
+
+Create a new file with the .css extension (e.g., "styles.css"). Type the following code:
+
+```css
+body {
+	background-color: #f2f2f2;
+}
+
+h1 {
+	color: blue;
+}
+```
+
+* `body` is a selector that targets the `<body>` element.
+* `background-color` sets the background color of your website.
+* `h1` is a selector that targets the `<h1>` heading element.
+* `color` sets the text color of the heading.
+
+**Step 5: Link Your CSS File to Your HTML File**
+
+Modify your HTML file by adding the following code inside the `<head>` tag:
+
+```html
+<link rel="stylesheet" type="text/css" href="styles.css">
+```
+
+This links your external CSS file to your HTML file.
+
+**Step 6: Save and Test Your Website**
+
+Save both files (HTML and CSS) in the same directory. Open your HTML file in a web browser to see your website come to life!
+
+That's it! You have successfully created a basic website using HTML and CSS.

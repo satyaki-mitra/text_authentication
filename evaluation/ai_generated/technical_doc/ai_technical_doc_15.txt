@@ -1,28 +1,87 @@
-Title: User Authentication and Authorization Feature
+Title: **API Documentation - User Management Endpoint**
 
-1. Overview
+## User Management API
 
-The User Authentication and Authorization feature is designed to secure the application by managing user identities and regulating access to sensitive areas. This section outlines the functionality, implementation details, and best practices for integrating this feature into your project.
+### Endpoint Description
 
-2. Functionality
+The `User Management API` provides a RESTful interface to create, retrieve, update, and delete user accounts within the system. The primary endpoint for this service is `/api/users`.
 
-   - **User Registration**: Allows new users to create an account within the application using a username, email, or social media accounts (optional).
-   - **Login**: Enables authenticated access to the application after providing valid credentials such as username/password combinations or third-party authentication methods.
-   - **Password Reset**: Provides a mechanism for users to recover their account in case they forget their password.
-   - **Session Management**: Tracks user activity across multiple requests and automatically logs out users after a specified period of inactivity.
-   - **Role-Based Access Control (RBAC)**: Defines different levels of access within the application, ensuring that each user has access only to authorized resources based on their assigned roles.
+### Request Parameters
 
-3. Implementation Details
+#### Create User (POST)
 
-   - For user registration and login, we recommend using popular libraries such as Passport.js for Node.js applications or Django's built-in authentication system in Python projects.
-   - To store user data securely, employ a database management system like MongoDB, MySQL, or PostgreSQL with encryption for sensitive information like password hashes and salt values.
-   - Implement password reset functionality by sending a unique token to the user's email address or utilizing SMS services for verification purposes.
-   - Establish an expiration time for authentication tokens to minimize potential security risks.
-   - Implement session management by storing temporary data about the authenticated user in cookies or local storage on the client-side, while maintaining a corresponding record on the server-side.
-   - Utilize RBAC to grant and restrict access to various application resources based on predefined roles assigned to each user.
+- `Content-Type: application/json`
 
-4. Best Practices
+```json
+{
+  "username": "<string>",
+  "password": "<string>",
+  "email": "<string>",
+  "first_name": "<string>",
+  "last_name": "<string>"
+}
+```
 
-   - Use secure hashing algorithms (e.g., bcrypt or Argon2) for password storage, ensuring that stored passwords cannot be easily reversed.
-   - Implement rate limiting and account lockout policies to prevent brute-force attacks on user accounts.
-   - Store sensitive data such as passwords, API keys, and access tokens securely using
+#### Retrieve User (GET)
+
+- `Accept: application/json`
+- Optional query parameters: `?id=<integer>`, `?username=<string>`, `?email=<string>`
+
+#### Update User (PUT)
+
+- `Content-Type: application/json`
+- Required query parameter: `id=<integer>`
+
+```json
+{
+  "username": "<optional string>",
+  "password": "<optional string>",
+  "email": "<optional string>",
+  "first_name": "<optional string>",
+  "last_name": "<optional string>"
+}
+```
+
+#### Delete User (DELETE)
+
+- Required query parameter: `id=<integer>`
+
+### Response Parameters
+
+#### Successful Response
+
+- Status Code: **200 OK**
+- Content Type: `application/json`
+
+```json
+{
+  "id": <integer>,
+  "username": "<string>",
+  "email": "<string>",
+  "first_name": "<string>",
+  "last_name": "<string>"
+}
+```
+
+#### Error Response
+
+- Status Code: **400 Bad Request**, **401 Unauthorized**, **404 Not Found**, or **500 Internal Server Error**
+- Content Type: `application/json`
+
+```json
+{
+  "error_code": <integer>,
+  "message": "<error description>"
+}
+```
+
+### Authentication Requirements
+
+All actions except for retrieving a user by ID require authentication. Use the provided API key in the `Authorization` header as follows:
+
+- `Authorization: Bearer <API_KEY>`
+
+### Usage Notes
+
+- When creating a new user, ensure that the provided username, email, and password are unique within the system.
+- Passwords are hashed before being stored, so it's safe to send them in plain text during creation. However, best practices for secure handling of sensitive data

@@ -1,27 +1,27 @@
-Title: Clause Regarding Confidentiality and Non-Disclosure
+Title: Data Processing Agreement - Clause 3: Data Protection Obligations
 
-1. Confidential Information
+3.1 Data Controller Obligations
 
-In this Agreement, "Confidential Information" refers to any information that is either identified as confidential at the time of disclosure or should be reasonably understood by the receiving party to be confidential given the nature of the information and the circumstances surrounding its disclosure. Confidential Information may include, but is not limited to, technical data, trade secrets, business and marketing plans, financial data, and customer lists.
+3.1.1 The Data Controller shall, in relation to any Personal Data processed in connection with the Services, comply with all applicable Data Protection Laws and ensure that it has all necessary permissions and notices in place to enable lawful transfer of such Personal Data to the Data Processor for the duration and purposes of this Agreement.
 
-2. Obligations of the Receiving Party
+3.1.2 The Data Controller shall have sole responsibility for the accuracy, quality, and legality of Personal Data and the means by which it obtained such data. It shall provide all necessary information relating to the nature of the Personal Data and any special categories of data (if applicable) to the Data Processor upon request.
 
-The receiving party agrees to maintain the confidentiality of the Confidential Information and use such information solely for the purposes of this Agreement or as otherwise explicitly authorized in writing by the disclosing party. The receiving party will not, without the prior written consent of the disclosing party, disclose any Confidential Information to third parties or use it for its own benefit or that of any third party.
+3.1.3 The Data Controller shall promptly inform the Data Processor if it becomes aware of any accidental or unauthorized access to, or loss, destruction, or alteration of, any Personal Data.
 
-3. Exceptions to Confidentiality Obligations
+3.2 Data Processor Obligations
 
-The obligations set forth in this clause do not apply to any information which:
+3.2.1 The Data Processor shall process Personal Data only in accordance with the documented instructions from the Data Controller (unless required to do so by applicable law), and shall not process such data for any purpose other than the performance of its obligations under this Agreement.
 
-(a) was publicly known at the time of disclosure;
-(b) becomes publicly known after disclosure through no fault of the receiving party;
-(c) is learned by the receiving party through legitimate means other than from the disclosing party or a disclosed third party;
-(d) is approved for release in writing by the disclosing party; or
-(e) is required to be disclosed by law, court order, or subpoena.
+3.2.2 The Data Processor shall implement appropriate technical and organizational measures to ensure a level of security appropriate to the risk, including but not limited to: (a) the prevention of unauthorized or unlawful processing of Personal Data; (b) the prevention of accidental loss or destruction of, or damage to, Personal Data; (c) ensuring the integrity, confidentiality, and availability of Personal Data; (d) regular testing, assessing, and evaluating the effectiveness of technical and organizational measures for ensuring the security of the processing.
 
-4. Return of Confidential Information
+3.2.3 The Data Processor shall ensure that all personnel who have access to and/or process Personal Data are obligated to keep such data confidential.
 
-Upon termination of this Agreement, or upon the request of the disclosing party at any time prior to such termination, the receiving party will promptly return all documents and materials containing Confidential Information in its possession. The receiving party may retain one copy for archival purposes, provided that it maintains the confidentiality of such copy and does not disclose or use it except as expressly permitted under this clause.
+3.2.4 Upon termination or expiration of this Agreement, the Data Processor shall securely delete or return all the Personal Data to the Data Controller, unless required by applicable law to store the Personal Data.
 
-5. Injunctive Relief
+3.3 Subprocessors
 
-The parties acknowledge that any breach by the receiving party of its obligations under this clause may cause irreparable harm to the disclosing party for which monetary damages would be an inadequate remedy. Accordingly, the disclosing party shall be entitled to seek injunctive relief and specific performance to enforce the terms of this clause, without
+3.3.1 The Data Processor may engage third-party subprocessors for the processing of Personal Data, provided that: (a) it obtains the prior written consent of the Data Controller; and (b) it imposes data protection terms on any such subprocessor that require them to protect the Personal Data in accordance with this Agreement.
+
+3.4 Cooperation and Rights of Data Subjects
+
+3.4.1 The Data Processor shall, at the request of the Data Controller, provide reasonable cooperation and assistance

@@ -43,7 +43,7 @@ MODEL_REGISTRY : Dict[str, ModelConfig] = {"perplexity_reference_lm"    : ModelC
                                                                                       batch_size        = 16,
                                                                                       additional_params = {"is_spacy_model": True},
                                                                                      ),
-                                           "content_domain_classifier"  : ModelConfig(model_id          = "cross-encoder/nli-roberta-base",
+                                           "content_domain_classifier"  : ModelConfig(model_id          = "facebook/bart-large-mnli",
                                                                                       model_type        = ModelType.CLASSIFIER,
                                                                                       description       = "Zero-shot content domain inference model",
                                                                                       size_mb           = 500,

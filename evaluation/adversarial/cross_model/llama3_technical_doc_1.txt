@@ -1,69 +1,62 @@
-**API Endpoint: Get User Information**
+**API Documentation: User Profile Management System**
 
-### Overview
+**Overview**
 
-The `getUser` API endpoint allows authenticated users to retrieve their own user information, including their profile details and associated data. This endpoint is designed for use by the client-side application to populate the user's profile information.
+The User Profile Management System (UPMS) is a RESTful API that enables users to create, update, and manage their profile information. The API provides a secure and scalable way for applications to interact with user profiles, allowing developers to focus on building innovative experiences rather than managing user data.
 
-### Request
+**API Endpoints**
 
-#### Method
+1. **Create User Profile**: `/users`
+	* Method: POST
+	* Request Body:
+		+ `username`: string (required)
+		+ `email`: string (required)
+		+ `password`: string (required)
+	* Response: 201 Created, containing the newly created user profile ID
+2. **Retrieve User Profile**: `/users/{user_id}`
+	* Method: GET
+	* Path Parameter:
+		+ `user_id`: integer (required)
+	* Response: 200 OK, containing the requested user profile information
+3. **Update User Profile**: `/users/{user_id}`
+	* Method: PUT
+	* Path Parameter:
+		+ `user_id`: integer (required)
+	* Request Body:
+		+ `username`: string (optional)
+		+ `email`: string (optional)
+		+ `password`: string (optional)
+	* Response: 200 OK, indicating the update was successful
+4. **Delete User Profile**: `/users/{user_id}`
+	* Method: DELETE
+	* Path Parameter:
+		+ `user_id`: integer (required)
+	* Response: 204 No Content, indicating the user profile was deleted
 
-* **GET**: The `getUser` endpoint accepts GET requests.
+**API Request Headers**
 
-#### URL**
+1. **Authorization**: string (required for authentication)
+2. **Content-Type**: application/json (default)
 
-* `https://api.example.com/users/me`
+**API Response Formats**
 
-#### Headers
+The API returns responses in JSON format by default. To specify a different response format, include the `Accept` header with a value of `application/xml` or another supported format.
 
-* **Authorization**: The API key or token required for authentication. (Required)
-* **Content-Type**: Set to `application/json` to indicate the request body format.
+**Error Handling**
 
-#### Query Parameters
+The UPMS API uses standard HTTP status codes to indicate errors. If an error occurs, the API will return a 4xx or 5xx status code along with an error message in the response body.
 
-None
+**Security Considerations**
 
-### Response
+1. **Authentication**: The API requires authentication using JSON Web Tokens (JWT) for all requests.
+2. **Data Encryption**: All data transmitted between the client and server is encrypted using Transport Layer Security (TLS).
+3. **Input Validation**: The API validates input data to prevent potential security vulnerabilities.
 
-The response will be in JSON format and include the following fields:
+**Usage Guidelines**
 
-* **id** (integer): Unique identifier for the user.
-* **name** (string): The user's full name.
-* **email** (string): The user's email address.
-* **profile_picture** (string): A URL pointing to the user's profile picture.
-* **bio** (string): A brief bio or description of the user.
+1. Use the `Create User Profile` endpoint to create a new user profile, providing required information such as username, email, and password.
+2. Use the `Retrieve User Profile` endpoint to retrieve an existing user profile by its ID.
+3. Use the `Update User Profile` endpoint to update an existing user profile, providing optional changes to the profile information.
+4. Use the `Delete User Profile` endpoint to delete a user profile permanently.
 
-Example Response:
-
-```json
-{
-  "id": 123,
-  "name": "John Doe",
-  "email": "johndoe@example.com",
-  "profile_picture": "https://example.com/picture.jpg",
-  "bio": "Software engineer by day, gamer by night."
-}
-```
-
-### Error Handling
-
-The `getUser` endpoint will return the following error responses:
-
-* **401 Unauthorized**: The request lacks valid authentication credentials.
-* **404 Not Found**: The requested user does not exist or is invalid.
-
-Error responses will be in JSON format and include an error message. For example:
-
-```json
-{
-  "error": {
-    "code": 401,
-    "message": "Invalid API key provided."
-  }
-}
-```
-
-### Technical Requirements
-
-* **HTTP**: The `getUser` endpoint supports HTTP/1.1.
-* **JSON**: The response
+By following these guidelines and specifications, developers can integrate the UPMS API into their applications and provide users with a seamless experience for managing their profiles.

@@ -1,28 +1,33 @@
-Case Title: Smith v. Johnson
+Title: Data Processing Agreement - Clause 8: Data Subject Rights
 
-Court: Supreme Court of the State of New York, County of Albany
+8. Data Subject Rights
 
-Docket Number: 2021-CA-003456
+8.1 Obligations Regarding Data Subject Requests
 
-Judge: Hon. Judge Jane Doe
+8.1.1 Data Controller (hereinafter "Controller") shall have the right to request, and Data Processor (hereinafter "Processor") shall promptly comply with any reasonable requests from the Controller with respect to accessing, correcting, deleting, or restricting the processing of Personal Data, which include but are not limited to:
 
-Date of Decision: January 1, 2022
+  8.1.1.1 Right of Access: Providing the Controller with a copy of the Personal Data being processed and related information as required under applicable data protection laws;
 
-Claimant/Plaintiff: John Smith
+  8.1.1.2 Right to Rectification: Correcting inaccurate or incomplete Personal Data at the Controller's request, subject to any verification of the accuracy of the new data;
 
-Defendant/Respondent: Jane Johnson
+  8.1.1.3 Right to Erasure (Right to be Forgotten): Deleting Personal Data at the Controller's request, unless Processor is required by applicable law to retain such data;
 
-Facts:
-The Plaintiff, John Smith, brings this action against the Defendant, Jane Johnson, for breach of contract. The parties entered into a written agreement on September 1, 2021, regarding the sale and purchase of real property located at 123 Main Street, Albany, New York (the "Property"). Specifically, the Defendant agreed to sell and convey the Property to the Plaintiff for a total purchase price of $500,000. The agreement contained a clause stipulating that the Defendant would have no right to rescind or terminate the contract without the Plaintiff's written consent.
+  8.1.1.4 Right to Restriction of Processing: Restricting the processing of Personal Data at the Controller's request, for example, while the accuracy of the data is being verified or an objection to processing is being resolved; and
 
-The Defendant, however, unilaterally terminated the contract on December 15, 2021, without providing the Plaintiff with prior written notice or consent. The Plaintiff contends that the Defendant's actions constitute a breach of contract and seeks damages in the amount of $500,000, being the total purchase price, as well as reasonable attorney's fees and costs incurred in bringing this action.
+  8.1.1.5 Right to Data Portability: Providing the Controller, or a third party designated by the Controller, with a copy of the Personal Data in a structured, commonly used, machine-readable format, subject to technical feasibility.
 
-Issues:
-1. Whether the Defendant's unilateral termination of the contract constitutes a breach of contract.
-2. If so, what remedies are available to the Plaintiff for the Defendant's breach of contract.
+8.2 Notification of Data Subject Requests
 
-Holding:
-The Court finds that the Defendant's unilateral termination of the contract without the Plaintiff's written consent constitutes a breach of contract. The Plaintiff is entitled to damages in the amount of $500,000, being the total purchase price, as well as reasonable attorney's fees and costs incurred in bringing this action.
+8.2.1 Processor shall notify Controller without undue delay upon receiving a request from a Data Subject exercising any of their rights under applicable data protection laws (hereinafter "Data Subject Request"). Such notification shall include all relevant information about the request and steps taken in response, if any.
 
-Reasoning:
-The Court finds that the Defendant's actions were a clear violation of the express terms of the contract, which stip
+8.3 Assistance with Data Subject Requests
+
+8.3.1 Processor shall provide reasonable assistance to Controller in fulfilling its obligations under this Clause 8, including by:
+
+  8.3.1.1 Providing the Controller with information and cooperation necessary for the Controller to respond to a Data Subject Request;
+
+  8.3.1.2 Implementing reasonable measures to verify the identity of a Data Subject who submits a request under this Clause 8, if requested by the Controller; and
+
+  8.3.1.3 Providing the Controller with information regarding Personal Data that is the subject of a Data Subject Request, as well as any available information about the origin of such data, if known to Processor.
+
+8.4 Timeframes for Compl

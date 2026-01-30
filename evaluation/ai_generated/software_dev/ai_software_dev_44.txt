@@ -1,51 +1,66 @@
-Title: Understanding Dependency Injection in Software Development
+Title: Documentation on Dependency Injection in C# using Constructor Injection
 
-Dependency Injection (DI) is a design pattern that separates the construction of an object's service dependencies from the object itself. This separation provides greater flexibility, improved testability, and enhanced modularity within software applications.
+Introduction:
+Dependency Injection (DI) is a design pattern that helps to manage dependencies between objects efficiently. By injecting dependencies at runtime instead of hardcoding them within the application, we can achieve loose coupling and improved testability. This document explains the implementation of Dependency Injection using Constructor Injection in C#.
 
-In traditional object-oriented programming, objects are often responsible for creating their own dependencies, which can lead to tight coupling between components. This tight coupling makes it difficult to modify or replace these dependencies without affecting other parts of the system. Dependency Injection addresses this issue by allowing developers to inject dependencies into an object at runtime.
+Use Case:
+Consider a simple example of an `IService` interface with its implementation `ServiceImpl`. The service depends on another class `Repository` for data access operations. Using DI, we can inject the required `Repository` instance into the `ServiceImpl` constructor, allowing us to replace it with mocks during testing or swap implementations at runtime.
 
-There are three main types of Dependency Injection: Constructor Injection, Setter Injection, and Interface Injection.
+```csharp
+public interface IRepository
+{
+    void Save();
+}
 
-1. Constructor Injection: This approach involves passing all dependencies through a class constructor when creating an instance. It ensures that the object is always created with the correct dependencies and makes it easy to spot missing dependencies since they will result in errors during instantiation.
+public class Repository : IRepository
+{
+    public void Save()
+    {
+        Console.WriteLine("Saving data in the repository.");
+    }
+}
 
-```java
-public class DatabaseConnection {
-    private final IDatabase database;
+public interface IService
+{
+    void Execute();
+}
 
-    public DatabaseConnection(IDatabase database) {
-        this.database = database;
+public class ServiceImpl : IService
+{
+    private readonly IRepository _repository;
+
+    public ServiceImpl(IRepository repository)
+    {
+        _repository = repository;
     }
 
-    // ... other methods using the database object
-}
-```
-
-2. Setter Injection: This approach involves setting dependencies using setter methods after an object has been created. Although it allows for more flexibility, it can lead to issues such as late binding and makes it harder to ensure that objects are always properly initialized with the correct dependencies.
-
-```java
-public class DatabaseConnection {
-    private IDatabase database;
-
-    public void setDatabase(IDatabase database) {
-        this.database = database;
-    }
-
-    // ... other methods using the database object
-}
-```
-
-3. Interface Injection (also known as Method Injection): This approach involves injecting dependencies directly into a method instead of an entire class or constructor. It allows for greater flexibility and is often used in frameworks like Spring to dynamically create objects with different dependencies based on the context.
-
-```java
-public interface Database {
-    void query(String sql);
-}
-
-public class MyClass {
-    public void doSomething(Database database) {
-        // use the database object here
+    public void Execute()
+    {
+        _repository.Save();
+        Console.WriteLine("Executing service operation.");
     }
 }
 ```
 
-By using Dependency
+In the above example, `ServiceImpl` depends on `IRepository`. By defining a constructor that takes an instance of `IRepository`, we can inject this dependency at runtime when creating instances of `ServiceImpl`.
+
+Implementation:
+The implementation of Dependency Injection in C# usually involves using a DI container like Autofac, SimpleInjector, or Microsoft.Extensions.DependencyInjection (DI extension for ASP.NET Core). Here's an example using Microsoft.Extensions.DependencyInjection:
+
+```csharp
+using Microsoft.Extensions.DependencyInjection;
+
+var services = new ServiceCollection();
+services.AddTransient<IRepository, Repository>();
+services.AddTransient<IService, ServiceImpl>();
+
+IServiceProvider provider = services.BuildServiceProvider();
+IService service = provider.GetService<IService>();
+service.Execute();
+```
+
+Trade-offs:
+While Dependency Injection provides several benefits, there are also some trade-offs to consider:
+
+1. Increased complexity: Managing dependencies can add another layer of complexity to your application. It requires understanding and adhering to the DI pattern and possibly using a container.
+2. Performance overhead: Using a DI container may introduce some performance overhead

@@ -1,0 +1,33 @@
+Title: Data Handling Contract - Data Controller to Data Processor Terms
+
+A. Agreement Overview
+
+This Data Handling Agreement ("Contract") is formed between the Data Controller ("Data Manager") and the Data Processor ("Data Handler"), each a "Party" and collectively the "Parties." This Contract supplements the primary agreement that governs the Services (the "Primary Agreement"). The objective of this Contract is to adhere to Data Privacy Laws by outlining the conditions under which the Data Handler handles Personal Information on behalf of the Data Manager.
+
+B. Definitions and Interpretation
+
+B.1 In this Contract, the following terms will have the meanings indicated below:
+
+   "Data Individual" refers to a specific natural person to whom Personal Information pertains;
+
+   "Data Privacy Laws" encompass all applicable data protection and privacy regulations in effect at any given time, including the General Data Protection Regulation (EU) 2016/679 ("GDPR");
+
+   "Personal Information" denotes any details concerning a specific natural person; such an individual can be identified directly or indirectly, using methods like a name, identification number, location data, online identifier, or characteristics unique to the physical, genetic, mental, economic, cultural, or social identity of that person;
+
+   "Handling" encompasses any operation or sequence of operations executed on Personal Information, whether automated or not, such as collection, recording, organization, structuring, storage, alteration, retrieval, use, transmission, dissemination, or making available, alignment, restriction, erasure, or destruction;
+
+C. Handling of Personal Information
+
+C.1 The Data Handler will process the Personal Information solely for the purposes detailed in the Primary Agreement and in accordance with written instructions from the Data Manager.
+
+D. Data Manager's Responsibilities
+
+D.1 The Data Manager guarantees and represents that it has, and will maintain, the necessary authorization to provide instructions under all applicable Data Privacy Laws, and that its instructions for the handling of Personal Information by the Data Handler have been issued in compliance with such laws.
+
+E. Data Handler's Responsibilities
+
+E.1 The Data Handler will:
+
+   E.1.1 handle the Personal Information only on documented instructions from the Data Manager, unless obligated to do so by Union or Member State law to which the Data Handler is subject; in such cases, the Data Handler shall notify the Data
+
+                TOTAL

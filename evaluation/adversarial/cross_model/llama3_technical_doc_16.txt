@@ -1,51 +1,52 @@
-**API Endpoint: `GET /orders/{orderId}`**
+**API Documentation: Weather Forecast System**
 
-### Overview
+**Overview**
 
-The `GET /orders/{orderId}` endpoint retrieves a specific order by its unique ID, allowing clients to access and retrieve detailed information about the order.
+The Weather Forecast System is a RESTful API that provides current and forecasted weather conditions for various locations worldwide. The API uses OpenWeatherMap data as its primary source, ensuring accurate and up-to-date information.
 
-### Request Parameters
+**Specifications**
 
-* **`orderId`:** A unique identifier for the order. The value should be a valid UUID (Universally Unique Identifier).
+* **Endpoints**
+	+ `/weather`: Retrieves the current weather conditions for a specific location (latitude and longitude).
+	+ `/forecast`: Returns the 5-day forecast for a given location.
+* **HTTP Methods**
+	+ `GET`: Used to retrieve weather data.
+* **Response Format**: JSON
+* **Error Handling**:
+	+ 200 OK: Successful request.
+	+ 404 Not Found: Location not found or invalid input.
+	+ 500 Internal Server Error: Server error.
 
-Example: `123e4567-e89b-12d3-a456-426614174000`
+**Usage Guidelines**
 
-### Response
+### Retrieving Current Weather Conditions
 
-The response to this endpoint will contain the requested order information in JSON format.
+1. Send a `GET` request to `/weather` with the following parameters:
+	* `lat`: The latitude of the location (required).
+	* `lon`: The longitude of the location (required).
+2. Example Request: `GET /weather?lat=37.7749&lon=-122.4194`
+3. Response: A JSON object containing current weather conditions, including temperature, humidity, wind speed, and more.
 
-**Order Object**
+### Retrieving 5-Day Forecast
 
-* **`id`:** A unique identifier for the order.
-* **`customerName`:** The name of the customer associated with the order.
-* **`orderDate`:** The date and time when the order was placed.
-* **`totalAmount`:** The total amount charged to the customer for the order.
-* **`items`:** A list of items included in the order, each containing:
-	+ `id`: A unique identifier for the item.
-	+ `name`: The name of the item.
-	+ `quantity`: The quantity of the item ordered.
+1. Send a `GET` request to `/forecast` with the following parameters:
+	* `lat`: The latitude of the location (required).
+	* `lon`: The longitude of the location (required).
+2. Example Request: `GET /forecast?lat=37.7749&lon=-122.4194`
+3. Response: A JSON array containing 5-day forecast data, including temperature, precipitation probability, and more.
 
-Example Response:
-```json
-{
-  "id": "123e4567-e89b-12d3-a456-426614174000",
-  "customerName": "John Doe",
-  "orderDate": "2022-01-01T14:30:00.000Z",
-  "totalAmount": 100.99,
-  "items": [
-    {
-      "id": "item-1",
-      "name": "Product A",
-      "quantity": 3
-    },
-    {
-      "id": "item-2",
-      "name": "Product B",
-      "quantity": 2
-    }
-  ]
-}
-```
-### Error Handling
+### Handling Errors
 
-If the requested order ID is invalid or cannot be found, the API will return a `404 Not Found
+1. Check the response status code:
+	* 200 OK: Successful request.
+	* 404 Not Found: Location not found or invalid input.
+	* 500 Internal Server Error: Server error.
+2. Parse the JSON response to extract any error messages or additional information.
+
+**Additional Notes**
+
+* The API uses OpenWeatherMap's API key, which is subject to their usage policies and terms of service.
+* Requests are limited to 100 per hour for demo purposes. For commercial use, please contact us for a custom quota agreement.
+* The system is designed to handle concurrent requests efficiently, but high volumes may affect response times.
+
+By following these guidelines, you can effectively utilize the Weather Forecast System API to retrieve accurate and up-to-date weather data. If you have any questions or concerns, please don't hesitate to reach out to our support team.

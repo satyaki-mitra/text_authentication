@@ -1,0 +1,53 @@
+Title: API Guide - Managing User Interface
+
+## User Interface Management API
+
+### Overview
+
+This API delivers interfaces for managing user profiles within the system. The main objective is to handle operations such as creation, retrieval, modification, and deletion of user profiles.
+
+### Authentication Prerequisites
+
+All interactions with this interface necessitate a valid JWT token in the `Authorization` header. The token must be sent as `Bearer token`.
+
+### Interfaces
+
+#### User Profile Generation
+
+**Interface:** POST /api/profiles
+
+**Input Parameters**
+
+| Parameter     | Type   | Description                                |
+|--------------|-------|--------------------------------------------|
+| fullName     | string | The user's complete name                   |
+| email        | string | A unique email for the user account       |
+| passwordHash | string | Encrypted user password prior to storage  |
+| role          | enum   | User's system role (either 'admin' or 'user')|
+
+#### User Profile Retrieval
+
+**Interface:** GET /api/profiles/{ID}
+
+**Input Parameters**
+
+| Parameter | Type  | Description                       |
+|-----------|------|-----------------------------------|
+| ID        | int   | Unique identifier for the user   |
+
+#### User Profile Modification
+
+**Interface:** PUT /api/profiles/{ID}
+
+**Input Parameters**
+
+| Parameter | Type   | Description                                |
+|--------------|-------|--------------------------------------------|
+| ID          | int    | Unique identifier for the user            |
+| fullName    | string | Updated complete name for the user        |
+| email       | string | Modified unique email (if needed)         |
+| role         | enum   | New system role (either 'admin' or 'user')|
+
+#### User Profile Deletion
+
+**Interface:** DELETE /api/profiles

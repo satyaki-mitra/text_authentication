@@ -399,13 +399,32 @@ class ModelManager:
         Load classification model (for zero-shot, etc.)
         """
         # For zero-shot classification models
-        pipe = pipeline("zero-shot-classification",
-                        model        = config.model_id,
-                        device       = 0 if self.device.type == "cuda" else -1,
-                        model_kwargs = {"cache_dir": str(self.cache_dir)},
+        '''
+        pipe = pipeline(task      = "zero-shot-classification",
+                        model     = config.model_id,
+                        tokenizer = config.model_id,
+                        cache_dir = str(self.cache_dir),
+                        device    = 0 if self.device.type == "cuda" else -1,
                        )
         
         return pipe
+        '''
+        # Load classification model and tokenizer
+        tokenizer = AutoTokenizer.from_pretrained(pretrained_model_name_or_path = config.model_id,
+                                                  cache_dir                     = str(self.cache_dir),
+                                                 )
+
+        model     = AutoModelForSequenceClassification.from_pretrained(pretrained_model_name_or_path = config.model_id,
+                                                                       cache_dir                     = str(self.cache_dir),
+                                                                      )
+        
+        # Move model to desired device
+        model     = model.to(self.device)
+
+        # Set model to evaluation mode
+        model.eval()
+
+        return model, tokenizer
 
     
     def _load_sequence_classifier(self, config: ModelConfig) -> Any:
@@ -420,6 +439,7 @@ class ModelManager:
         # Move to device
         model = model.to(self.device)
         
+        # Set model to evaluation mode
         model.eval()
         
         # Apply quantization if enabled
@@ -492,8 +512,9 @@ class ModelManager:
         
         pipe = pipeline(task         = task,
                         model        = model_config.model_id,
+                        tokenizer    = model_config.model_id,
+                        cache_dir    = str(self.cache_dir),
                         device       = 0 if self.device.type == "cuda" else -1,
-                        model_kwargs = {"cache_dir": str(self.cache_dir)},
                        )
 
         self.cache.put(cache_key, pipe)

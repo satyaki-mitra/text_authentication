@@ -1,0 +1,29 @@
+Title: Privacy and Data Security Guidelines
+
+   A. Preamble
+
+      A.1 This document, referred to as the Privacy and Data Security Guidelines ("Guidelines"), outlines our commitment to safeguarding personal data in accordance with relevant regulations such as the General Data Protection Regulation (EU) 2016/679 ("GDPR"), the California Consumer Privacy Act of 2018 ("CCPA"), and other pertinent privacy and data protection laws.
+
+      A.2 These Guidelines apply to all personal data processed by us in conjunction with our business operations, encompassing various platforms like websites, mobile applications, products, and services collectively termed as "Platforms."
+
+   B. Personal Data Definition
+
+       B.1 In the context of these Guidelines, "personal data" denotes any information that could be used to identify a specific individual. This may comprise names, contact details, identification numbers, location data, online identifiers, and other such identifying information.
+
+   C. Collection and Utilization of Personal Data
+
+       C.1 We gather personal data from various sources, including individuals (through Platform usage, account creation, newsletter subscriptions, or contact initiation), automatically via interactions with our Platforms (via cookies and tracking technologies), and from external sources like business partners, service providers, and public records.
+
+       C.2 We collect and process personal data for diverse purposes, including enhancing our Platforms, communicating with users, managing user accounts, executing transactions, adhering to legal requirements, and pursuing legitimate interests shared by us or other parties.
+
+   D. Legal Authorization for Processing Personal Data
+
+       D.1 We will only process personal data if supported by a valid legal justification. Under the GDPR, such legitimizations may consist of: (i) explicit consent from the individual concerned; (ii) the necessity to perform a contract with the individual; (iii) compliance with applicable laws; or (iv) our legitimate interests or those of third parties, as long as these interests do not supersede the interests or fundamental rights and freedoms of the individual.
+
+   E. Data Sharing with Third Parties
+
+       E.1 We may share personal data with external entities, including affiliates, service providers, business partners, and public authorities, to accomplish the objectives detailed in these Guidelines. Where possible, we will implement measures to ensure that such recipients adhere to suitable data protection standards.
+
+   F. Data Transfers Across Borders
+
+       F.1 We may transfer personal data to nations beyond the European Economic Area ("EEA") or

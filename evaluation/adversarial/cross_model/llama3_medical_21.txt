@@ -1,0 +1,27 @@
+**Case Report:**
+
+**Title:** A Rare Case of Mucormycosis Presenting as Orbital Cellulitis in an Immunocompetent Individual
+
+**Abstract:**
+
+Mucormycosis, a rare and life-threatening fungal infection, is typically seen in immunocompromised individuals. We report a unique case of mucormycosis presenting as orbital cellulitis in an otherwise healthy adult.
+
+A 35-year-old male was admitted to our institution with a 3-day history of severe headache, proptosis, and limited extraocular movement. He had no underlying medical conditions and denied any recent travel or exposure to fungi. On examination, his right eye showed marked swelling, chemosis, and lid edema. CT scans revealed extensive soft tissue inflammation and bony destruction in the orbit.
+
+Initial laboratory tests revealed elevated white blood cell count (25,000/mm3), mild anemia, and a normal differential count. Blood cultures were negative for bacteria or fungi. Given the patient's rapid deterioration and lack of response to antibiotic therapy, we suspected a fungal etiology.
+
+A biopsy of the orbital tissue was obtained, which demonstrated extensive granulomatous inflammation with numerous filamentous organisms consistent with Mucor spp. The patient was started on intravenous amphotericin B (1 mg/kg/day) and voriconazole (6 mg/kg/day), in addition to broad-spectrum antibacterial coverage.
+
+Within 7 days of therapy initiation, the patient's orbital swelling subsided, and his vision improved. He remained hospitalized for a total of 14 days before being discharged on oral antifungal therapy.
+
+**Discussion:**
+
+Mucormycosis is an increasingly recognized opportunistic infection in immunocompetent individuals, particularly those with diabetes or other underlying conditions. Our case highlights the importance of considering mucormycosis in patients presenting with orbital cellulitis, even without traditional risk factors.
+
+The diagnosis was facilitated by a high index of suspicion and the use of imaging studies to demonstrate bony destruction. The patient's response to antifungal therapy supports the effectiveness of this approach in treating mucormycosis.
+
+**Conclusion:**
+
+Mucormycosis should be included in the differential diagnosis of orbital cellulitis, even in immunocompetent individuals. Early recognition and initiation of antifungal therapy are critical to improving outcomes in these patients. Further research is needed to better understand the epidemiology and pathogenesis of mucormycosis in this population.
+
+**Keywords:** Mucormycosis, orbital cellulitis, immunocompetent individual, fungal infection.

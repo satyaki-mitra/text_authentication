@@ -1,0 +1,1 @@
+Next message: Beman Dawes: "Version 1.18.1 posted on web site" Previous message: jsiek_at_[hidden]: "Re: [boost] graph: different node/edge types?" Next in thread: David Abrahams: "Re: [boost] GCC 2.95.2 and <limits>" Reply: David Abrahams: "Re: [boost] GCC 2.95.2 and <limits>" 2.95.2 will pass more of the boost regression tests. GCC 3.0 "by the end of the year".

@@ -1,36 +1,46 @@
-Title: Documentation for the User Authentication Feature in XYZ Application
+Title: **API Documentation - User Management Endpoint**
 
-1. Introduction
-   This document provides an overview of the user authentication feature in the XYZ application. The user authentication process ensures secure access to the application by validating user credentials.
+**Endpoint Description:**
 
-2. Scope
-   This documentation covers the following aspects of the user authentication feature:
-   - User registration
-   - Login process
-   - Password reset functionality
-   - Session management
+The `/api/v1/users` endpoint is a RESTful API designed for managing user resources. It allows for the creation, retrieval, update, and deletion of users within the system.
 
-3. User Registration
-   New users can register for an account in the XYZ application by providing a valid email address and creating a unique password. The system will send a confirmation link to the provided email address for verification.
+**Request Methods:**
+- `GET`: Retrieve a list of users
+- `POST`: Create a new user
+- `PUT`: Update an existing user
+- `DELETE`: Delete an existing user
 
-4. Login Process
-   Existing users can log into their accounts by entering their registered email address and password. Upon successful login, the system generates an encrypted session token that is stored in the user's browser.
+**Authentication Requirements:**
+All requests to this endpoint require authentication. The token for authentication should be included in the `Authorization` header as a Bearer token (e.g., `Authorization: Bearer {token}`).
 
-5. Password Reset Functionality
-   In case a user forgets their password, they can request a password reset link via email. The system will then send a temporary reset link to the user's registered email address. Upon clicking the link, the user can set a new password for their account.
+**Request/Response Parameters:**
 
-6. Session Management
-   The XYZ application uses session tokens to manage active user sessions. Each session is associated with a unique token that expires after a certain period of inactivity or manual logout. The system automatically logs out users whose sessions have expired.
+1. **GET Request**
+   - **Query Params:**
+     - `page` *(optional, integer)*: The page number to retrieve. Default is 1.
+     - `limit` *(optional, integer)*: The number of items per page. Default is 20.
 
-7. Security Considerations
-   - Passwords are stored securely using hashing and salting techniques to protect against unauthorized access.
-   - Sensitive data is transmitted over encrypted connections (HTTPS) to prevent eavesdropping and man-in-the-middle attacks.
-   - User data is protected by regular backups and is subject to strict access controls.
+   - **Response:**
+     - `status` *(integer)*: HTTP status code (e.g., 200 for success)
+     - `data`: An array containing user objects
+       - `id` *(integer)*: The unique identifier of the user
+       - `username` *(string)*: The username of the user
+       - `email` *(string)*: The email address of the user
+       - `first_name` *(string)*: The first name of the user
+       - `last_name` *(string)*: The last name of the user
+     - `message` *(string)*: A brief message describing the response (e.g., "Users fetched successfully.")
 
-8. Future Enhancements
-   - Implement multi-factor authentication for added security.
-   - Integrate with third-party identity providers for seamless user management across multiple applications.
-   - Add biometric authentication options such as fingerprint or facial recognition.
+2. **POST Request**
+   - **Request Body:**
+     - `username` *(string, required)*: The desired username for the new user
+     - `email` *(string, required)*: The email address of the new user
+     - `password` *(string, required)*: The password for the new user (encrypted)
+     - `first_name` *(string, optional)*: The first name of the new user
+     - `last_name` *(string, optional)*: The last name of the new user
 
-9. Conclusion
-   The user authentication feature in the XYZ application provides a secure and convenient way for users to manage their accounts, ensuring a smooth and reliable user experience. By implementing best practices for security and session management, we aim to protect our users' data and maintain
+   - **Response:**
+     - `status` *(integer)*: HTTP status code (e.g., 201 for created)
+     - `data`: An object containing details about the newly created user
+       - `id` *(integer)*: The unique identifier of the new user
+       - `username` *(string)*: The username of the new user
+       - `email` *(string)*: The email address of the

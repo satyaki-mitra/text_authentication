@@ -1,37 +1,63 @@
-Title: Understanding Duck Typing in JavaScript
+Title: Documentation on Dependency Injection Design Pattern in Java
 
-Duck typing is a programming concept that originates from the famous quote, "If it looks like a duck, swims like a duck, and quacks like a duck, then it probably is a duck." In the context of programming, particularly in dynamic languages like JavaScript, duck typing emphasizes behavior over rigid type definitions.
+Introduction
 
-In JavaScript, duck typing can be seen as follows: if an object has the properties and methods that another piece of code expects, it will work with it regardless of its declared type or class. This means that you don't have to explicitly declare types for your variables. Instead, the type is determined by the methods and properties the object has.
+Dependency Injection (DI) is a software design pattern that allows the reduction of hard-coded dependencies by managing the lifecycle and creation of objects outside the control flow of an application. This promotes loose coupling, modularity, and testability in software development.
 
-Here's a simple example:
+In this documentation, we'll explore the implementation of Dependency Injection using Constructor Injection and Setter Injection in Java, along with use cases, trade-offs, and best practices for professional developers.
 
-```javascript
-function printDetails(obj) {
-  console.log('Name:', obj.name);
-  console.log('Age:', obj.age);
+Implementation
+
+###Constructor Injection
+
+Constructor injection is a technique where the dependencies are passed to an object via its constructor. This method ensures that all required dependencies are provided when creating a new instance of the class. Here's an example:
+
+```java
+public class Service {
+    private final Dependency dependency;
+
+    public Service(Dependency dependency) {
+        this.dependency = dependency;
+    }
+
+    // Service methods using dependency...
 }
 
-let duck = { name: 'Donald', age: 80 };
-let car = { brand: 'Toyota', year: 2015 };
+public interface Dependency {}
 
-printDetails(duck); // Name: Donald, Age: 80
-printDetails(car); // TypeError: Cannot read property 'name' of undefined (if strict mode is enabled) or undefined (if not in strict mode)
+public class ConcreteDependency implements Dependency {}
 ```
 
-In this example, the `printDetails` function expects an object with `name` and `age` properties. When we pass a `duck`, it works as expected. However, when we pass a `car`, which doesn't have the required properties, JavaScript throws an error because of the lack of duck typing (or explicit type checking).
+###Setter Injection
 
-To make this work with duck typing, we could modify our function to check for the presence of the necessary properties before trying to access them:
+Setter injection is an alternative approach where dependencies are set after the object has been created. Although it promotes flexibility, care should be taken to avoid hard-coding dependencies by initializing them in the constructor and setting them later.
 
-```javascript
-function printDetails(obj) {
-  if (obj.hasOwnProperty('name') && obj.hasOwnProperty('age')) {
-    console.log('Name:', obj.name);
-    console.log('Age:', obj.age);
-  } else {
-    console.log('Invalid object, needs name and age properties.');
-  }
+```java
+public class Service {
+    private Dependency dependency;
+
+    public void setDependency(Dependency dependency) {
+        this.dependency = dependency;
+    }
+
+    // Service methods using dependency...
 }
+
+// Initializing the service with its dependency:
+Service service = new Service();
+service.setDependency(new ConcreteDependency());
 ```
 
-Now, our function can work with any object that has the necessary properties, even if they're not explicitly declared as such
+###Using a DI Container
+
+For larger applications, managing dependencies manually becomes cumbersome and prone to errors. To address this issue, developers can use Dependency Injection Containers (DI Containers), such as Spring or Google Guice, which automatically manage the creation and wiring of objects based on configuration files or annotations.
+
+Use Cases
+
+- Reducing hard-coded dependencies improves testability by enabling easier unit testing and mocking of dependencies.
+- Promotes loose coupling between classes, making it easier to modify or replace components without affecting other parts of the application.
+- Allows for inversion of control, where higher-level modules do not call lower-level modules directly but instead receive them as parameters. This simplifies the application's structure and makes it more modular.
+
+Trade-offs
+
+- While Dependency Injection promotes separation of concerns and testability, it may lead to an increase in boilerplate code when

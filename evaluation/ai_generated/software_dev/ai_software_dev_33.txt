@@ -1,51 +1,70 @@
-Title: Understanding Dependency Injection in Java
+Title: Documentation on the Observer Design Pattern in C#
 
-Dependency Injection (DI) is an essential design pattern in modern software development, particularly in Java. It's a technique where an object receives other objects that it depends on, rather than creating them internally. This separation of concerns helps in writing modular, testable, and maintainable code.
+Introduction:
+The Observer Design Pattern is a behavioral software design pattern that defines a one-to-many dependency between objects so that when one object changes its state, all its dependents are notified and updated automatically. This pattern is particularly useful in implementing event-driven applications, user interfaces, or any system where data needs to be shared among multiple objects without creating hard-coded links between them.
 
-In the context of Java, there are several DI approaches, but three main ones are Constructor Injection, Setter Injection, and Interface Injection (also known as Method Injection).
+In this documentation, we will discuss the implementation of the Observer Design Pattern using C#.
 
-1. **Constructor Injection**: This is the most preferred method in Java for Dependency Injection because it ensures that all dependencies are set during object creation, making the objects immutable, which is beneficial for thread-safety.
+Implementation:
+1. **Define the Subject:** The `Subject` class is the central hub in the Observer pattern. It maintains a list of observers and notifies them when its state changes. In our implementation, we will use an interface `ISubject` to define the methods required for a class to be a subject.
 
-```java
-public class Service {
-    private final DataAccessObject dao;
+```csharp
+public interface ISubject
+{
+    void Attach(IObserver observer);
+    void Detach(IObserver observer);
+    void Notify();
+}
+```
 
-    public Service(DataAccessObject dao) {
-        this.dao = dao;
+2. **Define the Observer:** The `Observer` class is responsible for maintaining a relationship with the subject and updating its state when the subject changes. In our implementation, we will use an interface `IObserver` to define the methods required for a class to be an observer.
+
+```csharp
+public interface IObserver
+{
+    void Update(ISubject subject);
+}
+```
+
+3. **Implement Subject and Observer:** Now, you can implement your specific subjects and observers based on your application's needs. Here is a simple example of a `ConcreteSubject` that maintains a list of temperatures and notifies its observers when the temperature changes:
+
+```csharp
+public class ConcreteSubject : ISubject
+{
+    private List<IObserver> _observers = new List<IObserver>();
+    private double _temperature;
+
+    public void Attach(IObserver observer)
+    {
+        _observers.Add(observer);
+    }
+
+    public void Detach(IObserver observer)
+    {
+        _observers.Remove(observer);
+    }
+
+    public void Notify()
+    {
+        foreach (var observer in _observers)
+        {
+            observer.Update(this);
+        }
+    }
+
+    public double Temperature
+    {
+        get => _temperature;
+        set
+        {
+            if (_temperature != value)
+            {
+                _temperature = value;
+                Notify();
+            }
+        }
     }
 }
 ```
 
-2. **Setter Injection**: This method involves setting the dependencies after object creation, usually via setter methods. While it's less preferred due to potential issues with mutable state and thread-safety, it can be useful when dealing with existing codebases that don't support constructor injection.
-
-```java
-public class Service {
-    private DataAccessObject dao;
-
-    public void setDao(DataAccessObject dao) {
-        this.dao = dao;
-    }
-}
-```
-
-3. **Interface Injection**: This method involves using interfaces to inject dependencies at runtime, providing more flexibility in terms of swapping out implementations. However, it's less common in Java due to its strong typing and static nature, which makes constructor or setter injection more practical in most cases.
-
-```java
-public interface DataAccessObject {
-    // interface methods
-}
-
-public class JdbcDataAccessObject implements DataAccessObject {
-    // implementation details
-}
-
-public class Service {
-    private final DataAccessObject dao;
-
-    public void setDao(DataAccessObject dao) {
-        this.dao = dao;
-    }
-}
-```
-
-For implementing Dependency Injection in Java, you can use popular libraries like Spring Framework or Google Guice to
+In this

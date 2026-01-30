@@ -16,9 +16,16 @@ from config.threshold_config import get_threshold_for_domain
 
 class EntropyMetric(BaseMetric):
     """
-    Enhanced entropy analysis for text randomness and predictability
+    Entropy analysis for text randomness and predictability
+
+    Mathematical Foundation:
+    ------------------------
+    - Shannon Entropy: H = -Σ p(x) * log2(p(x))
+    - Higher entropy = more random/diverse = typically human
+    - Lower entropy  = more predictable/uniform = typically synthetic
     
-    Measures (Aligned with Documentation):
+    Measures:
+    ---------
     - Character-level entropy and diversity
     - Word-level entropy and burstiness  
     - Token-level diversity and unpredictability in sequences
@@ -61,7 +68,7 @@ class EntropyMetric(BaseMetric):
 
     def compute(self, text: str, **kwargs) -> MetricResult:
         """
-        Compute enhanced entropy measures for text with FULL DOMAIN THRESHOLD INTEGRATION
+        Compute entropy measures for text
         """
         try:
             if (not text or (len(text.strip()) < self.params.MIN_TEXT_LENGTH_FOR_ANALYSIS)):
@@ -149,10 +156,10 @@ class EntropyMetric(BaseMetric):
         authentic_prob = max(self.params.MIN_PROBABILITY, min(self.params.MAX_PROBABILITY, authentic_prob))
         
         # Calculate hybrid probability based on entropy variance
-        hybrid_prob = self._calculate_hybrid_probability(features)
+        hybrid_prob    = self._calculate_hybrid_probability(features)
         
         # Normalize to sum to 1.0
-        total       = synthetic_prob + authentic_prob + hybrid_prob
+        total          = synthetic_prob + authentic_prob + hybrid_prob
 
         if (total > self.params.ZERO_TOLERANCE):
             synthetic_prob /= total
@@ -167,26 +174,29 @@ class EntropyMetric(BaseMetric):
         Calculate comprehensive entropy measures including document-required features
         """
         # Basic entropy measures
-        char_entropy              = self._calculate_character_entropy(text)
-        word_entropy              = self._calculate_word_entropy(text)
-        token_entropy             = self._calculate_token_entropy(text) if self.tokenizer else 0.0
+        char_entropy              = self._calculate_character_entropy(text = text)
+        word_entropy              = self._calculate_word_entropy(text = text)
+        token_entropy             = self._calculate_token_entropy(text = text) if self.tokenizer else 0.0
         
         # DOCUMENT-REQUIRED: Token-level diversity
-        token_diversity           = self._calculate_token_diversity(text)
+        token_diversity           = self._calculate_token_diversity(text = text)
         
         # DOCUMENT-REQUIRED: Unpredictability in sequences
-        sequence_unpredictability = self._calculate_sequence_unpredictability(text)
+        sequence_unpredictability = self._calculate_sequence_unpredictability(text = text)
         
         # Chunk-based analysis for whole-text understanding
-        chunk_entropies           = self._calculate_chunk_entropy(text)
+        chunk_entropies           = self._calculate_chunk_entropy(text = text)
         entropy_variance          = np.var(chunk_entropies) if chunk_entropies else 0.0
         avg_chunk_entropy         = np.mean(chunk_entropies) if chunk_entropies else 0.0
         
         # Synthetic-specific pattern detection
-        synthetic_pattern_score   = self._detect_synthetic_entropy_patterns(text)
+        synthetic_pattern_score   = self._detect_synthetic_entropy_patterns(text = text)
         
         # Predictability measures
         predictability            = 1.0 - min(1.0, char_entropy / self.params.MAX_CHAR_ENTROPY)
+        
+        # Count tokens for confidence calculation
+        num_tokens                = len(self.tokenizer.encode(text, add_special_tokens = False)) if self.tokenizer else len(text.split())
         
         return {"char_entropy"              : round(char_entropy, 4),
                 "word_entropy"              : round(word_entropy, 4),
@@ -198,12 +208,17 @@ class EntropyMetric(BaseMetric):
                 "predictability_score"      : round(predictability, 4),
                 "synthetic_pattern_score"   : round(synthetic_pattern_score, 4),
                 "num_chunks_analyzed"       : len(chunk_entropies),
+                "num_tokens_analyzed"       : num_tokens,
                }
     
 
     def _calculate_character_entropy(self, text: str) -> float:
         """
-        Calculate character-level entropy
+        Calculate character-level Shannon entropy
+        
+        Formula: H = -Σ p(x) * log2(p(x))
+        
+        Typical English text: 3.0-4.5 bits
         """
         # Clean text and convert to lowercase
         clean_text = ''.join(c for c in text.lower() if c.isalnum() or c.isspace())
@@ -215,12 +230,13 @@ class EntropyMetric(BaseMetric):
         char_counts = Counter(clean_text)
         total_chars = len(clean_text)
         
-        # Calculate entropy
+        # Calculate Shannon entropy
         entropy    = 0.0
 
         for count in char_counts.values():
             probability = count / total_chars
-            if probability > self.params.ZERO_TOLERANCE:
+
+            if (probability > self.params.ZERO_TOLERANCE):
                 entropy -= probability * math.log2(probability)
         
         return entropy
@@ -228,7 +244,7 @@ class EntropyMetric(BaseMetric):
 
     def _calculate_word_entropy(self, text: str) -> float:
         """
-        Calculate word-level entropy
+        Calculate word-level Shannon entropy
         """
         words = text.lower().split()
         if (len(words) < self.params.MIN_WORDS_FOR_ANALYSIS):
@@ -241,7 +257,8 @@ class EntropyMetric(BaseMetric):
 
         for count in word_counts.values():
             probability = count / total_words
-            if probability > self.params.ZERO_TOLERANCE:
+
+            if (probability > self.params.ZERO_TOLERANCE):
                 entropy -= probability * math.log2(probability)
         
         return entropy
@@ -249,7 +266,7 @@ class EntropyMetric(BaseMetric):
 
     def _calculate_token_entropy(self, text: str) -> float:
         """
-        Calculate token-level entropy using GPT-2 tokenizer
+        Calculate token-level Shannon entropy using GPT-2 tokenizer
         """
         try:
             if not self.tokenizer:
@@ -275,7 +292,7 @@ class EntropyMetric(BaseMetric):
 
             for count in token_counts.values():
                 probability = count / total_tokens
-                if probability > self.params.ZERO_TOLERANCE:
+                if (probability > self.params.ZERO_TOLERANCE):
                     entropy -= probability * math.log2(probability)
             
             return entropy
@@ -287,20 +304,25 @@ class EntropyMetric(BaseMetric):
 
     def _calculate_token_diversity(self, text: str) -> float:
         """
-        Calculate token-level diversity : Higher diversity = more authentic-like
+        Calculate token-level diversity (type-token ratio)
+        
+        Interpretation:
+        --------------
+            Higher diversity = more authentic-like
+            Lower diversity  = more synthetic-like (vocabulary reuse)
         """
         if not self.tokenizer:
             return 0.0
         
         try:
-            tokens = self.tokenizer.encode(text, add_special_tokens=False)
+            tokens = self.tokenizer.encode(text, add_special_tokens = False)
             if (len(tokens) < self.params.MIN_TOKENS_FOR_ANALYSIS):
                 return 0.0
             
             unique_tokens = len(set(tokens))
             total_tokens  = len(tokens)
             
-            # Type-token ratio for tokens
+            # Type-token ratio
             diversity     = unique_tokens / total_tokens
 
             return diversity
@@ -312,13 +334,15 @@ class EntropyMetric(BaseMetric):
 
     def _calculate_sequence_unpredictability(self, text: str) -> float:
         """
-        Calculate unpredictability in text sequences, it measures how unpredictable the token sequences are
+        Calculate unpredictability in text sequences using bigram entropy
+        
+        Measures how unpredictable the token sequences are: Higher unpredictability = more human-like
         """
         if not self.tokenizer:
             return 0.0
         
         try:
-            tokens = self.tokenizer.encode(text, add_special_tokens=False)
+            tokens = self.tokenizer.encode(text, add_special_tokens = False)
             if (len(tokens) < self.params.MIN_TOKENS_FOR_SEQUENCE):
                 return 0.0
             
@@ -332,7 +356,7 @@ class EntropyMetric(BaseMetric):
 
             for count in bigram_counts.values():
                 probability = count / total_bigrams
-                if probability > self.params.ZERO_TOLERANCE:
+                if (probability > self.params.ZERO_TOLERANCE):
                     sequence_entropy -= probability * math.log2(probability)
             
             # Normalize to 0-1 scale
@@ -361,8 +385,9 @@ class EntropyMetric(BaseMetric):
             
             # Minimum chunk size
             if (len(chunk) > self.params.MIN_CHUNK_LENGTH):  
-                entropy = self._calculate_character_entropy(chunk)
-                if entropy > self.params.ZERO_TOLERANCE:
+                entropy = self._calculate_character_entropy(text = chunk)
+                
+                if (entropy > self.params.ZERO_TOLERANCE):
                     chunks.append(entropy)
         
         return chunks
@@ -370,37 +395,43 @@ class EntropyMetric(BaseMetric):
 
     def _detect_synthetic_entropy_patterns(self, text: str) -> float:
         """
-        Detect synthetic-specific entropy patterns: synthetic text often shows specific entropy signatures
+        Detect synthetic-specific entropy patterns
+        
+        Synthetic text often shows specific entropy signatures:
+        - Overly consistent character distribution
+        - Low token diversity
+        - Predictable sequences
+        - Low entropy variance across chunks
         """
         patterns_detected = 0
         total_patterns    = 4
         
-        # Overly consistent character distribution
-        char_entropy      = self._calculate_character_entropy(text)
+        # Pattern 1: Overly consistent character distribution
+        char_entropy      = self._calculate_character_entropy(text = text)
         
-        # synthetic tends to be more consistent
+        # Synthetic tends to be more consistent 
         if (char_entropy < self.params.CHAR_ENTROPY_LOW_THRESHOLD):  
             patterns_detected += 1
         
-        # Low token diversity
+        # Pattern 2: Low token diversity
         token_diversity = self._calculate_token_diversity(text)
 
-        # synthetic reuses tokens more
+        # Synthetic reuses tokens more 
         if (token_diversity < self.params.TOKEN_DIVERSITY_MEDIUM_THRESHOLD):  
             patterns_detected += 1
         
-        # Predictable sequences
-        sequence_unpredictability = self._calculate_sequence_unpredictability(text)
+        # Pattern 3: Predictable sequences
+        sequence_unpredictability = self._calculate_sequence_unpredictability(text = text)
         
-        # synthetic sequences are more predictable
+        # Synthetic sequences are more predictable
         if (sequence_unpredictability < self.params.SEQUENCE_UNPREDICTABILITY_MEDIUM_THRESHOLD):  
             patterns_detected += 1
         
-        # Low entropy variance across chunks
-        chunk_entropies  = self._calculate_chunk_entropy(text)
+        # Pattern 4: Low entropy variance across chunks
+        chunk_entropies  = self._calculate_chunk_entropy(text = text)
         entropy_variance = np.var(chunk_entropies) if chunk_entropies else 0.0
         
-        # synthetic maintains consistent entropy
+        # Synthetic maintains consistent entropy 
         if (entropy_variance < self.params.ENTROPY_VARIANCE_LOW_THRESHOLD):  
             patterns_detected += 1
         
@@ -409,8 +440,13 @@ class EntropyMetric(BaseMetric):
 
     def _analyze_entropy_patterns(self, features: Dict[str, Any]) -> tuple:
         """
-        Analyze entropy patterns to determine RAW entropy score (0-1 scale)
-        This raw score will later be converted using domain thresholds
+        Analyze entropy patterns to determine RAW entropy score (0-1 scale) with confidence
+        
+        Returns:
+        --------
+        (raw_score, confidence) where:
+        - raw_score: Higher = more synthetic-like
+        - confidence: Based on sample size and agreement
         """
         # Check feature validity
         valid_features = [score for score in [features.get('char_entropy', 0),
@@ -427,7 +463,7 @@ class EntropyMetric(BaseMetric):
 
         synthetic_indicators = list()
         
-        # synthetic text often has lower character entropy (more predictable)
+        # Synthetic text often has lower character entropy (more predictable)
         if (features['char_entropy'] < self.params.CHAR_ENTROPY_VERY_LOW_THRESHOLD):
             # Strong synthetic indicator
             synthetic_indicators.append(self.params.VERY_STRONG_SYNTHETIC_WEIGHT)  
@@ -491,10 +527,23 @@ class EntropyMetric(BaseMetric):
         else:
             synthetic_indicators.append(self.params.LOW_SYNTHETIC_WEIGHT)
         
-        # Calculate raw score and confidence
-        raw_score  = np.mean(synthetic_indicators) if synthetic_indicators else self.params.NEUTRAL_PROBABILITY
-        confidence = 1.0 - (np.std(synthetic_indicators) / self.params.CONFIDENCE_STD_NORMALIZER) if synthetic_indicators else self.params.NEUTRAL_CONFIDENCE
-        confidence = max(self.params.MIN_CONFIDENCE, min(self.params.MAX_CONFIDENCE, confidence))
+        # Calculate raw score
+        raw_score            = np.mean(synthetic_indicators) if synthetic_indicators else self.params.NEUTRAL_PROBABILITY
+        
+        # Factor 1: Agreement between indicators (lower std = higher confidence)
+        agreement_confidence = 1.0 - min(1.0, np.std(synthetic_indicators) / self.params.CONFIDENCE_STD_NORMALIZER)
+        
+        # Factor 2: Sample size adequacy
+        num_chunks           = features.get('num_chunks_analyzed', 0)
+        num_tokens           = features.get('num_tokens_analyzed', 0)
+        chunk_confidence     = min(1.0, num_chunks / self.params.MIN_CHUNKS_FOR_CONFIDENCE)
+        token_confidence     = min(1.0, num_tokens / self.params.MIN_TOKENS_FOR_CONFIDENCE)
+        sample_confidence    = (chunk_confidence + token_confidence) / 2.0
+        
+        # Combine factors
+        confidence           = (self.params.CONFIDENCE_BASE + self.params.CONFIDENCE_STD_FACTOR * agreement_confidence + self.params.CONFIDENCE_SAMPLE_FACTOR * sample_confidence)
+        
+        confidence           = max(self.params.MIN_CONFIDENCE, min(self.params.MAX_CONFIDENCE, confidence))
         
         return raw_score, confidence
     
@@ -506,7 +555,7 @@ class EntropyMetric(BaseMetric):
         hybrid_indicators = list()
         
         # High entropy variance suggests mixed content
-        entropy_variance = features.get('entropy_variance', 0)
+        entropy_variance  = features.get('entropy_variance', 0)
         
         if (entropy_variance > self.params.ENTROPY_VARIANCE_HIGH_THRESHOLD):
             # Strong mixed indicator

@@ -1,33 +1,54 @@
-Title: User Authentication Feature in XYZ Application
+Title: API Documentation - User Management Endpoint
 
-1. Overview
+## User Management API
 
-The User Authentication feature is an essential component of the XYZ Application, enabling secure access to user accounts by implementing two layers of authentication - Email/Password and Two-Factor Authentication (2FA). This documentation provides a comprehensive overview of the User Authentication feature, its functionalities, and implementation details.
+### Endpoint Description
 
-2. Functionalities
+This REST API provides endpoints for managing users within our system. The `/users` endpoint is used to create, retrieve, update, and delete user records.
 
-   a. Registration: Users can register for an account using their email addresses and chosen passwords. The system will validate the entered email address to ensure it is unique and active.
+### Request Parameters
 
-   b. Password Reset: In case users forget their password, they can reset it by entering their registered email address and following the password recovery process.
+| Parameter          | Data Type   | Required | Description                                                                                                       |
+|--------------------|------------|----------|-------------------------------------------------------------------------------------------------------------------|
+| `action`           | `string`   | Yes      | Action to perform on the user: `create`, `read`, `update`, or `delete`.                                         |
+| `id`               | `integer`  | Optional | Unique identifier of the user (for `update` and `delete` actions).                                              |
+| `username`         | `string`   | Yes (for `create`) / Optional (for `update`) | The username for the user.                                                                                          |
+| `password`         | `string`   | Yes (for `create`) / Optional (for `update`) | The password for the user. (Note: Passwords are hashed and not stored in plaintext.)                             |
+| `email`            | `string`   | Yes      | The email address of the user.                                                                                    |
+| `first_name`       | `string`   | Optional | The first name of the user.                                                                                     |
+| `last_name`        | `string`   | Optional | The last name of the user.                                                                                      |
+| `roles`            | `array`    | Optional | An array of roles assigned to the user. (e.g., ["admin", "user"])                                              |
 
-   c. Email/Password Authentication: Users authenticate themselves using their registered email addresses and passwords during login. The system will validate the entered credentials against the stored records to ensure secure access.
+### Authentication Requirements
 
-   d. Two-Factor Authentication (2FA): For enhanced security, users can opt for 2FA by providing a mobile number during registration or enabling it in their account settings. Upon successful email/password authentication, users receive a verification code via SMS, which they must enter to complete the login process.
+All requests require authentication using API keys. The API key should be included in the request header with the key `Authorization`.
 
-3. Implementation Details
+Example:
+```bash
+Authorization: Bearer <your_api_key>
+```
 
-   a. Registration:
-      - Users input their email address and chosen password upon registration.
-      - The system validates the entered email address for uniqueness using a unique constraint in the database.
-      - A secure hash of the password is stored in the database to protect against unauthorized access.
-      b. Password Reset:
-         - Users enter their registered email addresses to initiate the password recovery process.
-         - The system sends a reset link to the user's email address.
-         - Upon clicking the link, users are redirected to a page where they can input and confirm a new password.
-      c. Email/Password Authentication:
-          - During login, users enter their email addresses and passwords.
-          - The system validates the entered credentials against the stored records in the database.
-          d. Two-Factor Authentication (2FA):
-              - Users can opt for 2FA by providing a mobile number during registration or enabling it in their account settings.
-              - Upon successful email/password authentication, users receive a verification code via SMS.
-              -
+### Example Requests
+
+#### Create a new user
+
+```bash
+POST /users
+Content-Type: application/json
+
+{
+  "action": "create",
+  "username": "john_doe",
+  "password": "secret123",
+  "email": "john.doe@example.com",
+  "first_name": "John",
+  "last_name": "Doe",
+  "roles": ["user"]
+}
+```
+
+#### Retrieve user details
+
+```bash
+GET /users/<id>
+Authorization: Bearer <your_api_key>

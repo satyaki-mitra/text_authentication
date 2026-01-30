@@ -1,0 +1,27 @@
+Title: Agreement Regarding Data Handling (ADH) Clause
+
+A. Establishment
+
+This Agreement Regarding Data Handling ("ADH") is formed between [Company Name] ("Data Protector") and [Recipient's Name] ("Data Handler"), each a "Party" and together the "Parties." This ADH serves as an addition to the existing [Agreement/Contract Name] (the "Agreement").
+
+B. Aim
+
+The purpose of this ADH is to outline the Parties' agreement on handling Personal Information by the Data Handler, in accordance with Regulation (EU) 2016/679 (General Data Protection Regulation) ("GDPR") and any other relevant data protection laws.
+
+C. Definitions
+
+For the purpose of this ADH, capitalized terms will have the meanings ascribed below or as otherwise defined in the Agreement:
+
+1. "Data Subject" refers to a natural person whose Personal Information is relevant.
+2. "Personal Information" encompasses any details pertaining to an identified or identifiable individual; an identifiable person is one who can be pinpointed directly or indirectly, for example, through references such as a name, an identification number, location data, online identifier, or characteristics specific to the physical, genetic, mental, economic, cultural, or social identity of that individual.
+3. "Processing" denotes any activity or sequence of operations performed on Personal Information, whether automatic or not, including collection, recording, organization, structuring, storage, adaptation or alteration, retrieval, consultation, use, disclosure by transmission, dissemination or otherwise making available, alignment or combination, restriction, erasure, or destruction.
+
+D. Data Processing Instructions
+
+The Data Protector will provide the Data Handler with written instructions detailing how to handle Personal Information (the "Processing Instructions"). The Data Handler shall process Personal Information only in accordance with these instructions.
+
+E. Data Handler's Obligations
+
+E.1 Confidentiality: The Data Handler must ensure that anyone authorized to handle Personal Information has agreed to confidentiality or is bound by a legal obligation of confidentiality.
+
+E.2 Security Measures: The Data Handler must implement and maintain technical and organizational measures intended to safeguard the Personal Information from unintentional or illegal destruction, loss, modification, unauthorized disclosure or access, particularly when the processing involves

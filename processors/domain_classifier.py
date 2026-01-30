@@ -1,17 +1,22 @@
 # DEPENDENCIES
+import os
+import torch
 from typing import Dict
 from typing import List
 from typing import Tuple
 from loguru import logger
 from typing import Optional
 from config.enums import Domain
+import torch.nn.functional as F
 from config.schemas import DomainPrediction
 from models.model_manager import get_model_manager
 from config.constants import domain_classification_params
 from config.threshold_config import interpolate_thresholds
 from config.threshold_config import get_threshold_for_domain
 
-    
+# Device-agnostic safety
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
+
 
 class DomainClassifier:
     """
@@ -100,24 +105,32 @@ class DomainClassifier:
                                                        model_type = "primary",
                                                       )
             
-            # If primary result meets confidence threshold, return it
-            if (primary_result.evidence_strength >= min_confidence):
-                return primary_result
+            # Save it as best result
+            best_result    = primary_result
             
             # If primary is low confidence but we have fallback, try fallback
-            if self.fallback_classifier:
-                logger.info("Primary classifier low confidence, trying fallback model...")
+            if (self.fallback_classifier and (primary_result.evidence_strength < domain_classification_params.HIGH_CONFIDENCE_THRESHOLD)):
+                logger.info("Primary classifier shows low confidence, trying fallback model...")
                 fallback_result = self._classify_with_model(text       = text, 
                                                             classifier = self.fallback_classifier, 
                                                             model_type = "fallback",
                                                            )
                 
                 # Use fallback if it has higher confidence
-                if (fallback_result.evidence_strength > primary_result.evidence_strength):
-                    return fallback_result
+                if (fallback_result.evidence_strength > best_result.evidence_strength):
+                    best_result = fallback_result
+
+            # Hard Safety Gate: if not any solid evidence with great confidence to determine domain, fallback to General Domain
+            if best_result.evidence_strength < domain_classification_params.ABS_DOMAIN_CONFIDENCE_THRESHOLD:
+                logger.info(f"Domain confidence {best_result.evidence_strength:.3f} below hard threshold {domain_classification_params.ABS_DOMAIN_CONFIDENCE_THRESHOLD:.2f}; forcing GENERAL domain")
+                return DomainPrediction(primary_domain    = Domain.GENERAL,
+                                        secondary_domain  = None,
+                                        evidence_strength = 0.5,
+                                        domain_scores     = {Domain.GENERAL.value: 1.0},
+                                       )
             
             # Return primary result even if low confidence
-            return primary_result
+            return best_result
             
         except Exception as e:
             logger.error(f"Error in domain classification: {repr(e)}")
@@ -138,93 +151,194 @@ class DomainClassifier:
             return self._get_default_prediction()
     
 
+    # def _classify_with_model(self, text: str, classifier, model_type: str) -> DomainPrediction:
+    #     """
+    #     Classify using a zero-shot classification model
+    #     """
+    #     # Preprocess text
+    #     processed_text  = self._preprocess_text(text)
+        
+    #     # Get all candidate labels
+    #     all_labels      = list()
+    #     label_to_domain = dict()
+
+    #     for domain, labels in self.DOMAIN_LABELS.items():
+    #         # Use the first label as the primary one for this domain
+    #         primary_label                  = labels[0]
+    #         all_labels.append(primary_label)
+
+    #         label_to_domain[primary_label] = domain
+        
+    #     # Perform zero-shot classification
+    #     result = classifier(processed_text,
+    #                         candidate_labels    = all_labels,
+    #                         multi_label         = False,
+    #                         hypothesis_template = "This text is about {}.",
+    #                        )
+        
+    #     # Convert to domain scores
+    #     domain_scores = dict()
+
+    #     for label, score in zip(result['labels'], result['scores']):
+    #         domain     = label_to_domain[label]
+    #         domain_key = domain.value
+
+    #         if (domain_key not in domain_scores):
+    #             domain_scores[domain_key] = list()
+
+    #         domain_scores[domain_key].append(score)
+        
+    #     # Average scores for each domain
+    #     avg_domain_scores                 = {domain: sum(scores) / len(scores) for domain, scores in domain_scores.items()}
+        
+    #     # Sort by score
+    #     sorted_domains                    = sorted(avg_domain_scores.items(), key = lambda x: x[1], reverse = True)
+        
+    #     # Get primary and secondary domains
+    #     primary_domain_str, primary_score = sorted_domains[0]
+    #     primary_domain                    = Domain(primary_domain_str)
+        
+    #     secondary_domain                  = None
+    #     secondary_score                   = 0.0
+        
+    #     # Use constant for secondary domain minimum score
+    #     secondary_min_score               = domain_classification_params.SECONDARY_DOMAIN_MIN_SCORE
+
+    #     if ((len(sorted_domains) > 1) and (sorted_domains[1][1] >= secondary_min_score)):
+    #         secondary_domain = Domain(sorted_domains[1][0])
+    #         secondary_score  = sorted_domains[1][1]
+        
+    #     # Calculate evidence_strength
+    #     evidence_strength    = primary_score
+        
+    #     # Use constants for mixed domain detection
+    #     high_conf_threshold  = domain_classification_params.HIGH_CONFIDENCE_THRESHOLD
+    #     mixed_secondary_min  = domain_classification_params.MIXED_DOMAIN_SECONDARY_MIN
+    #     mixed_ratio_thresh   = domain_classification_params.MIXED_DOMAIN_RATIO_THRESHOLD
+    #     mixed_conf_penalty   = domain_classification_params.MIXED_DOMAIN_CONFIDENCE_PENALTY
+        
+    #     # If we have mixed domains with close scores, adjust confidence
+    #     if (secondary_domain and (primary_score < high_conf_threshold) and (secondary_score > mixed_secondary_min)):
+            
+    #         score_ratio = secondary_score / primary_score
+            
+    #         # Secondary is at least 60% of primary
+    #         if (score_ratio > mixed_ratio_thresh):
+    #             # Lower confidence for mixed domains
+    #             evidence_strength = ((primary_score + secondary_score) / 2 * mixed_conf_penalty)
+    #             logger.info(f"Mixed domain detected: {primary_domain.value} + {secondary_domain.value}, will use interpolated thresholds")
+        
+    #     # Use constant for low confidence threshold
+    #     low_conf_threshold = domain_classification_params.LOW_CONFIDENCE_THRESHOLD
+        
+    #     # If primary score is low and we have a secondary, it's uncertain
+    #     if ((primary_score < low_conf_threshold) and secondary_domain):
+    #         # Reduce confidence using penalty
+    #         evidence_strength *= mixed_conf_penalty
+        
+    #     logger.info(f"{model_type.capitalize()} model classified domain: {primary_domain.value} (confidence: {evidence_strength:.3f})")
+        
+    #     return DomainPrediction(primary_domain    = primary_domain,
+    #                             secondary_domain  = secondary_domain,
+    #                             evidence_strength = evidence_strength,
+    #                             domain_scores     = avg_domain_scores,
+    #                            )
+
     def _classify_with_model(self, text: str, classifier, model_type: str) -> DomainPrediction:
         """
-        Classify using a zero-shot classification model
+        Classify using a manual NLI-style zero-shot classifier (NO pipelines)
         """
-        # Preprocess text
-        processed_text  = self._preprocess_text(text)
-        
-        # Get all candidate labels
+
+        model, tokenizer = classifier
+
+        processed_text   = self._preprocess_text(text)
+
+        # Build labels
         all_labels      = list()
         label_to_domain = dict()
 
         for domain, labels in self.DOMAIN_LABELS.items():
-            # Use the first label as the primary one for this domain
-            primary_label                  = labels[0]
-            all_labels.append(primary_label)
+            for label in labels[:3]: 
+                all_labels.append(label)
+                label_to_domain[label] = domain
 
-            label_to_domain[primary_label] = domain
-        
-        # Perform zero-shot classification
-        result = classifier(processed_text,
-                            candidate_labels    = all_labels,
-                            multi_label         = False,
-                            hypothesis_template = "This text is about {}.",
-                           )
-        
-        # Convert to domain scores
-        domain_scores = dict()
+        # NLI formulation
+        premises   = [processed_text] * len(all_labels)
+        hypotheses = [f"This text is a {label}." for label in all_labels]
 
-        for label, score in zip(result['labels'], result['scores']):
+        # Tokenize safely (device-agnostic)
+        inputs     = tokenizer(premises,
+                               hypotheses,
+                               return_tensors = "pt",
+                               padding        = True,
+                               truncation     = True,
+                               max_length     = 1024,  # HARD SAFETY CAP
+                              )
+
+        inputs     = {k: v.to(model.device) for k, v in inputs.items()}
+
+        # Forward pass
+        with torch.no_grad():
+            logits = model(**inputs).logits
+
+        # Resolve entailment index robustly (works for ALL devices/models)
+        label2id       = {k.lower(): v for k, v in model.config.label2id.items()}
+
+        # fallback: last column
+        entailment_idx = (label2id.get("entailment") or label2id.get("entails") or (logits.shape[-1] - 1))
+
+        probs          = F.softmax(logits, dim = -1)
+        scores         = probs[:, entailment_idx].detach().cpu().tolist()
+
+        # Aggregate per-domain scores
+        domain_scores  = dict()
+
+        for label, score in zip(all_labels, scores):
             domain     = label_to_domain[label]
             domain_key = domain.value
+            domain_scores.setdefault(domain_key, []).append(score)
 
-            if (domain_key not in domain_scores):
-                domain_scores[domain_key] = list()
+        # Average scores
+        avg_domain_scores                 = {domain: sum(vals) / len(vals) for domain, vals in domain_scores.items()}
 
-            domain_scores[domain_key].append(score)
-        
-        # Average scores for each domain
-        avg_domain_scores                 = {domain: sum(scores) / len(scores) for domain, scores in domain_scores.items()}
-        
-        # Sort by score
-        sorted_domains                    = sorted(avg_domain_scores.items(), key = lambda x: x[1], reverse = True)
-        
-        # Get primary and secondary domains
+        # Sort
+        sorted_domains                    = sorted(avg_domain_scores.items(),
+                                                   key     = lambda x: x[1],
+                                                   reverse = True,
+                                                  )
+
         primary_domain_str, primary_score = sorted_domains[0]
         primary_domain                    = Domain(primary_domain_str)
-        
         secondary_domain                  = None
         secondary_score                   = 0.0
-        
-        # Use constant for secondary domain minimum score
         secondary_min_score               = domain_classification_params.SECONDARY_DOMAIN_MIN_SCORE
 
-        if ((len(sorted_domains) > 1) and (sorted_domains[1][1] >= secondary_min_score)):
+        if (len(sorted_domains) > 1) and (sorted_domains[1][1] >= secondary_min_score):
             secondary_domain = Domain(sorted_domains[1][0])
             secondary_score  = sorted_domains[1][1]
-        
-        # Calculate evidence_strength
-        evidence_strength    = primary_score
-        
-        # Use constants for mixed domain detection
-        high_conf_threshold  = domain_classification_params.HIGH_CONFIDENCE_THRESHOLD
-        mixed_secondary_min  = domain_classification_params.MIXED_DOMAIN_SECONDARY_MIN
-        mixed_ratio_thresh   = domain_classification_params.MIXED_DOMAIN_RATIO_THRESHOLD
-        mixed_conf_penalty   = domain_classification_params.MIXED_DOMAIN_CONFIDENCE_PENALTY
-        
-        # If we have mixed domains with close scores, adjust confidence
-        if (secondary_domain and (primary_score < high_conf_threshold) and (secondary_score > mixed_secondary_min)):
+
+        evidence_strength   = primary_score
+
+        # Mixed-domain confidence adjustment 
+        high_conf_threshold = domain_classification_params.HIGH_CONFIDENCE_THRESHOLD
+        mixed_secondary_min = domain_classification_params.MIXED_DOMAIN_SECONDARY_MIN
+        mixed_ratio_thresh  = domain_classification_params.MIXED_DOMAIN_RATIO_THRESHOLD
+        mixed_conf_penalty  = domain_classification_params.MIXED_DOMAIN_CONFIDENCE_PENALTY
+
+        if secondary_domain and primary_score < high_conf_threshold and secondary_score > mixed_secondary_min:
+            score_ratio = secondary_score / max(primary_score, 1e-6)
             
-            score_ratio = secondary_score / primary_score
-            
-            # Secondary is at least 60% of primary
             if (score_ratio > mixed_ratio_thresh):
-                # Lower confidence for mixed domains
-                evidence_strength = ((primary_score + secondary_score) / 2 * mixed_conf_penalty)
-                logger.info(f"Mixed domain detected: {primary_domain.value} + {secondary_domain.value}, will use interpolated thresholds")
-        
-        # Use constant for low confidence threshold
+                evidence_strength = ((primary_score + secondary_score) / 2) * mixed_conf_penalty
+                logger.info(f"Mixed domain detected: {primary_domain.value} + {secondary_domain.value}")
+
         low_conf_threshold = domain_classification_params.LOW_CONFIDENCE_THRESHOLD
-        
-        # If primary score is low and we have a secondary, it's uncertain
+
         if ((primary_score < low_conf_threshold) and secondary_domain):
-            # Reduce confidence using penalty
             evidence_strength *= mixed_conf_penalty
-        
+
         logger.info(f"{model_type.capitalize()} model classified domain: {primary_domain.value} (confidence: {evidence_strength:.3f})")
-        
+
         return DomainPrediction(primary_domain    = primary_domain,
                                 secondary_domain  = secondary_domain,
                                 evidence_strength = evidence_strength,

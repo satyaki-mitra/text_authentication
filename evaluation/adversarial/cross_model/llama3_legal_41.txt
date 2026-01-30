@@ -1,0 +1,36 @@
+**ARTICLE III: TERM AND TERMINATION**
+
+Section 1: Term of Agreement
+
+This Agreement shall commence on the date of execution ("Commencement Date") and shall continue in effect for a period of [X] years ("Term"). The Term may be extended or terminated by mutual written agreement of the Parties. Upon expiration of the Term, this Agreement shall automatically terminate.
+
+Section 2: Termination Rights
+
+Either Party may terminate this Agreement upon [X] days' written notice to the other Party in the event of a material breach of this Agreement by the other Party. A "material breach" means a failure to perform or comply with any provision of this Agreement that is not cured within such [X]-day period.
+
+Section 3: Effect of Termination
+
+Upon termination of this Agreement, all rights and obligations of the Parties under this Agreement shall cease, except as otherwise provided in this Article III. The Parties shall return to each other all confidential information and intellectual property rights created or acquired during the Term. Upon termination, neither Party shall be entitled to any compensation or damages for breach of contract.
+
+Section 4: Survival
+
+The following provisions shall survive termination of this Agreement:
+
+* Sections 1-3 of Article II (Confidentiality);
+* Section 5 of Article III (Effect of Termination); and
+* Articles IV-VI (Representations, Warranties, and Indemnification).
+
+These surviving provisions shall remain in effect until the expiration of any applicable statute of limitations.
+
+Section 5: Notice
+
+Any notice or other communication under this Agreement must be in writing and delivered personally, by email, or certified mail, return receipt requested, to the address specified below:
+
+* [Party A's Address]
+* [Party B's Address]
+
+Notice shall be deemed effective upon delivery or attempted delivery.
+
+**ARTICLE III END**
+
+This section is a sample of a legal document using formal legal language and proper structure. It outlines the term and termination of an agreement between two parties, including the rights to terminate, the effect of termination, and provisions that survive termination. The section also includes a notice provision specifying how notices must be delivered.

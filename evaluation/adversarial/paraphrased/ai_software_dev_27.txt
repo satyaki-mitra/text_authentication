@@ -1,0 +1,57 @@
+Title: Overview of the Observable Design Pattern in Java
+
+The Observable Design Pattern is a behavioral design pattern that establishes a many-to-one relationship between objects, allowing an object to notify multiple dependents automatically when its state changes. This pattern is beneficial for implementing real-time updates across various objects in applications that require event handling and notifications.
+
+**Use Case:** Imagine a weather application featuring a WeatherInfo (Subject) object storing weather data and a group of subscribers (Observers), such as temperature displays, weather history logs, and alert systems. Upon any alteration to the weather data, the WeatherInfo broadcasts updates to all its subscribed Observers.
+
+```java
+public interface InfoSource {
+    void subscribe(Subscriber subscriber);
+    void unsubscribe(Subscriber subscriber);
+    void notifyAll();
+}
+
+public interface Subscriber {
+    void update(InfoSource source);
+}
+
+public class WeatherInfo implements InfoSource, WeatherDataInterface {
+    private float temperature;
+    private float humidity;
+    private float pressure;
+    private List<Subscriber> subscribers = new ArrayList<>();
+
+    public void dataModified() {
+        notifyAll();
+    }
+
+    // Implementation of WeatherDataInterface methods
+
+    @Override
+    public void subscribe(Subscriber subscriber) {
+        subscribers.add(subscriber);
+    }
+
+    @Override
+    public void unsubscribe(Subscriber subscriber) {
+        subscribers.remove(subscriber);
+    }
+
+    @Override
+    public void notifyAll() {
+        for (Subscriber subscriber : subscribers) {
+            subscriber.update(this);
+        }
+    }
+}
+
+public class DisplayUnit implements Subscriber, DisplayElementInterface {
+    private InfoSource weatherInfo;
+    private float currentPressure;
+
+    public void showData() {
+        // Present the temperature, humidity, and pressure data
+    }
+
+    @Override
+    public void update(InfoSource source) {

@@ -1,0 +1,31 @@
+Title: Setting Up a Local WordPress Development Environment Using WAMP Package on Windows
+
+In this guide, we will demonstrate the process of creating a local development environment for WordPress using the widely used WAMP (Windows, Apache, MySQL, PHP) software bundle. This tutorial caters to beginners with minimal or no experience in web development.
+
+**Step 1: Download and Install WAMP Server**
+
+1.1 Navigate to the official WAMPServer website at http://www.wampserver.com/en/ and click on the 'Download' button to obtain the latest version of WAMPServer.
+
+1.2 Run the installer, agree to the license terms, opt for the 'Custom (Advanced)' installation method, and proceed with default settings unless you have unique requirements.
+
+**Step 2: Start WAMP Server**
+
+2.1 Upon completion of the installation, find the WAMPServer icon on your Start menu or desktop and double-click it to initiate the server. You will see a window similar to the one depicted below:
+
+![WAMP Server Dashboard](https://i.imgur.com/YwBdN5p.png)
+
+**Step 3: Verify Server Status**
+
+3.1 In the WAMPServer interface, ensure that all services are active by clicking on the corresponding buttons if they are inactive. If any service fails to start, you may need help from the WAMPServer documentation or forums.
+
+3.2 Click on the 'Localhost' link under 'Servers' to open your web browser and test whether your server is operational correctly. You will see a page displaying the message "It works!" courtesy of Apache, as shown below:
+
+![Localhost Test Page](https://i.imgur.com/Nk7T4yH.png)
+
+**Step 4: Install WordPress Locally**
+
+4.1 Navigate to the WAMPServer folder on your computer (usually found in `C:\wamp64`) and open the `www` directory.
+
+4.2 Create a new folder for your WordPress project, e.g., 'project_mywordpress'.
+
+4.3 Retrieve the latest version of WordPress from https://

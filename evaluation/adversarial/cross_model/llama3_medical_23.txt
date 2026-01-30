@@ -1,0 +1,28 @@
+**Case Report:**
+
+**Title:** Unusual Presentation of Pseudomyxoma Peritonei with Appendiceal Signet Ring Cell Carcinoid Tumor
+
+**Abstract:**
+
+We present the case of a 45-year-old woman who presented with a rare and unusual clinical manifestation of pseudomyxoma peritonei (PMP) associated with an appendiceal signet ring cell carcinoid tumor. The patient initially complained of chronic abdominal distension, nausea, and vomiting, which progressed to severe ascites and bowel obstruction.
+
+Abdominal imaging revealed a large amount of fluid accumulation in the pelvic and abdominal cavities, accompanied by multiple nodular lesions suggestive of PMP. Computed tomography (CT) scans also detected an appendiceal mass with heterogeneous enhancement, consistent with a carcinoid tumor.
+
+At laparotomy, approximately 5 liters of gelatinous fluid were evacuated from the peritoneal cavity, revealing numerous nodules and diffuse disease spread throughout the abdominal lining. A total colectomy was performed due to extensive bowel involvement. The appendiceal mass was resected, showing a signet ring cell carcinoid tumor.
+
+Histopathological examination confirmed the diagnosis of PMP with an underlying appendiceal origin. Immunohistochemical staining revealed positivity for carcinoembryonic antigen (CEA), CDX2, and vimentin, supporting the diagnosis.
+
+The patient underwent adjuvant chemotherapy and received a 6-month course of intraperitoneal hyperthermic chemotherapy. Follow-up imaging at 12 months showed significant regression of disease, with no evidence of recurrence or metastasis.
+
+**Conclusion:**
+
+This case highlights the importance of considering PMP in patients presenting with unexplained abdominal distension and ascites, even in the absence of a clear primary tumor site. The presence of an appendiceal signet ring cell carcinoid tumor as the underlying cause of PMP is rare, making this presentation particularly unusual.
+
+The diagnosis of PMP requires careful evaluation of imaging studies and histopathological analysis to identify the primary tumor origin. Aggressive surgical resection, combined with adjuvant chemotherapy, can improve patient outcomes and reduce the risk of recurrence in this complex disease entity.
+
+**References:**
+
+1. Moran BJ, et al. (2018). Pseudomyxoma peritonei: A review of the literature. World Journal of Surgical Oncology, 16(1), 1-10.
+2. Sugarbaker PH, et al. (2006). Peritoneal carcinomatosis from appendiceal origin: A new approach to the management of pseudomyxoma peritonei. Journal of Clinical Oncology, 24(31), 4953-4961.
+
+Note: The case report is fictional and does not represent a real patient or medical outcome.

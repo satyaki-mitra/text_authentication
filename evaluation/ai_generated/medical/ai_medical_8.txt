@@ -1,13 +1,17 @@
-Title: A Case of Severe Acute Pancreatitis with Concurrent Infective Endocarditis: A Multidisciplinary Approach to Management
+Title: A Case Study on Successful Management of Refractory Gastroesophageal Variceal Bleeding in a Cirrhotic Patient
 
 Abstract
 
-A 62-year-old male, a chronic smoker and heavy alcohol consumer, presented to the emergency department (ED) with a three-day history of persistent abdominal pain, nausea, and vomiting. On initial presentation, his vital signs showed tachycardia, fever, and mild hypotension. Laboratory results revealed significant elevation of serum amylase and lipase levels, suggesting acute pancreatitis. Further imaging with computed tomography (CT) scan confirmed the diagnosis, demonstrating diffuse enlargement of the pancreas with peripancreatic fat stranding.
+Background: Gastroesophageal variceal bleeding (GEVB) is a life-threatening complication in patients with cirrhosis, carrying high morbidity and mortality rates. This case report presents an uncommon yet successful management approach for refractory GEVB in a cirrhotic patient.
 
-Upon closer examination, a heart murmur was heard, prompting an echocardiogram that revealed vegetations on the mitral valve, indicative of infective endocarditis (IE). Blood cultures grew Staphylococcus aureus, which matched the IE lesion. The patient's condition worsened due to sepsis, and he required mechanical ventilation and continuous renal replacement therapy (CRRT) for acute kidney injury.
+Case Presentation: A 58-year-old male with a ten-year history of alcoholic cirrhosis presented with hematemesis and melena, indicative of acute GEVB. The patient had prior treatment for GEVB including endoscopic band ligation (EBL) and terlipressin infusion, but the bleeding persisted. Upon admission, his MELD score was 18, Child-Pugh class C, and hemoglobin level was 7.5 g/dL. On initial endoscopy, large esophageal varices with active bleeding were observed.
 
-The patient was managed concurrently by gastroenterology and infectious disease specialists. The pancreatitis was treated with intravenous fluids, analgesia, and nasogastric suctioning. Antibiotic therapy was initiated for the IE, targeting S. aureus, and subsequently adjusted based on antimicrobial susceptibility results.
+Diagnostic Approach: Given the refractory nature of the GEVB despite conventional treatment, a transjugular intrahepatic portosystemic shunt (TIPS) was considered as an alternative management option. Pre-procedure imaging confirmed portal hypertension with esophagogastric varices and no contraindications for TIPS.
 
-Despite intensive care unit (ICU) management, the patient's condition continued to deteriorate, and he succumbed to multi-organ failure 10 days after admission. This case underscores the importance of a multidisciplinary approach in managing complex cases, particularly those involving concurrent life-threatening conditions such as acute pancreatitis and infective endocarditis.
+Treatment: The patient underwent a successful TIPS procedure resulting in immediate hemostasis. Postoperatively, the patient was managed with prophylactic antibiotics, antifungals, and lactulose to prevent complications such as sepsis, encephalopathy, and spontaneous bacterial peritonitis.
 
-Keywords: Acute Pancreatitis, Infective Endocarditis, Sepsis, Multidisciplinary Management, Staphylococcus aureus, Mortality
+Outcomes: The patient's hemoglobin level gradually increased over the following days, and he was discharged on hospital day 10 with a stable MELD score of 14, Child-Pugh class B, and a hemoglobin level of 12 g/dL. At six-month follow-up, the patient remained asymptomatic without further episodes of GEVB.
+
+Discussion: This case highlights the successful application of TIPS for the management of refractory GEVB in a cirrhotic patient. The high morbidity and mortality associated with refractory variceal bleeding underscore the importance of exploring alternative treatment strategies such as TIPS. This case report adds to the growing body of literature supporting the use of TIPS in managing refractory GEVB, particularly in patients who do not respond to conventional therapies.
+
+However, it is essential to consider the potential risks associated

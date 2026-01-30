@@ -1,0 +1,19 @@
+**Clinical Abstract**
+
+**Title:** Unusual Presentation of Adult-Onset Still's Disease: A Case Report
+
+**Abstract:**
+
+We present a rare and intriguing case of adult-onset Still's disease (AOSD), characterized by a unique combination of symptoms and laboratory findings. A 35-year-old female was admitted to our hospital with a 2-week history of fever, arthralgias, and skin rash. Physical examination revealed a maculopapular rash on the trunk and limbs, as well as swelling in both knees.
+
+Laboratory investigations disclosed marked elevations in inflammatory markers, including an erythrocyte sedimentation rate (ESR) of 90 mm/hour and C-reactive protein (CRP) of 250 mg/L. Complete blood count (CBC) showed a normocytic anemia with hemoglobin level of 9.5 g/dL and white blood cell count (WBC) of 12,000/μL. Serum creatinine was elevated at 1.2 mg/dL, consistent with acute kidney injury.
+
+Rheumatoid factor (RF) and anti-citrullinated peptide antibody (anti-CCP) were negative, while antinuclear antibody (ANA) was positive at a titer of 1:320. Serological tests for Epstein-Barr virus (EBV), cytomegalovirus (CMV), and herpes simplex virus (HSV) were all negative.
+
+The patient's clinical presentation and laboratory findings suggested an acute phase response, warranting a thorough search for underlying causes. Histopathological examination of a skin biopsy revealed a characteristic lymphocytic infiltrate consistent with AOSD.
+
+Treatment with high-dose corticosteroids (methylprednisolone 1 mg/kg/day) was initiated, followed by azathioprine 2 mg/kg/day after a favorable response. The patient's symptoms resolved within 6 weeks, and laboratory markers normalized.
+
+AOSD is a rare autoimmune disorder characterized by fever, arthralgias, and skin rash, often accompanied by laboratory evidence of systemic inflammation. This case highlights the importance of considering AOSD in the differential diagnosis of adult patients presenting with an acute phase response and negative RF/anti-CCP testing. Early recognition and institution of appropriate therapy can significantly improve patient outcomes.
+
+**Keywords:** Adult-onset Still's disease, autoinflammatory syndrome, anemia, acute kidney injury, lymphocytic infiltrate.

@@ -1,15 +1,15 @@
-Title: A Case Study on the Management of Refractory Atrial Fibrillation in an Elderly Patient
+Title: A Case Report of Successful Treatment of Recalcitrant Pemphigus Vulgaris with Rituximab
 
 Abstract
 
-Background: Refractory atrial fibrillation (AF) remains a significant challenge in cardiology, particularly in elderly patients due to increased comorbidities and polypharmacy. This case report presents the management of refractory AF in an 85-year-old female with a history of hypertension, diabetes mellitus, chronic obstructive pulmonary disease (COPD), and stroke.
+Background: Pemphigus vulgaris (PV), a rare autoimmune blistering disease characterized by intraepidermal acantholysis, can lead to debilitating mucocutaneous erosions. The mainstay of treatment involves immunosuppressive agents such as corticosteroids, azathioprine, and mycophenolate mofetil. However, these therapies often have significant side effects and may be insufficient in managing recalcitrant cases. Rituximab, a chimeric monoclonal anti-CD20 antibody, has shown promise in treating PV due to its ability to deplete B cells responsible for producing pathogenic autoantibodies.
 
-Case Presentation: The patient presented with palpitations and a persistent irregular pulse for three weeks. Initial electrocardiogram (ECG) confirmed AF with a rapid ventricular response. Despite aggressive rate control attempts with multiple antiarrhythmic drugs, the AF remained refractory. A transthoracic echocardiogram revealed enlarged left atrium and moderate mitral regurgitation.
+Case Presentation: A 64-year-old Caucasian male presented with a two-month history of painful oral and nasal ulcers accompanied by erosions on the trunk, extremities, and genitalia. A biopsy revealed epidermal acantholysis consistent with PV. Despite high-dose prednisone, azathioprine, and dapsone therapy, the patient's condition worsened, leading to severe mucosal involvement and an inability to eat or drink comfortably.
 
-Intervention: Given the refractory nature of the AF and the patient's comorbidities, a catheter ablation was considered. However, due to the high risk associated with sedation and prolonged procedure duration, we opted for an alternative approach - left atrial appendage closure (LAAC) using the Watchman device. The procedure was performed successfully under local anesthesia. Post-procedure, the patient was managed with aspirin and clopidogrel for six months, followed by aspirin monotherapy.
+Diagnostic Approach: The diagnosis of PV was confirmed through direct immunofluorescence (DIF) analysis, which demonstrated IgG and C3 deposits at the epidermal-dermal junction. The presence of circulating autoantibodies against desmoglein 1 and 3 was also detected by enzyme-linked immunosorbent assay (ELISA).
 
-Outcome: The patient experienced immediate AF termination post-procedure, and her symptoms significantly improved. Follow-up ECG showed sinus rhythm. During the one-year follow-up, the patient remained in sinus rhythm with no major adverse events.
+Treatment: Given the patient's recalcitrant PV and significant side effects from conventional treatments, a decision was made to initiate rituximab therapy. The patient received four weekly infusions of 375 mg/m² Rituximab.
 
-Conclusion: This case highlights the successful use of LAAC as an alternative to catheter ablation for refractory AF management in high-risk elderly patients. The procedure's minimal invasiveness, shorter procedural time, and reduced sedation requirement make it a promising approach in such cases. Further studies are needed to evaluate the long-term safety and efficacy of this technique.
+Outcomes: Following the first cycle of rituximab, the patient experienced a rapid improvement in symptoms, with complete resolution of oral and nasal ulcers within two weeks. Mucocutaneous erosions also began to heal, and the patient reported significantly improved quality of life. DIF analysis after one month revealed no detectable IgG or C3 deposits at the epidermal-dermal junction, confirming the success of rituximab treatment.
 
-Keywords: Atrial Fibrillation, Refractory, Elderly, Left Atrial Appendage Closure, Watchman Device
+Discussion: This case report highlights the effectiveness of rituximab in managing recalcitrant PV. The rapid response and complete resolution of symptoms suggest that ritux

@@ -1,13 +1,15 @@
-Title: Unusual Presentation of Chronic Lymphocytic Leukemia Masquerading as Recurrent Pneumonia
+Title: A Case Study on Successful Management of Refractory Angina Pectoris with Coronary Artery Bypass Grafting (CABG)
 
-Case Presentation:
+Abstract
 
-A 65-year-old Caucasian male, non-smoker with no significant past medical history, presented to the emergency department (ED) for the third time in four months with complaints of recurrent cough, dyspnea, and persistent fever. The patient had been treated empirically for bacterial pneumonia on each occasion without improvement.
+Background: Refractory angina pectoris (RAP), characterized by persistent chest pain at rest despite optimal medical therapy, presents a significant challenge in cardiology. Despite advancements in pharmacological interventions and percutaneous coronary intervention (PCI), a substantial proportion of patients continue to experience RAP, necessitating alternative strategies. This case report documents the successful management of refractory angina pectoris through Coronary Artery Bypass Grafting (CABG).
 
-Upon admission, vital signs revealed a temperature of 38.5°C, heart rate of 120 beats per minute, respiration rate of 24 breaths per minute, and oxygen saturation of 93% on room air. Chest examination showed bilateral crackles, and chest X-ray demonstrated patchy infiltrates in both lungs.
+Case Presentation: A 65-year-old male patient presented with recurrent episodes of chest pain at rest, dyspnea, and orthopnea over a period of six months. The patient had a past medical history of hypertension, diabetes mellitus, and a three-vessel coronary artery disease (CAD) treated with PCI two years prior. On examination, the patient exhibited signs consistent with congestive heart failure (CHF). Echocardiography revealed left ventricular ejection fraction (LVEF) of 40%, regional wall motion abnormalities, and a moderate-to-severe mitral regurgitation. The patient was on optimized medical therapy including beta-blockers, nitrates, ACE inhibitors, and antiplatelet agents. However, the chest pain persisted, and the patient continued to experience episodes of acute decompensated heart failure.
 
-Laboratory results were significant for a white blood cell count (WBC) of 150.2 × 10^9/L with lymphocytes constituting 83% of the total WBC, hemoglobin level of 8 g/dL, and platelet count of 140 × 10^9/L. Further investigations including flow cytometry confirmed a diagnosis of chronic lymphocytic leukemia (CLL).
+Diagnostic Approach: Given the refractory nature of the angina, a cardiac catheterization was performed, which confirmed significant restenosis in the left anterior descending (LAD) artery and the right coronary artery (RCA). The patient's high surgical risk score prompted a multidisciplinary discussion, and it was decided that CABG would offer the best chance of symptom relief and improved quality of life.
 
-The patient was initially misdiagnosed due to the atypical presentation of CLL, which presented as recurrent pneumonia-like symptoms rather than the more common constitutional symptoms such as fatigue and weight loss. The patient was subsequently started on a regimen of chemoimmunotherapy with rituximab and fludarabine, resulting in a significant improvement in symptoms and laboratory findings.
+Treatment: The patient underwent off-pump CABG with revascularization of the LAD and RCA. Postoperatively, the patient recovered well without any major complications. He was discharged on a regimen of dual antiplatelet therapy, beta-blockers, ACE inhibitors, and diuretics.
 
-This case underscores the importance of considering less common diagnostic possibilities, even when initial presentations appear straightforward, to ensure prompt and accurate diagnosis and appropriate management for optimal patient outcomes.
+Outcomes: At six months post-surgery, the patient reported significant improvement in symptoms with no episodes of angina or decompensated heart failure. Echocardiography showed an improved LVEF of 50%. The patient reported a marked increase in his quality of life, enabling him to resume his daily activities without limitation.
+
+Conclusion: This case highlights

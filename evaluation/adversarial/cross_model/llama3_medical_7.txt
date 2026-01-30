@@ -1,0 +1,19 @@
+**Clinical Abstract**
+
+**Title:** Rare Case of Cerebral Amyloid Angiopathy Presenting as Recurrent Seizures and Cognitive Decline in an Elderly Individual
+
+**Background:** Cerebral amyloid angiopathy (CAA) is a rare, age-related cerebrovascular disorder characterized by the deposition of beta-amyloid protein in small blood vessels. While CAA can present with various clinical features, including hemorrhage, stroke, and dementia, recurrent seizures are an uncommon manifestation.
+
+**Case Report:** A 75-year-old woman was referred to our institution for evaluation of a 6-month history of recurrent partial seizures and progressive cognitive decline. Her medical history was significant for hypertension, hyperlipidemia, and type 2 diabetes mellitus. The patient had no family history of neurodegenerative disorders.
+
+**Clinical Findings:** Upon presentation, the patient experienced frequent complex partial seizures, often triggered by emotional stimuli. She also exhibited marked cognitive impairment, including difficulties with memory, attention, and language processing. A thorough neurological examination revealed no focal motor or sensory deficits.
+
+**Imaging Studies:** Magnetic resonance imaging (MRI) of the brain demonstrated extensive cortical atrophy, particularly in the frontal and temporal lobes. Fluorodeoxyglucose positron emission tomography (FDG-PET) scan showed decreased metabolism in these regions, consistent with Alzheimer's disease-like pattern. Cerebrospinal fluid (CSF) analysis revealed elevated tau protein levels.
+
+**Pathological Analysis:** Autopsy examination of the brain tissue confirmed the presence of dense, hyaline deposits of beta-amyloid protein within small blood vessels and cortical neurons, consistent with a diagnosis of CAA.
+
+**Discussion:** This rare case highlights the importance of considering CAA in the differential diagnosis of recurrent seizures and cognitive decline in elderly individuals. The patient's clinical presentation was dominated by seizure activity, with cognitive impairment playing a secondary role. The lack of significant amyloid burden on FDG-PET scan may have contributed to the delayed diagnosis.
+
+**Conclusion:** This case underscores the need for a high index of suspicion for CAA in patients presenting with unusual seizure patterns and cognitive decline. Early recognition is crucial for optimal management, as CAA can mimic other neurodegenerative disorders, leading to potential misdiagnosis and suboptimal treatment. Further research is necessary to better understand the clinical spectrum of CAA and develop effective diagnostic tools.
+
+**Keywords:** cerebral amyloid angiopathy, recurrent seizures, cognitive decline, Alzheimer's disease, tau protein.

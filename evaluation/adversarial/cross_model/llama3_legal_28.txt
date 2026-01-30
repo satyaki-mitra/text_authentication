@@ -1,0 +1,47 @@
+**ARTICLE III: TERM AND TERMINATION**
+
+Section 1. Term.
+
+The term of this Agreement shall commence on the Effective Date (as defined in Article I) and shall continue for a period of [insert number] years, unless terminated earlier as set forth below.
+
+Section 2. Termination by Either Party.
+
+Either party may terminate this Agreement upon [insert timeframe] days' written notice to the other party. Upon termination, each party shall return all Confidential Information (as defined in Article II) and any copies thereof to the other party within [insert timeframe].
+
+Section 3. Termination for Cause.
+
+Either party may terminate this Agreement immediately upon written notice if the other party:
+
+(a) fails to pay any amount due under this Agreement when due, and such failure continues for a period of [insert timeframe]; or
+
+(b) breaches any material term or condition of this Agreement and does not cure such breach within [insert timeframe] days after receipt of written notice thereof.
+
+Section 4. Effect of Termination.
+
+Upon termination of this Agreement, each party shall:
+
+(a) immediately cease using the other party's Confidential Information; and
+
+(b) return all materials and property of the other party in its possession or control.
+
+Section 5. Survival.
+
+The following provisions shall survive any termination of this Agreement:
+
+(a) Article II (Confidentiality);
+(b) Article III, Section 4 (Effect of Termination); and
+(c) Article IV (Indemnification).
+
+By executing this Agreement, the parties acknowledge that they have read, understand, and agree to be bound by the terms and conditions set forth in this Article.
+
+**IN WITNESS WHEREOF**
+
+The parties have executed this Agreement as of the date first above written.
+
+[Insert party names]
+
+Date:
+
+[Insert signature block]
+
+Note: This is just an example section, please make sure to adjust it according to your specific needs and legal requirements.

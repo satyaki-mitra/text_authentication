@@ -1,44 +1,61 @@
-Title: Beginner's Guide to Coding in Python: Creating Your First Program
+Title: A Comprehensive Guide for Beginners: Setting Up a Local Development Environment with Python and Django
 
-In this tutorial, we will guide you through the process of creating your first Python program. By the end of it, you'll be able to write, run, and understand a simple Python script!
+In this tutorial, we will guide you through the process of setting up a local development environment for a web application using Python and Django – a popular open-source web framework. By the end of this tutorial, you'll have an understanding of how to install necessary software, create your first Django project, and run it locally.
 
-**Step 1: Installation**
+**Step 1: Install Prerequisites**
 
-First, ensure that Python is installed on your computer. You can download it from the official website: https://www.python.org/downloads/
+Before we dive into Django, ensure that you have the following prerequisites installed on your system:
 
-Once downloaded, follow the installation instructions for your operating system.
+1. Python (3.x) – Download and install the latest version of Python from https://www.python.org/downloads/. Make sure to add Python to your PATH during installation.
 
-After installation, verify that Python was successfully installed by opening a command prompt or terminal window and typing:
+2. Git – To manage project versions and collaborate with others, we will use Git. Install it from https://git-scm.com/downloads.
+
+3. A Code Editor – We recommend using Visual Studio Code (https://code.visualstudio.com/) for this tutorial due to its excellent Python support.
+
+**Step 2: Install Pip and Virtualenv**
+
+Pip is a package manager for Python, and virtualenv helps you create isolated Python environments. To install them, open your terminal or command prompt and run the following commands:
+
+```bash
+pip install pip
+pip install virtualenv
 ```
-python --version
+
+**Step 3: Create a Virtual Environment**
+
+Navigate to your project directory (or create one if needed) and create a new Python environment using the `virtualenv` command.
+
+```bash
+cd /path/to/your/project
+virtualenv my_django_env
 ```
-You should see the version of Python displayed on the screen.
 
-**Step 2: Writing Your First Program**
+Activate the virtual environment by running:
 
-Next, let's create our first Python script. Open any text editor (Notepad on Windows, TextEdit on MacOS, or gedit on Linux). We will write a simple program that prints "Hello, World!" to the console.
+- On Windows: `my_django_env\Scripts\activate`
+- On Unix or macOS: `source my_django_env/bin/activate`
 
-```python
-print("Hello, World!")
+**Step 4: Install Django**
+
+Now that you have an active Python environment, install the latest version of Django using pip.
+
+```bash
+pip install django
 ```
-Save this file with the extension .py, for example, `hello_world.py`.
 
-**Step 3: Running Your Program**
+**Step 5: Create a New Django Project**
 
-To run your Python script, open a command prompt or terminal window, navigate to the directory where you saved your `hello_world.py` file, and enter the following command:
+With Django installed, create your first project using the `django-admin` command.
 
+```bash
+django-admin startproject my_django_project
 ```
-python hello_world.py
+
+Navigate into the newly created project directory and verify that everything is set up correctly by running:
+
+```bash
+cd my_django_project
+python manage.py runserver
 ```
-You should see "Hello, World!" printed on the console, confirming that your program runs successfully!
 
-**Step 4: Understanding Your Code**
-
-Now let's break down what we wrote in our code:
-
-- `print()` is a built-in function in Python used to display output on the screen.
-- `("Hello, World!")` is the argument passed to the print function, which contains the text that will be displayed on the console.
-
-**Step 5: Next Steps**
-
-Congratulations on creating your first Python program! To further explore Python, check out online resources like Codecademy (https://www.codecademy.com/learn/learn-python) and W3Schools (https://www.w3schools.com/python/) for interactive lessons and exercises
+If all goes well, you should see output indicating that the development server started and providing a URL to access

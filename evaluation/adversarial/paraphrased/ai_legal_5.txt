@@ -1,0 +1,35 @@
+Title: Privacy and Security Policy Declaration
+
+   A. Preamble
+
+     1.1 This Privacy and Security Policy Declaration ("Declaration") signifies the Company's pledge to safeguard personal data in accordance with relevant data protection statutes, regulations, and guidelines, including the General Data Protection Regulation (GDPR), California Consumer Privacy Act (CCPA), and other pertinent privacy legislation.
+
+     1.2 This Declaration applies to all employees, contractors, agents, consultants, and third-party service providers handling personal data on behalf of the Company ("Data Handlers").
+
+   B. Terms and Definitions
+
+      2.1 "Personal Information" denotes any details pertaining to an identifiable individual.
+
+      2.2 "Data Owner" designates the person who is the subject of Personal Information.
+
+      2.3 "Processing" encompasses any operation or series of operations executed on Personal Information, whether automated or not, such as collection, recording, organizing, structuring, storing, adapting, altering, retrieving, consulting, using, disclosing, transmitting, disseminating, making available, aligning, combining, restricting, erasing, or destroying.
+
+   C. Privacy Principles
+
+      3.1 The Company will adhere to the following privacy principles when processing Personal Information:
+
+          a) Legality, fairness, and openness: Personal Information shall be processed lawfully, fairly, and transparently relative to the Data Owner.
+
+          b) Purpose specification: Personal Information shall be gathered for particular, explicit, and legitimate purposes and shall not be further processed in a manner that contradicts these objectives.
+
+          c) Data minimization: Personal Information shall be sufficient, relevant, and restricted to what is required for the intended purposes of processing.
+
+          d) Accuracy: Personal Information shall be precise and, if necessary, kept current. Every possible measure should be taken to ensure that inaccurate Personal Information is either deleted or corrected without delay.
+
+          e) Retention limit: Personal Information shall not be retained for a longer duration than necessary for the purposes for which it was gathered.
+
+          f) Integrity and confidentiality: Personal Information shall be processed in a manner that guarantees suitable security, including protection against unauthorized or unlawful processing and against accidental loss, destruction, or damage, using appropriate technical or organizational measures.
+
+   D. Roles and Responsibilities
+
+      4.

@@ -1,0 +1,33 @@
+Title: Data Handling Protocol - Article 3: Rights of Data Subjects
+
+I. **Applicable Scope**
+
+This Article 3 (Data Subject Rights) is integrated within the Data Handling Agreement ("Agreement") between the Data Controller, identified as [Controller's Name] based at [Controller's Address] ("Controller"), and the Data Processor, identified as [Processor's Name] based at [Processor's Address] ("Processor").
+
+II. **Data Subject Rights Obligations**
+
+2.1 The Processor is tasked, given legal permissibility and technical feasibility, to support the Controller in meeting its obligations under Regulation (EU) 2016/679 of the European Parliament and of the Council of 27 April 2016 concerning data protection, commonly known as the General Data Protection Regulation ("GDPR"), along with any other applicable data privacy legislation.
+
+2.2 Upon Controller's request, the Processor shall offer reasonable aid for the Controller to address:
+
+   2.2.1 Requests from data subjects exercising their GDPR-granted rights (such as the right of access, rectification, erasure, restriction, objection, and data portability);
+
+   2.2.2 Any correspondence, notification, or complaint received from a data protection authority.
+
+III. **Cooperation and Assistance**
+
+3.1 At Controller's expense, the Processor shall disclose all relevant information to prove compliance with this Agreement, GDPR, and any pertinent data privacy laws.
+
+3.2 The Processor will immediately inform the Controller upon receiving a request or notification related directly to Personal Data processing under this Agreement.
+
+IV. **Assistance in Assessments**
+
+The Processor shall collaborate with the Controller in conducting data protection impact assessments and consulting with supervisory authorities or other competent data privacy authorities, as mandated by the GDPR.
+
+V. **Subprocessor Engagement**
+
+Should the Processor enlist another processor (a "Subprocessor") to handle specific processing tasks on behalf of the Controller, the Processor will:
+
+   5.1 Provide prior notice to the Controller about any planned changes regarding the addition or replacement of Subprocessors; and
+
+   5.2 Ensure that the Subprocessor agrees to comply with the same data privacy obligations as outlined in this Agreement.

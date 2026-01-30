@@ -1,0 +1,38 @@
+Title: Guidance on Dependent Injection in Java utilizing the Spring Framework
+
+Overview:
+
+Dependent Injection (DI) is a design pattern for software that eliminates hardcoded dependencies through external control at runtime. It fosters loose coupling, enhances testability, and streamlines application upkeep. This guide focuses on Dependent Injection within Java, leveraging the Spring Framework.
+
+Prerequisites:
+
+- Adequate understanding of Object-Oriented Programming (OOP) fundamentals.
+- Familiarity with the Java programming language.
+- Knowledge of Maven or Gradle for project setup and dependency management.
+- Comprehension of Spring Framework (Spring Core, Spring Beans, Autowiring).
+
+Getting Started:
+
+Initiate by establishing a fresh Maven project in your preferred IDE. Integrate the Spring Web and Spring Context dependencies into your `pom.xml`.
+
+```xml
+<dependencies>
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-webmvc</artifactId>
+        <version>5.3.20</version>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-context</artifactId>
+        <version>5.3.20</version>
+    </dependency>
+</dependencies>
+```
+
+Develop a basic controller with reliance on a service class:
+
+```java
+package com.example.demo;
+
+import org.springframework.stereotype.Controller;

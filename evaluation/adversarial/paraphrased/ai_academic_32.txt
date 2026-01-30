@@ -1,0 +1,13 @@
+Title: Examining the Impact of Cognitive Behavioral Therapy (CBT) on Adolescent Anxiety Disorders: A Randomized, Controlled Study
+
+Introduction:
+Anxiety disorders pose a substantial health issue, particularly among adolescents, due to their high occurrence rate, chronic nature, and ability to affect multiple life aspects. While Cognitive Behavioral Therapy (CBT) has proven effective for treating anxiety disorders in adults, its applicability within adolescent populations remains under-explored.
+
+Research Design:
+In this investigation, a randomized controlled trial design was adopted to assess the influence of CBT on symptoms of anxiety in 150 teenagers aged 13-18 years, diagnosed with one or more anxiety disorders according to DSM-5 criteria. Participants were divided equally into two groups: an experimental group (n=75) receiving CBT and a control group (n=75) on a waiting list. The treatment involved 16 weekly sessions, each lasting an hour, delivered by trained therapists. The primary evaluation tools included the Spence Children's Anxiety Scale (SCAS), State-Trait Anxiety Inventory for Children (STAIC), and Youth Outcomes Questionnaire (Y-OQ). Assessments were carried out at baseline, post-therapy, and a 3-month follow-up.
+
+Primary Results:
+Findings demonstrated substantial reductions in anxiety symptoms among the experimental group compared to the control group across all measurement tools after therapy and during follow-up (p<0.001). Effect sizes ranged from moderate to significant, with Cohen's d values exceeding 0.80. Furthermore, mediational analyses suggested that alterations in cognitive assessments and maladaptive behaviors contributed to the impact of CBT on anxiety symptoms.
+
+Implications:
+The findings suggest that CBT is highly effective in alleviating anxiety symptoms among adolescents with anxiety disorders. These results emphasize the need for incorporating CBT into routine clinical practices for this demographic. Moreover, identifying cognitive and behavioral factors driving treatment effects could pave the way for

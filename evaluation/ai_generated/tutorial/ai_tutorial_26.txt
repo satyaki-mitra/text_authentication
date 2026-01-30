@@ -1,69 +1,34 @@
-Title: A Step-by-Step Guide for Beginners: Setting Up a Simple Web Server using Node.js and Express
+Title: A Beginner's Guide to Installing a Linux Operating System on a Personal Computer
 
-**Step 1: Install Node.js and npm**
+This tutorial will guide you through the process of installing a Linux operating system (Ubuntu) on your personal computer. By following these steps, you'll learn how to create bootable media, back up data, and perform a clean installation of Ubuntu.
 
-Before we start, ensure you have Node.js and npm (Node Package Manager) installed on your computer. You can download Node.js from the official website (https://nodejs.org/) and follow the installation instructions according to your operating system. After installing Node.js, npm will be installed automatically.
+**Materials Needed:**
+1. A personal computer with an available USB drive (minimum 8GB) or DVD burner
+2. Ubuntu ISO file (latest version can be downloaded from [Ubuntu.com](http://ubuntu.com))
+3. Backup drive (optional but recommended for data protection)
+4. Internet connection
 
-**Step 2: Verify Installation**
+**Step 1: Download and Verify the Ubuntu ISO File**
+- Visit the official Ubuntu website at [ubuntu.com](http://ubuntu.com).
+- Click on "Download" and choose the latest version of Ubuntu (LTS releases are recommended for longer support).
+- Save the ISO file to your computer. Make sure to verify its integrity using a tool like HashCalculate or sha256sum.
 
-Open your terminal or command prompt and type the following commands:
+**Step 2: Create a Bootable USB Drive**
+- Plug in the USB drive into your computer.
+- Download Rufus (a free utility for creating bootable USB drives) from [Rufus' official website](https://rufus.akeo.ie/).
+- Run Rufus, select the downloaded Ubuntu ISO file, and choose your USB drive as the target device.
+- Ensure the partition scheme is set to "GPT" for UEFI systems or "MBR" for BIOS systems. Click "Start" to create the bootable USB.
 
-```bash
-node -v
-npm -v
-```
+**Step 3: Backup Important Data (Optional but Recommended)**
+- Connect an external backup drive to your computer.
+- Copy all important files from your internal hard drive to the backup drive to ensure no data loss during the installation process.
 
-The output should display the versions of Node.js and npm that you've installed.
+**Step 4: Boot from the USB Drive**
+- Restart your computer and enter the boot menu by pressing the appropriate key (usually F12, Esc, or Del). The keys may vary depending on your computer's manufacturer.
+- Select the USB drive as the boot device and press Enter. Your computer will now boot from the Ubuntu ISO file on the USB drive.
 
-**Step 3: Create a new directory for your project**
+**Step 5: Choose Language and Keyboard Layout**
+- On the first screen, select your preferred language and keyboard layout for the installation process.
 
-Create a new folder where you will work on this tutorial by running the following command in your terminal or command prompt:
-
-```bash
-mkdir simple-web-server
-cd simple-web-server
-```
-
-**Step 4: Initialize the project and install Express**
-
-Initialize your project as a Node.js project by running:
-
-```bash
-npm init -y
-```
-
-Now, let's install Express.js, which is a popular web application framework for Node.js:
-
-```bash
-npm install express
-```
-
-**Step 5: Create your first Express app file**
-
-Create a new file called `app.js` in your project folder:
-
-```bash
-touch app.js
-```
-
-**Step 6: Write the basic code for your web server**
-
-Open the `app.js` file in your preferred text editor and paste the following code:
-
-```javascript
-const express = require('express');
-const app = express();
-const port = 3000;
-
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
-
-app.listen(port, () => {
-  console.log(`Server is running at http://localhost:${port}`);
-});
-```
-
-**Step 7: Run your web server**
-
-In your terminal or command prompt, navigate to the
+**Step 6: Start the Installation Process**
+- Click "Install Ubuntu" to begin the installation. Select "Erase disk and

@@ -1,0 +1,11 @@
+Title: The Marvel of Photosynthesis and Its Impact on Earth's Biosphere
+
+The life-sustaining process of photosynthesis, a vital biochemical phenomenon, is the key contributor to oxygen generation, organic compound creation, and food production for numerous organisms inhabiting our planet. This chemical reaction transforms carbon dioxide (CO2), water (H2O), and solar energy into glucose (C6H12O6) and oxygen (O2) within green plants, algae, and cyanobacteria.
+
+Divided into two primary phases, the conversion process unfolds as follows: firstly, the light-dependent reactions; secondly, the light-independent reactions, or Calvin cycle. In the former phase, sunlight energy initiates the splitting of water molecules within the thylakoid membrane of chloroplasts, facilitated by chlorophyll (the pigment that captures light). This process yields oxygen as a byproduct and generates Adenosine Triphosphate (ATP) and Nicotinamide Adenine Dinucleotide Phosphate (NADPH), energy-rich compounds essential for the subsequent Calvin cycle.
+
+The latter phase, also known as the Calvin cycle or carbon fixation, occurs within the stroma of chloroplasts. Carbon dioxide is converted into organic forms via a series of enzyme-catalyzed reactions, initially transformed by rubisco (ribulose bisphosphate carboxylase/oxygenase) into two 3-phosphoglycerate (3PG) molecules. Subsequent transformations lead to the generation of glucose and other sugars.
+
+In 1779, Jan Ingenhousz provided empirical evidence for photosynthesis by demonstrating that green plants emit oxygen during sunlight exposure. Later studies identified the various components and reactions involved in this process, with Charles Darwin's collaborator, Julius von Sachs, discovering chlorophyll, the primary light-absorbing pigment, in 1862.
+
+Advancements made by Calvin, Bassham, and Melvin

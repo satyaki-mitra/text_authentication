@@ -1,36 +1,80 @@
-Title: Documentation for the Auto-Save Feature in XYZ Software
+Title: **API Documentation - User Management Endpoint**
 
-1. Overview
+## User Management API
 
-The Auto-Save feature is an essential component of the XYZ Software, designed to automatically save user data at regular intervals to prevent loss of work due to unexpected system events or user errors. This documentation provides a comprehensive understanding of the Auto-Save feature's functionality, configuration, and best practices for its usage.
+The User Management API provides a set of endpoints for managing user accounts in our system. This documentation details the `/users` endpoint, which allows for creating, retrieving, updating, and deleting user accounts.
 
-2. Feature Description
+### /users (CRUD Operations)
 
-The Auto-Save feature in XYZ Software automatically saves users' data at predefined intervals (default is every 5 minutes). It helps to minimize data loss and ensure that work progress is preserved, even when the user forgets to save their work manually or encounters system errors.
+#### Create User (POST)
 
-3. Configuration
+Creates a new user account.
 
-Users can adjust the Auto-Save interval by navigating to the "Preferences" menu, then selecting "Auto-Save." The available options are 5 minutes (default), 10 minutes, 15 minutes, 30 minutes, and 1 hour. Users may also disable the Auto-Save feature if desired.
+**Request Parameters:**
 
-4. Best Practices
+- `username`: **string** - The unique username for the user.
+- `password`: **string** - The password for the user, encrypted before sending.
+- `email`: **string** - The email address of the user.
+- `first_name`: **string** - The first name of the user.
+- `last_name`: **string** - The last name of the user.
 
-To make the most of the Auto-Save feature, users should:
+##### Example Request:
 
-   a. Adjust the Auto-Save interval based on their work habits and project requirements.
-   b. Save their work manually whenever possible to ensure that all changes are captured by the Auto-Save feature.
-   c. Close the software when not in use to conserve system resources and prevent accidental modifications.
+```http
+POST /users
+Content-Type: application/json
 
-5. Limitations and Known Issues
+{
+  "username": "johndoe",
+  "password": "encrypted_password",
+  "email": "john.doe@example.com",
+  "first_name": "John",
+  "last_name": "Doe"
+}
+```
 
-While the Auto-Save feature greatly reduces the risk of data loss, it is essential to note that it may still fail under certain circumstances:
+#### Retrieve User (GET)
 
-   a. Power outages or sudden system shutdowns can cause data loss if they occur during an Auto-Save interval.
-   b. In cases where the software encounters severe errors or bugs, the Auto-Save feature might not function as expected, and users should save their work manually before continuing.
+Retrieves the details of a user by their unique username.
 
-6. Troubleshooting
+**Request Parameters:**
 
-If users encounter issues with the Auto-Save feature, they can try the following troubleshooting steps:
+- `username`: **string** - The unique username of the user to retrieve.
 
-   a. Verify that the Auto-Save interval is set correctly in the Preferences menu.
-   b. Check for any ongoing software updates or patches that may affect the Auto-Save functionality.
-   c. If issues persist, contact XY
+##### Example Request:
+
+```http
+GET /users/johndoe
+```
+
+#### Update User (PUT)
+
+Updates the details of an existing user by their unique username.
+
+**Request Parameters:**
+
+- `username`: **string** - The unique username of the user to update.
+- `password`: **string** - The new password for the user, encrypted before sending (optional).
+- `email`: **string** - The new email address of the user (optional).
+- `first_name`: **string** - The new first name of the user (optional).
+- `last_name`: **string** - The new last name of the user (optional).
+
+##### Example Request:
+
+```http
+PUT /users/johndoe
+Content-Type: application/json
+
+{
+  "password": "new_encrypted_password",
+  "email": "john.doe@newemail.com"
+}
+```
+
+#### Delete User (DELETE)
+
+Deletes an existing user by their unique username.
+
+**Request Parameters:**
+
+- `username`: **string** - The unique

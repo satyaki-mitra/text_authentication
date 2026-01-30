@@ -1,29 +1,50 @@
-Title: A Beginner's Guide to Programming in Python
+Title: A Comprehensive Guide for Beginners: Setting Up an FTP Server Using FileZilla on Windows
 
-1. **Installation of Python**
-   - Visit the official Python website (https://www.python.org/) and download the latest version of Python that suits your operating system. Follow the installation instructions provided.
-   - After installation, you can verify it by opening a command prompt/terminal and typing `python --version`. The output should display the installed version of Python.
+This tutorial will guide you through the process of setting up an FTP (File Transfer Protocol) server using FileZilla on a Windows system. By the end of this guide, you'll be able to share files between your computer and other devices or networks.
 
-2. **Installation of an Integrated Development Environment (IDE)**
-   - An IDE provides a user-friendly interface for writing, running, and debugging code. One popular choice for beginners is PyCharm, which can be downloaded from https://www.jetbrains.com/pycharm/.
-   - After installation, open PyCharm and create a new project.
+**Materials Needed:**
+1. A Windows PC
+2. FileZilla Server (Download from: https://filezilla-project.org/download.php?type=server)
+3. Basic understanding of Windows file system navigation
 
-3. **Understanding the Python Shell**
-   - The Python shell allows you to write and execute Python code directly. You can access it by clicking on "Terminal" in PyCharm or opening a command prompt/terminal and typing `python`.
-   - Try out some simple commands, like printing a message: `print("Hello, World!")`
+**Step 1: Download and Install FileZilla Server**
 
-4. **Variables and Data Types**
-   - Variables are used to store data and change its value as needed. In Python, you don't have to declare the type of variable.
-   - Create a variable and assign it a value: `x = 5` or `name = "John"`
-   - You can also combine variables using operators: `y = x + 3`
-   - Explore different data types such as strings, integers, floats, booleans, and lists.
+1.1 Navigate to the FileZilla download page at https://filezilla-project.org/download.php?type=server
 
-5. **Functions**
-   - Functions allow you to group related code together so it can be easily reused. To create a function, use the `def` keyword: `def greet(name): print("Hello, " + name)`
-   - Call the function with an argument: `greet("John")`
+1.2 Click on the "Windows" button to download the setup file (FileZillaServer_win32-x64-setup.exe)
 
-6. **Control Structures**
-   - Control structures like loops and conditionals allow you to control the flow of your program. Learn about for loops, while loops, if-else statements, and conditional expressions.
+1.3 Double-click the downloaded file and follow the installation wizard instructions
 
-7. **Building a Simple Project**
-   - Now that you've learned the basics, try
+**Step 2: Launch FileZilla Server Interface**
+
+2.1 Search for "FileZilla Server" in the Windows Start menu or use the desktop shortcut created during installation
+
+2.2 Click on the application to launch it, and you will be presented with the FileZilla Server interface
+
+**Step 3: Configure Basic Settings**
+
+3.1 In the left-hand sidebar, find "Servers" and click on the plus sign (+) to expand the list
+
+3.2 Right-click on "Local FTP site" (or create a new one by right-clicking on "Servers" and selecting "New site")
+
+3.3 Select "Edit Site" from the context menu
+
+3.4 In the "General" tab, rename the site to something descriptive, such as "MyFTPServer"
+
+**Step 4: Set Up User Accounts**
+
+4.1 Click on the "Users" tab
+
+4.2 Click the "Add" button beneath the user list to create a new user account
+
+4.3 Fill in the required fields (Username, Password, and Root directory)
+
+   - **Username:** A unique identifier for the user account (e.g., john_doe)
+   - **Password:** A secure password for the user account
+   - **Root directory:** The starting point for the user's files on the server (e.g., C:\Users\john_doe\FTP)
+
+4.4 Click "OK" to save the new user account
+
+**Step 5: Configure Firewall and Port Settings**
+
+5.

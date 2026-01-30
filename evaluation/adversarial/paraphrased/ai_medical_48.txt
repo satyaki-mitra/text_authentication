@@ -1,0 +1,16 @@
+Title: Successful Management of Advanced Malignant Pleural Mesothelioma Through Immunotherapy - A Case Report on Pembrolizumab Utilization
+
+Introduction:
+In this case study, we present the successful management of an advanced instance of malignant pleural mesothelioma (MPM), a highly aggressive cancer frequently linked to asbestos exposure. Despite conventional treatment options, MPM prognosis remains grim due to limited efficacy and substantial toxicity. However, the advent of immunotherapy presents a potential solution for improved patient outcomes.
+
+Case Report:
+A 65-year-old male smoker, with no reported asbestos exposure history, presented with symptoms including progressive dyspnea, left-sided chest pain, and a persistent dry cough over a three-month period. On examination, reduced breath sounds were noted on the affected side, and a chest X-ray confirmed the presence of pleural effusion on the left side. Thoracentesis revealed an exudative pleural fluid containing malignant mesothelial cells. Imaging studies displayed a thickened visceral pleura with irregular consolidation in the lower left lobe, indicative of MPM. Tissue biopsy confirmed epithelioid subtype MPM, and immunohistochemistry demonstrated PD-L1 expression at 50%.
+
+Diagnostic Procedure:
+Given the patient's symptoms, clinical presentation, and imaging findings, a diagnosis of MPM was established. The staging process included a PET scan, which revealed no distant metastasis (stage IIIB). Genetic testing failed to identify any actionable mutations. Based on PD-L1 expression levels ≥50%, the patient was deemed an ideal candidate for immunotherapy.
+
+Treatment Plan:
+The patient began treatment with pembrolizumab, administered at a dose of 200mg every three weeks. Following two cycles, the patient reported alleviated symptoms, and a partial response was confirmed through follow-up imaging. The patient experienced minimal toxicity, with no grade ≥3 adverse events recorded.
+
+Outcomes:
+The patient completed six cycles of pembrolizumab

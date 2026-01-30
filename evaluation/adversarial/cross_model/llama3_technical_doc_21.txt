@@ -1,55 +1,38 @@
-**Endpoint: Get User Profile**
+**System Name:** Weather Alert System (WAS)
 
-**HTTP Method:** GET
+**Overview:**
 
-**URI Path:** `/users/{userId}/profile`
+The Weather Alert System (WAS) is a cloud-based API designed to provide real-time weather data and alert notifications to users. The system integrates with multiple weather forecasting services to deliver accurate and up-to-date information on various weather conditions, such as temperature, humidity, wind speed, and precipitation.
 
-**Description:**
+**Specifications:**
 
-The `Get User Profile` endpoint allows clients to retrieve the profile information of a specified user. This endpoint returns the user's profile data, including their name, email address, and any custom fields defined in the application.
+1. **API Endpoints:**
+	* `/weather/current`: Returns the current weather conditions for a specified location (latitude and longitude).
+	* `/weather/forecast`: Retrieves the 5-day forecast for a given location.
+	* `/alerts`: Provides real-time alerts on severe weather events, such as tornadoes, hurricanes, or blizzards.
+2. **API Request Parameters:**
+	* `location`: A string containing the latitude and longitude coordinates (e.g., "37.7749, -122.4194").
+	* `unit`: A string specifying the unit of measurement for temperature (Celsius or Fahrenheit).
+3. **API Response Format:** JSON
 
-**Request Parameters:**
+**Usage Guidelines:**
 
-* **userId (required):** The unique identifier of the user whose profile is being requested.
-	+ Data Type: Integer
-	+ Example: `12345`
+1. **Authentication:** To access WAS, you must provide a valid API key in the `Authorization` header. You can obtain an API key by registering on our website.
+2. **Rate Limiting:** To prevent abuse and ensure system stability, we enforce rate limits on API requests. The default limit is 100 requests per hour; however, this can be increased upon request for legitimate use cases.
+3. **Error Handling:** WAS returns error responses in JSON format when an invalid or missing parameter is provided. Error codes are listed below:
+	* `400`: Bad Request (invalid parameters)
+	* `401`: Unauthorized (missing API key)
+	* `429`: Too Many Requests (exceeding rate limits)
+4. **Example Requests:**
+	* `GET /weather/current?location=37.7749,-122.4194&unit=C`
+	* `GET /weather/forecast?location=37.7749,-122.4194`
+	* `GET /alerts?location=37.7749,-122.4194`
 
-**Response:**
+**Best Practices:**
 
-The response will be a JSON object containing the user's profile data. The response includes the following properties:
+1. Always provide a valid API key in the `Authorization` header.
+2. Use the correct request parameters and format (JSON) to ensure accurate responses.
+3. Respect rate limits to avoid account suspension or temporary blockage.
+4. Handle error responses accordingly, as described in the documentation.
 
-* **id:** The unique identifier of the user.
-	+ Data Type: Integer
-* **name:** The full name of the user.
-	+ Data Type: String
-* **email:** The email address of the user.
-	+ Data Type: String
-* **customFields:** An array of custom fields defined in the application, along with their corresponding values for this user.
-	+ Data Type: Array of Objects (see below)
-* **createdAt:** The date and time when the user was created.
-	+ Data Type: Date
-
-**Custom Fields Response Format:**
-
-The `customFields` property will contain an array of objects, each representing a custom field defined in the application. Each object will have the following properties:
-
-* **name:** The name of the custom field.
-	+ Data Type: String
-* **value:** The value associated with this custom field for this user.
-	+ Data Type: String
-
-**Example Response:**
-
-```json
-{
-  "id": 12345,
-  "name": "John Doe",
-  "email": "johndoe@example.com",
-  "customFields": [
-    {
-      "name": "FavoriteColor",
-      "value": "blue"
-    },
-    {
-      "name": "Hobby",
-      "value
+By following these guidelines and specifications, you can effectively integrate WAS into your applications and services, providing users with timely and accurate weather information. If you have any questions or require further assistance, please contact our support team at [support@was.com](mailto:support@was.com).

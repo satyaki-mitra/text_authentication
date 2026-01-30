@@ -1,0 +1,35 @@
+Title: Data Handling Contract - Processor to Controller Provisions
+
+A. Agreement Outline
+
+A.1 This Data Handling Contract ("Contract") is formed between [Processor's Name] ("Processor") and [Controller's Name] ("Controller"), each referred to as a "Party," and collectively, the "Parties."
+
+A.2 The Parties have agreed to this contract in accordance with their respective obligations under Regulation (EU) 2016/679 of the European Parliament and Council on data protection, known as General Data Protection Regulation ("GDPR").
+
+A.3 This Contract serves as a supplement to the primary agreement between the Parties regarding Processor's services for Controller (the "Primary Agreement"). In case of any disagreement or inconsistency between this Contract and the Primary Agreement, this Contract shall take precedence to the extent necessary.
+
+B. Terminology
+
+B.1 Terms used in this Contract but not defined will have the meanings given by GDPR or the Primary Agreement.
+
+C. Data Processing
+
+C.1 The Controller hereby designates Processor as a data processor for handling personal data on Controller's behalf, as detailed in Schedule 1 (Processing Details).
+
+D. Compliance with Regulations
+
+D.1 Each Party shall adhere to all applicable laws, regulations, and industry standards related to their duties under this Contract.
+
+D.2 Processor will process personal data exclusively for the purposes specified in Schedule 1 (Processing Details) and strictly according to Controller's documented instructions, as revised from time to time.
+
+E. Party Rights and Obligations
+
+E.1 Controller guarantees it has acquired all necessary permissions and authorizations necessary for transferring personal data to Processor under this Contract, including any required registrations, notifications, or approvals related to data protection.
+
+E.2 Processor will implement appropriate technical and organizational measures to ensure a security level suitable for the associated risks, taking into account factors like current state-of-the-art technology, cost of implementation, nature, scope, context, and purpose of processing, as well as the potential impact on individuals' rights and freedoms.
+
+E.3 Processor will inform Controller promptly if it becomes aware of any unauthorized or accidental access to, destruction, loss, or alteration of personal data.
+
+F. Subcontracting
+
+F.1 Processor may engage third parties ("Subprocessors") for processing personal data. However, before doing

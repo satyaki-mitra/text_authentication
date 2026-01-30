@@ -1,39 +1,78 @@
-Title: Understanding Dependency Injection in Modern Software Development
+Title: Documentation on Observer Design Pattern in Java with Best Practices
 
 Introduction:
+The Observer Design Pattern is a behavioral design pattern that defines a one-to-many dependency between objects so that when one object changes its state, all its dependents are notified and updated automatically. This pattern is particularly useful when dealing with events or situations where multiple entities need to be kept informed of the same data or state.
 
-Dependency Injection (DI) is a design pattern that helps in decoupling objects and improving software modularity, maintainability, and testability. It's an essential practice in modern software development, especially in object-oriented programming languages like Java, C#, and Python.
+Implementation in Java:
 
-Concept:
+1. Interface for Observers:
+```java
+public interface Observer {
+    void update(Subject subject);
+}
+```
+In our implementation, the `Observer` interface defines a single method `update()`, which will be called whenever the subject (the entity being observed) changes its state.
 
-In simple terms, Dependency Injection is a technique where an object receives other objects that it depends on, instead of creating or looking for those dependencies itself. This separation allows for greater control over the lifecycle of objects, making them easier to test, modify, and manage.
+2. Interface for Subjects:
+```java
+public interface Subject {
+    void attach(Observer observer);
+    void detach(Observer observer);
+    void notifyObservers();
+}
+```
+The `Subject` interface defines methods for attaching and detaching observers, as well as a method for notifying all observers when the subject's state changes.
 
-Components:
+3. Concrete Subject:
+```java
+import java.util.ArrayList;
+import java.util.List;
 
-1. **Dependencies**: These are the objects required by a class to function correctly. They can be other classes, resources, or services.
+public class ConcreteSubject implements Subject {
+    private List<Observer> observers = new ArrayList<>();
+    private int state;
 
-2. **Constructor Injection**: This is the most common method for dependency injection in modern programming languages. It involves passing dependencies as arguments when creating an object via its constructor.
+    public void attach(Observer observer) {
+        observers.add(observer);
+    }
 
-   Example (Python):
-   ```python
-   class Calculator:
-       def __init__(self, math_service):
-           self.math_service = math_service
+    public void detach(Observer observer) {
+        observers.remove(observer);
+    }
 
-   def create_calculator(math_service):
-       return Calculator(math_service)
-   ```
+    public void notifyObservers() {
+        for (Observer observer : observers) {
+            observer.update(this);
+        }
+    }
 
-3. **Setter Injection**: This method involves injecting dependencies via setters after the object is instantiated. However, this approach can lead to tight coupling and is less preferred compared to constructor injection.
+    public void setState(int state) {
+        this.state = state;
+        notifyObservers();
+    }
 
-4. **Field Injection**: This method is used in frameworks like Spring (Java) or Django (Python), where annotations are used to mark fields that should be injected with dependencies at runtime.
+    public int getState() {
+        return state;
+    }
+}
+```
+In the concrete implementation of `Subject`, we maintain a list of observers, and methods for adding and removing them. When the subject's state changes, it calls the `notifyObservers()` method to update all its observers.
 
-5. **Interface Injection**: This technique involves defining interfaces for your dependencies and using them when creating objects. This allows for greater flexibility as different implementations of the interface can be swapped in without modifying the code.
+4. Concrete Observer:
+```java
+public class ConcreteObserver implements Observer {
+    private String name;
+    private Subject subject;
 
-Advantages:
+    public ConcreteObserver(String name) {
+        this.name = name;
+    }
 
-1. **Improved Modularity**: By decoupling objects, it becomes easier to modify or replace parts of the system without affecting others.
+    public void setSubject(Subject subject) {
+        this.subject = subject;
+        subject.attach(this);
+    }
 
-2. **Enhanced Testability**: Dependencies can be easily mocked during testing, allowing for more isolated and effective tests.
-
-3. **Easier Maintenance and Scalability**: As systems grow, managing dependencies can
+    @Override
+    public void update(Subject subject) {
+        System.out.println

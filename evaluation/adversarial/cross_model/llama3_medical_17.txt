@@ -1,0 +1,17 @@
+**Case Report: Unusual Presentation of Meningitis in an Immunocompromised Individual**
+
+A 42-year-old male, previously diagnosed with HIV and treated with antiretroviral therapy (ART), presented to the emergency department with a 2-day history of severe headache, fever, and confusion. The patient had no prior medical conditions or allergies.
+
+Upon admission, physical examination revealed a temperature of 39°C, blood pressure of 140/90 mmHg, pulse rate of 110 beats per minute, and oxygen saturation of 95% on room air. Neurological examination showed decreased level of consciousness, bilateral Babinski reflexes, and mild neck stiffness.
+
+Laboratory tests revealed leukocytosis (20,000/mm³), elevated C-reactive protein (CRP) levels (120 mg/L), and mildly increased lactate dehydrogenase (LDH) (250 IU/L). Lumbar puncture was performed, yielding cloudy cerebrospinal fluid (CSF) with a white blood cell count of 2,000/mm³, primarily composed of neutrophils. CSF protein levels were elevated at 150 mg/dL, and glucose levels were decreased to 20 mg/dL.
+
+The patient's CD4+ T-cell count was 200 cells/μL, indicating significant immunosuppression. A Gram stain of the CSF revealed gram-negative rods, suggestive of Pseudomonas aeruginosa infection. Blood cultures were also positive for P. aeruginosa. The patient was empirically treated with broad-spectrum antibiotics, including vancomycin and cefepime.
+
+Imaging studies, including computed tomography (CT) scans of the head and chest, did not reveal any significant abnormalities. Magnetic resonance imaging (MRI) of the brain showed mild edema and enhancement in the right cerebral hemisphere consistent with meningitis.
+
+The patient's condition deteriorated rapidly, requiring intubation for airway protection. He developed septic shock and required vasopressor support. After 7 days of aggressive antibiotic therapy, the patient began to show signs of clinical improvement, including resolution of fever and decreased sedation.
+
+This case highlights the unusual presentation of meningitis in an immunocompromised individual with HIV/AIDS. The patient's rapidly deteriorating condition emphasized the importance of prompt recognition and treatment of opportunistic infections in this population. Early initiation of appropriate antibiotics and close monitoring allowed for successful management of the patient's severe illness.
+
+**Keywords:** Meningitis, HIV/AIDS, immunosuppression, Pseudomonas aeruginosa, septic shock.

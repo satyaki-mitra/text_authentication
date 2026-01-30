@@ -1,0 +1,32 @@
+Title: Guiding Java Applications with Dependency Injection via Spring Framework Documentation
+
+In this documentation, we delve into the practical application of Dependency Injection (DI) within the realm of Java using the Spring Framework. This design pattern is crucial for managing object dependencies and promotes code modularity, testability, and maintainability in modern software development.
+
+**Overview of Spring Framework:**
+Spring Framework, a widely-adopted open-source application framework, assists in constructing sophisticated Java enterprise applications by offering features such as DI, Aspect-Oriented Programming (AOP), and data access abstraction.
+
+**Dependency Injection within the Spring Ecosystem:**
+In the Spring landscape, DI is facilitated through ApplicationContext or BeanFactory interfaces. These interfaces are instrumental in creating, managing, and configuring application objects (beans) according to their specifications. The DI mechanism can be configured via XML files or annotations.
+
+**Example Code:**
+Consider a straightforward example involving a service layer comprising two services: `UserService` and `EmailService`, with the former depending on the latter.
+
+```java
+public interface UserService {
+    void dispatchActivationEmail(String userEmail);
+}
+
+public class EmailService implements UserService {
+    // ...
+}
+```
+
+To incorporate the `EmailService` instance into the `UserService`, we must configure them using a Spring configuration file (application.xml) or Java-based configuration (@Configuration annotation).
+
+**XML Configuration:**
+
+```xml
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+           http://www.springframework.org/schema/beans http://www.springframework.org/schema/

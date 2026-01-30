@@ -1,0 +1,36 @@
+Title: A Detailed Guide for Novices: Establishing an FTP Server Using FileZilla on Windows Operating System
+
+This article will walk you through the process of establishing an FTP (File Transfer Protocol) server using FileZilla on a Windows system, allowing you to exchange files between your computer and other devices or networks.
+
+**Materials Necessitated:**
+1. A Personal Computer Running Windows OS
+2. FileZilla Server [Download from: <https://filezilla-project.org/download.php?type=server>]
+3. Fundamental Knowledge of Navigating the Windows File System
+
+**Step 1: Retrieve and Install FileZilla Server:**
+
+1.1 Proceed to the FileZilla download page at <https://filezilla-project.org/download.php?type=server>
+
+1.2 Click on the "Windows" button to initiate the download of the setup file (FileZillaServer_win32-x64-setup.exe)
+
+1.3 Double-click the downloaded file and adhere to the instructions provided by the installation wizard
+
+**Step 2: Initiate FileZilla Server Interface:**
+
+2.1 Locate "FileZilla Server" in the Windows Start menu or utilize the desktop shortcut created during installation
+
+2.2 Launch the application, which will present you with the FileZilla Server interface
+
+**Step 3: Configure Basic Settings:**
+
+3.1 In the left-hand sidebar, locate "Servers" and click on the arrow to expand the list
+
+3.2 Right-click on "Local FTP site" (or create a new one by right-clicking on "Servers" and selecting "New Site")
+
+3.3 Select "Edit Site" from the context menu that appears
+
+3.4 In the "General" tab, rename the site to something descriptive, such as "MyFTPServer"
+
+**Step 4: Set Up User Accounts:**
+
+4.1 Click on the "Users" tab

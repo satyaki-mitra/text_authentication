@@ -1,0 +1,23 @@
+Title: Enhancing Grid Resilience Through Optimal Control of Renewable Energy Sources in Intelligent Power Systems: A Comparative Study
+
+Introduction
+
+In the modern world, the shift towards sustainable energy sources is crucial to combat environmental degradation and secure energy supply. This work explores various control strategies to optimize the integration of renewable energy (RE) within intelligent power systems, particularly focusing on minimizing power volatility and bolstering grid robustness.
+
+Methodology
+
+A comprehensive literature review was undertaken to isolate significant control strategies, followed by a simulation-based analysis using MATLAB/Simulink software. Four unique control techniques were assessed: (1) Proportional-Integral-Derivative (PID), (2) Sliding Mode Control (SMC), (3) Fuzzy Logic Control (FLC), and (4) Artificial Neural Network (ANN). The assessment was carried out under varying renewable energy penetration rates, load scenarios, and disturbances.
+
+Findings
+
+The results indicated that all strategies exhibited commendable control over power fluctuations; however, their performance varied considerably in distinct situations. Under low to moderate RE penetration rates, PID displayed robust stability and negligible overshoot, making it suitable for grids with foreseeable renewable energy generation patterns. However, its efficiency declined under high RE penetration rates due to the increased complexity of the system dynamics.
+
+SMC proved to be exceptionally adaptable and resilient in handling non-linear and intricate systems, making it an optimal choice for grids with high RE penetration rates or unpredictable renewable energy generation patterns. FLC offered a balance between computational complexity and performance, delivering consistent results under assorted conditions. ANN showcased the highest potential for adapting to dynamic grid scenarios but demanded extensive training data and substantial computational resources.
+
+Implications
+
+The implications of this study transcend academic boundaries, providing crucial insights for decision-makers, utility companies, and researchers engaged in the design and deployment of intelligent power systems. The findings serve as a basis for selecting optimal control strategies based on specific grid characteristics, renewable energy penetration rates, and operational prerequisites. Moreover, this research emphasizes the necessity of incorporating advanced control strategies to ensure stable and robust intelligent power systems capable of accommodating escalating RE integration.
+
+Future Directions
+
+Future research should concentrate on developing hybrid control strategies that synergize multiple approaches to optimize

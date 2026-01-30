@@ -1,0 +1,23 @@
+**Case Report:**
+
+**Title:** A Rare Case of Primary Hyperaldosteronism Presenting as Hypertensive Crisis in a Young Adult
+
+**Abstract:**
+
+We present the case of a 25-year-old woman who presented to our emergency department with a sudden onset of severe hypertension, headache, and altered mental status. Her medical history was unremarkable, except for occasional headaches and mild anxiety. On physical examination, her blood pressure was 220/110 mmHg, pulse 120 beats per minute, and temperature 37.5°C (98°F). Laboratory results revealed elevated serum sodium (154 mEq/L), potassium (2.1 mEq/L), and aldosterone levels (345 pg/mL).
+
+The patient was initially treated for presumed pheochromocytoma or secondary hypertension, but her symptoms persisted despite aggressive management with antihypertensive medications. Further evaluation, including computed tomography (CT) scan of the adrenal glands and kidneys, revealed a solitary right adrenal mass.
+
+Pathological analysis of the resected tissue confirmed primary hyperaldosteronism due to a benign aldosterone-producing adenoma (APA). The patient underwent successful laparoscopic adrenalectomy, followed by postsurgical management with potassium-sparing diuretics and beta blockers to control hypertension.
+
+**Discussion:**
+
+Primary hyperaldosteronism is a rare endocrine disorder characterized by excessive production of aldosterone, leading to hypokalemia, hypertension, and metabolic alkalosis. APAs are the most common cause of primary hyperaldosteronism in young adults. Our case highlights the importance of considering this diagnosis in patients with severe hypertension, particularly when other causes have been ruled out.
+
+The patient's presentation was notable for a sudden onset of severe hypertension, which is often seen in APA cases due to the rapid increase in aldosterone production. The elevated serum sodium and potassium levels confirmed the presence of metabolic alkalosis and hypokalemia, respectively.
+
+**Conclusion:**
+
+Primary hyperaldosteronism should be considered in the differential diagnosis of young adults presenting with severe hypertension, particularly when other causes have been ruled out. Accurate diagnosis relies on a high index of suspicion, combined with thorough physical examination, laboratory evaluation, and imaging studies. Prompt treatment with laparoscopic adrenalectomy can significantly improve blood pressure control and prevent long-term complications.
+
+**Keywords:** Primary hyperaldosteronism, aldosterone-producing adenoma, hypertension, hypokalemia, metabolic alkalosis.

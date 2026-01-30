@@ -1,58 +1,73 @@
-Title: Creating a Simple Web Page Using HTML and CSS
+Title: A Comprehensive Guide for Beginners: Installing and Configuring Apache, MySQL, and PHP (LAMP Stack) on Ubuntu 20.04
 
-**Step 1: Setting Up the Workspace**
+In this tutorial, we will walk you through the process of installing and configuring the LAMP stack (Apache, MySQL, and PHP) on an Ubuntu 20.04 server. By the end of this guide, you'll have a functional web development environment for creating dynamic websites using PHP.
 
-1. Install a text editor (if you don't have one already). Notepad++, Sublime Text, or Visual Studio Code are popular choices for beginners.
+**Step 1: Update System**
 
-2. Download a web browser if you haven't already (Chrome, Firefox, Safari, etc.). You will use this to view your web page.
+Before we begin installing our LAMP stack components, ensure your system is up-to-date by running these commands:
 
-**Step 2: Creating the HTML File**
-
-1. Open your text editor and create a new file with a .html extension (e.g., `index.html`).
-
-2. In the file, write the basic HTML structure:
-
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My First Web Page</title>
-</head>
-<body>
-    <!-- Your content goes here -->
-</body>
-</html>
+```
+sudo apt update
+sudo apt upgrade
 ```
 
-**Step 3: Adding Content and Styling with CSS**
+**Step 2: Install Apache**
 
-1. To add styling, create a new file with the .css extension (e.g., `styles.css`) and link it to your HTML file by adding this line inside the head tag:
+Now let's install the web server, Apache. Run this command to start the installation process:
 
-```html
-<head>
-    ...
-    <link rel="stylesheet" href="styles.css">
-</head>
+```
+sudo apt install apache2
 ```
 
-2. Now, you can write CSS rules for your web page in the `styles.css` file. Here's an example of a simple rule:
+After the installation completes, enable and start Apache services with these commands:
 
-```css
-body {
-    background-color: lightblue;
-}
+```
+sudo systemctl enable apache2
+sudo systemctl start apache2
 ```
 
-3. To add content to your web page, place it inside the body tag (between `<body>` and `</body>`) in the HTML file:
+**Step 3: Test Apache Installation**
 
-```html
-<body>
-    <h1>Welcome to My First Web Page!</h1>
-</body>
+To confirm that Apache is functioning correctly, navigate to your server's IP address or domain name in a web browser. You should see the default Apache test page: "It works!"
+
+**Step 4: Install MySQL**
+
+MySQL is our choice for the database component of our LAMP stack. Start its installation with this command:
+
+```
+sudo apt install mysql-server
 ```
 
-**Step 4: Viewing Your Web Page**
+After installation, secure the MySQL installation by running the following script, which will walk you through setting a password and other security measures:
 
-1. Save both files (index.html and styles.css) in the same folder on your computer.
+```
+sudo mysql_secure_installation
+```
+
+**Step 5: Install PHP**
+
+Now we'll install PHP, our scripting language. Run this command to start the installation process:
+
+```
+sudo apt install php libapache2-mod-php php-mysql
+```
+
+After the installation completes, enable the PHP module for Apache with these commands:
+
+```
+sudo a2enmod rewrite
+sudo a2enmod headers
+sudo a2enmod php
+```
+
+**Step 6: Restart Apache**
+
+Finally, restart Apache to ensure it recognizes the PHP module changes:
+
+```
+sudo systemctl restart apache2
+```
+
+**Step 7: Test PHP Installation**
+
+To confirm that PHP is working correctly, create a new file in the Apache root directory (/var/www/html) named `info.php`. Add this simple

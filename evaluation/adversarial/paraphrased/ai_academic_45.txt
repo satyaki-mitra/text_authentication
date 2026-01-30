@@ -1,0 +1,11 @@
+Title: Examining Omega-3 Fatty Acid Supplementation's Effect on Cognitive Performance in Senior Citizens: A Double-Blind, Randomized Clinical Trial
+
+Summary
+
+Geriatric population expansion necessitates exploration of strategies that bolster cognitive health and delay age-related cognitive deterioration. One promising avenue is the dietary intake of omega-3 fatty acids (n-3 FA), which have been linked to numerous neuroprotective benefits. This study assessed n-3 FA supplementation's impact on senior citizens' cognitive performance.
+
+Research Procedures: A 12-month, double-blind, randomized clinical trial was conducted with 200 elderly individuals (65 years and above) residing in the community, free of neurological disorders. Participants were randomly assigned to receive either n-3 FA supplements (comprising EPA and DHA at a ratio of 2:1, 1 gram daily) or placebo. Cognitive performance was evaluated utilizing standard neuropsychological tests at initiation, six months, and twelve months.
+
+Principal Results: Following a year, the n-3 FA group displayed significant enhancements in executive function (p<0.001), working memory (p=0.002), and processing speed (p=0.015) compared to the placebo group. No significant discrepancies were identified between groups concerning general cognition, immediate recall, or delayed recall. Moreover, no adverse reactions related to n-3 FA supplementation were documented.
+
+Inferences: The findings indicate that n-3 FAs may potentially improve specific cognitive aspects in senior citizens. Given the escalating incidence of age-related cognitive decline and the minimal risk associated with n-3 FA supplements, further investigation is required to determine ideal dosage, duration, and underlying mechanisms responsible for these effects. This study underscores the significance of dietary adjustments as a

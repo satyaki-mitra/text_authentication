@@ -1,40 +1,78 @@
-Title: Understanding Dependency Injection in Java
+Title: Documentation on Observer Design Pattern with Java Implementation
 
-Dependency Injection (DI) is a design pattern that separates the construction of an object graph from its business logic, promoting loose coupling, testability, and reusability in software development. This concept is widely used in Java for creating modular and maintainable applications.
+## Introduction
 
-Key Concepts:
-1. Dependencies: These are external classes or resources that a class relies on to function correctly.
-2. Coupling: The degree to which one class knows about another class, often measured by the number of direct references between them. High coupling can lead to inflexible and hard-to-maintain code.
-3. Inversion of Control (IoC): Instead of classes creating their dependencies directly, they are provided or injected from an external source. This inverts the traditional control flow, allowing for greater flexibility and testability.
+The Observer Design Pattern is a behavioral pattern that defines a one-to-many dependency between objects such that when an object changes its state, all its dependents are notified and updated automatically. This pattern is particularly useful in implementing distributed event handling systems, real-time data visualization, and monitoring applications.
 
-Dependency Injection in Java can be implemented using various frameworks such as Spring, Google Guice, and CDI (Contexts and Dependency Injection for Java EE). However, basic DI can also be achieved with simple techniques like constructor injection, setter injection, and field injection.
+## Use Cases
 
-1. Constructor Injection: Injecting dependencies through a class's constructor allows the injected objects to be part of the object's state from creation. This approach promotes encapsulation since constructors are used for initializing state, reducing mutable fields.
+1. **Stock Ticker:** A stock ticker application can have multiple observers (users) interested in the stock price of a particular company. When the stock price changes, all the users will be notified instantly.
+
+2. **Weather Forecast:** In a weather forecast application, when there's a change in temperature or weather condition, all subscribed devices or applications can be updated accordingly.
+
+## Implementation in Java
+
+### Interfaces and Abstract Classes
 
 ```java
-public class Service {
-    private final Repository repository;
+public interface Subject {
+    void registerObserver(Observer observer);
+    void removeObserver(Observer observer);
+    void notifyObservers();
+}
 
-    public Service(Repository repository) {
-        this.repository = repository;
+public abstract class Observer {
+    protected Subject subject;
+
+    public void update() {
+        // Implementation for updating the observer's state when notified.
     }
 
-    // Business logic using the injected Repository...
+    public void setSubject(Subject subject) {
+        this.subject = subject;
+        this.subject.registerObserver(this);
+    }
 }
 ```
 
-2. Setter Injection: Injecting dependencies via setter methods enables more flexible configuration after an object has been instantiated but promotes higher coupling due to mutable state.
+### Concrete Subject (WeatherData in our example)
 
 ```java
-public class Service {
-    private Repository repository;
+public class WeatherData implements Subject {
+    private float temperature;
+    private float humidity;
+    private float pressure;
+    private List<Observer> observers = new ArrayList<>();
 
-    public void setRepository(Repository repository) {
-        this.repository = repository;
+    public void measurementsChanged() {
+        notifyObservers();
     }
 
-    // Business logic using the injected Repository...
+    // Other methods for setting and getting the data values.
 }
 ```
 
-3. Field Injection: This approach involves directly annotating fields with dependency injection framework-specific annotations for automatic wiring during object creation. It simplifies code but may compromise encapsulation and testability due to
+### Concrete Observer (Display in our example)
+
+```java
+public class CurrentConditionsDisplay implements Observer {
+    private float temperature;
+    private float humidity;
+    private float pressure;
+
+    public void update(float temperature, float humidity, float pressure) {
+        this.temperature = temperature;
+        this.humidity = humidity;
+        this.pressure = pressure;
+        display();
+    }
+
+    public void display() {
+        System.out.println("Current conditions: " + temperature + "F degrees and " + humidity + "% humidity");
+    }
+}
+```
+
+## Trade-offs
+
+1. **Memory Efficiency:** The Observer pattern can lead to increased memory usage due to the creation of many observer objects. This can be mitigated by implementing lazy initialization or using weak references for

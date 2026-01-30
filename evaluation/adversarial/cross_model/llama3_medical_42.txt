@@ -1,0 +1,21 @@
+**Case Report:**
+
+A 45-year-old male presented to our emergency department with sudden onset of severe headaches, fever, and stiff neck. The patient had no prior medical history and was not taking any medications at the time of presentation.
+
+Upon examination, the patient's vital signs were notable for a temperature of 102°F (39°C), blood pressure of 160/90 mmHg, and pulse rate of 120 beats per minute. His head was held in a rigid position due to neck stiffness, with tenderness to palpation. Funduscopic examination revealed bilateral retinal artery narrowing consistent with vasospasm.
+
+Laboratory results showed elevated white blood cell count (24,000/mm³), C-reactive protein (CRP) of 150 mg/L, and erythrocyte sedimentation rate (ESR) of 90 mm/hour. Lumbar puncture was performed, revealing a spinal fluid opening pressure of 250 mmH2O, with 1,500 cells/mm³ (95% lymphocytes), protein level of 120 mg/dL, and glucose level of 30 mg/dL.
+
+Imaging studies, including computed tomography (CT) scan of the head and neck, were normal. Magnetic resonance imaging (MRI) of the spine showed a focal lesion in the thoracic spinal cord at T5-T6 level, measuring approximately 2 cm in length. The lesion was homogeneous, with no evidence of enhancement or edema.
+
+Based on the patient's clinical presentation, laboratory results, and imaging findings, he was diagnosed with transverse myelitis (TM) likely caused by a viral etiology, possibly West Nile virus (WNV). He received high-dose corticosteroid therapy, followed by plasmapheresis and antiviral medications.
+
+**Clinical Abstract:**
+
+Transverse myelitis is an acute inflammatory disorder that affects the spinal cord, resulting in motor, sensory, and autonomic dysfunction. The etiology of TM can be infectious (viral, bacterial, or fungal), immune-mediated, or idiopathic.
+
+In this case report, we present a patient who presented with sudden onset of severe headaches, fever, and stiff neck, ultimately diagnosed with transverse myelitis likely caused by West Nile virus infection. The diagnosis was confirmed by laboratory results, imaging studies, and clinical presentation.
+
+Early recognition and treatment of TM are crucial to prevent long-term neurological sequelae. Our case highlights the importance of considering viral etiologies in patients presenting with acute spinal cord dysfunction, especially during outbreaks or periods of increased WNV activity.
+
+**Keywords:** transverse myelitis, West Nile virus, spinal cord injury, neuroinflammation.

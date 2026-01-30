@@ -1,0 +1,33 @@
+Title: A Comprehensive Guide for Novices: Crafting a Fundamental HTML Web Page Utilizing Notepad (Windows)
+
+Embark on an exhilarating introductory journey into web development via the creation of a rudimentary HTML web page. This guide will lead you through the process employing Notepad on Windows. Let's commence!
+
+**Step 1: Apparatus Setup (Skipped as we leverage in-built tools)**
+Since we are utilizing Notepad, a built-in tool in Windows, installation is unnecessary if you own a Windows system. You are already equipped with all the essentials required to generate HTML files.
+
+**Step 2: Commence Document Creation**
+1. Activate Notepad by typing "notepad" into the Start menu and pressing 'Enter'.
+2. To initiate a new HTML document, navigate to 'File' in the upper-left corner and select 'New'. A pristine document will materialize.
+
+**Step 3: Composing Elementary HTML Code**
+HTML composition involves enclosing elements within tags. For our elementary web page, we'll construct an `<html>`, `<head>`, and `<body>` segment, along with some basic text.
+
+```html
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Initial Web Page</title>
+</head>
+<body>
+    <h1>Welcome to My First Web Page!</h1>
+    <p>This text serves as the foundation for my web page.</p>
+</body>
+</html>
+```
+
+**Step 4: Archiving the File as an HTML Document**
+1. Navigate to 'File' in the upper-left corner and select 'Save As'.
+2. In the ensuing dialog box, traverse to your preferred location for storing the file.
+3. Name

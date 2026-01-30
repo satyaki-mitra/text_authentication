@@ -1,25 +1,13 @@
-Title: An Unusual Case of Recurrent Angioedema in a Pediatric Patient with Undiagnosed Primary Immunodeficiency
+Title: A Case Study on Successful Management of Severe Acute Pancreatitis with Early Surgical Intervention
 
-Case Presentation:
+Abstract
 
-A 9-year-old female patient, previously healthy, presented to the Emergency Department with recurrent episodes of facial and limb swelling over the past six months. The symptoms typically manifested as sudden onset, painless, and lasted for several hours without any apparent triggers. The patient had no history of allergies or adverse reactions to food, medications, or insect stings. She reported normal bowel movements and denied any respiratory symptoms, fever, or joint pain.
+Background: Severe acutepancreatitis (SAP) is a life-threatening condition characterized by systemic inflammation caused by acute pancreatitis. The management of SAP remains challenging due to its unpredictable course and potential complications. Early surgical intervention, although controversial, has been suggested in certain cases for the prevention and treatment of complications.
 
-Physical Examination:
+Case Presentation: A 58-year-old male with a history of alcohol abuse presented to the emergency department with severe epigastric pain radiating to the back, nausea, and vomiting for three days. Initial laboratory tests revealed a serum amylase level of 2000 U/L (normal range: 30-140 U/L) and a lipase level of 6000 U/L (normal range: 13-60 U/L), consistent with acute pancreatitis. The patient's condition worsened, developing respiratory failure, hypotension, and abdominal distention. Computed tomography (CT) scan of the abdomen confirmed the diagnosis of necrotizing pancreatitis with walled-off pancreatic necrosis (WOPN). The patient was managed conservatively initially, but due to persistent sepsis and organ failure, an open necrosectomy was performed on the 14th day of hospitalization. The postoperative course was complicated by a pancreatic fistula that was managed conservatively. The patient was discharged on the 35th day with complete resolution of symptoms and normal laboratory values.
 
-On presentation, the patient appeared well-nourished with no signs of distress. Swelling was observed on her lips, eyelids, and both hands, consistent with previous descriptions by the patient's parents. The skin was non-pitting, warm, and erythematous, suggesting angioedema. No lymphadenopathy or organomegaly was noted.
+Discussion: Early surgical intervention in SAP remains controversial due to the risk of exacerbating inflammation and increasing morbidity. However, in this case, the patient's rapid deterioration despite conservative management necessitated early surgery. The successful outcome underscores the potential benefits of early surgical intervention in select cases of SAP with refractory organ failure or evidence of necrosis on imaging. Further research is needed to define the specific indications for early surgical intervention and to determine its optimal timing and technique.
 
-Investigations:
+Keywords: Acute pancreatitis, severe acute pancreatitis, necrotizing pancreatitis, walled-off pancreatic necrosis, early surgical intervention, open necrosectomy, pancreatic fistula.
 
-Complete blood count (CBC), comprehensive metabolic panel (CMP), thyroid function tests (TFT), and urinalysis were within normal limits. C3 and C4 levels were found to be low, suggesting a possible immunodeficiency disorder. The patient underwent further diagnostic testing, including immunoglobulin quantification and lymphocyte subsets analysis, which revealed severe deficiencies in IgG, IgA, and IgM levels, along with a decreased percentage of B cells.
-
-Diagnosis:
-
-The patient was diagnosed with Common Variable Immunodeficiency (CVID) based on the laboratory findings and recurrent angioedema episodes.
-
-Treatment:
-
-The patient was started on intravenous immunoglobulin replacement therapy at a dose of 400mg/kg every three weeks. She was also prescribed antihistamines for symptomatic relief during acute attacks of angioedema.
-
-Follow-up and Discussion:
-
-The patient responded well to the initial treatment regimen, with no further episodes of angioedema reported after two months of therapy. Close follow-up is necessary to monitor the patient's immun
+The patient, a 58-year-old male with a significant history of alcohol abuse, presented to the emergency department with severe epigastric pain radiating to the back, nause

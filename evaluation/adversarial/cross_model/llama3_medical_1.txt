@@ -1,0 +1,15 @@
+**Title:** Unusual Presentation of Autoimmune Polyendocrine Syndrome Type 1: A Case Report
+
+**Abstract:**
+
+Autoimmune polyendocrine syndrome type 1 (APS1) is a rare genetic disorder characterized by the simultaneous occurrence of autoimmune destruction of multiple endocrine glands, typically including adrenal insufficiency, hypoparathyroidism, and chronic mucocutaneous candidiasis. We report an unusual case of APS1 presenting with isolated hypocalcemia in a 25-year-old male.
+
+The patient initially presented to our emergency department with symptoms of numbness and tingling in his hands and feet, which worsened over several days. Laboratory tests revealed severe hypocalcemia (Ca2+: 0.65 mmol/L) with an inappropriately normal parathyroid hormone level. Electrolyte panel showed mild hyperkalemia (K+: 5.4 mmol/L). Further investigation included thyroid function tests, which were within normal limits, and cortisol levels, which were slightly elevated (12.3 μg/dL).
+
+The patient's symptoms improved with calcium replacement therapy. However, a subsequent evaluation revealed evidence of hypoparathyroidism, including an inappropriately normal parathyroid hormone level and absent response to calcium infusion. Additionally, adrenal insufficiency was confirmed by low cortisol levels (<5 μg/dL) and elevated aldosterone (145 ng/dL).
+
+The patient's symptoms improved with glucocorticoid replacement therapy, and calcium supplementation was continued due to persistent hypocalcemia. A genetic analysis revealed a heterozygous mutation in the AIRE gene, consistent with APS1.
+
+This case highlights the importance of considering rare endocrine disorders in patients presenting with isolated hypocalcemia or unexplained electrolyte disturbances. APS1 should be included in the differential diagnosis of young adults with multiple endocrine deficiencies, even in the absence of classic features such as chronic mucocutaneous candidiasis.
+
+**Key words:** Autoimmune polyendocrine syndrome type 1, hypoparathyroidism, adrenal insufficiency, chronic mucocutaneous candidiasis.

@@ -53,7 +53,7 @@ class StructuralMetric(StatisticalMetric):
             # Extract all structural features
             features                                    = self._extract_features(text = text)
             
-            # Calculate raw synthetic probability based on features
+            # Calculate raw synthetic probability based on features (CORRECTED)
             raw_synthetic_score, confidence             = self._calculate_synthetic_probability(features = features)
             
             # Apply domain-specific thresholds to convert raw score to probabilities
@@ -122,7 +122,7 @@ class StructuralMetric(StatisticalMetric):
         synthetic_prob = max(params.MIN_PROBABILITY, min(params.MAX_PROBABILITY, synthetic_prob))
         authentic_prob = max(params.MIN_PROBABILITY, min(params.MAX_PROBABILITY, authentic_prob))
         
-        # Calculate hybrid probability based on statistical patterns
+        # Calculate hybrid probability based on structural patterns
         hybrid_prob    = self._calculate_hybrid_probability(features = features)
         
         # Normalize to sum to 1.0
@@ -165,9 +165,9 @@ class StructuralMetric(StatisticalMetric):
         # Burstiness (variation in patterns)
         burstiness          = self._calculate_burstiness(values = sentence_lengths)
         
-        # Uniformity scores
+        # Uniformity scores (CORRECTED - now uses constant)
         if (avg_sentence_length > structural_metric_params.ZERO_TOLERANCE):
-            length_uniformity = structural_metric_params.MAX_PROBABILITY - (std_sentence_length / avg_sentence_length)
+            length_uniformity = structural_metric_params.ONE_VALUE - (std_sentence_length / avg_sentence_length)
             length_uniformity = max(structural_metric_params.MIN_PROBABILITY, min(structural_metric_params.MAX_PROBABILITY, length_uniformity))
         
         else:
@@ -176,7 +176,7 @@ class StructuralMetric(StatisticalMetric):
         # Readability approximation (simplified)
         readability         = self._calculate_readability(text      = text, 
                                                           sentences = sentences,
-                                                          words     =  words,
+                                                          words     = words,
                                                          )
         
         # Pattern detection
@@ -310,8 +310,7 @@ class StructuralMetric(StatisticalMetric):
 
     def _detect_repetitive_patterns(self, words: List[str]) -> float:
         """
-        Detect repetitive patterns in text
-        AI text sometimes shows more repetition
+        Detect repetitive patterns in text: Generated text sometimes shows more repetition
         """
         if (len(words) < structural_metric_params.MIN_WORDS_FOR_REPETITION):
             return structural_metric_params.ZERO_VALUE
@@ -346,7 +345,7 @@ class StructuralMetric(StatisticalMetric):
         ngrams        = [tuple(words[i:i+n]) for i in range(len(words) - n + 1)]
         total_ngrams  = len(ngrams)
         
-        if total_ngrams > structural_metric_params.ZERO_TOLERANCE:
+        if (total_ngrams > structural_metric_params.ZERO_TOLERANCE):
             unique_ngrams = len(set(ngrams))
             diversity     = unique_ngrams / total_ngrams
             return min(structural_metric_params.MAX_PROBABILITY, diversity)
@@ -356,12 +355,12 @@ class StructuralMetric(StatisticalMetric):
 
     def _calculate_synthetic_probability(self, features: Dict[str, Any]) -> tuple:
         """
-        Calculate synthetic probability based on structural features: Returns raw score and confidence
+        Calculate synthetic probability based on structural features and returns raw score and confidence
         """
         synthetic_indicators = list()
         params               = structural_metric_params
         
-        # Low burstiness suggests synthetic (AI is more consistent)
+        # Low burstiness suggests synthetic (generated text is more consistent): Typical burstiness ranges: 0.1-0.4 after normalization
         if (features['burstiness_score'] < params.BURSTINESS_LOW_THRESHOLD):
             synthetic_indicators.append(params.STRONG_SYNTHETIC_WEIGHT)
 
@@ -405,11 +404,32 @@ class StructuralMetric(StatisticalMetric):
         else:
             synthetic_indicators.append(params.WEAK_SYNTHETIC_WEIGHT)
         
-        # Calculate raw score and confidence
+        # Calculate raw score and IMPROVED confidence
         if synthetic_indicators:
             raw_score  = np.mean(synthetic_indicators)
-            confidence = params.MAX_PROBABILITY - min(params.MAX_PROBABILITY, np.std(synthetic_indicators) / params.CONFIDENCE_STD_NORMALIZER)
-            confidence = max(params.MIN_CONFIDENCE, min(params.MAX_CONFIDENCE, confidence))
+            
+            # Factor 1: Agreement between indicators (lower std = higher confidence)
+            agreement_confidence = params.ONE_VALUE - min(params.ONE_VALUE, 
+                                                          np.std(synthetic_indicators) / params.CONFIDENCE_STD_NORMALIZER,
+                                                         )
+            
+            # Factor 2: Sample size adequacy
+            num_sentences        = features.get('num_sentences', 0)
+            num_words            = features.get('num_words', 0)
+            sentence_confidence  = min(params.ONE_VALUE, 
+                                       num_sentences / params.MIN_SENTENCES_FOR_CONFIDENCE,
+                                      )
+
+            word_confidence      = min(params.ONE_VALUE, 
+                                       num_words / params.MIN_WORDS_FOR_CONFIDENCE,
+                                      )
+
+            sample_confidence    = (sentence_confidence + word_confidence) / 2.0
+            
+            # Combine factors
+            confidence           = (params.CONFIDENCE_BASE + params.CONFIDENCE_STD_FACTOR * agreement_confidence + params.CONFIDENCE_SAMPLE_FACTOR * sample_confidence)
+            
+            confidence           = max(params.MIN_CONFIDENCE, min(params.MAX_CONFIDENCE, confidence))
         
         else:
             raw_score  = params.NEUTRAL_PROBABILITY
@@ -433,7 +453,7 @@ class StructuralMetric(StatisticalMetric):
         if (features['avg_sentence_length'] > params.ZERO_TOLERANCE and features['std_sentence_length'] > features['avg_sentence_length'] * params.SENTENCE_LENGTH_VARIANCE_RATIO):
             mixed_indicators.append(params.WEAK_HYBRID_WEIGHT)
         
-        # Extreme values in multiple features might indicate mixing
+        # Extreme values in multiple features might indicate mixing 
         extreme_features = 0
         if (features['type_token_ratio'] < params.TYPE_TOKEN_RATIO_EXTREME_LOW) or (features['type_token_ratio'] > params.TYPE_TOKEN_RATIO_EXTREME_HIGH):
             extreme_features += 1
@@ -441,7 +461,7 @@ class StructuralMetric(StatisticalMetric):
         if (features['readability_score'] < params.READABILITY_EXTREME_LOW) or (features['readability_score'] > params.READABILITY_EXTREME_HIGH):
             extreme_features += 1
         
-        if (extreme_features >= 2):
+        if (extreme_features >= params.MIN_EXTREME_FEATURES):
             mixed_indicators.append(params.WEAK_HYBRID_WEIGHT)
         
         if mixed_indicators:

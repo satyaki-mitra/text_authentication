@@ -1,40 +1,78 @@
-Title: Documentation for Enhanced Search Feature in XYZ Application v3.0
+Title: PetStore API - Find Pets by Status
 
-1. Overview
+## Endpoint Description
 
-The Enhanced Search Feature is a significant improvement to the search functionality within the XYZ Application. This new version offers advanced search capabilities, improving user experience and efficiency by providing more accurate and relevant results.
+This API is used to retrieve a list of pets that match the given status. The endpoint uses the `GET` HTTP method and conforms to REST architecture principles.
 
-2. Key Features
+## Request Parameters
 
-   - **Filtering:** Users can now filter their searches based on various parameters such as date range, specific categories, or keywords to refine the search results.
+The API accepts query parameters for filtering pets by their status.
 
-   - **Predictive Search:** As users type in their search query, predictive suggestions will appear, helping them find what they're looking for more quickly and accurately.
+Parameter | Data Type | Description
+-----------|----------|------------
+`status`   | string   | Status of the pet (available, sold)
 
-   - **Fuzzy Search:** The Enhanced Search Feature supports fuzzy matching, which allows it to return results that are similar to the user's search term even if the spelling is incorrect or incomplete.
+## Authentication Requirements
 
-   - **Saved Searches:** Users can save their frequent searches for easy access and future reference.
+Access to this endpoint requires an API key in the `Authorization` header. The API key can be obtained by registering for a developer account at [PetStore](https://petstore.swagger.io/).
 
-3. Usage Instructions
+Example:
+```
+Authorization: Bearer {your_api_key}
+```
 
-   - To initiate a search, click on the "Search" icon located at the top of the application interface.
+## Example Requests
 
-   - In the search bar, enter your query and press Enter or click the magnifying glass icon.
+A request to retrieve all pets with status "available" would look like this:
 
-   - If predictive search is enabled (default setting), suggestions will appear as you type. Click on a suggestion to go directly to that result.
+Request URL: `https://petstore.swagger.io/v2/pet/findByStatus?status=available`
 
-   - To filter your search results, use the filters available in the left sidebar. You can also refine your search by using advanced operators like AND, OR, NOT, and parentheses for complex queries.
+Request Headers:
+```
+Content-Type: application/json
+Authorization: Bearer {your_api_key}
+```
 
-   - To save a search, click on the "Save Search" button located under the search bar after performing a search. Enter a name for the saved search and click "Save."
+## Response Parameters
 
-4. Configuration Options
+The API response is a JSON object containing an array of pets that match the requested status. Each pet object has the following properties:
 
-Administrators can configure various aspects of the Enhanced Search Feature from the Admin Dashboard:
+Property | Data Type | Description
+---------|----------|------------
+`id`      | integer  | The unique identifier for the pet
+`category` | object   | Pet category details (not provided in this response)
+`name`    | string   | Name of the pet
+`photoUrls` | array   | An array of URLs to images of the pet
+`tags`    | array   | Tags associated with the pet
+`status`  | string   | Current status of the pet (available, sold)
 
-   - Enable/disable predictive search.
-   - Enable/disable fuzzy matching.
-   - Customize the filter options available to users.
-   - Configure the number of results displayed per page and the maximum number of saved searches for each user.
+## Example Response
 
-5. Limitations
+```json
+{
+  "petId": 12345,
+  "category": {
+    "id": 4,
+    "name": "dog"
+  },
+  "name": "Max",
+  "photoUrls": [
+    "string"
+  ],
+  "tags": [
+    {
+      "id": 1,
+      "name": "friend"
+    }
+  ],
+  "status": "available"
+}
+```
 
-   - Fuzzy search may not always provide accurate results, especially for queries with multiple words or
+## Error Codes
+
+Error responses will include the following properties:
+
+Property | Data Type | Description
+---------|----------|------------
+`code`   | integer  | Error code as defined in [RFC 6838](https://tools.ietf.org/html/rfc683

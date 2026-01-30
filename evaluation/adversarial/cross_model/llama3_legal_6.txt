@@ -1,21 +1,51 @@
-Here is a draft of a formal legal clause about data privacy compliance:
+**ARTICLE III: TERM AND TERMINATION**
 
-**Data Privacy Compliance**
+ Article III of this [Agreement/Legal Document] sets forth the terms and conditions governing the duration and termination of this agreement.
 
-1. **Definitions**: For purposes of this Section, "Personal Data" means any information that (a) identifies an individual, or (b) is directly or indirectly related to an individual and could be used to identify such individual.
+**Section 1: Term**
 
-2. **Compliance with Applicable Laws**: [Name of Company] will comply with all applicable laws, regulations, and industry standards regarding the collection, processing, storage, transmission, use, and disposal of Personal Data ("Data Privacy Laws").
+The term of this Agreement shall commence on [Effective Date] and continue until [Expiration Date], unless sooner terminated as provided herein (the "Term"). For the avoidance of doubt, the parties acknowledge that the Term may be extended or modified by mutual written agreement between the parties.
 
-3. **Data Protection Principles**: [Name of Company] will implement and maintain reasonable administrative, technical, and physical safeguards to protect Personal Data from unauthorized access, use, disclosure, modification, or destruction in accordance with the following principles:
+**Section 2: Termination for Cause**
 
-(a) **Collection Limitation**: [Name of Company] will only collect Personal Data that is necessary for a legitimate purpose and will inform individuals of the purposes for which their Personal Data will be used.
+Either party may terminate this Agreement upon written notice to the other party if the other party:
 
-(b) **Data Quality**: [Name of Company] will ensure that all Personal Data collected, processed, or stored by it is accurate, complete, and up-to-date.
+a) fails to comply with any material provision of this Agreement; or
 
-(c) **Purpose Limitation**: [Name of Company] will only use Personal Data in a manner consistent with the purposes for which it was collected and will not use such data for any purpose that is incompatible with those purposes.
+b) becomes insolvent, makes an assignment for the benefit of creditors, files a petition in bankruptcy, or has a receiver appointed.
 
-(d) **Security**: [Name of Company] will take reasonable measures to prevent unauthorized access, use, disclosure, modification, or destruction of Personal Data.
+**Section 3: Termination Without Cause**
 
-(e) **Openness and Transparency**: [Name of Company] will maintain accurate records of all Personal Data collection, processing, and storage activities, including the categories of individuals whose Personal Data is collected, processed, or stored, and will provide such information to individuals upon request.
+Either party may terminate this Agreement without cause upon [Number] days' written notice to the other party. Upon termination, all rights and obligations of the parties under this Agreement shall cease, except as otherwise provided in Sections 4 and 5 below.
 
-(f) **Individuals' Rights**: [Name of Company] will respect the rights of individuals to access, correct, or delete their Personal Data, as well
+**Section 4: Survival**
+
+The following provisions shall survive any termination or expiration of this Agreement:
+
+a) Article II (Confidentiality); and
+
+b) Article IV (Dispute Resolution).
+
+**Section 5: Effect of Termination**
+
+Upon termination or expiration of this Agreement, the parties shall:
+
+a) return all confidential information and materials provided by the other party; and
+
+b) cease using any intellectual property rights assigned to them under this Agreement.
+
+**Section 6: Notices**
+
+All notices, requests, and demands under this Article III shall be in writing and addressed to the parties at their respective addresses set forth [Location]. Notice shall be deemed effective when delivered or transmitted.
+
+By executing this Agreement, the parties acknowledge that they have read, understand, and agree to the terms and conditions contained in this Article III.
+
+**IN WITNESS WHEREOF**
+
+The parties have executed this Agreement as of the date first above written.
+
+[Signature]
+[Party Name]
+
+[Signature]
+[Party Name]

@@ -1,49 +1,72 @@
-**API Endpoint: User Information**
+**API Documentation: Weather Forecast System**
 
-**Path:** `/api/v1/users/{userId}`
+The Weather Forecast System is a RESTful API that provides real-time weather data for various locations around the world. This API is designed to be scalable, reliable, and easy to integrate with other systems.
 
-**Method:** `GET`
+**System Specifications:**
 
-**Description:** This API endpoint returns information about a specific user.
+* **API Endpoints:** The API has the following endpoints:
+	+ `/weather`: Returns current weather conditions for a given location.
+	+ `/forecast`: Returns a 7-day forecast for a given location.
+	+ `/locations`: Returns a list of supported locations.
+* **Request Methods:** GET and POST methods are supported.
+* **Response Formats:** JSON and XML formats are supported.
+* **Rate Limiting:** The API has a rate limit of 100 requests per minute.
 
-**Request Parameters:**
+**Usage Guidelines:**
 
-* **`userId`**: A unique identifier for the user (required). The value must be a valid UUID.
-	+ Type: string
-	+ Example: `123e4567-e89b-12d3-a456-426614174000`
+### Authentication
 
-**Response:**
+The Weather Forecast System uses Basic Auth for authentication. You can authenticate by including your API key in the `Authorization` header of your request. Your API key can be obtained by registering on our website.
 
-The API endpoint returns a JSON object containing the following information about the specified user:
+### Request Parameters
 
-* **`id`**: A unique identifier for the user (same as the `userId` parameter).
-	+ Type: string
-	+ Example: `123e4567-e89b-12d3-a456-426614174000`
-* **`name`**: The user's full name.
-	+ Type: string
-	+ Example: `"John Doe"`
-* **`email`**: The user's email address.
-	+ Type: string
-	+ Example: `johndoe@example.com`
-* **`role`**: The user's role (e.g., "admin", "user").
-	+ Type: string
-	+ Example: `"admin"`
+* **location**: The location for which you want to retrieve weather data. Supported locations include cities, countries, and zip codes.
+* **date**: The date for which you want to retrieve forecast data (optional).
 
-**Error Handling:**
+### Response Data
 
-* If the requested `userId` does not exist, the API endpoint returns a 404 Not Found response with an error message.
-* If there is an internal server error, the API endpoint returns a 500 Internal Server Error response with an error message.
+The response will contain the following data:
+
+* `current_weather`: Current weather conditions, including temperature, humidity, wind speed, etc.
+* `forecast`: A 7-day forecast, including high and low temperatures, precipitation probability, etc.
+
+### Error Handling
+
+If an error occurs while processing your request, the API will return a JSON response with the following structure:
+```json
+{
+    "error": {
+        "code": <error_code>,
+        "message": <error_message>
+    }
+}
+```
+**Example Request:**
+
+`GET /weather?location=New+York&date=2023-03-15`
 
 **Example Response:**
 ```json
 {
-  "id": "123e4567-e89b-12d3-a456-426614174000",
-  "name": "John Doe",
-  "email": "johndoe@example.com",
-  "role": "admin"
+    "current_weather": {
+        "temperature": 25,
+        "humidity": 60,
+        "wind_speed": 10
+    },
+    "forecast": [
+        {
+            "date": "2023-03-15",
+            "high_temp": 28,
+            "low_temp": 22,
+            "precipitation_prob": 30
+        },
+        ...
+    ]
 }
 ```
-**Security Considerations:**
+**Troubleshooting:**
 
-* This API endpoint requires authentication and authorization to ensure only authorized users can access user information.
-*
+* If you encounter errors or issues, please refer to our API documentation and FAQs.
+* For technical support, contact us at [support@example.com](mailto:support@example.com).
+
+By following these guidelines, you can effectively integrate the Weather Forecast System into your application and start receiving real-time weather data.

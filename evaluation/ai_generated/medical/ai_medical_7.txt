@@ -1,15 +1,13 @@
-Title: A Rare Case of Recurrent Hypokalemic Periodic Paralysis in a Young Adult
+Title: A Case Study of Successful Treatment of Refractory Primary Sjogren's Syndrome with Rituximab
 
-Abstract:
+Abstract
 
-We present an intriguing case study of a 25-year-old male patient, previously healthy, who presented with recurrent episodes of flaccid muscle weakness over the past two years. The episodes were characterized by sudden onset, often triggered by rest after prolonged physical activity or stress, and lasting from hours to days. During these attacks, the patient experienced partial or complete paralysis, more pronounced in proximal limb muscles, with normal sensory function preserved.
+Background: Primary Sjogren's syndrome (pSS) is an autoimmune disorder characterized by lymphocytic infiltration of the exocrine glands, leading to dryness of the eyes and mouth. Refractory pSS, defined as a lack of response to standard therapy, poses significant challenges for clinicians. This case report highlights the successful treatment of refractory pSS with Rituximab, a chimeric monoclonal antibody targeting CD20-positive B cells.
 
-Laboratory investigations during an attack revealed a marked hypokalemia (serum potassium: 2.1 mmol/L; normal range: 3.5-5.1 mmol/L), while creatine kinase levels were significantly elevated (CK: 10,000 U/L; normal range: <170 U/L). The patient's family history was unremarkable for similar symptoms or neurological disorders.
+Case Presentation: A 58-year-old female presented with symptoms consistent with pSS, including xerostomia, keratoconjunctivitis sicca, arthralgias, and fatigue of three-year duration. The patient had failed multiple lines of therapy, including hydroxychloroquine, azathioprine, mycophenolate mofetil, and prednisone. Laboratory results showed positive anti-SSA antibodies, low Schirmer's test scores, and decreased unstimulated and stimulated whole saliva flow rates, confirming the diagnosis of pSS.
 
-The diagnosis of Hypokalemic Periodic Paralysis (HPP) was made based on the clinical presentation and biochemical findings, confirmed by genetic testing that identified a heterozygous mutation in the gene encoding the skeletal muscle voltage-gated sodium channel (SCN4A).
+Diagnostic Approach: The patient underwent a comprehensive evaluation to determine the extent of her disease activity and assess the need for alternative treatment options. This included a complete blood count, comprehensive metabolic panel, erythrocyte sedimentation rate (ESR), C-reactive protein (CRP), anti-double stranded DNA antibodies, complement levels, antinuclear antibody (ANA) titer, and rheumatoid factor. Imaging studies such as magnetic resonance imaging (MRI) of the salivary glands and ultrasound were also performed to evaluate glandular involvement.
 
-The patient was treated with oral potassium supplements during acute attacks and regular potassium-sparing diuretics for prophylaxis. With these interventions, the frequency and severity of the episodes have significantly decreased, improving the quality of life for our patient.
+Treatment: Given the refractory nature of the patient's pSS, a decision was made to initiate treatment with Rituximab. The patient received four infusions of 1000 mg each, administered two weeks apart.
 
-This case highlights the importance of considering rare inherited disorders such as HPP in patients presenting with recurrent muscle weakness and hypokalemia. Early recognition and appropriate management can lead to effective symptom control and improved outcomes.
-
-Keywords: Hypokalemic Periodic Paralysis, Skeletal Muscle Disorders, Genetic Testing, Potassium Supplementation, Prophylaxis
+Outcomes: Following the initiation of Rituximab therapy, the patient reported significant improvements in her symptoms. Laboratory tests showed decreased ESR and CRP levels, normalization of complement levels, and a reduction in ANA titer. The Schirmer's test scores increased, and both unstimulated and stimulated whole saliva flow rates improved significantly. MRI and ultrasound imaging revealed a marked decrease in the extent of lymphocytic infiltration in the salivary glands.

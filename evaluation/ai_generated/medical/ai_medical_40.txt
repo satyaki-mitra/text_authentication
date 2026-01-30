@@ -1,15 +1,15 @@
-Title: A Rare Case of Pseudoxanthoma Elasticum Presenting with Retinal Detachment
+Title: A Case Study on Successful Management of Severe Acute Pancreatitis Using Prophylactic Plasminogen Activator and Early Enteral Nutrition
 
 Abstract
 
-We report an unusual case of a 52-year-old Caucasian male who presented to our ophthalmology department with a complaint of blurred vision in his left eye for the past two weeks. The patient's medical history was significant for no known systemic diseases, but he reported a family history of premature cataract formation and cardiovascular issues.
+Background: Severe acute pancreatitis (SAP) is a life-threatening inflammatory condition associated with high morbidity and mortality. Traditional management strategies primarily focus on supportive care, fluid resuscitation, pain control, and nutritional support. However, the search for more effective interventions continues to drive research in this field.
 
-Upon examination, slit-lamp biomicroscopy revealed angioid streaks radiating from the optic disc in the left eye. Funduscopic exam showed yellowish plaques around the neck of the retinal vessels, characteristic of planar calcifications in Pseudoxanthoma Elasticum (PXE). Indirect ophthalmoscopy confirmed a posterior pole detachment in the same eye. The right eye showed no abnormalities.
+Case Presentation: A 58-year-old male presented to the emergency department with a four-day history of persistent epigastric abdominal pain radiating to his back, accompanied by vomiting and fever. Laboratory investigations revealed a serum amylase level of 1,600 IU/L (normal range: 25-140 IU/L) and lipase level of 3,000 IU/L (normal range: 13-60 IU/L), suggestive of pancreatitis. Computed tomography confirmed the diagnosis of SAP with necrotizing features.
 
-The patient was diagnosed with Pseudoxanthoma Elasticum, which is an uncommon, autosomal recessive disorder characterized by calcification and fragmentation of elastic fibers in various tissues such as skin, retina, and cardiovascular system. This condition can lead to complications like choroidal neovascularization, retinal detachment, and arterial aneurysms.
+Diagnostic Approach: Given the severity of the patient's condition, a thorough diagnostic workup was conducted to assess the extent of organ damage and complications. Transabdominal ultrasonography revealed pancreatic necrosis. Magnetic resonance cholangiopancreatography (MRCP) was performed to exclude other potential etiologies such as gallstones or tumors.
 
-The patient was referred for further management involving vitrectomy and scleral buckling surgery to repair the retinal detachment. Genetic counseling was also provided due to the hereditary nature of the disease and potential risks for family members.
+Treatment: The patient was immediately started on prophylactic alteplase, a plasminogen activator, to prevent complications related to pancreatic necrosis such as infection and abscess formation. Early enteral nutrition (EN) was initiated within 24 hours of hospital admission to minimize catabolic stress, maintain gut integrity, and promote recovery. Pain control was achieved using a combination of opioids and non-steroidal anti-inflammatory drugs (NSAIDs).
 
-This case highlights the importance of considering rare conditions like Pseudoxanthoma Elasticum in patients presenting with symptoms suggestive of retinal disorders, especially when there is a family history of related complications. Early diagnosis can aid in timely management, potentially reducing morbidity and preserving visual function.
+Outcomes: The patient's clinical condition improved significantly over the course of 7 days, with gradual resolution of abdominal pain and normalization of laboratory values. Following a period of close observation and management of complications, the patient was discharged on hospital day 14 with no signs of residual pancreatitis or complications.
 
-Keywords: Pseudoxanthoma Elasticum, Retinal Detachment, Angioid Streaks, Genetic Counseling
+Research Methodology and Findings: This case report highlights the potential benefits of prophylactic plasminogen activator use in SAP management. A literature review revealed limited but promising evidence supporting its role in reducing the incidence of pancreatic necrosis-related complications such as

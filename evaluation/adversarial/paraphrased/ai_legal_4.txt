@@ -1,0 +1,28 @@
+Title: Data Processing Contract - Section 4: Rights of Data Subjects
+
+4. The Rights of Data Subjects
+
+4.1 Responsibilities Concerning Data Subject Inquiries
+
+4.1.1 The Data Controller (referred to henceforth as "Controller") retains the authority to mandate the Data Processor (referred to henceforth as "Processor") to implement appropriate actions in response to requests from Data Subjects (hereinafter "Data Subjects"), regarding their rights as defined by Regulation (EU) 2016/679 (General Data Protection Regulation or "GDPR").
+
+4.1.2 The Processor, within the bounds of legal permissibility and technological feasibility, will collaborate with the Controller in fulfilling obligations under Articles 12 to 22 of GDPR in relation to Data Subjects' requests for:
+   a. Access to Personal Information (Article 15)
+   b. Modification of Personal Information (Article 16)
+   c. Deletion of Personal Information (Article 17)
+   d. Restriction of Data Processing (Article 18)
+   e. Opposition to Data Processing (Article 21)
+   f. Portability of Data (Article 20).
+
+4.1.3 Upon a reasonable request from the Controller, the Processor will provide details about the measures implemented in accordance with this Section 4.1.2.
+
+4.2 Notification of Data Subject Inquiries
+
+4.2.1 The Processor will promptly inform the Controller if it receives an inquiry from a Data Subject exercising any of their rights under GDPR, unless EU or Member State law prevents such disclosure for significant reasons related to public interest.
+
+4.2.2 Notifications under this Section 4.2.1 will include:
+   a. The nature of the inquiry
+   b. Actions taken by the Processor in response to the inquiry, and
+   c. A copy of the Data Subject's inquiry (unless it was for correction).
+
+4.

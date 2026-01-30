@@ -1,7 +1,27 @@
-Clause: Indemnity and Hold Harmless Agreement
+Title: Data Processing Agreement ("DPA")
 
-In this agreement, the indemnifying party (Indemnitor) agrees to hold harmless and indemnify the indemnified party (Indemnitee) from any and all actions, claims, damages, liabilities, costs, or expenses (collectively "Claims") arising out of or related to the indemnifying party's acts or omissions in connection with this agreement or the use of the indemnified party's services, products, or properties. The indemnifying party further agrees to reimburse the indemnified party for any payments made by it as a result of such Claims, provided that the indemnifying party is given prompt notice of any such Claim and an opportunity to defend against such Claim at its own expense. This indemnity shall survive termination or expiration of this agreement.
+This Data Processing Agreement ("Agreement") is entered into on the Effective Date (as defined below) by and between [Company Name] ("Data Controller" or "Controller"), a company organized under the laws of [Country], with its principal place of business located at [Address], and [Service Provider Name] ("Data Processor" or "Processor"), a company organized under the laws of [Country], with its principal place of business located at [Address].
 
-Case Summary: Smith v. Johnson (2021)
+WHEREAS, Controller is a party to an agreement with Processor for the provision of services (the "Agreement"); and
 
-In the case of Smith v. Johnson, the plaintiff, Smith, brought a lawsuit against the defendant, Johnson, alleging negligence and breach of contract in connection with a real estate transaction. Specifically, Smith claimed that Johnson had failed to disclose material defects in the property and had engaged in fraudulent activities during the sale process. The court found in favor of Johnson, holding that the indemnity clause contained in the purchase agreement between the parties provided Johnson with protection against any Claims arising out of or related to the transaction, including those based on negligence or breach of contract. The court further held that Smith had failed to provide Johnson with prompt notice of the alleged defects and had waived his right to claim indemnity by not allowing Johnson the opportunity to defend against the Claim at its own expense as required by the agreement.
+WHEREAS, in providing such services, Processor will process Personal Data on behalf of Controller;
+
+WHEREAS, the General Data Protection Regulation (EU) 2016/679 ("GDPR") requires that parties entering into data processing agreements ensure a level of protection for Personal Data that is essentially equivalent to that afforded by the GDPR;
+
+NOW, THEREFORE, in consideration of the mutual covenants contained herein and for other good and valuable consideration, the receipt and sufficiency of which are hereby acknowledged, the parties agree as follows:
+
+1. Definitions
+
+1.1 In this Agreement, the following terms shall have the meanings set out below:
+
+   "Agreement" means the agreement between the Controller and Processor governing the provision by Processor of services to Controller, under which Processor processes Personal Data on behalf of Controller.
+
+   "Controller" means the natural or legal person, public authority, agency, or other body which, alone or jointly with others, determines the purposes and means of the processing of Personal Data.
+
+   "Data Subject" means an identified or identifiable natural person whose Personal Data is processed by Processor on behalf of Controller.
+
+   "Personal Data" means any information relating to an identified or identifiable natural person; an identifiable natural person is one who can be identified, directly or indirectly, in particular by reference to an identifier such as a name, an identification number, location data, an online identifier, or to one or more factors specific to the physical, physiological, genetic, mental, economic, cultural, or social identity of that natural person.
+
+   "Processing" means any operation or set of operations which is performed on Personal Data or sets of Personal Data, whether or not by automated means, such as collection, recording, organization, structuring, storage, adaptation or alteration, retrieval, consultation, use, disclosure by transmission, dissemination or otherwise making available, alignment or combination, restriction, erasure, or destruction.
+
+   "Processor" means a natural or legal person, public authority, agency, or other body which processes Personal Data

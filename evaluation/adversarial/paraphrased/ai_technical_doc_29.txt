@@ -1,0 +1,42 @@
+Title: API User Management - Endpoints for Data Operations
+
+## 1. Introduction
+
+This document delineates the User Management APIs for our platform, offering endpoints that enable user data manipulation through Create, Retrieve, Update, and Delete (CRUD) operations.
+
+## 2. Access Control
+
+All requests mandate authentication using API keys, with the key supplied as an `Authorization` header containing the value `Bearer Your_API_Key`.
+
+## 3. Endpoints Overview
+
+### 3.1 User Creation
+
+- **Endpoint:** `POST /register`
+  - **Functionality:** Registers a new user within the system.
+
+#### 3.1.1 Request Details
+
+| Parameter     | Data Type   | Description                                                               |
+|---------------|------------|---------------------------------------------------------------------------|
+| full_name     | string      | The user's complete name.                                                |
+| email         | string      | A distinctive email address for the user.                                 |
+| encrypted_pass| string      | The user's password, encoded prior to transmission to our servers.       |
+| role          | string      | The assigned user role (e.g., admin, standard).                            |
+
+#### 3.1.2 Response Details
+
+| Parameter     | Data Type   | Description               |
+|---------------|------------|---------------------------|
+| user_id       | integer     | The unique identifier for the new user.  |
+| full_name     | string      | The user's complete name.    |
+| email         | string      | The user's distinctive email.      |
+| role          | string      | The assigned user role.            |
+
+#### 3.1.3 Example Request
+
+```bash
+POST /register HTTP/1.1
+Host: api.example.com
+Authorization: Bearer Your_API_Key
+Content-Type: application/

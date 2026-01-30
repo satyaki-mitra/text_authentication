@@ -1,31 +1,35 @@
-Case Title: Smith v. Johnson
+Title: Data Processing Agreement - Clause 4: Data Subject Rights
 
-Court: Supreme Court of the State of New York, County of Albany
+4. Data Subject Rights
 
-Docket Number: 20-CV-12345
+4.1 Obligations Regarding Data Subject Requests
 
-Date of Decision: March 1, 2021
+4.1.1 Data Processor shall, at the choice of Data Controller, assist Data Controller in fulfilling its obligations under Articles 12 to 22 and Article 34 of the GDPR to respond to requests for exercising the data subject's rights (collectively, "Data Subject Requests"). Data Processor's assistance shall include, but not be limited to, providing reasonable cooperation and assistance necessary for Data Controller to comply with such obligations.
 
-Judge: Honorable Elizabeth A. Garry
+4.1.2 Data Processor shall promptly notify Data Controller if it receives a request from a data subject in relation to this Processing, unless EU Law prohibits such notification on important grounds of public interest.
 
-Parties:
-Plaintiff: John Smith (hereinafter "Plaintiff")
-Defendant: Jane Johnson (hereinafter "Defendant")
+4.2 Response to Data Subject Requests
 
-Facts:
-The Plaintiff, John Smith, brought this action against the Defendant, Jane Johnson, alleging breach of contract. The parties entered into a written agreement on October 1, 2020, whereby the Defendant agreed to sell and transfer certain real property to the Plaintiff for the sum of $300,000. According to the Plaintiff's complaint, the Defendant failed to deliver possession of the property on the agreed-upon closing date, December 15, 2020, thereby breaching the contract.
+4.2.1 Upon receiving a Data Subject Request, Data Processor shall, at the choice of Data Controller:
 
-Issue:
-Whether the Defendant's failure to deliver possession of the real property by the closing date constitutes a breach of the contract between the parties.
+(a) provide Data Controller with such information and cooperation as is necessary for Data Controller to respond directly to the data subject; or
 
-Holding:
-The Court finds that the Defendant's failure to deliver possession of the real property on the agreed-upon closing date constituted a material breach of the contract, entitling the Plaintiff to damages.
+(b) if requested by Data Controller, take reasonable steps (at Data Controller's expense) to assist in the compliance with the Data Subject Request, including amending, correcting, deleting or restricting the processing of Personal Data.
 
-Reasoning:
-Under New York law, a breach of contract occurs when one party fails to perform a material obligation under the contract without justification. Here, the Defendant's failure to deliver possession of the property by the closing date was a material term of the contract, as it was specifically mentioned in the agreement and essential for the Plaintiff to complete his purchase. The Defendant's failure to perform this obligation constitutes a breach of contract.
+4.3 Data Processor's Obligations Regarding Access by Data Subjects
 
-Decision:
-The Court grants the Plaintiff's motion for summary judgment on his claim for breach of contract, and orders the Defendant to pay damages to the Plaintiff in an amount to be determined at a future trial or by further proceedings. The Clerk is directed to enter judgment accordingly.
+4.3.1 Data Processor shall implement appropriate technical and organizational measures to enable Data Controller to demonstrate compliance with Articles 5(1)(a) to (e) and 25 to 39 of the GDPR, insofar as the processing operations are carried out by Data Processor.
 
-Attorneys:
-For the Plaintiff: John Doe, Esq., 123 Main Street, Albany,
+4.3.2 Data Processor shall maintain documentation of all categories of processing activities carried out under this Agreement, including a description of the technical and organizational security measures implemented, and make it available to Data Controller upon request.
+
+4.4 Data Breach Notification
+
+In the event of a personal data breach, Data Processor shall without undue delay notify Data Controller thereof, providing all relevant information necessary for Data Controller to comply with its obligations under Articles 33 and 34 of the GDPR.
+
+4.5 Compliance with Laws and Regulations
+
+In performing its obligations under this Clause, Data Processor shall comply with all applicable laws and regulations in the EU Member State in which the Data Processing takes place.
+
+4.6 Liability
+
+Each party's liability arising out of or in connection with this Clause shall be subject to the indemnification and limitation of liability provisions set forth elsewhere in this Agreement.

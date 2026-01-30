@@ -1,50 +1,63 @@
-**API Endpoint: Get User Information**
+**API Documentation: Customer Management System**
 
-**Endpoint:** `GET /users/{userId}`
+The Customer Management System (CMS) is an Application Programming Interface (API) that allows developers to interact with our customer database, retrieve information, and perform various operations on customers. The API uses RESTful architecture and supports HTTP/HTTPS requests.
 
-**Description:** This API endpoint allows clients to retrieve detailed information about a specific user.
+**Endpoints**
 
-**Path Parameters:**
+The CMS API has the following endpoints:
 
-* `{userId}` (required): The unique identifier of the user for whom you want to retrieve information. This parameter is case-sensitive and must match the format of the user's ID in your system.
+1. **GET /customers**: Retrieves a list of all customers.
+	* Parameters: None
+	* Response: A JSON array containing customer objects with the following properties:
+		+ id (integer)
+		+ name (string)
+		+ email (string)
+		+ phone (string)
+2. **GET /customers/:id**: Retrieves a specific customer by ID.
+	* Parameters: id (integer)
+	* Response: A JSON object containing the customer's information with the same properties as above
+3. **POST /customers**: Creates a new customer.
+	* Request Body: A JSON object with the following properties:
+		+ name (string)
+		+ email (string)
+		+ phone (string)
+	* Response: The newly created customer's ID and information in JSON format
+4. **PUT /customers/:id**: Updates an existing customer.
+	* Parameters: id (integer)
+	* Request Body: A JSON object with the updated properties (name, email, phone)
+	* Response: The updated customer's information in JSON format
+5. **DELETE /customers/:id**: Deletes a customer by ID.
+	* Parameters: id (integer)
+	* Response: None
 
-**Request Headers:**
+**Error Handling**
 
-* `Authorization`: Your API key or authentication token, if required.
-* `Content-Type`: `application/json` (default)
+The API uses standard HTTP error codes to indicate errors:
 
-**Query Parameters:**
+* 200 OK: Request successful
+* 400 Bad Request: Invalid request data or missing required parameters
+* 404 Not Found: Resource not found (e.g., customer does not exist)
+* 500 Internal Server Error: Unexpected server-side error
 
-* None
+**Authentication**
 
-**Response:**
+The CMS API uses JSON Web Tokens (JWT) for authentication. To authenticate, send a valid JWT token in the `Authorization` header of your request.
 
-The response will be a JSON object containing the requested user information. The following fields are included:
+**Rate Limiting**
 
-* `id`: The unique identifier of the user.
-* `name`: The user's full name.
-* `email`: The user's email address.
-* `phone`: The user's phone number (if available).
-* `address`: A JSON object containing the user's address information:
-	+ `street`: The street address.
-	+ `city`: The city.
-	+ `state`: The state or province.
-	+ `zip`: The zip code or postal code.
-* `created`: The date and time when the user account was created (UTC).
-* `updated`: The date and time when the user's information was last updated (UTC).
+To prevent abuse and ensure fair usage, we enforce rate limiting on all API requests. The limit is 100 requests per minute per IP address.
 
-**Example Response:**
-```json
-{
-  "id": 123456,
-  "name": "John Doe",
-  "email": "johndoe@example.com",
-  "phone": "+1-555-555-5555",
-  "address": {
-    "street": "123 Main St",
-    "city": "Anytown",
-    "state": "CA",
-    "zip": "12345"
-  },
-  "created": "2022-01-01T12:00:00Z",
-  "updated": "2022-02-15T14:30
+**Caching**
+
+To improve performance, we cache responses for a maximum of 1 hour. This means that if you make multiple requests to the same endpoint within an hour, you will receive the cached response instead of re-fetching the data from our database.
+
+**Usage Guidelines**
+
+When using the CMS API, please follow these guidelines:
+
+* Always use HTTPS when making requests
+* Include a valid JWT token in your `Authorization` header for authenticated requests
+* Be mindful of rate limiting and avoid making excessive requests
+* Handle errors gracefully by checking response codes and handling exceptions accordingly
+
+By following these guidelines and understanding the API endpoints, you can effectively integrate our Customer Management System into your application. If you have any questions or need further assistance, please contact our support team.

@@ -1,49 +1,71 @@
-Title: Dive into Dependency Injection in Java: Understanding and Implementing with Spring Framework
+Title: Documentation on Observer Design Pattern Implementation in Java
 
-Overview:
+## Introduction
 
-Dependency Injection (DI) is a design pattern that aims to improve modularity, testability, and reusability in software applications by decoupling dependencies between components. This article will delve into the concept of Dependency Injection using the popular Java framework - Spring, and provide you with a practical understanding and implementation guide.
+The Observer Design Pattern is a behavioral design pattern that defines a one-to-many dependency between objects, allowing them to be notified automatically of any changes that occur in the subject (also known as the observable object). This pattern is particularly useful in applications where multiple objects need to be kept up-to-date with the state of other objects.
 
-Prerequisites:
+## Use Cases
 
-- Basic knowledge of Java programming language and OOP concepts
-- Familiarity with Maven or Gradle for project setup
+The Observer design pattern can be effectively used in various scenarios:
 
-Introduction to Dependency Injection (DI):
+1. Weather forecasting systems: In a weather forecasting application, users subscribe (observe) to receive updates from various weather stations (subjects). When there is a change in weather conditions at any station, all subscribed users are notified.
 
-In traditional object-oriented programming, objects are responsible for creating their dependencies, which leads to tight coupling between components. Dependency Injection aims to invert this relationship by having external components provide the dependencies, thus achieving loose coupling and promoting maintainability and testability.
+2. Stock market ticker: A stock market application can use the Observer pattern to update users about real-time stock prices or market trends. The stock exchange system (subject) will notify all interested users (observers) whenever there is a change in stock prices.
 
-Spring Framework:
+3. Email notifications: In an email client, when a new message arrives or an existing message changes status (e.g., read/unread), various components within the application can be notified to update their UI accordingly.
 
-Spring is an open-source Java framework that provides comprehensive support for developing enterprise applications. It includes various modules such as Spring Core, Spring MVC, Spring Data, etc., but we will focus on Spring Core for the purpose of this article.
+## Implementation in Java
 
-Setting up a Spring project with Maven:
-
-1. Create a new Maven project and add the following dependencies to your `pom.xml` file:
-
-```xml
-<dependencies>
-    <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-context</artifactId>
-        <version>5.3.14</version>
-    </dependency>
-    <!-- Optional: Spring Test for unit testing -->
-    <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-test</artifactId>
-        <version>5.3.14</version>
-        <scope>test</scope>
-    </dependency>
-</dependencies>
-```
-
-2. Configure Spring by adding the following lines to your main application class:
+### Interfaces and Abstract Classes
 
 ```java
-@Configuration
-public class AppConfig {
+public interface Subject {
+    void registerObserver(Observer observer);
+    void removeObserver(Observer observer);
+    void notifyObservers();
+}
+
+public abstract class Observer {
+    protected Subject subject;
+
+    public void update() {
+        // Implement specific update logic based on the subject's state change
+    }
+
+    public void setSubject(Subject subject) {
+        this.subject = subject;
+        subject.registerObserver(this);
+    }
 }
 ```
 
-3. Create a simple service example, let's call it `GreetingService`. This service will have a dependency on a `MessageProvider` interface:
+### Concrete Subject and Observer Implementations
+
+```java
+public class StockTicker implements Subject {
+    private List<Observer> observers = new ArrayList<>();
+    private String stockSymbol;
+    private double currentPrice;
+
+    // Methods for registering, removing observers and updating them when the state changes
+}
+
+public class StockMarketUser extends Observer {
+    private String userName;
+
+    public StockMarketUser(String userName) {
+        this.userName = userName;
+    }
+
+    @Override
+    public void update() {
+        System.out.println("Stock market user: " + userName + " has been notified of a change in stock price.");
+    }
+}
+```
+
+### Client Code Using the Observer Pattern
+
+```java
+public class Main {
+    public static void main

@@ -1,0 +1,29 @@
+Title: Mastering the Art of Web Development: Configuring a Personal Workspace using WAMP on Windows
+
+This tutorial outlines the process of configuring a local development environment on your Windows computer utilizing WAMP (Windows, Apache, MySQL, PHP) Server. Upon completion, you will possess a functional local server, enabling you to construct and scrutinize web applications.
+
+**Phase 1: Acquiring and Installing WAMP Server**
+
+1.1 Navigate to the official WAMPServer website at <https://sourceforge.net/projects/wampserver/> and download the most current version for Windows systems. As of now, WAMPServer 3 is the latest stable release.
+
+1.2 Execute the installer by double-clicking the downloaded file (WAMPServer3_x64_apache2_4_42_php7_2_8_mysql5_7_290530_0_VC15_x64.exe for 64-bit systems). Adhere to the on-screen guidelines to complete the installation process.
+
+**Phase 2: Initiating WAMP Server**
+
+2.1 Upon successful installation, locate a shortcut for WAMPServer within your Start menu or desktop. Click on it to activate the server.
+
+2.2 You will be requested to grant the server access through Windows Firewall. Select "Allow Access" followed by "Close."
+
+**Phase 3: Becoming Familiar with WAMP Server Interface**
+
+The WAMPServer interface comprises various components:
+
+- Localhost - The local IP address utilized for accessing your web applications on the server.
+- Apache - An open-source HTTP server software that manages web requests and distributes content.
+- MySQL - An open-source relational database management system that stores your application's data.
+- PHPMyAdmin - A free, open-source web-based interface for administering MySQL databases.
+- Services - A section displaying the status of Apache, MySQL, and other WAMP services.
+
+**Phase 4: Activating and Launching Services**
+
+4.1 Verify that all services are inactive by noticing the red "Stopped"

@@ -1,35 +1,55 @@
-Title: Beginner's Guide to Using a Text Editor for Coding
+Title: A Comprehensive Guide for Beginners: Setting Up an Apache Web Server on Ubuntu 20.04 LTS
 
-1. **Choosing a Text Editor**
-   - For beginners, free text editors such as Visual Studio Code (VSCode), Atom, or Sublime Text are recommended due to their user-friendly interfaces and extensive support for plugins and themes.
-   - Download the preferred text editor from its official website and follow the installation instructions provided.
+This tutorial will guide you through the process of setting up an Apache web server on Ubuntu 20.04 LTS, a crucial step in hosting websites and web applications. Let's dive in!
 
-2. **Setting Up the Workspace**
-   - Once installed, open the text editor. A new window or tab will appear where you can start writing your code.
+**Before You Begin:**
+1. Make sure your system is updated: `sudo apt-get update`
+2. Install essential tools: `sudo apt-get install software-properties-common`
 
-3. **Understanding the Interface**
-   - Familiarize yourself with the interface and its various components such as the sidebar (file explorer), editor area (where you write code), status bar, and menus.
+**Step 1: Install Apache**
 
-4. **Setting Up a Project**
-   - Create a new folder on your computer for your project by right-clicking in an empty space and selecting "New Folder." Name it appropriately.
-   - In the text editor, open this folder by going to File > Open Folder or using the keyboard shortcut (Ctrl+Shift+O in VSCode).
+To install the Apache web server, we will use the apt package manager:
 
-5. **Writing Your First Code**
-   - To write code, simply type it into the editor area. For example, if you're learning Python:
-     ```python
-     print("Hello, World!")
-     ```
+```bash
+sudo apt-get install apache2
+```
 
-6. **Saving Your File**
-   - Save your file by going to File > Save As or using the keyboard shortcut (Ctrl+S). Name it appropriately with a .py extension if you're writing Python code.
+Once the installation is complete, start and enable the Apache service for automatic startup at boot:
 
-7. **Running Your Code**
-   - To run your code, you may need an integrated development environment (IDE) or a terminal emulator. If you're using Python:
-     - Install Python from https://www.python.org/downloads/ if not already installed.
-     - In the text editor, open the terminal by going to Terminal > New Terminal or using the keyboard shortcut (Ctrl+``).
-     - Navigate to your project folder using the cd command, then run your code with the python command followed by the file name:
-       ```
-       cd path/to/your/project
-       python filename.py
-       ```
-       You should see "Hello
+```bash
+sudo systemctl start apache2
+sudo systemctl enable apache2
+```
+
+**Step 2: Verify Installation**
+
+To check if Apache is running, use the following command:
+
+```bash
+sudo systemctl status apache2
+```
+
+If Apache is successfully installed and running, you should see an "active (running)" status. You can also visit your server's IP address in a web browser to access the default Apache test page.
+
+**Step 3: Understanding the Apache Directory Structure**
+
+Apache stores important files and directories within its main directory located at `/var/www/html`. The default website files, including the test page you accessed earlier, are stored here.
+
+**Common Pitfall:**
+Ensure that you do not delete or modify essential files in the `/var/www/` directory without understanding their purpose.
+
+**Step 4: Create a New Website**
+
+To create a new website, follow these steps:
+
+1. Navigate to the main Apache directory: `cd /var/www/`
+2. Create a new directory for your website: `sudo mkdir mywebsite` (replace "mywebsite" with your desired site name)
+3. Change ownership of the new directory to the www-data user (Apache's default user): `sudo chown -R www-data:www-data mywebsite`
+4. Now, you can place your website files in the newly created directory.
+
+**Helpful Tip:**
+Apache uses the .htaccess file to manage additional configurations for specific directories and files. You can create one in your website's directory to customize settings as needed.
+
+**Step 5: Test Your New Website**
+
+After placing your website files, visit your server's IP address

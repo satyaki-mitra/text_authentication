@@ -1,0 +1,22 @@
+**ARTICLE III: TERM AND TERMINATION**
+
+1. **TERM**: This Agreement shall commence on the Effective Date and shall continue for a period of [insert number] years, unless terminated earlier as provided herein.
+
+2. **EARLY TERMINATION**: Either Party may terminate this Agreement upon [insert number] days' written notice to the other Party in the event that:
+a) The other Party fails to perform any material obligation or covenant under this Agreement and such failure continues for a period of [insert number] days after receipt of written notice thereof;
+b) The other Party becomes insolvent, files a petition for bankruptcy or is adjudicated bankrupt, or makes an assignment for the benefit of creditors; or
+c) A court of competent jurisdiction enters a decree or order that the other Party is not capable of managing its affairs.
+
+3. **DEFAULT TERMINATION**: This Agreement shall automatically terminate upon occurrence of any of the following events:
+a) If either Party fails to make any payment when due, and such failure continues for a period of [insert number] days after receipt of written notice thereof;
+b) If either Party breaches any material provision or covenant under this Agreement, and such breach is not cured within [insert number] days after receipt of written notice thereof.
+
+4. **SURVIVAL**: The following provisions shall survive termination of this Agreement:
+a) Articles I (Definitions), II (Purpose and Scope), III (Term and Termination), IV (Representations and Warranties), V (Confidentiality), VI (Indemnification), VII (Governing Law), VIII (Dispute Resolution), IX (Entire Agreement), X (Amendments), and XI (Notices);
+b) Any provision that by its nature is intended to survive termination, including but not limited to covenants respecting confidentiality, non-disclosure, and non-competition.
+
+5. **RETURN OF PROPERTY**: Upon termination of this Agreement, each Party shall promptly return all Confidential Information, trade secrets, and other proprietary materials in its possession or control, and each Party hereby agrees to destroy any copies thereof.
+
+6. **NO WAIVER**: No failure or delay by either Party in exercising any right, power, or remedy under this Agreement shall operate as a waiver of such right, power, or remedy.
+
+By executing this Agreement, the Parties acknowledge that they have read, understand, and agree to be bound by the terms and conditions set forth herein.

@@ -1,0 +1,36 @@
+Title: Privacy and Data Handling Protocol
+
+   A. Preamble
+
+   A.1 This Privacy and Data Handling Protocol ("Protocol") outlines the guidelines and procedures that our Organization (hereafter "We," "Us," or "Company") will adhere to when dealing with personal data. We are dedicated to ensuring all personal information handled by us, our staff, agents, vendors, or other parties acting on our behalf ("Data Handlers") is managed in accordance with existing privacy laws and regulations ("Privacy Regulations").
+
+   A.2 This Protocol applies to any Data Handler who processes personal data for the Organization. Failure to comply with this Protocol may lead to disciplinary action, ranging from written warnings to termination of employment or contract.
+
+   B. Terminology
+
+   B.1 "Personal Information" refers to any details pertaining to an individual person ("Data Owner"). A Data Owner is someone who can be identified directly or indirectly by factors such as a name, identification number, location data, online identifier, or other distinguishing characteristics related to their physical, genetic, economic, cultural, or social identity.
+
+   B.2 "Handling" encompasses any process or series of operations performed on Personal Information, whether manually or automated, including but not limited to collection, recording, organizing, storing, modifying, retrieving, using, disclosing, disseminating, aligning, combining, restricting, deleting, or destroying.
+
+   C. Roles and Responsibilities
+
+   C.1 The Organization acts as the Data Controller under Privacy Regulations, determining both the purposes and methods of Personal Information processing.
+
+   C.2 Each Data Handler is responsible for ensuring compliance with this Protocol in relation to their handling activities.
+
+   D. Data Owner Rights
+
+   D.1 Data Owners have several rights under Privacy Regulations, such as:
+
+      i) The right to access their Personal Information;
+     ii) The right to correct any incorrect or incomplete Personal Information;
+    iii) The right to erase their Personal Information (also known as the 'right to be forgotten');
+   iv) The right to limit processing;
+   v) The right to object to processing; and
+   vi) The right to transfer their Personal Information ("data portability").
+
+   D.2 Data Handlers must assist Data Owners in exercising these rights as required by Privacy Regulations.
+
+   E. Legal Basis for Processing Personal Information
+
+   E.1 We will only process Personal Information when we have a valid legal basis

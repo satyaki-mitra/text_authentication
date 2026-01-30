@@ -1,39 +1,34 @@
-Title: A Beginner's Guide to Using a Text Editor for Coding
+Title: A Comprehensive Guide for Beginners: Installing WordPress on a Local Development Environment Using MAMP
 
-1. **Introduction**
-   Welcome to the world of coding! In this tutorial, we will guide you through setting up and using a text editor for coding, specifically Visual Studio Code (VS Code). VS Code is a free, open-source, and popular code editor developed by Microsoft.
+In this tutorial, we will walk you through the process of installing WordPress on your local development environment using MAMP (Mac, Apache, MySQL, PHP). By the end of this guide, you'll have a working WordPress installation that allows you to practice and experiment without affecting your live website.
 
-2. **Download and Installation**
-   - Visit the official website: https://code.visualstudio.com/
-   - Click on 'Download for Windows', 'Download for macOS', or 'Download for Linux' depending on your operating system.
-   - Run the installer, follow the prompts to complete the installation process.
+**Prerequisites:**
+1. A Mac computer with macOS installed.
+2. Download MAMP from [the official site](https://www.mamp.info/en/downloads/) (free trial available).
 
-3. **Opening VS Code**
-   After successful installation, you can find the Visual Studio Code icon in your application folder or start menu. Click on it to open the editor.
+**Step 1: Install MAMP**
+   - Double-click the downloaded .dmg file to start the installation process.
+   - Follow the on-screen instructions to complete the installation. Once installed, MAMP will reside in your Applications folder.
 
-4. **Exploring the Interface**
-   - The main areas of the interface are:
-     a) Activity Bar (left side): Contains various views like Explorer, Terminal, Debug, and Extensions.
-     b) Editor (center): Where you write your code.
-     c) Sidebar (left or right, depending on your settings): Displays file structure of the current project.
-     d) Status Bar (bottom): Shows information about the active document, such as line and character counts.
+**Step 2: Open MAMP and Start Server**
+   - Navigate to your Applications folder and open the MAMP application.
+   - Click the "Start Servers" button at the bottom of the window to start Apache and MySQL servers.
+   - A small icon will appear in the Mac menu bar; verify that both Apache and MySQL are running by checking their corresponding icons.
 
-5. **Creating a New File**
-   - Click on 'File' in the top menu bar.
-   - Select 'New File' or 'New Window'. A new blank file will be created for you to start coding.
+**Step 3: Create a New Database**
+   - In the MAMP application, navigate to the "PHPMyAdmin" tab.
+   - Click "Database" from the left sidebar, then click the "Create new database" button.
+   - Name your database (e.g., wordpress) and click "Create."
+   - Remember your database name as you'll need it later.
 
-6. **Writing Code**
-   - You can start writing your code in the editor area. For example, if you want to write a simple HTML page, you might write:
-     ```html
-     <!DOCTYPE html>
-     <html lang="en">
-       <head>
-         <meta charset="UTF-8" />
-         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-         <title>My First Web Page</title>
-       </head>
-       <body>
-         <h1>Hello World!</h1>
-       </body>
-     </html>
-     ```
+**Step 4: Download WordPress**
+   - Visit the [WordPress download page](https://wordpress.org/download/) to get the latest version of WordPress.
+   - Unzip the downloaded .zip file. You should see a folder named "wordpress."
+
+**Step 5: Configure WordPress for Local Development**
+   - Open the Finder, navigate to the "Applications" folder, and then open the "MAMP" application.
+   - In the MAMP window, click on the "hamburger" button (three horizontal lines) and choose "Open Webstart."
+   - Navigate to your "htdocs" folder by clicking "Choose Folder," which is located within the "WWW" folder in the Applications/MAMP folder.
+   - Move the unzipped WordPress folder into the htdocs folder (this will be your project root directory). Rename the folder to something descriptive, such as "my-wordpress-project."
+
+**Step 6: Configure wp-config.php File

@@ -1,0 +1,31 @@
+Title: Data Processing Contract - Article 8: Rights of Data Subjects
+
+Article 8: Obligations Concerning Data Subject Requests
+
+8.1 Controller's Rights and Processor's Responsibilities
+
+  8.1.1 In the event that Controller demands access, correction, deletion, or restriction of Personal Data processing, Processor is obligated to promptly comply with such requests, subject to the following specific rights:
+
+      8.1.1.1 Access Right: The provision of a copy of the processed Personal Data and related information as required by applicable data protection regulations;
+
+      8.1.1.2 Rectification Right: Correction of inaccurate or incomplete Personal Data upon Controller's request, following the verification of the accuracy of the new data;
+
+      8.1.1.3 Erasure (Forgetfulness) Right: Deletion of Personal Data at Controller's discretion, unless legally obliged to retain such data;
+
+      8.1.1.4 Processing Restriction Right: Temporary halting of Personal Data processing at Controller's request, during data verification or resolution of objections; and
+
+      8.1.1.5 Portability Right: The supply of a copy of the Personal Data in a standardized machine-readable format, to the Controller or a third party designated by them, provided that this is technically feasible.
+
+8.2 Notification of Data Subject Requests
+
+8.2.1 Upon receiving a request from a Data Subject exercising their rights under applicable data protection laws (hereafter referred to as "Data Subject Request"), Processor must immediately inform Controller with all pertinent details about the request and any steps taken in response.
+
+8.3 Assistance for Data Subject Requests
+
+8.3.1 In order to fulfill its obligations under Article 8, Processor shall offer reasonable assistance to Controller by:
+
+     8.3.1.1 Supplying the necessary information and cooperation required for Controller's response to a Data Subject Request;
+
+     8.3.1.2 Implementing appropriate measures to authenticate the identity of Data Subjects who submit requests under Article 8, at Controller's discretion; and
+
+     8.3.1.3 Providing Controller with information about the Personal Data subject to a Data Subject Request, along with any known details regarding the data's origin

@@ -1,0 +1,56 @@
+Title: Oversee Pattern for Observer Design with Java Execution
+
+## Conclusion
+
+The Oversee Pattern is a conduct-based design pattern that establishes a many-to-one association between objects, enabling them to retain compatible states devoid of necessitating the objects to be cognizant of each other. This strategy is valuable in situations where several objects demand responses to alterations in another object, such as handling events or real-time data updates.
+
+## Situations
+
+For instance, within a weather app, an observable WeatherData object could manage its state and signal enrolled Overseeees (subscribers) upon substantial transformations, like temperature, humidity, or pressure modifications. The overseeees might be Graphical User Interface components presenting the updated weather details to the user.
+
+## Implementation in Java
+
+### Observable Interface
+
+```java
+public interface Oversee {
+    void affiliateOverseer(Observer overseer);
+    void detachOverseer(Observer overseer);
+    void reportOverseers();
+}
+```
+
+The Oversee interface outlines methods for adding, eliminating, and informing overseeees. In our scenario, the WeatherData class will implement this interface.
+
+### Observer Interface
+
+```java
+public interface Observer {
+    void refresh(Overseen overseen, Object data);
+}
+```
+
+The Observer interface outlines a `refresh()` method that will be invoked when an Overseen object's state varies. This method accepts two arguments: the Overseen object and any supplementary information pertinent to the change (e.g., new temperature value).
+
+### WeatherData Class (Overseen)
+
+```java
+import java.util.*;
+
+public class WeatherData implements Oversee {
+    private float temperature;
+    private float humidity;
+    private float pressure;
+    private List<Observer> overseers = new ArrayList<>();
+
+    public void dataAltered() {
+        reportOverseers();
+    }
+
+    @Override
+    public void affiliateOverseer(Observer observer) {
+        overseers.add(observer);
+    }
+
+    @Override
+    public void

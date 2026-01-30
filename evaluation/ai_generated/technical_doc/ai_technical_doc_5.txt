@@ -1,29 +1,56 @@
-Title: Documentation for the "Real-Time Data Analytics" Feature in XYZ Application
+Title: API Documentation - User Management Endpoint
 
-1. Overview
+## User Management Endpoint
 
-The Real-Time Data Analytics (RTDA) is an innovative and powerful feature of the XYZ Application, designed to enable users to monitor and analyze data streams in real-time. This feature provides valuable insights into trends, patterns, and anomalies within the data, empowering users to make informed decisions quickly.
+### Description
 
-2. Key Components
+This API provides a RESTful endpoint for managing user accounts within our system. The `/users` endpoint allows you to create new users, retrieve user details, update existing users, and delete users.
 
-   a) Data Input: The RTDA accepts data from various sources such as databases, APIs, and streaming services. Users can configure the input sources to feed data into the system.
+### Authentication Requirements
 
-   b) Real-Time Processing: The feature processes incoming data in real-time, applying algorithms for cleaning, normalization, and aggregation if necessary.
+All requests to the User Management Endpoint require an access token as part of the Authorization header. The token should be provided in the format: `Authorization: Bearer {access_token}`. Access tokens can be obtained through the Authentication API.
 
-   c) Data Visualization: RTDA offers an interactive dashboard with a variety of charts, graphs, and tables to present the processed data. Users can customize the visualizations according to their preferences.
+### Endpoint
 
-   d) Alert System: The feature includes an alert system that notifies users about significant events or anomalies detected in the data stream. Users can configure the types of alerts they want to receive and how they are delivered (email, SMS, etc.).
+`POST /users` - Create a new user
+`GET /users/{userId}` - Retrieve user details
+`PUT /users/{userId}` - Update an existing user
+`DELETE /users/{userId}` - Delete a user
 
-3. Usage Instructions
+### Request Parameters
 
-   a) Data Input Configuration: To configure data input sources, navigate to the "Data Input" section in the application settings. Add new sources by specifying their type, connection details, and update frequency.
+#### `POST /users` - Create User
 
-   b) Real-Time Processing Settings: Users can customize the processing algorithms and rules within the "Processing Rules" section of the application settings. These settings determine how the data is cleaned, normalized, aggregated, and filtered.
+**Request Body:** (application/json)
 
-   c) Data Visualization: The interactive dashboard can be accessed from the main menu. Users can customize visualizations by selecting the desired chart or graph type, adjusting display options, and filtering data based on specific criteria.
+| Name       | Data Type | Description                                   | Required |
+|------------|----------|-----------------------------------------------|----------|
+| username   | string   | The unique identifier for the user account.  | Yes      |
+| password   | string   | The encrypted password for the user account.  | Yes      |
+| email      | string   | A valid email address for the user account.   | Yes      |
 
-   d) Alert System Configuration: To configure alerts, navigate to the "Alert Settings" within the application settings. Users can specify the types of events they want to receive notifications for, as well as the delivery channels and frequency of alerts.
+#### `GET /users/{userId}` - Retrieve User Details
 
-4. Best Practices
+**URL Parameters:**
 
-   a) Regularly review and update processing rules to ensure data quality and relevance.
+- `userId`: (integer) The unique identifier of the requested user.
+
+**Response Body:** (application/json)
+
+| Name         | Data Type    | Description                                                       |
+|--------------|-------------|-------------------------------------------------------------------|
+| id           | integer      | The unique identifier for the user account.                        |
+| username     | string       | The username of the user account.                                  |
+| email        | string       | The email address associated with the user account.                |
+| createdAt    | date-time    | The timestamp when the user account was created.                   |
+| updatedAt    | date-time    | The timestamp when the user account was last updated.              |
+
+#### `PUT /users/{userId}` - Update User
+
+**Request Body:** (application/json)
+
+| Name       | Data Type | Description                           | Required |
+|------------|----------|---------------------------------------|----------|
+| username   | string   | The new username for the user account. | No       |
+| password   | string   | The encrypted new password for the user account. | No       |
+| email      | string   | A new valid email address for the user account. | No       |

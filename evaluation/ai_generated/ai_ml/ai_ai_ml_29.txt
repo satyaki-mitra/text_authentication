@@ -1,0 +1,27 @@
+Title: Explanation of Reinforcement Learning with Deep Q-Networks (DQN) and its Applications in Game Playing
+
+Reinforcement Learning (RL), a subset of Machine Learning (ML), is an area where an agent learns to make decisions by interacting with an environment. The goal is to maximize a cumulative reward over time, with the agent learning through trial-and-error interactions with its environment. One of the most popular and successful methods in RL is Deep Q-Networks (DQN).
+
+The core of DQN lies in the Convolutional Neural Network (CNN) combined with a value estimation technique known as Q-learning. The Q-value, represented by Q(s, a), denotes the expected return of choosing action 'a' in state 's'. The goal is to find the optimal Q-value function that maximizes the cumulative reward.
+
+Mathematically, DQN can be explained using the Bellman equation:
+
+Q(s,a) = ∑r*R(s,a,s') * (1 - γ)^n + γ * max_a' Q(s', a')
+
+Where,
+- s and s' are states,
+- a and a' are actions,
+- r is the immediate reward,
+- R(s,a,s') is the total reward from state 's' to 's' after taking action 'a',
+- γ (0 < γ < 1) is the discount factor that gives more importance to immediate rewards over future rewards.
+
+In DQN, the Q-value function is approximated by a neural network. The agent interacts with the environment, collects experiences (state, action, reward, next state), and updates the neural network weights using the Bellman equation in the form of temporal difference learning:
+
+Q(s_t, a_t) ← Q(s_t, a_t) + α * [r_t + γ * max_a' Q(s_(t+1), a') - Q(s_t, a_t)]
+
+Where,
+- α is the learning rate.
+
+To prevent overfitting, DQN employs several strategies: experience replay, target Q-network, and prioritized experience replay. Experience replay stores the collected experiences in a buffer and randomly samples them for training. The target Q-network maintains a separate copy of the Q-network that is updated periodically to reduce correlation between the main and target networks. Prioritized experience replay gives more importance to underestimated or overestimated Q-values during training.
+
+Practical applications of DQN include game playing, where it has achieved

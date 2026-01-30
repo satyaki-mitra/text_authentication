@@ -1,26 +1,61 @@
-Title: Documentation for Auto-Save Feature in Application XYZ Version 3.0
+Title: Pet Store REST API Documentation
 
-1. Overview
-   The Auto-Save feature is a new addition to Application XYZ version 3.0, designed to automatically save the user's work at specified intervals to prevent data loss due to unexpected application closures or system crashes.
+## Pet Store API Overview
 
-2. Functionality
-   The Auto-Save feature will be enabled by default upon installing Application XYZ version 3.0. Users can adjust the auto-save interval settings from the Preferences menu. The minimum auto-save interval is set at 5 minutes, and the maximum is set at 60 minutes.
+The Pet Store API is a RESTful service designed for managing pet-related resources such as pets, stores, and orders. This documentation provides an overview of the API's primary endpoint for creating, retrieving, updating, and deleting pet resources.
 
-3. User Interface
-   - Auto-Save Interval Adjustment: Accessed through the Preferences menu in the main Application XYZ window, this setting allows users to choose their preferred auto-save interval (ranging from 5 minutes to 60 minutes).
-   - Auto-Save Notification: A pop-up notification will appear on the screen whenever the application saves data automatically. Users can dismiss the notification by clicking anywhere within the Application XYZ window.
+### Base URL
 
-4. Data Recovery
-   If a user encounters an unexpected closure or system crash, they can recover their most recent auto-saved work by restarting Application XYZ. The application will automatically reopen with the last auto-saved version of the user's work.
+All endpoints in this API are accessible under the base URL `https://petstore.swagger.io/v2`.
 
-5. Performance Considerations
-   - The Auto-Save feature may have a minor impact on Application XYZ's performance due to the additional data saving operations. However, it is designed to minimize this impact by only saving changes when necessary and adjusting its frequency based on user preferences.
-   - Users working with large datasets or heavy computations are advised to reduce the auto-save interval to prevent extended delays during data-intensive tasks.
+## Pets Endpoint
 
-6. Compatibility
-   The Auto-Save feature is compatible with all operating systems supported by Application XYZ version 3.0, including Windows, macOS, and Linux.
+### Description
 
-7. Troubleshooting
-   In case users encounter issues with the Auto-Save feature, they can consult our online support resources or contact our technical support team for assistance. Common problems may include:
-   - Failure to auto-save data due to network connectivity issues or insufficient disk space
-   - Inability to
+The `/pet` endpoint is used to manage various pet-related operations, including creating, retrieving, updating, and deleting pets.
+
+### Request Parameters
+
+#### Query Parameters (Optional)
+
+| Parameter | Data Type  | Description                                               |
+|-----------|-----------|-----------------------------------------------------------|
+| `status`  | `string`  | Filter pets by their status (available or sold)            |
+| `limit`   | `number`  | Limit the number of results returned per request           |
+| `offset`  | `number`  | Offset the starting point for results in the response      |
+
+#### Path Parameters (Optional)
+
+| Parameter | Data Type  | Description                        |
+|-----------|-----------|------------------------------------|
+| `petId`   | `string`  | Unique identifier for a specific pet |
+
+### Request Body (POST, PUT)
+
+| Property       | Data Type            | Description                                                      |
+|---------------|---------------------|------------------------------------------------------------------|
+| `id`          | `string`            | Unique identifier for the pet (optional if creating a new pet)  |
+| `categoryId`  | `string`            | Identifier of the category to which the pet belongs             |
+| `status`      | `enum(available, sold)` | Current status of the pet                                       |
+| `name`        | `string`            | Name of the pet                                                  |
+| `photoUrls`   | `array<string>`     | URLs for photos of the pet                                      |
+| `tags`        | `array<object>`     | Array of tags associated with the pet (see below)                |
+| `category`    | `object`           | Object containing details about the pet's category (see below)   |
+
+**Tag object:**
+```json
+{
+  "id": "string",
+  "name": "string"
+}
+```
+
+**Category object:**
+```json
+{
+  "id": "string",
+  "name": "string"
+}
+```
+
+###

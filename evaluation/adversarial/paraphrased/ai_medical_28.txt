@@ -1,0 +1,21 @@
+Title: Management Strategies for Intractable Esophageal Variceal Bleeding in a Cirrhotic Patient: A Case Report
+
+Introduction
+
+In patients with cirrhosis, esophageal variceal bleeding (EVB) can be a life-threatening complication, marked by substantial morbidity and mortality. This report details an atypical yet successful management approach for intractable EVB in a cirrhotic individual, whose initial endoscopic and pharmacological treatments were unsuccessful.
+
+Patient Presentation and Course of Treatment
+
+A 58-year-old male with alcoholic liver disease (Class B according to Child-Pugh) and esophageal varices initially presented with hematemesis and melena, indicative of active EVB. Initial endoscopic ligation failed due to excessive bleeding, while subsequent sclerotherapy sessions were ineffective due to recurrent bleeding. The patient was ultimately treated with terlipressin, a vasoactive intestinal peptide (VIP) analogue, along with prophylactic antibiotics and transjugular intrahepatic portosystemic shunt (TIPS) implantation.
+
+Diagnostic Procedures
+
+Diagnosis was confirmed through esophagogastroduodenoscopy (EGD), which revealed large esophageal varices with active bleeding. Laboratory tests detected portal hypertension, characterized by elevated international normalized ratio (INR) and thrombocytopenia.
+
+Therapeutic Intervention
+
+Given the intransigent nature of the EVB, the patient received terlipressin to enhance hemostasis through splanchnic vasoconstriction. Concurrently, prophylactic antibiotics were initiated to avert bacterial translocation and spontaneous bacterial peritonitis (SBP). As a last resort, TIPS surgery was performed to lower portal pressure and diminish variceal bleeding.
+
+Outcomes and Follow-up
+
+The combined therapy led to swift hemostasis, accompanied by stabilization of vital signs and resolution

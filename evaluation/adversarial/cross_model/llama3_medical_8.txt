@@ -1,0 +1,23 @@
+**Case Report: Unusual Presentation of Giant Cell Arteritis**
+
+Abstract:
+
+A 62-year-old woman presented to the emergency department with sudden onset of severe headache, jaw pain, and visual disturbances. The patient had a history of hypertension and hyperlipidemia but was otherwise healthy. Physical examination revealed tenderness in the temporal region, limited extraocular movement, and reduced visual acuity.
+
+Laboratory tests showed elevated levels of erythrocyte sedimentation rate (ESR) (105 mm/hour) and C-reactive protein (CRP) (15 mg/dL). Magnetic resonance angiography (MRA) of the head revealed narrowing of the left internal carotid artery, consistent with giant cell arteritis (GCA).
+
+The patient was treated with high-dose corticosteroids (prednisone 60 mg/day), and her symptoms began to resolve within 24 hours. However, she developed severe nausea, vomiting, and abdominal pain 3 days into treatment.
+
+Given the unusual presentation of GCA and the development of gastrointestinal side effects, we considered alternative diagnoses, including vasculitis-related gastrointestinal perforation or aortic dissection. A repeat MRA revealed no evidence of vascular compromise or perforation.
+
+The patient's symptoms subsided with dose reduction and substitution of prednisone with dexamethasone (4 mg every 6 hours). She was discharged on a tapering regimen of corticosteroids and prophylactic anticonvulsants for seizures related to medication side effects.
+
+**Discussion:**
+
+Giant cell arteritis is a common inflammatory condition affecting the cranial arteries, often presenting with headache, scalp tenderness, and visual disturbances. Our patient's presentation was unusual due to the absence of typical symptoms and the rapid onset of gastrointestinal symptoms attributed to corticosteroid therapy.
+
+The development of gastrointestinal side effects is a recognized complication of high-dose corticosteroids, particularly when used in combination with other medications. In this case, the patient's symptoms resolved with dose reduction and substitution with dexamethasone, suggesting that the gastrointestinal side effects were primarily related to prednisone rather than GCA.
+
+**Conclusion:**
+
+This case highlights the importance of considering alternative diagnoses in patients presenting with unusual symptoms attributed to giant cell arteritis. Additionally, it emphasizes the need for careful monitoring of corticosteroid therapy and consideration of alternative medications when gastrointestinal side effects occur. Further research is needed to better understand the relationship between corticosteroids and gastrointestinal complications in patients with GCA.

@@ -1,0 +1,28 @@
+**Case Report: Unusual Presentation of Pseudohypoparathyroidism**
+
+A 42-year-old female presented to our endocrine clinic with symptoms of muscle weakness, fatigue, and recurrent kidney stones over a period of 5 years. Physical examination revealed hypocalcemia (ionized calcium: 1.08 mmol/L) and elevated parathyroid hormone (PTH) levels (14.2 ng/mL). Despite these findings, the patient's renal function was normal.
+
+Further investigation revealed a family history of similar symptoms in her father and two siblings. Laboratory tests confirmed hypocalcemia and hyperphosphatemia (serum phosphorus: 5.8 mg/dL), with an inappropriately normal or slightly elevated PTH level for the calcium-phosphorus product. Serum calcitriol levels were undetectable.
+
+The patient's symptoms and laboratory findings were consistent with pseudohypoparathyroidism, a rare disorder characterized by inappropriate elevation of PTH levels in response to hypocalcemia. This diagnosis was further supported by genetic testing, which revealed a heterozygous mutation in the GNAS gene (c.115G>A).
+
+The patient's symptoms responded well to treatment with calcitriol supplementation and phosphate binders, resulting in normalization of her calcium-phosphorus product and resolution of muscle weakness and kidney stone formation.
+
+**Discussion**
+
+Pseudohypoparathyroidism is a rare disorder characterized by inappropriately elevated PTH levels in response to hypocalcemia. It is often caused by mutations in the GNAS gene, which encodes for the α subunit of stimulatory G protein (Gαs). Our case highlights the importance of considering this diagnosis in patients with unusual presentations of hyperparathyroidism.
+
+The patient's family history and clinical presentation were consistent with pseudohypoparathyroidism, and genetic testing confirmed the presence of a heterozygous GNAS mutation. Treatment with calcitriol supplementation and phosphate binders effectively managed the patient's symptoms and laboratory abnormalities.
+
+**Conclusion**
+
+Pseudohypoparathyroidism is a rare disorder that can be difficult to diagnose. A high index of suspicion, coupled with genetic testing and careful evaluation of PTH levels, are essential for accurate diagnosis. Treatment with calcitriol supplementation and phosphate binders can effectively manage symptoms and laboratory abnormalities in these patients.
+
+**References**
+
+1. Marx SJ, et al. Abnormalities in vitamin D metabolism in pseudohypoparathyroidism. J Clin Invest 1977;60:588-597.
+2. Levine MA, et al. Genetic analysis of the GNAS gene in familial isolated hyperparathyroidism. J Bone Miner Res 2002;17:1436-1443.
+
+**Disclosure**
+
+The authors have no conflicts of interest to declare.

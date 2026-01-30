@@ -1,0 +1,37 @@
+Title: Privacy Protection Policy Guidelines
+
+A. Preamble
+
+   A.1 This Privacy Protection Policy Guideline ("Guide") outlines the principles and practices adhered to by [Company Name] ("Firm") regarding the handling of personal information by the Firm, its employees, officials, contractors, or representatives (collectively referred to as "Us" or "We").
+
+   A.2 The Guide conforms to the Personal Data Protection Act 2012 ("PDPA") of Singapore and any other pertinent laws and regulations governing data privacy.
+
+B. Collection, Utilization, and Disclosure of Personal Information
+
+   B.1 We will only gather personal information that is essential for the purposes outlined in this Guide or as communicated to the individual from whom the information is obtained.
+
+   B.2 Prior consent will be sought before using, disclosing, or collecting an individual's personal information, unless an exception under the PDPA applies.
+
+   B.3 Personal information may be acquired through various methods such as face-to-face interactions, telephone conversations, email correspondence, and online forms.
+
+   B.4 We will only use and share personal information for the reasons it was initially collected, unless the individual consents to a different use or disclosure, or an exception under the PDPA applies.
+
+C. Data Integrity and Security
+
+   C.1 Reasonable precautions will be taken to ensure that the personal information we collect is accurate, complete, and current.
+
+   C.2 Adequate measures will be implemented to safeguard personal information from unauthorized access, disclosure, loss, misuse, modification, alteration, or destruction. Such measures include, but are not limited to, implementing suitable technical and organizational security measures, conducting regular security reviews, and ensuring that our employees, officials, contractors, or representatives understand their responsibilities in relation to personal information protection.
+
+D. Access and Amendment of Personal Information
+
+   D.1 Upon request, we will grant an individual access to the personal information stored by us, subject to certain exceptions under the PDPA.
+
+   D.2 Reasonable efforts will be made to correct any inaccurate or incomplete personal information upon request by the individual, unless an exception under the PDPA applies.
+
+E. Data Retention
+
+   E.1 We will only store personal information for as long as it is necessary to achieve the purpose for which it was collected, or as mandated by applicable laws and regulations.
+
+F. Transfer of Personal Information
+
+   F.1 We may transfer personal information outside Singapore if the recipient resides in a jurisdiction with comparable data protection

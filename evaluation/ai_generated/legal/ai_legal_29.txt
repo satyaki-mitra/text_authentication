@@ -1,11 +1,43 @@
-Clause: Confidentiality and Non-Disclosure Agreement (NDA)
+Title: Data Protection Policy - Clause 9: Data Breach Notification and Response
 
-Whereas, Party A ("Disclosing Party") is a party that possesses sensitive and proprietary information ("Confidential Information"), and Party B ("Receiving Party") seeks access to such Confidential Information for the purpose of engaging in business discussions. In consideration of the mutual promises contained herein, the parties agree as follows:
+9.1 Obligation to Notify
 
-1. Definition of Confidential Information: For the purposes of this Agreement, Confidential Information shall be any information that is disclosed by either party and marked or otherwise identified as confidential at the time of disclosure, or which, given the nature of the information and circumstances surrounding its disclosure, a reasonable person would understand to be confidential.
-2. Obligations of Receiving Party: The Receiving Party agrees to maintain the Confidential Information in strict confidence for the sole purpose of evaluating potential business opportunities between the parties. The Receiving Party shall not disclose any Confidential Information to third parties without the Disclosing Party's prior written consent, and shall take reasonable measures to protect the confidentiality of such information.
-3. Exceptions: The obligations set forth in Section 2 shall not apply to any Confidential Information that (a) was already known to the Receiving Party at the time of disclosure; (b) becomes publicly available through no fault of the Receiving Party; (c) is lawfully obtained by the Receiving Party from a third party without a breach of any obligation of confidentiality; or (d) is independently developed by employees of the Receiving Party who had no access to such Confidential Information.
-4. Termination: This Agreement shall terminate upon the earlier of the completion of the business discussions or upon written notice from either party. Upon termination, the Receiving Party shall return all copies, reproductions, and notes relating to the Disclosing Party's Confidential Information.
-5. Remedies: In the event that the Receiving Party breaches this Agreement, the Disclosing Party shall be entitled to seek injunctive relief, specific performance, and damages, in addition to any other remedies available at law or in equity.
-6. Governing Law: This Agreement shall be governed by and construed in accordance with the laws of the jurisdiction where the discussions between the parties are taking place.
-7. Entire Agreement:
+9.1.1 In the event of a data breach, the Data Controller shall promptly notify the Data Subject and the Supervisory Authority in accordance with applicable laws and regulations.
+
+9.1.2 A data breach is defined as any unauthorized or unlawful access to, disclosure, loss, destruction, alteration, or acquisition of Personal Data transmitted, stored, or otherwise processed by the Data Controller.
+
+9.2 Timeline for Notification
+
+9.2.1 The Data Controller shall provide notification without undue delay and, where feasible, not later than 72 hours after having become aware of a data breach, unless the Data Controller demonstrates that the personal data breach is unlikely to result in a risk to the rights and freedoms of natural persons.
+
+9.3 Content of Notification
+
+9.3.1 The notification shall include the following information:
+
+   (a) A description of the nature of the data breach, including where possible, the categories and approximate number of Data Subjects concerned and the categories and approximate number of Personal Data records concerned;
+
+   (b) The name and contact details of the Data Protection Officer or other contact point where more information can be obtained;
+
+   (c) A description of the likely consequences of the data breach;
+
+   (d) A description of the measures taken or proposed to be taken by the Data Controller to address the data breach, including, where appropriate, measures to mitigate its possible adverse effects.
+
+9.4 Obligation to Keep Records
+
+9.4.1 The Data Controller shall maintain a record of all data breaches, whether or not they were communicated to the Data Subject and the Supervisory Authority, in accordance with applicable laws and regulations.
+
+9.5 Confidentiality
+
+9.5.1 All parties involved in the notification and response process shall maintain the confidentiality of any information received during the data breach notification and response process.
+
+9.6 Cooperation with Data Subjects
+
+9.6.1 The Data Controller shall provide appropriate assistance to the Data Subject, including providing them with the information necessary to exercise their rights under applicable laws and regulations, such as the right to access, rectify, erase, or restrict processing of their Personal Data.
+
+9.7 Cooperation with Supervisory Authority
+
+9.7.1 The Data Controller shall cooperate fully with any investigation by the Supervisory Authority regarding a data breach, providing them with all necessary information and taking all reasonable steps to remedy any identified issues.
+
+9.8 Consequences of Non-compliance
+
+9.

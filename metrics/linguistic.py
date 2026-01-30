@@ -18,8 +18,15 @@ from config.threshold_config import get_threshold_for_domain
 class LinguisticMetric(BaseMetric):
     """
     Linguistic analysis using POS tagging, syntactic complexity, and grammatical patterns
+
+    Mathematical Foundation:
+    ------------------------
+    - POS Entropy: H = -Σ p(pos) * log2(p(pos))
+    - Dependency Tree Depth: Recursive maximum depth calculation
+    - Syntactic Complexity: Weighted combination of average and max depths
     
-    Measures (Aligned with Documentation):
+    Measures:
+    ---------
     - POS tag diversity and patterns
     - Syntactic complexity and sentence structure
     - Grammatical patterns and usage
@@ -29,7 +36,8 @@ class LinguisticMetric(BaseMetric):
         super().__init__(name        = "linguistic",
                          description = "POS tag diversity, syntactic complexity, and grammatical pattern analysis",
                         )
-        self.nlp = None
+
+        self.nlp    = None
         self.params = linguistic_metric_params
     
 
@@ -41,8 +49,8 @@ class LinguisticMetric(BaseMetric):
             logger.info("Initializing linguistic metric...")
             
             # Load spaCy model for linguistic analysis
-            model_manager = get_model_manager()
-            self.nlp      = model_manager.load_model("linguistic_spacy")
+            model_manager       = get_model_manager()
+            self.nlp            = model_manager.load_model("linguistic_spacy")
             
             self.is_initialized = True
             logger.success("Linguistic metric initialized successfully")
@@ -70,7 +78,7 @@ class LinguisticMetric(BaseMetric):
             # Calculate comprehensive linguistic features
             features                                    = self._calculate_linguistic_features(text = text)
             
-            # Calculate raw linguistic score (0-1 scale) - higher = more synthetic-like
+            # Calculate raw linguistic score (0-1 scale) with IMPROVED confidence
             raw_linguistic_score, confidence            = self._analyze_linguistic_patterns(features = features)
             
             # Apply domain-specific thresholds to convert raw score to probabilities
@@ -138,10 +146,10 @@ class LinguisticMetric(BaseMetric):
         authentic_prob = max(self.params.MIN_PROBABILITY, min(self.params.MAX_PROBABILITY, authentic_prob))
         
         # Calculate hybrid probability based on linguistic variance
-        hybrid_prob = self._calculate_hybrid_probability(features)
+        hybrid_prob    = self._calculate_hybrid_probability(features)
         
         # Normalize to sum to 1.0
-        total       = synthetic_prob + authentic_prob + hybrid_prob
+        total          = synthetic_prob + authentic_prob + hybrid_prob
         if (total > self.params.ZERO_TOLERANCE):
             synthetic_prob /= total
             authentic_prob /= total
@@ -186,6 +194,9 @@ class LinguisticMetric(BaseMetric):
             # Calculate specific synthetic linguistic patterns
             synthetic_pattern_score = self._detect_synthetic_linguistic_patterns(doc = doc)
             
+            # Count sentences for confidence calculation
+            num_sentences           = len(list(doc.sents))
+            
             return {"pos_diversity"           : round(pos_diversity, 4),
                     "pos_entropy"             : round(pos_entropy, 4),
                     "syntactic_complexity"    : round(syntactic_complexity, 4),
@@ -197,7 +208,7 @@ class LinguisticMetric(BaseMetric):
                     "synthetic_pattern_score" : round(synthetic_pattern_score, 4),
                     "avg_chunk_complexity"    : round(avg_chunk_complexity, 4),
                     "complexity_variance"     : round(complexity_variance, 4),
-                    "num_sentences"           : len(list(doc.sents)),
+                    "num_sentences"           : num_sentences,
                     "num_chunks_analyzed"     : num_chunks,
                    }
             
@@ -208,7 +219,9 @@ class LinguisticMetric(BaseMetric):
 
     def _calculate_pos_diversity(self, pos_tags: List[str]) -> float:
         """
-        Calculate POS tag diversity : Higher diversity = more varied sentence structures
+        Calculate POS tag diversity (type-token ratio for POS tags)
+        
+        Higher diversity = more varied sentence structures
         """
         if not pos_tags:
             return 0.0
@@ -222,7 +235,11 @@ class LinguisticMetric(BaseMetric):
 
     def _calculate_pos_entropy(self, pos_tags: List[str]) -> float:
         """
-        Calculate entropy of POS tag distribution
+        Calculate Shannon entropy of POS tag distribution
+        
+        Formula: H = -Σ p(pos) * log2(p(pos))
+        
+        Typical English: 2.5-3.5 bits
         """
         if (not pos_tags) or (len(pos_tags) < self.params.MIN_TAGS_FOR_ENTROPY):
             return 0.0
@@ -230,10 +247,12 @@ class LinguisticMetric(BaseMetric):
         pos_counts = Counter(pos_tags)
         total_tags = len(pos_tags)
         
-        entropy = 0.0
+        entropy    = 0.0
+
         for count in pos_counts.values():
             probability = count / total_tags
-            if probability > self.params.ZERO_TOLERANCE:
+
+            if (probability > self.params.ZERO_TOLERANCE):
                 entropy -= probability * np.log2(probability)
         
         return entropy
@@ -241,13 +260,16 @@ class LinguisticMetric(BaseMetric):
 
     def _calculate_syntactic_complexity(self, doc) -> float:
         """
-        Calculate overall syntactic complexity : based on dependency tree depth and structure
+        Calculate overall syntactic complexity based on dependency tree depth and structure
+        
+        Formula: complexity = (avg_depth * weight_avg) + (max_depth * weight_max)
         """
         complexities = list()
         
         for sent in doc.sents:
             # Calculate dependency tree depth
             depths = list()
+
             for token in sent:
                 depth = self._calculate_dependency_depth(token)
                 depths.append(depth)
@@ -255,8 +277,7 @@ class LinguisticMetric(BaseMetric):
             if depths:
                 avg_depth  = np.mean(depths)
                 max_depth  = np.max(depths)
-                complexity = (avg_depth * self.params.COMPLEXITY_WEIGHT_AVG + 
-                              max_depth * self.params.COMPLEXITY_WEIGHT_MAX)
+                complexity = (avg_depth * self.params.COMPLEXITY_WEIGHT_AVG + max_depth * self.params.COMPLEXITY_WEIGHT_MAX)
                 complexities.append(complexity)
         
         return np.mean(complexities) if complexities else 0.0
@@ -264,7 +285,9 @@ class LinguisticMetric(BaseMetric):
 
     def _calculate_dependency_depth(self, token, depth: int = 0) -> int:
         """
-        Calculate dependency tree depth for a token
+        Calculate dependency tree depth for a token (recursive)
+        
+        This is mathematically correct - traverses the parse tree to find maximum depth.
         """
         if not list(token.children):
             return depth
@@ -313,7 +336,7 @@ class LinguisticMetric(BaseMetric):
             else:
                 active_voice += 1       
             
-            # Count transition words``
+            # Count transition words
             for word in self.params.TRANSITION_WORDS_SET:
                 if word in sent_text:
                     transition_words += 1
@@ -324,8 +347,7 @@ class LinguisticMetric(BaseMetric):
         transition_usage = transition_words / total_sentences if total_sentences > 0 else 0.0
         
         # Calculate consistency (lower variance in patterns)
-        consistency      = 1.0 - min(1.0, abs(passive_ratio - self.params.IDEAL_PASSIVE_RATIO) + 
-                                     abs(transition_usage - self.params.IDEAL_TRANSITION_RATIO))
+        consistency      = 1.0 - min(1.0, abs(passive_ratio - self.params.IDEAL_PASSIVE_RATIO) + abs(transition_usage - self.params.IDEAL_TRANSITION_RATIO))
         
         return {'consistency'      : max(0.0, consistency),
                 'passive_ratio'    : passive_ratio,
@@ -340,7 +362,7 @@ class LinguisticMetric(BaseMetric):
         style_indicators = list()
         
         # Sentence length variation
-        sent_lengths = [len([token for token in sent if not token.is_punct]) for sent in doc.sents]
+        sent_lengths     = [len([token for token in sent if not token.is_punct]) for sent in doc.sents]
         
         if sent_lengths:
             length_variation = np.std(sent_lengths) / np.mean(sent_lengths) if np.mean(sent_lengths) > 0 else 0.0
@@ -503,8 +525,8 @@ class LinguisticMetric(BaseMetric):
                 try:
                     chunk_doc = self.nlp(chunk)
                     
-                    # Check if processing was successful
-                    if (chunk_doc and (len(list(chunk_doc.sents)) > self.params.MIN_SENTENCES_FOR_ANALYSIS)):
+                    # Check if processing was successful (CORRECTED - now uses constant)
+                    if (chunk_doc and (len(list(chunk_doc.sents)) > self.params.MIN_SENTENCES_FOR_CHUNK_VALIDITY)):
                         complexity = self._calculate_syntactic_complexity(chunk_doc)
                         complexities.append(complexity)
                 
@@ -517,7 +539,13 @@ class LinguisticMetric(BaseMetric):
 
     def _analyze_linguistic_patterns(self, features: Dict[str, Any]) -> tuple:
         """
-        Analyze linguistic patterns to determine RAW linguistic score (0-1 scale) : Higher score = more synthetic-like
+        Analyze linguistic patterns to determine RAW linguistic score (0-1 scale) 
+        
+        Returns:
+        --------
+        (raw_score, confidence) where:
+        - raw_score: Higher = more synthetic-like
+        - confidence: Based on sample size and agreement
         """
         # Check feature validity first
         required_features = ['pos_diversity', 'pos_entropy', 'syntactic_complexity', 'grammatical_consistency', 'transition_word_usage', 'synthetic_pattern_score', 'complexity_variance']
@@ -545,6 +573,12 @@ class LinguisticMetric(BaseMetric):
         # Low POS entropy suggests templated / synthetic language
         if (features['pos_entropy'] < self.params.POS_ENTROPY_LOW_THRESHOLD):
             synthetic_indicators.append(self.params.MODERATE_SYNTHETIC_WEIGHT)
+        
+        elif (features['pos_entropy'] < self.params.POS_ENTROPY_MEDIUM_THRESHOLD):
+            synthetic_indicators.append(self.params.WEAK_SYNTHETIC_WEIGHT)
+        
+        else:
+            synthetic_indicators.append(self.params.MINIMAL_SYNTHETIC_WEIGHT)
         
         # Low syntactic complexity suggests synthetic
         if (features['syntactic_complexity'] < self.params.SYNTACTIC_COMPLEXITY_LOW_THRESHOLD):
@@ -596,10 +630,23 @@ class LinguisticMetric(BaseMetric):
         else:
             synthetic_indicators.append(self.params.VERY_LOW_SYNTHETIC_WEIGHT)
         
-        # Calculate raw score and confidence
+        # Calculate raw score
         raw_score  = np.mean(synthetic_indicators) if synthetic_indicators else self.params.NEUTRAL_PROBABILITY
-        confidence = 1.0 - (np.std(synthetic_indicators) / self.params.CONFIDENCE_STD_NORMALIZER) if synthetic_indicators else self.params.NEUTRAL_CONFIDENCE
-        confidence = max(self.params.MIN_CONFIDENCE, min(self.params.MAX_CONFIDENCE, confidence))
+        
+        # Factor 1: Agreement between indicators (lower std = higher confidence)
+        agreement_confidence = 1.0 - min(1.0, np.std(synthetic_indicators) / self.params.CONFIDENCE_STD_NORMALIZER)
+        
+        # Factor 2: Sample size adequacy
+        num_sentences        = features.get('num_sentences', 0)
+        num_chunks           = features.get('num_chunks_analyzed', 0)
+        sentence_confidence  = min(1.0, num_sentences / self.params.MIN_SENTENCES_FOR_CONFIDENCE)
+        chunk_confidence     = min(1.0, num_chunks / self.params.MIN_CHUNKS_FOR_CONFIDENCE)
+        sample_confidence    = (sentence_confidence + chunk_confidence) / 2.0
+        
+        # Combine factors
+        confidence           = (self.params.CONFIDENCE_BASE + self.params.CONFIDENCE_STD_FACTOR * agreement_confidence + self.params.CONFIDENCE_SAMPLE_FACTOR * sample_confidence)
+        
+        confidence           = max(self.params.MIN_CONFIDENCE, min(self.params.MAX_CONFIDENCE, confidence))
         
         return raw_score, confidence
     

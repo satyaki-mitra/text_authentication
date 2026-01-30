@@ -1,0 +1,30 @@
+Title: Data Processing Arrangement (DPA) Clauses
+
+A. Establishment
+
+This Data Processing Agreement ("DPA") constitutes a mutual agreement between [Client Name] ("Data Controller") and [Company Name] ("Data Processor"), hereafter referred to as the "Parties." This DPA serves as an extension of the previously established [Agreement/Contract Name] ("Agreement").
+
+B. Purpose
+
+The primary objective of this DPA is to outline the Parties' compliance with Regulation (EU) 2016/679 (General Data Protection Regulation or "GDPR") regarding the handling of Personal Data.
+
+C. Terminology
+
+For the purposes of this DPA, the following terms shall bear the meanings defined below or as specified in the GDPR, the Agreement, or otherwise:
+
+- "Data Subject" denotes any natural person whose personal data is being handled by the Data Processor on behalf of the Data Controller.
+- "Personal Data" refers to any information pertaining to an identifiable natural person, including but not limited to names, identification numbers, location data, online identifiers, or factors specific to their physical, physiological, genetic, mental, economic, cultural, or social identity.
+- "Processing" encompasses any action or set of actions performed on personal data, regardless of whether it is automated or not, such as collection, recording, organization, structuring, storage, adaptation, alteration, retrieval, consultation, use, disclosure, transmission, dissemination, alignment, combination, restriction, erasure, or destruction.
+- "Subprocessor" signifies any third party contracted by the Data Processor for data processing tasks related to the Agreement.
+
+D. Personal Data Processing
+
+The Data Controller hereby authorizes the Data Processor to process personal data exclusively for the purposes and within the specified scope detailed in the Agreement. The Data Processor is obligated to adhere strictly to documented instructions from the Data Controller, unless mandated by European Union (EU) or Member State law, whereupon the Data Processor shall inform the Data Controller of such legal obligation prior to processing, unless the law precludes disclosure due to significant public interest considerations.
+
+E. Obligations of Data Processor
+
+The Data Processor is responsible for:
+
+- processing personal data solely in accordance with the Data Controller's instructions;
+- ensuring that all personnel involved in handling personal data have agreed to maintain confidentiality or are bound by a statutory duty of secrecy;
+- implementing appropriate technical and organizational

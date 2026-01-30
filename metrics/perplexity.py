@@ -24,6 +24,11 @@ class PerplexityMetric(BaseMetric):
     - Perplexity distribution across text chunks
     - Sentence-level perplexity patterns
     - Cross-entropy analysis
+    
+    Mathematical Foundation:
+    - Perplexity = exp(cross_entropy_loss)
+    - Lower perplexity indicates more predictable text (characteristic of synthetic text)
+    - Higher perplexity indicates less predictable text (characteristic of human text)
     """
     def __init__(self):
         super().__init__(name        = "perplexity",
@@ -84,7 +89,7 @@ class PerplexityMetric(BaseMetric):
             # Calculate comprehensive perplexity features
             features                                     = self._calculate_perplexity_features(text = text)
             
-            # Calculate raw perplexity score (0-1 scale)
+            # Calculate raw perplexity score (0-1 scale) with IMPROVED confidence
             raw_perplexity_score, confidence             = self._analyze_perplexity_patterns(features = features)
             
             # Apply domain-specific thresholds to convert raw score to probabilities
@@ -182,8 +187,10 @@ class PerplexityMetric(BaseMetric):
         valid_sentences       = 0
         
         for sentence in sentences:
-            # Minimum sentence length
-            if (len(sentence.strip()) > self.params.MIN_SENTENCE_LENGTH):  
+            # Use constant instead of hardcoded division
+            min_sent_len = self.params.MIN_SENTENCE_LENGTH // self.params.MIN_SENTENCE_LENGTH_DIVISOR
+            
+            if (len(sentence.strip()) > min_sent_len):  
                 sent_perplexity = self._calculate_perplexity(sentence)
                 
                 if (sent_perplexity > self.params.ZERO_TOLERANCE):
@@ -230,11 +237,20 @@ class PerplexityMetric(BaseMetric):
 
     def _calculate_perplexity(self, text: str) -> float:
         """
-        Calculate perplexity for given text using GPT-2 : Lower perplexity = more predictable = more synthetic-like
+        Calculate perplexity for given text using GPT-2
+        
+        Mathematical Formula:
+            perplexity = exp(cross_entropy_loss)
+        
+        Interpretation:
+            Lower perplexity = more predictable = more synthetic-like
+            Higher perplexity = less predictable = more human-like
         """
         try:
-            # Check text length before tokenization
-            if (len(text.strip()) < self.params.MIN_SENTENCE_LENGTH // 2):
+            # Use constant instead of hardcoded division
+            min_text_len = self.params.MIN_SENTENCE_LENGTH // self.params.MIN_SENTENCE_LENGTH_DIVISOR
+            
+            if (len(text.strip()) < min_text_len):
                 return 0.0
 
             # Tokenize the text
@@ -255,7 +271,7 @@ class PerplexityMetric(BaseMetric):
                 outputs = self.model(input_ids, labels = input_ids)
                 loss    = outputs.loss
             
-            # Convert loss to perplexity
+            # Convert loss to perplexity (CORRECT FORMULA)
             perplexity = math.exp(loss.item())
 
             return perplexity
@@ -269,8 +285,12 @@ class PerplexityMetric(BaseMetric):
         """
         Split text into sentences
         """
-        sentences = re.split(self.params.SENTENCE_SPLIT_PATTERN, text)
-        return [s.strip() for s in sentences if s.strip() and len(s.strip()) > self.params.MIN_SENTENCE_LENGTH // 2]
+        # Use constant instead of hardcoded division
+        min_sent_len = self.params.MIN_SENTENCE_LENGTH // self.params.MIN_SENTENCE_LENGTH_DIVISOR
+        
+        sentences    = re.split(self.params.SENTENCE_SPLIT_PATTERN, text)
+        
+        return [s.strip() for s in sentences if s.strip() and len(s.strip()) > min_sent_len]
     
 
     def _calculate_chunk_perplexity(self, text: str) -> List[float]:
@@ -282,8 +302,10 @@ class PerplexityMetric(BaseMetric):
         chunk_size = self.params.CHUNK_SIZE_WORDS
         overlap = int(chunk_size * self.params.CHUNK_OVERLAP_RATIO)
 
-        # Ensure we have enough words for meaningful chunks
-        if (len(words) < chunk_size // 2):
+        # Use constant instead of hardcoded division
+        min_chunk_size = chunk_size // self.params.MIN_CHUNK_SIZE_DIVISOR
+        
+        if (len(words) < min_chunk_size):
             return [self._calculate_perplexity(text)] if text.strip() else []
         
         # Create overlapping chunks for better analysis
@@ -307,10 +329,20 @@ class PerplexityMetric(BaseMetric):
     def _normalize_perplexity(self, perplexity: float) -> float:
         """
         Normalize perplexity using sigmoid transformation
-
-        Lower perplexity = higher normalized score = more synthetic-like
+        
+        Formula:
+            normalized = 1 / (1 + exp((perplexity - center) / scale))
+        
+        Interpretation:
+            Lower perplexity → higher normalized score → more synthetic-like
+            Higher perplexity → lower normalized score → more authentic-like
+        
+        Example transformations:
+            perplexity=20  → normalized≈0.73 (high score = synthetic)
+            perplexity=40  → normalized≈0.50 (neutral)
+            perplexity=80  → normalized≈0.12 (low score = authentic)
         """
-        # Use exponential normalization
+        # Use sigmoid normalization (CORRECT IMPLEMENTATION)
         normalized = 1.0 / (1.0 + np.exp((perplexity - self.params.PERPLEXITY_SIGMOID_CENTER) / self.params.PERPLEXITY_SIGMOID_SCALE))
         
         return normalized 
@@ -347,7 +379,12 @@ class PerplexityMetric(BaseMetric):
 
     def _analyze_perplexity_patterns(self, features: Dict[str, Any]) -> tuple:
         """
-        Analyze perplexity patterns to determine RAW perplexity score (0-1 scale) : Higher score = more synthetic-like
+        Analyze perplexity patterns to determine RAW perplexity score (0-1 scale) with IMPROVED confidence
+        
+        Returns:
+            (raw_score, confidence) where:
+            - raw_score: Higher score = more synthetic-like
+            - confidence: Based on sample size and agreement between indicators
         """
         # Check feature validity first
         required_features = ['normalized_perplexity', 'perplexity_variance', 'std_sentence_perplexity', 'cross_entropy_score']
@@ -417,9 +454,27 @@ class PerplexityMetric(BaseMetric):
         else:
             synthetic_indicators.append(self.params.VERY_WEAK_SYNTHETIC_WEIGHT)
         
-        # Calculate raw score and confidence
+        # Calculate raw score
         raw_score  = np.mean(synthetic_indicators) if synthetic_indicators else self.params.NEUTRAL_PROBABILITY
-        confidence = max(self.params.MIN_CONFIDENCE, min(self.params.MAX_CONFIDENCE, 1.0 - (np.std(synthetic_indicators) / self.params.CONFIDENCE_STD_NORMALIZER)))
+        
+        # IMPROVED CONFIDENCE CALCULATION
+        # Factor 1: Agreement between indicators (lower std = higher confidence)
+        agreement_confidence = 1.0 - min(1.0, np.std(synthetic_indicators) / self.params.CONFIDENCE_STD_NORMALIZER)
+        
+        # Factor 2: Sample size adequacy
+        num_sentences       = features.get('num_sentences_analyzed', 0)
+        num_chunks          = features.get('num_chunks_analyzed', 0)
+        sentence_confidence = min(1.0, num_sentences / self.params.MIN_SENTENCES_FOR_CONFIDENCE)
+        chunk_confidence    = min(1.0, num_chunks / self.params.MIN_CHUNKS_FOR_CONFIDENCE)
+        sample_confidence   = (sentence_confidence + chunk_confidence) / 2.0
+        
+        # Combine factors
+        confidence = (self.params.CONFIDENCE_BASE + 
+                     self.params.CONFIDENCE_STD_FACTOR * agreement_confidence +
+                     self.params.CONFIDENCE_SAMPLE_FACTOR * sample_confidence)
+        
+        confidence = max(self.params.MIN_CONFIDENCE, min(self.params.MAX_CONFIDENCE, confidence))
+        
         return raw_score, confidence
     
 

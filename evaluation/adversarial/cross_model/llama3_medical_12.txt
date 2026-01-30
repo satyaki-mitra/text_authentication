@@ -1,0 +1,24 @@
+**Title:** Unusual Presentation of Neurofibromatosis Type 1: A Case Report
+
+**Abstract:**
+
+Neurofibromatosis type 1 (NF1) is a rare genetic disorder characterized by the growth of benign tumors along nerves, called neurofibromas. While the classical presentation of NF1 includes multiple cafe-au-lait macules and axillary freckling, we report an unusual case of NF1 presenting with a solitary plexiform neurofibroma in the absence of any characteristic cutaneous lesions.
+
+A 35-year-old woman was referred to our institution for evaluation of a slow-growing, painless mass in her right thigh. The lesion had been present for approximately 5 years and had gradually increased in size over time. Physical examination revealed a firm, mobile mass measuring 10 cm in diameter, located just above the knee joint.
+
+Radiological imaging studies, including computed tomography (CT) scan and magnetic resonance imaging (MRI), showed a large, well-circumscribed tumor originating from the right femoral nerve sheath. The lesion was heterogeneously enhanced with contrast agents on both CT and MRI scans.
+
+Histopathological examination of a biopsy specimen revealed a plexiform neurofibroma, characterized by a mixture of Schwann cells, fibroblasts, and perineurial cells within a collagenous stroma. Immunohistochemical staining confirmed the presence of S100 protein, a marker commonly expressed in neurofibromas.
+
+In addition to the solitary plexiform neurofibroma, the patient's medical history was significant for hypertension, which responded well to antihypertensive therapy after diagnosis and treatment of her NF1.
+
+This case highlights the importance of considering NF1 in the differential diagnosis of a solitary soft tissue mass, particularly when radiological imaging studies suggest a nerve sheath origin. The absence of characteristic cutaneous lesions does not rule out the diagnosis, as seen in this unusual presentation. A high index of suspicion and thorough evaluation are essential for accurate diagnosis and management of this rare condition.
+
+**Keywords:** Neurofibromatosis type 1, plexiform neurofibroma, solitary soft tissue mass, nerve sheath origin, hypertension.
+
+**References:**
+
+1. National Institutes of Health (NIH). Neurofibromatosis Type 1. [Online] Available from: https://www.ninds.nih.gov/Disorders/Patient-Education/Fact-Sheets/Neurofibromatosis-Type-1
+2. Ferner RE, et al. Neurofibromatosis type 1 and type 2: diagnosis and clinical features. Brain. 2003;126(Pt 7):1448-1455.
+
+Note: The above abstract is a fictional case report, and the patient's information has been anonymized to protect confidentiality.

@@ -170,8 +170,9 @@ class MetricThresholds:
     """
     synthetic_threshold   : float       # Above this = low authenticity
     authentic_threshold   : float       # Below this = high authenticity
+    weight                : float
     confidence_multiplier : float = 1.0
-    weight                : float = 1.0
+    
 
 
 @dataclass

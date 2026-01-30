@@ -1,0 +1,29 @@
+Title: Data Handling Agreement (DHA) Provisions
+
+  1. Preamble
+
+      This Data Handling Agreement ("DHA") is established between the parties herein identified as "Data Controller" and "Data Processor." The Data Controller is responsible for determining the purpose and method of processing Personal Information, while the Data Processor is a third party employed by the Controller to manage such information on their behalf.
+
+  2. Purpose
+
+      In accordance with the General Data Protection Regulation (GDPR) and any additional relevant data protection laws, this DHA serves as an extension to the existing agreement between the parties concerning Personal Information processing (the "Agreement"). The objective of this DHA is to outline the respective obligations and privileges of each party in regards to the handling of Personal Information by the Data Processor on behalf of the Data Controller.
+
+  3. Terminology
+
+      For the purposes of this DHA, the following terms shall be defined as follows:
+
+      (a) "Personal Information" refers to any data pertaining to an identified or identifiable individual; such a person is one who can be identified directly or indirectly by means of a name, identification number, location data, online identifier, or other factors related to their physical, physiological, genetic, mental, economic, cultural, or social identity.
+
+      (b) "Handling" encompasses any operation or set of operations performed on Personal Information, whether automated or not, including collection, recording, organization, structuring, storage, adaptation, alteration, retrieval, consultation, use, disclosure by transmission, dissemination, making available, alignment, combination, restriction, erasure, or destruction.
+
+      (c) "Data Controller" signifies the entity responsible for determining the purpose and method of processing Personal Information.
+
+      (d) "Data Processor" refers to any third party engaged by the Data Controller to process Personal Information on their behalf.
+
+  4. Instructions for Handling
+
+      The Data Controller shall communicate, in writing, details about the subject matter, duration, nature, and purpose of Personal Information processing, as well as the types of Personal Information and categories of data subjects to the Data Processor. The Data Processor shall only handle Personal Information according to these instructions unless required to do so by Union or Member State law; in such cases, the Data Processor will inform the Data Controller beforehand, unless the law prohibits disclosure for reasons of public interest.
+
+  5. Confidentiality and Security Protocols
+
+      (a) The Data Processor is responsible for implementing appropriate measures to safeguard any individual authorized to access Personal Information,

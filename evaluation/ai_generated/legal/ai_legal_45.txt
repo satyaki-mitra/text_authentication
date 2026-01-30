@@ -1,21 +1,29 @@
-Case Title: Smith v. Jones
+Title: Data Processing Agreement - Clause 4: Data Subject Rights
 
-Court: Supreme Court of [State Name]
+4. Data Subject Rights
 
-Docket Number: SC-2021-0001
+4.1 Obligations Regarding Data Subject Requests
 
-Date of Decision: January 1, 2023
+4.1.1 The Data Processor shall, to the extent legally permitted, promptly notify the Data Controller if it receives a request from a Data Subject for access to, rectification, erasure, or restriction of processing of that Data Subject's Personal Data (hereinafter "Data Subject Request"). The Data Processor shall not respond to such a request without the prior written consent of the Data Controller except where otherwise required by applicable law.
 
-Jurisdiction: State of [State Name]
+4.1.2 Upon receiving any Data Subject Request, the Data Processor shall cooperate with the Data Controller and take reasonable steps to assist the Data Controller in fulfilling its obligations under this Agreement and any applicable data protection laws, including providing the Data Controller with such information and assistance as is reasonably necessary to respond to the request.
 
-Parties: Plaintiff - John A. Smith; Defendant - Mary B. Jones
+4.2 Response to Data Subject Requests
 
-Clause or Summary:
+4.2.1 The Data Processor shall respond to a Data Subject Request promptly and in any event within the timeframe required by applicable data protection laws. The Data Processor's response shall be made directly to the Data Subject, unless local law requires that it be made to the Data Controller.
 
-In the matter of Smith v. Jones, the Supreme Court of the State of [State Name] rendered a decision on January 1, 2023. The case concerned a dispute over property ownership between Plaintiff John A. Smith and Defendant Mary B. Jones.
+4.2.2 If the Data Processor is unable to respond fully to a Data Subject Request within the required timeframe, it shall provide the Data Subject with a written explanation setting out the reasons for the delay and the anticipated response time.
 
-The court found that the original deed transferring ownership of the disputed property from the previous owner to Defendant Mary B. Jones contained an error in the legal description, which was not discovered until Mr. Smith purchased the adjacent property. As a result, the court held that the deed was invalid due to the legal description error and that the title to the disputed property should be vested in Plaintiff John A. Smith.
+4.3 Data Portability
 
-The court further ordered Defendant Mary B. Jones to pay Plaintiff John A. Smith reasonable attorney's fees and costs associated with bringing the action, as well as any additional expenses incurred by Mr. Smith due to the defective deed.
+4.3.1 To the extent that the Personal Data is processed by automated means under this Agreement, the Data Processor shall, at the choice of the Data Controller, provide the Data Subject with a copy of that Personal Data in a structured, commonly used, machine-readable format.
 
-In reaching its decision, the court relied on the principles of property law established in [relevant case or statute], which state that a deed containing an error in the legal description is void and unenforceable. The court's ruling serves as a reminder to parties involved in real estate transactions to ensure that all documents are properly executed and accurately reflect the true intentions of the parties.
+4.3.2 The Data Processor may charge a reasonable fee for any such data portability request, based on administrative costs. In no case shall the fee amount to a disproportionate burden on the Data Subject.
+
+4.4 Data Breach Notification
+
+4.4.1 In the event of a data breach, the Data Processor shall comply with its obligations under Clause 7 (Data Security) and promptly notify the Data Controller of any such breach. Such notification shall include all available details regarding the nature of the breach, the categories and numbers of Data Subjects concerned, and the measures taken or proposed to be taken to address the breach and mitigate its potential adverse effects.
+
+4.5 Records of Processing Activities
+
+4.5.1 The Data Processor shall maintain records of all categories of processing activities carried out under this Agreement, including records of Data Subject Requests. These records shall be made available to

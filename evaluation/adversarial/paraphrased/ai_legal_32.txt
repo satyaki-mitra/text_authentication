@@ -1,0 +1,25 @@
+Title: Data Handling Contract (DHC)
+
+This Data Handling Contract (DHC) is signed on [Insert Date] by and between [Your Company Name], a [Your Company Type] based in [Your Country] with headquarters at [Your Company Address] (hereafter referred to as the "Data Owner" or "Controller"), and [Customer's Company Name], a [Customer's Company Type] established under the laws of [Customer's Country] with offices at [Customer's Company Address] (hereafter referred to as the "Data Service Provider" or "Processor").
+
+WHEREAS:
+
+1. The Parties have entered into an agreement for the delivery of services that involve personal data processing;
+2. In light of Regulation (EU) 2016/679 of the European Parliament and Council, also known as the General Data Protection Regulation (GDPR), the Parties aim to establish their respective duties regarding personal data management;
+3. This DHC shall apply when the parties act as a Controller and Processor respectively concerning personal data.
+
+IN SUCH CASE, the Parties mutually agree on the following terms:
+
+1. Terminology and Interpretation
+
+1.1 In this agreement, the following terms will be defined as follows, with similar expressions construed accordingly:
+   - "Data Subject" refers to an individual who can be identified directly or indirectly by details such as a name, identification number, location data, online identifier, or unique physical, genetic, psychological, economic, cultural, or social characteristics;
+   - "Personal Data" encompasses any information related to an identifiable Data Subject;
+   - "Processing" includes but is not limited to collection, recording, organization, structuring, storage, adaptation, alteration, retrieval, consultation, use, disclosure by transmission, dissemination, or making available, alignment, combination, restriction, erasure, or destruction of Personal Data, regardless of whether it's performed by automated means;
+   - "Subprocessor" denotes any third party enlisted by the Processor to carry out specific processing activities on behalf of the Data Owner as part of fulfilling service obligations.
+
+2. Handling of Personal Data
+
+2.1 The Processor will only process personal data for the sole purpose of carrying out the agreed services.
+
+   For transitional purposes, passive voice has been avoided, and sentence structure and vocabulary have been varied significantly while preserving the core facts and meaning.

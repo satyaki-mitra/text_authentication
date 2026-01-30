@@ -1,50 +1,100 @@
-**API Endpoint: User Profile Retrieval**
+**API Documentation: User Management System**
 
-**Endpoint URL:** `https://api.example.com/v1/users/:userId/profile`
+The User Management System is an application programming interface (API) designed to manage user accounts, permissions, and authentication for various systems and applications. This documentation provides an overview of the API's functionality, technical specifications, and usage guidelines.
 
-**Method:** GET
+**Technical Specifications:**
 
-**Description:**
+* **API Endpoints:** The API has the following endpoints:
+	+ `/users`: Retrieve a list of all users
+	+ `/users/:id`: Retrieve a specific user by ID
+	+ `/users`: Create a new user
+	+ `/users/:id`: Update an existing user
+	+ `/users/:id`: Delete a user
+* **HTTP Methods:** The API supports the following HTTP methods:
+	+ GET: Retrieve data
+	+ POST: Create new data
+	+ PUT: Update existing data
+	+ DELETE: Delete data
+* **API Versioning:** The API uses semantic versioning (SemVer) for versioning, with the current version being v1.0.
+* **Data Formats:** The API accepts and returns data in JSON format.
 
-The `getUserProfile` endpoint retrieves the profile information of a specific user, as identified by their unique `userId`. This endpoint is useful for applications that require access to a user's profile data, such as displaying profile information on a dashboard or updating a user's profile settings.
+**Usage Guidelines:**
 
-**Path Parameters:**
+### Authentication
 
-* `userId`: The unique identifier of the user whose profile information is being retrieved. (Required)
+To access the API, you must first authenticate using a valid username and password. You can do this by sending an HTTP POST request to `/auth` with your credentials:
 
-**Query Parameters:** None
-
-**Request Body:** Empty request body (i.e., no JSON payload)
-
-**Response:**
-
-The response will contain the user's profile information in a JSON format, with the following properties:
-
-* `id`: The unique identifier of the user.
-* `name`: The full name of the user.
-* `email`: The email address associated with the user account.
-* `phoneNumber`: The phone number associated with the user account (if available).
-* `profileImage`: A URL pointing to the user's profile image (if available).
-
-**Example Response:**
 ```json
 {
-  "id": 123,
-  "name": "John Doe",
-  "email": "johndoe@example.com",
-  "phoneNumber": "+1-555-555-5555",
-  "profileImage": "https://example.com/profile-images/johndoe.jpg"
+  "username": "your_username",
+  "password": "your_password"
 }
 ```
-**Error Handling:**
 
-* **404 Not Found**: If the specified `userId` is not found, a `404 Not Found` error will be returned.
-* **500 Internal Server Error**: If an internal server error occurs while processing the request, a `500 Internal Server Error` will be returned.
+Upon successful authentication, you will receive a JSON Web Token (JWT) as the response:
 
-**Rate Limiting:**
+```json
+{
+  "token": "your_token"
+}
+```
 
-This endpoint has a rate limit of 10 requests per minute. Exceeding this limit may result in errors or throttling.
+### Request Headers
 
-**Authentication:**
+When making requests to the API, include the `Authorization` header with your JWT token:
 
-To access this endpoint
+```http
+Authorization: Bearer <your_token>
+```
+
+### Error Handling
+
+The API uses standard HTTP status codes for error handling. If an error occurs, the API will return a JSON response with a detailed error message.
+
+Example error response:
+```json
+{
+  "error": {
+    "code": 404,
+    "message": "User not found"
+  }
+}
+```
+
+### Request Payloads
+
+When creating or updating data, you must include the necessary payload information in your request. For example, when creating a new user, you would include the following fields:
+
+```json
+{
+  "username": "new_user",
+  "email": "new_user@example.com",
+  "password": "new_password"
+}
+```
+
+### Response Formats
+
+The API returns data in JSON format. When retrieving multiple records (e.g., `/users`), the response will be a JSON array of objects.
+
+Example response:
+```json
+[
+  {
+    "id": 1,
+    "username": "user1",
+    "email": "user1@example.com"
+  },
+  {
+    "id": 2,
+    "username": "user2",
+    "email": "user2@example.com"
+  }
+]
+```
+
+### Rate Limiting
+
+To prevent abuse, the API enforces a rate limit of 100 requests per minute. If you exceed this limit, your requests will be blocked for 30 seconds before being allowed to continue.
+
+By following these guidelines and technical specifications, you should be able to effectively use the User Management System API to manage user accounts and authentication.

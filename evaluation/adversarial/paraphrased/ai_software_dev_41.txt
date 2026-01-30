@@ -1,0 +1,55 @@
+Title: Pattern for Observing Objects' Changes with Java Example - Dependent Behavior in Software Design
+
+Discussion on the Pattern
+
+The design pattern under consideration is a behavioral software construct known as the Observer, which establishes a relationship between multiple objects. When an object experiences a modification to its state, all dependent entities are signaled and updated automatically. This pattern proves useful for various scenarios in real-world applications such as user interfaces, distributed event systems, or weather apps.
+
+Implementation Procedure
+
+In Java, the Observer design pattern can be implemented via interfaces for both subject (observable) and observer (observer) classes. Below is a simplified version:
+
+```java
+// Interface defining methods to add/remove observers for the subject class
+public interface Observable {
+    void addObserver(Observer o);
+    void removeObserver(Observer o);
+    void notifyObservers();
+}
+
+// Interface specifying update method for observer classes
+public interface Observer {
+    void update(Observable observable, Object arg);
+}
+
+// Concrete Subject (WeatherInfo) keeping a list of observers and state-changing methods
+public class WeatherInfo implements Observable {
+    private float temperature;
+    private float humidity;
+    private float pressure;
+    private ArrayList<Observer> observers = new ArrayList<>();
+
+    public void dataUpdated() {
+        notifyObservers();
+    }
+
+    @Override
+    public void addObserver(Observer o) {
+        observers.add(o);
+    }
+
+    @Override
+    public void removeObserver(Observer o) {
+        observers.remove(o);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (Observer observer : observers) {
+            observer.update(this, null);
+        }
+    }
+
+    // Methods to modify state and signal updates
+    public void setTemperature(float temp) {
+        temperature = temp;
+        data

@@ -1,13 +1,13 @@
-Title: Unusual Presentation of Gastrointestinal Stromal Tumor (GIST) in the Esophagus
+Title: A Case Study on Successful Management of Refractory Myasthenia Gravis with Plasmapheresis and Rituximab
 
-Case Description:
+Abstract
 
-A 68-year-old Caucasian male, non-smoker with no significant past medical history, presented to our institution with a two-month history of progressive dysphagia and unintentional weight loss. The patient reported symptoms worsening over time, including regurgitation of undigested food and recurrent bouts of hemoptysis. Physical examination was unremarkable, except for a palpable mass in the mid-thorax.
+Background: Myasthenia gravis (MG) is an autoimmune neuromuscular disorder characterized by fluctuating muscle weakness, fatigability, and impaired neuromuscular transmission. Refractory MG, resistant to first-line immunosuppressive therapies, poses a significant challenge in clinical practice. This case report presents the successful management of a refractory MG patient through plasmapheresis and Rituximab treatment.
 
-Initial esophagogastroduodenoscopy (EGD) revealed an irregular ulcerative lesion in the distal esophagus, biopsy of which was inconclusive due to sampling error. Subsequent computed tomography (CT) scan showed a 5 cm heterogeneous mass in the distal esophagus with signs of invasion into the mediastinum and superior vena cava (SVC).
+Case Presentation: A 65-year-old female patient presented with symptoms of diplopia, ptosis, dysphagia, and generalized muscle weakness. The patient's medical history included hypertension, type II diabetes mellitus, and a recent diagnosis of thymoma. The Myasthenia Gravis Foundation of America (MGFA) classification indicated MGFA class III due to bulbar, ocular, and limb involvement. Despite treatment with prednisone, azathioprine, and pyridostigmine, the patient's symptoms persisted and worsened over several months.
 
-Given the radiological findings suggestive of malignancy, the patient underwent an esophagectomy. Histopathology revealed a spindle cell tumor positive for CD117, CD34, and DOG1, consistent with a gastrointestinal stromal tumor (GIST). The tumor was negative for c-kit exon 9 mutation but had an exon 11 mutation. Immunohistochemistry also demonstrated KIT expression, confirming the diagnosis of GIST.
+Diagnostic Approach: The diagnosis of MG was confirmed through a positive Edrophonium test, Tensilon test, and increased serum anti-acetylcholine receptor (AChR) antibodies. Computerized tomography (CT) scan confirmed the presence of a thymoma, which supported the diagnosis of thymoma-associated MG.
 
-The patient's postoperative course was uneventful. He started imatinib mesylate, a tyrosine kinase inhibitor, for adjuvant treatment due to the exon 11 mutation. The patient remains asymptomatic and is currently under regular follow-up with oncology services.
+Treatment: Due to the refractory nature of the patient's MG, plasmapheresis was initiated as an urgent intervention to remove circulating antibodies and improve neuromuscular transmission. Subsequently, Rituximab, a chimeric monoclonal antibody targeting CD20+ B cells, was administered intravenously at a dosage of 375 mg/m² weekly for four weeks to deplete the pathogenic B cells responsible for producing AChR antibodies.
 
-This case highlights an unusual presentation of GIST in the esophagus, which can mimic other esophageal malignancies. Early recognition, proper diagnosis, and appropriate management are crucial for improved outcomes in such cases.
+Outcomes: Following plasmapheresis and Rituximab treatment, the patient experienced significant improvement in symptoms, with complete resolution of diplopia and ptosis after two weeks and near-complete resolution of dysphagia and limb weakness after four weeks. The patient's MGFA classification was downgraded to class II, and serum AChR antibodies decreased significantly from 40 nmol/L at baseline to 1 nmol/L post-treatment. The patient has remained symptom-free for over two years since the treatment, with

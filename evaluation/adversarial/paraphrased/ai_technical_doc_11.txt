@@ -1,0 +1,47 @@
+Title: Retrieving Pets by Status via PetStore API
+
+## Description of the Endpoint
+
+The objective of this API is to fetch a collection of pets based on their specified status. It adheres to the REST architecture principles and employs the `GET` HTTP method.
+
+## Query Parameters for Filtering Pets
+
+The API allows for pet filtering through query parameters, namely:
+
+Parameter | Data Type | Description
+-----------|----------|------------
+`status_filter`   | string   | The status of the pets (available, sold)
+
+## Authentication Process
+
+To access this endpoint, an API key is required in the `Authorization` header. To acquire one, registration for a developer account on [PetStore](https://petstore.swagger.io/) is necessary.
+
+Example:
+```
+Authorization: Bearer {your_api_key}
+```
+
+## Illustrative Requests
+
+A request to retrieve all pets with the status "available" would appear as follows:
+
+Request URL: `https://petstore.swagger.io/v2/pets?status_filter=available`
+
+Request Headers:
+```
+Content-Type: application/json
+Authorization: Bearer {your_api_key}
+```
+
+## Response Details
+
+The API delivers a JSON object containing an array of pets that correspond to the requested status. Each pet object comprises the following properties:
+
+Property | Data Type | Description
+---------|----------|------------
+`pet_id`      | integer  | Unique identifier for the pet
+`category_info` | object   | Detailed information about the pet's category (not provided in this response)
+`name`    | string   | Name assigned to the pet
+`image_urls` | array   | List of URLs pointing to images of the pet
+`tags`    | array   | Tags associated with the pet
+`status`  | string   | Current status of the pet (available,

@@ -1,0 +1,63 @@
+**API Documentation: Order Management System**
+
+The Order Management System (OMS) is a RESTful API that enables seamless order management for e-commerce businesses. This documentation provides an overview of the API, its specifications, and usage guidelines.
+
+**API Endpoints**
+
+The OMS API consists of the following endpoints:
+
+1. **Create Order**: Creates a new order with the provided details.
+	* Method: POST
+	* Path: `/orders`
+	* Request Body:
+		+ `customer_name`: string (required)
+		+ `order_items`: array of objects (required)
+			- Each object must contain:
+				- `product_id`: integer (required)
+				- `quantity`: integer (required)
+2. **Get Order**: Retrieves an existing order by ID.
+	* Method: GET
+	* Path: `/orders/{order_id}`
+	* Path Parameters:
+		+ `order_id`: integer (required)
+3. **Update Order**: Updates an existing order with the provided details.
+	* Method: PUT
+	* Path: `/orders/{order_id}`
+	* Request Body:
+		+ `customer_name`: string (optional)
+		+ `order_items`: array of objects (optional)
+			- Each object must contain:
+				- `product_id`: integer (required)
+				- `quantity`: integer (required)
+
+**API Parameters**
+
+The OMS API accepts the following parameters:
+
+1. **Authorization**: A JSON Web Token (JWT) containing the user's authentication credentials.
+2. **Content-Type**: The format of the request body, either application/json or text/plain.
+
+**Error Handling**
+
+The OMS API returns errors in the following formats:
+
+1. **HTTP Status Code**: A 4xx or 5xx status code indicating the type of error (e.g., 404 for a missing order).
+2. **Error Message**: A human-readable message describing the error.
+3. **Error Details**: Additional information about the error, including any relevant logs or debugging data.
+
+**Usage Guidelines**
+
+1. **API Keys**: Obtain an API key from the OMS team to use with your application.
+2. **Rate Limiting**: The OMS API enforces rate limiting to prevent abuse. Requests exceeding this limit will be blocked temporarily.
+3. **Data Formatting**: Ensure that request and response data adhere to the specified formats (JSON or text/plain).
+4. **Caching**: Implement caching mechanisms in your application to reduce the number of requests made to the OMS API.
+
+**Technical Requirements**
+
+The OMS API is designed for use with modern web development frameworks and libraries, including:
+
+1. **Java**: Use a Java-based framework such as Spring Boot or Play Framework.
+2. **Python**: Utilize a Python-based framework like Flask or Django.
+3. **Node.js**: Employ a Node.js-based framework like Express.js.
+
+By following these guidelines and technical requirements, you can successfully integrate the OMS API into your e-commerce application and streamline order management processes.

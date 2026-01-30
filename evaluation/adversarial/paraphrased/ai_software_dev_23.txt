@@ -1,0 +1,49 @@
+Title: Dependency Injection Pattern in C# via Constructor Injection Explained
+
+Dependency injection (DI) is a software design strategy that decouples object construction from behavior, enhancing modularity, testability, and maintainability. This exposition discusses the utilization of dependency injection through constructor injection within C#.
+
+**Scenario**
+
+Consider a straightforward illustration: A `DatabaseService` class requiring an object of `IDatabaseConnection` for its operations. Rather than embedding the dependency within `DatabaseService`, we can employ DI to provide the necessary dependency at runtime using DI.
+
+```csharp
+public interface IDataConnection
+{
+    void Connect();
+}
+
+public class SqlConnection : IDataConnection
+{
+    public void Connect()
+    {
+        Console.WriteLine("Linked to SQL");
+    }
+}
+
+public class DatabaseService
+{
+    private readonly IDataConnection _connection;
+
+    public DatabaseService(IDataConnection connection)
+    {
+        _connection = connection;
+    }
+
+    public void ExecuteTasks()
+    {
+        _connection.Connect();
+        // Other tasks...
+    }
+}
+```
+
+In this example, the `DatabaseService` is instantiated with an object of `IDataConnection`. This allows for simple replacement of concrete implementation (e.g., substituting `SqlConnection` with `MySQLConnection`) without altering `DatabaseService`.
+
+**Implementation: Container and Registration**
+
+For handling dependencies and their instantiation, we utilize a DI container like Microsoft's `SimpleInjector`. First, obtain the package through NuGet installation. Then, register the necessary services and their dependencies with the container during application initialization.
+
+```csharp
+var container = new Container();
+container.Register<IDataConnection, SqlConnection>();
+container.Register<DatabaseService>(Lifestyle.Transient);

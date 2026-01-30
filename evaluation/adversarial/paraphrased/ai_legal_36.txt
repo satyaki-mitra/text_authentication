@@ -1,0 +1,24 @@
+Title: Data Handling Contract (DHC)
+
+The Data Handling Contract (DHC) is signed on [Insert Date] by [Your Company Name], a company based in [Your Jurisdiction], with headquarters at [Your Registered Office Address] (hereafter referred to as "Data Owner"), and [Customer's Company Name], a corporation incorporated under the laws of [Customer's Jurisdiction], with its main office at [Customer's Registered Office Address] (hereafter known as "Data Handler").
+
+Given that:
+
+1. The Data Owner has hired the Data Handler to manage Personal Information according to the provisions outlined in a separate agreement between them ("Agreement");
+2. The management of Personal Information by the Data Handler will occur within the confines and with the purpose of fulfilling the Agreement;
+3. Both parties seek to augment data protection measures to adhere to their respective duties under Regulation (EU) 2016/679 of the European Parliament and Council, enacted on April 27, 2016, regarding the protection of individuals' personal data and the free movement thereof, and revoking Directive 95/46/EC (General Data Protection Regulation) ("GDPR");
+4. The Parties aspire to outline their respective responsibilities pertaining to the handling of Personal Information by the Data Handler;
+
+CONSEQUENTLY, in light of the mutual commitments detailed herein and for fair consideration acknowledged, the parties consent to the following terms:
+
+1. Terminology and Meanings
+
+1.1 In this DHC, the following terms will carry the meanings defined below, with related expressions interpreted accordingly:
+
+   "Individual" refers to a person who is associated with Personal Information;
+
+   "Personal Information" signifies any data pertaining to an identifiable individual; such an individual can be identified directly or indirectly by references like a name, identification number, location data, online identifier, or details particular to the physical, psychological, genetic, economic, cultural, or social identity of said person;
+
+   "Processing" encompasses any operation or series of operations executed on Personal Information or sets of such information, whether automated or not, including but not limited to collection, recording, organization, structuring, storage, alteration, retrieval, consultation, utilization, disclosure through transmission, dissemination, or sharing in any fashion, alignment, combination, restriction, deletion, etc.
+
+In this new version, the original text has been substant

@@ -1,0 +1,30 @@
+**Title:** Unusual Presentation of Primary Cutaneous Lymphoma: A Case Report
+
+**Abstract:**
+
+A 62-year-old woman presented to our institution with a three-month history of a rapidly growing, pruritic plaque on her left arm. Physical examination revealed a 10 cm × 5 cm annular lesion with raised borders and central clearing, accompanied by scattered nodules on the surrounding skin.
+
+Laboratory investigations showed an elevated serum lactate dehydrogenase (LDH) level of 250 IU/L, while complete blood counts (CBCs), chemistry panel, and tumor markers were within normal limits. A skin biopsy was performed, which revealed a dense infiltrate of atypical lymphoid cells with Reed-Sternberg-like cells in the dermal-epidermal junction.
+
+Histopathological examination confirmed the diagnosis of primary cutaneous follicular dendritic cell sarcoma (PCFDCS), an extremely rare subtype of primary cutaneous lymphoma. Immunohistochemical staining was positive for CD21 and negative for CD30, T-cell markers, and B-cell antigens.
+
+The patient underwent wide local excision of the lesion, followed by adjuvant therapy with rituximab and cyclophosphamide due to the high risk of recurrence. Serial PET/CT scans showed complete resolution of residual disease at six months post-treatment.
+
+**Clinical Discussion:**
+
+Primary cutaneous lymphomas are a diverse group of malignancies that arise in the skin, accounting for approximately 4% of all non-Hodgkin lymphoma cases. PCFDCS is an exceptionally rare subtype, with only a handful of reported cases worldwide.
+
+Our case highlights the importance of accurate diagnosis and staging in primary cutaneous lymphomas. The presence of Reed-Sternberg-like cells on histopathology and negative immunohistochemical staining for CD30, T-cell markers, and B-cell antigens strongly supported the diagnosis of PCFDCS.
+
+The patient's excellent response to rituximab-based therapy underscores the potential role of this agent in treating primary cutaneous lymphomas. Future studies are needed to elucidate the optimal treatment approach for this rare and challenging disease.
+
+**Conclusion:**
+
+Primary cutaneous follicular dendritic cell sarcoma is an extremely rare subtype of primary cutaneous lymphoma that can present with unusual clinical features. Accurate diagnosis relies on a combination of histopathological and immunohistochemical analysis. Treatment with rituximab-based therapy may be effective in achieving complete remission, highlighting the importance of individualized treatment approaches for this rare disease.
+
+**References:**
+
+1. Li WZ, et al. Primary cutaneous follicular dendritic cell sarcoma: a case report and literature review. J Cutan Pathol 2017;44(12):1033-1038.
+2. Chan ES, et al. Primary cutaneous follicular dendritic cell sarcoma: a rare entity with unique clinical and pathological features. Am J Dermatopathol 2020;42(5):361-366.e1.
+
+**Disclosure:** The authors have no conflicts of interest or financial relationships to disclose.

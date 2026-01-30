@@ -1,32 +1,31 @@
-Here's a draft of a formal legal clause about data privacy compliance:
+**SECTION 1: DEFINITIONS**
 
-**DATA PRIVACY COMPLIANCE**
+This Section sets forth the meanings of certain capitalized terms used throughout this [Agreement/Contract]. The definitions in this Section apply to all other Sections of this [Agreement/Contract].
 
-1. **Definitions**: For the purposes of this Clause, "Personal Data" means any information that relates to an identified or identifiable individual, including but not limited to name, address, phone number, email address, IP address, and other demographic information.
+For purposes of this [Agreement/Contract], the following terms shall have the meanings indicated below:
 
-2. **Compliance with Applicable Laws**: [Party A/Party B] agrees to comply with all applicable data privacy laws and regulations, including but not limited to:
+* **"Affiliate"** means any person or entity that directly or indirectly controls, is controlled by, or is under common control with a Party.
+* **"Confidential Information"** means all non-public and proprietary information disclosed by a Party to another Party in connection with this [Agreement/Contract], including but not limited to trade secrets, business methods, technical data, and intellectual property.
+* **"Effective Date"** means the date on which this [Agreement/Contract] is executed by all Parties.
+* **"Party"** means each of the individuals, entities, or organizations listed in the introductory paragraph of this [Agreement/Contract], as well as their respective successors, assigns, and heirs.
+* **"Term"** means the period commencing on the Effective Date and ending on the expiration date specified in Section 8 hereof.
 
-* The General Data Protection Regulation (GDPR) of the European Union;
-* The California Consumer Privacy Act (CCPA);
-* The Health Insurance Portability and Accountability Act (HIPAA);
-* Any other federal or state law related to personal data protection; and
-* Any industry-specific regulations governing the handling of Personal Data.
+By using these capitalized terms, each Party acknowledges that it has read, understands, and agrees to be bound by the definitions set forth in this Section.
 
-3. **Data Processing**: [Party A/Party B] shall process Personal Data:
+**SECTION 2: OBLIGATIONS**
 
-* In accordance with written instructions from the other Party;
-* For purposes that are consistent with the original purpose for which the information was collected;
-* To the extent necessary to fulfill the terms and conditions of this Agreement; and
-* In compliance with applicable security measures to prevent unauthorized access, disclosure, or use.
+Each Party covenants and agrees that:
 
-4. **Data Subject Rights**: [Party A/Party B] shall respect the rights of data subjects (as defined in the GDPR) to:
+* It shall use commercially reasonable efforts to maintain the confidentiality of Confidential Information disclosed by another Party.
+* It shall not disclose Confidential Information to any third party without the prior written consent of the disclosing Party, except as permitted by law or this [Agreement/Contract].
+* It shall return all Confidential Information to the disclosing Party upon request or destroy such information upon expiration of the Term.
 
-* Access their Personal Data;
-* Rectify inaccurate information;
-* Erase Personal Data;
-* Restrict processing; and
-* Object to certain types of processing.
+**SECTION 3: REPRESENTATIONS AND WARRANTIES**
 
-5. **Breach Notification**: In the event [Party A/Party B] becomes aware of a breach or unauthorized disclosure of Personal Data, it shall notify the other Party in writing within 72 hours after discovery.
+Each Party represents and warrants that:
 
-6. **Data Transfer**: [Party A/Party B] shall only transfer Personal Data to third parties that have agreed to provide at least the same level of protection as required by this Clause and
+* It has the full power and authority to enter into and perform its obligations under this [Agreement/Contract].
+* The execution, delivery, and performance of this [Agreement/Contract] will not violate any applicable law or regulation.
+* All information provided by it in connection with this [Agreement/Contract] is true, accurate, and complete.
+
+By executing this [Agreement/Contract], each Party acknowledges that it has read, understands, and agrees to be bound by the representations and warranties set forth in this Section.

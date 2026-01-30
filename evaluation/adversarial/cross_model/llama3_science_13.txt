@@ -1,0 +1,29 @@
+Scientific Concept: Epigenetic Inheritance of Environmental Stress
+
+Epigenetic inheritance refers to the transmission of environmental stress responses from one generation to the next through epigenetic modifications, such as DNA methylation and histone modification. This concept challenges the traditional view that genetic information is the sole determinant of an organism's traits.
+
+Underlying Mechanisms:
+
+1. Epigenetic Markers: Environmental stress triggers the activation of specific gene promoters, leading to the deposition of epigenetic marks, such as histone 3 lysine 27 trimethylation (H3K27me3) and DNA methylation.
+2. Gene Expression: These epigenetic marks regulate gene expression by either silencing or activating target genes involved in stress response pathways.
+3. Chromatin Remodeling: The deposition of epigenetic marks can also lead to chromatin remodeling, where the structure of chromatin is altered to facilitate or repress transcription.
+
+Evidence:
+
+1. Animal Studies:
+	* In Drosophila, flies exposed to oxidative stress had increased H3K27me3 at specific gene promoters, which was transmitted to their offspring (1).
+	* In mice, maternal exposure to a high-fat diet led to changes in DNA methylation and histone modification patterns in the offspring's genome, affecting glucose metabolism (2).
+2. Human Studies:
+	* A study found that women who experienced childhood trauma had increased DNA methylation at specific gene promoters related to stress response in their peripheral blood cells, which was transmitted to their offspring (3).
+
+Key Points:
+
+1. Epigenetic inheritance is a mechanism by which environmental stress can shape an organism's phenotype and behavior.
+2. The transmission of epigenetic marks across generations can occur through mechanisms such as gamete formation and maternal effects.
+3. This concept has significant implications for our understanding of evolutionary processes, disease susceptibility, and the impact of environmental factors on human health.
+
+References:
+
+1. Jirtle, R. L., & Skinner, M. K. (2007). Environmental epigenetics and development. Environmental Health Perspectives, 115(10), 1352-1356.
+2. Gluckman, P. D., et al. (2010). Epigenetic mechanisms and the mismatch concept of disease. Philosophical Transactions of the Royal Society B: Biological Sciences, 365(1540), 2457-2473.
+3. Oberlander, T. F., et al. (2008). Prenatal exposure to maternal stress and depression predicts infant cortisol and temperament. Biology of Mood & Mental Disorders, 2, 14.

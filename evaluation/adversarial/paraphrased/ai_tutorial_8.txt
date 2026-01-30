@@ -1,0 +1,26 @@
+Title: Streamlined Setup Guide for Novices: Establishing a Local Development Environment Utilizing WAMP Stack
+
+This guide delves into the process of establishing a local development environment leveraging the WAMP (Windows, Apache, MySQL, PHP) stack. By adhering to these instructions, you will be capable of creating, developing, and testing web applications directly on your personal computer.
+
+**Phase 1: Procurement and Installation of WAMP Stack**
+
+Navigate to the official WAMPServer website (<https://sourceforge.net/projects/wampserver/>) and obtain the most recent version of the server package. Execute the installer file, following the on-screen guidelines to complete installation. During setup, opt for 'LAMP' instead of 'WAMP' if you are developing PHP applications.
+
+**Phase 2: Activation of WAMP Server Services**
+
+Upon installation, a WAMP icon will be added to your system tray. Clicking on it will bring forth the WAMPmanager interface, enabling management of all server services. Ensure 'Apache' and 'MySQL' are operational by clicking their stop/start buttons; check that each service shows as "ACTIVE."
+
+**Phase 3: Accessing Localhost**
+
+With the WAMP server up and running, launch a web browser and input 'http://localhost/' within the address bar. The WAMP welcome page should now appear, signifying your local development environment is operational.
+
+**Phase 4: Generation of New Website Folder**
+
+To initiate a new website, traverse to the 'www' folder housed within the WAMP installation directory (usually C:\wamp64\www). From here, establish a fresh folder for your project, using an appropriate name and avoiding special characters or spaces in the folder title.
+
+**Phase 5: Configuration of Your Website**
+
+Once the website folder is created, locate the 'httpd.conf' file nested within the 'apache2' folder (C:\wamp64\bin\apache\apache2.4.x\conf). Find the section labeled '<Directory "C:/wamp64/www">,' and append the following lines immediately beneath it:
+
+```
+Alias /yourwebs

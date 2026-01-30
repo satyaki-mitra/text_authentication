@@ -1,0 +1,23 @@
+**Case Report: Rare Presentation of Cerebral Amyloid Angiopathy**
+
+**Abstract**
+
+We present a unique case of cerebral amyloid angiopathy (CAA) in a 65-year-old woman who presented with an unusual constellation of symptoms, highlighting the importance of considering rare neurodegenerative disorders in the differential diagnosis of acute neurological presentations.
+
+A 65-year-old woman was admitted to our institution with a sudden onset of severe headache, confusion, and left-sided weakness. Her medical history included hypertension, hyperlipidemia, and type 2 diabetes mellitus. Physical examination revealed a blood pressure of 180/100 mmHg, pulse rate of 110 beats per minute, and a temperature of 38°C (100.4°F). Neurological examination showed a left-sided hemiparesis, bilateral papilledema, and an altered mental status.
+
+Initial laboratory tests revealed elevated creatine kinase levels (1,200 IU/L), whereas magnetic resonance imaging (MRI) of the brain demonstrated extensive cortical and subcortical white matter lesions consistent with vasogenic edema. Cerebrospinal fluid analysis showed a mildly elevated protein content (40 mg/dL) and a normal glucose level.
+
+Despite treatment with antihypertensive medications, anticonvulsants, and corticosteroids, the patient's symptoms persisted, and she eventually developed seizures and status epilepticus. A repeat MRI revealed additional lesions in the basal ganglia and thalamus.
+
+Further investigation, including electroencephalography and neuropsychological testing, led to a diagnosis of CAA, which was confirmed by brain biopsy. The patient's clinical course improved significantly following treatment with immunosuppressive therapy and blood pressure control.
+
+**Discussion**
+
+CAA is a rare neurodegenerative disorder characterized by the deposition of amyloid-β protein in the walls of cerebral vessels, leading to microhemorrhages, vasogenic edema, and subsequent neurological dysfunction. The patient's presentation was unusual due to the lack of classic CAA symptoms, such as recurrent lobar hemorrhages or gradual cognitive decline.
+
+This case highlights the importance of considering rare neurodegenerative disorders in the differential diagnosis of acute neurological presentations, particularly in patients with hypertension, diabetes, or other systemic conditions that may increase the risk of CAA. A high index of suspicion and careful examination of imaging studies can help diagnose this condition, allowing for prompt initiation of appropriate therapy.
+
+**Conclusion**
+
+Cerebral amyloid angiopathy is a rare but important diagnosis to consider in patients presenting with acute neurological symptoms. Prompt recognition of this condition can lead to effective management and improved patient outcomes.

@@ -1,22 +1,69 @@
-Title: Documentation for the "Real-Time Data Streaming" Feature
+Title: API Documentation - User Management Endpoints
 
-1. Introduction
-   - Description: The Real-Time Data Streaming (RTDS) feature enables continuous, uninterrupted data transfer from one application to another over a network in real time. This feature is crucial for applications that require up-to-date and near instantaneous data processing, such as financial trading systems, live video streaming, or IoT devices.
+## 1. User Endpoint Overview
 
-2. Components
-   - Data Producers: These are the sources of data that will be streamed. Examples include sensors in an IoT system, user inputs in a gaming application, or market data feeds in a trading system.
-   - Data Consumers: These are the applications or systems that will receive and process the data streams. They can be analytics engines, visualization tools, or other applications requiring real-time data.
-   - RTDS Server: The central hub responsible for managing and routing data streams between producers and consumers. It ensures efficient data transmission and handles any potential issues such as network delays or connectivity problems.
+This documentation outlines the REST endpoint for user management operations in our API. The base URL for all user-related endpoints is `https://api.example.com/v1`.
 
-3. Implementation
-   - Data Producers: To integrate with the RTDS feature, data producers must implement a protocol compatible with the RTDS server. This includes packaging data in a standard format, adding necessary metadata (e.g., timestamps and identifiers), and establishing a connection to the RTDS server using an appropriate communication protocol such as HTTP or WebSocket.
-   - Data Consumers: To consume data streams from the RTDS feature, consumers must also implement compatible protocols for receiving and processing data packets. They should be able to handle variations in data volume, potential network delays, and errors in transmission.
-   - RTDS Server: The RTDS server acts as an intermediary between producers and consumers. It manages connections, routes data based on consumer subscriptions, handles errors and retries, and provides monitoring and logging capabilities for troubleshooting and performance optimization.
+## 2. Endpoints Description
 
-4. Configuration
-   - To configure the RTDS feature, users will need to specify details such as:
-     - Data producer and consumer endpoints (URLs or IP addresses)
-     - Data encryption settings (if required)
-     - Subscription rules for routing data streams to specific consumers
-     - Error handling policies (e.g., retry attempts, timeout thresholds)
-   - These configuration options can be set through a
+### 2.1 Create a New User (POST /users)
+
+Create a new user in the system. Only authorized admin users can create new users.
+
+### 2.2 Retrieve User Profile (GET /users/:userId)
+
+Retrieve detailed information about an existing user by their unique identifier. Any authenticated user can access their own profile and admins can access all profiles.
+
+### 2.3 Update User Profile (PUT /users/:userId)
+
+Update the details of an existing user by their unique identifier. Only the user themselves or authorized admin users can update a user's profile.
+
+### 2.4 Delete User Account (DELETE /users/:userId)
+
+Delete an existing user account by their unique identifier. Only authorized admin users can delete user accounts.
+
+## 3. Request/Response Parameters
+
+### 3.1 Common Parameters
+
+- `Authorization`: Bearer {token} (JWT token for authentication)
+- `Content-Type`: application/json
+
+### 3.2 Create User Parameters (POST /users)
+
+Request Body Example:
+```json
+{
+    "firstName": "John",
+    "lastName": "Doe",
+    "email": "john.doe@example.com",
+    "password": "secure_password"
+}
+```
+- `firstName` (string, required) - The first name of the user.
+- `lastName` (string, required) - The last name of the user.
+- `email` (string, required, unique) - The email address of the user.
+- `password` (string, required) - The password for the user's account.
+
+### 3.3 Retrieve User Profile Parameters (GET /users/:userId)
+
+Path Parameter:
+- `userId` (integer, required) - The unique identifier of the user to retrieve.
+
+Response Body Example:
+```json
+{
+    "id": 1,
+    "firstName": "John",
+    "lastName": "Doe",
+    "email": "john.doe@example.com"
+}
+```
+
+### 3.4 Update User Profile Parameters (PUT /users/:userId)
+
+Request Body Example:
+```json
+{
+    "firstName": "Jane",
+    "lastName": "Doe"

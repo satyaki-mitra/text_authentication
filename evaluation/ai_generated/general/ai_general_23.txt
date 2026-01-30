@@ -1,3 +1,15 @@
-Title: The Impact of Social Media on Modern Society
+Title: Electromagnetic Spectrum
 
-Social media, a digital platform that enables communication and interaction among users, has become an integral part of modern society. Its widespread adoption globally has significantly transformed various aspects of our daily lives, from personal relationships to business operations. Social media serves as a powerful tool for information dissemination, fostering global connectivity and promoting cultural exchange. However, its influence extends beyond these areas; it also impacts politics by shaping public opinion and influencing elections, and influences mental health through the creation of virtual communities, both positive and negative. As social media continues to evolve, understanding its societal implications is crucial in navigating its benefits and mitigating its potential risks.
+The electromagnetic spectrum is a comprehensive classification of all types of electromagnetic radiation, arranged in order of frequency, wavelength, and energy. This essential concept spans from high-energy gamma rays to low-energy radio waves, encompassing various forms of light and radiation that are fundamental to our daily lives and scientific understanding.
+
+Electromagnetic (EM) radiation is a transverse wave phenomenon characterized by oscillating electric and magnetic fields that propagate through space as self-contained, discrete packets known as photons. These waves travel at the speed of light (approximately 299,792 kilometers per second in a vacuum) and exhibit properties such as reflection, refraction, absorption, and diffraction, similar to sound waves.
+
+The electromagnetic spectrum can be divided into several regions based on frequency, wavelength, or energy:
+
+1. Gamma Rays (γ): With the highest frequencies (≥3 x 10^19 Hz) and shortest wavelengths (≤10^-11 m), gamma rays are extremely energetic and ionizing radiation emitted by radioactive isotopes, nuclear reactions, and some astronomical objects. They have numerous industrial and medical applications, but their high energy can be harmful to living organisms.
+
+2. X-rays (X): Lower in frequency than gamma rays (3 x 10^16 Hz to 3 x 10^19 Hz), x-rays have longer wavelengths (10^-11 m to 10^-8 m) and are also ionizing radiation. They are primarily used in medical imaging, fluorescence diagnostics, and scientific research.
+
+3. Ultraviolet (UV) Radiation: Comprising frequencies between approximately 7 x 10^14 Hz and 3 x 10^16 Hz, UV radiation has wavelengths ranging from 10^-7 m to 4 x 10^-7 m. It is emitted by the sun and plays a critical role in photosynthesis and vitamin D production in humans, but excessive exposure can cause skin damage and eye irritation.
+
+4. Visible Light: With frequencies between approximately 4 x 10^14 Hz and 7 x 10^14 Hz, visible light encompasses the colors of the rainbow (red, orange, yellow, green, blue, indigo, and violet) and has wavelengths ranging from around 4 x 10^-7 m to 7.5 x 10^-7 m. This region of the electromagnetic spectrum is crucial for human vision, plant photosynthesis

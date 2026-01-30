@@ -1,11 +1,17 @@
-Title: A Rare Case of Recurrent Mastocytosis with Systemic Manifestations and Successful Management
+Title: A Case Study on Successful Management of Malignant Pleural Mesothelioma Using Immunotherapy: PD-L1 Inhibitor Pembrolizumab
 
-Case Presentation:
+Abstract
 
-A 48-year-old Caucasian female, non-smoker, with no significant past medical history, presented to the emergency department (ED) for a third episode of acute abdominal pain, flushing, diarrhea, and shortness of breath over the past three months. The symptoms were recurrent, lasting for several hours each time, and had been initially misdiagnosed as gastrointestinal disorders.
+Background: Malignant pleural mesothelioma (MPM) is an aggressive malignancy primarily associated with asbestos exposure, carrying a dismal prognosis. Traditional treatment modalities offer limited efficacy and significant toxicity. The advent of immunotherapy provides a promising avenue for improved outcomes.
 
-On physical examination, the patient was alert but visibly flushed, with multiple urticarial lesions on her trunk and extremities. Upon palpation, a firm, mobile, and nontender mass was detected in the left supraclavicular fossa. Laboratory results showed an elevated serum tryptase level (30 ng/mL; reference range: 2-11 ng/mL), eosinophilia (2.5 x 10^9 cells/L; reference range: 0.2-0.6 x 10^9 cells/L), and anemia (Hb: 8.5 g/dL; reference range: 12-16 g/dL).
+Case Presentation: A 65-year-old male smoker with no known asbestos exposure presented with progressive shortness of breath, chest pain, and a persistent dry cough of three months' duration. Physical examination revealed decreased breath sounds on the left side, and chest X-ray confirmed a left pleural effusion. Thoracentesis revealed an exudative pleural fluid with cytology positive for mesothelial malignant cells. Imaging studies showed a thickened visceral pleura and irregular consolidation of the lower left lobe consistent with MPM. Tissue biopsy confirmed epithelioid subtype MPM, and PD-L1 expression was 50%.
 
-A bone marrow aspiration revealed a high percentage of mast cells (>25% of total nucleated cells) with spindle-shaped morphology and dense granules, confirming the diagnosis of systemic mastocytosis. The patient was subsequently diagnosed with Mastocytosis with Systemic Manifestations (SM-AHN) based on WHO 2016 criteria, due to the presence of the major criterion (demonstration of a clonal hematopoietic neoplasm by cytogenetic or molecular genetic studies) and one minor criterion (anemia).
+Diagnostic Approach: Given the patient's history, clinical presentation, and imaging findings, a diagnosis of MPM was made. Staging workup included a PET scan, which revealed no distant metastasis (stage IIIB). Genetic profiling showed no actionable mutations. The patient was deemed a suitable candidate for immunotherapy based on PD-L1 expression ≥50%.
 
-The patient was managed with antihistamines for symptomatic relief, H1-receptor blockers (cetirizine 10 mg daily), and H2-receptor blockers (ranitidine 150 mg twice daily) to control acute attacks. In addition, oral corticosteroids (prednisone 40 mg daily) were initiated to address
+Treatment: The patient was initiated on pembrolizumab at a dose of 200 mg every three weeks. After two cycles, the patient reported improvement in symptoms and a partial response was confirmed on follow-up imaging. Toxicity was minimal with no grade ≥3 adverse events reported.
+
+Outcomes: The patient completed six cycles of pembrolizumab with ongoing disease control at one year (assessed by CT scan). The patient remains symptom-free and continues on maintenance therapy.
+
+Discussion: This case highlights the successful management of MPM using immunotherapy, specifically pembrolizumab. While traditional treatments offer limited efficacy, PD-L1 inhibitors have shown promise in improving outcomes for patients with high PD-L1 expression. Further research is warranted to assess the long-term efficacy and optimal sequencing of immunotherapy with other treatment modalities in MPM management.
+
+Keywords: Malignant pleural mesothelioma, Immunotherapy, Pembrolizumab, PD-L1 inhibitor, Case study

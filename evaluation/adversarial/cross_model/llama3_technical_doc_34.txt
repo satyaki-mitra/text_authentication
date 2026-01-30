@@ -1,61 +1,52 @@
-**API Endpoint: `GET /users/{id}`**
+**API Documentation: User Profile Management System**
 
-### Description:
+**Overview**
+The User Profile Management System is a RESTful API designed to manage user profiles for various applications. The API provides a set of endpoints for creating, reading, updating, and deleting (CRUD) user profiles. This documentation outlines the technical specifications and usage guidelines for the API.
 
-Retrieve a user's details by their unique identifier.
+**Technical Specifications**
 
-### Request Parameters:
+* **HTTP Methods**: GET, POST, PUT, DELETE
+* **API Endpoint**: `https://user-profiles.com/api/profiles`
+* **Request Format**: JSON
+* **Response Format**: JSON
+* **Authorization**: Token-based authentication (OAuth 2.0)
+* **Data Encoding**: UTF-8
 
-* **`id`**: The ID of the user to retrieve (required). Type: `integer`.
+**Endpoints**
 
-### Request Example:
+### Create a User Profile (POST /profiles)
 
-```bash
-curl -X GET \
-  http://example.com/api/users/12345 \
-  -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer YOUR_API_KEY'
-```
+* **Request Body**: A JSON object containing the user profile data, including:
+	+ `username`: The unique username for the user
+	+ `email`: The user's email address
+	+ `name`: The user's full name
+	+ `password`: The user's password (hashed)
+* **Response**: A JSON object with the newly created user profile ID and a success message
 
-### Response:
+### Read a User Profile (GET /profiles/{id})
 
-The API returns a JSON object containing the user's details.
+* **Path Parameter**: `id` - The unique ID of the user profile to retrieve
+* **Response**: A JSON object containing the user profile data
 
-**Response Body:**
+### Update a User Profile (PUT /profiles/{id})
 
-```json
-{
-  "id": 12345,
-  "name": "John Doe",
-  "email": "johndoe@example.com",
-  "role": "admin"
-}
-```
+* **Path Parameter**: `id` - The unique ID of the user profile to update
+* **Request Body**: A JSON object with the updated user profile data
+* **Response**: A JSON object with an updated user profile and a success message
 
-### Response Status Codes:
+### Delete a User Profile (DELETE /profiles/{id})
 
-* **200**: The user was found and the response body contains their details.
-* **404**: The user with the specified ID was not found.
+* **Path Parameter**: `id` - The unique ID of the user profile to delete
+* **Response**: A JSON object with a deletion confirmation message
 
-### Error Handling:
+**Usage Guidelines**
 
-If an error occurs while processing the request, the API will return a JSON object with the following structure:
+1. To create a new user profile, send a POST request to the `/profiles` endpoint with a valid JSON payload containing the required fields.
+2. To read a user profile, send a GET request to the `/profiles/{id}` endpoint, replacing `{id}` with the unique ID of the user profile you want to retrieve.
+3. To update an existing user profile, send a PUT request to the `/profiles/{id}` endpoint, replacing `{id}` with the unique ID of the user profile you want to update.
+4. To delete a user profile, send a DELETE request to the `/profiles/{id}` endpoint, replacing `{id}` with the unique ID of the user profile you want to delete.
 
-```json
-{
-  "error": {
-    "code": "INVALID_USER",
-    "message": "The user with the specified ID does not exist."
-  }
-}
-```
+**Error Handling**
+The API will return an error response in JSON format if an invalid request is made or if an internal server error occurs. The error response will contain a `code` field indicating the type of error and a `message` field providing a detailed description of the issue.
 
-### Notes:
-
-* The `id` parameter is required and must be an integer.
-* The API uses JSON Web Tokens (JWT) for authentication. Include a valid JWT in the `Authorization` header to authenticate your request.
-* This endpoint only returns public information about the user, such as their name and email address. For sensitive data, use the `GET /users/{id}/private` endpoint instead.
-
-### Changelog:
-
-* **2023-02-15**: Added support for retrieving users by ID.
+By following these technical specifications and usage guidelines, you can effectively integrate with the User Profile Management System API to manage user profiles for your applications.

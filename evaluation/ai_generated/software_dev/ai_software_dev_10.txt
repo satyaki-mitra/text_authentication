@@ -1,27 +1,76 @@
-Title: Understanding Functional Programming in JavaScript with the Map, Reduce, and Filter Methods
+Title: Documentation on Observer Design Pattern Implementation in Java with Best Practices
 
-Functional programming is a programming paradigm that emphasizes the use of functions as first-class citizens, immutable data, and avoiding side effects (changes to external state). In this article, we will explore three powerful methods in JavaScript – `map`, `reduce`, and `filter` – that are essential tools for functional programming.
+## Introduction
 
-1. Map: The map() method is used to create a new array with the results of calling a provided function on every element in the array. It does not modify the original array but instead returns a new one. Here's an example:
+The Observer Design Pattern is a behavioral software design pattern that defines a one-to-many dependency between objects so that when an object changes state, all its dependents are notified and updated automatically. This pattern is particularly useful in implementing event-driven systems, real-time data updates, and decoupling interfaces to improve modularity and reusability.
 
-```javascript
-const numbers = [1, 2, 3, 4, 5];
-const squares = numbers.map(num => num * num); // [1, 4, 9, 16, 25]
-```
-In this example, we created a new array of square numbers without modifying the original `numbers` array.
+## Use Cases
 
-2. Reduce: The reduce() method applies a provided function against an accumulator and each element in the array (from left to right) to reduce it to a single output value. Here's an example that calculates the sum of all elements in an array:
+1. **Weather Application:** In a weather application, the WeatherData class represents the subject (weather station), while the Observers (current conditions display, forecast display, and statistics display) represent objects that are interested in receiving updates about weather changes.
 
-```javascript
-const numbers = [1, 2, 3, 4, 5];
-const sum = numbers.reduce((total, num) => total + num, 0); // 15
-```
-In this example, we start with an initial value of `0` and add each number in the array to the accumulator (`total`) until we get the final result, `15`. The reduce() method is also useful for other operations like finding the minimum or maximum values in an array.
+2. **Stock Market Monitoring System:** In this system, the Stock class serves as a subject, with StockObserver objects representing various users who want to be notified of stock price changes.
 
-3. Filter: The filter() method creates a new array with all elements that pass the test provided by the function. It does not modify the original array but instead returns a new one. Here's an example that filters out odd numbers from an array:
+## Implementation in Java
 
-```javascript
-const numbers = [1, 2, 3, 4, 5];
-const evens = numbers.filter(num => num % 2 === 0); // [2, 4]
-```
-In this example, we created a
+Here's a simplified example of the Observer Design Pattern implementation in Java:
+
+```java
+interface Subject {
+    void registerObserver(Observer observer);
+    void removeObserver(Observer observer);
+    void notifyObservers();
+}
+
+interface Observer {
+    void update(Subject subject);
+}
+
+class WeatherData implements Subject {
+    private float temperature;
+    private float humidity;
+    private float pressure;
+    private List<Observer> observers = new ArrayList<>();
+
+    public void measurementsChanged() {
+        notifyObservers();
+    }
+
+    @Override
+    public void registerObserver(Observer observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(Observer observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (Observer observer : observers) {
+            observer.update(this);
+        }
+    }
+
+    // Setters and getters for temperature, humidity, and pressure
+}
+
+class CurrentConditionsDisplay implements Observer {
+    private float temperature;
+    private float humidity;
+
+    @Override
+    public void update(Subject subject) {
+        WeatherData weatherData = (WeatherData) subject;
+        this.temperature = weatherData.getTemperature();
+        this.humidity = weatherData.getHumidity();
+        display();
+    }
+
+    private void display() {
+        System.out.println("Current conditions: " + temperature + "°C, Humidity: " + humidity + "%");
+    }
+}
+
+public class Main {
+    public static void main(

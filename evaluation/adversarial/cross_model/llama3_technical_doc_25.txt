@@ -1,61 +1,56 @@
-**Endpoint:** `GET /orders`
+**API Documentation: User Management System**
 
-**Summary:**
+**Overview**
+The User Management System (UMS) is a RESTful API designed to manage user accounts, authenticate users, and provide authorization control for accessing protected resources. This documentation outlines the API's specifications, usage guidelines, and best practices.
 
-Retrieve a list of orders placed by customers. This endpoint returns an array of order objects, each containing information about the order.
+**API Endpoints**
+The UMS API consists of the following endpoints:
 
-**Path Parameters:**
+1. **/register**: Creates a new user account with provided credentials (username, password, email).
+	* Request Method: POST
+	* Request Body:
+		+ username (string)
+		+ password (string)
+		+ email (string)
+2. **/login**: Authenticates an existing user and returns an authentication token.
+	* Request Method: POST
+	* Request Body:
+		+ username (string)
+		+ password (string)
+3. **/logout**: Invalidates the current user's authentication token.
+	* Request Method: POST
+4. **/users**: Retrieves a list of all registered users.
+	* Request Method: GET
+5. **/users/{username}**: Retrieves a specific user's profile information.
+	* Request Method: GET
+	* Path Parameter: username (string)
+6. **/authorize**: Verifies the authenticity of an authentication token and allows access to protected resources.
+	* Request Method: POST
+	* Header: Authorization (string) - authentication token
 
-* None
+**API Specifications**
 
-**Query Parameters:**
+* API Version: 1.0
+* HTTP Methods: GET, POST
+* Content-Type: application/json
+* Authentication: Token-based (JSON Web Tokens)
+* Caching: Enabled for frequent requests (ETag and Last-Modified headers)
 
-* `customer_id`: (optional) Filter orders by customer ID. Accepts a comma-separated list of IDs.
-* `status`: (optional) Filter orders by status. Accepts one of the following values:
-	+ `pending`
-	+ `shipped`
-	+ `delivered`
-	+ `cancelled`
+**Usage Guidelines**
+To use the UMS API, follow these guidelines:
 
-**Request Headers:**
+1. **Registration**: Use the `/register` endpoint to create a new user account with unique credentials.
+2. **Login**: Authenticate using the `/login` endpoint by providing valid username and password credentials.
+3. **Authorization**: Use the authentication token returned from the `/login` endpoint to access protected resources through the `/authorize` endpoint.
+4. **Logout**: invalidate your authentication token using the `/logout` endpoint when you're finished using the system.
+5. **Error Handling**: Handle API errors by checking the HTTP status code and examining the response body for detailed error messages.
 
-* `Authorization`: Required Bearer token for API authentication.
-* `Content-Type`: Optional header specifying the format of the response (e.g., `application/json`).
+**Best Practices**
+When working with the UMS API, keep the following best practices in mind:
 
-**Response:**
+1. **Keep authentication tokens secure**: Store and transmit authentication tokens securely to prevent unauthorized access.
+2. **Use HTTPS**: Always use HTTPS when interacting with the UMS API to ensure data encryption and integrity.
+3. **Handle errors correctly**: Implement robust error handling mechanisms to catch and handle unexpected API responses.
 
-The endpoint returns a JSON object containing an array of order objects. Each order object has the following properties:
-
-* `id`: Unique identifier for the order.
-* `customer_id`: ID of the customer who placed the order.
-* `status`: Current status of the order (e.g., `pending`, `shipped`, etc.).
-* `total`: Total cost of the order.
-* `items`: Array of items in the order, with each item having:
-	+ `id`: Unique identifier for the item.
-	+ `name`: Name of the item.
-	+ `quantity`: Quantity of the item ordered.
-
-**Example Response:**
-```json
-[
-  {
-    "id": 1,
-    "customer_id": 123,
-    "status": "pending",
-    "total": 100.00,
-    "items": [
-      {
-        "id": 1,
-        "name": "Product A",
-        "quantity": 2
-      },
-      {
-        "id": 2,
-        "name": "Product B",
-        "quantity": 3
-      }
-    ]
-  },
-  {
-    "id": 2,
-    "customer_id
+**Additional Information**
+For more information on using the User Management System API, consult the accompanying developer documentation or contact our support team.

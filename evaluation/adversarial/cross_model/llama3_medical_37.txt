@@ -1,0 +1,21 @@
+**Clinical Abstract**
+
+**Case Report: Unique Presentation of Myasthenia Gravis with Concurrent Autoimmune Thyroiditis**
+
+A 42-year-old female presented to our institution with a several-month history of generalized muscle weakness, fatigue, and impaired coordination. She reported difficulty swallowing, speaking, and performing everyday activities such as dressing and grooming.
+
+Physical examination revealed pronounced ptosis, facial weakness, and proximal muscle wasting. Reflexes were depressed, and motor strength was diminished in all four extremities. The patient's thyroid function tests (TFTs) demonstrated subclinical hypothyroidism (thyroid-stimulating hormone [TSH] 5.1 mU/L; free thyroxine [FT4] 0.8 ng/dL).
+
+Laboratory investigations revealed elevated acetylcholine receptor antibody titers (AChR Ab: 30 IU/mL) and a high titer of thyroid peroxidase antibody (TPO Ab: 320 IU/mL). The patient's electromyogram (EMG) showed characteristic findings consistent with myasthenia gravis (MG), including decreased compound muscle action potentials (CMAPs) and prolonged duration of fasciculation potentials.
+
+A diagnosis of concurrent autoimmune MG and thyroditis was made, highlighting the rare occurrence of these two conditions together. The patient's symptoms responded favorably to immunosuppressive therapy with prednisone (60 mg/day) and azathioprine (150 mg/day). Thyroxine replacement therapy was initiated to normalize her thyroid function.
+
+**Discussion**
+
+Myasthenia gravis is an autoimmune disorder characterized by muscle weakness and fatigue, often accompanied by ocular or bulbar symptoms. Concurrent autoimmune thyroiditis is a rare phenomenon, estimated to occur in approximately 10% of patients with MG. The present case highlights the importance of considering the coexistence of these two conditions when evaluating patients presenting with muscle weakness and thyroid dysfunction.
+
+The diagnosis of concurrent autoimmune MG and thyroditis was based on the presence of characteristic clinical features, laboratory markers, and EMG findings. Treatment with immunosuppressive agents aimed at suppressing the aberrant immune response helped alleviate the patient's symptoms and improve her quality of life.
+
+**Conclusion**
+
+This case report underscores the importance of considering concurrent autoimmune thyroiditis in patients presenting with muscle weakness, particularly when accompanied by subclinical hypothyroidism or other laboratory abnormalities. A high index of suspicion, coupled with a comprehensive diagnostic workup, is essential for accurate diagnosis and effective management of these complex conditions.

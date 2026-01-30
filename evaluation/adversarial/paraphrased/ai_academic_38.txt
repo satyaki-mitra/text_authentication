@@ -1,0 +1,13 @@
+Title: Examining the Influence of Ocean Temperature Fluctuations on Fertility Outcomes of the Critically Endangered Leatherback Turtle in Pacific Coastal Zones
+
+Introduction:
+The critically endangered marine species, the Leatherback Turtle (Dermochelys coriacea), is under immense pressure due to climate change and human activity. This investigation sought to explore the impact of ocean temperature variations on the reproductive outcomes of leatherback turtles nesting in Pacific coastal regions.
+
+Research Design:
+A multi-year field study spanning nine years (2012-2020) was executed at three significant nesting locations along Costa Rica's Pacific Coast: Tortuguero National Park, Ostional Wildlife Refuge, and Las Baulas National Marine Park. The research process encompassed daily surveillance of turtle nesting activities, quantification of clutch size, incubation duration, and hatchling emergence rates. Furthermore, temperature sensors were embedded within the nests to monitor microclimate conditions during the incubation period. Data analysis was conducted using generalized linear models (GLMs) to establish a link between ocean temperatures and reproductive parameters.
+
+Significant Observations:
+The data revealed a substantial negative correlation between ocean surface temperature anomalies and clutch size (-0.72, p<0.01), hatchling emergence rates (-0.68, p<0.01), and incubation duration (0.59, p<0.01). In simpler terms, a 1°C rise in ocean surface temperature led to a reduction in clutch size by approximately 24%, hatchling emergence rates by 27%, and an extension of incubation duration by around 6%.
+
+Implications:
+The research findings indicate that climate change is negatively impacting the reproductive success of leatherback turtles nesting in Pacific coastal regions. This study offers vital evidence to bolster conservation efforts for protecting this endangered species from the deleterious effects of global warming. Future studies should

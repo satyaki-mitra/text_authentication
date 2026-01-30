@@ -1,25 +1,60 @@
-Title: Documentation for the "Real-Time Data Processing" Feature in XYZ Application
+**API Documentation**
 
-1. Overview
+## Movie Rating REST Endpoint
 
-The Real-Time Data Processing (RTDP) feature is a significant addition to the XYZ application, designed to process and analyze data as it streams continuously from various sources. This functionality ensures timely decision-making by delivering up-to-date insights in real time.
+This document outlines the specifications for our Movie Rating REST API endpoint. The goal of this API is to allow users to rate movies, view other users' ratings, and manage their own rating history.
 
-2. Key Features
-   - Continuous Data Streaming: RTDP supports the seamless ingestion of data from multiple sources such as databases, APIs, and IoT devices without any interruptions.
-   - Real-Time Analysis: The feature performs immediate data analysis using advanced algorithms to extract meaningful insights from the incoming data stream.
-   - Customizable Thresholds: Users can set custom thresholds for various parameters within the RTDP dashboard to monitor the data and receive real-time alerts when predefined conditions are met.
-   - Data Visualization: Real-time charts, graphs, and dashboards display processed data in an easy-to-understand format, allowing users to quickly assess trends, patterns, and anomalies.
-   - Scalability: RTDP is designed to handle large volumes of data with high concurrency, ensuring optimal performance even as the amount of incoming data grows.
+### Endpoint Description
 
-3. Implementation Details
-   - Data Ingestion: RTDP uses a combination of APIs, webhooks, and custom connectors to ingest data from various sources in real time.
-   - Data Processing: The processing pipeline involves multiple stages, including parsing, cleaning, normalization, and transformation, before delivering the processed data for analysis.
-   - Real-Time Analysis: Advanced algorithms are employed to analyze the processed data in real time, with options for custom scripting using Python or Java for more complex use cases.
-   - Data Storage: Processed data can be stored in a variety of databases such as MySQL, PostgreSQL, MongoDB, and others, providing flexibility based on user requirements.
-   - Alert Notifications: Users can configure real-time alerts via email, SMS, or webhooks to notify them when predefined thresholds are breached.
+The primary endpoint for our Movie Rating API is `/movies/{movieId}/rate`. This endpoint is designed to handle movie rating requests from authenticated users.
 
-4. User Guide
+### Request Parameters
 
-To get started with RTDP, follow these steps:
+- `movieId` (required, integer): The unique identifier for the movie being rated.
+- `rating` (required, float): The user's rating for the specified movie.
+- `userId` (optional, integer): The unique identifier of the user performing the rating action. If not provided, the authenticated user will be assumed.
 
-   a) Access the RTDP dashboard within the XYZ application and set up data sources
+### Response Parameters
+
+- `movieId` (integer): The unique identifier for the rated movie.
+- `rating` (float): The new rating for the specified movie after the request.
+- `userId` (integer): The unique identifier of the user who performed the rating action.
+- `timestamp` (string, ISO 8601 format): The timestamp when the rating was submitted.
+
+### Authentication Requirements
+
+All requests to the Movie Rating API must be authenticated using a JSON Web Token (JWT). The JWT must be included in the `Authorization` header with the prefix "Bearer ". Unauthenticated requests will return an error response (see below for details).
+
+### Example Requests
+
+#### Successful Request
+
+To rate a movie as a user, send a POST request to the following URL:
+
+```
+https://api.movierating.com/movies/{movieId}/rate
+Authorization: Bearer {your_jwt_token}
+Content-Type: application/json
+
+{
+  "rating": 4.5
+}
+```
+
+#### Error Response
+
+If an error occurs during the request, the API will return a JSON object with an `errorCode` and a human-readable `message`. Here's an example of a failed request:
+
+```json
+{
+  "errorCode": 401,
+  "message": "Unauthorized. Please provide valid authentication credentials."
+}
+```
+
+### Usage Notes
+
+- If the user attempting to rate a movie does not have an account, they will be required to create one before rating any movies.
+- Ratings can only be updated once per user for each movie.
+- The API will return error responses if provided `movieId` is invalid or the specified movie has already been rated by the authenticated user.
+- To retrieve

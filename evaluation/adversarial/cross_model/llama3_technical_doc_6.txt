@@ -1,43 +1,70 @@
-**API Endpoint: `/users`**
+**API Documentation: User Profile Management System**
 
-**Description:**
-The `/users` endpoint is used to retrieve a list of users from the system. This endpoint can be used by client applications to fetch a list of users, including their basic information and any additional details that are specified in the request parameters.
+The User Profile Management System (UPMS) is a RESTful API designed to manage user profiles, allowing developers to integrate user profile data into their applications seamlessly. This documentation provides an overview of the API's features, specifications, and usage guidelines.
 
-**Request Parameters:**
+**API Endpoints**
 
-* **limit**: The maximum number of users to return in the response (default: 10). Acceptable values: 1-100.
-* **offset**: The starting point for the user list (default: 0).
-* **filter**: A JSON object containing filter criteria. See the "Filter Criteria" section below.
+1. **Create User Profile**: `POST /users`
+	* Request Body: JSON object containing user profile information (e.g., name, email, phone number)
+	* Response: User ID and a success message upon successful creation
+2. **Retrieve User Profile**: `GET /users/{userId}`
+	* Path Parameter: `userId` - The unique identifier of the user profile
+	* Response: JSON object containing the requested user's profile information
+3. **Update User Profile**: `PUT /users/{userId}`
+	* Path Parameter: `userId` - The unique identifier of the user profile
+	* Request Body: JSON object containing updated user profile information
+	* Response: A success message upon successful update
+4. **Delete User Profile**: `DELETE /users/{userId}`
+	* Path Parameter: `userId` - The unique identifier of the user profile
+	* Response: A success message upon successful deletion
 
-**Response:**
+**API Request and Response Formats**
 
-The `/users` endpoint returns a JSON response containing an array of users. Each user object includes the following properties:
+The UPMS API uses JSON (JavaScript Object Notation) as its primary data format for requests and responses.
 
-* `id`: Unique identifier for the user.
-* `username`: The username chosen by the user.
-* `email`: The user's email address.
-* **profile**: An object containing additional profile information (e.g., name, bio).
-* **created_at`: Timestamp indicating when the user account was created.
+**Error Handling**
 
-**Filter Criteria:**
-The `filter` parameter allows you to specify criteria for filtering the list of users. The filter object can contain the following properties:
+The UPMS API will return the following HTTP status codes to indicate the result of a request:
 
-* `username_like`: A string pattern to match against usernames (e.g., "j%").
-* `email_like`: A string pattern to match against email addresses (e.g., "@example.com").
-* `profile_name_like`: A string pattern to match against profile names (e.g., "%John").
+* 200 OK - Successful request
+* 400 Bad Request - Invalid request syntax or missing required fields
+* 404 Not Found - User profile not found or invalid `userId`
+* 500 Internal Server Error - Unexpected error occurred
 
-**Example Request:**
+**Security Considerations**
+
+To ensure secure data transmission, the UPMS API uses HTTPS encryption (TLSv1.2) and OAuth 2.0 for authentication.
+
+**Best Practices**
+
+When integrating with the UPMS API:
+
+1. Handle errors properly by checking the HTTP status code and response body.
+2. Use JSON formatting to ensure data consistency.
+3. Validate input data against the API's schema definitions.
+4. Implement rate limiting to prevent excessive requests.
+
+**Example Code Snippets (JavaScript)**
+
+Create User Profile:
+```javascript
+const axios = require('axios');
+
+axios.post('https://example.com/users', {
+  name: 'John Doe',
+  email: 'johndoe@example.com',
+  phone: '123-456-7890'
+})
+.then(response => console.log(response.data))
+.catch(error => console.error(error));
 ```
-GET /users?limit=20&offset=10&filter={"username_like": "j%"}
+Retrieve User Profile:
+```javascript
+const axios = require('axios');
+
+axios.get('https://example.com/users/12345')
+  .then(response => console.log(response.data))
+  .catch(error => console.error(error));
 ```
 
-**Example Response:**
-```json
-{
-  "users": [
-    {
-      "id": 123,
-      "username": "john",
-      "email": "john@example.com",
-      "profile": {"name": "John Doe"},
-      "created_at": "
+By following these guidelines and specifications, developers can effectively integrate the UPMS API into their applications, providing a seamless user profile management experience.

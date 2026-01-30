@@ -1,0 +1,1 @@
+The terrific & neat theme for the Ghost blogging platform. Ordentlich is the terrific and neat theme for Ghost. It's free, responsive and ready to rumble! See it live in action on for example pages like Coding w/ Passion Mag. Ordentlich is heavily using Bourbon, Neat, Bitters and the nice flex boxes. Build the theme using gulp as described on the official Github page.

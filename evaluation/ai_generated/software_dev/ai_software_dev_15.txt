@@ -1,18 +1,75 @@
-Title: Exploring Functional Programming with Haskell's Monads
+Title: Documentation on Observer Design Pattern with Java Implementation
 
-Functional programming (FP) is a programming paradigm that emphasizes the evaluation of functions without changing state and without considering side effects. One of the key concepts in FP, particularly in Haskell, is the use of monads. This article aims to provide an introductory explanation of monads in Haskell.
+## Introduction
 
-Monads are a design pattern used in Haskell for sequencing operations, managing state, and enforcing computational structure. They help abstract complexities and promote readability in functional code. To better understand monads, let's break down the concept into simpler components:
+The Observer Design Pattern is a software design pattern that defines a one-to-many dependency between objects so that when one object changes its state, all its dependents are notified and updated automatically. It's particularly useful in implementing distributed event handling systems, real-time applications, and GUI frameworks.
 
-1. **Wrappers**: Monads are essentially wrappers around values that enable computation with these values. They provide a standard interface for combining operations, so you can chain them together without worrying about how they interact internally.
+## Use Cases
 
-2. **Bind (>>=) Operation**: The bind operation allows you to sequence computations using monadic values. It takes two arguments: a value wrapped in a monad and a function that operates on the type of the monad's underlying value, returning another monad. The bind operation extracts the underlying value from the first monad, applies the function, and then wraps the result back into a new monad.
+1. **Weather Forecasting System**: In this system, weather data providers (subject) publish their updates to observers (weather stations) who are interested in the specific data. When there is a change in weather conditions, all subscribed weather stations receive an update instantly.
 
-3. **Return (pure) Function**: The return function takes a plain value and wraps it in a monad instance of its type. This is used when you want to introduce a value into a sequence of computations as a monadic value, instead of the standard value itself.
+2. **Stock Market Ticker**: In a stock market application, investors can subscribe to updates about a particular stock or stocks. The stock exchange (subject) sends real-time price updates to its observers (investors).
 
-4. **Monad Laws**: Monads must obey three laws to ensure predictable behavior:
-   - Left Identity: If you have a monad containing a plain value (returned with pure), and then chain it with another computation, the resulting monad should be equivalent to chaining the original plain value directly with the same computation.
-   - Right Identity: If you wrap a plain value in two consecutive monads using return, and then bind that monad with any function, the result should be equal to applying the function directly to the plain value.
-   - Associativity: When chaining multiple computations with bind, the order in which they're combined doesn't matter, as long as you follow the correct grouping rules (associativity law).
+## Implementation in Java
 
-Haskell provides
+Let's create an example of the Observer pattern using Java interfaces:
+
+```java
+// Subject interface
+public interface Subject {
+    void attach(Observer observer);
+    void detach(Observer observer);
+    void notifyObservers();
+}
+
+// ConcreteSubject class
+public class WeatherData implements Subject {
+    private float temperature;
+    private float humidity;
+    private float pressure;
+    private List<Observer> observers = new ArrayList<>();
+
+    public void measurementsChanged() {
+        notifyObservers();
+    }
+
+    //... other methods for setting and getting temperature, humidity, and pressure
+
+    @Override
+    public void attach(Observer observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void detach(Observer observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (Observer observer : observers) {
+            observer.update(this);
+        }
+    }
+}
+
+// Observer interface
+public interface Observer {
+    void update(Subject subject);
+}
+
+// ConcreteObserver class
+public class CurrentConditionsDisplay implements Observer {
+    private float temperature;
+    private float humidity;
+    private float pressure;
+
+    public void display() {
+        System.out.println("Current conditions: " + temperature + ", " + humidity + ", " + pressure);
+    }
+
+    @Override
+    public void update(Subject subject) {
+        WeatherData weatherData = (WeatherData) subject;
+        this.temperature = weatherData.getTemperature();
+        this.humidity = weatherData.getHum

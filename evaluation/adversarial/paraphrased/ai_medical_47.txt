@@ -1,0 +1,13 @@
+Title: A Clinical Case Analysis of Effective Pancreatitis Management in a Severe Hyperlipidemia Context
+
+Introduction
+In the realm of gastrointestinal disorders, acute pancreatitis (AP) emerges as a prevalent issue, with severe hyperlipidemia (HL) serving as a prominent risk factor. This study showcases an unusual case of AP complicated by extreme HL and its successful management.
+
+Case Description:
+A 45-year-old gentleman arrived at the emergency department, reporting abdominal pain, nausea, and vomiting for four consecutive days. He disclosed no substantial medical background but admitted to excessive alcohol consumption and a high-fat dietary regimen. Upon examination, laboratory results revealed an amylase level of 1500 U/L (normal range: 26-110 U/L) and lipase level of 3000 U/L (normal range: 13-60 U/L), signaling acute pancreatitis. Moreover, a triglyceride level of 1500 mg/dL (normal range: 40-160 mg/dL) was recorded, hinting at secondary AP due to extreme HL. The physical examination was unremarkable except for epigastric tenderness and guarding. Diagnostic imaging studies such as abdominal ultrasound and computed tomography confirmed the diagnosis of AP.
+
+Approach to Diagnosis:
+Given the high triglyceride levels, an extensive lipid profile was conducted to rule out other possible causes, including monogenic dyslipidemias or secondary factors inducing HL. Furthermore, the patient underwent screening for comorbidities that could be linked to AP, such as autoimmune diseases and medication usage.
+
+Treatment Strategy:
+The patient was admitted to the hospital and received supportive care, including intravenous fluids, pain management, and nutritional support. Due to severe HL, plasmapheresis commenced to lower triglyceride levels below 1000 mg/d

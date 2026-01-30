@@ -1,26 +1,40 @@
-Title: Documentation for the "Real-Time Data Synchronization Feature"
+Title: Petstore API - Find Pets by Status
 
-1. Introduction
-   - The Real-Time Data Synchronization (RTDS) feature is an essential component of our software, designed to ensure that data across multiple instances of the application remains consistent in real-time. This feature is critical in scenarios where collaborative work or data sharing among multiple users is necessary.
+## Endpoint Description
 
-2. Feature Overview
-   - The RTDS feature uses a distributed database approach with optimistic concurrency control (OCC) to manage and synchronize data changes across the application instances. It allows users to view and modify data simultaneously without conflicts or inconsistencies.
+`GET /v2/pet/findByStatus`
 
-3. Key Components
-   - Data Synchronization Manager: Responsible for managing and coordinating data synchronization between instances, ensuring that changes are propagated in real-time.
-   - Conflict Resolver: Handles potential conflicts that may arise when multiple users modify the same data simultaneously, resolving them in a manner that maintains data integrity.
-   - Data Versioning: Ensures that each instance has a unique version of the data, facilitating conflict resolution and change tracking.
+This endpoint allows users to search for pets based on their status (available or sold).
 
-4. Usage
-   - To enable the RTDS feature, it must be activated during the application setup or configuration process. Once enabled, all instances of the application will automatically synchronize their data in real-time.
-   - Users can modify data locally, and changes will be synchronized with other instances immediately, provided no conflicts have occurred. If a conflict does occur, the Conflict Resolver will handle it and ensure that the final state maintains data integrity.
+## Request Parameters
 
-5. Best Practices
-   - To minimize potential conflicts, encourage users to communicate while working on the same data. This can help prevent simultaneous modifications and reduce the need for conflict resolution.
-   - Regularly backup and archive your data to maintain a historical record of changes and ensure data recovery in case of unexpected issues.
+| Parameter      | Description                                                                     | Data Type    | Required | Default Value |
+| -------------- | ------------------------------------------------------------------------------- | ------------ | -------- | ------------- |
+| `status`       | The status of the pets to be returned. Supported values are 'available' and 'sold'. | string       | Yes      | -             |
+| `page`         | The page number of results to return. Default is 0.                          | integer      | No       | 0             |
+| `limit`        | The maximum number of items per page. Default is 20, max allowed limit is 100.  | integer      | No       | 20            |
 
-6. Troubleshooting
-   - If conflicts persist or the synchronization process encounters errors, consult the application logs for more information on the issue. These logs will contain detailed information about the conflict and potential steps to resolve it.
-   - In some cases, manually resolving conflicts may be necessary. This can be done by either reverting to a previous version of the data or manually adjusting the data to maintain consistency across instances.
+## Response Parameters
 
-7. Conclusion
+| Parameter      | Description                                                         | Data Type    |
+| -------------- | ------------------------------------------------------------------- | ------------ |
+| `page`         | The current page number in the result set.                        | integer      |
+| `size`         | The total number of results returned in the response.             | integer      |
+| `total`        | The total number of pets found based on the given query.          | integer      |
+| `pets`         | An array of pet objects that match the specified status filter.  | array        |
+| `pet` (nested) | A single pet object containing information about the pet.         | object       |
+|                  | - `id`                : The unique identifier for a pet            | integer      |
+|                  | - `categoryId`        : The unique identifier for a pet's category | integer      |
+|                  | - `categoryName`      : The name of the pet's category             | string       |
+|                  | - `price`             : The price of the pet in cents              | float        |
+|                  | - `status`            : The status of the pet (available or sold)    | string       |
+|                  | - `name`              : The name of the pet                          | string       |
+|                  | - `photoUrls`         : An array of URLs for photos of the pet      | array        |
+
+## Authentication Requirements
+
+API key authentication is required to access this endpoint. The API key should be included in the `Authorization` header with the prefix `api_key`.
+
+Example:
+```
+Authorization: api_key <YOUR_API_KEY>

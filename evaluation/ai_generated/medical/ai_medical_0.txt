@@ -1,21 +1,15 @@
-Title: A Rare Case of Pseudoxanthoma Elasticum Manifesting as Recurrent Retinal Detachment
+Title: A Case Study on Successful Management of Acute Pancreatitis Complicated by Acute Respiratory Distress Syndrome (ARDS)
 
-Case Presentation:
+Abstract
 
-A 52-year-old Caucasian female presented with a three-month history of intermittent floaters and peripheral vision loss in her left eye. The patient had no significant past medical history, but reported a family history of similar visual symptoms among close relatives. Upon initial examination, slit lamp biomicroscopy revealed angioid streaks emanating from the optic disc, suggestive of Pseudoxanthoma Elasticum (PXE). Funduscopic examination confirmed multiple retinal tears and detachments in both eyes, with the left eye demonstrating a more pronounced detachment.
+Background: Acute pancreatitis (AP) is a common gastrointestinal disorder, often precipitated by gallstones or alcohol abuse. A complication of AP, Acute Respiratory Distress Syndrome (ARDS), can significantly worsen the prognosis. This case report highlights an unusual presentation and successful management of AP complicated by ARDS in a 58-year-old male patient.
 
-Investigations:
+Case Presentation: The patient presented to the emergency department with severe epigastric abdominal pain, nausea, and vomiting. His medical history included hypertension, hyperlipidemia, and chronic alcohol consumption. Initial laboratory findings revealed a serum amylase level of 1500 U/L (normal range: 28-136 U/L) and lipase level of 4000 U/L (normal range: 13-60 U/L), consistent with AP. Chest X-ray revealed bilateral infiltrates, suggesting the development of ARDS.
 
-Dermatological evaluation revealed yellowish-brown plaques on the neck and axillae, consistent with Calcification of Plaque Xanthomata, another feature of PXE. Laboratory findings were unremarkable. X-ray and CT scans showed calcifications in the elastic tissue of the aorta and other large arteries, confirming systemic involvement. Genetic testing for mutations in ABCC6 gene, the most common genetic cause of PXE, was positive.
+Diagnostic Approach: Further investigations included abdominal ultrasound, which confirmed the diagnosis of AP. The patient was also diagnosed with ARDS based on the Berlin Definition, including acute onset of respiratory failure, bilateral opacities on chest imaging not fully explained by heart failure or fluid overload, and no signs of left atrial hypertension.
 
-Treatment:
+Treatment: The patient was immediately admitted to the intensive care unit (ICU) for supportive care, including oxygen therapy, mechanical ventilation, and intravenous fluids. Nutritional support was initiated with total parenteral nutrition due to the severity of his condition. Antibiotics were administered to prevent secondary infections, and analgesics were provided for pain management.
 
-The patient underwent multiple vitrectomies with silicone oil tamponade to repair the retinal detachments in both eyes. Due to the recurrent nature of the detachments and the systemic involvement of PXE, regular ophthalmologic follow-ups were scheduled along with management for potential cardiovascular complications.
+Outcomes: Over the course of one week, the patient's respiratory status improved significantly, with a gradual reduction in ventilator support. His serum amylase and lipase levels also began to decrease, indicating resolution of AP. By the end of the second week, the patient was extubated, and he was discharged from the ICU on the third week. After a month of hospitalization, he was discharged home with instructions for alcohol cessation and follow-up appointments with a gastroenterologist and pulmonologist.
 
-Discussion:
-
-This case highlights the importance of recognizing Pseudoxanthoma Elasticum (PXE), a rare and often underdiagnosed multisystem disorder, in patients presenting with retinal detachments. The disease is characterized by calcification and fragmentation of elastic fibers in the skin, eyes, and cardiovascular system. Early recognition can help in managing ophthalmologic complications and preventing potential cardiovascular events.
-
-Conclusion:
-
-In patients with recurrent retinal detachments, especially those with a family history of similar symptoms or dermatological findings suggestive of PXE, a thorough evaluation for system
+Discussion: This case underscores the importance of prompt recognition and aggressive management in patients with AP complicated by ARDS. Early ICU admission, appropriate ventilatory support, and nutritional interventions played

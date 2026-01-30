@@ -1,0 +1,56 @@
+Title: User Account Management API - Endpoint for RESTful Interaction
+
+## RESTful User Account Interface
+
+### Overview
+
+This API delivers a RESTful interface for handling user accounts within our system. The endpoint has been engineered to execute diverse tasks, such as creation, retrieval, modification, and deletion of users.
+
+### Endpoint Addresses
+
+- Create a new user: `POST /api/v1/accounts/users`
+- Retrieve user details by ID: `GET /api/v1/accounts/users/{ID}`
+- Update user details by ID: `PUT /api/v1/accounts/users/{ID}`
+- Delete a user by ID: `DELETE /api/v1/accounts/users/{ID}`
+
+### Request Data Structures
+
+#### User Creation (POST)
+
+```json
+{
+  "first_name": "string",
+  "last_name": "string",
+  "email": "string",
+  "password": "string"
+}
+```
+
+#### User Retrieval, Update, and Deletion (GET/PUT/DELETE)
+
+```json
+{
+  "ID": "integer"
+}
+```
+
+### Response Data Structures
+
+#### Successful Responses (200 OK)
+
+For successful operations, the response will consist of the requested data in JSON format.
+
+##### User Creation
+
+```json
+{
+  "ID": "integer",
+  "first_name": "string",
+  "last_name": "string",
+  "email": "string",
+  "created_at": "date-time",
+  "updated_at": "date-time"
+}
+```
+
+##### User Retrieval

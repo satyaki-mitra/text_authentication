@@ -1,0 +1,42 @@
+**Guided Practice: Creating a Simple Spreadsheet**
+
+**Objective:** To create a basic spreadsheet using Google Sheets or Microsoft Excel, demonstrating essential skills in data organization and visualization.
+
+**Materials:**
+
+* Computer with internet access
+* Google Sheets or Microsoft Excel software installed
+* A simple dataset (e.g., student grades)
+
+**Step-by-Step Instructions:**
+
+1. **Open the Spreadsheet Software**
+	* Launch Google Sheets (gsuite.google.com) or Microsoft Excel (excel.office.com) on your computer.
+2. **Create a New Document**
+	* In Google Sheets, click on the "New" button and select "Google Sheets." In Microsoft Excel, click on the "File" menu and choose "New."
+3. **Set Up Your Spreadsheet**
+	* Give your spreadsheet a title (e.g., "Student Grades") and set the dimensions to 5 rows x 2 columns.
+4. **Enter Your Data**
+	* Copy and paste your simple dataset into the spreadsheet, using one row for each student's information (e.g., name, grade, subject).
+	* Use the first column for student names and the second column for grades.
+
+**Tips:**
+
+* Keep your data organized by using clear labels and formatting.
+* Use formulas to perform basic calculations, such as averaging or summing scores.
+
+5. **Format Your Data**
+	* Use the "Format" tab (Google Sheets) or "Home" tab (Microsoft Excel) to apply styles to your data.
+	* Choose a font size and color scheme that is easy to read.
+6. **Create Charts and Graphs**
+	* Select the range of cells containing the grades data.
+	* Click on the "Insert" menu (Google Sheets) or "Chart Tools" tab (Microsoft Excel).
+	* Choose a simple chart type, such as a bar graph or pie chart.
+
+**Additional Tips:**
+
+* Use hover-over text to provide additional information about each student's grade.
+* Experiment with different chart types and colors to visualize your data effectively.
+
+**Conclusion:**
+Congratulations! You have successfully created a basic spreadsheet using Google Sheets or Microsoft Excel. Practice these essential skills to improve your ability to organize, analyze, and present data in various formats.

@@ -1,45 +1,97 @@
-Title: Documentation for the Advanced Search Feature in XYZ Software
+Title: API Documentation - User Management Endpoint
 
-1. Overview
+## User Management REST Endpoint
 
-The Advanced Search feature in XYZ Software is designed to provide users with an enhanced search experience, allowing them to perform more complex and precise searches within the application's data. This document will detail the functionality, usage, and configuration options of the Advanced Search feature.
+### Description
 
-2. Functionality
+This API provides a RESTful interface for managing user accounts within our system. The endpoint is designed to perform various operations such as creating, retrieving, updating, and deleting users.
 
-The Advanced Search allows users to filter results based on multiple criteria, such as date ranges, specific fields, and customized search queries. The results are returned in a more organized and relevant manner compared to standard searches.
+### Endpoint
 
-3. Usage
+`POST /api/v1/users` - Create a new user
+`GET /api/v1/users/{id}` - Retrieve user details by ID
+`PUT /api/v1/users/{id}` - Update user details by ID
+`DELETE /api/v1/users/{id}` - Delete user by ID
 
-To access the Advanced Search feature:
-- Navigate to the main menu and click on "Search"
-- Select "Advanced Search" from the dropdown menu
-- In the search bar, enter the desired keywords or phrases
-- Use the "Filters" section to customize your search criteria
-- Click "Search" to initiate the search
+### Request Parameters
 
-4. Filters
+#### Create User (POST)
 
-The following filters are available in the Advanced Search feature:
+```json
+{
+  "firstName": "string",
+  "lastName": "string",
+  "email": "string",
+  "password": "string"
+}
+```
 
-a) Date Range: Users can specify a date range for the results they want to retrieve, such as last month, this year, or a custom range.
+#### Retrieve, Update, Delete User (GET/PUT/DELETE)
 
-b) Fields: Users can select specific fields to focus their search on, such as title, author, or content.
+```json
+{
+  "id": "integer"
+}
+```
 
-c) Custom Query: Users can enter a custom SQL-like query to perform more complex searches, for example, searching for documents containing specific words within the title and content.
+### Response Parameters
 
-d) Boolean Operators: Users can use Boolean operators (AND, OR, NOT) to combine search terms or exclude certain keywords from their results.
+#### Success Response (200 OK)
 
-5. Configuration
+For successful operations, the response will contain the requested data in JSON format.
 
-The Advanced Search feature can be configured by system administrators to meet the specific needs of different users or departments. This includes defining the available filters, setting default search options, and restricting access to certain features based on user roles.
+##### Create User
 
-6. Best Practices
+```json
+{
+  "id": "integer",
+  "firstName": "string",
+  "lastName": "string",
+  "email": "string",
+  "createdAt": "date-time",
+  "updatedAt": "date-time"
+}
+```
 
-- Use specific keywords or phrases for more accurate results
-- Experiment with various filters and Boolean operators to refine your searches
-- Consider using custom queries for complex search requirements
-- Limit the number of filters used in a single search to avoid overly restrictive results
+##### Retrieve User
 
-7. Troubleshooting
+```json
+{
+  "id": "integer",
+  "firstName": "string",
+  "lastName": "string",
+  "email": "string",
+  "createdAt": "date-time",
+  "updatedAt": "date-time"
+}
+```
 
-In case of any issues or errors while using the Advanced Search feature, please consult the XYZ Software support team
+##### Update User
+
+Same as Retrieve User response, but includes additional `updatedAt` field.
+
+#### Error Response (4xx/5xx)
+
+Error responses will contain a JSON object with an error code and message.
+
+```json
+{
+  "errorCode": "integer",
+  "message": "string"
+}
+```
+
+### Authentication Requirements
+
+All requests to the User Management endpoint require authentication using API keys. The API key should be included in the `Authorization` header of each request as follows:
+
+```bash
+Authorization: Bearer [Your API Key]
+```
+
+### Example Request
+
+#### Create a new user with API key `abc123`
+
+```bash
+POST /api/v1/users HTTP/1

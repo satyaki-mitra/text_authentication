@@ -1,17 +1,14 @@
-Title: An Investigation into the Evolution and Impact of Artificial Intelligence on Modern Society: A Multidisciplinary Approach
+Title: An Examination of the Impact of Cognitive Behavioral Therapy on Depression Symptomatology in Adolescents: A Randomized Controlled Trial
 
-Abstract:
+Abstract
 
-This study aims to delve into the intricate evolutionary trajectory of Artificial Intelligence (AI) and its profound effects on contemporary society, employing a multidisciplinary approach that encompasses computer science, sociology, economics, ethics, and law.
+Background Context: Depression is a pervasive and debilitating mental health disorder, particularly prevalent among adolescents. The World Health Organization has identified depression as the leading cause of disability worldwide for individuals between the ages of 15 and 44 years (World Health Organization, 2017). Cognitive Behavioral Therapy (CBT) has emerged as a promising intervention strategy, yet its efficacy in addressing adolescent depression remains under-explored.
 
-The paper is structured around four interrelated sections. The first section provides an historical overview of AI, tracing its origins to the Dartmouth Conference in 1956 and exploring key milestones in the development of AI, including the emergence of expert systems, artificial neural networks, machine learning, and deep learning. This section also discusses the conceptual shifts in AI, from rule-based systems to data-driven models, and the implications of these changes for the future of AI research and application.
+Research Methodology: This study employed a randomized controlled trial design to investigate the effects of CBT on depression symptomatology in a sample of 150 adolescents (M age = 16.3 years, SD = 1.2; 70 males, 80 females) from secondary schools in a suburban area. Participants were randomly assigned to either the experimental group (n=75), receiving 12 weekly sessions of CBT, or the control group (n=75), who received no intervention but standard school counseling services. The primary outcome measure was the Beck Depression Inventory-II (BDI-II; Beck et al., 1996). Pre-intervention, post-intervention, and follow-up assessments were conducted at baseline, immediately following the intervention, and three months post-intervention, respectively.
 
-The second section focuses on the societal impact of AI, examining its influence across various sectors such as healthcare, finance, transportation, entertainment, and education. It discusses how AI has transformed industries by enhancing efficiency, accuracy, and decision-making capabilities, while also highlighting potential challenges and ethical concerns associated with these advancements.
+Key Findings: Significant differences between groups were observed on the BDI-II scores at all time points (F(2, 298) = 164.03, p < .001). Post hoc analyses revealed that adolescents in the CBT group demonstrated substantial reductions in depression symptoms compared to the control group across all assessments (p's < .001). Furthermore, significant within-group improvements were found for both the experimental and control groups from pre-intervention to follow-up (F(2, 298) = 56.34, p < .001), indicating that standard school counseling services may also have a positive impact on adolescent depression symptomatology.
 
-The third section delves into the economic implications of AI, including job displacement due to automation, the rise of new employment opportunities in AI-related fields, and the impact on global economic growth and inequality. It explores the need for a paradigm shift in education and workforce development to prepare individuals for the AI-driven economy.
+Implications: The findings of this study provide strong evidence supporting the efficacy of CBT in reducing depression symptoms among adolescents. The significant improvements observed in both intervention groups suggest that integrating CBT into standard school counseling services may be an effective strategy for addressing adolescent mental health concerns. Future research should explore the long-term effects of CBT and its potential role in preventing the development and progression of depression in this population.
 
-The fourth section addresses the legal and ethical dimensions of AI, including issues related to privacy, consent, accountability, and bias in AI systems. It discusses ongoing debates about the regulation of AI and proposes potential strategies for ensuring ethical use and development of AI technologies.
-
-In conclusion, this study offers a comprehensive analysis of the evolution and impact of AI on modern society, emphasizing its transformative potential while also underscoring the need for careful consideration of its ethical, legal, economic, and societal implications. By synthesizing insights from various disciplines, this research aims to contribute to ongoing discourse about the future of AI and its role in shaping the global landscape.
-
-Keywords: Artificial Intelligence, Evolution, Impact, Multidisciplinary, Society, Economics, Ethics, Law
+References:
+Beck, A.

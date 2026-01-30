@@ -1,0 +1,17 @@
+Title: A Rare Case of Cerebral Amyloid Angiopathy Presenting as Reversible Posterior Leukoencephalopathy Syndrome (RPLS)
+
+Abstract:
+
+We report a unique case of cerebral amyloid angiopathy (CAA) presenting as reversible posterior leukoencephalopathy syndrome (RPLS). A 65-year-old woman with no significant medical history was admitted to our hospital with sudden onset of headache, confusion, and altered mental status. Initial computed tomography (CT) scans revealed bilateral white matter edema in the posterior regions of the brain, consistent with RPLS. Magnetic resonance imaging (MRI) showed extensive T2-weighted hyperintensities in the same areas.
+
+The patient's condition rapidly deteriorated, with development of seizures and increased intracranial pressure. Lumbar puncture revealed elevated opening pressures and a protein content of 240 mg/dL. Cerebrospinal fluid (CSF) analysis showed no infectious or inflammatory markers.
+
+Given the patient's rapid decline, we initiated treatment with mannitol and osmotherapy to reduce intracranial pressure. The patient also received empiric antibiotics and anticonvulsant therapy. Despite these interventions, her condition continued to worsen over the next 48 hours.
+
+A repeat MRI revealed extensive cortical and subcortical involvement consistent with CAA. A subsequent cerebral angiogram showed characteristic beading of the posterior circulation vessels, confirming the diagnosis. We discontinued all medications except for anticonvulsant therapy and began a regimen of nimotuzumab, a monoclonal antibody targeting vascular endothelial growth factor receptor-1 (VEGFR-1).
+
+Within 72 hours of initiating treatment, the patient's neurological symptoms significantly improved, with resolution of her seizures and improvement in mental status. Repeat MRI showed significant reduction in white matter edema.
+
+CAA is a rare condition characterized by amyloid deposition in cerebral blood vessels, leading to microhemorrhages and cerebral ischemia. RPLS is a reversible condition often seen in patients with hypertension, kidney disease, or immunosuppression. The coexistence of these two conditions has not been previously reported. Our case highlights the importance of considering CAA in the differential diagnosis of RPLS, particularly in older adults with no prior medical history.
+
+This unique presentation underscores the need for a high index of suspicion and prompt recognition to initiate targeted treatment. Further research is necessary to better understand the relationship between CAA and RPLS and to develop effective therapeutic strategies for this rare but potentially devastating condition.

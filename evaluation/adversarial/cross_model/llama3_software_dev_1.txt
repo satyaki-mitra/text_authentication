@@ -1,0 +1,92 @@
+**Design Pattern: Observer (Publish-Subscribe)**
+
+In this documentation, we will explore the Observer design pattern, also known as Publish-Subscribe, and provide practical examples of its application in software development.
+
+**Problem Statement**
+
+Imagine you are building a large-scale e-commerce platform that requires real-time updates to notify users about new product arrivals, promotions, or order status changes. You need a mechanism to decouple the producer (the source of the update) from the consumer (the user receiving the update), allowing for loose coupling and scalability.
+
+**Observer Pattern Overview**
+
+The Observer pattern is a behavioral design pattern that allows objects to be notified when another object's state changes. This is achieved by creating a subscription-based system where producers publish updates, and consumers subscribe to receive notifications about specific events or data changes.
+
+**Key Components**
+
+1. **Subject (Publisher)**: The object publishing the updates. It maintains a list of observers.
+2. **Observer**: The object subscribing to receive notifications. It must implement an update method.
+3. **Subscription**: The link between the subject and observer, allowing the observer to receive updates.
+
+**Practical Example**
+
+Let's create an e-commerce platform that sends real-time notifications about new product arrivals:
+
+1. Define the `Product` class with properties for name, description, and price:
+```java
+public class Product {
+    private String name;
+    private String description;
+    private double price;
+
+    // getters and setters
+}
+```
+2. Create an `OrderManager` class that will publish updates about new product arrivals:
+```java
+public class OrderManager {
+    private List<Product> products = new ArrayList<>();
+    private List<Observer> observers = new ArrayList<>();
+
+    public void addProduct(Product product) {
+        products.add(product);
+        notifyObservers();
+    }
+
+    public void addObserver(Observer observer) {
+        observers.add(observer);
+    }
+
+    public void removeObserver(Observer observer) {
+        observers.remove(observer);
+    }
+
+    private void notifyObservers() {
+        for (Observer observer : observers) {
+            observer.update(products);
+        }
+    }
+}
+```
+3. Define an `EmailSubscriber` class that implements the Observer interface to receive notifications:
+```java
+public class EmailSubscriber implements Observer {
+    @Override
+    public void update(List<Product> products) {
+        // Send email notifications about new product arrivals
+    }
+}
+```
+4. Add observers to the OrderManager and publish updates:
+
+```java
+OrderManager orderManager = new OrderManager();
+EmailSubscriber emailSubscriber = new EmailSubscriber();
+
+orderManager.addObserver(emailSubscriber);
+
+// Publish an update about a new product arrival
+Product newProduct = new Product("New Arrival", "Description", 49.99);
+orderManager.addProduct(newProduct);
+
+// Remove the observer
+orderManager.removeObserver(emailSubscriber);
+```
+
+**Benefits**
+
+The Observer pattern provides several benefits, including:
+
+* Decoupling producers from consumers: The OrderManager and EmailSubscriber are completely decoupled, allowing for independent evolution.
+* Scalability: Adding more observers or subjects does not affect the performance of the system.
+* Flexibility: New types of observers can be easily added without modifying the existing code.
+
+In conclusion, the Observer design pattern is a powerful tool for managing complex interactions between objects in software development. By applying this pattern, you can create scalable and flexible systems that are easier to maintain and extend.

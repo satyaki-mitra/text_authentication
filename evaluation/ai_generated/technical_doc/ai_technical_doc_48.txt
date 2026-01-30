@@ -1,42 +1,56 @@
-Title: User Authentication Feature in XYZ Application
+**API Documentation - User Management Endpoint**
 
-1. Introduction
+## User Management REST Endpoint
 
-The User Authentication Feature is an essential component of the XYZ Application, designed to provide secure access and manage user accounts. This document outlines the functionalities, implementation details, and usage guidelines for this feature.
+### Overview
 
-2. Functional Overview
+This API provides a RESTful interface for managing user accounts within our system. The endpoint is designed to handle various operations such as user registration, login, and profile updates.
 
-The User Authentication Feature allows users to register, log in, and manage their accounts within the XYZ Application. It includes the following main components:
+### Endpoint Description
 
-- Registration: Users can create new accounts by providing essential information such as username, email address, and password.
-- Login: Authenticated users can access the application using their registered email addresses and passwords.
-- Password Recovery: In case of a forgotten password, users can request a password reset link via email.
-- Account Management: Registered users can edit their account information, change their passwords, and delete their accounts if needed.
+The base URL for all user management requests is `https://api.example.com/users`. All endpoints are HTTPS secured and support JSON data format.
 
-3. Technical Implementation
+### Authentication Requirements
 
-The User Authentication Feature is implemented using industry-standard best practices for security and scalability. Key technologies include:
+Most of the endpoints require authentication. You can authenticate by including an API key in the `Authorization` header of your request, with the following format: `API_KEY Your-Api-Key`.
 
-- BCrypt for hashing and salting user passwords for increased security.
-- JWT (JSON Web Tokens) for managing user sessions securely.
-- OAuth2 for external authentication providers like Google, Facebook, and GitHub (if applicable).
-- SQL databases for storing user account information and session data.
+### Request/Response Parameters
 
-4. API Endpoints
+| Endpoint                | HTTP Verb | Path Parameters   | Query Parameters     | Request Body         | Response Body       | Data Type            | Description                                                                                    |
+|-------------------------|-----------|-------------------|----------------------|-----------------------|---------------------|---------------------|----------------------------------------------------------------------------------------------|
+| Register                | POST      |                   | username, email, password | json                  | 201 Created         | JSON Object        | Creates a new user account                                                                    |
+| Login                   | POST      |                   |                       | json (email, password) | 200 OK              | JSON Object        | Authenticates the user and returns an API key for future requests                           |
+| Get User Profile        | GET       | username          |                       | None                  | 200 OK              | JSON Object        | Retrieves the current user's profile data                                                    |
+| Update User Profile     | PATCH     | username          |                       | json (updated profile) | 200 OK              | JSON Object        | Updates the current user's profile data                                                      |
 
-The User Authentication Feature exposes the following RESTful API endpoints:
+### Example Requests
 
-- `/register`: Create a new user account.
-- `/login`: Log in to the application with provided credentials.
-- `/logout`: End current user session securely.
-- `/password/reset`: Request a password reset link via email.
-- `/password/change`: Change the user's password after completing the password reset process.
-- `/account`: Retrieve, update, and delete the authenticated user's account information.
+#### Registering a new user:
 
-5. Usage Guidelines
+```bash
+POST https://api.example.com/users
+Content-Type: application/json
+Authorization: API_KEY Your-Api-Key
 
-Developers should follow these guidelines when implementing the User Authentication Feature in their applications:
+{
+    "username": "newuser",
+    "email": "newuser@example.com",
+    "password": "securepassword"
+}
+```
 
-- Always validate user input to prevent potential security vulnerabilities.
-- Use HTTPS for all communication with the API endpoints to ensure data privacy.
-- Implement rate limiting and CSRF protection mechanisms to protect against brute
+#### Logging in to get an API key:
+
+```bash
+POST https://api.example.com/users/login
+Content-Type: application/json
+
+{
+    "email": "newuser@example.com",
+    "password": "securepassword"
+}
+```
+
+### Error Codes
+
+| HTTP Status Code | Error Code   | Description

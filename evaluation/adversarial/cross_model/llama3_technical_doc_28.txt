@@ -1,45 +1,67 @@
-**API Endpoint: Get User Information**
+**API Documentation: User Management System**
 
-### Overview
+The User Management System (UMS) is a RESTful API that provides a set of endpoints for managing user accounts, authentication, and authorization. The API is designed to be highly scalable, secure, and easy to integrate with various applications.
 
-The `GET /users/{userId}` API endpoint is used to retrieve detailed information about a specific user. This endpoint can be used by client applications to fetch user data, such as their name, email address, and role.
+**Specifications:**
 
-### Request Parameters
+* **HTTP Methods:** GET, POST, PUT, DELETE
+* **Request Formats:** JSON (application/json)
+* **Response Formats:** JSON (application/json)
+* **API Versioning:** Use the "Accept" header to specify the API version (e.g., Accept: application/vnd.ums.v1+json)
+* **Rate Limiting:** 100 requests per minute, per IP address
+* **Authentication:** Basic authentication using username and password, or OAuth 2.0 token-based authentication
 
-* **`userId`** (required): The unique identifier of the user for whom you want to retrieve information. This parameter should be a valid UUID.
+**Endpoints:**
 
-### Response
+### Users
 
-The API endpoint returns a JSON object containing the requested user's information. The response format is as follows:
+* `GET /users`: Retrieve a list of all users.
+	+ Parameters:
+		- `page`: The page number (default: 1)
+		- `limit`: The number of users per page (default: 20)
+	+ Response: A JSON object containing an array of user objects and pagination metadata
+* `GET /users/:id`: Retrieve a specific user by ID.
+	+ Parameters:
+		- `id`: The unique identifier of the user
+	+ Response: A JSON object representing the user
+* `POST /users`: Create a new user account.
+	+ Request Body: A JSON object containing the user's details (username, email, password)
+	+ Response: A JSON object representing the newly created user
+* `PUT /users/:id`: Update an existing user account.
+	+ Parameters:
+		- `id`: The unique identifier of the user
+	+ Request Body: A JSON object containing the updated user's details (username, email, password)
+	+ Response: A JSON object representing the updated user
 
-```json
-{
-  "id": "<uuid>",
-  "name": "<string>",
-  "email": "<string>",
-  "role": "<string>",
-  "created_at": "<timestamp>",
-  "updated_at": "<timestamp>"
-}
-```
+### Sessions
 
-* **`id`**: The unique identifier of the user.
-* **`name`**: The full name of the user.
-* **`email`**: The email address of the user.
-* **`role`**: The role assigned to the user (e.g., "admin", "moderator", etc.).
-* **`created_at`**: The timestamp when the user account was created.
-* **`updated_at`**: The timestamp when the user's information was last updated.
+* `POST /sessions`: Authenticate a user and create a new session.
+	+ Request Body: A JSON object containing the username and password
+	+ Response: A JSON object containing an authentication token and session metadata
+* `GET /sessions/:id`: Retrieve the details of an existing session.
+	+ Parameters:
+		- `id`: The unique identifier of the session
+	+ Response: A JSON object representing the session
+* `DELETE /sessions/:id`: Terminate an existing session.
+	+ Parameters:
+		- `id`: The unique identifier of the session
 
-### Response Codes
+### Authorization
 
-The API endpoint returns the following response codes:
+* `GET /permissions`: Retrieve a list of available permissions.
+	+ Response: A JSON object containing an array of permission objects
+* `POST /permissions`: Create a new permission.
+	+ Request Body: A JSON object containing the permission details (name, description)
+	+ Response: A JSON object representing the newly created permission
 
-* **200 OK**: The request was successful, and the user information is returned in the response body.
-* **404 Not Found**: The specified `userId` does not exist or is invalid.
-* **500 Internal Server Error**: An unexpected error occurred while processing the request.
+**Usage Guidelines:**
 
-### Example Request
+1. Use the `Accept` header to specify the API version and format (e.g., Accept: application/vnd.ums.v1+json).
+2. Use basic authentication or OAuth 2.0 token-based authentication to access protected endpoints.
+3. Handle errors by checking the HTTP response code and parsing any error messages from the JSON response.
+4. Use the provided pagination metadata (if applicable) to manage large result sets.
 
-To retrieve the user information for a specific user with the ID `123e4567-e89b-12d3-a456-426655440000`, you can send an HTTP GET request to the following URL:
-```bash
-https://api.example.com/users/123e4567-e89b-12
+**Security Considerations:**
+
+1. Validate all input data to prevent SQL injection, cross-site scripting, and other security vulnerabilities.
+2

@@ -1,0 +1,51 @@
+Title: API for User Administration - Managing Users Via API Endpoint
+
+## Managing Users Via API Endpoint
+
+The API Endpoint we have developed is geared towards managing various user operations within our application. It adheres to the RESTful architecture and communicates through HTTP protocol.
+
+### Details of the Endpoint
+
+The base URL for this endpoint is: `https://api.application.com/version1`
+
+All user-centric requests will be directed towards the path: `/users`
+
+### Authentication Prerequisites
+
+Authentication is mandatory for all interactions with the User API Endpoint, accomplished through JSON Web Tokens (JWTs). The JWT must be incorporated into the Authorization header of each request as `Bearer <token>`.
+
+### Request Characteristics
+
+#### New User Registration (POST)
+
+```bash
+https://api.application.com/version1/users
+```
+
+Request Body:
+
+```json
+{
+  "username": "<identifier>",
+  "email": "<address>",
+  "password": "<encoded>"
+}
+```
+
+- `username` (alphanumeric string, required): A distinct identifier for the user, containing between 3 and 50 characters.
+- `email` (email address, required): The user's email, used in account recovery scenarios.
+- `password` (encoded text, required): The user's encrypted password.
+
+#### Retrieve User Profile (GET)
+
+```bash
+https://api.application.com/version1/users/<user_id>
+```
+
+- `user_id` (integer, required): A unique identifier for the targeted user.
+
+#### Update User Profile (PUT)
+
+```bash
+https://api.application.com/version1/users/<user_id>
+```

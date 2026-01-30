@@ -1,39 +1,91 @@
-Title: Documentation for the "Real-Time Data Synchronization Feature"
+Title: API Documentation - User Management Endpoint
 
-1. Overview
+## User Management REST Endpoint
 
-The Real-Time Data Synchronization (RTDS) is a new feature designed to ensure seamless data consistency across multiple instances of our software, in real-time. This feature allows users to work on the same data simultaneously without conflicts or delays due to manual updates.
+### Description
 
-2. Feature Description
+This REST endpoint provides an interface for managing user accounts within the application. The endpoint supports CRUD (Create, Read, Update, Delete) operations and is accessible via HTTPS requests.
 
-The RTDS function enables automatic and continuous data synchronization between different user sessions, ensuring that all users have access to the most up-to-date information at any given time. This feature is particularly useful for collaborative work environments where multiple users need to access and edit the same data sets.
+### Authentication Requirements
 
-3. Key Components
+All interactions with this endpoint require the use of HTTP Basic authentication with valid API keys. API keys can be obtained from the [API Key Management page](https://your-app-api-keys.com).
 
-   a) Data Synchronizer: The core component responsible for detecting changes in the data, preparing it for transfer, and sending it to other connected sessions.
+### Endpoint
 
-   b) Connector: A module that establishes and maintains connections between user sessions, enabling real-time data exchange.
+`https://your-app-api.com/v1/users`
 
-   c) Conflict Resolver: In case of simultaneous changes, this component will identify and resolve conflicts based on predefined rules or user input.
+### Request Parameters
 
-4. Implementation
+#### Create Operation (POST)
 
-The RTDS feature can be enabled from the software's settings menu. Once activated, users will automatically be connected to other active sessions within the same network. The system will continuously monitor for changes in the data and propagate these updates to all connected users.
+```
+Content-Type: application/json
+Authorization: Basic API_KEY_BASE64
 
-5. Limitations and Considerations
+{
+  "username": "string",
+  "email": "string",
+  "password": "string"
+}
+```
 
-   a) Network Latency: Real-time synchronization may encounter issues due to network latency, which could result in delayed or lost updates.
+#### Read Operation (GET)
 
-   b) Bandwidth Consumption: As the RTDS feature requires continuous data transfer between connected sessions, it might consume significant amounts of network bandwidth.
+```
+Authorization: Basic API_KEY_BASE64
+```
 
-   c) Conflict Resolution: In cases where simultaneous changes occur, the conflict resolution process might not always produce the desired results and may require manual intervention to correct.
+#### Update Operation (PUT)
 
-6. Best Practices
+```
+Content-Type: application/json
+Authorization: Basic API_KEY_BASE64
 
-   a) Ensure a stable and high-speed network connection to minimize potential issues caused by network latency or bandwidth limitations.
+{
+  "username": "string",
+  "email": "string",
+  "password": "string"
+}
+```
 
-   b) Collaborate with other users responsibly, considering their workflow and potential conflicts before making changes to shared data sets.
+#### Delete Operation (DELETE)
 
-7. Troubleshooting
+```
+Authorization: Basic API_KEY_BASE64
+```
 
-If you encounter any problems while using the RTDS feature,
+### Response Parameters
+
+#### Successful Responses
+
+All successful responses will return a JSON object with the following structure:
+
+```json
+{
+  "status": "success",
+  "data": {
+    // The specific data depends on the operation (user object for create/update, user ID for delete)
+  }
+}
+```
+
+#### Error Responses
+
+Error responses will return a JSON object with the following structure:
+
+```json
+{
+  "status": "error",
+  "code": "ERROR_CODE",
+  "message": "Human-readable error message"
+}
+```
+
+Possible error codes include:
+
+1. `INVALID_API_KEY` - The provided API key is invalid or expired.
+2. `MISSING_DATA` - The request body lacks required data for the operation.
+3. `INVALID_DATA` - The provided data does not meet validation requirements for the operation.
+4. `USERNAME_TAKEN` - The requested username is already in use.
+5. `EMAIL_IN_USE` - The requested email is already associated with an existing user account.
+6. `INTERNAL_ERROR` - An unforeseen error occurred on

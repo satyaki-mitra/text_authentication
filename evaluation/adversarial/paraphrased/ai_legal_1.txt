@@ -1,0 +1,26 @@
+Title: Privacy Protection Guidelines
+
+  1. Preamble
+      a. This comprehensive Privacy Protection Guidelines ("Guidelines") outlines the ethical and practical standards that will guide the handling of Personal Information by our corporation, hereafter referred to as "Company" or "Data Manager." The Company is dedicated to adhering to all relevant privacy legislation, including but not limited to the General Data Protection Regulation ("GDPR"), the California Consumer Privacy Act ("CCPA"), and other applicable data protection laws.
+
+      b. Within these Guidelines, Personal Information refers to any data associated with a specific or identifiable individual. The handling of Personal Information encompasses various activities such as gathering, storing, altering, using, disclosing, disseminating, or otherwise making accessible, aligning, combining, deleting, or destroying Personal Information—regardless of whether these actions are automated.
+
+  2. Data Manager's Responsibilities
+      a. The Company shall process Personal Information lawfully, ethically, and transparently.
+      b. Collection of Personal Information should only be carried out for predefined, explicit, and justifiable purposes, and it must not be processed in a manner contradictory to those purposes.
+      c. Personal Information should be relevant, adequate, and limited to the extent necessary for the intended purposes.
+      d. The Company shall make every reasonable effort to ensure that Personal Information is accurate and, if necessary, kept up-to-date.
+      e. When Personal Information is no longer required for its initial purpose, it must be erased or corrected without undue delay.
+      f. Appropriate technical and organizational measures will be implemented to secure Personal Information according to the level of risk involved.
+      g. All personnel handling Personal Information will be aware of their obligations under these Guidelines and other relevant privacy laws.
+      h. Personal Information will only be transferred to countries outside the European Economic Area ("EEA") or California if such transfers comply with applicable data protection legislation.
+      i. A Data Protection Officer (DPO) will be designated to monitor compliance with these Guidelines and other relevant privacy legislation.
+
+  3. Data Subject's Privileges
+      a. Data subjects have the right to confirm whether their Personal Information is being processed and, if so, access that information.
+      b. Inaccurate Personal Information can be corrected upon request.
+      c. Under certain circumstances, Personal Information can be erased ("right to be forgotten").
+      d. The processing of Personal Information can be restricted in specific situations.
+
+  4. Additional Considerations
+     The Company is responsible for ensuring that any third-party processors it engages also comply with relevant data protection laws and these

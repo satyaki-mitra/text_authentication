@@ -1,0 +1,20 @@
+**Case Report: Rare Presentation of Cryptococcosis in an Immunocompetent Individual**
+
+We present the unusual case of a 35-year-old immunocompetent male who presented with symptoms suggestive of meningitis, ultimately diagnosed with cryptococcal meningitis caused by _Cryptococcus neoformans_.
+
+The patient was initially admitted to our emergency department with a 2-day history of severe headache, fever, and confusion. He reported no recent travel or exposure to individuals with known fungal infections. Physical examination revealed a temperature of 39°C (102°F), blood pressure of 110/80 mmHg, and pulse rate of 100 beats per minute. Neurological exam was remarkable for altered mental status, photophobia, and Kerning's sign.
+
+Initial laboratory tests showed elevated white blood cell count (18,000/μL) and C-reactive protein (CRP) levels (120 mg/L). Lumbar puncture revealed cloudy cerebrospinal fluid (CSF) with a white blood cell count of 400/μL and a protein level of 100 mg/dL. Fungal serology was positive for cryptococcal antigen.
+
+Further investigations, including chest computed tomography (CT) scan and magnetic resonance imaging (MRI) of the brain, were unremarkable except for mild meningeal enhancement on MRI. The patient was empirically treated with antibiotics for suspected bacterial meningitis, but his condition worsened over the next 48 hours, with increasing confusion, lethargy, and seizures.
+
+Subsequent fungal cultures from CSF and blood specimens grew _C. neoformans_ (serotype A). The patient was subsequently started on amphotericin B and flucytosine, with significant clinical improvement within 7 days of treatment initiation.
+
+Cryptococcosis is a rare fungal infection typically affecting immunocompromised individuals, such as those with HIV/AIDS or solid organ transplantation. Our case highlights the importance of considering this diagnosis in patients with unexplained meningitis, even in the absence of known risk factors.
+
+**Key Points:**
+
+* Rare presentation of cryptococcal meningitis in an immunocompetent individual
+* Initial misdiagnosis due to limited diagnostic evaluation and empiric antibiotic treatment
+* Importance of fungal serology and lumbar puncture in diagnosing cryptococcosis
+* Prompt initiation of antifungal therapy with amphotericin B and flucytosine led to significant clinical improvement.

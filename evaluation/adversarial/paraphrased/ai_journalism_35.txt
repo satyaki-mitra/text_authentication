@@ -1,0 +1,15 @@
+Title: Net Neutrality Abolition Sparks heated Discourse Among Tech Fraternity
+
+In a seismic shift, the Federal Communications Commission (FCC), presided over by Chairman Ajit Pai, a longstanding net neutrality antagonist, has opted to repeal Obama-era internet fairness regulations. This decision, met with heated debate and political machinations over numerous months, has instigated a passionate outcry from proponents who fear an imbalanced digital landscape for content distribution.
+
+The FCC's 3-2 vote, a party-line affair marking the conclusion of a comprehensive review process initiated in May, paves the way for internet service providers (ISPs) to potentially charge content distributors for expedited delivery of their services, a practice colloquially termed "priority pricing" or "express lanes."
+
+These new regulations, slated to commence in early 2018, are anticipated to offer ISPs the latitude to favor certain content over others. Chairman Pai heralded this as the dawn of an era promising consumers more selections, greater competition, and enhanced safeguards during the FCC's assembly on Thursday. He contends that prior net neutrality rules impeded investment in broadband infrastructure and innovation, while failing to mitigate internet congestion or outages.
+
+However, dissenters argue this move will grant ISPs an undue advantage over smaller content providers who may find it financially burdensome to fund the extra fees necessitated for swift delivery speeds. Senator Ed Markey (D-MA) voiced his disapproval following the vote, asserting that "this action amounts to a control grab of free speech and online information flow by big cable companies."
+
+The tech community stands divided over this issue, with influential figures publicly opposing the FCC's resolution. In a blog post released on Thursday, Amazon CEO Jeff Bezos voiced concerns that the repeal could trigger increased costs and limited choices for consumers. Netflix, another significant player in the streaming sphere, has been vocal about its backing of net neutrality, stating that the new regulations would jeopardize internet equity, competition, and free expression.
+
+Conversely, not every tech luminary has denounced the FCC's resolution. Comcast, one of the country's largest ISPs, issued a statement reaffirming its dedication to an open internet and adherence to net neutrality principles. "We do not restrict, throttle, or discriminate against lawful content on the web," the company stated in their declaration.
+
+The FCC's resolution faces potential legal challenges from advoc

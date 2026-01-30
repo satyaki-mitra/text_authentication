@@ -1,43 +1,59 @@
-Title: Documentation for the "Real-Time Data Synchronization Feature"
+Title: PetStore API - Order Resource
 
-1. Overview
+## Endpoint Description
 
-The Real-Time Data Synchronization (RTDS) feature is an integral part of our application designed to maintain consistency between data across multiple instances or devices in real-time. This feature ensures that all synchronized data remains updated, eliminating the need for manual updates and reducing the chances of data discrepancies.
+The `POST /order` endpoint is used to create a new order in the PetStore. This endpoint requires proper authorization to ensure that only authorized users can place orders.
 
-2. Key Components
+## Request Parameters
 
-   a. Data Synchronization Manager (DSM) - The core component responsible for managing and coordinating data synchronization between multiple instances or devices.
+| Parameter          | Data Type  | Description                                                                                   |
+|--------------------|-----------|-----------------------------------------------------------------------------------------------|
+| `orderId`          | String    | Unique identifier for the order. If not provided, a unique ID will be auto-generated.      |
+| `customerId`       | Number    | The ID of the customer placing the order.                                                  |
+| `petId`            | Number    | The ID of the pet being purchased.                                                          |
+| `quantity`         | Number    | The quantity of the pet being ordered.                                                     |
+| `shipDate`         | String (date-time format: yyyy-MM-dd'T'HH:mm:ss.SSSZ) | The expected delivery date for the order, if provided. If not provided, the current date will be used. |
 
-   b. Conflict Resolution Module (CRM) - A sub-component of DSM that addresses conflicts and inconsistencies in the synchronized data, ensuring only valid data is stored across all instances.
+## Authentication Requirements
 
-   c. Synchronization Protocol - The communication standard used by RTDS to exchange data between instances or devices.
+All requests to this endpoint must include an `Authorization` header with a valid token. The token should be obtained through authentication using the `POST /auth/login` endpoint.
 
-3. Functionality
+Example:
+```
+Authorization: Bearer {token}
+```
 
-   a. Automatic Data Synchronization - Upon enabling RTDS, data is automatically synchronized in real-time across all connected instances or devices.
+## Example Request
 
-   b. Conflict Detection and Resolution - In case of conflicts, the CRM will detect and address inconsistencies by prioritizing certain data over others based on user-defined rules or system defaults.
+A successful request to create a new order might look like this:
 
-   c. Data Synchronization Status Monitoring - Users can monitor the status of data synchronization in real-time through an intuitive interface, allowing them to quickly identify any issues that may arise during the synchronization process.
+```bash
+POST /order HTTP/1.1
+Host: petstore.swagger.io
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {token}
 
-4. Implementation
+{
+  "orderId": "12345",
+  "customerId": 1,
+  "petId": 1,
+  "quantity": 2,
+  "shipDate": "2022-01-01T00:00:00.000Z"
+}
+```
 
-To implement RTDS, follow these steps:
+## Response
 
-   a. Install and configure the required components (Data Synchronization Manager, Conflict Resolution Module, and Synchronization Protocol).
+The response will contain the details of the created order. If the order creation is successful, the response will have a `200 OK` status code and include the following JSON structure:
 
-   b. Define user-specific rules or priorities for conflict resolution, if necessary.
-
-   c. Enable RTDS on all intended instances or devices that will be synchronized.
-
-5. Best Practices
-
-   a. Ensure that all connected instances or devices have consistent configurations and settings to minimize conflicts.
-
-   b. Regularly review the synchronization status and address any issues promptly to maintain optimal data consistency.
-
-   c. Consider implementing backup strategies to mitigate potential data loss during conflict resolution.
-
-6. Limitations and Known Issues
-
-   a. High network latency or instability may impact real-
+```json
+{
+  "orderId": "12345",
+  "customerId": 1,
+  "petId": 1,
+  "quantity": 2,
+  "shipDate": "2022-01-01T00:00:00.000Z",
+  "status": "Pending"
+}
+```

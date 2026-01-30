@@ -1,17 +1,31 @@
-Case Title: Smith v. Johnson
+Title: Data Processing Agreement (DPA) - Controller to Processor Clauses
 
-Court: Supreme Court of New York, County of Albany
+1. **Purpose**
 
-Docket Number: 2021-CV-03456
+This Data Processing Agreement ("Agreement") is entered into between the Controller ("Data Controller") and the Processor ("Data Processor"), each a "Party" and together the "Parties." This Agreement supplements the main agreement governing the Services (the "Main Agreement"). The purpose of this Agreement is to comply with Data Protection Legislation by setting out the terms and conditions under which the Data Processor processes Personal Data on behalf of the Data Controller.
 
-Judgment Date: February 18, 2022
+2. **Definitions and Interpretation**
 
-In the matter of Smith v. Johnson, the plaintiff, John Smith, brought an action against the defendant, Jane Johnson, alleging breach of contract and negligence. The dispute arose from a written agreement dated October 1, 2021, between the parties for the sale and purchase of real property located at 123 Main Street, Albany, New York (the "Property").
+2.1 In this Agreement, the following terms shall have the meanings set out below:
 
-The plaintiff, John Smith, claimed that he had paid the defendant, Jane Johnson, the agreed-upon purchase price in full on October 30, 2021, and that the defendant failed to transfer ownership of the Property as stipulated in the agreement. The plaintiff further alleged that the defendant's actions constituted a breach of contract and caused him damages.
+   "Data Subject" means an identified or identifiable natural person to whom Personal Data relates;
 
-In her answer to the complaint, the defendant, Jane Johnson, admitted that she had received the purchase price but denied any breach of contract. She contended that she was unable to transfer ownership of the Property due to an undisclosed encumbrance on the title. The defendant asserted that she had made reasonable efforts to remove the encumbrance and sought a reasonable extension of time to complete the transfer of ownership.
+   "Data Protection Legislation" means all applicable data protection and privacy legislation in force from time to time including the General Data Protection Regulation (EU) 2016/679 ("GDPR");
 
-Following discovery, the court held a non-jury trial on February 15, 2022, at which both parties presented evidence and arguments. The court found that the defendant had breached the contract by failing to transfer ownership of the Property within the agreed timeframe, despite having received the purchase price in full. The court further determined that the defendant's failure to disclose the encumbrance on the title before entering into the agreement constituted fraudulent concealment.
+   "Personal Data" means any information relating to an identified or identifiable natural person; an identifiable natural person is one who can be identified, directly or indirectly, in particular by reference to an identifier such as a name, an identification number, location data, an online identifier or to one or more factors specific to the physical, physiological, genetic, mental, economic, cultural or social identity of that natural person;
 
-In considering the damages suffered by the plaintiff as a result of the defendant's breach, the court found that the plaintiff had incurred expenses for property inspections and legal fees, and was unable to secure alternative housing during the delay caused by the defendant's breach. The court awarded the plaintiff $15,0
+   "Processing" means any operation or set of operations which is performed upon Personal Data, whether or not by automatic means, such as collection, recording, organization, structuring, storage, adaptation or alteration, retrieval, consultation, use, disclosure by transmission, dissemination or otherwise making available, alignment or combination, restriction, erasure or destruction;
+
+3. **Processing of Personal Data**
+
+3.1 The Data Processor shall process the Personal Data only for the purposes set out in the Main Agreement and in accordance with the written instructions of the Data Controller.
+
+4. **Data Controller's Obligations**
+
+4.1 The Data Controller warrants and represents that it is and will remain duly and effectively authorised to give instructions under all applicable Data Protection Legislation, and that its instructions for the Processing of Personal Data by the Data Processor have been made in accordance with all such applicable Data Protection Legislation.
+
+5. **Data Processor's Obligations**
+
+5.1 The Data Processor shall:
+
+   5.1.1 process the Personal Data only on documented instructions from the Data Controller, unless required to do so by Union or Member State law to which the Data Processor is subject; in such a case, the Data Processor shall inform the Data

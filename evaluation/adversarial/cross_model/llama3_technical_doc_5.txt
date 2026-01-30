@@ -1,56 +1,66 @@
-**API Endpoint: `GET /users/{id}`**
+**API Documentation: User Profile Management System**
 
-**Overview**
+The User Profile Management System (UPMS) is an application programming interface (API) designed to facilitate the creation, modification, and retrieval of user profiles in a centralized database. The API provides a set of endpoints that enable developers to interact with the system, allowing for efficient management of user data.
 
-The `GET /users/{id}` endpoint returns the details of a specific user identified by their unique ID.
+**System Architecture:**
 
-**Request Parameters**
+The UPMS consists of three main components:
 
-* **`id`**: The ID of the user to retrieve (required).
-	+ Type: UUID
-	+ Example: `123e4567-e89b-12d3-a456-426616446126`
+1. **User Profile Database:** A relational database storing user profile information.
+2. **API Gateway:** A RESTful API responsible for handling incoming requests and forwarding them to the database.
+3. **Business Logic Layer:** A layer that encapsulates business logic, ensuring data consistency and integrity.
 
-**Response**
+**API Endpoints:**
 
-The response will be in JSON format and contain the following attributes:
+The UPMS API provides the following endpoints:
 
-* **`id`**: The unique ID of the user.
-	+ Type: UUID
-* **`name`**: The full name of the user.
-	+ Type: String
-* **`email`**: The email address of the user.
-	+ Type: String
-* **`role`**: The role of the user (e.g. "admin", "user").
-	+ Type: String
-* **`created_at`**: The timestamp when the user was created.
-	+ Type: Date
-* **`updated_at`**: The timestamp when the user was last updated.
-	+ Type: Date
+### Create User Profile
 
-**Error Handling**
+* **Method:** POST
+* **Endpoint:** `/users`
+* **Request Body:** `{"name": string, "email": string, "phone": string}`
+* **Response:** Created user profile ID (JSON)
 
-If an error occurs while processing the request, the API will return a JSON response with the following structure:
+Create a new user profile by sending a JSON request body with the required fields.
 
-* **`error`**: A brief description of the error (required).
-	+ Type: String
-* **`code`**: A unique code identifying the error (optional).
-	+ Type: Integer
+### Retrieve User Profile
 
-Example Error Response:
-```json
-{
-  "error": "User not found",
-  "code": 404
-}
-```
-**Rate Limiting**
+* **Method:** GET
+* **Endpoint:** `/users/{id}`
+* **Request Parameters:** `id` (integer)
+* **Response:** User profile data (JSON)
 
-This API endpoint is subject to rate limiting. The maximum number of requests that can be made within a given time period is 100 per minute.
+Retrieve an existing user profile by specifying the profile ID in the URL.
 
-**Caching**
+### Update User Profile
 
-The response from this API endpoint is cacheable for 1 hour (3600 seconds).
+* **Method:** PUT
+* **Endpoint:** `/users/{id}`
+* **Request Body:** `{"name": string, "email": string, "phone": string}`
+* **Response:** Updated user profile data (JSON)
 
-**Security Considerations**
+Update an existing user profile by sending a JSON request body with the modified fields.
 
-* Authentication: This API endpoint requires authentication using an access token. Please see
+### Delete User Profile
+
+* **Method:** DELETE
+* **Endpoint:** `/users/{id}`
+* **Request Parameters:** `id` (integer)
+* **Response:** Confirmation of deletion (JSON)
+
+Delete an existing user profile by specifying the profile ID in the URL.
+
+**Usage Guidelines:**
+
+1. **Authentication:** The API requires authentication using a JSON Web Token (JWT) for secure access.
+2. **Rate Limiting:** Requests are rate-limited to prevent abuse and ensure system stability.
+3. **Error Handling:** Handle errors by checking the HTTP response status code and parsing the error message from the response body.
+4. **Data Validation:** Ensure data consistency by validating input fields against predefined constraints.
+
+**Technical Requirements:**
+
+1. **API Client:** Developers should use a RESTful API client, such as cURL or Postman, to interact with the UPMS API.
+2. **JSON Format:** Requests and responses are formatted in JSON (JavaScript Object Notation).
+3. **HTTP Verbs:** Use standard HTTP verbs (GET, POST, PUT, DELETE) for requests.
+
+By following these guidelines and specifications, developers can effectively integrate the User Profile Management System into their applications, providing a centralized hub for managing user profiles.

@@ -1,0 +1,23 @@
+**Clinical Abstract:**
+
+**Title:** A Rare Case of Neuroendocrine Carcinoma with Concurrent Cushing's Syndrome and Hypercalcemia in a Young Adult
+
+**Abstract:**
+
+A 28-year-old non-smoking woman presented to our institution with a six-month history of increasing fatigue, weight gain, and skin thinning. Physical examination revealed facial rounding, truncal obesity, and purple striae on the abdomen. Laboratory tests revealed elevated serum cortisol levels (44.5 ng/mL), morning adrenocorticotropic hormone (ACTH) level of 210 pg/mL, and hypercalcemia (12.8 mg/dL).
+
+A diagnostic workup was initiated to determine the underlying cause of her symptoms. Imaging studies, including computed tomography (CT) and magnetic resonance imaging (MRI), revealed a 2.5 cm mass in the pancreas, consistent with neuroendocrine carcinoma. Endoscopic ultrasound-guided fine-needle aspiration biopsy confirmed the diagnosis.
+
+The patient's clinical presentation was further complicated by concurrent Cushing's syndrome, characterized by excess cortisol production leading to characteristic physical findings and laboratory abnormalities. Hypercalcemia, likely related to ectopic ACTH secretion from the pancreatic tumor, contributed to her symptoms.
+
+The patient underwent surgical resection of the pancreatic mass, followed by chemotherapy and targeted therapy with everolimus and somatostatin analogues. Post-operatively, cortisol levels normalized, and hypercalcemia resolved.
+
+**Discussion:**
+
+This case illustrates a rare presentation of neuroendocrine carcinoma with concurrent Cushing's syndrome and hypercalcemia in a young adult. The diagnosis was challenging due to the complexity of her symptoms and laboratory findings. Neuroendocrine tumors account for approximately 2% of all cancer diagnoses, but only rarely present with Cushing's syndrome and hypercalcemia.
+
+**Conclusion:**
+
+This case highlights the importance of considering rare presentations of neuroendocrine carcinoma in young adults, particularly when patients present with signs and symptoms suggestive of Cushing's syndrome. A multidisciplinary approach involving endocrinologists, oncologists, and radiologists is essential for accurate diagnosis and effective management of these complex cases.
+
+**Keywords:** Neuroendocrine carcinoma; Cushing's syndrome; Hypercalcemia; Young adult.

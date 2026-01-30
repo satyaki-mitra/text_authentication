@@ -1,19 +1,75 @@
-Title: Understanding the Dependency Injection Pattern in Software Development
+Title: Documentation on Observer Design Pattern with Java Example
 
-In the realm of object-oriented programming, one of the most powerful and versatile design patterns is the Dependency Injection (DI) pattern. This pattern plays a crucial role in software architecture, particularly when it comes to creating modular, testable, and maintainable applications. Let's dive into the essence of Dependency Injection.
+Introduction
 
-At its core, Dependency Injection is a technique that separates the creation of objects from their usage. It helps achieve high cohesion and low coupling within an application, making it more flexible and easier to manage.
+The Observer Design Pattern is a behavioral software design pattern that defines a one-to-many dependency between objects so that when an object changes its state, all its dependents are notified and updated automatically. This pattern is particularly useful in real-world applications where multiple objects need to be kept informed about the changes in another object, such as user interfaces, distributed event systems, or weather applications.
 
-In traditional object-oriented programming, classes often create their own dependencies, which can lead to tight coupling between classes. This tight coupling makes it difficult to modify or replace a class's behavior without affecting the entire system, as changes in one class may require modifications in other interdependent classes.
+Implementation
 
-Dependency Injection aims to alleviate this issue by providing an external source to create and manage dependencies for objects, decoupling them from each other. This way, the classes are more reusable, maintainable, and testable.
+In Java, the Observer Design Pattern can be implemented using interfaces for both the subject (observable) and observer (observer) classes. Here's a simple implementation:
 
-There are three primary types of Dependency Injection: Constructor Injection, Setter Injection, and Interface Injection.
+```java
+// Subject interface defining methods to add and remove observers
+public interface Subject {
+    public void registerObserver(Observer observer);
+    public void removeObserver(Observer observer);
+    public void notifyObservers();
+}
 
-1. **Constructor Injection** involves passing dependencies as arguments when creating a new instance of a class. This approach ensures that the class always receives valid dependencies and makes it easy to spot usage of each dependency in the code.
+// Observer interface defining the update method
+public interface Observer {
+    public void update(Subject subject);
+}
 
-2. **Setter Injection**, on the other hand, allows setting dependencies after an object has been instantiated through setter methods. While this method can be useful for injecting optional or late-bound dependencies, it may lead to issues with tight coupling and requires careful management to ensure that objects are always initialized with valid dependencies.
+// Concrete Subject (WeatherData) maintaining a list of observers and methods to change its state
+public class WeatherData implements Subject {
+    private float temperature;
+    private float humidity;
+    private float pressure;
+    private ArrayList<Observer> observers = new ArrayList<>();
 
-3. **Interface Injection** is a more advanced technique that involves defining interfaces for dependencies instead of concrete classes. This approach allows using different implementations of the interface as needed, promoting flexibility and polymorphism within the application.
+    public void measurementsChanged() {
+        notifyObservers();
+    }
 
-By adopting Dependency Injection, developers can create applications that are easier to test, maintain, and scale. It encourages separation of concerns, promotes testability, and makes it simple to modify or replace dependencies without affecting other parts of the system. As a result, your software will be more robust, adapt
+    @Override
+    public void registerObserver(Observer observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(Observer observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (Observer observer : observers) {
+            observer.update(this);
+        }
+    }
+
+    // Methods to change state and notify observers
+    public void setTemperature(float temperature) {
+        this.temperature = temperature;
+        measurementsChanged();
+    }
+
+    // Similar methods for humidity and pressure
+}
+
+// Concrete Observer (WeatherStatDisplay) displaying the weather data
+public class WeatherStatDisplay implements Observer {
+    private float minTemperature;
+    private float maxTemperature;
+    private float temperatureSum;
+    private int numReadings;
+
+    public void update(Subject subject) {
+        if (subject instanceof WeatherData) {
+            WeatherData weatherData = (WeatherData) subject;
+            temperatureSum += weatherData.getTemperature();
+            numReadings++;
+
+            if (numReadings == 1) {
+                minTemperature = weatherData.getTemperature();

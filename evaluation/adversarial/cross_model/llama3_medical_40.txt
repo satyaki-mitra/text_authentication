@@ -1,0 +1,15 @@
+**Title:** Unusual Presentation of Cutaneous T-cell Lymphoma: A Case Report
+
+**Abstract:**
+
+We present an unusual case of cutaneous T-cell lymphoma, specifically mycosis fungoides, characterized by a unique presentation and challenging diagnostic features. A 42-year-old male patient was referred to our institution with a several-month history of pruritic plaques and patches on his trunk, arms, and legs. The lesions were erythematous, annular, and up to 10 cm in diameter, with a characteristic "ring-like" appearance.
+
+Physical examination revealed numerous skin lesions with a prominent peripheral scale and central clearing, resembling a ringworm infection. Histopathological evaluation of a biopsy specimen from the most recent lesion showed a dense infiltrate of atypical lymphoid cells in the dermis, consistent with mycosis fungoides. Immunohistochemical staining confirmed the presence of CD4-positive T-cells.
+
+The patient's laboratory results were remarkable for an elevated lactate dehydrogenase (LDH) level (425 IU/L; normal range: 120-240 IU/L) and a low peripheral blood absolute lymphocyte count (0.5 x 10^9/L; normal range: 1.5-3.5 x 10^9/L). A bone marrow biopsy revealed no evidence of lymphoid infiltrate or other hematological abnormalities.
+
+Despite the patient's asymptomatic presentation, subsequent staging with positron emission tomography (PET) and computed tomography (CT) scans revealed involvement of regional lymph nodes and limited disease progression to the spleen. The patient was initiated on a combination therapy regimen consisting of topical corticosteroids, oral methotrexate, and rituximab.
+
+At 6-month follow-up, the patient exhibited significant improvement in his skin lesions, with reduced pruritus and lesion size. Although mycosis fungoides typically presents as patchy or plaque-like lesions, this case highlights the importance of considering other dermatological conditions that may mimic its clinical presentation. Additionally, the unusual laboratory findings emphasize the need for a thorough evaluation to rule out underlying hematological disorders.
+
+**Key words:** cutaneous T-cell lymphoma, mycosis fungoides, pruritic plaques, ring-like lesions, immunohistochemical staining, lactate dehydrogenase (LDH), absolute lymphocyte count.

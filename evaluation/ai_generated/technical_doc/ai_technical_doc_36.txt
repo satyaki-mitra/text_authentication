@@ -1,33 +1,81 @@
-Title: Documentation for the "Real-Time Data Synchronization Feature"
+Title: API Documentation - User Management Endpoint
 
-1. Introduction
+## User Management API
 
-The Real-Time Data Synchronization (RTDS) feature is an innovative functionality designed to ensure that data across multiple instances of our application remains consistent in real-time. This document provides a comprehensive overview of the RTDS feature, its components, and its usage.
+### Endpoint Description
 
-2. Key Components
+This API provides endpoints for managing users within the system. The primary focus is on CRUD (Create, Read, Update, Delete) operations related to user accounts.
 
-   - **Data Manager**: The central component responsible for managing and synchronizing data between different instances of the application.
-   - **Sync Engine**: A subcomponent within the Data Manager that handles real-time data synchronization between connected clients.
-   - **Data Transfer Protocol (DTP)**: A proprietary protocol used by the Sync Engine to exchange data efficiently and securely between clients.
+### Authentication Requirements
 
-3. Functionality Overview
+All requests to this endpoint require authentication using a JSON Web Token (JWT). The token should be included in the `Authorization` header with the prefix `Bearer`.
 
-   The RTDS feature allows multiple instances of our application to maintain a consistent state by automatically synchronizing data changes in real-time. When one client modifies its local data, the modified data is sent through DTP to all other connected clients. The receiving clients then update their local data accordingly, maintaining consistency across all instances.
+### Endpoints
 
-4. Implementation Details
+#### 1. Create User
 
-   a) **Initial Setup**: Upon starting the application, each client connects to the Data Manager and requests access to relevant data sets. The Data Manager assigns unique identifiers to each connected client and grants them access to the requested data sets.
+**Endpoint:** `POST /api/users`
 
-   b) **Data Modification**: When a client modifies its local data, it sends a request to the Data Manager to update the shared data set associated with that particular resource.
+**Request Parameters:**
 
-   c) **Sync Process**: The Data Manager validates the modification and, if approved, notifies all connected clients to update their local data accordingly.
+- `name`: Required. User's full name (string).
+- `email`: Required. Unique user email address (string).
+- `password`: Required. User's password (string). Password should be encrypted before sending the request.
 
-   d) **Conflict Resolution**: In case of conflicts during synchronization (e.g., multiple clients modifying the same data at the same time), the Data Manager employs a conflict resolution strategy to determine which modification takes precedence. The preferred approach is "last write wins," but custom strategies can be configured upon request.
+**Example Request:**
 
-5. Best Practices
+```
+POST /api/users HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer <JWT_TOKEN>
 
-   To optimize performance and ensure smooth operation of the RTDS feature, follow these best practices:
+{
+  "name": "John Doe",
+  "email": "johndoe@example.com",
+  "password": "<encrypted_password>"
+}
+```
 
-   a) Ensure that your network connection is stable and reliable to minimize potential data synchronization issues.
+**Response:**
 
-   b) Implement proper error handling and recovery mechanisms in your application to
+- `201 Created`: Successful creation of the user with a generated API key.
+- `400 Bad Request`: Invalid input data or missing required parameters.
+- `409 Conflict`: The provided email address is already registered.
+
+#### 2. Get User Details
+
+**Endpoint:** `GET /api/users/{userId}`
+
+**Request Parameters:**
+
+- `userId`: Required. Unique identifier of the user (integer).
+
+**Example Request:**
+
+```
+GET /api/users/1 HTTP/1.1
+Authorization: Bearer <JWT_TOKEN>
+```
+
+**Response:**
+
+- `200 OK`: Successful retrieval of the user details.
+- `400 Bad Request`: Invalid input data or missing required parameters.
+- `404 Not Found`: The specified user does not exist.
+
+#### 3. Update User Details
+
+**Endpoint:** `PUT /api/users/{userId}`
+
+**Request Parameters:**
+
+- `userId`: Required. Unique identifier of the user (integer).
+- `name`: Optional. Updated user's full name (string).
+- `email`: Optional. Updated user's email address (string).
+
+**Example Request:**
+
+```
+PUT /api/users/1 HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer

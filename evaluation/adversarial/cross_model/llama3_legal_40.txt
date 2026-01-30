@@ -1,0 +1,30 @@
+**ARTICLE V: INDEMNIFICATION**
+
+**SECTION 1: DEFINITIONS**
+
+For the purposes of this Article, the following terms shall have the meanings set forth below:
+
+* "Indemnified Party" means [Name of Company or Individual], including its officers, directors, employees, agents, and affiliates;
+* "Claims" means any and all claims, demands, actions, suits, proceedings, judgments, damages, losses, costs, expenses, fines, penalties, and liabilities, whether arising out of contract, tort, negligence, strict liability, or otherwise;
+* "Losses" means any and all Losses that the Indemnified Party incurs or suffers in connection with or related to the subject matter of this Agreement.
+
+**SECTION 2: INDEMNIFICATION OBLIGATIONS**
+
+The [Name of Company] shall indemnify, defend, and hold harmless each Indemnified Party against any Claims, Losses, or expenses arising out of or related to:
+
+* The development, production, marketing, distribution, sale, use, or possession of the products or services contemplated by this Agreement;
+* Any breach or alleged breach of any warranty, representation, or covenant made by [Name of Company] in connection with this Agreement;
+* Any negligence, misrepresentation, or other wrongful act or omission by [Name of Company] in connection with this Agreement; and
+* Any claim that the products or services contemplated by this Agreement infringe on or violate the intellectual property rights of any third party.
+
+**SECTION 3: CONDITIONS PRECEDENT**
+
+The Indemnification obligations set forth in Section 2 shall be subject to the following conditions precedent:
+
+* The Indemnified Party must give written notice to [Name of Company] promptly after becoming aware of any Claim or alleged Claim that may give rise to an indemnification obligation;
+* [Name of Company] shall have the right to control the defense and settlement of any Claim, including the selection of counsel and the prosecution of any appeal; and
+* The Indemnified Party must cooperate fully with [Name of Company] in connection with any claim or alleged claim that may give rise to an indemnification obligation.
+
+**SECTION 4: LIMITATION OF LIABILITY**
+
+The aggregate liability of [Name of Company] under this Article shall be limited to the total consideration paid by the Indemnified Party to [Name of Company] under this Agreement.

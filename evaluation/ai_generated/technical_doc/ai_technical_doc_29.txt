@@ -1,31 +1,65 @@
-Title: Documentation for the "Real-Time Data Synchronization Feature"
+Title: API Documentation - User Management Endpoints
 
-1. Introduction
-   - Description: The Real-Time Data Synchronization (RTDS) is a cutting-edge feature designed to ensure consistent and up-to-date data across multiple instances of our application, eliminating the need for manual updates or refreshes.
+## 1. Overview
 
-2. Functionality Overview
-   - Purpose: To provide seamless collaboration and data consistency among users in real-time.
-   - Scope: This feature applies to all data that is editable within the application and shared across multiple users.
+This document describes the User Management REST APIs for our platform. These endpoints allow you to perform CRUD (Create, Read, Update, Delete) operations on user resources.
 
-3. Key Components
-   - Data Manager: Responsible for managing the synchronization process, including detecting changes, encoding, and sending updates to other instances.
-   - Connection Handler: Establishes and maintains connections between different instances for efficient data exchange.
-   - Conflict Resolver: Addresses potential conflicts that may arise during simultaneous data modifications by prioritizing and resolving the changes.
+## 2. Authentication
 
-4. Implementation Details
-   - Data encoding: JSON format is used to encode and decode data before transmission, ensuring compatibility with various platforms.
-   - Connection establishment: Upon launch, instances initiate connection attempts to discover and establish connections with other nearby running instances.
-   - Conflict resolution: Priority is given to the last modifier of a shared item, and their changes will be applied while discarding conflicting edits from previous modifications.
+All requests require authentication using API keys. The API key should be provided as an `Authorization` header with the value `Bearer <Your_API_Key>`.
 
-5. User Guidelines
-   - Users should expect near real-time updates when working collaboratively on shared data.
-   - Users are advised to save their work regularly to minimize potential data loss in case of connection issues.
-   - In the event of a conflict, users will be notified with a message detailing which changes have been overwritten and why.
+## 3. Endpoints
 
-6. Limitations and Known Issues
-   - The feature may experience performance degradation when multiple instances are running on devices with low processing power or slow internet connections.
-   - Certain edge cases involving simultaneous, rapid edits to shared data may result in temporary inconsistencies before the conflict resolver takes effect.
+### 3.1 Create User
 
-7. Testing and Quality Assurance
-   - The RTDS feature has undergone rigorous testing to ensure its reliability and performance. However, we encourage users to report any issues or concerns they encounter during use.
-   - Regular updates will be
+- **Endpoint:** `POST /users`
+- **Description:** Creates a new user in the system.
+
+#### 3.1.1 Request Parameters
+
+| Parameter       | Data Type   | Description                                                                    |
+|-----------------|------------|------------------------------------------------------------------------------|
+| name            | string      | The user's full name.                                                        |
+| email           | string      | A unique email address for the user.                                         |
+| password        | string      | The user's password, encrypted before sending to our servers.                |
+| role            | string      | The role assigned to the user (e.g., admin, standard_user).                   |
+
+#### 3.1.2 Response Parameters
+
+| Parameter       | Data Type   | Description                              |
+|-----------------|------------|------------------------------------------|
+| id              | integer     | The unique identifier for the new user.  |
+| name            | string      | The user's full name.                    |
+| email           | string      | The user's email address.                |
+| role            | string      | The user's assigned role.                 |
+
+#### 3.1.3 Example Request
+
+```bash
+POST /users HTTP/1.1
+Host: api.example.com
+Authorization: Bearer Your_API_Key
+Content-Type: application/json
+
+{
+    "name": "John Doe",
+    "email": "john.doe@example.com",
+    "password": "secure_password",
+    "role": "admin"
+}
+```
+
+### 3.2 Get User
+
+- **Endpoint:** `GET /users/{id}`
+- **Description:** Retrieves the details of a specific user by its unique identifier.
+
+#### 3.2.1 Request Parameters
+
+| Parameter | Data Type   | Description                                    |
+|-----------|------------|----------------------------------------------|
+| id        | integer     | The unique identifier for the user to fetch.  |
+
+#### 3.2.2 Response Parameters
+
+See section 3

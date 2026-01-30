@@ -250,7 +250,7 @@ graph TB
 
 ### 3. Processing Layer (`processors/`)
 
-Handles document extraction, text preprocessing, domain classification, and language detection.
+Handles document extraction, text preprocessing, domain identification, and language detection.
 
 ```mermaid
 graph TB
@@ -303,7 +303,7 @@ graph TB
 **Processing Pipeline:**
 1. **Document Extraction**: Multi-format support with fallback strategies
 2. **Text Cleaning**: Unicode normalization, noise removal, validation
-3. **Domain Classification**: Zero-shot classification with confidence scores
+3. **Domain Identification**: Zero-shot classification with confidence scores
 4. **Language Detection**: Multi-strategy approach with script analysis
 
 ---

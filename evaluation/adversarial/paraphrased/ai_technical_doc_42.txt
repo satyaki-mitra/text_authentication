@@ -1,0 +1,30 @@
+Title: Pet Store API - Retrieve Pets by Condition
+
+## Endpoint Information
+
+`GET /v2/pet/retrieveByCondition`
+
+This resource enables users to discover pets according to their condition (adoptable or sold out).
+
+## Query Parameters
+
+| Parameter    | Explanation                                                         | Data Type  | Mandatory? | Default Value |
+| ------------ | ------------------------------------------------------------------- | ---------- | ---------- | ------------- |
+| `condition`  | The condition of the pets to be retrieved. Supported options are 'adoptable' and 'sold'. | string     | Yes        | -             |
+| `page_number`| Represents the page of results to be displayed. Default value is zero.                | integer    | No         | 0             |
+| `items_per_page`| Specifies the maximum number of items per display page. The default limit is 20, while the maximum allowed limit is 100.   | integer    | No         | 20            |
+
+## Response Details
+
+| Parameter      | Description                               | Data Type     |
+| -------------- | ----------------------------------------- | ------------- |
+| `current_page` | Refers to the current page in the results.| integer       |
+| `total_results`| Denotes the total number of responses received.   | integer      |
+| `total_pets`   | Signifies the total number of pets that matched the query. |integer       |
+| `pet_list`     | Represents an array of pet objects that meet the specified condition. | array        |
+| `pet` (nested)  | Represents a single pet object containing pet-related information.| object       |
+|                   | - `id`: Unique identifier for a specific pet            | integer      |
+|                   | - `category_id`: Unique identifier for the pet's category | integer      |
+|                   | - `category_name`: Name of the pet's category              | string       |
+|                   | - `price`: Cost of the pet in cents                | float        |
+|                   | - `condition`: Condition of the pet (adoptable or sold)         | string

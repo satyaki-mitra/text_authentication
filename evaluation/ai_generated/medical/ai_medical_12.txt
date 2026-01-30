@@ -1,13 +1,15 @@
-Title: A Case Study on Refractory Epilepsy Management: An Unusual Presentation of Dravet Syndrome
+Title: A Case Study on Successful Management of Refractory Angioedema in a Pediatric Patient Utilizing Ecallantide
 
-Background: Dravet syndrome is a rare, severe form of intractable epilepsy, typically presenting in the first year of life with febrile seizures. The condition is characterized by the development of recurrent, drug-resistant seizures and intellectual disability. Herein, we present an atypical case of Dravet syndrome presenting later in childhood.
+Abstract
 
-Case Presentation: A 7-year-old male patient, previously healthy, presented with a 6-month history of frequent, prolonged tonic-clonic seizures. The seizures were initially triggered by fever but soon became spontaneous. The patient's developmental milestones were normal until the onset of seizures, followed by gradual decline in cognitive function and behavioral problems.
+Background: Hereditary angioedema (HAE) is a rare autosomal dominant disorder characterized by recurrent, non-pruritic, and life-threatening swellings of the skin and mucosa. Type III HAE (HAE-III), caused by C1 inhibitor deficiency or dysfunction, accounts for approximately 30% of all cases. This case study presents an uncommon presentation and effective treatment approach in a pediatric patient with refractory angioedema.
 
-Investigations: Electroencephalography (EEG) showed hypsarrhythmia and magnetic resonance imaging (MRI) was unremarkable. Genetic testing revealed a de novo mutation in the SCN1A gene, confirming the diagnosis of Dravet syndrome.
+Case Presentation: A 12-year-old female presented to the emergency department (ED) with acute onset facial edema, abdominal pain, and difficulty breathing, persisting for over 48 hours despite self-administered antihistamines, corticosteroids, and tranexamic acid. Physical examination revealed bilateral periorbital edema, tongue swelling, and diffuse abdominal tenderness. Laboratory findings included normal complete blood count, comprehensive metabolic panel, and C3/C4 levels, but low C1 inhibitor (C1-INH) levels (0.06 mg/dL; reference range: 0.12-0.45 mg/dL). The patient's symptoms were consistent with a diagnosis of HAE-III.
 
-Treatment: The patient was initially treated with several antiepileptic drugs (AEDs), including valproic acid, lamotrigine, and levetiracetam, but remained refractory to treatment, requiring frequent hospitalizations due to repeated seizures.
+Diagnostic Approach: Given the patient's history of recurrent angioedema attacks and low C1-INH levels, a definitive diagnosis of HAE-III was made based on clinical presentation and laboratory results. A genetic test for C1-INH gene mutations was recommended but declined by the patient's family due to concerns about insurance coverage and potential psychological impact.
 
-Discussion: This case highlights the challenges in managing Dravet syndrome, particularly when it presents later in childhood. Early identification and genetic testing are crucial for accurate diagnosis and appropriate management. Despite advances in AEDs, many patients with Dravet syndrome remain refractory to treatment, underscoring the need for novel therapeutic strategies.
+Treatment: Given the refractory nature of her symptoms, the patient was treated with ecallantide, a plasma kallikrein inhibitor approved for acute HAE attacks in patients 12 years and older. Following intravenous administration of ecallantide (30 mg), her facial edema resolved within 4 hours, and abdominal symptoms improved over the subsequent 24 hours.
 
-Conclusion: This case underscores the importance of early suspicion and prompt investigation in cases of refractory epilepsy, even if they present outside the typical age range for Dravet syndrome. Further research is needed to improve our understanding of this condition and develop more effective treatment strategies.
+Outcomes: The patient was discharged home on oral corticosteroids and prophylactic danazol. She experienced no further attacks during a 6-month follow-up period while adhering to her medication regimen. Notably, ecallantide was well tolerated with only mild injection site reactions and no anaphylaxis or other significant adverse events reported.
+
+Discussion: This case highlights the importance of recognizing and managing refractory angioed

@@ -1,50 +1,54 @@
-**API Endpoint: Get User Information**
+**API Documentation: User Profile Management System**
 
-### Overview
+**Overview**
 
-This API endpoint allows clients to retrieve information about a specific user in the system. The endpoint is secured using SSL/TLS and requires authentication using an API key.
+The User Profile Management System (UPMS) is a RESTful API designed to manage user profiles, providing a centralized platform for storing and retrieving user information. This documentation outlines the system's specifications, usage guidelines, and technical details.
 
-### Request Parameters
+**API Endpoints**
 
-* **user_id**: A unique identifier for the user, which can be obtained from the `id` field in the response of the [Create User](#create-user) endpoint or by searching for a user using the [Search Users](#search-users) endpoint. (Required)
+1. **Create User**: `POST /users`
+	* Request Body: JSON object containing user information (e.g., name, email, password)
+	* Response: Created user ID
+2. **Get User**: `GET /users/{userId}`
+	* Path Parameter: `userId` - the unique identifier of the user
+	* Response: User profile information in JSON format
+3. **Update User**: `PUT /users/{userId}`
+	* Path Parameter: `userId` - the unique identifier of the user
+	* Request Body: JSON object containing updated user information
+	* Response: Updated user ID
+4. **Delete User**: `DELETE /users/{userId}`
+	* Path Parameter: `userId` - the unique identifier of the user
+	* Response: Success message
 
-### Response Format
+**API Request and Response Formats**
 
-The API returns data in JSON format.
+The UPMS API uses JSON (JavaScript Object Notation) as its request and response format.
 
-### Success Response
+**Error Handling**
 
-* **status**: A string indicating the status of the request ("OK")
-* **data**: An object containing the following fields:
-	+ **id**: The unique identifier for the user
-	+ **name**: The name of the user
-	+ **email**: The email address of the user
-	+ **phone_number**: The phone number of the user (if available)
-	+ **created_at**: The date and time when the user account was created
+The UPMS API returns error responses in the following formats:
 
-### Error Response
+1. **400 Bad Request**: Invalid input or missing required fields
+2. **404 Not Found**: User not found or invalid `userId`
+3. **500 Internal Server Error**: Unexpected system errors
 
-* **status**: A string indicating the status of the request ("ERROR")
-* **error_code**: An integer error code (e.g. 404, 401, etc.)
-* **error_message**: A human-readable message describing the error
+**Security Considerations**
 
-### Examples
+1. **Authentication**: The API requires authentication using a unique API key (provided by the client)
+2. **Data Encryption**: All transmitted data is encrypted using SSL/TLS
+3. **Access Control**: The API enforces role-based access control to ensure secure user data management
 
-#### Successful Request
-```json
-GET /api/v1/users/123 HTTP/1.1
-Host: example.com
-Accept: application/json
-Authorization: Bearer YOUR_API_KEY
+**Technical Requirements**
 
-HTTP/1.1 200 OK
-Content-Type: application/json
+1. **HTTP**: The API supports HTTP 1.1 and above
+2. **JSON**: The API uses JSON for request and response formats
+3. **SSL/TLS**: The API requires SSL/TLS encryption for secure data transmission
+4. **Database**: The UPMS API is built on a relational database management system (RDBMS)
 
-{
-    "status": "OK",
-    "data": {
-        "id": 123,
-        "name": "John Doe",
-        "email": "johndoe@example.com",
-        "phone_number": "+1-555-555-5555",
-        "created_at": "2022-01-01T12:00:00Z"
+**Usage Guidelines**
+
+1. **Client-Side Configuration**: Configure the client to use the provided API key and set the request format to JSON
+2. **API Key Management**: Manage API keys securely, ensuring they are not shared or compromised
+3. **Data Validation**: Validate user input data to prevent errors and ensure secure data management
+
+By following these guidelines and adhering to the specified technical requirements, developers can effectively integrate the User Profile Management System (UPMS) into their applications, providing a robust and secure platform for managing user profiles.

@@ -1,0 +1,29 @@
+Data Security Protocol - Section 9: Data Incident Reporting and Action Plan
+
+9.1 Duty to Inform
+  9.1.1 Upon discovery of a data incident, the Data Manager is obligated to immediately inform the Data Owner and the Regulatory Body in accordance with the relevant statutes and regulations.
+
+  9.2 Timeframe for Disclosure
+  9.2.1 The Data Manager shall provide notice as swiftly as possible, and no later than 72 hours following the identification of a data incident, unless it can be demonstrated that the personal data breach poses an insignificant risk to the privacy rights of individuals.
+
+  9.3 Content of Disclosure
+   9.3.1 The disclosure must contain the following details:
+      (a) A detailed description of the nature of the data incident, including, where possible, the affected categories and approximate number of Data Subjects, as well as the impacted categories and approximate number of personal data records;
+      (b) Contact information for the Data Protection Liaison or alternative point of contact for further information;
+      (c) An explanation of the potential consequences of the data incident;
+      (d) A description of the remedial actions taken or proposed by the Data Manager to rectify the incident, including, as appropriate, measures to mitigate any possible adverse effects.
+
+  9.4 Record Keeping Requirement
+   9.4.1 The Data Manager is responsible for maintaining a log of all data incidents, whether or not they have been reported to the Data Owner and the Regulatory Body, in compliance with applicable laws and regulations.
+
+  9.5 Confidentiality Obligation
+   9.5.1 All parties involved in the data incident reporting and response process must preserve the confidentiality of any information received during this process.
+
+  9.6 Assistance to Data Subjects
+   9.6.1 The Data Manager shall offer necessary aid to the Data Subject, including supplying them with the relevant information to exercise their rights under applicable laws and regulations, such as the right to view, modify, delete, or restrict processing of their personal data.
+
+  9.7 Cooperation with Regulatory Body
+   9.7.1 The Data Manager shall fully cooperate with any investigation conducted by the Regulatory Body regarding a data incident, providing them with all required information and taking all reasonable actions to resolve identified issues.
+
+  9.8 Penalties for Non-compliance
+  9.8.1 Failure to

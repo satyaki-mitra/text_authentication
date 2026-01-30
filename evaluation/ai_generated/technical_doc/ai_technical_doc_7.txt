@@ -1,30 +1,84 @@
-Title: User Authentication Feature Documentation
+Title: API Documentation - User Management Endpoint
 
-1. Introduction
-   - The User Authentication feature is designed to secure the application by verifying the identity of users before granting access. This feature includes mechanisms for registration, login, and password recovery.
+## User Management Endpoint
 
-2. Registration
-   - Users can register by providing a unique email address, choosing a strong password, and confirming their account via a verification link sent to their email. The system will validate the entered email and ensure it is unique.
+The `User Management` endpoint is designed to manage user accounts within our system. This RESTful API provides several endpoints for creating, reading, updating, and deleting user accounts.
 
-3. Login
-   - Authenticated users can log in using their registered email and password. The system will verify the provided credentials against the user's account in the database. If successful, the user is granted access to the application.
+### Base URL
 
-4. Password Recovery
-   - In case a user forgets their password, they can request a reset link via email. The system will send a unique token to the user's registered email, which can be used to create a new password.
+All requests should be made to the following base URL: `https://api.example.com/v1`
 
-5. Session Management
-   - Upon successful login, a session is created for the user, which remains active until the user logs out or the session times out due to inactivity. The session ID is stored on the client-side and is sent with each subsequent request to maintain user context.
+### Authentication Requirements
 
-6. Security Measures
-   - To ensure the security of user data, passwords are hashed using a strong one-way function before storing them in the database. Sensitive information, such as passwords, is never sent over unencrypted channels.
+All requests require an access token for authentication. The token should be included in the `Authorization` header with the prefix `Bearer`. Access tokens can be obtained through our [Authentication API](authentication.md).
 
-7. Error Handling and Validation
-   - The system includes error handling and validation mechanisms to ensure that only valid input is processed and users are notified of any errors or issues during registration, login, or password recovery processes.
+### Endpoints
 
-8. API Endpoints
-   - Registration: POST /auth/register
-     Request body example: `{ "email": "john_doe@example.com", "password": "mypassword" }`
-   - Login: POST /auth/login
-     Request body example: `{ "email": "john_doe@example.com", "password": "mypassword" }`
-   - Password Recovery: POST /auth/recover-password
-     Request body example: `{ "email": "john_doe@example.com" }`
+#### 1. Create User
+
+**Endpoint:** `POST /users`
+
+**Request Parameters:**
+
+- `name` (string, required) - The user's name.
+- `email` (string, required, unique) - A unique email address for the user.
+- `password` (string, required) - The user's password (hash is stored in database).
+
+**Example Request:**
+
+```bash
+POST /users HTTP/1.1
+Host: api.example.com
+Authorization: Bearer <access_token>
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "email": "john.doe@example.com",
+  "password": "securepassword"
+}
+```
+
+**Response:**
+
+- `201 Created` - Upon successful creation, a new user object is returned.
+
+**User Object Example:**
+
+```json
+{
+  "id": 1,
+  "name": "John Doe",
+  "email": "john.doe@example.com"
+}
+```
+
+#### 2. Get User by ID
+
+**Endpoint:** `GET /users/{id}`
+
+**Request Parameters:**
+
+- `id` (integer, required) - The unique identifier of the user.
+
+**Example Request:**
+
+```bash
+GET /users/1 HTTP/1.1
+Host: api.example.com
+Authorization: Bearer <access_token>
+```
+
+**Response:**
+
+- `200 OK` - If the user exists, the user object is returned.
+- `404 Not Found` - If the user does not exist.
+
+#### 3. Update User
+
+**Endpoint:** `PUT /users/{id}`
+
+**Request Parameters:**
+
+- `id` (integer, required) - The unique identifier of the user.
+- `name` (string, optional) - The user's name (can be updated

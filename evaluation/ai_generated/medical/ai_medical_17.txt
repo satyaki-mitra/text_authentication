@@ -1,13 +1,15 @@
-Title: An Uncommon Case of Immunoglobulin G4-Related Sclerosing Orchitis: A Diagnostic Challenge
+Title: A Case Study on the Successful Management of Acute Pancreatitis in a Postoperative Gastric Bypass Patient
 
 Abstract
 
-We present an unusual case of a 56-year-old male patient who presented with acute onset of scrotal pain and swelling. The patient had no significant past medical history, and his physical examination revealed a firm, non-tender, right testicular mass. Laboratory findings were unremarkable, including normal tumor markers. Ultrasound imaging demonstrated a hypoechoic lesion within the right testis.
+Background: Acute pancreatitis (AP) is a common inflammatory condition of the pancreas, often occurring post-gastric bypass surgery. Early recognition and appropriate management are crucial to prevent complications and improve outcomes.
 
-Given the atypical presentation and inconclusive initial workup, further investigations were pursued. Magnetic resonance imaging (MRI) revealed a homogeneously enhancing mass with surrounding edema, suggestive of an inflammatory process. A diagnosis of immunoglobulin G4-related sclerosing orchitis was considered due to the patient's absence of infectious symptoms and the characteristic MRI findings.
+Case Presentation: A 58-year-old female with a BMI of 37.2 kg/m² presented to the emergency department (ED) with acute abdominal pain, nausea, and vomiting three days post-gastric bypass surgery. The patient had no history of pancreatitis or significant comorbidities other than morbid obesity. On admission, laboratory tests revealed elevated serum amylase (130 IU/L; normal range: 25-96 IU/L) and lipase (784 U/L; normal range: 13-60 U/L). Abdominal ultrasound showed a heterogeneous pancreas with peripancreatic fluid collection, suggestive of acute pancreatitis.
 
-Serum IgG4 levels were significantly elevated (207 mg/dL, normal range: 10-135 mg/dL). The diagnosis was confirmed with a testicular biopsy revealing lymphoplasmacytic infiltration and abundant IgG4-positive plasma cells.
+Diagnostic Approach: The diagnosis was confirmed with magnetic resonance cholangiopancreatography (MRCP), which revealed mild dilatation of the pancreatic duct and peripancreatic fat stranding, consistent with AP. The etiology was attributed to post-gastric bypass surgery due to early onset and resolution of symptoms after surgery.
 
-The patient was treated with glucocorticoids, resulting in rapid resolution of symptoms and reduction in testicular size within two weeks. This case highlights the importance of considering immunoglobulin G4-related diseases in the differential diagnosis of scrotal masses, even in the absence of systemic symptoms.
+Treatment: The patient was managed conservatively in the intensive care unit (ICU) with fluid resuscitation, pain management, and nutritional support. Octreotide was initiated to control pancreatitis-induced secretory diarrhea. Antibiotics were administered for suspected secondary infection, based on the presence of leukocytosis (12.5 × 10^9/L; normal range: 4.0-11.0 × 10^9/L) and elevated C-reactive protein (CRP) level (172 mg/L; normal range: <5 mg/L).
 
-Keywords: Immunoglobulin G4-Related Disease, Sclerosing Orchitis, Scrotal Mass, Diagnostic Challenge, Glucocorticoids Treatment.
+Outcomes: The patient's abdominal pain improved significantly within 48 hours of initiating treatment. Serum amylase and lipase levels normalized on the fifth day, and CRP level decreased to 60 mg/L by the seventh day. The patient was discharged from the hospital on the tenth day with oral pancreatic enzyme supplementation and a follow-up appointment for further management.
+
+Discussion: This case highlights the importance of recogn

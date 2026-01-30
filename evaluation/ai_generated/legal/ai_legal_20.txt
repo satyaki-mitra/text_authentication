@@ -1,21 +1,31 @@
-Title: Clause Regarding Confidentiality and Non-Disclosure
+Title: Data Processing Agreement (DPA) - Clause Excerpt
 
-1. Confidentiality Obligation
+1. Introduction
 
-Upon entering into this Agreement, the Receiving Party acknowledges and agrees that it shall maintain, during the term of this Agreement and thereafter, the Confidential Information in strict confidence for the sole and exclusive benefit of the Disclosing Party. The Receiving Party shall not disclose any Confidential Information to third parties without the prior written consent of the Disclosing Party, except as expressly permitted by this Agreement or required by law.
+1.1 This Data Processing Agreement ("Agreement") is entered into between [Data Controller Name] ("Controller") and [Data Processor Name] ("Processor"), each a "Party" and together the "Parties."
 
-2. Definition of Confidential Information
+1.2 The Parties have agreed to this DPA, which forms an integral part of the main agreement(s) under which the Processor provides services to the Controller (the "Agreement"). This DPA applies from [Effective Date] onwards.
 
-For the purposes of this Agreement, "Confidential Information" shall mean any technical data, trade secrets, know-how, non-public information, and business or marketing plans disclosed by the Disclosing Party to the Receiving Party, either directly or indirectly, in writing, electronically, orally, or by drawings or photographs.
+2. Purpose and Scope
 
-3. Exceptions to Confidentiality Obligation
+2.1 The purpose of this DPA is to reflect the Parties' obligation arising from Regulation (EU) 2016/679 ("GDPR") in relation to the processing of Personal Data by the Processor on behalf of the Controller.
 
-The obligations set forth in this clause shall not apply to any portion of the Confidential Information that: (a) was rightfully known to the Receiving Party prior to its disclosure by the Disclosing Party without breach of any obligation owed to the Disclosing Party; (b) becomes public knowledge through no fault of the Receiving Party; (c) is lawfully obtained by the Receiving Party from a third party free of any obligation of confidentiality; or (d) is independently developed by employees of the Receiving Party who had no access to such information.
+3. Definitions and Interpretation
 
-4. Remedies for Breach of Confidentiality Obligation
+3.1 The terms used in this DPA shall have the same meaning as defined in the GDPR, unless otherwise specified herein. In addition, the following terms shall have the following meanings:
 
-The Disclosing Party shall have the right, in addition to all other remedies available at law or in equity, to seek equitable relief (including injunction and specific performance) if the Receiving Party breaches or threatens to breach this clause. The Receiving Party acknowledges that any such breach may cause irreparable harm for which monetary damages would be an inadequate remedy, and therefore the Disclosing Party shall be entitled to seek immediate injunctive relief if the Receiving Party breaches or threatens to breach this clause.
+(a) "Personal Data Breach" means a breach of security leading to the accidental or unlawful destruction, loss, alteration, unauthorized disclosure of, or access to, Personal Data transmitted, stored, or otherwise processed.
 
-Case Summary: Smith v. Johnson (2021)
+4. Processor's Obligations
 
-In the case of Smith v. Johnson (2021), the plaint
+4.1 The Processor shall:
+
+(a) process the Personal Data only on documented instructions from the Controller, unless required to do so by Union or Member State law to which the Processor is subject; in such a case, the Processor shall inform the Controller of that legal requirement before processing, unless that law prohibits such information on important grounds of public interest;
+
+(b) ensure that persons authorized to process the Personal Data have committed themselves to confidentiality or are under an appropriate statutory obligation of confidentiality;
+
+(c) implement appropriate technical and organizational measures to ensure a level of security appropriate to the risk, including inter alia as appropriate: the pseudonymization and encryption of Personal Data; the ability to ensure the ongoing confidentiality, integrity, availability, and resilience of processing systems and services; the ability to restore the availability and access to Personal Data in a timely manner in the event of a physical or technical incident; and a process for regularly testing, assessing, and evaluating the effectiveness of technical and organizational measures for ensuring the security of the processing.
+
+5. Subprocessing
+
+5.1 The Processor shall not engage another processor ("Subprocessor") without prior specific or general written authorization of the Controller. In case of general written authorization, the Processor shall inform the Controller of any intended changes

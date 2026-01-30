@@ -1,0 +1,37 @@
+**ARTICLE III: TERM AND TERMINATION**
+
+This Article sets forth the term and termination provisions of this Agreement.
+
+**3.1 Term**
+
+The term of this Agreement shall commence on the Effective Date and continue for a period of [insert number] years (the "Initial Term"). After the Initial Term, this Agreement shall automatically renew for successive periods of [insert number] years (each, an "Extension Period") unless either Party gives written notice to the other Party of its intention not to renew at least [insert number] days prior to the end of the then-current term.
+
+**3.2 Termination**
+
+Either Party may terminate this Agreement upon written notice to the other Party in the event of:
+
+(a) material breach by the other Party of any provision of this Agreement, which breach is not cured within [insert number] days after receipt of written notice thereof; or
+
+(b) insolvency or bankruptcy proceedings being instituted against the other Party.
+
+In the event of termination, each Party shall return all confidential information and proprietary materials provided to it under this Agreement to the other Party. Termination shall be effective immediately upon receipt of written notice by the terminating Party.
+
+**3.3 Survival**
+
+The following provisions shall survive any expiration or termination of this Agreement: Sections 1 (Definitions), 2 (Purpose), 4 (Confidentiality), 5 (Intellectual Property), and [insert number] (Governing Law) of this Agreement.
+
+**3.4 Notice**
+
+All notices, demands, and communications under this Article shall be in writing and delivered personally or sent by certified mail, return receipt requested, to the Parties at their respective addresses set forth above. Notices shall be deemed given upon actual delivery.
+
+By entering into this Agreement, the Parties acknowledge that they have read, understand, and agree to be bound by the terms and conditions of this Article.
+
+**IN WITNESS WHEREOF**
+
+The Parties have executed this Agreement as of the date first above written.
+
+[Insert signature block]
+
+Date: [insert date]
+
+This document is a sample legal section and should not be used in actual practice without proper review and modification by an attorney licensed to practice law in your jurisdiction.

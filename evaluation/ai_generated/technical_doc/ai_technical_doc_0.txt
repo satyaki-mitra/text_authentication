@@ -1,29 +1,78 @@
-Title: Documentation for the "Real-Time Data Synchronization Feature"
+Title: API Documentation - User Management Endpoints
 
-1. Introduction
-   The Real-Time Data Synchronization (RTDS) feature is an integral part of our software solution, designed to ensure that all instances of the application remain updated with the latest data changes in real-time. This document provides a comprehensive overview of the RTDS feature, its functionality, and usage guidelines.
+## 1. User Registration Endpoint
 
-2. Feature Overview
-   The RTDS feature allows multiple users or applications accessing the same data set to stay synchronized without any manual intervention or time lag. It is particularly useful for collaborative projects and scenarios where real-time data updates are critical.
+### Description
 
-3. Key Components
-   - Data Hub: A central repository responsible for maintaining the latest version of all shared data.
-   - Synchronization Engine: Responsible for real-time data synchronization between the Data Hub and connected clients.
-   - Clients: The instances of the application that connect to the Data Hub to receive and send updates in real-time.
+This endpoint is used for registering new users in the system. It accepts JSON data containing user credentials and returns a unique `user_id` upon successful registration.
 
-4. Implementation
-   To enable the RTDS feature, users need to ensure that their application instance is configured correctly to communicate with the Data Hub. This can be done through the Application Settings within the user interface. Once enabled, the Synchronization Engine will automatically establish a connection with the Data Hub and start receiving updates.
+### Request
 
-5. Best Practices
-   - Ensure that your internet connection is stable and fast enough to support real-time data synchronization.
-   - Use the Conflict Resolution settings within Application Settings to manage potential conflicts between simultaneous changes.
-   - Regularly update your application to ensure compatibility with the latest versions of the RTDS feature.
+```http
+POST /api/v1/users
+Content-Type: application/json
+```
 
-6. Troubleshooting
-   If you encounter issues with the RTDS feature, check the following:
-   - Confirm that your application is properly connected to the Data Hub.
-   - Verify that your internet connection is stable and fast enough for real-time data synchronization.
-   - Check for any ongoing maintenance or updates on the Data Hub.
+#### Request Body Parameters
 
-7. Conclusion
-   The Real-Time Data Synchronization feature streamlines collaboration and ensures that all users have access to the latest data, enhancing productivity and accuracy. By following the best practices outlined in this documentation, you can ensure optimal performance of the RTDS feature within your application.
+| Parameter      | Data Type  | Description                                              |
+|----------------|-----------|----------------------------------------------------------|
+| username       | string    | A unique identifier for the user (max length: 30)        |
+| email          | string    | The user's email address (format: `example@example.com`) |
+| password       | string    | The user's encrypted password                            |
+| first_name     | string    | The user's first name (max length: 50)                   |
+| last_name      | string    | The user's last name (max length: 50)                    |
+
+### Response
+
+#### Success Response
+
+```http
+HTTP/1.1 201 Created
+Content-Type: application/json
+
+{
+    "user_id": "abc123",
+    "username": "exampleUser",
+    "email": "example@example.com",
+    ...
+}
+```
+
+#### Error Responses
+
+| HTTP Status Code | Description                                       |
+|------------------|---------------------------------------------------|
+| 400 Bad Request  | Invalid or incomplete request data               |
+| 409 Conflict      | Username or email already exists                  |
+| 500 Internal Server Error | An error occurred while processing the request |
+
+### Authentication Requirements
+
+This endpoint does not require authentication.
+
+### Usage Notes
+
+- Ensure that user credentials are securely hashed and salted before sending them to the server.
+- The response JSON may contain additional user data, such as role, date of birth, etc., depending on the specific implementation.
+
+---
+
+## 2. User Authentication Endpoint
+
+### Description
+
+This endpoint is used for authenticating existing users in the system. It accepts a username and password, checks their validity, and returns an authentication token upon successful login.
+
+### Request
+
+```http
+POST /api/v1/users/login
+Content-Type: application/json
+```
+
+#### Request Body Parameters
+
+| Parameter   | Data Type  | Description                       |
+|-------------|-----------|-----------------------------------|
+| username    | string    | The

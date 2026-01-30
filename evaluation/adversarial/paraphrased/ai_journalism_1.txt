@@ -1,0 +1,15 @@
+Title: Internet Equality Dismantled: A New Era of Service Provider Discretion
+
+In a groundbreaking decision, the Federal Communications Commission (FCC) voted 3-2, along party lines, to abolish Obama-era internet equality regulations. This move, met with vehement opposition from tech firms and advocacy groups, is slated for implementation in April 2018.
+
+The FCC's decision terminates the government's stipulation that internet service providers (ISPs) must treat all web content impartially. Opponents foresee this revocation enabling ISPs to manipulate website speeds based on payment capacity, thus fostering priority lanes for certain content and hindering innovation and competition online.
+
+Chairman Ajit Pai of the FCC, a critic of internet equality regulations, asserts that the repeal will catalyze "increased investment and superior, swifter internet access for all." Following the vote, Pai declared, "Under my proposal, the federal government will cease controlling the internet. Instead, the FCC will mandate transparency from ISPs, allowing consumers to choose their preferred service plans and enabling innovators to develop new products and services with certainty."
+
+On the other hand, proponents of internet equality warn that without these regulations, ISPs may favor self-generated content over competitors or impede new market entrants. Michael Beckerman, president and CEO of the Internet Association—a coalition representing tech giants such as Google, Amazon, and Facebook—stated, "The FCC's decision to dismantle internet equality is a detrimental move that adversely affects American consumers, innovation, and entrepreneurship."
+
+The repeal follows years of controversy over the extent of government regulation in the digital sphere. In 2015, the FCC reclassified ISPs as common carriers under Title II of the Communications Act, thereby empowering it to enforce internet equality rules. The current administration advocates deregulation, leading many to anticipate a repeal.
+
+The fate of internet equality remains uncertain, with both sides gearing up for legal battles and potential legislative action. Senators Ed Markey (D-MA) and Jeff Flake (R-AZ) have proposed a Congressional Review Act resolution aimed at reversing the FCC's decision. If successful, it would represent only the second time in history such a measure has been employed to overturn an agency's regulatory action.
+
+In response to the repeal, numerous tech firms and advocacy groups have vowed to defend internet equality. Protests under the banner "Defend Internet

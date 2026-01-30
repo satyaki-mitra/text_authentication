@@ -1,41 +1,74 @@
-Title: Understanding the Dependency Injection Pattern in Programming
+Title: Documentation on the Observer Design Pattern with Java Examples
 
-The Dependency Injection (DI) pattern is a design principle that aims to improve the modularity, testability, and reusability of code by separating the dependencies between objects at runtime rather than compile-time. This approach helps in creating loosely coupled software components, which are easier to manage, maintain, and test.
+The Observer Design Pattern is a fundamental behavioral design pattern that defines a one-to-many dependency between objects, allowing them to maintain consistency by notifying each other of changes in state. It is particularly useful when dealing with event handling, real-time data updates, and monitoring systems.
 
-In a traditional programming scenario, an object directly creates or obtains its dependencies, leading to tight coupling. On the other hand, Dependency Injection introduces a centralized service (often referred to as IoC container or Dependency Injection container) responsible for supplying objects with their dependencies when they are instantiated.
+**Use Case**
 
-Here's a simple example in Python using the PyInjector library:
+Consider a weather application where multiple users need to be updated whenever there's a change in weather conditions such as temperature or humidity. The WeatherSubject (WeatherData) maintains the current weather data and manages its observers, which are the users interested in receiving updates (WeatherObserver).
 
-```python
-from pyinjector import modules, inject
+```java
+interface Subject {
+    void registerObserver(Observer observer);
+    void removeObserver(Observer observer);
+    void notifyObservers();
+}
 
-class Service:
-    def __init__(self, database):
-        self.database = database
+interface Observer {
+    void update(Subject subject);
+}
 
-    def execute(self):
-        # Use the database to perform some operation
-        pass
+class WeatherData implements Subject, WeatherDataInterface {
+    private float temperature;
+    private float humidity;
+    private float pressure;
+    private List<Observer> observers = new ArrayList<>();
 
-class Database:
-    def connect(self):
-        print("Connecting to the database...")
+    public void measurementsChanged() {
+        notifyObservers();
+    }
 
-module = modules.CurrentModule()
+    @Override
+    public void registerObserver(Observer observer) {
+        observers.add(observer);
+    }
 
-# Define a binding for the 'database' dependency
-module.bind_instance_to(Database, Database)
+    @Override
+    public void removeObserver(Observer observer) {
+        observers.remove(observer);
+    }
 
-# Create a container and populate it with the bound dependencies
-container = module.PythonModuleLoader().inject_into_module(module)
+    @Override
+    public void notifyObservers() {
+        for (Observer observer : observers) {
+            observer.update(this);
+        }
+    }
 
-# Instantiate the Service using the container to retrieve the database instance
-service = container.get_instance(Service)
+    // ... other methods for handling temperature, humidity, and pressure
+}
 
-# Now, the service can use the database without directly creating or managing it
-service.execute()
+class CurrentConditionsDisplay implements Observer, DisplayElementInterface {
+    private Subject weatherData;
+
+    public CurrentConditionsDisplay(Subject weatherData) {
+        this.weatherData = weatherData;
+        weatherData.registerObserver(this);
+    }
+
+    @Override
+    public void update(Subject subject) {
+        WeatherData weatherData = (WeatherData) subject;
+        display();
+    }
+
+    private void display() {
+        // Display current conditions
+    }
+}
 ```
 
-In this example, the Service class depends on a Database object for its execution. Instead of creating the Database instance within the Service, we define the binding for the 'database' dependency using PyInjector's `bind_instance_to()` function and then use the container (created by `inject_into_module()`) to inject the Database instance when instantiating the Service using `get_instance()`.
+**Trade-offs and Best Practices**
 
-By employing Dependency Injection, we have decoupled the Service from the concrete implementation of the database. This makes it easier to swap out the database for a different implementation or even test the Service in isolation without an actual database connection.
+1. **Coupling**: Observers have a strong coupling with subjects, as they rely on each other for communication. This can make the system more brittle when maintaining and modifying it. To mitigate this, consider using an abstraction like interfaces to decouple them.
+
+2. **Observable Hierarchies**: Implementing the Observer pattern in hierarchical structures may lead to loops or inconsistencies during

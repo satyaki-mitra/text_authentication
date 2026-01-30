@@ -1,0 +1,33 @@
+Title: Data Handling Agreement - Processor to Controller Provisions
+
+A. Agreement Overview
+
+A.1 This Data Handling Agreement ("Accord") is formed between the data controller listed in Appendix A ("Controller") and the data processor listed in Appendix B ("Processor"), each referred to as a "Party," collectively as the "Parties."
+
+A.2 The Parties have mutually agreed to this Accord, which serves as an integral part of the contract under which the Processor offers services to the Controller (the "Contract"). This Accord becomes effective on the Effective Date specified in the Contract and remains valid until the termination or expiration of the Contract.
+
+A.3 The Parties confirm that the Processor will manage Personal Data on behalf of the Controller according to the Contract, and agree to adhere to the obligations detailed below.
+
+B. Terminology
+
+B.1 Capitalized terms used in this Accord but not otherwise defined shall be given their meanings as per the General Data Protection Regulation (Regulation (EU) 2016/679) ("GDPR").
+
+C. Handling of Personal Data
+
+C.1 The Controller hereby authorizes the Processor to manage Personal Data for the purposes and within the scope described in Appendix C.
+
+C.2 The Processor shall process the Personal Data solely according to this Accord, the Contract, and documented instructions from the Controller (unless mandated by law applicable to the Processor; in such a case, the Processor will inform the Controller of that legal requirement before processing, unless such information is legally barred due to significant reasons of public interest).
+
+D. Obligations of the Processor
+
+D.1 The Processor shall implement appropriate technical and organizational measures to ensure security suitable for the risk, taking into account the current state-of-the-art, cost implications, and the nature, scope, context, and purpose of processing as well as the varying likelihood and severity of threats affecting individuals' rights and freedoms.
+
+D.2 The Processor shall ensure that any individual authorized to handle Personal Data has pledged confidentiality or is bound by a legal obligation of confidentiality.
+
+D.3 At the Controller's discretion, the Processor will delete or return all Personal Data to the Controller following the conclusion of services related to data management, and will delete existing copies unless retention of the Personal Data is required by law.
+
+D.4 The Processor shall provide the Controller with any necessary information to demonstrate compliance with this Accord upon request.
+
+E. Sub-processors
+
+E.1

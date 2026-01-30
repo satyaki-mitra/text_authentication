@@ -1,32 +1,78 @@
-Title: Understanding Dependency Injection in JavaScript with TypeScript
+Title: Documentation on Observer Design Pattern in Java with Best Practices
 
-Dependency Injection (DI) is a design pattern that separates the construction of an object from its dependencies, which can greatly improve modularity, testability, and maintainability of your codebase. While not originally conceived for JavaScript, it has gained significant traction as TypeScript has emerged as a popular choice for large-scale JavaScript applications.
+**Introduction**
 
-In this article, we will explore the concept of Dependency Injection in the context of a TypeScript project, using a simple example to demonstrate its benefits.
+The Observer Design Pattern is a behavioral pattern that defines a one-to-many dependency between objects, allowing them to be notified automatically of any changes in the state of the other object. This pattern is particularly useful when multiple objects need to keep track of and respond to changes in another object without having direct access to it.
 
-**What is Dependency Injection?**
+**Use Cases**
 
-Dependency Injection (DI) is a technique where an object receives other objects that it depends on, rather than creating or hardcoding them itself. This allows for greater flexibility in the way dependencies are provided and managed, which can be particularly useful when working with complex systems where components have multiple dependencies or when testing isolated units of code.
+1. **Stock Price Updates:** A stock exchange application can use the Observer Pattern. Stocks are subjects, and their prices change (state). Investors who subscribe to these stocks become observers. When a stock price changes, all subscribed investors are notified automatically.
 
-**Why Use Dependency Injection?**
+2. **File System Notifications:** In an operating system, file systems can act as subjects, while users or applications interested in specific files can act as observers. If the state of the file (e.g., modification) changes, the observer gets notified.
 
-1. **Decoupling**: By separating the creation of objects from their dependencies, you create a more modular system that is easier to test and maintain.
-2. **Testability**: When dependencies are provided through DI, it becomes simpler to swap out actual implementations with mocks or stubs for testing purposes.
-3. **Loose Coupling**: By reducing the tight coupling between objects, changes to one object have less impact on others, making your system more robust and easier to scale.
-4. **Flexibility**: DI allows you to easily swap out dependencies at runtime, making it simple to adapt your application to new requirements or technologies.
+**Implementation in Java**
 
-**Implementing Dependency Injection in TypeScript**
+First, let's define the Interfaces:
 
-In a TypeScript project, you can implement DI using a variety of techniques such as the constructor function pattern, the service locator pattern, or the IoC (Inversion of Control) container pattern. For this example, we will focus on the IoC container pattern using the popular `inversify` library.
+```java
+interface Subject {
+    void attach(Observer observer);
+    void detach(Observer observer);
+    void notifyObservers();
+    void update();
+}
 
-**Step 1: Install Dependencies**
-
-First, install the necessary dependencies:
-
-```bash
-npm install inversify inversify-binding-compat inversify-express-utils
+interface Observer {
+    void update(Subject subject);
+}
 ```
 
-**Step 2: Define Interfaces and Classes**
+Next, let's create concrete implementations:
 
-Define your interfaces, which will serve as contracts for your
+```java
+class Stock implements Subject {
+    private String name;
+    private double price;
+    private List<Observer> observers = new ArrayList<>();
+
+    // Constructor, getters, and setters...
+
+    @Override
+    public void attach(Observer observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void detach(Observer observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (Observer observer : observers) {
+            observer.update(this);
+        }
+    }
+
+    @Override
+    public void update() {
+        // Update stock price...
+        this.price += Math.random() * 10;
+        notifyObservers();
+    }
+}
+
+class Investor implements Observer {
+    private String name;
+    private Subject stock;
+
+    public Investor(String name, Stock stock) {
+        this.name = name;
+        this.stock = stock;
+        stock.attach(this);
+    }
+
+    @Override
+    public void update(Subject subject) {
+        if (subject instanceof Stock) {
+            System.out.println(this.name + " has been notified of

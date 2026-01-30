@@ -1,0 +1,37 @@
+**User Registration API - System for Managing Accounts**
+
+**URL:** `POST /v1/accounts`
+
+**Functionality Overview:** This API is designed to add a new account within the system. The specified URL accepts JSON data containing user information as input.
+
+**Authentication Obligations:** All interactions with this URL necessitate an authentication token. Include the token in the `Authorization` header, formatted as follows: `Bearer {token}`.
+
+**Data Input Parameters:**
+
+- `full_name` *(string, mandatory)*: The user's full name (First Name Last Name).
+- `unique_email` *(string, required, unique)*: A unique email address for the account.
+- `password` *(string, required)*: The password for the user account.
+- `user_type` _(enum: 'admin', 'standard', default: 'standard')_: The type of user within the system (administrator or standard user).
+
+**Sample Request:**
+
+```bash
+POST /v1/accounts HTTP/1.1
+Host: yourdomain.com
+Authorization: Bearer {token}
+Content-Type: application/json
+
+{
+  "full_name": "John Doe",
+  "unique_email": "johndoe@example.com",
+  "password": "strong_password123",
+  "user_type": "admin"
+}
+```
+
+**Response Parameters:**
+
+- `account_id` *(integer, read-only)*: The unique identifier for the account.
+- `full_name` *(string)*: The user's full name.
+- `unique_email` _(string)_: The user's email address.
+- `user_type` _(enum: 'admin', 'standard')_: The type of user within the system.

@@ -1,0 +1,11 @@
+Title: Effective Management of Recalcitrant Gastroesophageal Varix Hemorrhage in a Cirrhotic Individual
+
+Introduction: This case study explores an unusual yet effective approach to managing persistent Gastroesophageal Varix Hemorrhage (GVH) in a patient suffering from cirrhosis. The significance of this case lies in the high morbidity and mortality rates associated with such complications.
+
+Case Description: A 58-year-old male, diagnosed with alcoholic cirrhosis a decade ago, was admitted due to episodes of hematemesis and melena, indicative of acute GVH. Despite previous treatments such as Endoscopic Band Ligation (EBL) and Terlipressin infusion, the bleeding continued unabated. Upon admission, his Model for End-Stage Liver Disease (MELD) score was 18, classified as Child-Pugh Class C, and his hemoglobin level was 7.5 g/dL. Initial endoscopy revealed large esophageal varices with active bleeding.
+
+Investigative Procedure: Given the stubborn nature of the GVH despite conventional treatment, there was a need to consider alternative management strategies. Following pre-procedural imaging confirming portal hypertension and absence of contraindications, a Transjugular Intrahepatic Portosystemic Shunt (TIPS) was proposed.
+
+Intervention: The patient underwent a successful TIPS procedure, which immediately halted the bleeding. Postoperatively, prophylactic antibiotics, antifungals, and lactulose were administered to prevent complications like sepsis, encephalopathy, and spontaneous bacterial peritonitis.
+
+Results: Over the subsequent days, the patient's hemoglobin level improved significantly, allowing for discharge on the tenth hospital day with a stable MELD score of 14, Class B under Child-Pugh, and a hemoglobin level of 12 g/dL. At the six-month follow-up, the

@@ -1,17 +1,39 @@
-Here is a draft of a formal legal clause about data privacy compliance:
+**SECTION 5: CONFIDENTIALITY AND NON-DISCLOSURE**
 
-**Data Privacy Compliance**
+1. **DEFINITIONS**: For the purposes of this Section, "Confidential Information" means all information disclosed by one party to the other in connection with this Agreement that is marked as confidential or that a reasonable person would consider confidential given the nature and circumstances of the disclosure.
 
-[Insert Company Name] (the "Company") recognizes the importance of protecting personal and sensitive information, and is committed to complying with all applicable laws and regulations regarding data privacy and security.
+2. **CONFIDENTIALITY OBLIGATIONS**: Each party agrees:
 
-To that end, the Company agrees to take the following steps to ensure the confidentiality, integrity, and security of all Personal Data (as defined below):
+a) To hold Confidential Information in confidence and not disclose it to any third party without the prior written consent of the other party;
 
-1. **Applicability**: This clause shall apply to all Personal Data collected, stored, processed or transmitted by or on behalf of the Company, including but not limited to information related to employees, customers, users, visitors, and any other individuals whose data is processed in connection with the provision of products and services by the Company.
-2. **Definition of Personal Data**: For the purposes of this clause, "Personal Data" means any information that can be used to identify an individual, including but not limited to name, address, email address, phone number, IP address, location data, cookies, or other online identifiers.
-3. **Data Collection and Processing**: The Company shall only collect and process Personal Data in accordance with the following principles:
-	* Lawful basis: The Company shall only collect and process Personal Data that is necessary for a legitimate business purpose, and shall obtain valid consent from the individual prior to collecting and processing sensitive or special categories of data.
-	* Transparency: The Company shall clearly and conspicuously communicate its data collection and processing practices to individuals prior to collecting their Personal Data.
-	* Purpose limitation: The Company shall only collect and process Personal Data for a specific, legitimate purpose, and shall not use the data for any other purpose without obtaining valid consent from the individual.
-	* Minimization: The Company shall minimize the amount of Personal Data collected and processed to only that which is necessary for its intended purpose.
-	* Accuracy: The Company shall take reasonable steps to ensure the accuracy and completeness of all Personal Data it collects and processes.
-4
+b) Not to use Confidential Information for any purpose other than as contemplated by this Agreement, including but not limited to developing a product or service that is similar to the other party's product or service;
+
+c) To take all reasonable measures to prevent unauthorized disclosure or use of Confidential Information, including limiting access to such information to authorized personnel and implementing appropriate technical and procedural safeguards.
+
+3. **EXCEPTIONS**: The obligations under this Section shall not apply to:
+
+a) Confidential Information that is or becomes generally available to the public through no fault of the disclosing party;
+
+b) Confidential Information that was in the possession of the receiving party prior to the disclosure;
+
+c) Confidential Information that is disclosed by the disclosing party with the prior written consent of the other party;
+
+d) Confidential Information that is required to be disclosed by law or regulation, provided that the disclosing party provides prompt notice of such requirement and cooperates with the receiving party to limit any resulting damage.
+
+4. **RETURN OF CONFIDENTIAL INFORMATION**: Upon request, each party agrees to promptly return all Confidential Information in its possession to the other party, including all copies, extracts, and derivative works.
+
+5. **SURVIVAL**: The obligations under this Section shall survive the expiration or termination of this Agreement for a period of five (5) years from such date, and the parties agree that these obligations are reasonable and necessary to protect the interests of the disclosing party.
+
+6. **DISPUTE RESOLUTION**: Any dispute arising out of or related to this Section shall be resolved in accordance with the dispute resolution procedures set forth in Section [insert section number].
+
+By signing below, each party acknowledges that it has read, understands, and agrees to be bound by the terms and conditions of this Section.
+
+**PARTY A:**
+
+Signature: ______________________________________
+Date: __________________________________________
+
+**PARTY B:**
+
+Signature: ______________________________________
+Date: __________________________________________

@@ -1,48 +1,52 @@
-**API Endpoint: `/users/{userId}/orders`**
+**System Documentation: Weather Forecast API**
 
-**Description:**
-This API endpoint allows you to retrieve the orders associated with a specific user.
+**Overview**
+The Weather Forecast API is a RESTful API designed to provide real-time weather forecasts for various locations worldwide. The API uses OpenWeatherMap's data feed to retrieve current and forecasted weather conditions, temperature, humidity, wind speed, and other relevant meteorological information.
 
-**HTTP Method:** GET
+**API Specifications**
 
-**Path Parameters:**
+* **Base URL**: `https://api.weather-forecast.com`
+* **HTTP Methods**:
+	+ `GET`: Retrieve current or forecasted weather data for a specific location
+	+ `POST`: Submit a request to retrieve historical weather data for a specific date range
+* **Request Parameters**:
+	+ `location` (required): Specify the location using latitude and longitude coordinates (e.g., `38.8977,-77.0365`)
+	+ `forecast_type` (optional): Choose between current, daily, or hourly forecasts (default: `current`)
+	+ `date_range` (optional): Specify a date range for historical data retrieval (format: `YYYY-MM-DD` to `YYYY-MM-DD`)
+* **Response Format**: JSON
 
-* `userId`: The unique identifier of the user whose orders you want to retrieve. This must be a valid, non-empty string in the format `YYYY-MM-DD-HH-MM-SS-S` (e.g., `2022-01-01-12-34-56-78`).
+**Usage Guidelines**
 
-**Query Parameters:**
-
-* None
-
-**Request Body:** None
-
-**Response:**
-The response will be a JSON object containing an array of order objects, each representing a single order associated with the specified user. Each order object will contain the following properties:
-
-* `orderId`: A unique identifier for the order.
-* `orderDate`: The date and time when the order was placed.
-* `total`: The total cost of the order.
-* `status`: The status of the order (e.g., "pending", "shipped", "delivered", etc.).
-
-Example Response:
-```json
-{
-  "orders": [
-    {
-      "orderId": "ORD-123456789",
-      "orderDate": "2022-01-15T12:34:56.000Z",
-      "total": 50.99,
-      "status": "pending"
-    },
-    {
-      "orderId": "ORD-234567890",
-      "orderDate": "2022-02-10T14:30:00.000Z",
-      "total": 25.00,
-      "status": "shipped"
-    }
-  ]
-}
+1. **Retrieving Current Weather Data**
+Send a `GET` request with the `location` parameter to retrieve current weather conditions:
+```bash
+curl -X GET 'https://api.weather-forecast.com/v1/weather/current?location=38.8977,-77.0365'
 ```
-**Error Handling:**
+The response will include data such as temperature, humidity, wind speed, and more.
 
-* **404 Not Found:** If the specified `userId` does not exist or has no associated orders, the API will return a 404 error with an empty response body.
-* **500 Internal Server Error:** If there is an internal error processing the request (e
+2. **Retrieving Forecasted Weather Data**
+Send a `GET` request with the `location` and `forecast_type` parameters to retrieve forecasted weather conditions:
+```bash
+curl -X GET 'https://api.weather-forecast.com/v1/weather/forecast?location=38.8977,-77.0365&forecast_type=daily'
+```
+The response will include data such as temperature, precipitation, wind speed, and more.
+
+3. **Retrieving Historical Weather Data**
+Send a `POST` request with the `location` and `date_range` parameters to retrieve historical weather data:
+```bash
+curl -X POST 'https://api.weather-forecast.com/v1/weather/history' \
+  -H 'Content-Type: application/json' \
+  -d '{"location": "38.8977,-77.0365", "date_range": ["2022-01-01", "2022-01-31"]}'
+```
+The response will include data such as temperature, precipitation, wind speed, and more.
+
+**Error Handling**
+The API returns error messages in JSON format for any invalid requests or errors encountered during processing. The error message will contain a brief description of the issue and the HTTP status code (e.g., 400 Bad Request, 404 Not Found).
+
+**Rate Limiting**
+To prevent abuse and ensure fair usage, the API enforces rate limiting on all requests. The default limit is 100 requests per hour per IP address.
+
+**Security Considerations**
+The API uses SSL/TLS encryption to secure data transmission. Additionally, all sensitive information (e.g., API keys) should be handled securely and never shared publicly.
+
+By following these guidelines and specifications, you can effectively integrate the Weather Forecast API into your applications, providing users with reliable and accurate weather forecasts.

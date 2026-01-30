@@ -42,6 +42,9 @@ from processors.document_extractor import DocumentExtractor
 from services.reasoning_generator import ReasoningGenerator
 
 
+# Ensure all HF loaders resolve to the same cache root 
+os.environ["HF_HOME"] = str(settings.MODEL_CACHE_DIR)
+
 
 # ==================== CUSTOM SERIALIZATION ====================
 class NumpyJSONEncoder(json.JSONEncoder):

@@ -1,0 +1,27 @@
+Title: Launching Your Personal Blog with WordPress: A Step-by-Step Guide for Novices
+
+This tutorial provides a step-by-step process to establish your personal blog using WordPress. Upon completion, you'll possess a functional blog that you can tailor to your preferences.
+
+**Phase 1: Selecting a Web Hosting Service Provider**
+
+A web hosting service provider is indispensable for internet accessibility of your blog. Notable options encompass Bluehost, SiteGround, and DreamHost. For newcomers, we advocate Bluehost due to its intuitive interface and cost-effective pricing. Register an account, pick the 'Website Builder' plan, and opt for a domain name that encapsulates your blog (e.g., [yourname].com).
+
+**Phase 2: Installing WordPress**
+
+Upon account creation with Bluehost, sign in to your account and traverse to the "My Sites" section. Click on "Create Site," opt for "WordPress," and input the necessary details for your blog (site name, catchphrase, email address, etc.). Subsequently, click "Review" followed by "Create Site."
+
+**Phase 3: Entering Your WordPress Dashboard**
+
+After creating your site, you'll be directed to the login page. Employ the login credentials given by Bluehost to access your WordPress dashboard. Acquaint yourself with the layout of the dashboard as it encompasses numerous options for personalizing your blog.
+
+**Phase 4: Opting for a Blog Theme**
+
+To imbue your blog with a distinctive appearance, you'll require an appropriate theme. WordPress provides an extensive library of free and premium themes catering to various types of blogs. To access the themes, hover over "Appearance" in the left-hand menu and click on "Themes." You can preview each theme by clicking on it; once found, click "Install," then "Activate."
+
+**Phase 5: Personalizing Your Blog**
+
+Now that your theme is installed, you may modify numerous aspects of your blog. Navigate to "Appearance" > "Customize" in the left-hand menu to access customization options for your chosen theme. You'll be able to adjust settings such as site title and catchphrase, colors, fonts, and more.
+
+**Phase 6: Writing Your First Blog Post**
+
+To create your initial blog post, hover over "Posts" in the left-hand menu and click on "Add

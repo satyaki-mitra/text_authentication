@@ -2,7 +2,6 @@
 from enum import Enum
 
 
-
 class ModelType(Enum):
     """
     Model types for categorization

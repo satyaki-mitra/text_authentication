@@ -1,28 +1,38 @@
-Case Title: Smith v. Johnson
+Title: Data Processing Agreement (DPA) - Clause 7: Data Subject Rights
 
-Court of Jurisdiction: Supreme Court of the State of New York, County of Albany
+7. Data Subject Rights
 
-Docket Number: 2021-CV-123456
+7.1 Obligations Regarding Data Subject Requests
 
-Judge Presiding: Honorable Jane Doe
+7.1.1 The Data Processor shall, to the extent legally permitted, promptly notify the Data Controller if it receives a request from a Data Subject in relation to access, rectification, erasure, restriction of processing, data portability, or objection to the processing of Personal Data.
 
-Date Filed: January 1, 2022
+7.1.2 Upon receipt of such a request, the Data Processor shall cooperate with the Data Controller to facilitate the Data Controller's response to the Data Subject's request in accordance with applicable Data Protection Laws. The Data Processor shall provide reasonable assistance as requested by the Data Controller to enable the Data Controller to comply with its obligations under Data Protection Laws with respect to such requests.
 
-Parties Involved:
-1. Plaintiff: John Smith (Plaintiff)
-2. Defendant: Emily Johnson (Defendant)
+7.2 Response to Data Subject Requests
 
-Facts:
-The Plaintiff, John Smith, alleges that the Defendant, Emily Johnson, breached a contractual agreement between the parties regarding the sale of real property located at 123 Main Street, Albany, New York (the "Property"). Specifically, Mr. Smith asserts that Ms. Johnson failed to transfer ownership of the Property on the agreed-upon closing date of December 31, 2021, and has subsequently refused to complete the sale despite receiving full payment from Mr. Smith.
+7.2.1 The Data Processor shall respond directly to any Data Subject request it receives, unless prohibited by applicable law, in which case the Data Processor will notify the Data Controller of such prohibition and provide regular updates on the status of the request.
 
-Claims:
-1. Breach of Contract (Count I) - Alleging that Ms. Johnson breached a written agreement for the sale of the Property by failing to transfer ownership on December 31, 2021, and refusing to complete the sale thereafter.
-2. Specific Performance (Count II) - Requesting the Court to order Ms. Johnson to transfer ownership of the Property to Mr. Smith as originally agreed in the contract.
-3. Damages (Count III) - Seeking compensatory damages for any losses incurred by Mr. Smith due to Ms. Johnson's breach, including but not limited to costs associated with the failed sale and any potential loss of profits from the investment in the Property.
-4. Attorney's Fees and Costs (Count IV) - Requesting that the Court award reasonable attorney's fees and costs incurred by Mr. Smith in bringing this action against Ms. Johnson.
+7.2.2 If the Data Processor responds to a Data Subject request, it shall not disclose to the Data Subject any information that is confidential or proprietary to the Data Controller, unless required by applicable law.
 
-Relief Sought:
-1. Specific Performance of the contract for the sale of the Property located at 123 Main Street, Albany, New York.
-2. Compensatory damages for any losses suffered as a result of Defendant's breach.
-3. Reasonable attorney's fees and costs incurred by Plaintiff in bringing this action.
-4. Such
+7.3 Data Controller's Responsibilities
+
+7.3.1 The Data Controller shall be responsible for verifying the identity of the Data Subject making a request and for providing necessary documentation or other information reasonably required by the Data Processor to respond to such requests.
+
+7.3.2 The Data Controller shall ensure that its instructions for responding to Data Subject requests are consistent with the Data Controller's obligations under Data Protection Laws and this Agreement.
+
+7.4 Effect of Data Subject Requests on Fees
+
+7.4.1 Any additional costs or fees incurred by the Data Processor in responding to a Data Subject request shall be borne by the Data Controller, unless such costs are due to the Data Controller's failure to comply with its obligations under this Agreement or applicable Data Protection Laws.
+
+7.5 Confidentiality
+
+All parties agree to keep confidential any information received from each other in connection with a Data Subject request, except where disclosure is required by law or pursuant to the terms of this Agreement.
+
+This Clause 7 shall be interpreted and enforced in accordance with the provisions of the Data Protection Laws applicable to each party.
+
+In witness whereof, the parties have executed this Data Processing Agreement as of the Effective Date.
+
+Data Controller: _______________________________
+(Name)
+(Address)
+(Contact

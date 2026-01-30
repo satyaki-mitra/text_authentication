@@ -1,50 +1,43 @@
-Title: A Beginner's Guide to Using Markdown in GitHub
+Title: A Beginner's Guide to Setting Up a Local Development Environment for WordPress Using WAMP Server
 
-1. **Understanding Markdown**
-   Markdown is a lightweight markup language that you can use to add formatting elements to plaintext text documents. It's often used for writing readme files, or writing messages in online discussion forums, wikis, and blogs.
+In this tutorial, you will learn how to set up a local development environment for WordPress using the WAMP (Windows, Apache, MySQL, PHP) server. This process is essential for testing and developing websites before going live. Let's dive in!
 
-2. **Setting Up Your Environment**
-   To get started with Markdown on GitHub, you'll need a few things:
-   - A computer (Windows, Mac, Linux)
-   - An account on GitHub (https://github.com/)
-   - A text editor (e.g., Visual Studio Code, Sublime Text, Atom, Notepad++)
+**Step 1: Download and Install WAMP Server**
 
-3. **Creating a New Repository**
-   - Sign in to your GitHub account.
-   - Click the green "New" button on the top left of the repository list.
-   - Name your repository (e.g., "MyFirstMarkdown").
-   - Choose whether to make it public or private, then click "Create repository."
+1.1 Visit the official WAMPServer website (https://sourceforge.net/projects/wampserver/) and download the latest version of WAMPServer for Windows. At the time of writing, the current version is 3.2.8.
 
-4. **Writing Markdown Syntax**
-   Now, let's write some basic Markdown syntax in a text editor:
+1.2 Run the downloaded .exe file to start the installation process. Make sure to check the box that says "I have read the license agreement" before clicking 'Next.'
 
-   - Headers (# for smaller headers, ## for larger, up to six #)
-     ```
-     # Heading 1
-     ## Heading 2
-     ### Heading 3
-     ```
+**Step 2: Choose Custom Installation Settings**
 
-   - Emphasis (italic with * or _ around text, bold with ** or __ around text)
-     ```
-     *italic* or _italic_
-     **bold** or __bold__
-     ```
+2.1 On the next screen, choose 'Custom (advanced)' and click 'Next'.
 
-   - Lists (unordered list with * or -, ordered list with numbers followed by a period)
-     ```
-     Unordered list:
-     - Item 1
-     - Item 2
+2.2 On the following screen, ensure all components are selected for installation. If you plan on using PHPMyAdmin to manage your databases, make sure that option is checked as well. Click 'Next.'
 
-     Ordered list:
-     1. First item
-     2. Second item
-     ```
+**Step 3: Choose Installation Folder and Start WAMP Server**
 
-   - Links (Inline links with brackets around the text you want to link, followed by parentheses containing the URL)
-     ```
-     [Google](https://www.google.com/)
-     ```
+3.1 In the next step, you can choose where WAMP will be installed or accept the default folder location (C:\wamp64). Click 'Next' when ready.
 
-   - Images (Similar to links, but include an exclamation mark before the brackets and the image file
+3.2 On the following screen, select 'Launch WAMP after installation' and click 'Finish.'
+
+**Step 4: Access WAMP Control Panel**
+
+4.1 Once the installation is complete, you will see a WAMP icon in your system tray. Click it to open the WAMP Control Panel.
+
+**Step 5: Enable Apache and MySQL Modules**
+
+5.1 In the WAMP control panel, ensure 'Apache' and 'MySQL' are checked under Services. If not, check them and click 'Start All Services.'
+
+**Step 6: Test Your Local Server**
+
+6.1 Open your web browser and type 'localhost' in the address bar. You should see a page confirming that Apache is working correctly.
+
+**Step 7: Download WordPress**
+
+7.1 Go to the official WordPress website (https://wordpress.org/download/) and download the latest version of WordPress.
+
+**Step 8: Extract and Rename the WordPress Folder**
+
+8.1 After downloading, extract the WordPress zip file to your preferred location (e.g., C:\WordPress). Rename the extracted folder to 'wordpress.'
+
+**Step 9: Move WordPress to the WAMP Root F

@@ -1,62 +1,81 @@
-Title: Understanding and Implementing the Observer Design Pattern in JavaScript
+Title: Documentation on Observer Design Pattern Implementation in Java
 
-The Observer Design Pattern is a software design pattern that defines a one-to-many dependency between objects, whereby any changes to the state of an object (subject) are immediately notified to its dependents (observers). This pattern promotes loose coupling and enables efficient communication between objects. Let's explore how to implement this pattern in JavaScript.
+## Introduction
 
-**Subject**: The subject is an object that has a list of observers and manages the state of the system. A subject can notify its observers when there are changes in its state. In JavaScript, we can create a simple Subject class:
+The Observer Design Pattern is a behavioral design pattern that defines a one-to-many dependency between objects, allowing them to be notified automatically of any changes in the state of another object, called the subject or observable. This pattern is particularly useful when there's a need for multiple objects to respond to changes in a single object without having explicit knowledge of each other.
 
-```javascript
-class Subject {
-  constructor() {
-    this._observers = [];
-  }
+## Use Cases
 
-  attach(observer) {
-    this._observers.push(observer);
-  }
+1. **Weather Forecasting System**: In this system, weather data (subject) can be subscribed by various interested parties like weather apps, TV stations, and websites (observers). When the weather data changes, all observers are notified automatically.
 
-  detach(observer) {
-    const index = this._observers.indexOf(observer);
-    if (index !== -1) {
-      this._observers.splice(index, 1);
+2. **Stock Market Monitoring System**: Stock prices (subject) can be observed by numerous investors (observers) who want real-time updates on their investments.
+
+## Implementation in Java
+
+### Interface Definition
+
+First, we define the `Subject` and `Observer` interfaces:
+
+```java
+public interface Subject {
+    void attach(Observer observer);
+    void detach(Observer observer);
+    void notifyObservers();
+}
+
+public interface Observer {
+    void update(Subject subject);
+}
+```
+
+### Concrete Subject Implementation
+
+The concrete subject (observable) implements the `Subject` interface and maintains a list of observers:
+
+```java
+import java.util.*;
+
+public class WeatherData implements Subject {
+    private float temperature;
+    private float humidity;
+    private float pressure;
+    private List<Observer> observers = new ArrayList<>();
+
+    // Constructor, set methods, and other methods omitted for brevity
+
+    @Override
+    public void attach(Observer observer) {
+        observers.add(observer);
     }
-  }
 
-  notify() {
-    this._observers.forEach((observer) => observer.update());
-  }
+    @Override
+    public void detach(Observer observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (Observer observer : observers) {
+            observer.update(this);
+        }
+    }
+
+    // Method to change weather data and notify observers when changes occur
 }
 ```
 
-**Observer**: The observer is an object that updates its internal state when it receives a notification from the subject. In JavaScript, we can create an Observer interface:
+### Concrete Observer Implementation
 
-```javascript
-interface Observer {
-  update();
-}
-```
+The concrete observer implements the `Observer` interface:
 
-A concrete implementation of the Observer could look like this:
+```java
+public class CurrentConditionsDisplay implements Observer {
+    private float temperature;
+    private float humidity;
+    private float pressure;
 
-```javascript
-class ConcreteObserver implements Observer {
-  constructor(name) {
-    this._name = name;
-  }
+    // Constructor, update method, and other methods omitted for brevity
 
-  update() {
-    console.log(`${this._name} has been notified`);
-  }
-}
-```
-
-**Client**: The client is responsible for creating a subject and attaching observers to it. When the state of the system changes, the subject sends a notification to its observers:
-
-```javascript
-const subject = new Subject();
-
-// Create some concrete observers
-const observer1 = new ConcreteObserver("Observer 1");
-const observer2 = new ConcreteObserver("Observer 2");
-const observer3 = new ConcreteObserver("Observer 3");
-
-// Attach
+    @Override
+    public void update(Subject subject) {
+        WeatherData weatherData =
