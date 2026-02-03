@@ -1737,44 +1737,6 @@ input[type="checkbox"]:checked::after {
     }
 }
 
-/* Light mode (if needed) */
-@media (prefers-color-scheme: light) {
-    :root {
-        --bg-dark: #f8fafc;
-        --bg-darker: #f1f5f9;
-        --bg-panel: rgba(241, 245, 249, 0.95);
-        --text-primary: #0f172a;
-        --text-secondary: #475569;
-        --text-muted: #64748b;
-        --border: rgba(148, 163, 184, 0.5);
-    }
-    
-    body {
-        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f8fafc 100%);
-    }
-    
-    .header {
-        background: rgba(248, 250, 252, 0.98);
-    }
-    
-    .panel {
-        background: var(--bg-panel);
-    }
-    
-    .text-input {
-        background: rgba(255, 255, 255, 0.9);
-        color: #0f172a;
-    }
-    
-    select {
-        background: rgba(255, 255, 255, 0.9);
-        color: #0f172a;
-    }
-    
-    input[type="checkbox"] {
-        background: rgba(255, 255, 255, 0.9);
-    }
-}
 </style>
 </head>
 <body>
@@ -2065,7 +2027,6 @@ input[type="checkbox"]:checked::after {
 </div>
 
 <script>
-// JavaScript remains exactly the same as your original
 // Configuration
 const API_BASE = '';
 let currentAnalysisData = null;
@@ -2985,7 +2946,7 @@ function displayMetricsCarousel(metrics, analysis, ensemble) {
                         <span style="font-size: 0.85rem; color: var(--text-secondary);">Confidence: ${confidence}% | Weight: ${weight}%</span>
                     </div>
                     
-                    ${metric.details ? renderMetricDetails(metricKey, metric.details) : ''}
+                    ${metric.details && Object.keys(metric.details).length > 0 ? renderMetricDetails(metricKey, metric.details) : '<div style="color: var(--text-muted); font-size: 0.85rem; margin-top: 1rem; text-align: center; padding: 1rem;">No detailed metrics available for this metric</div>'}
                 </div>
             </div>
         `;
@@ -3042,43 +3003,45 @@ function updateCarouselButtons() {
 }
 
 function renderMetricDetails(metricName, details) {
-    if (!details || Object.keys(details).length === 0) return '';
-
-    // Key metrics to show for each type
-    const importantKeys = {
-        'structural': ['burstiness_score', 'length_uniformity', 'avg_sentence_length', 'std_sentence_length'],
-        'perplexity': ['overall_perplexity', 'avg_sentence_perplexity', 'normalized_perplexity'],
-        'entropy': ['token_diversity', 'sequence_unpredictability', 'char_entropy'],
-        'semantic_analysis': ['coherence_score', 'consistency_score', 'repetition_score'],
-        'linguistic': ['pos_diversity', 'syntactic_complexity', 'grammatical_consistency'],
-        'multi_perturbation_stability': ['stability_score', 'curvature_score', 'likelihood_ratio', 'perturbation_variance', 'hybrid_probability']
-    };
-
-    const keysToShow = importantKeys[metricName] || Object.keys(details).slice(0, 6);
-
+    // If no details or empty object, return empty string
+    if (!details || Object.keys(details).length === 0) {
+        return '';
+    }
+    
     let detailsHTML = '<div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border);">';
     detailsHTML += '<div style="font-size: 0.9rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 0.75rem;">📈 Detailed Metrics:</div>';
     detailsHTML += '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.75rem; font-size: 0.85rem;">';
-
-    keysToShow.forEach(key => {
+    
+    // Show all available details
+    Object.keys(details).forEach(key => {
         if (details[key] !== undefined && details[key] !== null) {
             let value = details[key];
             let displayValue;
             
             // Format values appropriately
             if (typeof value === 'number') {
-                if (key.includes('score') || key.includes('ratio') || key.includes('probability')) {
+                // Check if it's a probability/score (between 0 and 1)
+                if (value >= 0 && value <= 1 && !Number.isInteger(value)) {
+                    // It's a probability or score - show as percentage
                     displayValue = (value * 100).toFixed(2) + '%';
-                } else if (value < 1 && value > 0) {
-                    displayValue = value.toFixed(4);
+                } else if (Number.isInteger(value)) {
+                    // It's an integer
+                    displayValue = value;
                 } else {
+                    // It's a decimal number
                     displayValue = value.toFixed(2);
                 }
+            } else if (typeof value === 'boolean') {
+                displayValue = value ? 'Yes' : 'No';
             } else {
-                displayValue = value;
+                displayValue = String(value);
             }
             
-            const label = key.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+            // Format the key name nicely
+            const label = key
+                .replace(/_/g, ' ')
+                .replace(/\b\w/g, c => c.toUpperCase());
+            
             detailsHTML += `
                 <div style="background: rgba(15, 23, 42, 0.6); padding: 0.5rem; border-radius: 6px;">
                     <div style="color: var(--text-muted); font-size: 0.75rem; margin-bottom: 0.25rem;">${label}</div>
@@ -3087,7 +3050,7 @@ function renderMetricDetails(metricName, details) {
             `;
         }
     });
-
+    
     detailsHTML += '</div></div>';
     return detailsHTML;
 }
