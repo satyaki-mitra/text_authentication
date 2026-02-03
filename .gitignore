@@ -53,4 +53,4 @@ logs/
 notebooks/
 config/*.txt
 services/*.txt
-metrics/*.txt
+metrics/*.txtevaluation/results/*.png
