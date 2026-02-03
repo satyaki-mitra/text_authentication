@@ -412,10 +412,10 @@ app.add_middleware(CORSMiddleware,
                   )
 
 # Mount static files
-ui_static_path = Path(__file__).parent / "ui" / "static"
+ui_static_path = Path(__file__).parent / "ui"
 
 if ui_static_path.exists():
-    app.mount("/static", StaticFiles(directory = str(ui_static_path)), name = "static")
+    app.mount("/ui", StaticFiles(directory = str(ui_static_path)), name = "ui")
 
 
 # Global instances
