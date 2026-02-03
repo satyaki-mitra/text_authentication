@@ -42,7 +42,7 @@ license: mit
 - [Ensemble Methodology](#ensemble-methodology)
 - [Domain-Aware Analysis](#domain-aware-analysis)
 - [Performance Characteristics](#performance-characteristics)
-- [Evaluation & Benchmarks](#-evaluation--benchmarks)
+- [Evaluation & Benchmarks](#evaluation--benchmarks)
 - [Project Structure](#project-structure)
 - [API Endpoints](#api-endpoints)
 - [Installation & Setup](#installation--setup)
