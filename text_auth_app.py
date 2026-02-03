@@ -832,7 +832,7 @@ async def root():
             return HTMLResponse(content=f.read())
     
     # Fallback to static directory if exists
-    ui_static_path = Path(__file__).parent / "ui" / "static"
+    ui_static_path = Path(__file__).parent / "ui"
     index_path     = ui_static_path / "index.html"
     
     if index_path.exists():
