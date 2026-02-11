@@ -1,13 +1,7 @@
 # Evidence-Based Text Forensics: A Multi-Dimensional Ensemble Approach to Textual Consistency Analysis
 
-**Technical White Paper**
 
----
-
-**Authors:** Satyaki Mitra  
-**Version:** 1.0.0  
-**Publication Date:** October 28, 2025  
-**Document Classification:** Research 
+#### **Author: Satyaki Mitra | Document Classification: Research**
 
 ---
 
@@ -106,7 +100,7 @@ Rather than a binary classification problem, modern content ecosystems face a mo
 
 ### 2.2 Sector-Specific Impacts
 
-#### 2.2.1 Education Sector (≈ $12B Market)
+#### 2.2.1 Education Sector
 
 Educational institutions increasingly rely on written submissions to assess understanding, reasoning ability, and individual effort. The integration of computational tools into learning workflows complicates these assessments:
 
@@ -120,7 +114,7 @@ The global educational technology and academic integrity tooling market is value
 
 ---
 
-#### 2.2.2 Professional Evaluation (≈ $5B Market)
+#### 2.2.2 Professional Evaluation 
 
 Written artifacts play a central role in modern hiring pipelines, particularly in remote and asynchronous workflows:
 
@@ -134,7 +128,7 @@ The enterprise hiring verification and assessment market represents approximatel
 
 ---
 
-#### 2.2.3 Content Publishing & Platform Integrity (≈ $3B Market)
+#### 2.2.3 Content Publishing & Platform Integrity
 
 Digital publishing platforms and content marketplaces operate at a scale where textual quality directly impacts trust, engagement, and monetization:
 
@@ -144,7 +138,7 @@ Digital publishing platforms and content marketplaces operate at a scale where t
 - **Economic Impact:** Low-quality or homogeneous content negatively affects advertising performance and platform credibility.
 
 **Market Context:**  
-Content quality assurance and moderation tooling constitutes a rapidly growing ≈ $3B market, driven by the need for scalable, interpretable signals rather than opaque classification decisions.
+Content quality assurance and moderation tooling constitutes a rapidly growing market, driven by the need for scalable, interpretable signals rather than opaque classification decisions.
 
 ---
 
@@ -1521,12 +1515,5 @@ SOCIAL_MEDIA_CONFIG = {
 ```
 
 **Technical White Paper**
-
----
-
-**Authors:** Satyaki Mitra  
-**Version:** 1.0.0  
-**Publication Date:** October 28, 2025  
-**Document Classification:** Research 
 
 ---

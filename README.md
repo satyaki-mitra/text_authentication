@@ -684,7 +684,6 @@ text_auth/
 ├── .gitignore
 ├── test_integration.py
 ├── .env.example
-├── requirements.txt
 └── text_auth_app.py
 ```
 
@@ -829,7 +828,7 @@ snapshot_download(repo_id="satyaki-mitra/statistical-text-reference-v1", local_d
 
 ---
 
-## 🏗️ Deployment notes**
+## 🏗️ Deployment notes
 - Containerize app with Docker, orchestrate with Kubernetes or ECS for scale
 - Autoscaling groups for API servers & worker nodes
 - Use spot GPU instances for retraining & large metric compute jobs
