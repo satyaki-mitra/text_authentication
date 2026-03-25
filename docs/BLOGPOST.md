@@ -86,7 +86,7 @@ TEXT-AUTH evaluates text through six independent analytical lenses, each examini
 **Mathematical Foundation**:
 
 $$
-\text{Perplexity}(T) = \exp\left(-\frac{1}{N}\sum_{i=1}^{N} \log P(w_i \mid w_{<i})\right)
+\text{Perplexity}(T) = \exp\left(-\frac{1}{N}\sum_{i=1}^{N} \log P(w_i \mid w_{< i})\right)
 $$
 
 **Forensic Insight**: Language models generate text by selecting tokens with high conditional probabilities, creating sequences that occupy high-probability regions of the language distribution. Human writing, in contrast, includes unexpected lexical choices, creative expressions, and domain-specific jargon that models find statistically "surprising."
