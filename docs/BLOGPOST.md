@@ -868,7 +868,7 @@ By focusing on evidence rather than attribution, uncertainty rather than false c
 ---
 
 **TEXT-AUTH Forensic Text Analysis Platform**  
-Version 1.0 — December 2025  
+Version 1.0  
 Author: Satyaki Mitra
 
 > *Evidence-based assessment, transparent reasoning, responsible implementation*
