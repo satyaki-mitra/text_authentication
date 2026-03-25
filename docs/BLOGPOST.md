@@ -622,7 +622,7 @@ The system recognizes that different writing genres have different normative cha
 
 ### Calibration Methodology
 
-Thresholds were optimized using ROC curve analysis on curated datasets of 10,000+ verified texts per domain, with cross-validation to ensure generalization. The optimization objective balanced precision and recall while prioritizing false positive minimization in high-stakes domains.
+Thresholds were optimized using ROC curve analysis on curated datasets of 1000+ verified texts per domain, with cross-validation to ensure generalization. The optimization objective balanced precision and recall while prioritizing false positive minimization in high-stakes domains.
 
 --- 
 
