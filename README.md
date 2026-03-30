@@ -28,15 +28,11 @@ license: mit
 ![API](https://img.shields.io/badge/API-RESTful-green.svg)
 
 
-> **TEXT-AUTH** is a research-oriented, production-minded **text forensics system** that evaluates written content using multiple independent linguistic, statistical, and semantic signals.
-
-> Rather than claiming authorship or identifying a generation source, the platform performs **evidence-based probabilistic assessment** of textual consistency patterns. It reports confidence-calibrated signals, uncertainty estimates, and human-interpretable explanations to support downstream decision-making.
-
-> TEXT-AUTH is designed as a **decision-support and forensic analysis tool**, not a binary classifier or attribution oracle.
+> **TEXT-AUTH** is a research-oriented, production-minded **text forensics system** that evaluates written content using multiple independent linguistic, statistical, and semantic signals. Rather than claiming authorship or identifying a generation source, the platform performs **evidence-based probabilistic assessment** of textual consistency patterns. It reports confidence-calibrated signals, uncertainty estimates, and human-interpretable explanations to support downstream decision-making. TEXT-AUTH is designed as a **decision-support and forensic analysis tool**, not a binary classifier or attribution oracle.
 
 > **Live Deployment Link:** [AI Text Authenticator Platform](https://huggingface.co/spaces/satyaki-mitra/AI_Text_Authenticator)
 
-![Demo](docs/textauth_demo.gif)
+> ![Demo](docs/textauth_demo.gif)
 
 </div>
 
