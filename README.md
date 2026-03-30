@@ -36,7 +36,7 @@ license: mit
 
 > **Live Deployment Link:** [AI Text Authenticator Platform](https://huggingface.co/spaces/satyaki-mitra/AI_Text_Authenticator)
 
-![Demo](docs/demo.gif)
+![Demo](docs/textauth_demo.html)
 
 </div>
 
