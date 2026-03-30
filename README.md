@@ -27,13 +27,22 @@ license: mit
 ![Hugging Face](https://img.shields.io/badge/HuggingFace-Spaces-yellow.svg)
 ![API](https://img.shields.io/badge/API-RESTful-green.svg)
 
+
+> **TEXT-AUTH** is a research-oriented, production-minded **text forensics system** that evaluates written content using multiple independent linguistic, statistical, and semantic signals.
+
+> Rather than claiming authorship or identifying a generation source, the platform performs **evidence-based probabilistic assessment** of textual consistency patterns. It reports confidence-calibrated signals, uncertainty estimates, and human-interpretable explanations to support downstream decision-making.
+
+> TEXT-AUTH is designed as a **decision-support and forensic analysis tool**, not a binary classifier or attribution oracle.
+
+> **Live Deployment Link:** [AI Text Authenticator Platform](https://huggingface.co/spaces/satyaki-mitra/AI_Text_Authenticator)
+
+![Demo](docs/demo.gif)
+
 </div>
 
 ---
 
 ## 📋 Table of Contents
-
-- [Abstract](#abstract)
 - [Overview](#overview)
 - [Key Differentiators](#key-differentiators)
 - [System Architecture](#system-architecture)
@@ -57,21 +66,6 @@ license: mit
 
 ---
 
-## 📝 Abstract
-
-**TEXT-AUTH** is a research-oriented, production-minded **text forensics system** that evaluates written content using multiple independent linguistic, statistical, and semantic signals.
-
-Rather than claiming authorship or identifying a generation source, the platform performs **evidence-based probabilistic assessment** of textual consistency patterns. It reports confidence-calibrated signals, uncertainty estimates, and human-interpretable explanations to support downstream decision-making.
-
-TEXT-AUTH is designed as a **decision-support and forensic analysis tool**, not a binary classifier or attribution oracle.
-
-- *For Architectural details, see [Architecture](docs/ARCHITECTURE.md).*
-- *For detailed technical documentation, see [Technical Docs](docs/BLOGPOST.md).* 
-- *For research methodology, see [Whitepaper](docs/WHITE_PAPER.md).*
-- *For API documentation, see [API Documentation](docs/API_DOCUMENTATION.md).*
-
----
-
 ## 🚀 Overview
 
 **Problem.** Modern text—whether human-written, assisted, edited, or fully generated—often exhibits patterns that are difficult to evaluate using binary classifiers.
@@ -81,6 +75,11 @@ TEXT-AUTH is designed as a **decision-support and forensic analysis tool**, not 
 **Live Deployment Link:** [AI Text Authenticator Platform](https://huggingface.co/spaces/satyaki-mitra/AI_Text_Authenticator)
 
 **MVP Scope.** End‑to‑end FastAPI backend, lightweight HTML UI, modular metrics, Hugging Face model auto‑download, and a prototype ensemble forensic analyzer. Model weights are not committed to the repo; they are fetched at first run.
+
+- *For Architectural details, see [Architecture](docs/ARCHITECTURE.md).*
+- *For detailed technical documentation, see [Technical Docs](docs/BLOGPOST.md).* 
+- *For research methodology, see [Whitepaper](docs/WHITE_PAPER.md).*
+- *For API documentation, see [API Documentation](docs/API_DOCUMENTATION.md).*
 
 ---
 
